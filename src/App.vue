@@ -64,8 +64,11 @@ export default {
     }
   },
   mounted(){
+    let scx = document.createElement('script');
+    scx.setAttribute('src', '/static/js/materialize.min.js');
+    document.head.appendChild(scx);
     let scrr = document.createElement('script');
-    scrr.innerHTML = "var sendAddon = function(iid, nname){var eventt = new CustomEvent('PreMiD_ReceiveExtensionData', {id: iid, name: nname});window.dispatchEvent(eventt);};window.onload = function(){document.querySelector('#commit').innerHTML = document.querySelector('meta[name=\"commit\"]').content;document.querySelector('#commit').href = 'https://github.com/Timeraa/PreMiD/commit/'+document.querySelector('meta[name=\"commit\"]').content;document.querySelector('meta[name=\"og:title\"]').content = document.title.replace(' - PreMiD', '');}";
+    scrr.innerHTML = "var sendAddon = function(iid, nname){var eventt = new CustomEvent('PreMiD_ReceiveExtensionData', {id: iid, name: nname});window.dispatchEvent(eventt);};window.onhashchange += function(){document.querySelector('#commit').innerHTML = document.querySelector('meta[name=\"commit\"]').content;document.querySelector('#commit').href = 'https://github.com/Timeraa/PreMiD/commit/'+document.querySelector('meta[name=\"commit\"]').content;document.querySelector('meta[name=\"og:title\"]').content = document.title.replace(' - PreMiD', '');};";
     document.head.appendChild(scrr);
   }
 };
