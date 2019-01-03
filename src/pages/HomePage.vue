@@ -153,11 +153,6 @@ export default {
   color:#000;
 }
 
-.banner-right {
-	float:right;
-	margin-right:1rem;
-}
-
 .banner-right > a > img {
 	max-height:75px;
 	margin:1rem;
@@ -174,6 +169,23 @@ export default {
 .banner-right > a > img:active {
 	filter: grayscale(0);
 	opacity:1;
+}
+
+.banner-right{float:right;}
+
+@media (max-width:1257px){
+  .banner-right{
+    float:unset;
+  }
+}
+
+@media (max-width:800px){
+  .banner-right{
+    width:100%;
+  }
+  #view > div.row.center.uig-skyline > div:nth-child(1) {
+    width:100%!important;
+  }
 }
 
 /* CAROUSEL */
