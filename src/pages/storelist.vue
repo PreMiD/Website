@@ -22,7 +22,7 @@ export default {
   },
   mounted(){
     let scr = document.createElement('script');
-    scr.innerHTML = "$.getJSON('https://api.premid.app/getServices', function(d){for(i = 0; i < d.length; i++){console.log(d[i]);var div = document.createElement('div');div.innerHTML = '<div class=\"col s12 m6 l3 xl2\"> <div style=\"--color:'+d[i].color+'\" class=\"card\"> <a data-position=\"top\" class=\"tooltipped\" data-tooltip=\"Add to PreMiD\" onclick=\"sendAddon(\\''+d[i].id+'\\',\\''+d[i].name+'\\');\" href=\"#\"><div class=\"card-image\"> <img src=\"https://raw.githubusercontent.com/PreMiD/PreMiD/master/presences/'+d[i].name+'/presence.png\"> <span class=\"card-title\">'+d[i].name+'</span> </div></a><div class=\"card-content\"> <p>'+d[i].description+'</p></div><div class=\"card-action\"> <a href=\"http://'+d[i].url+'\">'+new XMLSerializer().serializeToString(document.querySelector('#external-link-alt').firstChild)+' VIEW SITE</a> <a href=\"/user/'+d[i].userID+'\">'+new XMLSerializer().serializeToString(document.querySelector('#user').firstChild)+' AUTHOR</a></div></div></div>';document.querySelector('#apps').appendChild(div);}$('#loader').remove();var instances = M.Tooltip.init(document.querySelectorAll('.tooltipped'));});";
+    scr.innerHTML = "$.getJSON('https://api.premid.app/getServices', function(d){for(i = 0; i < d.length; i++){console.log(d[i]);var div = document.createElement('div');div.innerHTML = '<div class=\"col s12 m6 l3 xl2\"> <div style=\"--color:'+d[i].color+'\" class=\"card\"> <a data-position=\"top\" class=\"tooltipped\" data-tooltip=\"Add to PreMiD\" onclick=\"sendAddon(\\''+d[i].id+'\\',\\''+d[i].name+'\\');\" href=\"#\"><div class=\"card-image\"> <img src=\"https://raw.githubusercontent.com/PreMiD/PreMiD/master/presences/'+d[i].name+'/presence.png\"></div></a><div class=\"card-content\"><span style=\"font-size:1.33rem;font-weight:350;\">'+d[i].name+'</span><p style=\"font-weight:300;\">'+d[i].description+'</p></div><div class=\"card-action\"> <a href=\"http://'+d[i].url+'\">'+new XMLSerializer().serializeToString(document.querySelector('#external-link-alt').firstChild)+' VIEW SITE</a> <a href=\"/user/'+d[i].userID+'\">'+new XMLSerializer().serializeToString(document.querySelector('#user').firstChild)+' AUTHOR</a></div></div></div>';document.querySelector('#apps').appendChild(div);}$('#loader').remove();var instances = M.Tooltip.init(document.querySelectorAll('.tooltipped'));});";
     document.head.appendChild(scr);
   }
 };
@@ -99,9 +99,5 @@ export default {
 .card-image {
 	background-color:unset;
 	background:linear-gradient(45deg,rgba(0, 0, 0, 0.33),rgba(0, 0, 0, 0))var(--color)!important;
-}
-.card-title {
-	filter:invert(100%);
-	color:var(--color)!important;
 }
 </style>
