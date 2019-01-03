@@ -171,6 +171,12 @@ export default {
     margin-left:16px;
     margin-right:16px;
   }
+  #header > div.col {
+    margin-left:0.5rem;
+  }
+  #links {
+    margin-right:0.5rem;
+  }
 }
 
 

@@ -11,7 +11,7 @@
       <router-view id="view" />
     </transition>
     <div style="height:fit-content;width:100vw;" class="footer">
-    <div style="height:75px;width:100vw;"></div>
+    <div style="height:25px;width:100vw;"></div>
     <div class="footer-thing">
       <div class="footer-item">
         <div class="switch"> 
@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div style="height:75px;width:100vw;"></div>
+    <div style="height:25px;width:100vw;"></div>
     </div>
   </div>
 </template>
