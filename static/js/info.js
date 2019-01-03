@@ -92,19 +92,20 @@
 var setupDownloads = function(os = jscd.os, browser = jscd.browser){
     if(os == ""){os = jscd.os}
     if(browser == ""){browser = jscd.browser}
+    if(navigator.userAgent.indexOf('Chrome') != -1){browser = "Chrome";}
     // OS download
     switch (os) {
     	case "Windows":
-    		$('#dl').attr('href', 'https://github.com/Timeraa/PreMiD/releases/download/v1.2/PreMiD-Windows-x64.exe');
+    		$('#dl').attr('href', 'https://paz.yt/api/git/latest/?r=PreMiD/PreMiD&f=PreMiD-Windows-x64.exe');
             document.querySelector('#dl').innerHTML = new XMLSerializer().serializeToString(document.querySelector('#windows').firstChild);
     		break
     	case "Mac OS":
     	case "Mac OS X":
-            $('#dl').attr('href', 'https://github.com/Timeraa/PreMiD/releases/download/v1.2/PreMiD-Mac.dmg');
+            $('#dl').attr('href', 'https://paz.yt/api/git/latest/?r=PreMiD/PreMiD&f=PreMiD-Mac.dmg');
             document.querySelector('#dl').innerHTML = new XMLSerializer().serializeToString(document.querySelector('#apple').firstChild);
     		break
     	case "Linux":
-            $('#dl').attr('href', 'https://github.com/Timeraa/PreMiD/releases/download/v1.2/PreMiD-Linux-amd64.deb');
+            $('#dl').attr('href', 'https://paz.yt/api/git/latest/?r=PreMiD/PreMiD&f=PreMiD-Linux-amd64.deb');
             document.querySelector('#dl').innerHTML = new XMLSerializer().serializeToString(document.querySelector('#linux').firstChild);
     		break
     	default:
@@ -115,9 +116,6 @@ var setupDownloads = function(os = jscd.os, browser = jscd.browser){
     // extension download
     switch (browser) {
     	case "Chrome":
-    	case "Vivaldi":
-    	case "Chromium":
-    	case "Opera":
             $('#ext').attr('href', 'https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi');
             document.querySelector('#ext').innerHTML = new XMLSerializer().serializeToString(document.querySelector('#chrome').firstChild);
     		break
