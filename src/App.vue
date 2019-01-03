@@ -11,19 +11,19 @@
       <router-view id="view" />
     </transition>
     <div style="height:fit-content;width:100vw;" class="footer">
-    <div style="height:25px;width:100vw;"></div>
-    <div class="footer-thing">
-      <div class="footer-item">
-        <div class="switch"> 
-          <label>
-          <span>Dark Mode</span>
-          <input type="checkbox" id="darkmode" class="togglePresence">
-            <span class="lever" onclick="darkToggle();"></span> 
-          </label>
-        </div>
-      </div>
-    </div>
-    <div style="height:25px;width:100vw;"></div>
+	    <div style="height:25px;width:100vw;"></div>
+	    <div class="footer-thing">
+	      <div class="footer-item">
+	        <div class="switch"> 
+	          <label>
+	          <span>Dark Mode</span>
+	          <input type="checkbox" id="darkmode" class="togglePresence">
+	            <span class="lever" onclick="darkToggle();"></span> 
+	          </label>
+	        </div>
+	      </div>
+	    </div>
+    	<div style="height:25px;width:100vw;"></div>
     </div>
   </div>
 </template>
@@ -200,6 +200,8 @@ a:hover:not(.btn) {
   margin:0 0 0 0!important;
   margin-bottom:2px!important;
 }
+
+.footer {margin-top:122px;}
 
 .footer-item > .switch, .footer-item {
   width:fit-content;
