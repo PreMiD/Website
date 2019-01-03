@@ -90,12 +90,12 @@ export default {
     title: { inner: "Home" }
   },
   mounted(){
-    let scrr=document.createElement('script');scrr.innerHTML = "$.getJSON('https://api.premid.app/getServices', function(d){ii=0;for(i in d){ii++;var ch = document.createElement('img');ch.src='https://raw.githubusercontent.com/PreMiD/PreMiD/master/presences/'+d[i].name+'/presence.png';var chh = document.createElement('a');chh.href='/user/'+d[i].userID;chh.innerHTML = new XMLSerializer().serializeToString(ch);document.querySelector('#apps-preview').appendChild(chh);}var datakey=[];for(data in document.querySelector(\"#view\").dataset){datakey.push(data)};$(\"*\").attr(\"data-\"+datakey[0], \"\");document.querySelector('#apps-preview').parentElement.childNodes[0].childNodes[2].innerText = document.querySelector('#apps-preview').parentElement.childNodes[0].childNodes[2].innerText.replace('[int]', ii);});";document.head.appendChild(scrr);
+    let scrr=document.createElement('script');scrr.innerHTML = "$.getJSON('https://api.premid.app/getServices', function(d){ii=0;for(i in d){ii++;var ch = document.createElement('img');ch.src='https://raw.githubusercontent.com/PreMiD/PreMiD/master/presences/'+d[i].name+'/presence.png';var chh = document.createElement('a');chh.href='/user/'+d[i].userID;chh.innerHTML = new XMLSerializer().serializeToString(ch);document.querySelector('#apps-preview').appendChild(chh);}document.querySelector('#apps-preview').parentElement.childNodes[0].childNodes[2].innerText = document.querySelector('#apps-preview').parentElement.childNodes[0].childNodes[2].innerText.replace('[int]', ii);});";document.head.appendChild(scrr);
   }
 };
 </script>
 
-<style scoped>
+<style>
 
 #headingMain img {
   height: 150px;
