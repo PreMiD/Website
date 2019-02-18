@@ -78,7 +78,7 @@ export default {
           service: "Twitch",
           service_logo: twitch_logo,
           item1: ["Rekkles", "Rekkles"],
-          item2: "00:19 ellapsed"
+          item2: "00:20 ellapsed"
         },
         {
           profile: {
