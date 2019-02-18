@@ -91,4 +91,9 @@ footer {
   width: 100%;
   bottom: 0;
 }
+
+img {
+  user-select: none;
+  user-drag: none;
+}
 </style>
