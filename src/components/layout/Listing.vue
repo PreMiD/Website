@@ -6,7 +6,8 @@
             class="logo"
             :style="`background: linear-gradient(135deg, ${presence.color1} 0%, ${presence.color2} 100%);`"
           >
-            <img :src="presence.logo">
+            <a title="Verified" style="cursor: default;"><img src="./../../assets/images/verified.svg" class="verified" v-if="!submit"></a>
+            <img :src="presence.logo" class="service_logo">
           </div>
           <h2>
             {{ presence.service }}
@@ -78,13 +79,13 @@ export default {
     .content .logo {
       transition: box-shadow 120ms;
       box-shadow: inset 0.25rem 0.25rem rgba(0, 0, 0, 0.2);
-      img {
+      img.service_logo {
         width: 6.2rem;
         height: 6.2rem;
         transition: width 120ms;
         transition: height 120ms;
         top: 28%;
-        left: 29%;
+        left: 16%;
         transition: top 120ms;
         transition: left 120ms;
       }
@@ -99,13 +100,18 @@ export default {
       height: 15rem;
       border-radius: 0.4rem;
       transition: box-shadow 120ms;
-      img {
+      img.verified {
+        position: relative;
+        margin-left: 0.5rem;
+        top: -4.2rem;
+      }
+      img.service_logo {
         width: 6rem;
         height: 6rem;
         transition: width 120ms;
         transition: height 120ms;
         top: 30%;
-        left: 30%;
+        left: 17%;
         transition: top 120ms;
         transition: left 120ms;
         position: relative;

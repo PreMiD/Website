@@ -86,7 +86,6 @@ button:focus {
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
-
 footer {
   position: fixed;
   width: 100%;
