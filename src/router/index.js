@@ -1,65 +1,37 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Head from 'vue-head'
-import Homepage from '../pages/home'
-import Contributorspage from '../pages/contributors'
-import Aboutpage from '../pages/about'
-import Storepage from '../pages/mainstore'
-import StoreDashboard from '../pages/storepublish'
-import StoreInstall from '../pages/storelist'
-import Downloads from '../pages/downloads'
-import User from '../pages/user'
-import NotFound from '../pages/notfound'
-
-Vue.use(Router)
-Vue.use(Head, { separator: '-', complement: 'PreMiD' })
+import Vue from "vue";
+import Router from "vue-router";
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
-  routes: [
-    {
-      path: '/',
-      name: 'Homepage',
-      component: Homepage
-    },
-    {
-      path: '/contributors',
-      name: 'Contributors',
-      component: Contributorspage
-    },
-    {
-      path: '/about',
-      name: 'About',
-      component: Aboutpage
-    },
-	{
-      path: '/store',
-      name: 'Store',
-      component: Storepage
-    },
-	{
-      path: '/store/dashboard',
-      name: 'Store Dashboard',
-      component: StoreDashboard
-    },
-	{
-      path: '/store/install',
-      name: 'Store Installer',
-      component: StoreInstall
-    },
-    {
-      path: '/downloads',
-      name: 'Downloads',
-      component: Downloads
-    },
-    {
-      path: '/user/:id',
-      name: 'User',
-      component: User
-    },
-    {
-      path: '*',
-      component: NotFound
-    }
-  ]
-})
+    routes: [
+        {
+            path: "",
+            redirect: "/Home"
+        },
+        {
+            path: "/Home",
+            name: "Home",
+            component: require("@/pages/Home").default,
+        },
+        {
+            path: "/Store",
+            name: "Store",
+            component: require("@/pages/Store").default
+        },
+        {
+            path: "/Downloads",
+            name: "Downloads",
+            component: require("@/pages/Downloads").default
+        },
+        {
+            path: "/Contributors",
+            name: "Contributors",
+            component: require("@/pages/Contributors").default
+        },
+        {
+            path: "/Submit",
+            name: "Submit",
+            component: require("@/pages/Submit").default
+        }
+    ]
+});
