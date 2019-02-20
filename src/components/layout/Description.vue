@@ -33,7 +33,7 @@ export default {
   padding-bottom: 0.5rem;
   padding-left: 5%;
   padding-right: 1rem;
-  height: 6.5rem;
+  height: 2vh;
   color: @white;
 }
 
