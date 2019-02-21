@@ -2,7 +2,7 @@
   <div class="main">
     <title>PreMiD</title>
     <div class="container">
-      <div class=top>
+      <div class="top">
         <div class="main-container">
           <div class="logo">
             <img src="./../assets/images/logo-big.svg">
@@ -15,30 +15,50 @@
           </div>
         </div>
       </div>
-      <div class=bottom>
-        <button v-on:click="openInNewTab('https://github.com/PreMiD/PreMiD')" class="github"><i class="fab fa-github"></i>LEARN MORE</button>
-        <router-link replace to="/Downloads"><button class="downloads"><i class="fas fa-download"></i>DOWNLOADS</button></router-link>
+      <div class="bottom">
+        <button v-on:click="openInNewTab('https://github.com/PreMiD/PreMiD')" class="github">
+          <i class="fab fa-github"></i>LEARN MORE
+        </button>
+        <router-link replace to="/Downloads">
+          <button class="downloads">
+            <i class="fas fa-download"></i>DOWNLOADS
+          </button>
+        </router-link>
       </div>
     </div>
     <div class="presences">
       <div class="presence" v-for="presence of presences_display" v-bind:key="presence">
         <div class="top">
           <div class="logo">
-            <div class="logo_image" :style="'background-image: url(' + presence.profile.image + ');'"></div>
+            <div
+              class="logo_image"
+              :style="'background-image: url(' + presence.profile.image + ');'"
+            ></div>
           </div>
           <div class="name">
-            <h2>{{ presence.profile.name }}<span class="id">{{ '#' + presence.profile.id }}</span></h2>
-            <div class="badges"><div v-for="badge of presence.profile.badges" v-bind:key="badge" class="badge"><img :src="badge"></div></div>
+            <h2>
+              {{ presence.profile.name }}
+              <span class="id">{{ '#' + presence.profile.id }}</span>
+            </h2>
+            <div class="badges">
+              <div v-for="badge of presence.profile.badges" v-bind:key="badge" class="badge">
+                <img :src="badge">
+              </div>
+            </div>
           </div>
         </div>
         <div class="bottom">
           <h2>PLAYING A GAME</h2>
           <div class="service">
-            <div class="service_logo"><img :src="presence.service_logo"></div>
+            <div class="service_logo">
+              <img :src="presence.service_logo">
+            </div>
             <div class="details">
               <h2>{{ presence.service }}</h2>
-              <p>{{ presence.item1[0] }}
-                <br>{{ presence.item1[1] }}
+              <p>
+                {{ presence.item1[0] }}
+                <br>
+                {{ presence.item1[1] }}
               </p>
               <p>{{ presence.item2 }}</p>
             </div>
@@ -77,8 +97,8 @@ export default {
           },
           service: "Twitch",
           service_logo: twitch_logo,
-          item1: ["Rekkles", "Rekkles"],
-          item2: "00:20 elapsed"
+          item1: ["osu! World Cup 2018 Grand Finals", "osulive"],
+          item2: "01:24:18 elapsed"
         },
         {
           profile: {
