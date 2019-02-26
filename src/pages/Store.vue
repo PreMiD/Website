@@ -179,7 +179,7 @@ export default {
   overflow: scroll;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(18rem, 18rem));
-  height: 75%;
+  height: 73%;
 }
 
 .search_bar {

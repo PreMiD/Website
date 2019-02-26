@@ -161,6 +161,8 @@ export default {
   padding-right: 4%;
   display: grid;
   grid-template-areas: "left right";
+  overflow: scroll;
+  height: 73%;
 }
 
 .container {
