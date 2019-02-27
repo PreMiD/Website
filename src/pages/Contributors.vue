@@ -1,16 +1,90 @@
 <template>
-  <div>
-    <title>PreMiD - Contributors</title>Contributors
-    <br>
-    <br>Fruxh, Timeraa, Paz, Doomlord, VerifyBot, Vok, Mulv, Pao
+  <div class="main">
+    <title>PreMiD - Contributors</title>
+    <div v-for="contributor of contributors" v-bind:key="contributor" class="contributor">
+      <div class="picture"><img :src="contributor.picture" width="100%" height="100%"></div>
+      <span :class="contributor.position"></span>
+      <span class="name">{{ contributor.name }}</span>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "contributors"
+  name: "contributors",
+  data() {
+    return {
+      contributors: [
+        {
+          name: "TIMERAA#7947",
+          picture: "https://cdn.discordapp.com/avatars/223238938716798978/96d2e1c86178c8c79c99577e9772ada8.png",
+          position: "developer"
+        },
+        {
+          name: "FRUXH#3282",
+          picture: "https://cdn.discordapp.com/avatars/259407123782434816/a_cd2423939738e2e32713da9da189707d.gif",
+          position: "developer"
+        },
+        {
+          name: "MULVERINEX#0001",
+          picture: "https://cdn.discordapp.com/avatars/178551656714076161/a_d0e66e232c888d6f937887ada48eaa4c.gif",
+          position: "developer"
+        },
+        {
+          name: "Timeraa",
+          picture: "",
+          position: "Lead Dev"
+        },
+        {
+          name: "Timeraa",
+          picture: "",
+          position: "Lead Dev"
+        },
+        {
+          name: "Timeraa",
+          picture: "",
+          position: "Lead Dev"
+        }
+      ]
+    }
+  }
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+@import "./../stylesheets/colors.less";
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 12.5rem));
+  padding: 1.5rem;
+}
+
+.contributor {
+  width: 12rem;
+  height: 15.2rem;
+  border-radius: .3rem;
+  background: @background-secondary;
+  margin-bottom: .5rem;
+  .picture {
+    width: 12rem;
+    height: 12rem;
+    img {
+      border-radius: .3rem .3rem 0 0;
+    }
+  }
+  span {
+    font-weight: bold;
+    font-family: Inter;
+    &.name {
+      color: white;
+    }
+    &.developer {
+      color: #349BE1;
+    }
+    &.admin {
+      color: #C62828;
+    }
+  }
+}
 </style>
