@@ -13,7 +13,7 @@
   },
   "homepage": "\\",
   "scripts": {
-    "dev": "cp -R src/assets static/ && webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "cp -R src/assets static/ && webpack-dev-server --inline --progress --history-api-fallback --disable-csp --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "prestart": "npm i",
     "build": "cp -R src/assets static/ && node build/build.js"

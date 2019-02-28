@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <title>PreMiD - Contributors</title>
-    <div v-for="contributor of contributors" v-bind:key="contributor" class="contributor">
+    <div v-for="contributor of contributors" v-bind:key="contributor" :onmouseover="'this.style.background=\'' + contributor.roleColor + '\''" :onmouseout="'this.style.background=\'' + '\''" class="contributor">
       <div class="picture"><img :src="contributor.avatar" width="100%" height="100%"></div>
       <span :style="'color: ' + contributor.roleColor + ';'">{{ contributor.role.toUpperCase() }}</span>
       <br>
@@ -55,7 +55,7 @@ export default {
   }
   span {
     font-weight: bold;
-    font-family: Inter;
+    font-family: Discord;
     &.name {
       color: white;
       font-size: .8rem;
