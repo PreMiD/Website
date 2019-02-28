@@ -2,8 +2,8 @@
   <div class="main">
     <title>PreMiD - Contributors</title>
     <div v-for="contributor of contributors" v-bind:key="contributor" class="contributor">
-      <div class="picture"><img :src="contributor.picture" width="100%" height="100%"></div>
-      <span :class="contributor.position">{{ contributor.position.toUpperCase() }}</span>
+      <div class="picture"><img :src="contributor.avatar" width="100%" height="100%"></div>
+      <span :style="'color: ' + contributor.roleColor + ';'">{{ contributor.role.toUpperCase() }}</span>
       <br>
       <span class="name">{{ contributor.name.toUpperCase() }}</span>
     </div>
@@ -17,43 +17,14 @@ export default {
   name: "contributors",
   data() {
     return {
-      contributors: [
-        {
-          name: "Timeraa#7947",
-          picture: "https://cdn.discordapp.com/avatars/223238938716798978/96d2e1c86178c8c79c99577e9772ada8.png",
-          position: "developer"
-        },
-        {
-          name: "Fruxh#3282",
-          picture: "https://cdn.discordapp.com/avatars/259407123782434816/a_cd2423939738e2e32713da9da189707d.gif",
-          position: "developer"
-        },
-        {
-          name: "MulverineX#0001",
-          picture: "https://cdn.discordapp.com/avatars/178551656714076161/a_d0e66e232c888d6f937887ada48eaa4c.gif",
-          position: "contributor"
-        },
-        {
-          name: "Timeraa",
-          picture: "",
-          position: "Lead Dev"
-        },
-        {
-          name: "Timeraa",
-          picture: "",
-          position: "Lead Dev"
-        },
-        {
-          name: "Timeraa",
-          picture: "",
-          position: "Lead Dev"
-        }
-      ]
+      contributors: []
     }
   },
   mounted() {
-    request("https://api.premid.app/credits", () => {
+    request("https://api.premid.app/credits", (err, res, dat) => {
       let data = JSON.parse(dat);
+      data.sort((a, b) => b.rolePosition - a.rolePosition);
+      this.$data.contributors = data;
     })
   }
 };
@@ -65,6 +36,7 @@ export default {
 .main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 12.5rem));
+  justify-content: center;
   padding: 1.5rem;
 }
 
