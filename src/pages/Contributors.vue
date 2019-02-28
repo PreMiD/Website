@@ -55,7 +55,7 @@ export default {
   }
   span {
     font-weight: bold;
-    font-family: Discord;
+    font-family: 'Discord Font';
     &.name {
       color: white;
       font-size: .8rem;
