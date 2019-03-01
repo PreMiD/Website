@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <title>PreMiD - Contributors</title>
-    <div v-for="contributor of contributors" v-bind:key="contributor" :onmouseover="'this.style.background=\'' + contributor.roleColor + '\'; this.style.color=\'#23272A\''" :onmouseout="'this.style.background=\'' + '\'; this.style.color=\'' + contributor.roleColor + '\''" class="contributor">
+    <div v-for="contributor of contributors" v-bind:key="contributor" :style="'color: ' + contributor.roleColor + ';'" :onmouseover="'this.style.background=\'' + contributor.roleColor + '\'; this.style.color=\'#23272A\''" :onmouseout="'this.style.background=\'' + '\'; this.style.color=\'' + contributor.roleColor + '\''" class="contributor">
       <div class="picture"><img :src="contributor.avatar" width="100%" height="100%"></div>
       <span>{{ contributor.role.toUpperCase() }}</span>
       <br>

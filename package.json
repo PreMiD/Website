@@ -19,6 +19,7 @@
     "build": "cp -R src/assets static/ && node build/build.js"
   },
   "dependencies": {
+    "gif-frames": "^1.0.1",
     "jszip": "^3.1.5",
     "jszip-utils": "0.0.2",
     "mobile-detect": "^1.4.3",

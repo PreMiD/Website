@@ -23,6 +23,8 @@ export default {
   },
   data() {
     return {};
+  },
+  mounted() {
   }
 };
 </script>
@@ -103,6 +105,6 @@ footer {
 
 img {
   user-select: none;
-  user-drag: none;
+  -webkit-user-drag: none;
 }
 </style>

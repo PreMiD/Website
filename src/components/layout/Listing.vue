@@ -22,7 +22,7 @@
         <div class="container">
           <div class="left" v-if="!submit">
             <button class="service" v-on:click="openInNewTab(presence.url)">
-              <span class="icon">(a)</span> Service
+              <span class="icon"><i class="fas fa-external-link-alt"></i></span> Service
             </button>
           </div>
           <div class="right" v-if="!submit">
@@ -30,7 +30,7 @@
               class="add"
               v-on:click="openInNewTab(`chrome-extension://agjnjboanicjcpenljmaaigopkgdnihi/add.html?src=https://gistcdn.githack.com/${presence.source.user}/${presence.source.id}/raw/${presence.source.revision}/${presence.source.file_name}.js`)"
             >
-              <span class="icon">+</span> Add to PreMiD
+              <span class="icon"><i class="fas fa-plus-square"></i></span> Add to PreMiD
             </button>
           </div>
           <router-link replace to="/Submit"><button class="submit" v-if="submit">Submit</button></router-link>
