@@ -2,6 +2,7 @@
   <div id="app">
     <header>
       <navigation/>
+      <div class="shadow"></div>
     </header>
     <router-view></router-view>
     <footer>
@@ -42,6 +43,14 @@ body {
   background: #2c2f33;
   overflow: hidden;
   color: @accent-primary;
+}
+
+.shadow {
+  position: absolute;
+  width: 100%;
+  height: 0.25rem;
+  margin-top: 0rem;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .4) 0%, rgba(0, 0, 0, 0) 100%);;
 }
 
 h3 {

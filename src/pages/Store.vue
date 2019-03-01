@@ -4,6 +4,7 @@
     <i class="fas fa-search"></i>
     <input class="search_bar" placeholder="Search" v-on:input="update_search()">
     <div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" /></div>
+    <div class="shadow"></div>
     <div class="main-container">
       <listing v-if="!searching" v-for="presence of presences" v-bind:key="presence" :presence="presence" />
       <listing v-if="searching" v-for="presence of presence_search" v-bind:key="presence" :presence="presence" />
@@ -179,7 +180,15 @@ export default {
   overflow: scroll;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(18rem, 18rem));
-  height: 73%;
+  height: 73.1vh;
+}
+.shadow {
+  position: absolute;
+  width: 100%;
+  height: 0.25rem;
+  margin-right: -1rem;
+  margin-top: 0rem;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, .4) 0%, rgba(0, 0, 0, 0) 100%);;
 }
 
 .search_bar {
@@ -195,6 +204,7 @@ export default {
   color: @white-2;
   font-weight: bold;
   font-family: Inter;
+  margin-bottom: 1rem;
   &:focus {
     color: @white;
     transition: width 100ms;
@@ -218,7 +228,7 @@ export default {
 .nsfw-check {
   &-c {
     position: absolute;
-    margin-top: -1.8rem;
+    margin-top: -2.7rem;
     margin-left: 20rem;
   }
 }
