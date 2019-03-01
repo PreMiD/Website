@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <title>PreMiD - Contributors</title>
-    <div v-for="(contributor, index) of contributors" v-bind:key="contributor" :style="'color: ' + contributor.roleColor + ';'" v-on:mouseover="animate(index)" :onmouseover="'this.style.background=\'' + contributor.roleColor + '\'; this.style.color=\'#23272A\''" :onmouseout="'this.style.background=\'' + '\'; this.style.color=\'' + contributor.roleColor + '\''" class="contributor">
-      <div class="picture"><img src="" width="100%" height="100%"></div>
+    <div v-for="(contributor, index) of contributors" v-bind:key="contributor" :style="'color: ' + contributor.roleColor + ';'" v-on:mouseover="animate(index)" v-on:mouseout="de_animate(index)" :onmouseover="'this.style.background=\'' + contributor.roleColor + '\'; this.style.color=\'#23272A\''" :onmouseout="'this.style.background=\'' + '\'; this.style.color=\'' + contributor.roleColor + '\''" class="contributor">
+      <div class="picture"><img src="foo" width="100%" height="100%"></div>
       <span>{{ contributor.role.toUpperCase() }}</span>
       <br>
       <span class="name">{{ contributor.name.toUpperCase() }}</span>
@@ -30,14 +30,20 @@ export default {
       setTimeout(() => { 
         
         for(let index in this.$data.contributors) {
-          let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src;
           // this.$data.contributors[index].avatar
-          console.log(this.$data.contributors[index].avatar)
 
-          if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") gif_frames({ url: this.$data.contributors[index].avatar, frames: 0 }).then(function (frameData) {
-            src = frameData[0].getImage();
-          }); else {
-            src = this.$data.contributors[index].avatar;
+          if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") {
+            console.log(this.$data.contributors[index].avatar)
+            gif_frames({ url: this.$data.contributors[index].avatar, frames: 0, outputType: 'canvas' }).then(function (frameData) {
+              console.log(frameData[0].getImage());
+              let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].style = "display: none;"
+              let can = document.body.getElementsByClassName("contributor")[index].children[0].appendChild(frameData[0].getImage());
+              for (let canvas of document.body.getElementsByTagName("canvas")) {
+                canvas.style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px;';
+              }
+            }); 
+          } else {
+            let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = this.$data.contributors[index].avatar;
           }
         }
       }, 1000);
@@ -45,8 +51,18 @@ export default {
   },
   methods: {
     animate(index) {
-      let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src;
-      src = this.$data.contributors[index].avatar;
+      if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") {
+        let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = this.$data.contributors[index].avatar;
+        let style = document.body.getElementsByClassName("contributor")[index].children[0].children[0].style = "display: block";
+        let canvas = document.body.getElementsByClassName("contributor")[index].children[0].children[1].style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; display: none;';
+      }
+    },
+    de_animate(index) {
+      if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") {
+        let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = this.$data.contributors[index].avatar;
+        let style = document.body.getElementsByClassName("contributor")[index].children[0].children[0].style = "display: none";
+        let canvas = document.body.getElementsByClassName("contributor")[index].children[0].children[1].style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; display: block;';
+      }
     }
   }
 };
