@@ -2,8 +2,8 @@
   <div class="main">
     <router-link to="/Home">
       <img class="logo" src="./../../assets/images/logo.svg">
-      
-      <img src="./../../assets/images/premid.svg" class="title">
+
+      <span class="title">PREMID</span>
     </router-link>
     <span class="categories">
       <router-link
@@ -62,12 +62,15 @@ export default {
 }
 
 .logo {
+  margin-left: 0.5rem;
   margin-right: 0.3rem;
 }
 
 .title {
   vertical-align: top;
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
+  font-family: 'Discord Font';
+  font-size: 2rem;
 }
 
 .categories {
@@ -77,11 +80,11 @@ export default {
   font-weight: bolder;
   float: right;
   .category {
-    margin-left: 1.2rem;
+    margin-left: 2rem;
     &_title {
       font-family: Inter;
-      font-weight: bold;
-      font-size: 1.2rem;
+      font-weight: 800;
+      font-size: 1.35rem;
     }
   }
 }

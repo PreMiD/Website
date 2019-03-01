@@ -51,18 +51,30 @@ export default {
   margin-bottom: 1rem;
   padding-left: .5rem;
   @transition-time: 150ms;
-  transition: box-shadow @transition-time ease, transform @transition-time ease, color @transition-time, background @transition-time;
+  transition: 
+    box-shadow @transition-time ease, 
+    transform @transition-time ease, 
+    color @transition-time, 
+    background @transition-time;
   &:hover {
     transform: translate(.2rem, -.3rem);
     margin-bottom: .5rem;
     box-shadow: 0.35rem 0.35rem rgba(0, 0, 0, 0.2);
-    transition: box-shadow @transition-time ease, transform @transition-time ease, color @transition-time, background @transition-time;
+    transition: 
+      box-shadow @transition-time ease, 
+      transform @transition-time ease, 
+      color @transition-time, 
+      background @transition-time;
     .picture {
       width: 11rem;
       height: 11rem;
       margin-top: .5rem;
       margin-left: 0rem;
-      transition: margin-top @transition-time ease, margin-left @transition-time ease, width @transition-time ease, height @transition-time ease;
+      transition: 
+        margin-top @transition-time ease, 
+        margin-left @transition-time ease, 
+        width @transition-time ease, 
+        height @transition-time ease;
     }
   }
   .picture {
@@ -70,7 +82,11 @@ export default {
     height: 12rem;
     margin-bottom: .25rem;
     margin-left: -.5rem;
-    transition: margin-top @transition-time ease, margin-left @transition-time ease, width @transition-time ease, height @transition-time ease;
+    transition: 
+      margin-top @transition-time ease, 
+      margin-left @transition-time ease, 
+      width @transition-time ease, 
+      height @transition-time ease;
     img {
       border-radius: .3rem .3rem 0 0;
     }
