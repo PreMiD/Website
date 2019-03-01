@@ -39,7 +39,7 @@ export default {
               let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].style = "display: none;"
               let can = document.body.getElementsByClassName("contributor")[index].children[0].appendChild(frameData[0].getImage());
               for (let canvas of document.body.getElementsByTagName("canvas")) {
-                canvas.style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px;';
+                canvas.style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; border-radius: .3rem .3rem 0 0;';
               }
             }); 
           } else {
@@ -54,14 +54,14 @@ export default {
       if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") {
         let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = this.$data.contributors[index].avatar;
         let style = document.body.getElementsByClassName("contributor")[index].children[0].children[0].style = "display: block";
-        let canvas = document.body.getElementsByClassName("contributor")[index].children[0].children[1].style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; display: none;';
+        let canvas = document.body.getElementsByClassName("contributor")[index].children[0].children[1].style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; display: none; border-radius: .3rem .3rem 0 0;';
       }
     },
     de_animate(index) {
       if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") {
         let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = this.$data.contributors[index].avatar;
         let style = document.body.getElementsByClassName("contributor")[index].children[0].children[0].style = "display: none";
-        let canvas = document.body.getElementsByClassName("contributor")[index].children[0].children[1].style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; display: block;';
+        let canvas = document.body.getElementsByClassName("contributor")[index].children[0].children[1].style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; display: block; border-radius: .3rem .3rem 0 0;';
       }
     }
   }
