@@ -1,43 +1,43 @@
 <template>
   <div class="listing_container" v-if="nsfw || !presence.nsfw">
     <div class="listing">
-        <div class="content">
-          <div
-            class="logo"
-            :style="`background: linear-gradient(135deg, ${presence.color1} 0%, ${presence.color2} 100%);`"
-          >
-            <a title="Verified" style="cursor: default;"><img src="./../../assets/images/verified.svg" class="verified" v-if="!submit"></a>
-            <img :src="presence.logo" class="service_logo">
-          </div>
-          <h2>
-            {{ presence.service }}
-            <span v-if="!submit">
-              -
-              <a>{{ presence.author.name }}</a>
-            </span>
-          </h2>
-          <p class="desc">{{ presence.description }}</p>
+      <a title="Verified" style="cursor: default;"><img src="./../../assets/images/verified.svg" class="verified" v-if="!submit"></a>
+      <div class="content">
+        <div
+          class="logo"
+          :style="`background: linear-gradient(135deg, ${presence.color1} 0%, ${presence.color2} 100%);`"
+        >
+          <img :src="presence.logo" class="service_logo">
         </div>
-        <div class="buttons">
-          <div class="container">
-            <div class="left" v-if="!submit">
-              <button class="service" v-on:click="openInNewTab(presence.url)">
-                <span class="icon">(a)</span> Service
-              </button>
-            </div>
-            <div class="right" v-if="!submit">
-              <button
-                class="add"
-                v-on:click="openInNewTab(`chrome-extension://agjnjboanicjcpenljmaaigopkgdnihi/add.html?src=https://gistcdn.githack.com/${presence.source.user}/${presence.source.id}/raw/${presence.source.revision}/${presence.source.file_name}.js`)"
-              >
-                <span class="icon">+</span> Add to PreMiD
-              </button>
-            </div>
-            <router-link replace to="/Submit"><button class="submit" v-if="submit">Submit</button></router-link>
+        <h2>
+          {{ presence.service }}
+          <span v-if="!submit">
+            -
+            <a>{{ presence.author.name }}</a>
+          </span>
+        </h2>
+        <p class="desc">{{ presence.description }}</p>
+      </div>
+      <div class="buttons">
+        <div class="container">
+          <div class="left" v-if="!submit">
+            <button class="service" v-on:click="openInNewTab(presence.url)">
+              <span class="icon">(a)</span> Service
+            </button>
           </div>
+          <div class="right" v-if="!submit">
+            <button
+              class="add"
+              v-on:click="openInNewTab(`chrome-extension://agjnjboanicjcpenljmaaigopkgdnihi/add.html?src=https://gistcdn.githack.com/${presence.source.user}/${presence.source.id}/raw/${presence.source.revision}/${presence.source.file_name}.js`)"
+            >
+              <span class="icon">+</span> Add to PreMiD
+            </button>
+          </div>
+          <router-link replace to="/Submit"><button class="submit" v-if="submit">Submit</button></router-link>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -80,40 +80,41 @@ export default {
       transition: box-shadow 120ms;
       box-shadow: inset 0.25rem 0.25rem rgba(0, 0, 0, 0.2);
       img.service_logo {
-        width: 6.2rem;
-        height: 6.2rem;
-        transition: width 120ms;
-        transition: height 120ms;
-        top: 28%;
-        left: 16%;
-        transition: top 120ms;
-        transition: left 120ms;
+        width: 6.5rem;
+        height: 6.5rem;
+        transform: translate(65%, 65%);
+        transition: 
+          height 120ms ease, 
+          width 120ms ease, 
+          transform 120ms ease;
       }
     }
+  }
+  img.verified {
+    top: 0;
+    margin-top: -22.5rem;
+    margin-left: 1rem;
+    z-index: 1000;
+    position: relative;
   }
   .content {
     padding: 0.5rem;
     grid-area: top;
     justify-self: top;
+    z-index: 10;
     .logo {
       width: 15rem;
       height: 15rem;
       border-radius: 0.4rem;
       transition: box-shadow 120ms;
-      img.verified {
-        position: relative;
-        margin-left: 0.5rem;
-        top: -4.2rem;
-      }
       img.service_logo {
         width: 6rem;
         height: 6rem;
-        transition: width 120ms;
-        transition: height 120ms;
-        top: 30%;
-        left: 17%;
-        transition: top 120ms;
-        transition: left 120ms;
+        transform: translate(75%, 75%);
+        transition: 
+          height 120ms ease, 
+          width 120ms ease, 
+          transform 120ms ease;
         position: relative;
         filter: drop-shadow(0rem 0rem 0.7rem rgba(0, 0, 0, 0.5));
       }
