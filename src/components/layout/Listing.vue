@@ -1,7 +1,7 @@
 <template>
   <div class="listing_container" v-if="nsfw || !presence.nsfw">
     <div class="listing">
-      <a title="Verified" style="cursor: default;"><img src="./../../assets/images/verified.svg" class="verified" v-if="!submit"></a>
+      <!--<a title="Verified" style="cursor: default;"><img src="./../../assets/images/verified.svg" class="verified" v-if="!submit"></a>-->
       <div class="content">
         <div
           class="logo"
@@ -16,7 +16,7 @@
             <a>{{ presence.author.name }}</a>
           </span>
         </h2>
-        <p class="desc">{{ presence.description }}</p>
+        <p class="desc" :style="'display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;'">{{ presence.description }}</p>
       </div>
       <div class="buttons">
         <div class="container">
