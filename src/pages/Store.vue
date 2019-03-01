@@ -3,10 +3,10 @@
     <title>PreMiD - Store</title>
     <i class="fas fa-search"></i>
     <input class="search_bar" placeholder="Search" v-on:input="update_search()">
-    <div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" /></div>
+    <div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div>
     <div class="shadow"></div>
     <div class="main-container">
-      <listing v-if="!searching" v-for="presence of presences" v-bind:key="presence" :presence="presence" />
+      <listing v-if="!searching" v-for="presence of presences" v-bind:key="presence" :presence="presence" :nsfw="nsfw" />
       <listing v-if="searching" v-for="presence of presence_search" v-bind:key="presence" :presence="presence" />
       <listing :presence="submit_own" submit="true" />
     </div>
@@ -110,7 +110,29 @@ export default {
           description:
             "Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
           service_tags: ["video", "media"]
-        }
+        },
+        {
+          author: {
+            discordID: "223238938716798978",
+            name: "Timeraa"
+          },
+          source: {
+            type: "github",
+            user: "Timeraa",
+            id: "f95c06d49eff2e88fd46733b6b61eacf",
+            revision: "b828b17fcbb711ed90d64baa574d631abe65931d",
+            file_name: "example"
+          },
+          logo: "https://svgur.com/i/BVz.svg",
+          color1: "#F8981E",
+          color2: "transparent",
+          service: "Pornhub",
+          url: "https://pornhub.com",
+          description:
+            "Porn.",
+          service_tags: ["video", "media", "porn"],
+          nsfw: true
+        },
       ],
       submit_own: {
         logo: submit,
@@ -123,6 +145,7 @@ export default {
         service_tags: ["video", "media"]
       },
       searching: false,
+      nsfw: false,
       presence_search: []
     };
   },
@@ -167,6 +190,9 @@ export default {
       } else {
         this.$data.searching = false;
       }
+    },
+    toggleInput(input) {
+      if (input == "nsfw") if (!this.$data.nsfw) this.$data.nsfw = true; else this.$data.nsfw = false;
     }
   }
 };

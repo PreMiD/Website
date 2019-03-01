@@ -1,5 +1,5 @@
 <template>
-  <div class="listing_container">
+  <div class="listing_container" v-if="nsfw || !presence.nsfw">
     <div class="listing">
         <div class="content">
           <div
@@ -43,7 +43,7 @@
 <script>
 export default {
   name: "listing",
-  props: ["presence", "submit"],
+  props: ["presence", "submit", "nsfw"],
   methods: {
     openInNewTab(url) {
       let page = window.open(url, "_blank");
