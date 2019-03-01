@@ -19,6 +19,8 @@
     "build": "cp -R src/assets static/ && node build/build.js"
   },
   "dependencies": {
+    "discord.js": "^11.4.2",
+    "dotenv": "^6.2.0",
     "gif-frames": "^1.0.1",
     "jszip": "^3.1.5",
     "jszip-utils": "0.0.2",
