@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <title>PreMiD - Contributors</title>
-    <div v-for="contributor of contributors" v-bind:key="contributor" :style="'color: ' + contributor.roleColor + ';'" :onmouseover="'this.style.background=\'' + contributor.roleColor + '\'; this.style.color=\'#23272A\''" :onmouseout="'this.style.background=\'' + '\'; this.style.color=\'' + contributor.roleColor + '\''" class="contributor">
-      <div class="picture"><img :src="contributor.avatar" width="100%" height="100%"></div>
+    <div v-for="(contributor, index) of contributors" v-bind:key="contributor" :style="'color: ' + contributor.roleColor + ';'" v-on:mouseover="animate(index)" :onmouseover="'this.style.background=\'' + contributor.roleColor + '\'; this.style.color=\'#23272A\''" :onmouseout="'this.style.background=\'' + '\'; this.style.color=\'' + contributor.roleColor + '\''" class="contributor">
+      <div class="picture"><img src="" width="100%" height="100%"></div>
       <span>{{ contributor.role.toUpperCase() }}</span>
       <br>
       <span class="name">{{ contributor.name.toUpperCase() }}</span>
@@ -12,12 +12,13 @@
 
 <script>
 import request from "request";
+import gif_frames from "gif-frames"
 
 export default {
   name: "contributors",
   data() {
     return {
-      contributors: []
+      contributors: [{foo: "bar"}]
     }
   },
   mounted() {
@@ -25,7 +26,28 @@ export default {
       let data = JSON.parse(dat);
       data.sort((a, b) => b.rolePosition - a.rolePosition);
       this.$data.contributors = data;
+      console.log("foo")
+      setTimeout(() => { 
+        
+        for(let index in this.$data.contributors) {
+          let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src;
+          // this.$data.contributors[index].avatar
+          console.log(this.$data.contributors[index].avatar)
+
+          if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") gif_frames({ url: this.$data.contributors[index].avatar, frames: 0 }).then(function (frameData) {
+            src = frameData[0].getImage();
+          }); else {
+            src = this.$data.contributors[index].avatar;
+          }
+        }
+      }, 1000);
     })
+  },
+  methods: {
+    animate(index) {
+      let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src;
+      src = this.$data.contributors[index].avatar;
+    }
   }
 };
 </script>
