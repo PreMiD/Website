@@ -36,11 +36,8 @@ export default {
             console.log(this.$data.contributors[index].avatar)
             gif_frames({ url: this.$data.contributors[index].avatar, frames: 0, outputType: 'canvas' }).then(function (frameData) {
               console.log(frameData[0].getImage());
-              let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].style = "display: none;"
-              let can = document.body.getElementsByClassName("contributor")[index].children[0].appendChild(frameData[0].getImage());
-              for (let canvas of document.body.getElementsByTagName("canvas")) {
-                canvas.style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; border-radius: .3rem .3rem 0 0;';
-              }
+              let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = frameData[0].getImage().toDataURL("image/png");
+              let store = document.body.getElementsByClassName("contributor")[index].children[0].children[0].still = frameData[0].getImage().toDataURL("image/png");
             }); 
           } else {
             let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = this.$data.contributors[index].avatar;
@@ -53,15 +50,11 @@ export default {
     animate(index) {
       if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") {
         let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = this.$data.contributors[index].avatar;
-        let style = document.body.getElementsByClassName("contributor")[index].children[0].children[0].style = "display: block";
-        let canvas = document.body.getElementsByClassName("contributor")[index].children[0].children[1].style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; display: none; ';
       }
     },
     de_animate(index) {
       if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") {
-        let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = this.$data.contributors[index].avatar;
-        let style = document.body.getElementsByClassName("contributor")[index].children[0].children[0].style = "display: none";
-        let canvas = document.body.getElementsByClassName("contributor")[index].children[0].children[1].style = 'width: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; height: ' + document.body.getElementsByClassName("picture")[0].clientHeight + 'px; display: block; ';
+        let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].still;
       }
     }
   }
@@ -125,8 +118,6 @@ export default {
       margin-left @transition-time ease, 
       width @transition-time ease, 
       height @transition-time ease;
-    border-radius: .3rem .3rem 0 0;
-    overflow: hidden;
     img {
       border-radius: .3rem .3rem 0 0;
     }
@@ -139,9 +130,5 @@ export default {
       font-size: .8rem;
     }
   }
-}
-
-canvas {
-  
 }
 </style>
