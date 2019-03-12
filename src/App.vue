@@ -1,13 +1,16 @@
 <template>
   <div id="app">
-    <header>
+    <header v-if="!ua.includes('iOS') && !ua.includes('Android')">
       <navigation/>
       <div class="shadow"></div>
     </header>
-    <router-view></router-view>
-    <footer>
+    <router-view v-if="!ua.includes('iOS') && !ua.includes('Android')"></router-view>
+    <footer v-if="!ua.includes('iOS') && !ua.includes('Android')">
       <description/>
     </footer>
+    <div class="mobile" v-if="ua.includes('iOS') && ua.includes('Android')">
+      <center><p>Fuck You Kravos</p></center>
+    </div>
   </div>
 </template>
 
@@ -22,7 +25,9 @@ export default {
     Navigation
   },
   data() {
-    return {};
+    return {
+      ua: navigator.userAgent
+    };
   },
   mounted() {
   }
