@@ -8,7 +8,7 @@
     <footer v-if="!ua.includes('iOS') && !ua.includes('Android')">
       <description/>
     </footer>
-    <div class="mobile" v-if="ua.includes('iOS') && ua.includes('Android')">
+    <div class="mobile" v-if="ua.includes('iOS') || ua.includes('Android')">
       <center><p>Fuck You Kravos</p></center>
     </div>
   </div>
