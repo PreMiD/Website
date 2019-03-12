@@ -13,7 +13,7 @@ export default {
   name: "description",
   data() {
     return {
-      members: 3000
+      members: 4000
     };
   }
 };
