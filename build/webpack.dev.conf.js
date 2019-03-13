@@ -84,7 +84,7 @@ module.exports = new Promise((resolve, reject) => {
       // Add FriendlyErrorsPlugin
       devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
         compilationSuccessInfo: {
-          messages: [`RF Music is running here: http://${devWebpackConfig.devServer.host}:${port}`],
+          messages: [`Premid-Web is running here: http://${devWebpackConfig.devServer.host}:${port}`],
         },
         onErrors: config.dev.notifyOnErrors ?
           utils.createNotifierCallback() : undefined

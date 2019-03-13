@@ -121,7 +121,7 @@ h2 {
     color: @background-primary;
     font-size: 6.8rem;
     padding: 1.2rem;
-    margin: .7rem;
+    margin: .5rem;
   }
 
   @t-time: 160ms;
