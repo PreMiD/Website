@@ -10,8 +10,8 @@
       <p>Support <span class="premid">PreMiD</span> financially and receive the latest builds</p>
       <h2>Extension</h2>
       <div class="browsers">
-        <i v-if="chrome" class="logo fab fa-chrome" v-on:click="openInNewTab(chrome_url)"></i>
-        <i v-if="firefox" class="logo fab fa-firefox" v-on:click="openInNewTab(firefox_url)"></i>
+        <i class="logo fab fa-chrome" v-on:click="openInNewTab(chrome_url)"></i>
+        <i class="logo fab fa-firefox" v-on:click="openInNewTab(firefox_url)"></i>
       </div>
     </center>
   </div>
@@ -29,8 +29,6 @@ export default {
       apple_url: "",
       chrome_url: "https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
       firefox_url: "",
-      chrome: false,
-      firefox: false
     };
   },
   mounted() {
@@ -51,8 +49,6 @@ export default {
     this.$data.platforms.push(platforms_temp[0]);
     this.$data.platforms.push(platform_temp);
     this.$data.platforms.push(platforms_temp[1]);
-
-    if (ua.includes("Chrome")) this.$data.chrome = true; else this.$data.firefox = true;
 
     request("https://api.github.com/repos/PreMiD/PreMiD/releases", (err, res, dat) => {
       if (err) console.log(err);
@@ -148,17 +144,11 @@ h2 {
         background: #f5bd0c;
       }
       &firefox {
-        background: linear-gradient(135deg, #FA232B 0%, #FEF140 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         margin: .6rem;
         width: 7rem;
         height: 7rem;
       }
       &chrome {
-        background: linear-gradient(-135deg, #1ca361 0, #1ca361 37.5%, #ffce45 37.5%, #ffce45 57.5%, #de4e43 57.5%, #de4e43 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         margin: .6rem;
         width: 7rem;
         height: 7rem;
