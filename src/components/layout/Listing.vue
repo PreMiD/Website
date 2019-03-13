@@ -28,7 +28,7 @@
           <div class="right" v-if="!submit">
             <button
               class="add"
-              v-on:click="openInNewTab(`chrome-extension://agjnjboanicjcpenljmaaigopkgdnihi/add.html?src=https://gistcdn.githack.com/${presence.source.user}/${presence.source.id}/raw/${presence.source.revision}/${presence.source.file_name}.js`)"
+              v-on:click="sendPresence(presence.service)"
             >
               <span class="icon"><i class="fas fa-plus-square"></i></span> Add to PreMiD
             </button>
@@ -48,6 +48,10 @@ export default {
     openInNewTab(url) {
       let page = window.open(url, "_blank");
       win.focus();
+    },
+    sendPresence(name) {
+      console.log("Installing " + name + "...");
+      document.dispatchEvent(new CustomEvent("PreMiD_AddService", { detail: name }))
     }
   }
 };
