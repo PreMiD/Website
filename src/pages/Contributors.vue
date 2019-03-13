@@ -32,15 +32,16 @@ export default {
         for(let index in this.$data.contributors) {
           // this.$data.contributors[index].avatar
 
-          if (this.$data.contributors[index].avatar.split(".")[this.$data.contributors[index].avatar.split(".").length - 1] == "gif") {
-            console.log(this.$data.contributors[index].avatar)
-            gif_frames({ url: this.$data.contributors[index].avatar, frames: 0, outputType: 'canvas' }).then(function (frameData) {
-              console.log(frameData[0].getImage());
+          let avatar = this.$data.contributors[index].avatar.split("?")[0];
+
+          if (avatar.split(".")[avatar.split(".").length - 1] == "gif") {
+            console.log(avatar)
+            gif_frames({ url: avatar, frames: 0, outputType: 'canvas' }).then(function (frameData) {
               let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = frameData[0].getImage().toDataURL("image/png");
               let store = document.body.getElementsByClassName("contributor")[index].children[0].children[0].still = frameData[0].getImage().toDataURL("image/png");
             }); 
           } else {
-            let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = this.$data.contributors[index].avatar;
+            let src = document.body.getElementsByClassName("contributor")[index].children[0].children[0].src = avatar;
           }
         }
       }, 1000);
