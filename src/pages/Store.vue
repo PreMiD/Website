@@ -203,10 +203,8 @@ export default {
 
 .main-container {
   padding: 1rem;
-  overflow: scroll;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(18rem, 18rem));
-  height: 73.1vh;
 }
 .shadow {
   position: absolute;

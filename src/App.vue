@@ -5,9 +5,6 @@
       <div class="shadow"></div>
     </header>
     <router-view v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')"></router-view>
-    <footer v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')">
-      <description/>
-    </footer>
     <div class="mobile" v-if="ua.includes('iPhone') || ua.includes('iPad') || ua.includes('Android')">
       <center><p>Fuck You Kravos</p></center>
     </div>
@@ -15,13 +12,11 @@
 </template>
 
 <script>
-import Description from "./components/layout/Description.vue";
 import Navigation from "./components/layout/Navigation.vue";
 
 export default {
   name: "premid-web",
   components: {
-    Description,
     Navigation
   },
   data() {
@@ -43,13 +38,19 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 0px 0px 0px 0px;
+  margin: 4rem 0px 0px 0px;
   padding: 0px 0px 0px 0px;
   height: 100%;
   font-family: Roboto;
   background: #2c2f33;
-  overflow: hidden;
   color: @accent-primary;
+}
+
+header {
+  position: fixed;
+  z-index: 10000;
+  width: 100%;
+  margin-top: -4rem;
 }
 
 .shadow {
@@ -103,8 +104,8 @@ button:focus {
   background: transparent;
 }
 footer {
-  position: fixed;
   width: 100%;
+  position: absolute;
   bottom: 0;
 }
 

@@ -2,7 +2,7 @@
   <div class="main">
     <title>PreMiD - Contributors</title>
     <div v-for="(contributor, index) of contributors" v-bind:key="contributor" :style="'color: ' + contributor.roleColor + ';'" v-on:mouseover="animate(index)" v-on:mouseout="de_animate(index)" :onmouseover="'this.style.background=\'' + contributor.roleColor + '\'; this.style.color=\'#23272A\''" :onmouseout="'this.style.background=\'' + '\'; this.style.color=\'' + contributor.roleColor + '\''" class="contributor">
-      <div class="picture"><img src="https://i.imgur.com/LVES5pM.png" width="100%" height="100%"></div>
+      <div class="picture"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTk1IiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5NSAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEgMTcuNVYzMCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLW9wYWNpdHk9IjAuMDEiLz48L3N2Zz4=" width="100%" height="100%"></div>
       <span>{{ contributor.role.toUpperCase() }}</span>
       <br>
       <span class="name">{{ contributor.name.toUpperCase() }}</span>
@@ -70,8 +70,6 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(12rem, 12.5rem));
   justify-content: center;
   padding: 1.5rem;
-  overflow: scroll;
-  height: 77.9vh;
 }
 
 .contributor {

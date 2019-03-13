@@ -8,7 +8,7 @@
             <img src="./../assets/images/logo-big.svg">
           </div>
           <div class="right">
-            <img src="./../assets/images/premid.svg" class="premid">
+            <span class="premid">PreMiD</span>
             <div class="desc">
               <span>Let everyone know what you are watching and listening to!</span>
             </div>
@@ -161,8 +161,6 @@ export default {
   padding-right: 4%;
   display: grid;
   grid-template-areas: "left right";
-  overflow: scroll;
-  height: 73%;
 }
 
 .container {
@@ -175,7 +173,7 @@ export default {
   .right {
     display: flex;
     .desc {
-      margin-left: -12.5rem;
+      margin-left: -12rem;
       vertical-align: top;
       margin-top: 5.5rem;
       font-family: Inter;
@@ -188,14 +186,14 @@ export default {
     .premid {
       width: 12.5rem;
       vertical-align: top;
-      margin-top: -8rem;
       margin-left: 1.8rem;
       filter: drop-shadow(0rem 0.35rem 0rem rgba(0, 0, 0, 0.2));
+      font-family: "Discord Font";
+      font-size: 3.7rem;
     }
   }
   .bottom {
     margin-left: 3rem;
-    margin-top: -8rem;
     button {
       border: none;
       padding: 0.8rem;
