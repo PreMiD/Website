@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <header v-if="!ua.includes('iPhone') && !ua.includes('Android')">
+    <header v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')">
       <navigation/>
       <div class="shadow"></div>
     </header>
-    <router-view v-if="!ua.includes('iPhone') && !ua.includes('Android')"></router-view>
-    <footer v-if="!ua.includes('iPhone') && !ua.includes('Android')">
+    <router-view v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')"></router-view>
+    <footer v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')">
       <description/>
     </footer>
-    <div class="mobile" v-if="ua.includes('iPhone') || ua.includes('Android')">
+    <div class="mobile" v-if="ua.includes('iPhone') || !ua.includes('iPad') || ua.includes('Android')">
       <center><p>Fuck You Kravos</p></center>
     </div>
   </div>
