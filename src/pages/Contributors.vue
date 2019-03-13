@@ -2,7 +2,7 @@
   <div class="main">
     <title>PreMiD - Contributors</title>
     <div v-for="(contributor, index) of contributors" v-bind:key="contributor" :style="'color: ' + contributor.roleColor + ';'" v-on:mouseover="animate(index)" v-on:mouseout="de_animate(index)" :onmouseover="'this.style.background=\'' + contributor.roleColor + '\'; this.style.color=\'#23272A\''" :onmouseout="'this.style.background=\'' + '\'; this.style.color=\'' + contributor.roleColor + '\''" class="contributor">
-      <div class="picture"><img src="foo" width="100%" height="100%"></div>
+      <div class="picture"><img src="https://i.imgur.com/LVES5pM.png" width="100%" height="100%"></div>
       <span>{{ contributor.role.toUpperCase() }}</span>
       <br>
       <span class="name">{{ contributor.name.toUpperCase() }}</span>
