@@ -90,7 +90,7 @@ export default {
         {
           profile: {
             image:
-              "https://cdn.discordapp.com/avatars/259407123782434816/a_cd2423939738e2e32713da9da189707d.gif",
+              "https://cdn.discordapp.com/avatars/259407123782434816/a_1556deda91b9a5eb64b69b3ce4d0de18.gif",
             name: "Fruxh",
             id: "3282",
             badges: [partner, brilliance, early, nitro]
