@@ -37,7 +37,7 @@
               </span> Add to PreMiD
             </button>
           </div>
-          <router-link replace to="/Submit">
+          <router-link replace to="/submit">
             <button class="submit" v-if="submit">Submit</button>
           </router-link>
         </div>

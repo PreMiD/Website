@@ -7,31 +7,31 @@ export default new Router({
 	routes: [
 		{
 			path: '',
-			redirect: '/Home'
+			redirect: '/home'
 		},
 		{
-			path: '/Home',
-			name: 'Home',
+			path: '/home',
+			name: 'home',
 			component: require('@/pages/Home').default
 		},
 		{
-			path: '/Store',
-			name: 'Store',
+			path: '/store',
+			name: 'store',
 			component: require('@/pages/Store').default
 		},
 		{
-			path: '/Downloads',
-			name: 'Downloads',
+			path: '/downloads',
+			name: 'downloads',
 			component: require('@/pages/Downloads').default
 		},
 		{
-			path: '/Contributors',
-			name: 'Contributors',
+			path: '/contributors',
+			name: 'contributors',
 			component: require('@/pages/Contributors').default
 		},
 		{
-			path: '/Submit',
-			name: 'Submit',
+			path: '/submit',
+			name: 'submit',
 			component: require('@/pages/Submit').default
 		}
 	]
