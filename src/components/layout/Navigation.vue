@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <router-link to="/Home">
+    <router-link to="/home">
       <img class="logo" src="./../../assets/images/logo.svg">
 
       <span class="title">PREMID</span>
@@ -27,17 +27,17 @@ export default {
       categories: [
         {
           logo: "store",
-          route: "Store",
+          route: "store",
           title: "STORE"
         },
         {
           logo: "download",
-          route: "Downloads",
+          route: "downloads",
           title: "DOWNLOADS"
         },
         {
           logo: "users",
-          route: "Contributors",
+          route: "contributors",
           title: "CONTRIBUTORS"
         }
       ]
@@ -67,9 +67,8 @@ export default {
 }
 
 .title {
-  vertical-align: top;
-  margin-top: 0.6rem;
-  font-family: 'Discord Font';
+  vertical-align: super;
+  font-family: "Discord Font";
   font-size: 2rem;
 }
 
