@@ -17,8 +17,7 @@
           </span>
         </h2>
         <p
-          class="desc"
-          :style="'display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;'"
+          class="desc line-clamp"
         >{{ presence.description }}</p>
       </div>
       <div class="buttons">
@@ -61,8 +60,17 @@ export default {
         new CustomEvent("PreMiD_AddService", { detail: name })
       );
     }
+  },
+  mounted() {
+    clamp_desc();
   }
 };
+
+function clamp_desc() {
+  for(let element of document.getElementsByClassName("line-clamp")) {
+    $clamp(element, {clamp: 3});
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -140,10 +148,6 @@ export default {
       color: @white-2;
       font-weight: bold;
       font-size: 0.8rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
   }
   .buttons {

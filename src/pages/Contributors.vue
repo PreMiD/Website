@@ -16,6 +16,7 @@
           src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTk1IiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5NSAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEgMTcuNVYzMCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLW9wYWNpdHk9IjAuMDEiLz48L3N2Zz4="
           width="100%"
           height="100%"
+          :onload="'let avatar = `' + contributor.avatar.split('?')[0] + '`; if (!this.still) { this.src = avatar; this.still = ` `; if (avatar.includes(`.gif`)) { this.src = avatar.replace(`.gif`, `.png`); this.still = avatar.replace(`.gif`, `.png`); } }'"
         >
       </div>
       <span>{{ contributor.role.toUpperCase() }}</span>
@@ -33,7 +34,8 @@ export default {
   name: "contributors",
   data() {
     return {
-      contributors: [{ foo: "bar" }]
+      contributors: [],
+      display: false
     };
   },
   mounted() {
@@ -41,38 +43,18 @@ export default {
       let data = JSON.parse(dat);
       data.sort((a, b) => b.rolePosition - a.rolePosition);
       this.$data.contributors = data;
-      console.log("foo");
-      setTimeout(() => {
+      /*setTimeout(() => {
         for (let index in this.$data.contributors) {
-          // this.$data.contributors[index].avatar
-
-          let avatar = this.$data.contributors[index].avatar.split("?")[0];
-
-          if (avatar.split(".")[avatar.split(".").length - 1] == "gif") {
-            console.log(avatar);
-            gif_frames({ url: avatar, frames: 0, outputType: "canvas" }).then(
-              function(frameData) {
-                let src = (document.body.getElementsByClassName("contributor")[
-                  index
-                ].children[0].children[0].src = frameData[0]
-                  .getImage()
-                  .toDataURL("image/png"));
-                let store = (document.body.getElementsByClassName(
-                  "contributor"
-                )[
-                  index
-                ].children[0].children[0].still = frameData[0]
-                  .getImage()
-                  .toDataURL("image/png"));
-              }
-            );
+          let avatar = this.$data.contributors[index].avatar.split("?")[0]; // removes params from url ie size=2000
+          let element = document.body.getElementsByClassName("contributor")[index].children[0].children[0];
+          if (avatar.includes(".gif")) {
+            element.src = avatar.replace(".gif", ".png");
+            element.still = avatar.replace(".gif", ".png");
           } else {
-            let src = (document.body.getElementsByClassName("contributor")[
-              index
-            ].children[0].children[0].src = avatar);
+            element.src = avatar;
           }
         }
-      }, 1000);
+      }, 100);*/
     });
   },
   methods: {
