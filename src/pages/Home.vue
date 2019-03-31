@@ -215,6 +215,13 @@ export default {
       &.downloads {
         background: black;
       }
+      &:hover {
+        box-shadow: 0.18rem 0.18rem rgba(0, 0, 0, 0.2);
+        text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+        transition: box-shadow 120ms;
+        transition: text-shadow 120ms;
+        cursor: pointer;
+      }
     }
   }
 }

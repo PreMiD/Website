@@ -1,11 +1,11 @@
 <template>
-  <div class="listing_container" v-if="nsfw || !presence.nsfw">
+  <div class="listing_container"><!--v-if="nsfw || !presence.nsfw"-->
     <div class="listing">
       <!--<a title="Verified" style="cursor: default;"><img src="./../../assets/images/verified.svg" class="verified" v-if="!submit"></a>-->
       <div class="content">
         <div
           class="logo"
-          :style="`background: linear-gradient(135deg, ${presence.color1} 0%, ${presence.color2} 100%);`"
+          :style="`background: linear-gradient(135deg, ${presence.color} 0%, transparent 100%);`"
         >
           <img :src="presence.logo" class="service_logo">
         </div>
