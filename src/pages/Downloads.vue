@@ -70,8 +70,6 @@ export default {
         else this.$data.windows_url = win64_links[0];
         this.$data.apple_url = mac_links[0];
         this.$data.firefox_url = ff_links[0];
-        console.log(ff_links);
-        console.log(data);
       }
     })
   },
