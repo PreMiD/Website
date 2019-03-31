@@ -108,6 +108,11 @@ export default {
         width: 80%;
       }
     }
+    &.router-link-active {
+      span::after {
+        width: 80%;
+      }
+    }
   }
 }
 </style>
