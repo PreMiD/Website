@@ -3,7 +3,7 @@
     <title>PreMiD - Store</title>
     <i class="fas fa-search"></i>
     <input class="search_bar" placeholder="Search" v-on:input="update_search()">
-    <div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div>
+    <!--<div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div>-->
     <div class="shadow"></div>
     <div class="main-container">
       <listing v-if="!searching" v-for="presence of presences" v-bind:key="presence" :presence="presence" :nsfw="nsfw" />
