@@ -58,18 +58,20 @@ export default {
         let win32_links = [];
         let mac_links = [];
         let ff_links = [];
-        for (let release of data.slice(0,4)) {
+        for (let release of data) {
           for(let asset of release.assets) {
             if(asset.name.includes("x64.exe")) win64_links.push(asset.browser_download_url);
             if(asset.name.includes("x32.exe")) win32_links.push(asset.browser_download_url);
             if(asset.name.includes("Mac.dmg")) mac_links.push(asset.browser_download_url);
-            if(asset.name.includes("fx.xpi")) ff_links.push(asset.browser_download_url);
+            if(asset.name.includes(".xpi")) ff_links.push(asset.browser_download_url);
           }
         }
         if (ua.includes("x32")) this.$data.windows_url = win32_links[0];
         else this.$data.windows_url = win64_links[0];
         this.$data.apple_url = mac_links[0];
         this.$data.firefox_url = ff_links[0];
+        console.log(ff_links);
+        console.log(data);
       }
     })
   },
