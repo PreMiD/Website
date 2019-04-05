@@ -1,11 +1,11 @@
 <template>
-  <div class="listing_container" v-if="nsfw || !presence.nsfw">
+  <div class="listing_container"><!--v-if="nsfw || !presence.nsfw"-->
     <div class="listing">
       <!--<a title="Verified" style="cursor: default;"><img src="./../../assets/images/verified.svg" class="verified" v-if="!submit"></a>-->
       <div class="content">
         <div
           class="logo"
-          :style="`background: linear-gradient(135deg, ${presence.color1} 0%, ${presence.color2} 100%);`"
+          :style="`background: linear-gradient(135deg, ${presence.color} 0%, transparent 100%);`"
         >
           <img :src="presence.logo" class="service_logo">
         </div>
@@ -16,24 +16,29 @@
             <a>{{ presence.author.name }}</a>
           </span>
         </h2>
-        <p class="desc" :style="'display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;'">{{ presence.description }}</p>
+        <p
+          class="desc line-clamp"
+        >{{ presence.description }}</p>
       </div>
       <div class="buttons">
         <div class="container">
           <div class="left" v-if="!submit">
             <button class="service" v-on:click="openInNewTab(presence.url)">
-              <span class="icon"><i class="fas fa-external-link-alt"></i></span> Service
+              <span class="icon">
+                <i class="fas fa-external-link-alt"></i>
+              </span> Service
             </button>
           </div>
           <div class="right" v-if="!submit">
-            <button
-              class="add"
-              v-on:click="openInNewTab(`chrome-extension://agjnjboanicjcpenljmaaigopkgdnihi/add.html?src=https://gistcdn.githack.com/${presence.source.user}/${presence.source.id}/raw/${presence.source.revision}/${presence.source.file_name}.js`)"
-            >
-              <span class="icon"><i class="fas fa-plus-square"></i></span> Add to PreMiD
+            <button class="add" v-on:click="sendPresence(presence.service)">
+              <span class="icon">
+                <i class="fas fa-plus-square"></i>
+              </span> Add to PreMiD
             </button>
           </div>
-          <router-link replace to="/Submit"><button class="submit" v-if="submit">Submit</button></router-link>
+          <router-link replace to="/submit">
+            <button class="submit" v-if="submit">Submit</button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -48,9 +53,24 @@ export default {
     openInNewTab(url) {
       let page = window.open(url, "_blank");
       win.focus();
+    },
+    sendPresence(name) {
+      console.log("Installing " + name + "...");
+      document.dispatchEvent(
+        new CustomEvent("PreMiD_AddService", { detail: name })
+      );
     }
+  },
+  mounted() {
+    clamp_desc();
   }
 };
+
+function clamp_desc() {
+  for(let element of document.getElementsByClassName("line-clamp")) {
+    $clamp(element, {clamp: 3});
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -78,15 +98,9 @@ export default {
     transition: box-shadow 120ms;
     .content .logo {
       transition: box-shadow 120ms;
-      box-shadow: inset 0.25rem 0.25rem rgba(0, 0, 0, 0.2);
       img.service_logo {
-        width: 6.5rem;
-        height: 6.5rem;
-        transform: translate(65%, 65%);
-        transition: 
-          height 120ms ease, 
-          width 120ms ease, 
-          transform 120ms ease;
+        transform: translate(75%, 75%) scale(1.2);
+        transition: transform 120ms ease-out;
       }
     }
   }
@@ -111,10 +125,7 @@ export default {
         width: 6rem;
         height: 6rem;
         transform: translate(75%, 75%);
-        transition: 
-          height 120ms ease, 
-          width 120ms ease, 
-          transform 120ms ease;
+        transition: height 120ms ease, width 120ms ease, transform 120ms ease;
         position: relative;
         filter: drop-shadow(0rem 0rem 0.7rem rgba(0, 0, 0, 0.5));
       }
@@ -137,10 +148,6 @@ export default {
       color: @white-2;
       font-weight: bold;
       font-size: 0.8rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
   }
   .buttons {

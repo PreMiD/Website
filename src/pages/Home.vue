@@ -8,7 +8,7 @@
             <img src="./../assets/images/logo-big.svg">
           </div>
           <div class="right">
-            <img src="./../assets/images/premid.svg" class="premid">
+            <span class="premid">PreMiD</span>
             <div class="desc">
               <span>Let everyone know what you are watching and listening to!</span>
             </div>
@@ -90,7 +90,7 @@ export default {
         {
           profile: {
             image:
-              "https://cdn.discordapp.com/avatars/259407123782434816/a_cd2423939738e2e32713da9da189707d.gif",
+              "https://cdn.discordapp.com/avatars/259407123782434816/a_1556deda91b9a5eb64b69b3ce4d0de18.gif",
             name: "Fruxh",
             id: "3282",
             badges: [partner, brilliance, early, nitro]
@@ -161,8 +161,6 @@ export default {
   padding-right: 4%;
   display: grid;
   grid-template-areas: "left right";
-  overflow: scroll;
-  height: 73%;
 }
 
 .container {
@@ -175,7 +173,7 @@ export default {
   .right {
     display: flex;
     .desc {
-      margin-left: -12.5rem;
+      margin-left: -12rem;
       vertical-align: top;
       margin-top: 5.5rem;
       font-family: Inter;
@@ -188,14 +186,14 @@ export default {
     .premid {
       width: 12.5rem;
       vertical-align: top;
-      margin-top: -8rem;
       margin-left: 1.8rem;
       filter: drop-shadow(0rem 0.35rem 0rem rgba(0, 0, 0, 0.2));
+      font-family: "Discord Font";
+      font-size: 3.7rem;
     }
   }
   .bottom {
     margin-left: 3rem;
-    margin-top: -8rem;
     button {
       border: none;
       padding: 0.8rem;
@@ -216,6 +214,13 @@ export default {
       }
       &.downloads {
         background: black;
+      }
+      &:hover {
+        box-shadow: 0.18rem 0.18rem rgba(0, 0, 0, 0.2);
+        text-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+        transition: box-shadow 120ms;
+        transition: text-shadow 120ms;
+        cursor: pointer;
       }
     }
   }

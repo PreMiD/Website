@@ -3,7 +3,7 @@
     <title>PreMiD - Store</title>
     <i class="fas fa-search"></i>
     <input class="search_bar" placeholder="Search" v-on:input="update_search()">
-    <div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div>
+    <!--<div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div>-->
     <div class="shadow"></div>
     <div class="main-container">
       <listing v-if="!searching" v-for="presence of presences" v-bind:key="presence" :presence="presence" :nsfw="nsfw" />
@@ -27,117 +27,10 @@ export default {
   },
   data() {
     return {
-      presences: [
-        {
-          author: {
-            discordID: "223238938716798978",
-            name: "Timeraa"
-          },
-          source: {
-            type: "github",
-            user: "Timeraa",
-            id: "f95c06d49eff2e88fd46733b6b61eacf",
-            revision: "b828b17fcbb711ed90d64baa574d631abe65931d",
-            file_name: "example"
-          },
-          logo: "https://svgur.com/i/BGF.svg",
-          color1: "#FF0000",
-          color2: "transparent",
-          service: "YouTube",
-          url: "https://masterani.me",
-          description:
-            "Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
-          service_tags: ["video", "media"]
-        },
-        {
-          author: {
-            discordID: "178551656714076161",
-            name: "Mulverine"
-          },
-          source: {
-            type: "github",
-            user: "MulverineX",
-            id: "37896f882bf9f052ef6cc863ae33ef91",
-            revision: "0079b5b9c88d7e648d513582d4d39e6d01f52936",
-            file_name: "example"
-          },
-          logo: "https://svgur.com/i/BGB.svg",
-          color1: "#E40813",
-          color2: "transparent",
-          service: "Masteranime",
-          url: "https://masterani.me",
-          description: "Watch. Track. Anime.",
-          service_tags: ["video", "media", "anime"]
-        },
-        {
-          author: {
-            discordID: "223238938716798978",
-            name: "Timeraa"
-          },
-          source: {
-            type: "github",
-            user: "MulverineX",
-            id: "37896f882bf9f052ef6cc863ae33ef91",
-            revision: "0079b5b9c88d7e648d513582d4d39e6d01f52936",
-            file_name: "example"
-          },
-          logo: "https://svgur.com/i/BEw.svg",
-          color1: "#6441a5",
-          color2: "transparent",
-          service: "Twitch",
-          url: "https://twitch.com",
-          description:
-            "We are a global community of millions who come together each day to create their own entertainment.",
-          service_tags: ["video", "media"]
-        },
-        {
-          author: {
-            discordID: "223238938716798978",
-            name: "Timeraa"
-          },
-          source: {
-            type: "github",
-            user: "Timeraa",
-            id: "f95c06d49eff2e88fd46733b6b61eacf",
-            revision: "b828b17fcbb711ed90d64baa574d631abe65931d",
-            file_name: "example"
-          },
-          logo: "https://svgur.com/i/BGu.svg",
-          color1: "#FF0000",
-          color2: "transparent",
-          service: "YouTube Music",
-          url: "https://youtube.com",
-          description:
-            "Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
-          service_tags: ["video", "media"]
-        },
-        {
-          author: {
-            discordID: "223238938716798978",
-            name: "Timeraa"
-          },
-          source: {
-            type: "github",
-            user: "Timeraa",
-            id: "f95c06d49eff2e88fd46733b6b61eacf",
-            revision: "b828b17fcbb711ed90d64baa574d631abe65931d",
-            file_name: "example"
-          },
-          logo: "https://svgur.com/i/BVz.svg",
-          color1: "#F8981E",
-          color2: "transparent",
-          service: "Pornhub",
-          url: "https://pornhub.com",
-          description:
-            "Porn.",
-          service_tags: ["video", "media", "porn"],
-          nsfw: true
-        },
-      ],
+      presences: [],
       submit_own: {
         logo: submit,
-        color1: "#7289DA",
-        color2: "transparent",
+        color: "#7289DA",
         service: "Submit your own",
         url: "https://masterani.me",
         description:
@@ -153,6 +46,26 @@ export default {
     this.$data.presences = this.$data.presences.sort(
       this.dynamicSort("service")
     );
+
+    request(
+      `https://api.premid.app/presences`,
+      (err, res, dat) => {
+        if (!err) {
+          let presences = JSON.parse(dat);
+          for (let presence of presences) {
+            let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/').slice(0, -1);
+            request(
+              url,
+              (err, res, dat) => {
+                if (!err) {
+                  this.$data.presences.push(JSON.parse(dat));
+                } else console.log(err);
+              }
+            )
+          }
+        } else console.log(err);
+      }
+    )
   },
   methods: {
     dynamicSort(property) {
@@ -203,10 +116,8 @@ export default {
 
 .main-container {
   padding: 1rem;
-  overflow: scroll;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(18rem, 18rem));
-  height: 73.1vh;
 }
 .shadow {
   position: absolute;

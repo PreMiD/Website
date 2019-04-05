@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <router-link to="/Home">
+    <router-link to="/home">
       <img class="logo" src="./../../assets/images/logo.svg">
 
       <span class="title">PREMID</span>
@@ -13,7 +13,7 @@
         class="category"
       >
         <i :class="'fas fa-' + category.logo"></i>
-        <span class="category_title">{{ category.title }}</span>
+        <span class="category_title" :style="'width: ' + category.title.length + 'ch;'">{{ category.title }}</span>
       </router-link>
     </span>
   </div>
@@ -27,17 +27,17 @@ export default {
       categories: [
         {
           logo: "store",
-          route: "Store",
+          route: "store",
           title: "STORE"
         },
         {
           logo: "download",
-          route: "Downloads",
+          route: "downloads",
           title: "DOWNLOADS"
         },
         {
           logo: "users",
-          route: "Contributors",
+          route: "contributors",
           title: "CONTRIBUTORS"
         }
       ]
@@ -67,10 +67,15 @@ export default {
 }
 
 .title {
-  vertical-align: top;
-  margin-top: 0.6rem;
-  font-family: 'Discord Font';
+  vertical-align: super;
+  font-family: "Discord Font";
   font-size: 2rem;
+  filter: drop-shadow(.01rem .01rem 0rem rgba(0, 0, 0, 0.4));
+  transition: filter .12s;
+  &:hover {
+    filter: drop-shadow(.2rem .2rem 0rem rgba(0, 0, 0, 0.4));
+    transition: filter .12s;
+  }
 }
 
 .categories {
@@ -79,12 +84,34 @@ export default {
   font-size: 1.2rem;
   font-weight: bolder;
   float: right;
+  display: flex;
   .category {
     margin-left: 2rem;
     &_title {
       font-family: Inter;
       font-weight: 800;
       font-size: 1.35rem;
+      &::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: .12rem;
+        background: currentColor;
+        transition: all 0.2s ease;
+        margin-left: 53%;
+        margin-top: -.3rem;
+        transform: translate(-50%, 0); /*Add this*/
+      }
+    }
+    &:hover {
+      span::after {
+        width: 80%;
+      }
+    }
+    &.router-link-active {
+      span::after {
+        width: 80%;
+      }
     }
   }
 }
