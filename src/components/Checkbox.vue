@@ -32,10 +32,10 @@ export default {
   margin-bottom: 0;
 }
 .label-cbx input:checked + .checkbox {
-  border-color: @button-color;
+  border-color: @color-btn-green;
 }
 .label-cbx input:checked + .checkbox svg path {
-  fill: @button-color;
+  fill: @color-btn-green;
 }
 .label-cbx input:checked + .checkbox svg polyline {
   stroke-dashoffset: 0;
@@ -60,7 +60,7 @@ export default {
 }
 .label-cbx .checkbox svg path {
   fill: none;
-  stroke: @button-color;
+  stroke: @color-btn-green;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
