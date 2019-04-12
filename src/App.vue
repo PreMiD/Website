@@ -1,116 +1,308 @@
 <template>
   <div id="app">
     <header v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')">
-      <navigation/>
-      <div class="shadow"></div>
+      <navigation />
     </header>
-    <router-view v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')"></router-view>
-    <div class="mobile" v-if="ua.includes('iPhone') || ua.includes('iPad') || ua.includes('Android')">
-      <center><p>Fuck You Kravos</p></center>
+    <div class="page-wrapper">
+      <div id="content">
+        <transition name="route-animation" mode="out-in">
+          <router-view v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')"></router-view>
+        </transition>
+      </div>
+      <div id="footer">
+        <div class="footer-grid">
+          <div class="grid__section">
+            <p class="section__title">Ready to try PreMiD?</p>
+            <div class="section__promo">
+              <p>Join over 3 thousand users today!</p>
+              <router-link class="button" replace to="/downloads">
+                INSTALL
+              </router-link>
+            </div>
+
+          </div>
+          <div class="grid__section">
+            <p class="section__title">Partners</p>
+            <div class="section__promo">
+              <a class="poeditor-logo" href="https://poeditor.com/">
+                <span class="poeditor-logo__title">
+                  POEditor
+                  </span>
+              </a>
+            </div>
+
+          </div>
+          <div class="grid__section">
+            <p class="section__title">About us</p>
+            <div>
+              <a href="h">About</a>
+              <a href="h">How to work</a>
+              <a href="h">Jobs</a>
+              <a href="h">Contact</a>
+            </div>
+          </div>
+          <div class="grid__section">
+            <p class="section__title">Contributing</p>
+            <div>
+              <a href="h">Install the VSCode</a>
+              <a href="h">Too lazy</a>
+            </div>
+          </div>
+          <div class="grid__section">
+            <p class="section__title">Developers</p>
+            <div>
+              <a href="h">How to work</a>
+              <a href="h">Jobs</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- <div class="mobile" v-if="ua.includes('iPhone') || ua.includes('iPad') || ua.includes('Android')">
+      <center><p>Fuck You Kravos</p></center>
+    </div> -->
   </div>
 </template>
 
 <script>
-import Navigation from "./components/layout/Navigation.vue";
+  import Navigation from "./components/layout/Navigation.vue";
 
-export default {
-  name: "premid-web",
-  components: {
-    Navigation
-  },
-  data() {
-    return {
-      ua: navigator.userAgent
-    };
-  },
-  mounted() {
-  }
-};
+  export default {
+    name: "premid-web",
+    components: {
+      Navigation
+    },
+    data() {
+      return {
+        ua: navigator.userAgent
+      };
+    },
+    mounted() {}
+  };
+
 </script>
 
 <style lang="less">
-@import "./stylesheets/colors.less";
+  @import "./stylesheets/colors.less";
 
-body {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 4rem 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  height: 100%;
-  font-family: Roboto;
-  background: #2c2f33;
-  color: @accent-primary;
-}
-
-header {
-  position: fixed;
-  z-index: 10000;
-  width: 100%;
-  margin-top: -4rem;
-}
-
-.shadow {
-  position: absolute;
-  width: 100%;
-  height: 0.25rem;
-  margin-top: 0rem;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .4) 0%, rgba(0, 0, 0, 0) 100%);;
-}
-
-h3 {
-  font-weight: normal;
-}
-
-a {
-  text-decoration: none;
-  color: @accent-primary;
-  cursor: pointer;
-}
-
-button:focus {
-  outline: none;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar {
-  width: 0.4rem;
-  height: 0.6rem;
-}
-
-::-webkit-scrollbar-track {
-  background: none;
-  border: none;
-  &:hover {
-    background: @scroll-shade;
-    border-radius: 0.3rem;
-    transition: 500ms;
+  * {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
-}
 
-::-webkit-scrollbar-thumb {
-  background: @accent-primary;
-  border-radius: 0.3rem;
-  &:hover {
-    background: @accent-secondary;
-    transition: 700ms;
+  html,
+  body {
+    height: 100%;
   }
-}
 
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-}
+  .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 
-img {
-  user-select: none;
-  -webkit-user-drag: none;
-}
+  body {
+    padding: 0;
+    margin: 0;
+    background: #2c2f33;
+    color: @accent-primary;
+  }
+
+  header {
+    z-index: 10000;
+    width: 100%;
+  }
+
+  #content {
+    flex: 1 0 auto;
+  }
+
+  #footer {
+    flex: 0 0 auto;
+    background: @background-secondary;
+    color: white;
+    padding: 20px;
+    margin-top: 2.5em;
+  }
+
+  .poeditor-logo {
+    position: relative;
+    width: 166px;
+    height: 47px;
+    background: url(./assets/images/poeditor.svg) no-repeat center center;
+    background-size: 166px 47px;
+
+    .poeditor-logo__title {
+      color: rgba(255, 255, 255, 1);
+    position: absolute;
+    font-size: 22px;
+    top: 10px;
+    left: 56px;
+    font-weight: 700;
+    }
+
+  }
+
+  .footer-grid {
+
+    max-width: 1400px;
+    margin: 0 auto;
+
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-content: center;
+
+    .grid__section {
+
+      .section__title {
+        font-weight: 700;
+            margin: 7px auto;
+        font-size: 18px;
+        color: white;
+      }
+
+      div {
+        p {
+          color: #99AAB5;
+          margin: 7px auto;
+          font-weight: 600;
+        }
+
+        a {
+          &:not(.button) {
+            color: #99AAB5;
+            transition: color 0.2s ease;
+
+            &:hover {
+              color: lighten(#99AAB5, 10%);
+              transition: color 0s ease;
+            }
+          }
+
+          font-weight: 600;
+          display: block;
+          margin: 2px 0;
+        }
+      }
+
+    }
+
+  }
+
+  h3 {
+    font-weight: normal;
+  }
+
+  a {
+    text-decoration: none;
+    color: @accent-primary;
+    cursor: pointer;
+  }
+
+  button,
+  a.button {
+    user-select: none;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 1.5rem;
+    font-size: 1.15rem;
+    background: #7289DA;
+    font-weight: 700;
+    letter-spacing: 0.04rem;
+    color: fade(white, 95%);
+    cursor: pointer;
+    margin-right: 0.7rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 0 transparent;
+    text-align: center;
+
+    i {
+      margin-right: 5px;
+    }
+
+    &:hover {
+      box-shadow: 0 3px 26px -5px fade(lighten(#7289DA, 5%), 50%);
+      ;
+      background: lighten(#7289DA, 5%);
+    }
+
+    &:active {
+      background: darken(#7289DA, 5%);
+      box-shadow: none;
+      transition: all 0.1s ease;
+    }
+
+    &:focus {
+      outline: none;
+      cursor: pointer;
+    }
+  }
+
+  .colored-button(@color) {
+    background: @color;
+
+    &:hover {
+      box-shadow: 0 3px 26px -5px fade(lighten(@color, 2%), 50%);
+      background: lighten(@color, 2%);
+    }
+
+    &:active {
+      background: darken(@color, 2%);
+    }
+  }
+
+  button,
+  a.button {
+
+    &.button_black {
+      .colored-button(#202225);
+    }
+
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 0.6rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: @background-secondary;
+    border: none;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid @background-secondary;
+    border-radius: 20px;
+    background: @accent-primary;
+
+    &:hover {
+      background: lighten(@accent-secondary, 3%);
+    }
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .route-animation-enter-active,
+  .route-animation-leave-active {
+    transition: opacity .2s ease-in-out;
+  }
+
+  .route-animation-enter,
+  .route-animation-leave-to {
+    opacity: 0;
+  }
+
 </style>

@@ -1,4 +1,5 @@
 <template>
+<transition name="route-animation" mode="out-in">
   <div class="listing_container"><!--v-if="nsfw || !presence.nsfw"-->
     <div class="listing">
       <!--<a title="Verified" style="cursor: default;"><img src="./../../assets/images/verified.svg" class="verified" v-if="!submit"></a>-->
@@ -43,6 +44,7 @@
       </div>
     </div>
   </div>
+</transition>
 </template>
 
 <script>
@@ -172,7 +174,6 @@ function clamp_desc() {
       border-radius: 0.2rem;
       padding: 0.4rem;
       font-weight: bold;
-      font-family: Roboto;
       letter-spacing: 0.06rem;
       transition: box-shadow 120ms;
       transition: text-shadow 120ms;
