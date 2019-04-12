@@ -10,6 +10,11 @@ export default new Router({
 			redirect: '/home'
 		},
 		{
+			// If URL not matching any registered one then we drop user to 404 page.
+			path: '*',
+			redirect: '/home'
+		},
+		{
 			path: '/home',
 			name: 'home',
 			component: require('@/pages/Home').default

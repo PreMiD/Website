@@ -91,7 +91,6 @@ p {
     margin-bottom: 2rem;
   }
   &.notes {
-    font-family: Roboto;
     resize: none;
     width: 25rem;
     height: 5rem;
