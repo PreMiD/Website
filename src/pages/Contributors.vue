@@ -43,18 +43,6 @@ export default {
       let data = JSON.parse(dat);
       data.sort((a, b) => b.rolePosition - a.rolePosition);
       this.$data.contributors = data;
-      /*setTimeout(() => {
-        for (let index in this.$data.contributors) {
-          let avatar = this.$data.contributors[index].avatar.split("?")[0]; // removes params from url ie size=2000
-          let element = document.body.getElementsByClassName("contributor")[index].children[0].children[0];
-          if (avatar.includes(".gif")) {
-            element.src = avatar.replace(".gif", ".png");
-            element.still = avatar.replace(".gif", ".png");
-          } else {
-            element.src = avatar;
-          }
-        }
-      }, 100);*/
     });
   },
   methods: {
