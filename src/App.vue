@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <header v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')">
+    <header>
       <navigation />
     </header>
     <div class="page-wrapper">
       <div id="content">
         <transition name="route-animation" mode="out-in">
-          <router-view v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')"></router-view>
+          <router-view></router-view>
         </transition>
       </div>
       <div id="footer">
