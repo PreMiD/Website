@@ -138,7 +138,6 @@
 
   #content {
     flex: 1 0 auto;
-    padding: 20px;
   }
 
   #footer {
