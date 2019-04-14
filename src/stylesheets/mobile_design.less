@@ -1,0 +1,35 @@
+// Mobile phones
+@media only screen and (max-width: 860px) {
+    .on-desktop {
+        display: none !important;
+    }
+    .promo-container {
+        flex-wrap: wrap;
+    }
+    .promo-container .promo-container__presences {
+        margin-left: 0 !important;
+    }
+    .promo-container .promo-container__heading {
+        margin-right: 0 !important;
+    }
+    .footer-grid .grid__section .section__title {
+        border-left: 3px solid white;
+        padding-left: 10px !important;
+        font-size: 1.3em !important;
+        margin: 20px auto !important;
+    }
+    .footer-grid {
+        flex-flow: column !important;
+    }
+    button, a.button {
+        padding: 5px 10px !important;
+        font-size: 16px !important;
+    }
+}
+
+// Desktop
+@media (min-width: 860px) {
+    .on-mobile {
+        display: none !important;
+    }
+}

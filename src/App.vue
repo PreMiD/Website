@@ -27,34 +27,48 @@
               <a class="poeditor-logo" href="https://poeditor.com/">
                 <span class="poeditor-logo__title">
                   POEditor
-                  </span>
+                </span>
+              </a>
+              <a class="gitbook-logo" href="https://gitbook.com/">
+                <img src="./assets/images/gitbook.png">
               </a>
             </div>
 
           </div>
           <div class="grid__section">
-            <p class="section__title">About us</p>
-            <div>
-              <a href="h">About</a>
-              <a href="h">How to work</a>
-              <a href="h">Jobs</a>
-              <a href="h">Contact</a>
-            </div>
-          </div>
-          <div class="grid__section">
-            <p class="section__title">Contributing</p>
-            <div>
-              <a href="h">Install the VSCode</a>
-              <a href="h">Too lazy</a>
-            </div>
-          </div>
-          <div class="grid__section">
             <p class="section__title">Developers</p>
             <div>
-              <a href="h">How to work</a>
-              <a href="h">Jobs</a>
+              <a href="h">Documentation</a>
+              <a href="h">Rich Presence</a>
             </div>
           </div>
+          <div class="grid__section">
+            <p class="section__title">Support us</p>
+            <div>
+              <a v-on:click="openNavigation()">Donate</a>
+              <a href="h">For coders</a>
+              <a href="h">For designers</a>
+              <a href="h">For translators</a>
+            </div>
+          </div>
+          <div class="grid__section">
+            <p class="section__title">Help</p>
+            <div>
+              <a href="h">Troubleshooting</a>
+              <a href="h">Support</a>
+            </div>
+          </div>
+          <div class="grid__section">
+            <p class="section__title">More</p>
+            <div>
+              <a href="h">Status</a>
+              <a href="h">Discord</a>
+              <a href="h">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <p>&copy; 2019 PreMiD by Timeraa & Fruxh</p>
         </div>
       </div>
     </div>
@@ -72,6 +86,10 @@
     components: {
       Navigation
     },
+    methods: {
+      openNavigation() {
+      }
+    },
     data() {
       return {
         ua: navigator.userAgent
@@ -83,7 +101,9 @@
 </script>
 
 <style lang="less">
+
   @import "./stylesheets/colors.less";
+  @import "./stylesheets/mobile_design.less";
 
   * {
     font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -92,6 +112,10 @@
   html,
   body {
     height: 100%;
+  }
+
+  #app {
+    overflow: -webkit-paged-x;
   }
 
   .page-wrapper {
@@ -114,6 +138,7 @@
 
   #content {
     flex: 1 0 auto;
+    padding: 20px;
   }
 
   #footer {
@@ -122,6 +147,11 @@
     color: white;
     padding: 20px;
     margin-top: 2.5em;
+  }
+
+  .gitbook-logo img {
+    position: relative;
+    width: 150px;
   }
 
   .poeditor-logo {
@@ -133,13 +163,20 @@
 
     .poeditor-logo__title {
       color: rgba(255, 255, 255, 1);
-    position: absolute;
-    font-size: 22px;
-    top: 10px;
-    left: 56px;
-    font-weight: 700;
+      position: absolute;
+      font-size: 22px;
+      top: 10px;
+      left: 56px;
+      font-weight: 700;
     }
 
+  }
+
+  .footer-copyright {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #43484e;
   }
 
   .footer-grid {
@@ -156,7 +193,7 @@
 
       .section__title {
         font-weight: 700;
-            margin: 7px auto;
+        margin: 7px auto;
         font-size: 18px;
         color: white;
       }
