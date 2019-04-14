@@ -66,6 +66,17 @@
               <a href="h">GitHub</a>
             </div>
           </div>
+          <div class="grid__section">
+            <p class="section__title">More</p>
+            <div>
+              <a href="h">Status</a>
+              <a href="h">Discord</a>
+              <a href="h">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <p>&copy; 2019 PreMiD by Timeraa & Fruxh</p>
         </div>
         <div class="footer-copyright">
           <p>&copy; 2019 PreMiD by Timeraa & Fruxh</p>
