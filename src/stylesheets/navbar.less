@@ -52,6 +52,13 @@
     .navbar__item {
       margin: 0 20px;
       position: relative;
+
+      &.router-link-active {
+        &::after {
+          width: 100%;
+        }
+      }
+
       .item__title {
         font-family: Inter;
         font-weight: 800;
@@ -76,5 +83,40 @@
       }
     }
   }
+
+  .mobile-navbar__menu {
+    margin-left: auto;
+
+    a {
+      font-size: 23px;
+    }
+
+  }
+}
+
+.mobile-navbar__items {
+  display: none;
+  flex-flow: column;
+  text-align: center;
+
+  background: darken(@background-secondary, 2%);
+
+  a {
+    padding: 5px 0;
+    line-height: 2.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    transition: all 0.2s ease;
+    box-shadow: inset 0px 0 0 0 @accent-primary;
+
+    &.router-link-active {
+      box-shadow: inset 4px 0 0 0 @accent-primary;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+  }
+
 }
 }
+
