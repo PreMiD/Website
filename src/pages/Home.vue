@@ -143,6 +143,7 @@ import early from "./../assets/images/early.svg";
 import twitch_logo from "./../assets/images/twitch-logo.svg";
 import youtube_logo from "./../assets/images/youtube-logo.svg";
 import master_logo from "./../assets/images/master-logo.svg";
+import soundcloud_logo from "./../assets/images/soundcloud_logo.svg";
 
 export default {
   name: "home",
