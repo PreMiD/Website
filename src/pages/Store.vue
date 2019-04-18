@@ -54,6 +54,7 @@ export default {
           let presences = JSON.parse(dat);
           for (let presence of presences) {
             let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/').slice(0, -1);
+            let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/').slice(0, -1) + '/metadata.json';
             request(
               url,
               (err, res, dat) => {
