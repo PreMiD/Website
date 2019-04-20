@@ -1,11 +1,14 @@
 <template>
-  <div class="main">
+  <div>
     <title>PreMiD - Store</title>
-    <i class="fas fa-search"></i>
-    <input class="search_bar" placeholder="Search" v-on:input="update_search()">
-    <!--<div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div>-->
-    <div class="shadow"></div>
-    <div class="main-container">
+    <div class="store-menu">
+      <div class="store-menu__searchbar">
+        <i class="fas fa-search"></i>
+        <input class="search_bar" placeholder="Search" v-on:input="update_search()">
+      </div>
+    <!-- <div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div> -->
+    </div>
+    <div class="presence-container">
       <listing v-if="!searching" v-for="presence of presences" v-bind:key="presence" :presence="presence" :nsfw="nsfw" />
       <listing v-if="searching" v-for="presence of presence_search" v-bind:key="presence" :presence="presence" />
       <listing :presence="submit_own" submit="true" />
@@ -53,7 +56,7 @@ export default {
         if (!err) {
           let presences = JSON.parse(dat);
           for (let presence of presences) {
-            let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/').slice(0, -1);
+            let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/').slice(0, -1) + '/metadata.json';
             request(
               url,
               (err, res, dat) => {
@@ -114,6 +117,41 @@ export default {
 <style lang="less" scoped>
 @import "./../stylesheets/colors.less";
 
+.presence-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+
+    max-width: 1400px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.store-menu {
+  display: flex;
+  background: #202225;
+  padding-bottom: 0.5rem;
+}
+
+.store-menu__searchbar {
+  flex: 1 1 auto;
+
+  max-width: 700px;
+  margin: 0 auto;
+  
+  position: relative;
+  padding: 20px;
+
+  width: 1%;
+
+  input {
+    width: 100%;
+    border-radius: 99em;
+  }
+
+}
+
 .main-container {
   padding: 1rem;
   display: grid;
@@ -129,37 +167,34 @@ export default {
 }
 
 .search_bar {
-  width: 12rem;
   height: 1.8rem;
-  transition: width 100ms;
+  padding: 0 10px;
+  padding-left: 32px;
+  font-size: 14px;
+  transition: all 300ms ease;
   border: none;
-  background: @background-secondary;
-  border-radius: 1.4rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  padding-left: 1.8rem;
-  color: @white-2;
+  background: lighten(@background-secondary, 4%);
+  color: fadeOut(@white-2, 15%);
+  line-height: 25px;
   font-weight: bold;
   font-family: Inter;
-  margin-bottom: 1rem;
   &:focus {
-    color: @white;
-    transition: width 100ms;
-    width: 18rem;
+    background: lighten(@background-secondary, 7%);
     outline: none;
   }
   * {
     margin-left: -17.5rem;
   }
   &::placeholder {
-    color: @white-2;
+    color: fadeOut(@white-2, 65%);
   }
 }
+
 .fa-search {
   position: absolute;
-  margin-left: 1.5rem;
-  margin-top: 1.4rem;
-  color: @white-2;
+  margin-left: 0.6rem;
+  margin-top: 7px;
+  color: fadeOut(@white-2, 65%);
 }
 
 .nsfw-check {
