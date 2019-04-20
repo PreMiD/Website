@@ -64,7 +64,7 @@
         </div>
         <div class="footer-copyright">
           <p>
-            &copy; 2019 PreMiD by
+            <i class="far fa-copyright"></i> 2019 PreMiD by
             <a href="https://github.com/Timeraa/">Timeraa</a> &
             <a href="https://github.com/Fruxh/">Fruxh</a>
           </p>
@@ -135,7 +135,10 @@ header {
 
 #content {
   flex: 1 0 auto;
-  padding: 20px;
+}
+
+.verified-icon {
+  fill: gray;
 }
 
 #footer {
@@ -281,6 +284,9 @@ a.button {
 
 button,
 a.button {
+  &.button_gray {
+    .colored-button(#2C2F33);
+  }
   &.button_black {
     .colored-button(#202225);
   }
