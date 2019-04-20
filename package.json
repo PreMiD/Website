@@ -29,7 +29,8 @@
     "request": "^2.88.0",
     "vue": "^2.5.2",
     "vue-meta": "^1.5.8",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-tippy": "^2.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.6",
