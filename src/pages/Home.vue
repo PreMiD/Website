@@ -63,72 +63,6 @@
         </div>
       </div>
     </div>
-    <!-- 
-    <div class="container">
-      <div class="top">
-        <div class="main-container">
-          <div class="logo">
-            <img src="./../assets/images/logo-big.svg">
-          </div>
-          <div class="right">
-            <span class="premid">PreMiD</span>
-            <div class="desc">
-              <span>Let everyone know what you are watching and listening to!</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="bottom">
-        <button v-on:click="openInNewTab('https://github.com/PreMiD/PreMiD')" class="github">
-          <i class="fab fa-github"></i>LEARN MORE
-        </button>
-        <router-link replace to="/Downloads">
-          <button class="downloads">
-            <i class="fas fa-download"></i>DOWNLOADS
-          </button>
-        </router-link>
-      </div>
-    </div>
-    <div class="presences">
-      <div class="presence" v-for="presence of presences_display" v-bind:key="presence">
-        <div class="top">
-          <div class="logo">
-            <div
-              class="logo_image"
-              :style="'background-image: url(' + presence.profile.image + ');'"
-            ></div>
-          </div>
-          <div class="name">
-            <h2>
-              {{ presence.profile.name }}
-              <span class="id">{{ '#' + presence.profile.id }}</span>
-            </h2>
-            <div class="badges">
-              <div v-for="badge of presence.profile.badges" v-bind:key="badge" class="badge">
-                <img :src="badge">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="bottom">
-          <h2>PLAYING A GAME</h2>
-          <div class="service">
-            <div class="service_logo">
-              <img :src="presence.service_logo">
-            </div>
-            <div class="details">
-              <h2>{{ presence.service }}</h2>
-              <p>
-                {{ presence.item1[0] }}
-                <br>
-                {{ presence.item1[1] }}
-              </p>
-              <p>{{ presence.item2 }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>-->
   </div>
 </template>
 
@@ -193,18 +127,19 @@ export default {
           ],
           item2: "1:36 left"
         },
-        {
-          profile: {
-            image:
-              "https://cdn.discordapp.com/avatars/213305189657083905/f1f139ab21d7979d91bb874fbae5e91e.png",
-            name: "Voknehzyr",
-            id: "8754"
-          },
-          service: "SoundCloud",
-          service_logo: soundcloud_logo,
-          item1: ["Dion Timmer - Panic", "Dion Timmer"],
-          item2: "2:15 left"
-        }
+        // TODO: Fix SoundCloud logo.
+        // {
+        //   profile: {
+        //     image:
+        //       "https://cdn.discordapp.com/avatars/213305189657083905/f1f139ab21d7979d91bb874fbae5e91e.png",
+        //     name: "Voknehzyr",
+        //     id: "8754"
+        //   },
+        //   service: "SoundCloud",
+        //   service_logo: soundcloud_logo,
+        //   item1: ["Dion Timmer - Panic", "Dion Timmer"],
+        //   item2: "2:15 left"
+        // }
       ]
     };
   },
