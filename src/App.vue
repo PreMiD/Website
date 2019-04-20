@@ -134,6 +134,7 @@ header {
 }
 
 #content {
+  min-height: 100vh - 11rem;
   flex: 1 0 auto;
 }
 
@@ -285,7 +286,7 @@ a.button {
 button,
 a.button {
   &.button_gray {
-    .colored-button(#2C2F33);
+    .colored-button(#2c2f33);
   }
   &.button_black {
     .colored-button(#202225);
