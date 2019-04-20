@@ -4,6 +4,11 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 
+// Tooltips
+import VueTippy from 'vue-tippy'
+
+Vue.use(VueTippy);
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
