@@ -134,7 +134,7 @@ header {
 }
 
 #content {
-  min-height: 100vh - 11rem;
+  min-height: calc(100vh - 73px);
   flex: 1 0 auto;
 }
 
