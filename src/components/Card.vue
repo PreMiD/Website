@@ -17,53 +17,54 @@
 <style lang="less" scoped>
     @import "./../stylesheets/colors.less";
 
-          .feature-cards__card {
-    * {
-      margin: 0;
-      padding: 0;
-    }
+    .feature-cards__card {
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
-z-index: 1;
+        z-index: 1;
         position: relative;
-            width: 440px;
-                overflow: hidden;
-          text-align: center;
-          padding: 2em;
-          background: #202225;
-          border-radius: 5px;
-          margin: 0 1em;
-              transition: transform .2s ease,-webkit-transform .2s ease;
+        width: 440px;
+        overflow: hidden;
+        text-align: center;
+        padding: 2em;
+        background: #202225;
+        border-radius: 5px;
+        margin: 0 1em;
+        transition: transform .2s ease,
+        -webkit-transform .2s ease;
 
-              h3 {
-                font-weight: 600;
-    font-size: 1.4em;
-    padding-bottom: 8px;
-              }
+        h3 {
+            font-weight: 600;
+            font-size: 1.4em;
+            padding-bottom: 8px;
+        }
 
-    .card__desc {
-        opacity: .6;
-        text-align: left;
-    }
+        .card__desc {
+            opacity: .6;
+            text-align: left;
+        }
 
-          .card__feature-icon {
-opacity: .8;
-font-size: 3em;
-padding-bottom: 0.5em;
-          }
+        .card__feature-icon {
+            opacity: .8;
+            font-size: 3em;
+            padding-bottom: 0.5em;
+        }
 
-          .card__background-icon {
+        .card__background-icon {
             position: absolute;
             overflow: hidden;
             opacity: .05;
-    bottom: -70px;
-    right: 0;
-    transform: translate(35px, 5px);
+            bottom: -70px;
+            right: 0;
+            transform: translate(35px, 5px);
             font-size: 14em;
-          }
+        }
 
-    &:hover {
-          transform: translateY(-8px);
+        &:hover {
+            transform: translateY(-8px);
+        }
+
     }
-
-      }
 </style>

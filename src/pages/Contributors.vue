@@ -3,7 +3,7 @@
     <title>PreMiD - Contributors</title>
     <div
       v-for="(contributor, index) of contributors"
-      v-bind:key="contributor"
+      v-bind:key="contributor.name"
       :style="'color: ' + contributor.roleColor + ';'"
       v-on:mouseover="animate(index)"
       v-on:mouseout="de_animate(index)"

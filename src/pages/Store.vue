@@ -15,8 +15,8 @@
     <!-- <div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div> -->
     </div>
     <div class="presence-container">
-      <listing v-if="!searching" v-for="presence of presences" key="presence" :presence="presence" :nsfw="nsfw" />
-      <listing v-if="searching" v-for="presence of presence_search" key="presence_searcing" :presence="presence" />
+      <listing v-if="!searching" v-for="presence of presences" v-bind:key="presence.service" :presence="presence" :nsfw="nsfw" />
+      <listing v-if="searching" v-for="presence of presence_search" v-bind:key="presence_search.service" :presence="presence" />
     </div>
     </div>
   </div>
@@ -37,12 +37,19 @@ export default {
   data() {
     return {
       presences: [],
+      presences_installed: "",
       searching: false,
       nsfw: false,
       presence_search: []
     };
   },
   mounted() {
+
+        this.presences_installed = this.setCrap();
+
+        var event = new CustomEvent('PreMiD_GetPresenceList', { detail: 'YouTube' });
+        window.dispatchEvent(event);
+
     this.$data.presences = this.$data.presences.sort(
       this.dynamicSort("service")
     );
@@ -68,6 +75,12 @@ export default {
     )
   },
   methods: {
+    setCrap() {
+        window.addEventListener('PreMiD_GetWebisteFallback', function(data) {
+          console.log("gayi " + data.detail);
+          return data.detail;
+        });
+    },
     dynamicSort(property) {
       var sortOrder = 1;
 
@@ -85,6 +98,8 @@ export default {
       };
     },
     update_search() {
+      console.log(this.$data.presences_installed);
+      console.log(this.presences_installed);
       let input = document.getElementsByClassName("searchbar")[0];
       //this.$data.searching = true;
       if (input.value != "") {
