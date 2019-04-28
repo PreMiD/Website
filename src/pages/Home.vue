@@ -24,7 +24,7 @@
       </div>
       <div class="promo-container__presences">
         <div class="presences">
-          <div class="presence" v-for="presence of presences_display" v-bind:key="presence">
+          <div class="presence" v-for="presence of presences_display" v-bind:key="presence.service">
             <div class="top">
               <div class="logo">
                 <div class="logo_image" :style="'background-image: url(' + presence.profile.image + ');'"></div>

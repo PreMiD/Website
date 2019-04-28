@@ -11,7 +11,7 @@
       <router-link
         :to="'/' + category.route"
         v-for="category of categories"
-        v-bind:key="category"
+        v-bind:key="category.route"
         class="navbar__item"
       >
         <i :class="'fas fa-' + category.logo"></i>
@@ -26,7 +26,7 @@
         <router-link
         :to="'/' + category.route"
         v-for="category of categories"
-        v-bind:key="category"
+        v-bind:key="category.route"
         class="navbar__item"
       >
         <i :class="'fas fa-' + category.logo"></i>

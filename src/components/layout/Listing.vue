@@ -59,16 +59,17 @@
         win.focus();
       },
       sendPresence(name) {
-        console.log("Installing " + name + "...");
-        document.dispatchEvent(
-          new CustomEvent("PreMiD_AddService", {
-            detail: name
-          })
-        );
+        console.log("Adding " + name + "...");
+        var event = new CustomEvent('PreMiD_AddPresence', { detail: name });
+        window.dispatchEvent(event);
+        
       }
     },
     mounted() {
       clamp_desc();
+
+        console.log("sss " + this.$parent.presences_installed);
+      
     }
   };
 
@@ -96,7 +97,7 @@
     border-radius: 0.5rem;
     margin: 1em;
     padding: 0.5rem;
-    transition: all 200ms ease-out;
+    transition
 
     &:hover {
       box-shadow: 0 6px 32px 0 rgba(114, 137, 218, 0.3);
