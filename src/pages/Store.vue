@@ -2,16 +2,22 @@
   <div>
     <title>PreMiD - Store</title>
     <div class="store-menu">
-      <div class="store-menu__searchbar">
+      <div class="store-menu__searchbar-container">
         <i class="fas fa-search"></i>
-        <input class="search_bar" placeholder="Search" v-on:input="update_search()">
+        <input class="searchbar" placeholder="Search" v-on:input="update_search()">
+        <!-- TODO: Implement when we will be moving to DB.-->
+        <!-- <div class="searchbar-container__controls">
+          <a href="#" class="button">Submit</a>
+          <a href="#" class="button">Toggle NSFW</a>
+        </div> -->
       </div>
+      <!-- TODO: Implement when we will be moving to DB.-->
     <!-- <div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div> -->
     </div>
     <div class="presence-container">
-      <listing v-if="!searching" v-for="presence of presences" v-bind:key="presence" :presence="presence" :nsfw="nsfw" />
-      <listing v-if="searching" v-for="presence of presence_search" v-bind:key="presence" :presence="presence" />
-      <listing :presence="submit_own" submit="true" />
+      <listing v-if="!searching" v-for="presence of presences" key="presence" :presence="presence" :nsfw="nsfw" />
+      <listing v-if="searching" v-for="presence of presence_search" key="presence_searcing" :presence="presence" />
+    </div>
     </div>
   </div>
 </template>
@@ -31,15 +37,6 @@ export default {
   data() {
     return {
       presences: [],
-      submit_own: {
-        logo: submit,
-        color: "#7289DA",
-        service: "Submit your own",
-        url: "https://masterani.me",
-        description:
-          "Can’t find the service you’re looking for? Create or suggest your own! Click below for more info.",
-        service_tags: ["video", "media"]
-      },
       searching: false,
       nsfw: false,
       presence_search: []
@@ -88,7 +85,7 @@ export default {
       };
     },
     update_search() {
-      let input = document.getElementsByClassName("search_bar")[0];
+      let input = document.getElementsByClassName("searchbar")[0];
       //this.$data.searching = true;
       if (input.value != "") {
         this.$data.searching = true;
@@ -134,39 +131,43 @@ export default {
   padding-bottom: 0.5rem;
 }
 
-.store-menu__searchbar {
+.store-menu__searchbar-container {
   flex: 1 1 auto;
-
-  max-width: 700px;
-  margin: 0 auto;
+  display: flex;
   
   position: relative;
-  padding: 20px;
+
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
 
   width: 1%;
 
   input {
-    width: 100%;
+    width: -webkit-fill-available;
     border-radius: 99em;
+  }
+
+  .searchbar-container__controls {
+      margin: 0 4em;
+  }
+
+  button, .button {
+
+      &:not(:last-child), &:not(:first-child) {
+        border-radius: 0 0 0 0;
+      }
+   
+      display: inline-block;
+      padding: 0.09rem 10px;
+      font-size: 14px;
+      line-height: 25px;
+      font-weight: bold;
   }
 
 }
 
-.main-container {
-  padding: 1rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 18rem));
-}
-.shadow {
-  position: absolute;
-  width: 100%;
-  height: 0.25rem;
-  margin-right: -1rem;
-  margin-top: 0rem;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .4) 0%, rgba(0, 0, 0, 0) 100%);;
-}
-
-.search_bar {
+.searchbar {
   height: 1.8rem;
   padding: 0 10px;
   padding-left: 32px;
