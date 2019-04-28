@@ -71,9 +71,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="mobile" v-if="ua.includes('iPhone') || ua.includes('iPad') || ua.includes('Android')">
-      <center><p>Fuck You Kravos</p></center>
-    </div>-->
   </div>
 </template>
 
@@ -86,7 +83,11 @@ export default {
     Navigation
   },
   methods: {
-    openNavigation() {}
+    isElementVisible(elm) {
+      var rect = elm.getBoundingClientRect();
+      var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+      return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+    }
   },
   data() {
     return {
