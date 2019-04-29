@@ -9,18 +9,23 @@
             <img :src="presence.logo" class="service-logo">
           </div>
           <div class="store-card__service">
-            <h2>{{ presence.service }} <img
-                src="./../../assets/images/verified.svg" title="Verified"
-              v-tippy="{ inertia : true, arrow : true,  animation : 'scale', duration : '[250]'}" class="store-card__verified" v-if="!submit"></h2>
+            <h2>{{ presence.service }} <img src="./../../assets/images/verified.svg" title="Verified"
+                v-tippy="{ inertia : true, arrow : true,  animation : 'scale', duration : '[250]'}"
+                class="store-card__verified" v-if="!submit"></h2>
             <p v-if="!submit">Creator: <a>{{ presence.author.name }}</a></p>
           </div>
           <p class="store-card__desc">{{ presence.description }}</p>
         </div>
         <div class="store-card__buttons">
-          <button class="button" v-on:click="sendPresence(presence.service)">
+          <button v-if="!isInstalled" class="button" v-on:click="sendPresence(presence.service)">
             <span class="icon">
               <i class="fas fa-plus-square"></i>
-            </span>Add to PreMiD
+            </span>Add presence
+          </button>
+          <button v-if="isInstalled" class="button" v-on:click="removePresence(presence.service)">
+            <span class="icon">
+              <i class="fas fa-plus-square"></i>
+            </span>Remove presence
           </button>
         </div>
         <!-- <div class="buttons">
@@ -53,6 +58,11 @@
   export default {
     name: "listing",
     props: ["presence", "submit", "nsfw"],
+    data() {
+      return {
+        isInstalled: false,
+      };
+    },
     methods: {
       openInNewTab(url) {
         let page = window.open(url, "_blank");
@@ -60,16 +70,47 @@
       },
       sendPresence(name) {
         console.log("Adding " + name + "...");
-        var event = new CustomEvent('PreMiD_AddPresence', { detail: name });
+
+        var event = new CustomEvent('PreMiD_AddPresence', {
+          detail: name
+        });
         window.dispatchEvent(event);
-        
+
+        this.$data.isInstalled = true;
+      },
+      removePresence(name) {
+        console.log("Removing " + name + "...");
+
+        var event = new CustomEvent('PreMiD_RemovePresence', {
+          detail: name
+        });
+        window.dispatchEvent(event);
+
+        this.$data.isInstalled = false;
+      },
+      // This function compares the array elements that we get from Extension with `presenceName` string.
+      // If we find presence in array we return true.
+      isPresenceInstalled(presenceName) {
+        var array = this.$parent.presences_installed;
+
+        for (let element of array) {
+          if (element.toLowerCase() == presenceName.toLowerCase()) {
+            return true;
+          }
+        }
+
+        return false;
       }
+    },
+    beforeMount() {
     },
     mounted() {
       clamp_desc();
 
-        console.log("sss " + this.$parent.presences_installed);
-      
+      if(this.isPresenceInstalled(this.presence.service)) {
+        this.$data.isInstalled = true;
+      }
+
     }
   };
 
@@ -97,9 +138,8 @@
     border-radius: 0.5rem;
     margin: 1em;
     padding: 0.5rem;
-    transition
 
-    &:hover {
+    transition &:hover {
       box-shadow: 0 6px 32px 0 rgba(114, 137, 218, 0.3);
     }
 
@@ -168,29 +208,29 @@
       }
     }
 
-      button {
-        padding: 5px 10px;
-        font-weight: bold;
-        font-size: 14px;
-        margin: 3px 0;
-        width: 100%;
+    button {
+      padding: 5px 10px;
+      font-weight: bold;
+      font-size: 14px;
+      margin: 3px 0;
+      width: 100%;
 
-        &.service {
-          background: @background-primary;
-          color: @white-2;
-        }
-
-        &.add {
-          background: @accent-primary;
-          color: @white;
-        }
-
-        &.submit {
-          background: @background-primary;
-          color: @white-2;
-          width: 16rem;
-        }
+      &.service {
+        background: @background-primary;
+        color: @white-2;
       }
+
+      &.add {
+        background: @accent-primary;
+        color: @white;
+      }
+
+      &.submit {
+        background: @background-primary;
+        color: @white-2;
+        width: 16rem;
+      }
+    }
   }
 
 </style>

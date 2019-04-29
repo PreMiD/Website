@@ -100,7 +100,6 @@ export default {
 
 <style lang="less">
 @import "./stylesheets/colors.less";
-@import "./stylesheets/mobile_design.less";
 
 * {
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -338,4 +337,6 @@ img {
 .route-animation-leave-to {
   opacity: 0;
 }
+
+@import "./stylesheets/mobile_design.less";
 </style>
