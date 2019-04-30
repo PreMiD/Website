@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <navigation/>
+      <navigation />
     </header>
     <div class="page-wrapper">
       <div id="content">
@@ -75,268 +75,32 @@
 </template>
 
 <script>
-import Navigation from "./components/layout/Navigation.vue";
+  import Navigation from "./components/layout/Navigation.vue";
 
-export default {
-  name: "premid-web",
-  components: {
-    Navigation
-  },
-  methods: {
-    isElementVisible(elm) {
-      var rect = elm.getBoundingClientRect();
-      var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-      return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-    }
-  },
-  data() {
-    return {
-      ua: navigator.userAgent
-    };
-  },
-  mounted() {}
-};
+  export default {
+    name: "premid-web",
+    components: {
+      Navigation
+    },
+    methods: {
+      isElementVisible(elm) {
+        var rect = elm.getBoundingClientRect();
+        var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+        return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+      }
+    },
+    data() {
+      return {
+        ua: navigator.userAgent
+      };
+    },
+    mounted() {}
+  };
+
 </script>
 
 <style lang="less">
-@import "./stylesheets/colors.less";
 
-* {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
+  @import "./stylesheets/root.less";
 
-html,
-body {
-  height: 100%;
-}
-
-#app {
-  overflow: -webkit-paged-x;
-}
-
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-  background: #2c2f33;
-  color: @accent-primary;
-}
-
-header {
-  z-index: 10000;
-  width: 100%;
-}
-
-#content {
-  min-height: calc(100vh - 73px);
-  flex: 1 0 auto;
-}
-
-.verified-icon {
-  fill: gray;
-}
-
-#footer {
-  flex: 0 0 auto;
-  background: @background-secondary;
-  color: white;
-  padding: 20px;
-  margin-top: 2.5em;
-}
-
-.gitbook-logo img {
-  position: relative;
-  width: 150px;
-}
-
-.poeditor-logo {
-  position: relative;
-  width: 166px;
-  height: 47px;
-  background: url(./assets/images/poeditor.svg) no-repeat center center;
-  background-size: 166px 47px;
-
-  .poeditor-logo__title {
-    color: rgba(255, 255, 255, 1);
-    position: absolute;
-    font-size: 22px;
-    top: 10px;
-    left: 56px;
-    font-weight: 700;
-  }
-}
-
-.footer-copyright {
-  text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  color: #43484e;
-}
-
-.footer-grid {
-  max-width: 1400px;
-  margin: 0 auto;
-
-  display: flex;
-  position: relative;
-  justify-content: space-between;
-  align-content: center;
-
-  .grid__section {
-    .section__title {
-      font-weight: 700;
-      margin: 7px auto;
-      font-size: 18px;
-      color: white;
-    }
-
-    div {
-      p {
-        color: #99aab5;
-        margin: 7px auto;
-        font-weight: 600;
-      }
-
-      a {
-        &:not(.button) {
-          color: #99aab5;
-          transition: color 0.2s ease;
-
-          &:hover {
-            color: lighten(#99aab5, 10%);
-            transition: color 0s ease;
-          }
-        }
-
-        font-weight: 600;
-        display: block;
-        margin: 2px 0;
-      }
-    }
-  }
-}
-
-h3 {
-  font-weight: normal;
-}
-
-a {
-  text-decoration: none;
-  color: @accent-primary;
-  cursor: pointer;
-}
-
-button,
-a.button {
-  user-select: none;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 1.5rem;
-  font-size: 1.15rem;
-  background: #7289da;
-  font-weight: 700;
-  letter-spacing: 0.04rem;
-  color: fade(white, 95%);
-  cursor: pointer;
-  margin-right: 0.7rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 0 0 transparent;
-  text-align: center;
-
-  i {
-    margin-right: 5px;
-  }
-
-  &:hover {
-    box-shadow: 0 3px 26px -5px fade(lighten(#7289da, 5%), 50%);
-    background: lighten(#7289da, 5%);
-  }
-
-  &:active {
-    background: darken(#7289da, 5%);
-    box-shadow: none;
-    transition: all 0.1s ease;
-  }
-
-  &:focus {
-    outline: none;
-    cursor: pointer;
-  }
-}
-
-.colored-button(@color) {
-  background: @color;
-
-  &:hover {
-    box-shadow: 0 3px 26px -5px fade(lighten(@color, 2%), 50%);
-    background: lighten(@color, 2%);
-  }
-
-  &:active {
-    background: darken(@color, 2%);
-  }
-}
-
-button,
-a.button {
-  &.button_gray {
-    .colored-button(#2c2f33);
-  }
-  &.button_black {
-    .colored-button(#202225);
-  }
-}
-
-::-webkit-scrollbar {
-  width: 12px;
-  height: 0.6rem;
-}
-
-::-webkit-scrollbar-track {
-  background: @background-secondary;
-  border: none;
-}
-
-::-webkit-scrollbar-thumb {
-  border: 3px solid @background-secondary;
-  border-radius: 20px;
-  background: @accent-primary;
-
-  &:hover {
-    background: lighten(@accent-secondary, 3%);
-  }
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-}
-
-img {
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-.route-animation-enter-active,
-.route-animation-leave-active {
-  transition: opacity 0.2s ease-in-out;
-}
-
-.route-animation-enter,
-.route-animation-leave-to {
-  opacity: 0;
-}
-
-@import "./stylesheets/mobile_design.less";
 </style>

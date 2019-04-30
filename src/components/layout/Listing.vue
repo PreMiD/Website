@@ -16,7 +16,8 @@
           </div>
           <p class="store-card__desc">{{ presence.description }}</p>
         </div>
-        <div class="store-card__buttons">
+        <transition name="route-animation" mode="out-in">
+        <div v-if="this.$parent.extension_installed" class="store-card__buttons">
           <button v-if="!isInstalled" class="button" v-on:click="sendPresence(presence.service)">
             <span class="icon">
               <i class="fas fa-plus-square"></i>
@@ -28,6 +29,7 @@
             </span>Remove presence
           </button>
         </div>
+        </transition>
         <!-- <div class="buttons">
           <div class="container">
             <div class="left" v-if="!submit">

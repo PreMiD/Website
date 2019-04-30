@@ -15,7 +15,6 @@
 </script>
 
 <style lang="less" scoped>
-    @import "./../stylesheets/colors.less";
 
     .feature-cards__card {
         * {
