@@ -184,7 +184,8 @@
 </script>
 
 <style lang="less" scoped>
-  @import "./../stylesheets/colors.less";
+
+@import "../stylesheets/colors.less";
 
   .promo-container {
     display: flex;
@@ -379,7 +380,7 @@
 
     }
 
-        padding: 170px 0 200px;
+        padding: 120px 0 150px;
 
     background-image: linear-gradient(125deg, #738ef5, #b3aeff);
     color: #f8f9fd;
@@ -416,6 +417,8 @@
   .waves-divider {
     width: 100%;
     left: 0;
+
+    max-height: 100px;
 
     z-index: -1;
 

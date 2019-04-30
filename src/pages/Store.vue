@@ -37,9 +37,9 @@
       Checkbox
     },
     data() {
-
       return {
         presences: [],
+        extension_installed: false,
         presences_installed: "",
         searching: false,
         nsfw: false,
@@ -48,13 +48,24 @@
     },
     created() {
       var self = this;
-      window.addEventListener('PreMiD_GetWebisteFallback', function(data) {
-          console.log('Recieved information from Extension!');
-          var dataString = data.detail.toString().split(',');
-          self.$data.presences_installed = dataString;
+      window.addEventListener('PreMiD_GetWebisteFallback', function (data) {
+        console.log('Recieved information from Extension!');
+        var dataString = data.detail.toString().split(',');
+        self.$data.presences_installed = dataString;
       });
     },
     mounted() {
+
+      var self = this;
+      setTimeout(function () {
+        if (document.getElementById('PreMiD_PageVariables') !== null) {
+          self.$data.extension_installed = true;
+          console.log('Gay stuff!');
+        } else {
+          self.$data.extension_installed = false;
+          console.log('not Gay stuff!');
+        }
+      }, 1000);
 
       var event = new CustomEvent('PreMiD_GetPresenceList', {});
 
@@ -103,8 +114,6 @@
         };
       },
       update_search() {
-        console.log(this.$data.presences_installed);
-        console.log(this.presences_installed);
         let input = document.getElementsByClassName("searchbar")[0];
         //this.$data.searching = true;
         if (input.value != "") {
