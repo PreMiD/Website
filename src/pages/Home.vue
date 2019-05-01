@@ -41,6 +41,7 @@
               <div class="service">
                 <div class="service_logo">
                   <img :src="presence.service_logo">
+                  <img src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png" alt="Playing" style="width: 2rem;position: absolute;margin-left: -2rem;margin-top: 3rem;">
                 </div>
                 <div class="details">
                   <h2>{{ presence.service }}</h2>
