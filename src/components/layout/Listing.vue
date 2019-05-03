@@ -1,8 +1,8 @@
 <template>
   <transition name="card-animation" mode="out-in">
 
-    <div class="presence-container__item_new">
-      <div class="store-card_new">
+    <div class="presence-container__item">
+      <div class="store-card" :style="`background-image: url('${presence.thumbnail}')`">
         <div class="store-card__service-logo">
           <img :src="presence.logo">
         </div>
@@ -29,7 +29,7 @@
             </div>
           </transition>
         </div>
-        <div class="store-card__gradient" :style="`background: linear-gradient(135deg, ${presence.color} 0%, hsl(216, 0%, 0%) 100%);`"></div>
+        <div class="store-card__gradient" :style="`background: linear-gradient(135deg, ${presence.color} 0%, black 100%);`"></div>
       </div>
     </div>
 
@@ -137,7 +137,7 @@
 </script>
 
 <style lang="less" scoped>
-  .presence-container__item_new {
+  .presence-container__item {
     flex: 0 0;
   }
 

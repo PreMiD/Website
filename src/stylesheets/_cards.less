@@ -1,13 +1,14 @@
-.store-card_new {
+.store-card {
     width: 400px;
     height: 200px;
     position: relative;
     background: hsl(216, 7%, 9%);
     background-image: url("https://cached.imagescaler.hbpl.co.uk/resize/scaleWidth/743/cached.offlinehbpl.hbpl.co.uk/news/OMC/Netflix1-20180822081935478.jpg");
+    background-size: cover;
     box-shadow: 0 4px 32px 0 rgba(9, 10, 10, 0.2);
     border-radius: 0.5rem;
     overflow: hidden;
-    margin: 1em;
+    margin: 0.6em;
     padding: 0.5rem;
 
     display: flex;
@@ -26,7 +27,7 @@
         bottom: 0;
         left: 0;
         background-image: linear-gradient(to bottom right,#002f4b,#dc4225);
-        opacity: .4; 
+        opacity: .7; 
 
         z-index: 1;
     }
@@ -37,12 +38,15 @@
         img {
             max-width: 100px;
             border-radius: 5px;
+            filter: drop-shadow(0 4px 0.75rem rgba(0, 0, 0, 0.2));
         }
 
         z-index: 2;
     }
 
     .store-card__service-info {
+
+        filter: drop-shadow(0 4px 0.75rem rgba(0, 0, 0, 0.4));
 
         z-index: 2;
 
@@ -59,6 +63,8 @@
         }
 
         p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
             margin: 0;
             font-weight: 500;
         }
@@ -74,7 +80,7 @@
             margin-top: 8px;
             font-size: 12px;
 
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.8);
 
             transition: all 0.2s ease;
         }
@@ -107,105 +113,6 @@
 
     }
 
-}
-
-.store-card {
-    width: 200px;
-    position: relative;
-    background: hsl(216, 7%, 9%);
-    box-shadow: 0 4px 32px 0 rgba(9, 10, 10, 0.2);
-    border-radius: 0.5rem;
-    margin: 1em;
-    padding: 0.5rem;
-
-    .store-card__verified {
-        position: relative;
-        display: inline-block;
-        width: 16px;
-        vertical-align: baseline;
-    }
-
-    .store-card__content {
-        padding: 0.5rem;
-        grid-area: top;
-        justify-self: top;
-        z-index: 10;
-
-        .store-card__desc {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -webkit-box-orient: vertical;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-        }
-
-        .store-card__logo {
-            border-radius: 0.4rem;
-            transition: box-shadow 120ms;
-            position: relative;
-            height: 0;
-            padding: 50% 20px;
-
-            .service-logo {
-                height: 6rem;
-                position: absolute;
-                top: 50%;
-                right: 50%;
-                transform: translate(50%, -50%);
-                transition: height 120ms ease, width 120ms ease, transform 120ms ease;
-                position: absolute;
-                filter: drop-shadow(0rem 0rem 0.7rem rgba(0, 0, 0, 0.5));
-            }
-        }
-
-        h2 {
-            font-size: 1.3rem;
-            line-height: 0.2rem;
-
-            span {
-                color: @white-2;
-                font-size: 1.1rem;
-
-                a {
-                    color: inherit;
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
-
-        p {
-            color: @white-2;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-    }
-
-    button {
-        padding: 5px 10px;
-        font-weight: bold;
-        font-size: 14px;
-        margin: 3px 0;
-        width: 100%;
-
-        &.service {
-            background: @background-primary;
-            color: @white-2;
-        }
-
-        &.add {
-            background: @accent-primary;
-            color: @white;
-        }
-
-        &.submit {
-            background: @background-primary;
-            color: @white-2;
-            width: 16rem;
-        }
-    }
 }
 
 
