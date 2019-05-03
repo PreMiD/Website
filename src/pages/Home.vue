@@ -1,7 +1,6 @@
 <template>
   <div>
     <title>PreMiD</title>
-
     <div class="promo-container">
       <div class="promo-container__heading">
         <div class="heading__logo">
@@ -169,6 +168,7 @@
       };
     },
     mounted() {
+
       const length = this.$data.presences.length;
       this.$data.presences_display.push(
         this.$data.presences.splice((Math.random() * length) | 0, 1)[0],
@@ -187,59 +187,6 @@
 <style lang="less" scoped>
 
 @import "../stylesheets/colors.less";
-
-  .promo-container {
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-content: center;
-
-    padding: 5em 0;
-
-
-    .promo-container__heading {
-      margin-right: 60px;
-
-      .heading__logo {
-        vertical-align: middle;
-        display: inline-block;
-      }
-
-      .heading__text {
-        margin-left: 20px;
-        vertical-align: middle;
-        display: inline-block;
-
-        h1 {
-          font-size: 3.5em;
-          font-family: "Discord Font";
-          text-transform: uppercase;
-          margin: 0;
-        }
-
-        p {
-          position: relative;
-          left: 3px;
-
-          margin-left: 3px;
-          font-size: 1.2em;
-          margin: 0;
-          font-weight: 500;
-          color: rgba(255, 255, 255, 0.9);
-          max-width: 300px;
-        }
-      }
-
-      .heading__button-group {
-        max-width: fit-content;
-        margin: 40px auto;
-      }
-    }
-
-    .promo-container__presences {
-      margin-left: 60px;
-    }
-  }
 
   .presences {
     grid-area: right;
@@ -341,30 +288,6 @@
     }
   }
 
-  .section-heading {
-
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    margin: 0;
-    padding-top: 2em;
-    padding-bottom: 3.5em;
-    text-align: center;
-    .section-heading__title {
-      color: #fff;
-      font-size: 2em;
-      font-weight: 700;
-    }
-    .section-heading__subtitle {
-      color: #fff;
-      opacity: 0.6;
-      font-size: 1.1em;
-      font-weight: 400;
-    }
-  }
-
   .features-container {
     position: relative;
     z-index: 1;
@@ -377,7 +300,7 @@
       margin: 0 auto;
 
       justify-content: center;
-      align-items: baseline;
+      align-items: normal;
 
     }
 
@@ -419,8 +342,6 @@
     width: 100%;
     left: 0;
 
-    max-height: 100px;
-
     z-index: -1;
 
     &_top {
@@ -450,8 +371,10 @@
       display: block;
           overflow: hidden;
               transform-origin: 0px 0px;
-                  color: #2C2F33;
+                  color: #202225;
+                      max-height: 100px;
     }
 
   }
+
 </style>

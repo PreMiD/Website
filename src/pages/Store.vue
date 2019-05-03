@@ -30,6 +30,8 @@
   import request from "request";
   import submit from "./../assets/images/submit.svg";
 
+  import axios from "axios";
+
   export default {
     name: "store",
     components: {
@@ -47,7 +49,10 @@
       };
     },
     created() {
+      // Vue hook to call it inside JS functions.
       var self = this;
+
+      // Capturing event with presence data from extension.
       window.addEventListener('PreMiD_GetWebisteFallback', function (data) {
         console.log('Recieved information from Extension!');
         var dataString = data.detail.toString().split(',');
@@ -56,7 +61,10 @@
     },
     mounted() {
 
+      // Vue hook to call it inside JS functions.
       var self = this;
+
+      // Checking if user has the extension installed.
       setTimeout(function () {
         if (document.getElementById('PreMiD_PageVariables') !== null) {
           self.$data.extension_installed = true;
@@ -67,36 +75,34 @@
         }
       }, 1000);
 
+      // Firing event to get response from Extension with installed presences data.
       var event = new CustomEvent('PreMiD_GetPresenceList', {});
-
       window.dispatchEvent(event);
 
-      this.$data.presences = this.$data.presences.sort(
-        this.dynamicSort("service")
-      );
+      // Requesting presences data from our API and adding it into our Vue data.
+      axios.get(`https://api.premid.app/presences`)
+        .then(function (res) {
+          let presences = res.data;
+          for (let presence of presences) {
+            let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/')
+              .slice(0, -1) + '/metadata.json';
+            self.getPresenceData(url);
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
 
-      request(
-        `https://api.premid.app/presences`,
-        (err, res, dat) => {
-          if (!err) {
-            let presences = JSON.parse(dat);
-            for (let presence of presences) {
-              let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/')
-                .slice(0, -1) + '/metadata.json';
-              request(
-                url,
-                (err, res, dat) => {
-                  if (!err) {
-                    this.$data.presences.push(JSON.parse(dat));
-                  } else console.log(err);
-                }
-              )
-            }
-          } else console.log(err);
-        }
-      )
     },
     methods: {
+
+      getPresenceData: async function (url) {
+        await axios.get(url)
+          .then((res) => {
+            this.$data.presences.push(res.data);
+          }).catch((err) => {
+            console.log(err);
+          });
+      },
       dynamicSort(property) {
         var sortOrder = 1;
 
@@ -146,20 +152,9 @@
 <style lang="less" scoped>
   @import "./../stylesheets/colors.less";
 
-  .presence-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    position: relative;
-
-    max-width: 1400px;
-    margin: 0 auto;
-    justify-content: center;
-  }
-
   .store-menu {
     display: flex;
-    background: #202225;
+    background: hsl(216, 7%, 11%);
     padding-bottom: 0.5rem;
   }
 

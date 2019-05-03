@@ -42,6 +42,9 @@ export default {
     };
   },
   mounted() {
+
+    this.$parent.gayme();
+
     let ua = navigator.userAgent;
     let platform_temp = "linux";
     let platforms_temp = ["windows", "apple", "linux"];
@@ -111,56 +114,4 @@ export default {
 
 @import "../stylesheets/colors.less";
 
-.main {
-  padding: 2.5rem;
-  color: #99aab5;
-}
-
-.title {
-  color: @accent-primary;
-}
-
-h2 {
-  font-family: "Discord Font";
-  font-size: 2.7rem;
-  line-height: 2rem;
-}
-
-.logo {
-  background: @background-secondary;
-  color: @accent-primary;
-  font-size: 6.5rem;
-  padding: 1rem;
-  margin: 0.6rem;
-  width: 7rem;
-  height: 7rem;
-  border-radius: 0.8rem;
-  cursor: pointer;
-
-  &.pp1 {
-    background: @accent-primary;
-    color: @background-primary;
-  }
-
-  @t-time: 160ms;
-  transition: background @t-time, color @t-time, margin @t-time, width @t-time,
-    height @t-time, -webkit-background-clip @t-time,
-    -webkit-text-fill-color @t-time;
-
-  &:hover {
-    color: rgba(255, 255, 255, 1);
-    transition: background @t-time, color @t-time, margin @t-time, width @t-time,
-      height @t-time, -webkit-background-clip @t-time,
-      -webkit-text-fill-color @t-time;
-    &.fa- {
-      margin: 0.6rem;
-      width: 7rem;
-      height: 7rem;
-    }
-  }
-}
-
-.premid {
-  font-family: "Discord Font";
-}
 </style>
