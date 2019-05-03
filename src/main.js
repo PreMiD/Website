@@ -8,7 +8,6 @@ import router from './router';
 import VueTippy from 'vue-tippy'
 
 Vue.use(VueTippy);
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

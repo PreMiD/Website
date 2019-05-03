@@ -1,7 +1,7 @@
 .navbar__container {
 
   background: @background-secondary;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
 
 .navbar {
     max-width: 1400px;
@@ -53,12 +53,6 @@
       margin: 0 20px;
       position: relative;
 
-      &.router-link-active {
-        &::after {
-          width: 100%;
-        }
-      }
-
       .item__title {
         font-family: Inter;
         font-weight: 800;
@@ -70,15 +64,21 @@
         left: 50%;
         transform: translate(-50%);
         width: 0;
-        height: 3px;
-        bottom: -2px;
-        box-shadow: 0 1px 16px 0 @accent-primary;
+        height: 2px;
+        bottom: -1px;
+        border-radius: 5px;
+        // box-shadow: 0 1px 16px 0 @accent-primary;
         background: @accent-primary;
         transition: all .4s cubic-bezier(0.26, 0.08, 0, 0.97);
       }
       &:hover {
         &::after {
-          width: 100%;
+          width: 50%;
+        }
+      }
+      &.router-link-active {
+        &::after {
+          width: 80%;
         }
       }
     }

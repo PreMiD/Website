@@ -41,6 +41,7 @@ export default {
   name: "navigation",
   data() {
     return {
+      mobileNavbarSize: 0,
       categories: [
         {
           logo: "store",
@@ -63,7 +64,7 @@ export default {
   methods: {
     showMobileNavigation() {
       if (this.$refs.menuMobile.style.display !== 'flex') {
-        this.$refs.menuMobile.style.display = 'flex'
+        this.$refs.menuMobile.style.display = 'flex';
       } else this.$refs.menuMobile.style.display = 'none';
     }
   }

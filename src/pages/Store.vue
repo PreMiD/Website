@@ -145,21 +145,10 @@
 
 <style lang="less" scoped>
   @import "./../stylesheets/colors.less";
-
-  .presence-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    position: relative;
-
-    max-width: 1400px;
-    margin: 0 auto;
-    justify-content: center;
-  }
-
+  
   .store-menu {
     display: flex;
-    background: #202225;
+    background: hsl(216, 7%, 11%);
     padding-bottom: 0.5rem;
   }
 

@@ -1,0 +1,171 @@
+.store-card {
+    width: 200px;
+    position: relative;
+    background: hsl(216, 7%, 9%);
+    box-shadow: 0 4px 32px 0 rgba(9, 10, 10, 0.2);
+    border-radius: 0.5rem;
+    margin: 1em;
+    padding: 0.5rem;
+
+    .store-card__verified {
+        position: relative;
+        display: inline-block;
+        width: 16px;
+        vertical-align: baseline;
+    }
+
+    .store-card__content {
+        padding: 0.5rem;
+        grid-area: top;
+        justify-self: top;
+        z-index: 10;
+
+        .store-card__desc {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+        }
+
+        .store-card__logo {
+            border-radius: 0.4rem;
+            transition: box-shadow 120ms;
+            position: relative;
+            height: 0;
+            padding: 50% 20px;
+
+            .service-logo {
+                height: 6rem;
+                position: absolute;
+                top: 50%;
+                right: 50%;
+                transform: translate(50%, -50%);
+                transition: height 120ms ease, width 120ms ease, transform 120ms ease;
+                position: absolute;
+                filter: drop-shadow(0rem 0rem 0.7rem rgba(0, 0, 0, 0.5));
+            }
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            line-height: 0.2rem;
+
+            span {
+                color: @white-2;
+                font-size: 1.1rem;
+
+                a {
+                    color: inherit;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        p {
+            color: @white-2;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+    }
+
+    button {
+        padding: 5px 10px;
+        font-weight: bold;
+        font-size: 14px;
+        margin: 3px 0;
+        width: 100%;
+
+        &.service {
+            background: @background-primary;
+            color: @white-2;
+        }
+
+        &.add {
+            background: @accent-primary;
+            color: @white;
+        }
+
+        &.submit {
+            background: @background-primary;
+            color: @white-2;
+            width: 16rem;
+        }
+    }
+}
+
+
+.contributor {
+    width: 11.5rem;
+    height: 15.2rem;
+    border-radius: 0.3rem;
+    background: @background-secondary;
+    transform: translate(0.5rem);
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
+    @transition-time: 150ms;
+    transition: box-shadow @transition-time ease, transform @transition-time ease,
+        color @transition-time, background @transition-time;
+
+    &:hover {
+        transform: translate(0.2rem, -0.3rem);
+        margin-bottom: 0.5rem;
+        box-shadow: 0.35rem 0.35rem rgba(0, 0, 0, 0.2);
+        transition: box-shadow @transition-time ease,
+            transform @transition-time ease, color @transition-time,
+            background @transition-time;
+
+        .picture {
+            width: 11rem;
+            height: 11rem;
+            margin-top: 0.5rem;
+            margin-left: 0rem;
+            transition: margin-top @transition-time ease,
+                margin-left @transition-time ease, width @transition-time ease,
+                height @transition-time ease;
+
+            img {
+                transition: border-radius @transition-time ease;
+                border-radius: 0.3rem;
+            }
+        }
+    }
+
+    .picture {
+        width: 12rem;
+        height: 12rem;
+        margin-bottom: 0.25rem;
+        margin-left: -0.5rem;
+        transition: margin-top @transition-time ease,
+            margin-left @transition-time ease, width @transition-time ease,
+            height @transition-time ease;
+
+        img {
+            border-radius: 0.3rem 0.3rem 0 0;
+        }
+    }
+
+    span {
+        font-weight: bold;
+        font-family: "Discord Font";
+
+        &.name {
+            color: white;
+            font-size: 0.8rem;
+        }
+    }
+}
+
+.presence-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    position: relative;
+
+    max-width: 1400px;
+    margin: 0 auto;
+    justify-content: center;
+  }
