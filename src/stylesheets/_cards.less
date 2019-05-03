@@ -1,3 +1,114 @@
+.store-card_new {
+    width: 400px;
+    height: 200px;
+    position: relative;
+    background: hsl(216, 7%, 9%);
+    background-image: url("https://cached.imagescaler.hbpl.co.uk/resize/scaleWidth/743/cached.offlinehbpl.hbpl.co.uk/news/OMC/Netflix1-20180822081935478.jpg");
+    box-shadow: 0 4px 32px 0 rgba(9, 10, 10, 0.2);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin: 1em;
+    padding: 0.5rem;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    transition: all 0.2s ease;
+
+    user-select: none;
+
+    .store-card__gradient {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient(to bottom right,#002f4b,#dc4225);
+        opacity: .4; 
+
+        z-index: 1;
+    }
+
+    .store-card__service-logo {
+        padding: 0 1em;
+        margin: auto 0;
+        img {
+            max-width: 100px;
+            border-radius: 5px;
+        }
+
+        z-index: 2;
+    }
+
+    .store-card__service-info {
+
+        z-index: 2;
+
+        color: white;
+        margin: auto 0;
+        margin-right: auto;
+
+        a {
+            color: white;
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        p {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .store-card__desc {
+            opacity: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+
+            margin-top: 8px;
+            font-size: 12px;
+
+            color: rgba(255, 255, 255, 0.7);
+
+            transition: all 0.2s ease;
+        }
+
+        .store-card__buttons {
+            margin-top: 10px;
+
+            display: none;
+
+            .button, a {
+                font-size: 12px;
+                width: 100%;
+            }
+        }
+
+    }
+
+    &:hover {
+        box-shadow: 0 6px 32px 0 rgba(9, 10, 10, 0.8);
+
+        .store-card__buttons {
+            display: inline-block;
+            opacity: 1;
+        }
+
+        .store-card__desc {
+            display: none;
+            opacity: 0;
+        }
+
+    }
+
+}
+
 .store-card {
     width: 200px;
     position: relative;

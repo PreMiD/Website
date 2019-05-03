@@ -24,6 +24,8 @@
             padding: 0;
         }
 
+        user-select: none;
+
         z-index: 1;
         position: relative;
         width: 440px;

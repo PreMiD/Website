@@ -19,6 +19,7 @@
     "build": "cp -R src/assets static/ && node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "discord.js": "^11.4.2",
     "dotenv": "^6.2.0",
     "gif-frames": "^1.0.1",
