@@ -187,18 +187,6 @@
 <style lang="less" scoped>
 
 @import "../stylesheets/colors.less";
-
-
-  .service_logo {
-    position:relative;
-  }
-  
-  .service_logo > img:nth-child(2) {
-    position:absolute;
-    top:3rem;
-    right:0;
-    width:2rem;
-  }
   .presences {
     grid-area: right;
     justify-self: right;
@@ -280,8 +268,21 @@
           margin-top: 0.4rem;
           width: 5.5rem;
           height: 5.5rem;
+          position:relative;
         }
-
+        
+        .service_logo > img:nth-child(1) {
+          width:100%;
+          height:100%;
+        }
+        .service_logo > img:nth-child(2) {
+          position:absolute;
+          right:0;
+          bottom:4px;
+          width:2rem;
+          background:#6c82cf;
+          border-radius:999rem;
+        }
         .details {
           h2 {
             margin-top: 0.6rem;
