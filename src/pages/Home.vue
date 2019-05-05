@@ -40,7 +40,7 @@
               <div class="service">
                 <div class="service_logo">
                   <img :src="presence.service_logo">
-                  <img src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png" alt="Playing" style="width: 2rem;position: absolute;margin-left: -2rem;margin-top: 3rem;">
+                  <img src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png" alt="Playing">
                 </div>
                 <div class="details">
                   <h2>{{ presence.service }}</h2>
@@ -188,6 +188,17 @@
 
 @import "../stylesheets/colors.less";
 
+
+  .service_logo {
+    position:relative;
+  }
+  
+  .service_logo > img:nth-child(2) {
+    position:absolute;
+    top:3rem;
+    right:0;
+    width:2rem;
+  }
   .presences {
     grid-area: right;
     justify-self: right;
