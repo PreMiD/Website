@@ -5,7 +5,7 @@
       <div class="store-menu__searchbar-container">
         <i class="fas fa-search"></i>
         <input class="searchbar" placeholder="Search" v-on:input="update_search()">
-        <!-- TODO: Implement when we will be moving to DB.-->
+        <!-- // TODO: Implement when we will be moving to DB.-->
         <!-- <div class="searchbar-container__controls">
           <a href="#" class="button">Submit</a>
           <a href="#" class="button">Toggle NSFW</a>

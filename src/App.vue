@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <navigation />
+      <navigation/>
     </header>
     <div class="page-wrapper">
       <div id="content">
@@ -39,7 +39,9 @@
           <div class="grid__section">
             <p class="section__title">Support us</p>
             <div>
-              <a v-on:click="openNavigation()">Donate</a>
+              <!-- // TODO finish after V2
+              <a v-on:click="openNavigation()">Donate</a>-->
+              <a href="https://patreon.com/timeraa/">Donate</a>
               <a href="https://github.com/PreMiD/">For coders</a>
               <a href="https://discord.premid.app/">For designers</a>
               <a href="https://poeditor.com/join/project/Zzl1oOQV5g/">For translators</a>
@@ -75,35 +77,35 @@
 </template>
 
 <script>
-  import Navigation from "./components/layout/Navigation.vue";
+import Navigation from "./components/layout/Navigation.vue";
 
-  export default {
-    name: "premid-web",
-    components: {
-      Navigation
+export default {
+  name: "premid-web",
+  components: {
+    Navigation
+  },
+  methods: {
+    isElementVisible(elm) {
+      var rect = elm.getBoundingClientRect();
+      var viewHeight = Math.max(
+        document.documentElement.clientHeight,
+        window.innerHeight
+      );
+      return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
     },
-    methods: {
-      isElementVisible(elm) {
-        var rect = elm.getBoundingClientRect();
-        var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-        return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-      },
-      gayme() {
-        console.log("gay");
-      }
-    },
-    data() {
-      return {
-        ua: navigator.userAgent
-      };
-    },
-    mounted() {}
-  };
-
+    gayme() {
+      console.log("gay");
+    }
+  },
+  data() {
+    return {
+      ua: navigator.userAgent
+    };
+  },
+  mounted() {}
+};
 </script>
 
 <style lang="less">
-
-  @import "./stylesheets/root.less";
-
+@import "./stylesheets/root.less";
 </style>
