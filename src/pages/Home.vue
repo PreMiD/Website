@@ -39,6 +39,11 @@
                   {{ presence.profile.name }}
                   <span class="id">{{ '#' + presence.profile.id }}</span>
                 </h2>
+                <div class="badges">
+                  <div v-for="badge of presence.profile.badges" v-bind:key="badge" class="badge">
+                    <img :src="badge">
+                  </div>
+                </div>
               </div>
             </div>
             <div class="bottom">
@@ -92,17 +97,17 @@
       <div class="feature-cards">
         <Card
           title="Extension System"
-          desc="Our extension have own extensions! Sounds very strange but it works and allows you to install different presences for your lovely services!"
+          desc="Our extension has its own extensions! Sounds very strange but it allows you to install different presences for your lovely services!"
           icon="fas fa-puzzle-piece"
         />
         <Card
           title="Media Controls"
-          desc="Most of our presences provide support for Media Controls, they allow you to skip & pause tracks while using another applications."
+          desc="Most of our presences provide support for Media Controls. You can skip & pause tracks while using other applications."
           icon="fas fa-keyboard"
         />
         <Card
           title="Tab Priority"
-          desc="When you changing between tabs, our extension prioritizes the active one."
+          desc="When changing between tabs, our extension prioritizes the active one."
           icon="fas fa-laptop"
         />
         <Card
@@ -132,15 +137,17 @@
 
 <script>
 import request from "request";
-import fruxh_picture from "./../assets/images/fruxh.gif";
-import mulv_picture from "./../assets/images/mulv.gif";
-import brilliance from "./../assets/images/brilliance.svg";
-import partner from "./../assets/images/partner.svg";
+import balance from "./../assets/images/balance.svg";
+//import brilliance from "./../assets/images/brilliance.svg";
+//import bravery from "./../assets/images/bravery.svg";
+import hypesquad from "./../assets/images/hypesquad.svg";
 import nitro from "./../assets/images/nitro.svg";
+import partner from "./../assets/images/partner.svg";
 import early from "./../assets/images/early.svg";
+import staff from "./../assets/images/staff.svg";
+import bughunter from "./../assets/images/bughunter.svg";
 import twitch_logo from "./../assets/images/twitch-logo.svg";
 import youtube_logo from "./../assets/images/youtube-logo.svg";
-import master_logo from "./../assets/images/master-logo.svg";
 import soundcloud_logo from "./../assets/images/soundcloud_logo.svg";
 import netflix_logo from "./../assets/images/netflix_logo.svg";
 
@@ -160,7 +167,8 @@ export default {
             image:
               "https://cdn.discordapp.com/avatars/259407123782434816/89e8116b11f7150459dacc71c059202c.png",
             name: "Fruxh",
-            id: "3282"
+            id: "3282",
+            badges: [hypesquad, balance, early, nitro]
           },
           service: "Twitch",
           service_logo: twitch_logo,
@@ -184,7 +192,8 @@ export default {
             image:
               "https://cdn.discordapp.com/avatars/223238938716798978/96d2e1c86178c8c79c99577e9772ada8.png",
             name: "Timeraa",
-            id: "7947"
+            id: "7947",
+            badges: [balance, nitro]
           },
           service: "YouTube",
           service_logo: youtube_logo,
@@ -199,7 +208,8 @@ export default {
             image:
               "https://cdn.discordapp.com/avatars/213305189657083905/f1f139ab21d7979d91bb874fbae5e91e.png",
             name: "Voknehzyr",
-            id: "8754"
+            id: "8754",
+            badges: [balance, early]
           },
           service: "SoundCloud",
           service_logo: soundcloud_logo,
@@ -211,7 +221,8 @@ export default {
             image:
               "https://cdn.discordapp.com/avatars/291599690812882945/88a2157993073229c2aa3ae0e15f16dd.png",
             name: "!!PãoCaro!!",
-            id: "4076"
+            id: "4076",
+            badges: [balance]
           },
           service: "Netflix",
           service_logo: netflix_logo,

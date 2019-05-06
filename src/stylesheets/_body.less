@@ -1,179 +1,194 @@
 * {
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+		"Helvetica Neue", sans-serif;
 }
 
 html,
 body {
-    height: 100%;
+	height: 100%;
 }
 
 #app {
-    overflow: -webkit-paged-x;
+	overflow: -webkit-paged-x;
 }
 
 .page-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 body {
-    padding: 0;
-    margin: 0;
-    background: #202225;
-    color: @accent-primary;
+	padding: 0;
+	margin: 0;
+	background: #202225;
+	color: @accent-primary;
 }
 
 header {
-    z-index: 10000;
-    width: 100%;
+	z-index: 10000;
+	width: 100%;
 }
 
 #content {
-    min-height: 100vh - 11rem;
-    flex: 1 0 auto;
+	min-height: 100vh - 11rem;
+	flex: 1 0 auto;
 }
 
 #footer {
-    flex: 0 0 auto;
-    background: @background-secondary;
-    color: white;
-    padding: 20px;
-    margin-top: 2.5em;
+	flex: 0 0 auto;
+	background: @background-secondary;
+	color: white;
+	padding: 20px;
+	margin-top: 2.5em;
 }
 
 .gitbook-logo img {
-    position: relative;
-    width: 150px;
+	position: relative;
+	width: 150px;
 }
 
 .poeditor-logo {
-    position: relative;
-    width: 166px;
-    height: 47px;
-    background: url(../assets/images/poeditor.svg) no-repeat center center;
-    background-size: 166px 47px;
+	position: relative;
+	width: 166px;
+	height: 47px;
+	background: url(../assets/images/poeditor.svg) no-repeat center center;
+	background-size: 166px 47px;
 
-    .poeditor-logo__title {
-        color: rgba(255, 255, 255, 1);
-        position: absolute;
-        font-size: 22px;
-        top: 10px;
-        left: 56px;
-        font-weight: 700;
-    }
+	.poeditor-logo__title {
+		color: rgba(255, 255, 255, 1);
+		position: absolute;
+		font-size: 22px;
+		top: 10px;
+		left: 56px;
+		font-weight: 700;
+	}
+}
+
+.bitrock-logo {
+	position: relative;
+	width: 46px;
+	height: 46px;
+	background: url(../assets/images/bitrock_installbuilder_logo.png) no-repeat center center;
+	background-size: 46px 46px;
+
+	.bitrock-logo__title {
+		color: rgba(255, 255, 255, 1);
+		position: absolute;
+		font-size: 24px;
+		top: 10px;
+		left: 50px;
+		font-weight: 700;
+	}
 }
 
 .footer-copyright {
-    text-align: center;
-    font-size: 12px;
-    font-weight: 700;
-    color: #43484e;
+	text-align: center;
+	font-size: 12px;
+	font-weight: 700;
+	color: #43484e;
 }
 
 .footer-grid {
-    max-width: 1400px;
-    margin: 0 auto;
+	max-width: 1400px;
+	margin: 0 auto;
 
-    display: flex;
-    position: relative;
-    justify-content: space-between;
-    align-content: center;
+	display: flex;
+	position: relative;
+	justify-content: space-between;
+	align-content: center;
 
-    .grid__section {
-        .section__title {
-            font-weight: 700;
-            margin: 7px auto;
-            font-size: 18px;
-            color: white;
-        }
+	.grid__section {
+		.section__title {
+			font-weight: 700;
+			margin: 7px auto;
+			font-size: 18px;
+			color: white;
+		}
 
-        div {
-            p {
-                color: #99aab5;
-                margin: 7px auto;
-                font-weight: 600;
-            }
+		div {
+			p {
+				color: #99aab5;
+				margin: 7px auto;
+				font-weight: 600;
+			}
 
-            a {
-                &:not(.button) {
-                    color: #99aab5;
-                    transition: color 0.2s ease;
+			a {
+				&:not(.button) {
+					color: #99aab5;
+					transition: color 0.2s ease;
 
-                    &:hover {
-                        color: lighten(#99aab5, 10%);
-                        transition: color 0s ease;
-                    }
-                }
+					&:hover {
+						color: lighten(#99aab5, 10%);
+						transition: color 0s ease;
+					}
+				}
 
-                font-weight: 600;
-                display: block;
-                margin: 2px 0;
-            }
-        }
-    }
+				font-weight: 600;
+				display: block;
+				margin: 2px 0;
+			}
+		}
+	}
 }
 
 h3 {
-    font-weight: normal;
+	font-weight: normal;
 }
 
 a {
-    text-decoration: none;
-    color: @accent-primary;
-    cursor: pointer;
+	text-decoration: none;
+	color: @accent-primary;
+	cursor: pointer;
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
-    height: 0.6rem;
+	width: 12px;
+	height: 0.6rem;
 }
 
 ::-webkit-scrollbar-track {
-    background: @background-secondary;
-    border: none;
+	background: @background-secondary;
+	border: none;
 }
 
 ::-webkit-scrollbar-thumb {
-    border: 3px solid @background-secondary;
-    border-radius: 20px;
-    background: @accent-primary;
+	border: 3px solid @background-secondary;
+	border-radius: 20px;
+	background: @accent-primary;
 
-    &:hover {
-        background: lighten(@accent-secondary, 3%);
-    }
+	&:hover {
+		background: lighten(@accent-secondary, 3%);
+	}
 }
 
 ::-webkit-scrollbar-corner {
-    background: transparent;
+	background: transparent;
 }
 
 footer {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
 }
 
 img {
-    user-select: none;
-    -webkit-user-drag: none;
+	user-select: none;
+	-webkit-user-drag: none;
 }
 
 .tippy-tooltip.discord-theme {
-    /* Your styling here. Example: */
-    background-color: black;
-    box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
-  }
+	/* Your styling here. Example: */
+	background-color: black;
+	box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
+}
 
-  .tippy-popper[x-placement^=top] .tippy-tooltip.discord-theme .tippy-arrow {
+.tippy-popper[x-placement^=top] .tippy-tooltip.discord-theme .tippy-arrow {
+	border-top-color: black;
+	box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
+}
 
-    border-top-color: black;
-    box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
-
-  }
-
-  .tippy-tooltip.discord-theme .tippy-content {
-    /* Your styling here. Example: */
-    color: white;
-  }
+.tippy-tooltip.discord-theme .tippy-content {
+	/* Your styling here. Example: */
+	color: white;
+}

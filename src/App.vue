@@ -27,6 +27,9 @@
               <a class="gitbook-logo" href="https://gitbook.com/">
                 <img src="./assets/images/gitbook.png">
               </a>
+              <a class="bitrock-logo" href="https://installbuilder.bitrock.com/">
+                <span class="bitrock-logo__title">BitRock</span>
+              </a>
             </div>
           </div>
           <div class="grid__section">
