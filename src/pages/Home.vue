@@ -142,7 +142,6 @@ import balance from "./../assets/images/balance.svg";
 //import bravery from "./../assets/images/bravery.svg";
 import hypesquad from "./../assets/images/hypesquad.svg";
 import nitro from "./../assets/images/nitro.svg";
-import partner from "./../assets/images/partner.svg";
 import early from "./../assets/images/early.svg";
 import staff from "./../assets/images/staff.svg";
 import bughunter from "./../assets/images/bughunter.svg";
