@@ -239,7 +239,7 @@ export default {
           },
           service: "Crunchyroll",
           service_logo: crunchyroll_logo,
-          item1: ["Episode 18", "Into the Night"],
+          item1: ["Kill la Kill", "Episode 18 - Into the Night"],
           item2: "09:44 left"
         }
       ]
