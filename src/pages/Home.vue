@@ -149,6 +149,7 @@ import twitch_logo from "./../assets/images/twitch-logo.svg";
 import youtube_logo from "./../assets/images/youtube-logo.svg";
 import soundcloud_logo from "./../assets/images/soundcloud_logo.svg";
 import netflix_logo from "./../assets/images/netflix_logo.svg";
+import crunchyroll_logo from "./../assets/images/crunchyroll_logo.svg";
 
 import Card from "../components/Card.vue";
 
@@ -227,6 +228,19 @@ export default {
           service_logo: netflix_logo,
           item1: ["You", "S1:E6 Amour Fou"],
           item2: "17:37 left"
+        },
+         {
+          profile: {
+            image:
+              "https://cdn.discordapp.com/avatars/515668127829458945/410a6eedfe483252463eae0953b0db3f.png",
+            name: "fror",
+            id: "9493",
+            badges: [balance]
+          },
+          service: "Crunchyroll",
+          service_logo: crunchyroll_logo,
+          item1: ["Episode 18", "Into the Night"],
+          item2: "09:44 left"
         }
       ]
     };
