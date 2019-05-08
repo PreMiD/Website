@@ -138,7 +138,7 @@
             service_title: "Twitch",
             service_logo: twitch_logo,
             data: ["osu! World Cup 2018 Grand Finals", "osulive"],
-            presence_time:  "44:18 left"
+            presence_time:  "44:18"
           },
           {
             profile: {
@@ -149,7 +149,7 @@
             service_title: "Netflix",
             service_logo: netflix_logo,
             data: ["Breaking Bad", "S5:E16 Felina"],
-            presence_time:  "15:35 left"
+            presence_time:  "15:35"
           },
           {
             profile: {
@@ -164,7 +164,7 @@
               "Noisestorm - Crab Rave [Monstercat Release]",
               "Monstercat: Instinct"
             ],
-            presence_time:  "1:36 left"
+            presence_time:  "1:36"
           },
           {
             profile: {
@@ -176,7 +176,7 @@
             service_title: "SoundCloud",
             service_logo: soundcloud_logo,
             data: ["Dion Timmer - Panic", "Dion Timmer"],
-            presence_time:  "2:15 left"
+            presence_time:  "2:15"
           },
           {
             profile: {
@@ -188,7 +188,7 @@
             service_title: "Netflix",
             service_logo: netflix_logo,
             data: ["You", "S1:E6 Amour Fou"],
-            presence_time:  "17:37 left"
+            presence_time:  "17:37"
           }
         ]
       };
@@ -212,120 +212,6 @@
 
 <style lang="less" scoped>
   @import "../stylesheets/colors.less";
-
-  .presences {
-    grid-area: right;
-    justify-self: right;
-  }
-
-  // .presence {
-  //   width: 28rem;
-  //   height: 13.246rem;
-  //   background: @accent-primary;
-  //   padding: 1.5rem;
-  //   border-radius: 1rem;
-  //   box-shadow: inset 0rem -8rem #6c82cf;
-  //   display: grid;
-  //   color: @white;
-  //   margin-bottom: 1rem;
-
-  //   .top {
-  //     display: flex;
-
-  //     .logo {
-  //       width: 5rem;
-  //       height: 5rem;
-
-  //       &_image {
-  //         width: 5rem;
-  //         height: 5rem;
-  //         border-radius: 2.5rem;
-  //         background-size: cover;
-  //         background-repeat: no-repeat;
-  //         background-position: center center;
-  //       }
-  //     }
-
-  //     .name {
-  //       margin-left: 0.8rem;
-  //       margin-top: 1.8rem;
-
-  //       h2 {
-  //         font-size: 18px;
-  //         font-weight: 600;
-
-  //         span {
-  //           color: hsla(0, 0%, 100%, 0.6);
-  //           font-size: 14px;
-  //           font-weight: 400;
-  //         }
-
-  //         margin-block-start: 0px;
-  //         margin-block-end: 0px;
-  //       }
-
-  //       .badges {
-  //         display: flex;
-  //         align-items: center;
-  //         margin-top: 0.4rem;
-
-  //         .badge {
-  //           width: 24px;
-  //           height: 24px;
-  //           margin-right: 0.4rem;
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   .bottom {
-  //     margin-top: 2.7rem;
-
-  //     h2 {
-  //       margin-block-start: 0px;
-  //       margin-block-end: 0px;
-  //       font-size: 0.8rem;
-  //       letter-spacing: 0.06rem;
-  //     }
-
-  //     .service {
-  //       display: flex;
-
-  //       .service_logo {
-  //         margin-top: 0.4rem;
-  //         width: 5.5rem;
-  //         height: 5.5rem;
-  //         position: relative;
-  //       }
-
-  //       .service_logo > img:nth-child(1) {
-  //         width: 100%;
-  //         height: 100%;
-  //       }
-  //       .service_logo > img:nth-child(2) {
-  //         position: absolute;
-  //         right: 0;
-  //         bottom: 4px;
-  //         width: 2rem;
-  //         background: #6c82cf;
-  //         border-radius: 999rem;
-  //       }
-  //       .details {
-  //         h2 {
-  //           margin-top: 0.6rem;
-  //         }
-
-  //         p {
-  //           font-size: 0.8rem;
-  //           letter-spacing: 0.06rem;
-  //           margin-block-start: 0px;
-  //           margin-block-end: 0px;
-  //           color: rgba(255, 255, 255, 0.6);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 
   .features-container {
     position: relative;
