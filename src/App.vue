@@ -96,9 +96,6 @@ export default {
       );
       return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
     },
-    gayme() {
-      console.log("gay");
-    }
   },
   data() {
     return {

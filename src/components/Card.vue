@@ -71,6 +71,7 @@
             right: 0;
             transform: translate(35px, 5px);
             font-size: 14em;
+            pointer-events: none;
         }
 
         &:hover {
