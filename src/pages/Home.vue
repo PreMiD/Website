@@ -165,7 +165,7 @@ export default {
         {
           profile: {
             image:
-              "https://cdn.discordapp.com/avatars/259407123782434816/89e8116b11f7150459dacc71c059202c.png",
+              "https://cdn.discordapp.com/avatars/259407123782434816/a_b7deb3a8a235e64ce66ace280013b6d3.gif",
             name: "Fruxh",
             id: "3282",
             badges: [hypesquad, balance, early, nitro]
@@ -206,7 +206,7 @@ export default {
         {
           profile: {
             image:
-              "https://cdn.discordapp.com/avatars/213305189657083905/f1f139ab21d7979d91bb874fbae5e91e.png",
+              "https://cdn.discordapp.com/avatars/213305189657083905/675143fbe252b6b3b54e267fe7e395bb.png",
             name: "Voknehzyr",
             id: "8754",
             badges: [balance, early]
@@ -232,14 +232,14 @@ export default {
          {
           profile: {
             image:
-              "https://cdn.discordapp.com/avatars/515668127829458945/410a6eedfe483252463eae0953b0db3f.png",
+              "https://cdn.discordapp.com/avatars/515668127829458945/e307b512c3f7b517f8c8afd1b6503461.png",
             name: "fror",
             id: "9493",
             badges: [balance]
           },
           service: "Crunchyroll",
           service_logo: crunchyroll_logo,
-          item1: ["Kill la Kill", "Episode 18 - Into the Night"],
+          item1: ["KILL la KILL", "Episode 18 - Into the Night"],
           item2: "09:44 left"
         }
       ]
