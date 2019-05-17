@@ -22,7 +22,6 @@
         </div>
       </div>
       <div class="promo-container__presences">
-
         <div class="discord-usercard" v-for="presence of presences_display" v-bind:key="presence.service">
           <div class="usercard__header">
             <div class="header__avatar" :style="'background-image: url(' + presence.profile.image + ');'">
@@ -112,9 +111,8 @@
 
 <script>
   import request from "request";
-  import bughunter from "./../assets/images/bughunter.svg";
-  import twitch_logo from "./../assets/images/twitch-logo.svg";
-  import youtube_logo from "./../assets/images/youtube-logo.svg";
+  import twitch_logo from "./../assets/images/twitch.png";
+  import youtube_logo from "./../assets/images/youtube.png";
   import soundcloud_logo from "./../assets/images/soundcloud.png";
   import netflix_logo from "./../assets/images/netflix.png";
 
@@ -168,7 +166,7 @@
           },
           {
             profile: {
-              image: "https://cdn.discordapp.com/avatars/213305189657083905/f1f139ab21d7979d91bb874fbae5e91e.png",
+              image: "https://cdn.discordapp.com/avatars/213305189657083905/675143fbe252b6b3b54e267fe7e395bb.png",
               name: "Voknehzyr",
               id: "8754",
               badges: ["bravery", "early"]
@@ -183,7 +181,7 @@
               image: "https://cdn.discordapp.com/avatars/291599690812882945/88a2157993073229c2aa3ae0e15f16dd.png",
               name: "!!PãoCaro!!",
               id: "4076",
-              badges: ["hypesquad", "early", "nitro"]
+              badges: ["balance"]
             },
             service_title: "Netflix",
             service_logo: netflix_logo,

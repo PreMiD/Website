@@ -1,11 +1,12 @@
 <template>
   <transition name="card-animation" mode="out-in">
     <div class="presence-container__item">
-      <div class="store-card" :style="`background-image: url('${presence.thumbnail}')`">
+      <div class="store-card" @mouseover="card_hovered = true" @mouseleave="card_hovered = false" :style="`background-image: url('${presence.thumbnail}')`">
         <div class="store-card__service-logo">
           <img :src="presence.logo">
         </div>
         <div class="store-card__service-info">
+          
           <div class="store-card__service">
             <h2>
               {{ presence.service }}
@@ -23,16 +24,15 @@
                 </g>
               </svg>
             </h2>
+            
             <p>
               Creator:
               <a>{{ presence.author.name }}</a>
             </p>
-            <transition name="btn-animation" mode="out-in">
-            <p class="store-card__desc">{{ presence.description }}</p>
-            </transition>
+            <p v-show="!card_hovered" class="store-card__desc">{{ presence.description }}</p>
           </div>
           <transition name="btn-animation" mode="out-in">
-            <div v-if="this.$parent.extension_installed" class="store-card__buttons on-desktop">
+            <div v-if="this.$parent.extension_installed" v-show="card_hovered" class="store-card__buttons on-desktop">
               <button v-if="!isInstalled" class="button button_light" v-on:click="sendPresence(presence.service)">
                 <span class="icon">
                   <i class="fas fa-plus-square"></i>
@@ -50,38 +50,6 @@
           :style="`background: linear-gradient(135deg, ${presence.color} 0%, black 100%);`"></div>
       </div>
     </div>
-
-    <!-- <div class="presence-container__item">
-      <div class="store-card">
-        <div class="store-card__content">
-          <div class="store-card__logo"
-            :style="`background: linear-gradient(135deg, ${presence.color} 0%, transparent 100%);`">
-            <img :src="presence.logo" class="service-logo">
-          </div>
-          <div class="store-card__service">
-            <h2>{{ presence.service }} <img src="./../../assets/images/verified.svg" title="Verified"
-                v-tippy="{ inertia : true, arrow : true,  animation : 'scale', duration : '[250]'}"
-                class="store-card__verified" v-if="!submit"></h2>
-            <p v-if="!submit">Creator: <a>{{ presence.author.name }}</a></p>
-          </div>
-          <p class="store-card__desc">{{ presence.description }}</p>
-        </div>
-        <transition name="card-animation" mode="out-in">
-        <div v-if="this.$parent.extension_installed" class="store-card__buttons on-desktop">
-          <button v-if="!isInstalled" class="button" v-on:click="sendPresence(presence.service)">
-            <span class="icon">
-              <i class="fas fa-plus-square"></i>
-            </span>Add presence
-          </button>
-          <button v-if="isInstalled" class="button" v-on:click="removePresence(presence.service)">
-            <span class="icon">
-              <i class="fas fa-plus-square"></i>
-            </span>Remove presence
-          </button>
-        </div>
-        </transition>
-      </div>
-    </div>-->
   </transition>
 </template>
 
@@ -91,7 +59,8 @@
     props: ["presence", "submit", "nsfw"],
     data() {
       return {
-        isInstalled: false
+        isInstalled: false,
+        card_hovered: false,
       };
     },
     methods: {
@@ -153,9 +122,8 @@
 
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   .presence-container__item {
     flex: 0 0;
   }
-
 </style>

@@ -91,7 +91,7 @@
         .store-card__buttons {
             margin-top: 10px;
 
-            display: none;
+            display: inline-block;
 
             .button,
             a {
@@ -105,18 +105,83 @@
     &:hover {
         box-shadow: 0 6px 32px 0 rgba(9, 10, 10, 0.8);
 
-        .store-card__buttons {
-            display: inline-block;
-            opacity: 1;
-        }
+        // .store-card__buttons {
+        //     display: inline-block;
+        //     opacity: 1;
+        // }
 
-        .store-card__desc {
-            display: none;
-            opacity: 0;
-        }
+        // .store-card__desc {
+        //     display: none;
+        //     opacity: 0;
+        // }
 
     }
 
+}
+
+.dl-container__cards {
+
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    justify-content: center;
+    align-items: normal;
+
+    position: relative;
+
+    top: -9em;
+
+    .cards__card {
+
+        margin: 1em;
+
+        user-select: none;
+
+        z-index: 1;
+        position: relative;
+        width: 250px;
+        overflow: hidden;
+        text-align: center;
+        padding: 2em;
+        background: @accent-primary;
+        border-radius: 5px; 
+        margin: 1em;
+        transition: transform .2s ease,
+            -webkit-transform .2s ease;
+
+        .card__icon {
+            font-size: 5em;
+            padding-bottom: 0.2em;
+        }
+
+        .card__content {
+
+            h3 {
+                font-weight: bold;
+                font-size: 1.5em;
+                margin-bottom: 0.5em;
+            }
+
+            p {
+                opacity: .8;
+                margin: 0;
+                padding: 0;
+            }
+
+        }
+
+        .card__buttons {
+
+            margin: 2.5em 0;
+
+            .button {
+                position: absolute;
+                bottom: 15px;
+                transform: translate(-50%, 0);
+            }
+        }
+    }
 }
 
 .discord-usercard {
@@ -125,7 +190,7 @@
 
     border-radius: 8px;
     position: relative;
-    width: 600px;
+    width: 550px;
     background: #7289da;
 
     * {
@@ -291,7 +356,7 @@
 
                 .game__content {
                     flex: 1 1 auto;
-                    color: hsla(0,0%,100%,.8);
+                    color: hsla(0, 0%, 100%, .8);
                     margin-left: 20px;
 
                     white-space: nowrap;
@@ -311,7 +376,8 @@
                             &:hover {
                                 text-decoration: underline;
                             }
-                            color: hsla(0,0%,100%,.8);
+
+                            color: hsla(0, 0%, 100%, .8);
                         }
                     }
 
@@ -321,16 +387,14 @@
                     }
 
                     .game__st-line {
-                        color: hsla(0,0%,100%,.8);
+                        color: hsla(0, 0%, 100%, .8);
                     }
 
                     .game__nd-line {
-                        color: hsla(0,0%,100%,.8);
+                        color: hsla(0, 0%, 100%, .8);
                     }
 
-                    .game__time {
-
-                    }
+                    .game__time {}
 
                 }
             }
