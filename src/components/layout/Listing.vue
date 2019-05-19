@@ -4,7 +4,7 @@
       <div class="store-card">
         <img :src="presence.thumbnail">
         <div class="store-card__service-logo">
-          <img :src="presence.logo">
+          <img class="store-card__bg" :src="presence.logo">
         </div>
         <div class="store-card__service-info">
           <div class="store-card__service">
