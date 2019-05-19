@@ -2,9 +2,9 @@
   <transition name="card-animation" mode="out-in">
     <div class="presence-container__item">
       <div class="store-card">
-        <img :src="presence.thumbnail">
+        <img class="store-card__bg" :src="presence.thumbnail">
         <div class="store-card__service-logo">
-          <img class="store-card__bg" :src="presence.logo">
+          <img :src="presence.logo">
         </div>
         <div class="store-card__service-info">
           <div class="store-card__service">
