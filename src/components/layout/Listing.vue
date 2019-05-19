@@ -1,7 +1,8 @@
 <template>
   <transition name="card-animation" mode="out-in">
     <div class="presence-container__item">
-      <div class="store-card" :style="`background-image: url('${presence.thumbnail}')`">
+      <div class="store-card">
+        <img :src="presence.thumbnail">
         <div class="store-card__service-logo">
           <img :src="presence.logo">
         </div>
