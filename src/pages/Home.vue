@@ -11,20 +11,19 @@
           <p>Let everyone know what you are watching and listening to!</p>
         </div>
         <div class="heading__button-group">
-          <button v-on:click="openInNewTab('https://github.com/PreMiD/PreMiD')" class="button_black">
+          <a v-on:click="openInNewTab('https://github.com/PreMiD/PreMiD')" class="button button_black">
             <i class="fab fa-github"></i>SOURCE CODE
-          </button>
+          </a>
           <router-link replace to="/downloads">
-            <button class="button_green">
+            <button class="button">
               <i class="fas fa-download"></i>DOWNLOADS
             </button>
           </router-link>
         </div>
       </div>
       <div class="promo-container__presences">
-
-        <div class="discord-usercard" v-for="presence of presences_display" v-bind:key="presence.service">
-          <div class="usercard__header">
+        <div class="discord-usercard" v-for="presence of presences_display" v-bind:key="presence.service" :v-if="presence.profile.name !== ''">
+          <div class="usercard__header" >
             <div class="header__avatar" :style="'background-image: url(' + presence.profile.image + ');'">
             </div>
             <div class="header__info">
@@ -48,7 +47,8 @@
               <div class="info__game">
                 <div class="game__icon">
                   <img class="game" :src="presence.service_logo">
-                  <img class="status-icon" src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png">
+                  <img class="status-icon"
+                    src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png">
                 </div>
                 <div class="game__content">
                   <div class="game__title text-row">
@@ -112,13 +112,14 @@
 
 <script>
   import request from "request";
-  import bughunter from "./../assets/images/bughunter.svg";
-  import twitch_logo from "./../assets/images/twitch-logo.svg";
-  import youtube_logo from "./../assets/images/youtube-logo.svg";
+  import twitch_logo from "./../assets/images/twitch.png";
+  import youtube_logo from "./../assets/images/youtube.png";
   import soundcloud_logo from "./../assets/images/soundcloud.png";
   import netflix_logo from "./../assets/images/netflix.png";
 
   import Card from "../components/Card.vue";
+
+  import axios from "axios";
 
   export default {
     name: "home",
@@ -130,32 +131,26 @@
         presences_display: [],
         presences: [{
             profile: {
-              image: "https://cdn.discordapp.com/avatars/259407123782434816/89e8116b11f7150459dacc71c059202c.png",
-              name: "Fruxh",
-              id: "3282",
+              DiscordID: "259407123782434816",
               badges: ["hypesquad", "balance", "early", "nitro"]
             },
             service_title: "Twitch",
             service_logo: twitch_logo,
             data: ["osu! World Cup 2018 Grand Finals", "osulive"],
-            presence_time:  "44:18"
+            presence_time: "44:18"
           },
           {
             profile: {
-              image: "https://cdn.discordapp.com/avatars/465105167751315471/9feb7fb55d9e978fe4994076634f921b.png",
-              name: "maniac doomer",
-              id: "0282"
+              DiscordID: "465105167751315471",
             },
             service_title: "Netflix",
             service_logo: netflix_logo,
             data: ["Breaking Bad", "S5:E16 Felina"],
-            presence_time:  "15:35"
+            presence_time: "15:35"
           },
           {
             profile: {
-              image: "https://cdn.discordapp.com/avatars/223238938716798978/96d2e1c86178c8c79c99577e9772ada8.png",
-              name: "Timeraa",
-              id: "7947",
+              DiscordID: "223238938716798978",
               badges: ["brilliance", "early"]
             },
             service_title: "YouTube",
@@ -164,41 +159,59 @@
               "Noisestorm - Crab Rave [Monstercat Release]",
               "Monstercat: Instinct"
             ],
-            presence_time:  "1:36"
+            presence_time: "1:36"
           },
           {
             profile: {
-              image: "https://cdn.discordapp.com/avatars/213305189657083905/f1f139ab21d7979d91bb874fbae5e91e.png",
-              name: "Voknehzyr",
-              id: "8754",
+              DiscordID: "213305189657083905",
               badges: ["bravery", "early"]
             },
             service_title: "SoundCloud",
             service_logo: soundcloud_logo,
             data: ["Dion Timmer - Panic", "Dion Timmer"],
-            presence_time:  "2:15"
+            presence_time: "2:15"
           },
           {
             profile: {
-              image: "https://cdn.discordapp.com/avatars/291599690812882945/88a2157993073229c2aa3ae0e15f16dd.png",
-              name: "!!PãoCaro!!",
-              id: "4076",
-              badges: ["hypesquad", "early", "nitro"]
+              DiscordID: "291599690812882945",
+              badges: ["balance"]
             },
             service_title: "Netflix",
             service_logo: netflix_logo,
             data: ["You", "S1:E6 Amour Fou"],
-            presence_time:  "17:37"
+            presence_time: "17:37"
           }
         ]
       };
     },
-    mounted() {
+    beforeMount() {
+      
+      const Vue = this;
       const length = this.$data.presences.length;
+
+      // Randomly selects 2 presences to display.
       this.$data.presences_display.push(
         this.$data.presences.splice((Math.random() * length) | 0, 1)[0],
         this.$data.presences.splice((Math.random() * (length - 1)) | 0, 1)[0]
       );
+
+      // Updating user information in presence examples.
+      this.$data.presences_display.forEach(function (presence_item, index) {
+        // Axios provides Promises that will help us with handling errors and getting data.
+        axios.get(`https://api.premid.app/credits/${presence_item.profile.DiscordID}`)
+        .then(function (res) {
+          let data = res.data;
+          // TODO: Remove dirty code from here.
+          Vue.$set(Vue.$data.presences_display[index].profile, 'image', data.avatar);
+          Vue.$set(Vue.$data.presences_display[index].profile, 'name', data.name);
+          Vue.$set(Vue.$data.presences_display[index].profile, 'id', data.tag);
+        }).catch(function (error) {
+          console.log(error);
+        });
+      });
+    },
+    mounted() {
+      // Nothing here yet...
     },
     methods: {
       openInNewTab(url) {

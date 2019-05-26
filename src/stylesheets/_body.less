@@ -37,10 +37,10 @@ header {
 
 #footer {
 	flex: 0 0 auto;
-	background: @background-secondary;
+	background: linear-gradient(transparent 15%, @background-secondary);
 	color: white;
 	padding: 20px;
-	margin-top: 2.5em;
+	padding-top: 3.5em;
 }
 
 .gitbook-logo img {
@@ -190,5 +190,10 @@ img {
 
 .tippy-tooltip.discord-theme .tippy-content {
 	/* Your styling here. Example: */
+	color: white;
+}
+
+::selection {
+	background-color: rgba(56, 61, 66, 0.99);
 	color: white;
 }

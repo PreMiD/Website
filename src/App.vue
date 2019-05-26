@@ -96,6 +96,9 @@ export default {
       );
       return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
     },
+        test() {
+            console.log('works');
+        },
   },
   data() {
     return {

@@ -28,7 +28,6 @@
   import Listing from "./../components/layout/Listing.vue";
   import Checkbox from "./../components/Checkbox.vue";
   import request from "request";
-  import submit from "./../assets/images/submit.svg";
 
   import axios from "axios";
 
@@ -45,7 +44,7 @@
         presences_installed: "",
         searching: false,
         nsfw: false,
-        presence_search: []
+        presence_search: [],
       };
     },
     created() {
@@ -68,10 +67,10 @@
       setTimeout(function () {
         if (document.getElementById('PreMiD_PageVariables') !== null) {
           self.$data.extension_installed = true;
-          console.log('Gay stuff!');
+          self.debugMessage('Extension installed, unlocking functions...');
         } else {
           self.$data.extension_installed = false;
-          console.log('not Gay stuff!');
+          self.errorMessage('Extension not found, locking functions...');
         }
       }, 1000);
 
