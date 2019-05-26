@@ -8,7 +8,33 @@ import router from './router';
 import VueTippy from 'vue-tippy'
 
 Vue.use(VueTippy);
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+Vue.mixin({
+    // All methods that are defined here going to be global, use it carefully!
+    methods: {
+        // /DEBUG MESSAGES
+        debugMessage: function (message) {
+            console.log(
+                '%cPreMiD%c ' + message,
+                'color: #fff; font-weight: 900; padding: 3px 7px; margin: 3px; background: #596cae; border-radius: 50px;',
+                'color: #596cae;'
+            );
+        },
+        errorMessage: function (message) {
+            console.log(
+                '%cPreMiD%c ' + message,
+                'color: #fff; font-weight: 900; padding: 3px 7px; margin: 3px; background: crimson; border-radius: 50px;',
+                'color: crimson;'
+            );
+        },
+        // DEBUG MESSAGES/
+        floatingNotification: function (message) {
+
+        }
+
+    }
+});
 
 /* eslint-disable no-new */
 new Vue({

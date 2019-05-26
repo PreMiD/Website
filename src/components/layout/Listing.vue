@@ -104,6 +104,7 @@
     },
     beforeMount() {},
     mounted() {
+
       clamp_desc();
 
       if (this.isPresenceInstalled(this.presence.service)) {

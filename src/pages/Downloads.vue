@@ -2,7 +2,7 @@
   <div>
     <div class="dl-container">
       <div class="dl-container__intro">
-        <h2 class="dl-container__header">Downloads</h2>
+        <h2 class="container__header"><span class="header__step">1.</span> Download the application</h2>
 
         <div class="waves-divider waves-divider_bottom">
           <svg class="wave" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100"
@@ -14,45 +14,49 @@
         </div>
       </div>
 
-      <div class="dl-container__cards">
-        <div v-bind:key="platform" v-for="(platform, index) of builds" class="cards__card">
-          <div class="card__icon">
-            <i :class="`fab fa-${index}`"></i>
-          </div>
-          <div class="card__content">
-            <h3>{{platform.os_name}}</h3>
-            <p>{{platform.card_description}}</p>
-          </div>
-          <div class="card__buttons">
-            <a href="#" class="button button_gray">Download</a>
-          </div>
+      <div class="dl-container__cards waves-aligned">
+        <div v-bind:key="platform" v-for="(platform, index) of platform_order" v-on:click="open(platform)">
+          <a href="#">
+            <div v-bind:class="{ current_platform: index == 1 }" class="cards__card">
+              <div class="card__icon">
+                <i :class="`fab fa-${platform}`"></i>
+              </div>
+              <div class="card__content">
+                <h3>{{builds[platform].os_name}}</h3>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
-
     </div>
-    <!-- <title>PreMiD - Downloads</title>
-    <center>
-      <h2 class="title">Downloads</h2>
-      <h2>Application</h2>
-      <div class="platforms">
-        <i
-          v-for="(platform, index) of platforms"
-          v-bind:key="platform"
-          :title="platform"
-          v-on:click="open(platform)"
-          :class="'logo fab fa-' + platform + ' pp' + index"
-        ></i>
+    <div class="browser-container">
+      <h2 class="container__header"><span class="header__step">2.</span> Install browser extension</h2>
+      
+      <div class="dl-container__cards">
+          <a href="#">
+            <div v-on:click="openInNewTab(chrome_url)" class="cards__card">
+              <div class="card__icon">
+                <i class="fab fa-chrome"></i>
+              </div>
+              <div class="card__content">
+                <h3>Chromium</h3>
+              </div>
+            </div>
+          </a>
+          <a href="#">
+            <div v-on:click="openInNewTab(firefox_url)" class="cards__card">
+              <div class="card__icon">
+                <i class="fab fa-firefox"></i>
+              </div>
+              <div class="card__content">
+                <h3>Firefox</h3>
+              </div>
+            </div>
+          </a>
       </div>
-      <p>
-        Support
-        <span class="premid">PreMiD</span> financially and receive the latest dev-builds
-      </p>
-      <h2>Extension</h2>
-      <div class="browsers">
-        <i class="logo fab fa-chrome" v-on:click="openInNewTab(chrome_url)"></i>
-        <i class="logo fab fa-firefox" v-on:click="openInNewTab(firefox_url)"></i>
-      </div>
-    </center> -->
+    </div>
+    <!-- <h2 class="container__header"><span class="header__step">3.</span> Run the application</h2> -->
+    <title>PreMiD - Downloads</title>
   </div>
 </template>
 
@@ -66,23 +70,22 @@
         platforms: [],
         windows_url: "",
         apple_url: "",
+        linux_url: "",
         chrome_url: "https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
         firefox_url: "",
+        platform_order: ['windows', 'apple', 'linux'],
         builds: {
           windows: {
             os_name: 'Windows',
             has_installer: true,
-            card_description: 'Application installer for Windows with automatic updates',
           },
           apple: {
             os_name: 'OS X',
             has_installer: false,
-            card_description: 'Application installer for OS X',
           },
           linux: {
             os_name: 'Linux',
             has_installer: false,
-            card_description: 'Application installer for Linux',
           },
         },
       };
@@ -91,18 +94,15 @@
 
       let ua = navigator.userAgent;
       let platform_temp = "linux";
-      let platforms_temp = ["windows", "apple", "linux"];
+      var platform_order = this.$data.platform_order;
 
       if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
       if (ua.includes("Windows")) platform_temp = "windows";
 
-      var builds_raw = ['windows', 'apple', 'linux'];
-
-      console.log(builds_raw);
-
-      builds_raw.splice(builds_raw.indexOf(platform_temp), 1);
-      builds_raw.splice(1, 0, platform_temp);
-      console.log(builds_raw);
+      // TODO: Find better implementation.
+      // Centering the current platform in array. Only works if array has 3 items.
+      platform_order.splice(platform_order.indexOf(platform_temp), 1);
+      platform_order.splice(1, 0, platform_temp);
 
       request(
         "https://api.github.com/repos/PreMiD/PreMiD/releases",
@@ -145,7 +145,6 @@
       },
       openInNewTab(url) {
         let page = window.open(url, "_blank");
-        win.focus();
       }
     }
   };

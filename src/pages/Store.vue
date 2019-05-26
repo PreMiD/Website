@@ -67,10 +67,10 @@
       setTimeout(function () {
         if (document.getElementById('PreMiD_PageVariables') !== null) {
           self.$data.extension_installed = true;
-          console.log('Extension installed, unlocking functions...');
+          self.debugMessage('Extension installed, unlocking functions...');
         } else {
           self.$data.extension_installed = false;
-          console.log('Extension not found, locking functions...');
+          self.errorMessage('Extension not found, locking functions...');
         }
       }, 1000);
 

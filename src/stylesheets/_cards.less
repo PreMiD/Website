@@ -27,7 +27,7 @@
         bottom: 0;
         left: 0;
         background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
-        opacity: .7;
+        opacity: .6;
 
         z-index: 1;
     }
@@ -86,6 +86,7 @@
             color: rgba(255, 255, 255, 0.8);
 
             transition: all 0.2s ease;
+
         }
 
         .store-card__buttons {
@@ -110,10 +111,10 @@
         //     opacity: 1;
         // }
 
-        // .store-card__desc {
-        //     display: none;
-        //     opacity: 0;
-        // }
+        .store-card__desc {
+            opacity: 0;
+            margin-top: calc(-50% + 44px);
+        }
 
     }
 
@@ -130,7 +131,24 @@
 
     position: relative;
 
-    top: -9em;
+    &.waves-aligned {
+        top: -9em;
+        margin-bottom: -4em;
+    }
+    
+    a {
+        color: white;
+        &:hover {
+            .cards__card {
+                transform: translateY(-12px);
+            }
+        }
+        &:active {
+            .cards__card {
+                transform: translateY(-6px);
+            }
+        }
+    }
 
     .cards__card {
 
@@ -140,27 +158,35 @@
 
         z-index: 1;
         position: relative;
-        width: 250px;
+        width: 200px;
         overflow: hidden;
         text-align: center;
         padding: 2em;
-        background: @accent-primary;
-        border-radius: 5px; 
+        background: #383D42;
+        border-radius: 10px; 
         margin: 1em;
-        transition: transform .2s ease,
-            -webkit-transform .2s ease;
+        transition: all 0.2s ease;
+
+        &.current_platform, &:hover {
+            box-shadow: 0 4px 120px 0 rgba(114, 137, 218, 0.3);
+            background: @accent-primary;
+        }
+
+        &.current_platform {
+            transform: translateY(-12px);
+        }
 
         .card__icon {
             font-size: 5em;
-            padding-bottom: 0.2em;
+            padding-bottom: 0.1em;
         }
 
         .card__content {
 
             h3 {
-                font-weight: bold;
+                font-weight: 600;
                 font-size: 1.5em;
-                margin-bottom: 0.5em;
+                margin-bottom: 0.3em;
             }
 
             p {
@@ -168,11 +194,6 @@
                 margin: 0;
                 padding: 0;
             }
-
-        .store-card__desc {
-                opacity: 0;
-                margin-top: calc(-50% + 44px);
-        }
 
         .card__buttons {
 
@@ -184,6 +205,7 @@
                 transform: translate(-50%, 0);
             }
         }
+    }
     }
 }
 
