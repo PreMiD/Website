@@ -36,6 +36,16 @@
     will-change: transform;
 }
 
+.slide-down-enter-active {
+  transition: opacity .2s ease, transform .5s ease;
+}
+.slide-down-leave-active {
+  transition: opacity .3s ease, transform .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-down-enter, .slide-down-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
 
 @-webkit-keyframes waveAnimation {
     0% {

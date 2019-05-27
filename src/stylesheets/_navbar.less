@@ -1,9 +1,11 @@
 .navbar__container {
 
   background: @background-secondary;
+  position: relative;
   // box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
 
 .navbar {
+
     max-width: 1400px;
     margin: 0 auto;
     padding-top: 0.5rem;
@@ -95,7 +97,15 @@
 }
 
 .mobile-navbar__items {
-  display: none;
+
+  background: @background-secondary;
+
+      left: 0;
+    right: 0;
+    z-index: 1111;
+    position: absolute;
+
+  display: flex;
   flex-flow: column;
   text-align: center;
 

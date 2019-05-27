@@ -19,20 +19,23 @@
       </router-link>
     </div>
     <div class="mobile-navbar__menu on-mobile">
-      <a ref="menuTrigger" v-on:click="showMobileNavigation" href="javascript:void(0);"><i class="fas fa-bars"></i></a>
+      <a ref="menuTrigger" v-on:click="mobileMenuActive = !mobileMenuActive"><i class="fas fa-bars"></i></a>
     </div>
   </div>
-      <div ref="menuMobile" class="mobile-navbar__items on-mobile">
+  <transition name="slide-down" mode="out-in">
+      <div v-if="mobileMenuActive" v-on:click="mobileMenuActive = false" class="mobile-navbar__items on-mobile">
         <router-link
         :to="'/' + category.route"
         v-for="category of categories"
         v-bind:key="category.route"
+        
         class="navbar__item"
       >
         <i :class="'fas fa-' + category.logo"></i>
         <span class="item__title">{{ category.title }}</span>
       </router-link>
     </div>
+  </transition>
 </div>
 </template>
 
@@ -41,7 +44,7 @@ export default {
   name: "navigation",
   data() {
     return {
-      mobileNavbarSize: 0,
+      mobileMenuActive: false,
       categories: [
         {
           logo: "store",

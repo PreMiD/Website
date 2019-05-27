@@ -11,9 +11,9 @@
           <p>Let everyone know what you are watching and listening to!</p>
         </div>
         <div class="heading__button-group">
-          <a v-on:click="openInNewTab('https://github.com/PreMiD/PreMiD')" class="button button_black">
+          <button v-on:click="openInNewTab('https://github.com/PreMiD/PreMiD')" class="button button_black">
             <i class="fab fa-github"></i>SOURCE CODE
-          </a>
+          </button>
           <router-link replace to="/downloads">
             <button class="button">
               <i class="fas fa-download"></i>DOWNLOADS

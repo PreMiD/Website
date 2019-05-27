@@ -43,91 +43,36 @@ header {
 	padding-top: 3.5em;
 }
 
-.gitbook-logo img {
-	position: relative;
-	width: 150px;
-}
-
-.poeditor-logo {
-	position: relative;
-	width: 166px;
-	height: 47px;
-	background: url(../assets/images/poeditor.svg) no-repeat center center;
-	background-size: 166px 47px;
-
-	.poeditor-logo__title {
-		color: rgba(255, 255, 255, 1);
-		position: absolute;
-		font-size: 22px;
-		top: 10px;
-		left: 56px;
-		font-weight: 700;
-	}
-}
-
-.bitrock-logo {
-	position: relative;
-	width: 46px;
-	height: 46px;
-	background: url(../assets/images/bitrock_installbuilder_logo.png) no-repeat center center;
-	background-size: 46px 46px;
-
-	.bitrock-logo__title {
-		color: rgba(255, 255, 255, 1);
-		position: absolute;
-		font-size: 24px;
-		top: 10px;
-		left: 50px;
-		font-weight: 700;
-	}
-}
-
 .footer-copyright {
+
+	p {
+		margin: 3px;
+	}
+
 	text-align: center;
 	font-size: 12px;
 	font-weight: 700;
 	color: #43484e;
 }
 
-.footer-grid {
-	max-width: 1400px;
-	margin: 0 auto;
+.partner-logo {
+	display: inline-block;
 
-	display: flex;
-	position: relative;
-	justify-content: space-between;
-	align-content: center;
+	img {
+		width: 46px;
 
-	.grid__section {
-		.section__title {
-			font-weight: 700;
-			margin: 7px auto;
-			font-size: 18px;
-			color: white;
-		}
+		vertical-align: middle;
 
-		div {
-			p {
-				color: #99aab5;
-				margin: 7px auto;
-				font-weight: 600;
-			}
+		transition: all .2s ease;
 
-			a {
-				&:not(.button) {
-					color: #99aab5;
-					transition: color 0.2s ease;
+		filter: grayscale(100%);
+		opacity: .5;
+	}
 
-					&:hover {
-						color: lighten(#99aab5, 10%);
-						transition: color 0s ease;
-					}
-				}
-
-				font-weight: 600;
-				display: block;
-				margin: 2px 0;
-			}
+	&:hover {
+		img {
+			filter: grayscale(0%);
+			opacity: 1;
 		}
 	}
 }
@@ -137,9 +82,32 @@ h3 {
 }
 
 a {
+	position: relative;
 	text-decoration: none;
 	color: @accent-primary;
 	cursor: pointer;
+
+	&.hover-effect {
+      &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        width: 0;
+        height: 1px;
+        bottom: -2px;
+        border-radius: 5px;
+        // box-shadow: 0 1px 16px 0 @accent-primary;
+        background: @accent-primary;
+        transition: all .4s cubic-bezier(0.26, 0.08, 0, 0.97);
+      }
+      &:hover {
+        &::after {
+          width: 90%;
+        }
+      }
+	}
+
 }
 
 ::-webkit-scrollbar {

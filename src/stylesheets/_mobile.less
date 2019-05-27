@@ -3,7 +3,7 @@
  * Phone & Tablet screen
  * 
  */
-@media only screen and (max-width: 860px) {
+@media only screen and (max-width: 870px) {
     body {
     .on-desktop {
         display: none !important;
@@ -16,6 +16,13 @@
     }
     .store-card {
         width: 330px;
+        .store-card__service-info h2 {
+            font-size: 1.2em;
+        }
+        .store-card__verified {
+            position: relative;
+            bottom: -2px;
+        }
     }
     .promo-container {
         flex-wrap: wrap;
@@ -77,32 +84,40 @@
             }
         }
     }
-    .presence .bottom .service .details {
-        margin-left: 12px;
-    }
 
-    .presence .bottom .service .details p {
-        font-size: 0.7rem;
-        letter-spacing: 0.04rem;
+    .promo-container .promo-container__presences {
+        width: fill-available;
     }
 
     .discord-usercard {
-        width: initial;
+        width: auto;
+        margin: 1em;
     }
 }
 
 @media only screen and (max-width: 400px) {
 
+    body .store-card {
+        width: 280px;
+        height: 120px;
+        .store-card__service-logo img {
+            max-width: 50px;
+        }
+        .store-card__service-info h2 {
+            font-size: 1.1em;
+        }
+    }
+
     .heading__button-group {
         button, a.button {
-            width: 100%;
-            margin: 5px 0;
+            width: fill-available;
+            margin: 5px 1em;
         }
     }
 }
 
 // Desktop
-@media (min-width: 860px) {
+@media (min-width: 870px) {
     .on-mobile {
         display: none !important;
     }

@@ -170,7 +170,7 @@
     width: 1%;
 
     input {
-      width: -webkit-fill-available;
+      width: fill-available;
       border-radius: 99em;
     }
 

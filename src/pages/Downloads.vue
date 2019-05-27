@@ -2,7 +2,8 @@
   <div>
     <div class="dl-container">
       <div class="dl-container__intro">
-        <h2 class="container__header"><span class="header__step">1.</span> Download the application</h2>
+        <h2 class="container__header on-desktop"><span class="header__step">1.</span> Download the application</h2>
+        <h2 class="container__header on-mobile">PreMiD is not avaiable for mobile devices</h2>
 
         <div class="waves-divider waves-divider_bottom">
           <svg class="wave" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100"
@@ -14,22 +15,23 @@
         </div>
       </div>
 
-      <div class="dl-container__cards waves-aligned">
+      <div class="dl-container__cards waves-aligned on-desktop">
         <div v-bind:key="platform" v-for="(platform, index) of platform_order" v-on:click="open(platform)">
           <a href="#">
-            <div v-bind:class="{ current_platform: index == 1 }" class="cards__card">
+            <div v-bind:class="{ 'on-desktop': index == 0 || index == 2, 'current_platform': index == 1 }" class="cards__card">
               <div class="card__icon">
                 <i :class="`fab fa-${platform}`"></i>
               </div>
               <div class="card__content">
                 <h3>{{builds[platform].os_name}}</h3>
+                <p class="card__warning" v-if="!builds[platform].has_installer">You need to build an application for this OS on your own!</p>
               </div>
             </div>
           </a>
         </div>
       </div>
     </div>
-    <div class="browser-container">
+    <div class="browser-container on-desktop">
       <h2 class="container__header"><span class="header__step">2.</span> Install browser extension</h2>
       
       <div class="dl-container__cards">
@@ -81,7 +83,7 @@
           },
           apple: {
             os_name: 'OS X',
-            has_installer: false,
+            has_installer: true,
           },
           linux: {
             os_name: 'Linux',
@@ -138,7 +140,7 @@
       open(platform) {
         if (platform == "linux")
           this.openInNewTab(
-            "https://github.com/PreMiD/PreMiD/archive/stable.zip"
+            "https://github.com/PreMiD/PreMiD"
           );
         if (platform == "windows") this.openInNewTab(this.$data.windows_url);
         if (platform == "apple") this.openInNewTab(this.$data.apple_url);

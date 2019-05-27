@@ -21,14 +21,14 @@
           <div class="grid__section">
             <p class="section__title">Partners</p>
             <div class="section__promo">
-              <a class="poeditor-logo" href="https://poeditor.com/">
-                <span class="poeditor-logo__title">POEditor</span>
+              <a class="partner-logo" href="https://poeditor.com/">
+                <img src="./assets/images/poeditor.png">
               </a>
-              <a class="gitbook-logo" href="https://gitbook.com/">
+              <a class="partner-logo" href="https://gitbook.com/">
                 <img src="./assets/images/gitbook.png">
               </a>
-              <a class="bitrock-logo" href="https://installbuilder.bitrock.com/">
-                <span class="bitrock-logo__title">BitRock</span>
+              <a class="partner-logo" href="https://installbuilder.bitrock.com/">
+                <img src="./assets/images/bitrock_installbuilder.png">
               </a>
             </div>
           </div>
@@ -45,9 +45,9 @@
               <!-- // TODO finish after V2
               <a v-on:click="openNavigation()">Donate</a>-->
               <a href="https://patreon.com/timeraa/">Donate</a>
-              <a href="https://github.com/PreMiD/">For coders</a>
-              <a href="https://discord.premid.app/">For designers</a>
-              <a href="https://poeditor.com/join/project/Zzl1oOQV5g/">For translators</a>
+              <a href="https://github.com/PreMiD/">Contribute</a>
+              <a href="https://discord.premid.app/">Design</a>
+              <a href="https://poeditor.com/join/project/Zzl1oOQV5g/">Translate</a>
             </div>
           </div>
           <div class="grid__section">
@@ -70,9 +70,10 @@
         <div class="footer-copyright">
           <p>
             <i class="far fa-copyright"></i> 2019 PreMiD by
-            <a href="https://github.com/Timeraa/">Timeraa</a> &
-            <a href="https://github.com/Fruxh/">Fruxh</a>
+            <a class="hover-effect" href="https://github.com/Timeraa/">Timeraa</a> &
+            <a class="hover-effect" href="https://github.com/Fruxh/">Fruxh</a>
           </p>
+          <p>Website design by <a class="hover-effect" href="https://voknehzyr.ru/">Voknehzyr</a></p>
         </div>
       </div>
     </div>
@@ -96,16 +97,13 @@ export default {
       );
       return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
     },
-        test() {
-            console.log('works');
-        },
   },
   data() {
     return {
-      ua: navigator.userAgent
+      ua: navigator.userAgent,
+      extension_installed: false,
     };
-  },
-  mounted() {}
+  }
 };
 </script>
 
