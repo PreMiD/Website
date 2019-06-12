@@ -14,7 +14,7 @@
           <div class="grid__section">
             <p class="section__title">Ready to try PreMiD?</p>
             <div class="section__promo">
-              <p>Join over 6 thousand users today!</p>
+              <p>Join over 8 thousand users today!</p>
               <router-link class="button" replace to="/downloads">INSTALL</router-link>
             </div>
           </div>
