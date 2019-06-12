@@ -14,11 +14,7 @@
           <div class="grid__section">
             <p class="section__title">Ready to try PreMiD?</p>
             <div class="section__promo">
-<<<<<<< HEAD
               <p v-if="this.installStats != null">Join over {{installStats}} users today!</p>
-=======
-              <p>Join over 8 thousand users today!</p>
->>>>>>> 1d0763b2081b6daaf819a33c0e62d9e4e3cd854c
               <router-link class="button" replace to="/downloads">INSTALL</router-link>
             </div>
           </div>
