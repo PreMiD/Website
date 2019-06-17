@@ -14,7 +14,7 @@
           <div class="grid__section">
             <p class="section__title">Ready to try PreMiD?</p>
             <div class="section__promo">
-              <p>Join over 6 thousand users today!</p>
+              <p v-if="this.installStats != null">Join over {{installStats}} users today!</p>
               <router-link class="button" replace to="/downloads">INSTALL</router-link>
             </div>
           </div>
@@ -73,7 +73,10 @@
             <a class="hover-effect" href="https://github.com/Timeraa/">Timeraa</a> &
             <a class="hover-effect" href="https://github.com/Fruxh/">Fruxh</a>
           </p>
-          <p>Website design by <a class="hover-effect" href="https://voknehzyr.ru/">Voknehzyr</a></p>
+          <p>
+            Website design by
+            <a class="hover-effect" href="https://voknehzyr.ru/">Voknehzyr</a>
+          </p>
         </div>
       </div>
     </div>
@@ -96,12 +99,23 @@ export default {
         window.innerHeight
       );
       return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-    },
+    }
+  },
+  created() {
+    fetch("https://api.premid.app/users")
+      .then(res => res.json())
+      .then(
+        json =>
+          (this.installStats = json.chrome
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+      );
   },
   data() {
     return {
       ua: navigator.userAgent,
       extension_installed: false,
+      installStats: null
     };
   }
 };
