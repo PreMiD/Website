@@ -27,8 +27,12 @@
               <a class="partner-logo" href="https://gitbook.com/">
                 <img src="./assets/images/gitbook.png">
               </a>
+              <br>
               <a class="partner-logo" href="https://installbuilder.bitrock.com/">
                 <img src="./assets/images/bitrock_installbuilder.png">
+              </a>
+              <a class="partner-logo" href="https://statuspage.io/">
+                <img src="./assets/images/statuspageio.svg">
               </a>
             </div>
           </div>
