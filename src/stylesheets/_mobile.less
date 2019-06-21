@@ -1,0 +1,124 @@
+/**
+ * 
+ * Phone & Tablet screen
+ * 
+ */
+@media only screen and (max-width: 870px) {
+    body {
+    .on-desktop {
+        display: none !important;
+    }
+    .feature-cards {
+        flex-wrap: wrap;
+        .feature-cards__card {
+            width: 250px;
+        }
+    }
+    .store-card {
+        width: 330px;
+        .store-card__service-info h2 {
+            font-size: 1.2em;
+        }
+        .store-card__verified {
+            position: relative;
+            bottom: -2px;
+        }
+    }
+    .promo-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .promo-container .promo-container__presences {
+        margin-left: 0;
+    }
+    .promo-container .promo-container__heading {
+        margin-right: 0;
+    }
+    .footer-grid .grid__section .section__title {
+        font-size: 1.3em;
+        margin: 20px auto;
+    }
+    .footer-grid {
+        flex-wrap: wrap;
+    }
+    button, a.button {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+    .presence {
+        width: auto;
+        margin: 20px;
+    }
+}
+}
+
+/**
+ * 
+ * Very small phone screen
+ * 
+ */
+@media only screen and (max-width: 580px) {
+    .promo-container .promo-container__heading {
+
+        .heading__logo {
+            display: flex;
+            img {
+                margin: 0 auto;
+            }
+        }
+
+        .heading__text {
+
+            margin-left: 0;
+            display: block;
+
+            h1 {
+                text-align: center;
+            }
+
+            p {
+                left: 0;
+                margin-left: 0;
+                text-align: center;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    .promo-container .promo-container__presences {
+        width: fill-available;
+    }
+
+    .discord-usercard {
+        width: auto;
+        margin: 1em;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+
+    body .store-card {
+        width: 280px;
+        height: 120px;
+        .store-card__service-logo img {
+            max-width: 50px;
+        }
+        .store-card__service-info h2 {
+            font-size: 1.1em;
+        }
+    }
+
+    .heading__button-group {
+        button, a.button {
+            width: fill-available;
+            margin: 5px 1em;
+        }
+    }
+}
+
+// Desktop
+@media (min-width: 870px) {
+    .on-mobile {
+        display: none !important;
+    }
+}

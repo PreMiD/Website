@@ -1,12 +1,84 @@
 <template>
   <div id="app">
-    <header v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')">
+    <header>
       <navigation/>
-      <div class="shadow"></div>
     </header>
-    <router-view v-if="!ua.includes('iPhone') && !ua.includes('iPad') && !ua.includes('Android')"></router-view>
-    <div class="mobile" v-if="ua.includes('iPhone') || ua.includes('iPad') || ua.includes('Android')">
-      <center><p>Fuck You Kravos</p></center>
+    <div class="page-wrapper">
+      <div id="content">
+        <transition name="route-animation" mode="out-in">
+          <router-view></router-view>
+        </transition>
+      </div>
+      <div id="footer">
+        <div class="footer-grid">
+          <div class="grid__section">
+            <p class="section__title">Ready to try PreMiD?</p>
+            <div class="section__promo">
+              <p v-if="this.installStats != null">Join over {{installStats}} users today!</p>
+              <router-link class="button" replace to="/downloads">INSTALL</router-link>
+            </div>
+          </div>
+          <div class="grid__section">
+            <p class="section__title">Partners</p>
+            <div class="section__promo">
+              <a class="partner-logo" href="https://poeditor.com/">
+                <img src="./assets/images/poeditor.png">
+              </a>
+              <a class="partner-logo" href="https://gitbook.com/">
+                <img src="./assets/images/gitbook.png">
+              </a>
+              <a class="partner-logo" href="https://installbuilder.bitrock.com/">
+                <img src="./assets/images/bitrock_installbuilder.png">
+              </a>
+            </div>
+          </div>
+          <div class="grid__section">
+            <p class="section__title">Developers</p>
+            <div>
+              <a href="https://docs.premid.app/">Documentation</a>
+              <a href="https://discordapp.com/rich-presence/">Rich Presence</a>
+            </div>
+          </div>
+          <div class="grid__section">
+            <p class="section__title">Support us</p>
+            <div>
+              <!-- // TODO finish after V2
+              <a v-on:click="openNavigation()">Donate</a>-->
+              <a href="https://patreon.com/timeraa/">Donate</a>
+              <a href="https://github.com/PreMiD/">Contribute</a>
+              <a href="https://discord.premid.app/">Design</a>
+              <a href="https://poeditor.com/join/project/Zzl1oOQV5g/">Translate</a>
+            </div>
+          </div>
+          <div class="grid__section">
+            <p class="section__title">Help</p>
+            <div>
+              <a href="https://wiki.premid.app/troubleshooting/troubleshooting/">Troubleshooting</a>
+              <a href="https://discord.premid.app/">Get Support</a>
+            </div>
+          </div>
+          <div class="grid__section">
+            <p class="section__title">More</p>
+            <div>
+              <a href="https://status.premid.app/">Status</a>
+              <a href="https://discord.premid.app/">Discord</a>
+              <a href="https://github.com/PreMiD/">GitHub</a>
+              <a href="https://wiki.premid.app/">Wiki</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <p>
+            <i class="far fa-copyright"></i> 2019 PreMiD by
+            <a class="hover-effect" href="https://github.com/Timeraa/">Timeraa</a> &
+            <a class="hover-effect" href="https://github.com/Fruxh/">Fruxh</a>
+          </p>
+          <p>
+            Website design by
+            <a class="hover-effect" href="https://voknehzyr.ru/">Voknehzyr</a>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -19,98 +91,36 @@ export default {
   components: {
     Navigation
   },
+  methods: {
+    isElementVisible(elm) {
+      var rect = elm.getBoundingClientRect();
+      var viewHeight = Math.max(
+        document.documentElement.clientHeight,
+        window.innerHeight
+      );
+      return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+    }
+  },
+  created() {
+    fetch("https://api.premid.app/users")
+      .then(res => res.json())
+      .then(
+        json =>
+          (this.installStats = json.chrome
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+      );
+  },
   data() {
     return {
-      ua: navigator.userAgent
+      ua: navigator.userAgent,
+      extension_installed: false,
+      installStats: null
     };
-  },
-  mounted() {
   }
 };
 </script>
 
 <style lang="less">
-@import "./stylesheets/colors.less";
-
-body {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 4rem 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  height: 100%;
-  font-family: Roboto;
-  background: #2c2f33;
-  color: @accent-primary;
-}
-
-header {
-  position: fixed;
-  z-index: 10000;
-  width: 100%;
-  margin-top: -4rem;
-}
-
-.shadow {
-  position: absolute;
-  width: 100%;
-  height: 0.25rem;
-  margin-top: 0rem;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, .4) 0%, rgba(0, 0, 0, 0) 100%);;
-}
-
-h3 {
-  font-weight: normal;
-}
-
-a {
-  text-decoration: none;
-  color: @accent-primary;
-  cursor: pointer;
-}
-
-button:focus {
-  outline: none;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar {
-  width: 0.4rem;
-  height: 0.6rem;
-}
-
-::-webkit-scrollbar-track {
-  background: none;
-  border: none;
-  &:hover {
-    background: @scroll-shade;
-    border-radius: 0.3rem;
-    transition: 500ms;
-  }
-}
-
-::-webkit-scrollbar-thumb {
-  background: @accent-primary;
-  border-radius: 0.3rem;
-  &:hover {
-    background: @accent-secondary;
-    transition: 700ms;
-  }
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-}
-
-img {
-  user-select: none;
-  -webkit-user-drag: none;
-}
+@import "./stylesheets/root.less";
 </style>

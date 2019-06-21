@@ -3,3 +3,4 @@ node_modules
 static/assets
 www
 package-lock.json
+.vscode/settings.json

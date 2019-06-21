@@ -61,7 +61,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "./../stylesheets/colors.less";
+@import "../stylesheets/colors.less";
+
 .main {
   height: 75%;
   overflow: scroll;
@@ -91,7 +92,6 @@ p {
     margin-bottom: 2rem;
   }
   &.notes {
-    font-family: Roboto;
     resize: none;
     width: 25rem;
     height: 5rem;
