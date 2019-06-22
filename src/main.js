@@ -2,11 +2,24 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './App';
-import router from './router';
+import router from './router/router.js';
 
 // Tooltips
-import VueTippy from 'vue-tippy'
+import VueTippy from 'vue-tippy';
 
+// Notifications
+import VueNoty from 'vuejs-noty'
+
+Vue.use(VueNoty, {
+    timeout: 0,
+    progressBar: false,
+    layout: 'topCenter',
+    theme: 'premid',
+    // animation: {
+    //     open: 'animated fade',
+    //     close: 'animated fade'
+    // }
+});
 Vue.use(VueTippy);
 Vue.config.productionTip = false;
 
@@ -38,10 +51,6 @@ Vue.mixin({
 
 /* eslint-disable no-new */
 new Vue({
-    el: '#app',
     router,
-    components: {
-        App
-    },
-    template: '<App/>'
-})
+    render: h => h(App)
+}).$mount("#app");
