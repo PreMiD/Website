@@ -78,7 +78,7 @@
             <a class="hover-effect" href="https://github.com/Fruxh/">Fruxh</a>
           </p>
           <p>
-            Website design by
+            Website maintained by
             <a class="hover-effect" href="https://voknehzyr.ru/">Voknehzyr</a>
           </p>
         </div>
