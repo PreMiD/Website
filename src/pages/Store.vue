@@ -62,10 +62,9 @@
 
       // Vue hook to call it inside JS functions.
       var self = this;
-
       // Checking if user has the extension installed.
       setTimeout(function () {
-        if (document.getElementById('PreMiD_PageVariables') !== null) {
+        if (document.getElementById("app").getAttribute('extension-ready') == "true") {
           self.$data.extension_installed = true;
           self.$noty.success("Extension installed, unlocking functions...");
           self.debugMessage('Extension installed, unlocking functions...');
