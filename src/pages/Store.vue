@@ -67,9 +67,11 @@
       setTimeout(function () {
         if (document.getElementById('PreMiD_PageVariables') !== null) {
           self.$data.extension_installed = true;
+          self.$noty.success("Extension installed, unlocking functions...");
           self.debugMessage('Extension installed, unlocking functions...');
         } else {
           self.$data.extension_installed = false;
+          self.$noty.error("Extension not found, locking functions...");
           self.errorMessage('Extension not found, locking functions...');
         }
       }, 1000);
@@ -170,7 +172,7 @@
     width: 1%;
 
     input {
-      width: fill-available;
+      width: stretch;
       border-radius: 99em;
     }
 

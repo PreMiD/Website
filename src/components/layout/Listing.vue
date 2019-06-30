@@ -72,12 +72,14 @@
                 </span>Remove presence
               </button>
             </div>
-          </transition>
-        </div>
-        <div
+            </transition>
+
+          </div>
+                  <div
           class="store-card__gradient"
           :style="`background: linear-gradient(135deg, ${presence.color} 0%, black 100%);`"
         ></div>
+        </div>
       </div>
     </div>
   </transition>

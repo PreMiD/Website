@@ -17,8 +17,7 @@
 
       <div class="dl-container__cards waves-aligned on-desktop">
         <div v-bind:key="platform" v-for="(platform, index) of platform_order" v-on:click="open(platform)">
-          <a href="#">
-            <div v-bind:class="{ 'on-desktop': index == 0 || index == 2, 'current_platform': index == 1 }" class="cards__card">
+            <div v-bind:class="{ 'current_platform': index == 1 }" class="cards__card clickable">
               <div class="card__icon">
                 <i :class="`fab fa-${platform}`"></i>
               </div>
@@ -27,7 +26,6 @@
                 <p class="card__warning" v-if="!builds[platform].has_installer">You need to build an application for this OS on your own!</p>
               </div>
             </div>
-          </a>
         </div>
       </div>
     </div>
@@ -35,18 +33,17 @@
       <h2 class="container__header"><span class="header__step">2.</span> Install browser extension</h2>
       
       <div class="dl-container__cards">
-          <a href="#">
-            <div v-on:click="openInNewTab(chrome_url)" class="cards__card">
+            <div v-on:click="openInNewTab(chrome_url)" class="cards__card clickable">
               <div class="card__icon">
                 <i class="fab fa-chrome"></i>
               </div>
               <div class="card__content">
                 <h3>Chromium</h3>
+                <p class="card__warning">Chrome, Edge, Opera, and etc.</p>
               </div>
             </div>
-          </a>
-          <a href="#">
-            <div v-on:click="openInNewTab(firefox_url)" class="cards__card">
+
+            <div v-on:click="openInNewTab(firefox_url)" class="cards__card clickable">
               <div class="card__icon">
                 <i class="fab fa-firefox"></i>
               </div>
@@ -54,7 +51,7 @@
                 <h3>Firefox</h3>
               </div>
             </div>
-          </a>
+
       </div>
     </div>
     <!-- <h2 class="container__header"><span class="header__step">3.</span> Run the application</h2> -->
