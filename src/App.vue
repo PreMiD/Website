@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <navigation/>
+      <navigation />
     </header>
     <div class="page-wrapper">
       <div id="content">
@@ -22,17 +22,20 @@
             <p class="section__title">Partners</p>
             <div class="section__promo">
               <a class="partner-logo" href="https://poeditor.com/">
-                <img src="./assets/images/poeditor.png">
+                <img src="./assets/images/poeditor.png" />
               </a>
               <a class="partner-logo" href="https://gitbook.com/">
-                <img src="./assets/images/gitbook.png">
+                <img src="./assets/images/gitbook.png" />
               </a>
-              <br>
               <a class="partner-logo" href="https://installbuilder.bitrock.com/">
-                <img src="./assets/images/bitrock_installbuilder.png">
+                <img src="./assets/images/bitrock_installbuilder.png" />
               </a>
+              <br />
               <a class="partner-logo" href="https://statuspage.io/">
-                <img src="./assets/images/statuspageio.svg">
+                <img src="./assets/images/atlassian_statuspage.svg" />
+              </a>
+              <a class="partner-logo" href="https://www.transifex.com/">
+                <img src="./assets/images/atlassian_transifex.png" />
               </a>
             </div>
           </div>
@@ -73,7 +76,7 @@
         </div>
         <div class="footer-copyright">
           <p>
-            <i class="far fa-copyright"></i> 2019 PreMiD by
+            <i class="far fa-copyright"></i> 2018-2019 PreMiD by
             <a class="hover-effect" href="https://github.com/Timeraa/">Timeraa</a> &
             <a class="hover-effect" href="https://github.com/Fruxh/">Fruxh</a>
           </p>
