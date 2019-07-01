@@ -32,6 +32,15 @@
         z-index: 1;
     }
 
+    .store-card__overlay {
+        position: absolute;
+        top: 8px;
+        right: 0px;
+        bottom: 0;
+
+        z-index: 111;
+    }
+
     .store-card__service-logo {
         padding: 0 1em;
         margin: auto 0;
@@ -99,6 +108,19 @@
                 font-size: 12px;
                 width: 100%;
             }
+        }
+
+        .store-card__warning {
+            padding: 10px 0;
+            font-weight: 600;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 10px 0;
+            border-radius: 4px;
+            padding: 10px;
+
+            box-shadow: 0 3px 26px -5px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
         }
 
     }

@@ -12,17 +12,16 @@
     opacity: 0;
 }
 
-.card-animation-enter-active {
-    transition: all 0.2s ease;
-}
-
+.card-animation-enter-active,
 .card-animation-leave-active {
-    transition: all 0s ease;
+    transition: all 100ms cubic-bezier(0.26, 0.08, 0, 0.97);
 }
 
 .card-animation-enter,
 .card-animation-leave-to {
-    opacity: 0;
+    transform: scale(0);
+    will-change: transform;
+    opacity: 0 !important;
 }
 
 .btn-animation-enter-active,
