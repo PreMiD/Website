@@ -148,6 +148,7 @@ import twitch_logo from "./../assets/images/twitch.png";
 import youtube_logo from "./../assets/images/youtube.png";
 import soundcloud_logo from "./../assets/images/soundcloud.png";
 import netflix_logo from "./../assets/images/netflix.png";
+import youtube_music_logo from "./../assets/images/youtube-music.png";
 
 import Card from "../components/Card.vue";
 
@@ -165,7 +166,7 @@ export default {
         {
           profile: {
             DiscordID: "259407123782434816",
-            badges: ["hypesquad", "balance", "early", "nitro", "boost-lvl1"]
+            badges: ["hypesquad", "balance", "early", "nitro", "boost-lvl2"]
           },
           service_title: "Twitch",
           service_logo: twitch_logo,
@@ -174,17 +175,18 @@ export default {
         },
         {
           profile: {
-            DiscordID: "465105167751315471"
+            DiscordID: "515668127829458945",
+            badges: ["balance", "nitro", "boost-lvl2"]
           },
-          service_title: "Netflix",
-          service_logo: netflix_logo,
-          data: ["Breaking Bad", "S5:E16 Felina"],
-          presence_time: "15:35"
+          service_title: "YouTube Music",
+          service_logo: youtube_music_logo,
+          data: ["Old Town Road [cover]", "senzawa"],
+          presence_time: "00:26"
         },
         {
           profile: {
             DiscordID: "223238938716798978",
-            badges: ["brilliance", "nitro", "boost-lvl1"]
+            badges: ["brilliance", "nitro", "boost-lvl2"]
           },
           service_title: "YouTube",
           service_logo: youtube_logo,
