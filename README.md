@@ -1,18 +1,18 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/PreMiD/PreMiD/stable/gitassets/icon.png" width="128px" draggable="false">
+<img src="https://avatars3.githubusercontent.com/u/46326568?s=400&u=15e4a4988014780288d30ffb969fd1569fec23e6&v=4" width="128px" draggable="false">
 
 # PreMiD Website
   
 </div>  
   
-This repository contains source code of **PreMiD**'s website that allows you to install presences from store.
+This repository contains source code of **PreMiD**'s website that allows you to install presences from our presence store.
 If you want to get more information or help us by **[contributing](#development)** in this project, we would like to see you in our **Discord** server: <a target="_blank" href="https://discord.gg/WvfVZ8T" title="Join our Discord!">
-<img draggable="false" src="https://discordapp.com/api/guilds/493130730549805057/widget.png?style=banner2" height="76px" draggable="false" alt="Join my Discord!">
+<img draggable="false" src="https://discordapp.com/api/guilds/493130730549805057/widget.png?style=banner2" height="76px" draggable="false" alt="Join our Discord!">
 </a>
 
 ## Additional information
 Our server automatically builds the latest website versions from **[master](https://beta.premid.app/)** and **[stable](https://premid.app/)** branches.    
-Master branch includes all changes that was not tested yet and may have perfomance issues. 
+The `master` branch includes all changes that was not tested yet and may have perfomance issues. 
 
 ## Building
 
