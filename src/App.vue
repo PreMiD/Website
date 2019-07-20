@@ -70,7 +70,6 @@
               <a href="https://premid.app/cookies/">Cookies</a>
               <a href="https://premid.app/privacy/">Privacy</a>
               <a href="https://premid.app/tos/">Terms</a>
-              <a href="https://pornhub.com/">OwO</a>
             </div>
           </div>
           <div class="grid__section">
