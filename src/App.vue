@@ -54,7 +54,7 @@
               <a href="https://patreon.com/timeraa/">Donate</a>
               <a href="https://github.com/PreMiD/">Contribute</a>
               <a href="https://discord.premid.app/">Design</a>
-              <a href="https://poeditor.com/join/project/Zzl1oOQV5g/">Translate</a>
+              <a href="https://www.transifex.com/PreMiD/public/">Translate</a>
             </div>
           </div>
           <div class="grid__section">
