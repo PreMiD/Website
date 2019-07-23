@@ -50,6 +50,20 @@
       // Vue hook to call it inside JS functions.
       var self = this;
 
+      // Requesting presences data from our API and adding it into our Vue data.
+      axios.get(`https://api.premid.app/presences`)
+        .then(function (res) {
+          let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
+          for (let presence of presences) {
+            let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/')
+              .slice(0, -1) + '/metadata.json';
+            self.getPresenceData(url);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
       // Capturing event with presence data from extension.
       window.addEventListener('PreMiD_GetWebisteFallback', function (data) {
         self.debugMessage('Recieved information from Extension!');
@@ -77,20 +91,6 @@
       // Firing event to get response from Extension with installed presences data.
       var event = new CustomEvent('PreMiD_GetPresenceList', {});
       window.dispatchEvent(event);
-
-      // Requesting presences data from our API and adding it into our Vue data.
-      axios.get(`https://api.premid.app/presences`)
-        .then(function (res) {
-          let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
-          for (let presence of presences) {
-            let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/')
-              .slice(0, -1) + '/metadata.json';
-            self.getPresenceData(url);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
         
     },
     methods: {
