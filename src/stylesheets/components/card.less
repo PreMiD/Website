@@ -282,6 +282,13 @@
                 font-size: 1.2em;
                 font-weight: bold;
             }
+            .platform-warning {
+                color: #ED6347;
+                text-shadow: 0 0 12px rgba(237, 99, 71, 0.5);
+                margin-left: 3px;
+                font-size: 17px;
+                transition: all 0.2s ease;
+            }
         }
 
         .card__icon {
@@ -302,13 +309,24 @@
             cursor: pointer;
         }
 
-        &.current_platform,
-        &:hover {
-            box-shadow: 0 4px 120px 0 rgba(114, 137, 218, 0.3);
-            background: @accent-primary;
+        &.current-platform {
+            box-shadow: 0 4px 40px 0 rgba(114, 137, 218, 0.2);
         }
 
-        // &.current_platform {
+        &.current-platform,
+        &:hover {
+            background: @accent-primary;
+
+            .platform-warning {
+                color: white;
+            }
+        }
+
+        &:hover {
+            box-shadow: 0 4px 70px 0 rgba(114, 137, 218, 0.4);
+        }
+
+        // &.current-platform {
         //     transform: translateY(-12px);
         // }
 

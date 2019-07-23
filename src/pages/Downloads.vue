@@ -1,6 +1,6 @@
 <template>
   <div class="dl-container">
-    <div class="dl-container__section_header">
+    <div class="dl-container__section dl-container__section_header">
       <div class="dl-container__header">
         <div class="header__content">
           <h1>Time to show yourself to everyone.</h1>
@@ -11,13 +11,13 @@
           <h2>Get Started</h2>
           <ul>
             <li>
-              <p><span class="steps__counter">1</span> Download PreMiD.</p>
+              <p><span class="steps__counter">1</span> Download PreMiD. [<a href="#app-downloads"><i class="fas fa-arrow-down"/></a>]</p>
             </li>
             <li>
               <p><span class="steps__counter">2</span> Install PreMiD application.</p>
             </li>
             <li>
-              <p><span class="steps__counter">3</span> Install extension for Chrome/Firefox.</p>
+              <p><span class="steps__counter">3</span> Install extension for your browser. [<a href="#ext-downloads"><i class="fas fa-arrow-down"/></a>]</p>
             </li>
             <li>
               <p><span class="steps__counter">4</span> Visit <router-link to="/store">store</router-link> page and check
@@ -37,18 +37,18 @@
       </div>
     </div>
 
-    <div class="dl-container__section waves-aligned on-desktop">
-      <h1>Application downloads</h1>
+    <div id="app-downloads" class="dl-container__section dl-container__section_downloads waves-aligned on-desktop">
+      <h1 class="section-header">Application downloads</h1>
       <div class="dl-container__cards">
         <div v-bind:key="platform" v-for="(platform, index) of platform_order">
           <div v-on:click="open(platform)">
-            <div v-bind:class="{ 'current_platform': index == 1 }" class="cards__card clickable">
+            <div v-bind:class="{ 'current-platform': index == 1 }" class="cards__card clickable">
               <div class="card__icon">
                 <i :class="`fab fa-${platform}`"></i>
               </div>
               <div class="card__content">
                 <h3>{{builds[platform].os_name}} <i v-if="!builds[platform].has_installer"
-                    class="fas fa-exclamation-triangle platform_warning" /></h3>
+                    class="fas fa-exclamation-circle platform-warning" content="<b>WARNING:</b> Application doesn't have installer for this operating system. It means that there's no professional support for it." v-tippy /></h3>
               </div>
             </div>
           </div>
@@ -56,23 +56,20 @@
       </div>
     </div>
 
-    <div class="browser-container on-desktop">
-      <h2 class="container__header">
-        <span class="header__step">2.</span> Install browser extension
-      </h2>
+    <div id="ext-downloads" class="dl-container__section dl-container__section_downloads on-desktop">
+      <h1 class="section-header">Extension downloads</h1>
 
       <div class="dl-container__cards">
-        <div v-on:click="openInNewTab(chrome_url)" class="cards__card clickable">
+        <div v-on:click="openInNewTab(chrome_url)" v-bind:class="{ 'current-platform': browser == 'chrome' }" class="cards__card clickable">
           <div class="card__icon">
             <i class="fab fa-chrome"></i>
           </div>
           <div class="card__content">
             <h3>Chromium</h3>
-            <p class="card__warning">Chrome, Edge, Opera, and etc.</p>
           </div>
         </div>
 
-        <div v-on:click="openInNewTab(firefox_url)" class="cards__card clickable">
+        <div v-on:click="openInNewTab(firefox_url)" v-bind:class="{ 'current-platform': browser == 'firefox' }" class="cards__card clickable">
           <div class="card__icon">
             <i class="fab fa-firefox"></i>
           </div>
@@ -94,6 +91,7 @@
     data() {
       return {
         platforms: [],
+        browser: null,
         windows_url: "",
         apple_url: "",
         linux_url: "",
@@ -118,6 +116,15 @@
     },
     mounted() {
       let ua = navigator.userAgent;
+
+      //* Browser detection.
+      // Thanks to https://stackoverflow.com/a/9851769 for providing code.
+      if (!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) {
+        this.$data.browser = 'chrome';
+      } else if (typeof InstallTrigger !== 'undefined') {
+        this.$data.browser = 'firefox';
+      }
+
       let platform_temp = "linux";
       var platform_order = this.$data.platform_order;
 
@@ -128,7 +135,7 @@
       // Centering the current platform in array. Only works if array has 3 items.
       platform_order.splice(platform_order.indexOf(platform_temp), 1);
       platform_order.splice(1, 0, platform_temp);
-      
+
       request(
         "https://api.github.com/repos/PreMiD/PreMiD/releases/latest",
         (err, res, dat) => {

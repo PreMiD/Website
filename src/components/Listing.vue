@@ -11,9 +11,7 @@
             <h2>
               {{ presence.service }}
               <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
-                title="Verified presence"
-                v-tippy
-                class="store-card__verified" :style="`fill: ${presence.color}`">
+                title="Verified presence" v-tippy class="store-card__verified" :style="`fill: ${presence.color}`">
                 <g>
                   <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M10.0004 17.9551C10.0859 17.9614 10.1667 17.9642 10.2413 17.9634C11.0085 17.8521 11.8843 17.635 12.2814 17.2112C12.606 16.8648 12.8945 16.4383 13.0053 16C13.9884 16.7219 15.6293 16.4558 16.5 15.5267C17.3313 14.6396 16.8177 13.307 16.5 12.5C16.7653 12.3701 17.0421 12.1311 17.2608 11.8977C17.7709 11.3533 18.0169 10.7074 18 10.0001C18.0169 9.29273 17.7709 8.64677 17.2608 8.10244C17.0421 7.86902 16.7653 7.63005 16.5 7.50012C16.8177 6.69311 17.3313 5.36053 16.5 4.47341C15.6293 3.54432 13.9884 3.27818 13.0053 4.00012C12.8945 3.56179 12.606 3.13535 12.2814 2.78891C11.8843 2.36516 11.0072 2.10302 10.24 2.02092C10.1657 1.99098 10.0851 1.99373 10 2C9.90258 1.99364 9.81486 1.99085 9.74004 1.99163C9.11145 2.1173 8.10554 2.37692 7.71945 2.78891C7.3948 3.13535 7.10628 3.56179 6.99552 4.00012C6.01242 3.27818 4.37149 3.54432 3.50082 4.47341C2.66947 5.36053 3.18311 6.69311 3.50082 7.50012C3.23547 7.63005 2.95876 7.86902 2.74001 8.10244C2.2299 8.64677 1.9839 9.29273 2.00082 10.0001C1.9839 10.7074 2.2299 11.3533 2.74001 11.8977C2.95876 12.1311 3.23547 12.3701 3.50082 12.5C3.18311 13.307 2.66947 14.6396 3.50082 15.5267C4.37149 16.4558 6.01242 16.7219 6.99552 16C7.10628 16.4383 7.3948 16.8648 7.71945 17.2112C8.10554 17.6232 9.11273 17.8379 9.74133 17.9269C9.81592 17.9642 9.90334 17.9614 10.0004 17.9551Z">
@@ -48,17 +46,16 @@
                   </button>
                 </div>
                 <div v-if="this.$parent.extension_installed && presence.button == false">
-                  <p class="store-card__warning">This presence is included in PreMiD by default, no need to install it.</p>
+                  <p class="store-card__warning">This presence is included in PreMiD by default, no need to install it.
+                  </p>
                 </div>
-                </div>
+              </div>
             </transition>
           </div>
         </div>
-              <div class="store-card__gradient"
-        :style="`background: linear-gradient(135deg, ${presence.color} 0%, black 100%);`"></div>
-    </div>
+        <div class="store-card__gradient"
+          :style="`background: linear-gradient(135deg, ${presence.color} 0%, black 100%);`"></div>
       </div>
-    </div>
     </div>
   </transition>
 </template>

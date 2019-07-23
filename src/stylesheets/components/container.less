@@ -86,6 +86,7 @@
 	position: relative;
 
 	.dl-container__section { 
+		padding: 0 2rem;
 		&_header {
 			position: relative;
 
@@ -97,12 +98,18 @@
 			padding-bottom: 12em;
 			background: @background-secondary;
 		}
-		h1 {
+
+		&_downloads {
+			padding-top: 1em;
+			padding-bottom: 2em;
+		}
+
+		h1.section-header {
 			text-align: center;
 			font-weight: 800;
 			line-height: 1.1;
-			font-size: 58px;
-			letter-spacing: -3px;
+			font-size: 52px;
+			letter-spacing: -1px;
 			background: linear-gradient(30deg, @accent-primary, #b3aeff);
 			-webkit-background-clip: text;
 			background-clip: text;
@@ -277,6 +284,7 @@
 			&:hover,
 			&.active {
 				color: rgba(255, 255, 255, 1);
+				transform: scale(1.1);
 			}
 
 		}
