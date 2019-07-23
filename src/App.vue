@@ -65,11 +65,11 @@
             </div>
           </div>
           <div class="grid__section">
-            <p class="section__title">Information</p>
+            <p class="section__title">{{ $t(`footer.help.information`) }}</p>
             <div>
-              <router-link to="/cookies">Cookies</router-link>
-              <router-link to="/privacy">Privacy</router-link>
-              <router-link to="/tos">Terms</router-link>
+              <router-link to="/cookies">{{ $t(`footer.help.information.cookies`) }}</router-link>
+              <router-link to="/privacy">{{ $t(`footer.help.information.privacy`) }}</router-link>
+              <router-link to="/tos">{{ $t(`footer.help.information.terms`) }}</router-link>
             </div>
           </div>
           <div class="grid__section">

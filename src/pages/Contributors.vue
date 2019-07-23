@@ -2,28 +2,28 @@
   <div>
     <title>PreMiD - Contributors</title>
     <section class="contributors">
-      <h1 class="section-header">Core Team</h1>
+      <h1 class="section-header">{{ $t(`contributors.headings.coreteam`) }}</h1>
       <div class="contributor-container">
         <div v-for="(contributor, index) of contributors" v-bind:key="contributor.name" class="contributor-card"
           v-if="isStaffRole(contributor.role)">
           <ContributorCard :contributor="contributor" />
         </div>
       </div>
-      <h1 class="section-header">Supporters</h1>
+      <h1 class="section-header">{{ $t(`contributors.headings.supporters`) }}</h1>
       <div class="contributor-container">
         <div v-for="(contributor, index) of contributors" v-bind:key="contributor.name" class="contributor-card"
           v-if="isSupporterRole(contributor.role)">
           <ContributorCard :contributor="contributor" />
         </div>
       </div>
-      <h1 class="section-header">Translators</h1>
+      <h1 class="section-header">{{ $t(`contributors.headings.translators`) }}</h1>
       <div class="contributor-container">
         <div v-for="(contributor, index) of contributors" v-bind:key="contributor.name" class="contributor-card"
           v-if="isTranslatorRole(contributor.role)">
           <ContributorCard :contributor="contributor" />
         </div>
       </div>
-      <h1 class="section-header">Contributors</h1>
+      <h1 class="section-header">{{ $t(`contributors.headings.contributors`) }}</h1>
       <div class="contributor-container">
         <div v-for="(contributor, index) of contributors" v-bind:key="contributor.name" class="contributor-card"
           v-if="isContributorRole(contributor.role)">

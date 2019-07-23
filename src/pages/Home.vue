@@ -69,24 +69,23 @@
         </svg>
       </div>
       <div class="section-heading">
-        <h1 class="section-heading__title">Our primary features</h1>
+        <h1 class="section-heading__title">{{ $t('home.cards.heading') }}</h1>
         <p class="section-heading__subtitle">
-          We have lots of features, but right now we want to tell you about our primary features that you can find only
-          in PreMiD.
+          {{ $t('home.cards.subheading') }}
         </p>
       </div>
       <div class="feature-cards">
-        <Card title="Presence System"
-          desc="We have developed our extension with presence system that allows you to use presences that was created by other users and manage them via extension!"
+        <Card :title="$t('home.cards.presencesystem.title')"
+          :desc="$t('home.cards.presencesystem.explanation')"
           icon="fas fa-puzzle-piece" :image="cardThumbnail1" />
-        <Card title="Media Controls"
-          desc="Most of our presences provide support for media controls. You can skip/pause/play tracks while using other applications."
+        <Card :title="$t('home.cards.mediacontrols.title')"
+          :desc="$t('home.cards.mediacontrols.explanation')"
           icon="fas fa-keyboard" theme="media" :image="cardThumbnail2" />
-        <Card title="Multilingual"
-          desc="Not everyone good at English. That's why we translating our extension and website into other languages, probably including yours!"
+        <Card :title="$t('home.cards.multilingual.title')"
+          :desc="$t('home.cards.multilingual.explanation')"
           icon="fas fa-laptop" theme="lang" :image="cardThumbnail3" />
-        <Card title="Open Source"
-          desc="Our application, website and extension source codes are open source. If you found a bug or want to add new feature you can create issue or pull request on our GitHub page!"
+        <Card :title="$t('home.cards.opensource.title')"
+          :desc="$t('home.cards.opensource.explanation')"
           icon="fas fa-code" theme="opensource" :image="cardThumbnail4" />
       </div>
       <div class="waves-divider waves-divider_bottom">
