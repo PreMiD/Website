@@ -67,9 +67,9 @@
           <div class="grid__section">
             <p class="section__title">Information</p>
             <div>
-              <a href="https://premid.app/cookies/">Cookies</a>
-              <a href="https://premid.app/privacy/">Privacy</a>
-              <a href="https://premid.app/tos/">Terms</a>
+              <router-link to="/cookies">Cookies</router-link>
+              <router-link to="/privacy">Privacy</router-link>
+              <router-link to="/tos">Terms</router-link>
             </div>
           </div>
           <div class="grid__section">
