@@ -15,7 +15,7 @@
         name: 'language-switcher',
         data() {
             return {
-                currentLanguage: localStorage.language,
+                currentLanguage: null,
                 langs: this.$i18n.availableLocales
             }
         },
@@ -26,6 +26,9 @@
                 this.setLanguage(lang);
                 this.$data.currentLanguage = localStorage.language;
             }
+        },
+        created() {
+            this.$data.currentLanguage = this.getI18nLanguage();
         }
     }
 
