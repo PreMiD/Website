@@ -1,0 +1,183 @@
+* {
+	font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+		"Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+	height: 100%;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+#app {
+	overflow: -webkit-paged-x;
+}
+
+.page-wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	background: #202225;
+	color: @accent-primary;
+}
+
+header {
+	z-index: 10000;
+	width: 100%;
+}
+
+#content {
+	min-height: 100vh - 318.2px;
+	flex: 1 0 auto;
+}
+
+#footer {
+	flex: 0 0 auto;
+	background: #202225;
+	color: white;
+	padding: 20px;
+	padding-top: 3.5em;
+
+	.partner-logo {
+		display: inline-block;
+
+		img {
+			width: 42px;
+			margin: 2px;
+
+			vertical-align: middle;
+
+			transition: all .2s ease;
+
+			filter: grayscale(100%);
+			opacity: .5;
+		}
+
+		&:hover {
+			img {
+				filter: grayscale(0%);
+				opacity: 1;
+			}
+		}
+	}
+}
+
+.footer-copyright {
+
+	p {
+		margin: 3px;
+	}
+
+	text-align: center;
+	font-size: 12px;
+	font-weight: 700;
+	color: #43484e;
+}
+
+h3 {
+	font-weight: normal;
+}
+
+a {
+	position: relative;
+	text-decoration: none;
+	color: @accent-primary;
+	cursor: pointer;
+
+	&.hover-effect {
+		&::after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			transform: translate(-50%);
+			width: 0;
+			height: 1px;
+			bottom: -2px;
+			border-radius: 5px;
+			// box-shadow: 0 1px 16px 0 @accent-primary;
+			background: @accent-primary;
+			transition: all .4s cubic-bezier(0.26, 0.08, 0, 0.97);
+		}
+
+		&:hover {
+			&::after {
+				width: 90%;
+			}
+		}
+	}
+
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+	height: 0.6rem;
+}
+
+::-webkit-scrollbar-track {
+	background: @background-secondary;
+	border: none;
+}
+
+::-webkit-scrollbar-thumb {
+	border: 3px solid @background-secondary;
+	border-radius: 20px;
+	background: @accent-primary;
+
+	&:hover {
+		background: lighten(@accent-secondary, 3%);
+	}
+}
+
+::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+footer {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+}
+
+img {
+	user-select: none;
+	-webkit-user-drag: none;
+}
+
+.tippy-tooltip.discord-theme {
+	/* Your styling here. Example: */
+	background-color: black;
+	box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
+	
+}
+
+.tippy-popper[x-placement^=top] .tippy-tooltip.discord-theme .tippy-arrow {
+	border-top-color: black;
+	box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
+}
+
+.tippy-tooltip.discord-theme .tippy-content {
+	/* Your styling here. Example: */
+	padding: 5px;
+	color: white;
+
+	h2 {
+		margin: 0;
+		margin-bottom: 8px;
+	}
+}
+
+::selection {
+	background-color: rgba(56, 61, 66, 0.99);
+	color: white;
+}
+
+.hidden {
+	visibility: hidden;
+}
+

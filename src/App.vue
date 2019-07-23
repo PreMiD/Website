@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <LanguageSwitcher v-if="switcherVisible" />
+    <transition name="route-animation" mode="out-in">
+      <LanguageNotification />
+    </transition>
     <header>
       <navigation />
     </header>
@@ -12,14 +16,14 @@
       <div id="footer">
         <div class="footer-grid">
           <div class="grid__section">
-            <p class="section__title">Ready to try PreMiD?</p>
+            <p class="section__title">{{ $t(`footer.usercount.heading`) }}</p>
             <div class="section__promo">
-              <p v-if="this.installStats != null">Join over {{installStats}} users today!</p>
-              <router-link class="button" replace to="/downloads">INSTALL</router-link>
+              <p v-if="this.installStats != null">{{ $t(`footer.usercount.message`, [installStats]) }}</p>
+              <router-link class="button" replace to="/downloads">{{ $t(`footer.usercount.button`) }}</router-link>
             </div>
           </div>
           <div class="grid__section">
-            <p class="section__title">Partners</p>
+            <p class="section__title">{{ $t(`footer.partners.heading`) }}</p>
             <div class="section__promo">
               <a class="partner-logo" href="https://poeditor.com/">
                 <img src="./assets/images/poeditor.png" />
@@ -40,50 +44,51 @@
             </div>
           </div>
           <div class="grid__section">
-            <p class="section__title">Developers</p>
+            <p class="section__title">{{ $t(`footer.developers.heading`) }}</p>
             <div>
-              <a href="https://docs.premid.app/">Documentation</a>
-              <a href="https://discordapp.com/rich-presence/">Rich Presence</a>
+              <a href="https://docs.premid.app/">{{ $t(`footer.developers.documentation`) }}</a>
+              <a href="https://discordapp.com/rich-presence/">{{ $t(`footer.developers.richpresence`) }}</a>
             </div>
           </div>
           <div class="grid__section">
-            <p class="section__title">Support us</p>
+            <p class="section__title">{{ $t(`footer.supportus.heading`) }}</p>
             <div>
               <!-- // TODO finish after V2
               <a v-on:click="openNavigation()">Donate</a>-->
-              <a href="https://patreon.com/timeraa/">Donate</a>
-              <a href="https://github.com/PreMiD/">Contribute</a>
-              <a href="https://discord.premid.app/">Design</a>
-              <a href="https://poeditor.com/join/project/Zzl1oOQV5g/">Translate</a>
+              <a href="https://patreon.com/timeraa/">{{ $t(`footer.supportus.donate`) }}</a>
+              <a href="https://github.com/PreMiD/">{{ $t(`footer.supportus.contribute`) }}</a>
+              <a href="https://discord.premid.app/">{{ $t(`footer.supportus.design`) }}</a>
+              <a href="https://poeditor.com/join/project/Zzl1oOQV5g/">{{ $t(`footer.supportus.translate`) }}</a>
             </div>
           </div>
           <div class="grid__section">
-            <p class="section__title">Help</p>
+            <p class="section__title">{{ $t(`footer.help.heading`) }}</p>
             <div>
-              <a href="https://wiki.premid.app/troubleshooting/troubleshooting/">Troubleshooting</a>
-              <a href="https://discord.premid.app/">Get Support</a>
+              <a href="https://wiki.premid.app/troubleshooting/troubleshooting/">{{ $t(`footer.help.troubleshooting`) }}</a>
+              <a href="https://discord.premid.app/">{{ $t(`footer.help.getsupport`) }}</a>
             </div>
           </div>
           <div class="grid__section">
-            <p class="section__title">More</p>
+            <p class="section__title">{{ $t(`footer.more.heading`) }}</p>
             <div>
-              <a href="https://status.premid.app/">Status</a>
+              <a href="https://status.premid.app/">{{ $t(`footer.more.status`) }}</a>
               <a href="https://discord.premid.app/">Discord</a>
               <a href="https://github.com/PreMiD/">GitHub</a>
-              <a href="https://wiki.premid.app/">Wiki</a>
+              <a href="https://wiki.premid.app/">{{ $t(`footer.more.wiki`) }}</a>
             </div>
           </div>
         </div>
         <div class="footer-copyright">
+          <p><span class="label label_language-switcher">{{ $t(`footer.language`) }}: <a class="hover-effect"
+                href="javascript:void(0);" @click="switcherVisible = true;">{{ $t(`header.language`)}}</a></span></p>
           <p>
-            <i class="far fa-copyright"></i> 2018-2019 PreMiD by
+            <i class="far fa-copyright"></i> 2019 PreMiD by
             <a class="hover-effect" href="https://github.com/Timeraa/">Timeraa</a> &
             <a class="hover-effect" href="https://github.com/Fruxh/">Fruxh</a>
           </p>
-          <p>
-            Website maintained by
-            <a class="hover-effect" href="https://voknehzyr.ru/">Voknehzyr</a>
-          </p>
+          <i18n path="footer.copyright.line2" tag="p"> 
+            <a place="0" href="https://voknehzyr.ru/">Voknehzyr</a>
+          </i18n>
         </div>
       </div>
     </div>
@@ -91,43 +96,34 @@
 </template>
 
 <script>
-import Navigation from "./components/layout/Navigation.vue";
+  import Navigation from "./components/Navigation.vue";
+  import LanguageNotification from "./components/LanguageNotification.vue";
+  import LanguageSwitcher from "./components/LanguageSwitcher.vue";
 
-export default {
-  name: "premid-web",
-  components: {
-    Navigation
-  },
-  methods: {
-    isElementVisible(elm) {
-      var rect = elm.getBoundingClientRect();
-      var viewHeight = Math.max(
-        document.documentElement.clientHeight,
-        window.innerHeight
-      );
-      return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-    }
-  },
-  created() {
-    fetch("https://api.premid.app/users")
-      .then(res => res.json())
-      .then(
-        json =>
+  export default {
+    name: "premid-web",
+    components: {
+      Navigation,
+      LanguageNotification,
+      LanguageSwitcher
+    },
+    created() {
+      fetch("https://api.premid.app/users")
+        .then(res => res.json())
+        .then(
+          json =>
           (this.installStats = json.chrome
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, "."))
-      );
-  },
-  data() {
-    return {
-      ua: navigator.userAgent,
-      extension_installed: false,
-      installStats: null
-    };
-  }
-};
-</script>
+        );
+    },
+    data() {
+      return {
+        ua: navigator.userAgent,
+        extension_installed: false,
+        installStats: null
+      };
+    }
+  };
 
-<style lang="less">
-@import "./stylesheets/root.less";
-</style>
+</script>

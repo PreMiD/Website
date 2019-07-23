@@ -76,7 +76,7 @@ export default {
 
 <style lang="less" scoped>
 
-@import "../stylesheets/colors.less";
+@import "../stylesheets/variables.less";
 
 .main {
   display: grid;

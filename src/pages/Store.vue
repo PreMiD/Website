@@ -5,7 +5,7 @@
       <div class="store-menu__searchbar-container">
         <i class="fas fa-search"></i>
         <input class="searchbar" placeholder="Search" v-on:input="update_search()">
-        <!-- // TODO: Implement when we will be moving to DB.-->
+        <!-- TODO: Implement when we will be moving to DB.-->
         <!-- <div class="searchbar-container__controls">
           <a href="#" class="button">Submit</a>
           <a href="#" class="button">Toggle NSFW</a>
@@ -21,11 +21,10 @@
         :presence="presence" />
     </div>
   </div>
-  </div>
 </template>
 
 <script>
-  import Listing from "./../components/layout/Listing.vue";
+  import Listing from "./../components/Listing.vue";
   import Checkbox from "./../components/Checkbox.vue";
   import request from "request";
 
@@ -35,7 +34,7 @@
     name: "store",
     components: {
       Listing,
-      Checkbox
+      // Checkbox
     },
     data() {
       return {
@@ -53,7 +52,7 @@
 
       // Capturing event with presence data from extension.
       window.addEventListener('PreMiD_GetWebisteFallback', function (data) {
-        console.log('Recieved information from Extension!');
+        self.debugMessage('Recieved information from Extension!');
         var dataString = data.detail.toString().split(',');
         self.$data.presences_installed = dataString;
       });
@@ -64,9 +63,9 @@
       var self = this;
       // Checking if user has the extension installed.
       setTimeout(function () {
-        if (document.getElementById("app").getAttribute('extension-ready') == "true") {
+        if (self.extensionInstalled()) {
           self.$data.extension_installed = true;
-          self.$noty.success("Extension installed, unlocking functions...");
+          self.$noty.success(`Extension installed, unlocking functions...`);
           self.debugMessage('Extension installed, unlocking functions...');
         } else {
           self.$data.extension_installed = false;
@@ -82,19 +81,19 @@
       // Requesting presences data from our API and adding it into our Vue data.
       axios.get(`https://api.premid.app/presences`)
         .then(function (res) {
-          let presences = res.data;
+          let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
           for (let presence of presences) {
             let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/')
               .slice(0, -1) + '/metadata.json';
             self.getPresenceData(url);
           }
-        }).catch(function (error) {
+        })
+        .catch(function (error) {
           console.log(error);
         });
-
+        
     },
     methods: {
-
       getPresenceData: async function (url) {
         await axios.get(url)
           .then((res) => {
@@ -102,22 +101,6 @@
           }).catch((err) => {
             console.log(err);
           });
-      },
-      dynamicSort(property) {
-        var sortOrder = 1;
-
-        if (property[0] === "-") {
-          sortOrder = -1;
-          property = property.substr(1);
-        }
-
-        return function (a, b) {
-          if (sortOrder == -1) {
-            return b[property].localeCompare(a[property]);
-          } else {
-            return a[property].localeCompare(b[property]);
-          }
-        };
       },
       update_search() {
         let input = document.getElementsByClassName("searchbar")[0];
@@ -150,7 +133,7 @@
 </script>
 
 <style lang="less" scoped>
-  @import "./../stylesheets/colors.less";
+  @import "./../stylesheets/variables.less";
 
   .store-menu {
     display: flex;
@@ -204,7 +187,7 @@
     transition: all 300ms ease;
     border: none;
     background: lighten(@background-secondary, 4%);
-    color: fadeOut(@white-2, 15%);
+    color: #74787C;
     line-height: 25px;
     font-weight: bold;
     font-family: Inter;
@@ -219,7 +202,7 @@
     }
 
     &::placeholder {
-      color: fadeOut(@white-2, 65%);
+      color: #74787C;
     }
   }
 
@@ -227,7 +210,7 @@
     position: absolute;
     margin-left: 0.6rem;
     margin-top: 7px;
-    color: fadeOut(@white-2, 65%);
+    color: #74787C;
   }
 
   .nsfw-check {

@@ -10,7 +10,7 @@
   -webkit-font-smoothing: subpixel-antialiased;
   filter: blur(0);
   -webkit-filter: blur(0);
-  max-width: 90%; }
+  max-width: 100%; }
 
 #noty_layout__top {
   top: 0;
@@ -23,11 +23,10 @@
   width: 325px; }
 
 #noty_layout__topCenter {
-  top: 5%;
-  left: 50%;
-  width: 325px;
-  -webkit-transform: translate(-webkit-calc(-50% - .5px)) translateZ(0) scale(1, 1);
-          transform: translate(calc(-50% - .5px)) translateZ(0) scale(1, 1); }
+  top: 0;
+  left: 0;
+  right: 0;
+}
 
 #noty_layout__topRight {
   top: 20px;
@@ -101,17 +100,17 @@
 
 .noty_effects_open {
   opacity: 0;
-  -webkit-transform: translate(0, 50%);
-      -ms-transform: translate(0, 50%);
-          transform: translate(0, 50%);
-  -webkit-animation: noty_anim_in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-          animation: noty_anim_in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  -webkit-animation: noty_anim_in 0.5s ease-in;
+          animation: noty_anim_in 0.5s ease-in;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
 .noty_effects_close {
-  -webkit-animation: noty_anim_out 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-          animation: noty_anim_out 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -webkit-animation: noty_anim_out 0.5s ease-in;
+          animation: noty_anim_out 0.5s ease-in;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards; }
 
@@ -195,14 +194,14 @@
 
 @-webkit-keyframes noty_anim_out {
   100% {
-    -webkit-transform: translate(0, 50%);
-            transform: translate(0, 50%);
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
     opacity: 0; } }
 
 @keyframes noty_anim_out {
   100% {
-    -webkit-transform: translate(0, 50%);
-            transform: translate(0, 50%);
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%);
     opacity: 0; } }
 
 @-webkit-keyframes noty_anim_height {
@@ -658,10 +657,10 @@
 
 
 .noty_theme__premid.noty_bar {
-  margin: 20px 0;
+  margin: 0;
   overflow: hidden;
-  border-radius: 6px;
-  font-weight: bold;
+  border-radius: 0;
+  font-weight: 500;
   text-align: center;
   font-size: 0.9em;
   position: relative; }
@@ -701,17 +700,17 @@
     border-color: #0B90C4; }
 
 .noty_theme__premid.noty_type__success {
-  background-color: #1A1C1E;
-  border: 1px solid #43B581;
-  color: #43B581;
-  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
+  background-color: #7289DA;
+  color: white;
+  box-shadow: 0 2px 16px 0 rgba(114, 137, 218, 0.2);
 }
   .noty_theme__premid.noty_type__success .noty_buttons {
     border-color: #50C24E; }
   .noty_theme__premid.noty_bar {
-    margin: 4px 0;
-    overflow: hidden;
-    border-radius: 2px;
+  margin: 0;
+  padding: 12px 0;
+  overflow: hidden;
+  border-radius: 0;
     position: relative;
   }
 

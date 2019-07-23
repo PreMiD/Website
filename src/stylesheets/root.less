@@ -1,20 +1,26 @@
 // Loading variables first
-@import "colors.less";
+@import "variables.less";
 
 // Noty
 @import 'addons/vuejs-noty.less';
 
+/*
+ *      PreMiD Website CSS
+ *          Authors: Voknehzyr, Timeraa, Fruxh.
+ */
+
 // Importing base styles
-@import "_body.less";
+@import "components/body.less";
 
 // Loading components
-@import "_navbar.less";
-@import "_cards.less";
-@import "_grid.less";
-@import "_sections.less";
-@import "_buttons.less";
-@import "_waves-divider.less";
+@import "components/animation.less";
+@import "components/button.less";
+@import "components/card.less";
+@import "components/container.less";
+@import "components/divider.less";
+@import "components/grid.less";
+@import "components/label.less";
+@import "components/navbar.less";
 
-@import "_animations.less";
-
-@import "_mobile.less";
+// Styles for mobile devices and uncommon resolutions
+@import "components/visibility.less";
