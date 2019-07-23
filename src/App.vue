@@ -25,16 +25,12 @@
           <div class="grid__section">
             <p class="section__title">{{ $t(`footer.partners.heading`) }}</p>
             <div class="section__promo">
-              <a class="partner-logo" href="https://poeditor.com/">
-                <img src="./assets/images/poeditor.png" />
-              </a>
               <a class="partner-logo" href="https://gitbook.com/">
                 <img src="./assets/images/gitbook.png" />
               </a>
               <a class="partner-logo" href="https://installbuilder.bitrock.com/">
                 <img src="./assets/images/bitrock_installbuilder.png" />
               </a>
-              <br />
               <a class="partner-logo" href="https://statuspage.io/">
                 <img src="./assets/images/atlassian_statuspage.svg" />
               </a>
@@ -58,7 +54,7 @@
               <a href="https://patreon.com/timeraa/">{{ $t(`footer.supportus.donate`) }}</a>
               <a href="https://github.com/PreMiD/">{{ $t(`footer.supportus.contribute`) }}</a>
               <a href="https://discord.premid.app/">{{ $t(`footer.supportus.design`) }}</a>
-              <a href="https://poeditor.com/join/project/Zzl1oOQV5g/">{{ $t(`footer.supportus.translate`) }}</a>
+              <a href="https://www.transifex.com/PreMiD/public/">{{ $t(`footer.supportus.translate`) }}</a>
             </div>
           </div>
           <div class="grid__section">
