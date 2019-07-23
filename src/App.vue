@@ -83,7 +83,7 @@
             <a class="hover-effect" href="https://github.com/Fruxh/">Fruxh</a>
           </p>
           <i18n path="footer.copyright.line2" tag="p"> 
-            <a place="0" href="https://voknehzyr.ru/">Voknehzyr</a>
+            <a place="0" href="https://iryzhenkov.ru/">Voknehzyr</a>
           </i18n>
         </div>
       </div>
