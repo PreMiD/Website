@@ -273,8 +273,9 @@
 		text-align: center;
 
 		.languages-list__item {
+
 			user-select: none;
-			width: 100%;
+			width: 45%;
 			font-size: 3rem;
 			margin: 8px;
 			font-weight: bold;
@@ -314,6 +315,19 @@
 		font-size: 42px;
 		color: white;
 		padding: 10px;
+
+		position: relative;
+
+		&::before {
+			content: '';
+			position: absolute;
+			background: white;
+			border-radius: 50rem;
+			width: 30%;
+			height: 6px;
+			bottom: -6px;
+		}
+
 	}
 
 	.contributor-container {
