@@ -65,6 +65,14 @@
             </div>
           </div>
           <div class="grid__section">
+            <p class="section__title">Information</p>
+            <div>
+              <a href="https://premid.app/cookies/">Cookies</a>
+              <a href="https://premid.app/privacy/">Privacy</a>
+              <a href="https://premid.app/tos/">Terms</a>
+            </div>
+          </div>
+          <div class="grid__section">
             <p class="section__title">{{ $t(`footer.more.heading`) }}</p>
             <div>
               <a href="https://status.premid.app/">{{ $t(`footer.more.status`) }}</a>
