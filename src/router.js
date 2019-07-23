@@ -12,45 +12,45 @@ export default new Router({
       component: require("@/pages/errors/NotFound").default,
     },
     {
-	path: "",
-	alias: '/home',
+      path: "",
+      alias: "/home",
       name: "home",
       component: require("@/pages/Home").default,
     },
     {
       path: "/store",
       name: "store",
-      component: require("@/pages/Store").default
+      component: require("@/pages/Store").default,
     },
     {
       path: "/downloads",
       name: "downloads",
-      component: require("@/pages/Downloads").default
+      component: require("@/pages/Downloads").default,
     },
     {
       path: "/contributors",
       name: "contributors",
-      component: require("@/pages/Contributors").default
+      component: require("@/pages/Contributors").default,
     },
     {
       path: "/submit",
       name: "submit",
-      component: require("@/pages/Submit").default
+      component: require("@/pages/store/Submit").default,
     },
     {
       path: "/privacy",
       name: "privacy",
-      component: require("@/pages/Privacy").default
+      component: require("@/pages/legal/Privacy").default,
     },
     {
       path: "/cookies",
       name: "cookies",
-      component: require("@/pages/Cookies").default
+      component: require("@/pages/legal/Cookies").default,
     },
     {
       path: "/tos",
       name: "tos",
-      component: require("@/pages/ToS").default
-    }
-  ]
+      component: require("@/pages/legal/ToS").default,
+    },
+  ],
 });
