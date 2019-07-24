@@ -4,7 +4,7 @@ const emoji = require("node-emoji");
 const chalk = require("chalk");
 
 let apiURL = "https://api.premid.app/v2/langFile";
-let successEmoji = emoji.get("✔️");
+let successEmoji = emoji.emojify("✔️");
 
 process.stdout.write("\u001b[2J\u001b[0;0H");
 
