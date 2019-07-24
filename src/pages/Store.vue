@@ -61,7 +61,7 @@
           }
         })
         .catch(function (error) {
-          console.log(error);
+          console.error(error);
         });
 
       // Capturing event with presence data from extension.
@@ -79,11 +79,11 @@
       setTimeout(function () {
         if (self.extensionInstalled()) {
           self.$data.extension_installed = true;
-          self.$noty.success(`Extension installed, unlocking functions...`);
+          self.$noty.success(self.$t(`store.message.success`));
           self.debugMessage('Extension installed, unlocking functions...');
         } else {
           self.$data.extension_installed = false;
-          self.$noty.error("Extension not found, locking functions...");
+          self.$noty.error(self.$t(`store.message.error`));
           self.errorMessage('Extension not found, locking functions...');
         }
       }, 1000);

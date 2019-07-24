@@ -60,7 +60,7 @@
   "home.cards.mediacontrols.title": "Медиа-клавиши",
   "home.cards.mediacontrols.explanation": "Большинство из наших статусов поддерживают медиа-клавиши. Вы можете пропускать, останавливать и воспроизводить треки, во время использования других приложений.",
   "home.cards.multilingual.title": "Мультиязычность",
-  "home.cards.multilingual.explanation": "Не каждый хорош в английском языке. Именно по этому мы переводим наше расширение и веб-сайт на другие языки, включая ваш!",
+  "home.cards.multilingual.explanation": "Not everyone is good at English. That's why we're translating our extension and website into other languages, probably including yours!",
   "home.cards.opensource.title": "Open Source",
   "home.cards.opensource.explanation": "Исходники нашего приложения, веб-сайта открыты для всех. Если вы нашли ошибку или хотите добавить новую функцию, то вы можете создать 'проблему' или пул реквест на нашей странице GitHub!",
   "store.message.error": "Расширение не найдено, блокировка функций...",
