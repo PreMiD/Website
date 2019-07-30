@@ -50,7 +50,7 @@
               </div>
               <div class="card__content">
                 <h3>{{builds[platform].os_name}} <i v-if="!builds[platform].has_installer"
-                    class="fas fa-exclamation-circle platform-warning" :content="$t('downloads.tooltips.os.not.supported.part2', {0: `<b>${$t('downloads.tooltips.os.not.supported.part1')}</b>`})" v-tippy /></h3>
+                    class="fas fa-exclamation-circle platform-warning" :content="$t('downloads.tooltips.os.not.supported.part2', {0: `<b>${$t('downloads.tooltips.os.not.supported.part1')}</b> `})" v-tippy /></h3>
               </div>
             </div>
           </div>
