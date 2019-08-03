@@ -1,5 +1,5 @@
 <template>
-  <div class="tos">
+  <div class="legal-section">
     <h1>Terms of Service</h1>
     <p>
       Last modified: July 19, 2019.

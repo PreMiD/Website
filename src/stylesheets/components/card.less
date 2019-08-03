@@ -29,6 +29,7 @@
             font-weight: 700;
             font-size: 1.6em;
             padding-bottom: 10px;
+            position: relative;
             z-index: 2;
         }
 
@@ -44,6 +45,7 @@
         .card__desc {
             opacity: .7;
             text-align: left;
+            position: relative;
             z-index: 2;
         }
 
@@ -125,7 +127,9 @@
     justify-content: flex-start;
     align-items: center;
 
-    transition: all 0.2s ease;
+    transform: translateY(0px);
+
+    transition: all 0.1s ease-in-out;
 
     user-select: none;
 
@@ -235,7 +239,8 @@
     }
 
     &:hover {
-        box-shadow: 0 6px 32px 0 rgba(9, 10, 10, 0.8);
+        box-shadow: 0 6px 42px 0 rgba(9, 10, 10, 0.8);
+        transform: translateY(-8px);
     }
 
 }
@@ -661,15 +666,4 @@
             font-size: 0.8rem;
         }
     }
-}
-
-.presence-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    position: relative;
-
-    max-width: 1600px;
-    margin: 0 auto;
-    justify-content: center;
 }

@@ -12,14 +12,14 @@
       <div class="store-card__service-info">
         <div class="store-card__service">
           <h2>
-            {{ presence.service }}
+            <router-link :key="presenceLinkName" :to="`/store/${presenceLinkName}`">{{ presence.service }}
             <svg
               width="16"
               height="16"
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              :title="$t('store.cards.verified')"
+              :title="`${$t('store.cards.verified')}.`"
               v-tippy
               class="store-card__verified"
               :style="`fill: ${presence.color}`"
@@ -38,19 +38,20 @@
                 />
               </g>
             </svg>
+            </router-link>
           </h2>
           <p>
             {{ $t('store.cards.creator') }}:
-            <a>{{ presence.author.name }}</a>
+            <router-link :to="`/users/${presence.author.id}`">{{ presence.author.name }}</router-link>
           </p>
 
           <transition name="card-animation" mode="out-in">
-            <div key="desc" v-if="!card_hovered || !this.$parent.extension_installed">
+            <div key="desc" v-if="!card_hovered || !this.$root.extension_installed">
               <p class="store-card__desc">{{ presence.description }}</p>
             </div>
             <div key="buttons" v-if="card_hovered">
               <div
-                v-if="this.$parent.extension_installed && typeof presence.button == 'undefined'"
+                v-if="this.$root.extension_installed && typeof presence.button == 'undefined'"
                 class="store-card__buttons on-desktop"
               >
                 <button
@@ -74,10 +75,10 @@
                   {{ $t('store.card.presence.remove') }}
                 </button>
               </div>
-              <div v-if="this.$parent.extension_installed && presence.button == false">
+              <div v-if="this.$root.extension_installed && presence.button == false">
                 <p
                   class="store-card__warning"
-                >This presence is included in PreMiD by default, no need to install it.</p>
+                >{{ $t('store.card.presence.included') }}</p>
               </div>
             </div>
           </transition>
@@ -98,7 +99,8 @@ export default {
   data() {
     return {
       isInstalled: false,
-      card_hovered: false
+      card_hovered: false,
+      presenceLinkName: this.$props.presence.service,
     };
   },
   methods: {
@@ -114,6 +116,7 @@ export default {
       });
       window.dispatchEvent(event);
 
+      this.$root.presences_installed.push(name);
       this.$data.isInstalled = true;
     },
     removePresence(name) {
@@ -124,12 +127,13 @@ export default {
       });
       window.dispatchEvent(event);
 
+      this.$root.presences_installed.pop(name);
       this.$data.isInstalled = false;
     },
     // This function compares the array elements that we get from Extension with `presenceName` string.
     // If we find presence in array we return true.
     isPresenceInstalled(presenceName) {
-      var array = this.$parent.presences_installed;
+      var array = this.$root.presences_installed;
 
       for (let element of array) {
         if (element.toLowerCase() == presenceName.toLowerCase()) {
@@ -140,23 +144,12 @@ export default {
       return false;
     }
   },
-  beforeMount() {},
   mounted() {
-    clamp_desc();
-
     if (this.isPresenceInstalled(this.presence.service)) {
       this.$data.isInstalled = true;
     }
   }
 };
-
-function clamp_desc() {
-  for (let element of document.getElementsByClassName("line-clamp")) {
-    $clamp(element, {
-      clamp: 3
-    });
-  }
-}
 </script>
 
 <style lang="less">

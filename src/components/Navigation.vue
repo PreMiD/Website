@@ -32,7 +32,7 @@
         class="navbar__item"
       >
         <i :class="'fas fa-' + category.logo"/>
-        <span class="item__title">{{ category.title }}</span>
+        <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
       </router-link>
     </div>
   </transition>

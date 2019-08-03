@@ -198,8 +198,8 @@
       // Updating user information in presence examples.
       this.$data.presences_display.forEach(function (presence_item, index) {
         // Axios provides Promises that will help us with handling errors and getting data.
-        axios
-          .get(
+        Vue.$parent.isProcessing = true;
+        axios(
             `https://api.premid.app/credits/${presence_item.profile.DiscordID}`
           )
           .then(function (res) {
@@ -214,7 +214,10 @@
             Vue.$set(Vue.$data.presences_display[index].profile, "id", data.tag);
           })
           .catch(function (error) {
-            console.log(error);
+            Vue.errorMessage(error);
+          })
+          .finally(() => {
+            Vue.$parent.isProcessing = false;
           });
       });
     },

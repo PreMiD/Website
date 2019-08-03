@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <transition name="loader">
+      <Loading v-if="isProcessing" />
+    </transition>
     <LanguageSwitcher v-if="switcherVisible" />
     <transition name="route-animation" mode="out-in">
       <LanguageNotification />
@@ -8,7 +11,7 @@
       <navigation />
     </header>
     <div class="page-wrapper">
-      <div id="content">
+      <div class="content"> 
         <transition name="route-animation" mode="out-in">
           <router-view></router-view>
         </transition>
@@ -109,7 +112,7 @@
             v-html="$t('footer.copyright.line1').replace('{0}', '<i class=\'far fa-copyright\'></i> 2019 PreMiD').replace('{1}', '<a class=\'hover-effect\' href=\'https://github.com/Timeraa/\'>Timeraa</a> & <a class=\'hover-effect\' href=\'https://github.com/Fruxh/\'>Fruxh</a>')"
           ></p>
           <i18n path="footer.copyright.line2" tag="p">
-            <a place="0" href="https://iryzhenkov.ru/">Voknehzyr</a>
+            <a place="0" class="hover-effect" href="https://iryzhenkov.ru/">Voknehzyr</a>
           </i18n>
         </div>
       </div>
@@ -121,13 +124,15 @@
 import Navigation from "./components/Navigation.vue";
 import LanguageNotification from "./components/LanguageNotification.vue";
 import LanguageSwitcher from "./components/LanguageSwitcher.vue";
+import Loading from "./components/Loading.vue";
 
 export default {
   name: "premid-web",
   components: {
     Navigation,
     LanguageNotification,
-    LanguageSwitcher
+    LanguageSwitcher,
+    Loading
   },
   created() {
     fetch("https://api.premid.app/users")
@@ -138,11 +143,40 @@ export default {
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, "."))
       );
+
+    // Vue hook to call it inside JS functions.
+    var self = this;
+
+    // Capturing event with presence data from extension.
+    window.addEventListener("PreMiD_GetWebisteFallback", function(data) {
+      self.debugMessage("Recieved information from Extension!");
+      var dataString = data.detail.toString().split(",");
+      self.$root.presences_installed = dataString;
+    });
+  },
+  mounted() {
+    // Vue hook to call it inside JS functions.
+    var self = this;
+    // Checking if user has the extension installed.
+    setTimeout(function() {
+      if (self.extensionInstalled()) {
+        self.$root.extension_installed = true;
+        self.$noty.success(self.$t(`store.message.success`));
+        self.debugMessage("Extension installed, unlocking functions...");
+      } else {
+        self.$root.extension_installed = false;
+        self.$noty.error(self.$t(`store.message.error`));
+        self.errorMessage("Extension not found, locking functions...");
+      }
+    }, 1000);
+
+    // Firing event to get response from Extension with installed presences data.
+    var event = new CustomEvent("PreMiD_GetPresenceList", {});
+    window.dispatchEvent(event);
   },
   data() {
     return {
       ua: navigator.userAgent,
-      extension_installed: false,
       installStats: null
     };
   }

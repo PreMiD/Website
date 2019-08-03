@@ -32,72 +32,42 @@ import Checkbox from "./../components/Checkbox.vue";
 import request from "request";
 
 import axios from "axios";
+import { Promise } from 'q';
 
 export default {
   name: "store",
   components: {
-    Listing
-    // Checkbox
+    Listing,
   },
   data() {
     return {
       presences: [],
-      extension_installed: false,
-      presences_installed: "",
       nsfw: false,
-      presenceSearch: ""
+      presenceSearch: "",
     };
   },
   created() {
-    // Vue hook to call it inside JS functions.
-    var self = this;
+    let self = this;
+
+    this.$parent.isProcessing = true;
 
     // Requesting presences data from our API and adding it into our Vue data.
-    axios
-      .get(`https://api.premid.app/presences`)
+    axios(`https://api.premid.app/v2/presences`)
       .then(function(res) {
         let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
-        for (let presence of presences) {
-          let url =
-            presence.url
-              .replace(
-                "https://gist.githubusercontent.com/",
-                "https://gistcdn.githack.com/"
-              )
-              .slice(0, -1) + "/metadata.json";
-          self.getPresenceData(url);
-        }
+
+        var foreach = res.data.map((presence) => {
+          self.$data.presences.push(presence.metadata);
+        });
+
+        Promise.all(foreach).finally(() => {
+          self.$parent.isProcessing = false;
+        });
+
       })
       .catch(function(error) {
         console.error(error);
       });
-
-    // Capturing event with presence data from extension.
-    window.addEventListener("PreMiD_GetWebisteFallback", function(data) {
-      self.debugMessage("Recieved information from Extension!");
-      var dataString = data.detail.toString().split(",");
-      self.$data.presences_installed = dataString;
-    });
-  },
-  mounted() {
-    // Vue hook to call it inside JS functions.
-    var self = this;
-    // Checking if user has the extension installed.
-    setTimeout(function() {
-      if (self.extensionInstalled()) {
-        self.$data.extension_installed = true;
-        self.$noty.success(self.$t(`store.message.success`));
-        self.debugMessage("Extension installed, unlocking functions...");
-      } else {
-        self.$data.extension_installed = false;
-        self.$noty.error(self.$t(`store.message.error`));
-        self.errorMessage("Extension not found, locking functions...");
-      }
-    }, 1000);
-
-    // Firing event to get response from Extension with installed presences data.
-    var event = new CustomEvent("PreMiD_GetPresenceList", {});
-    window.dispatchEvent(event);
   },
   computed: {
     filteredPresences() {
@@ -114,16 +84,6 @@ export default {
     }
   },
   methods: {
-    getPresenceData: async function(url) {
-      await axios
-        .get(url)
-        .then(res => {
-          this.$data.presences.push(res.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
   }
 };
 </script>
@@ -140,6 +100,7 @@ export default {
 .store-menu__searchbar-container {
   flex: 1 1 auto;
   display: flex;
+    align-items: center;
 
   position: relative;
 
@@ -155,7 +116,7 @@ export default {
   }
 
   .searchbar-container__controls {
-    margin: 0 4em;
+    margin: 0 2em;
   }
 
   button,
@@ -203,8 +164,20 @@ export default {
 .fa-search {
   position: absolute;
   margin-left: 0.6rem;
-  margin-top: 7px;
   color: #74787c;
+}
+
+.nsfw_toggle {
+	height: 35px;
+	display: flex;
+	align-items: center;
+
+	p {
+		margin: 0;
+		margin-right: 10px;
+		font-size: 1.1rem;
+		font-weight: 800;
+	}
 }
 
 .nsfw-check {

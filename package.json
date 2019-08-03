@@ -12,6 +12,7 @@
     "axios": "^0.19.0",
     "core-js": "^2.6.9",
     "gif-frames": "^1.0.1",
+    "marked": "^0.7.0",
     "node-emoji": "^1.10.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.7",

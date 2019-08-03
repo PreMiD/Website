@@ -53,7 +53,6 @@ export default {
       if (src == "notes") this.$data.submition.notes = value;
     },
     submit() {
-      console.log(this.$data.submition);
       this.$data.submitted = true;
     }
   }

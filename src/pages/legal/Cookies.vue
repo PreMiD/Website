@@ -1,5 +1,5 @@
 <template>
-  <div class="cookies">
+  <div class="legal-section">
     <h1>Cookie Policy</h1>
     <p>Last modified: July 19, 2019.</p>
 

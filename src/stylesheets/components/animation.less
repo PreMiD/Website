@@ -2,6 +2,26 @@
  * Routing animations and etc.
  */
 
+.loader-enter,
+.loader-active,
+.loader-leave-active,
+.loader-leave,
+.loader-leave-to,
+.loader-enter-to {
+  z-index: 999;
+  position: fixed;
+}
+
+.loader-enter-active,
+.loader-leave-active {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.loader-enter,
+.loader-leave-to {
+  opacity: 0;
+}
+
 .route-animation-enter-active,
 .route-animation-leave-active {
     transition: opacity 0.2s ease-in-out;
@@ -83,5 +103,15 @@
       d: path(
         "M842.322034,38.0019829 C686.954825,71.1183168 623.386282,53.08497 467.492582,19.4422816 C313.032879,-13.8909426 84.0992497,8.02840272 0,44.7243294 L0,150.727527 L1920,150.727527 L1920,76.8685643 C1512.23604,-35.3595639 1568.70222,67.4289432 1278.62078,31.7541069 C988.539347,-3.92072949 997.689243,4.88564905 842.322034,38.0019829 Z"
       );
+    }
+  }
+
+  @keyframes loaderAnimation {
+    0% {
+        transform: rotateZ(0deg) scale(1);
+    }
+
+    100% {
+      transform: rotateZ(360deg) scale(1);
     }
   }

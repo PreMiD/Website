@@ -1,5 +1,5 @@
 <template>
-  <div class="privacy-policy">
+  <div class="legal-section">
     <h1>Privacy Policy</h1>
     <p>Last modified: July 19, 2019.</p>
 

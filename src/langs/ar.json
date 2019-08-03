@@ -45,6 +45,7 @@
   "header.languageNotification.text": "لقد تمت ترجمة موقعنا إلى لغتك. قد يساعدك ذلك إذا كنت لا تتحدث الإنجليزية جيدًا.",
   "header.languageNotification.btnDecline": "لا. شكرا",
   "header.languageNotification.btnAccept": "تغيير اللغة",
+  "header.loader.phrases": "Baking pancakes...;Placing containers...;Parsing your IP address...;UwU;Breaking rules...",
   "header.store": "المتجر",
   "header.downloads": "التحميلات",
   "header.contributors": "المساهمون",
@@ -63,11 +64,18 @@
   "home.cards.multilingual.explanation": "ليس كل شخص جيد في اللغة الإنجليزية. لهذا السبب نقوم بترجمة ملحقنا وموقعنا الإلكتروني إلى لغات أخرى ، بما في ذلك لغتك على الأرجح!",
   "home.cards.opensource.title": "المصدر المفتوح",
   "home.cards.opensource.explanation": "تطبيقنا وموقعنا وأكواد مصدر الملحق مفتوحة المصدر. إذا وجدت خطأ أو تريد إضافة ميزة جديدة ، يمكنك إنشاء مشكلة أو طلب سحب على صفحة GitHub الخاصة بنا!",
+  "presence.sections.description.title": "Description",
+  "presence.sections.information.title": "معلومات",
+  "presence.sections.information.author": "Author",
+  "presence.sections.information.version": "Version",
+  "presence.sections.information.tags": "Tags",
+  "presence.sections.information.supportedurls": "Supported URLs",
   "store.message.error": "الملحق غير موجود ، جاري قفل الوظائف ...",
   "store.message.success": "تم العثور على الملحق ، جاري فتح وظائف ...",
   "store.cards.creator": "منشئ",
   "store.cards.verified": "تمت الموافقة على هذا presence  بواسطة مطور مثبت",
   "store.header.search": "بحث",
   "store.card.presence.add": "تثبيت Presence",
-  "store.card.presence.remove": "إزالة Presence"
+  "store.card.presence.remove": "إزالة Presence",
+  "store.card.presence.included": "This presence is included in PreMiD by default, no need to install it."
 }

@@ -45,6 +45,7 @@
   "header.languageNotification.text": "Our website has been translated into your language. It might help you in case you don't speak English very well.",
   "header.languageNotification.btnDecline": "No, thanks",
   "header.languageNotification.btnAccept": "Switch language",
+  "header.loader.phrases": "Baking pancakes...;Placing containers...;Parsing your IP address...;UwU;Breaking rules...",
   "header.store": "Store",
   "header.downloads": "Downloads",
   "header.contributors": "Contributors",
@@ -63,11 +64,18 @@
   "home.cards.multilingual.explanation": "Not everyone is good at English. That's why we're translating our extension and website into other languages, probably including yours!",
   "home.cards.opensource.title": "Open Source",
   "home.cards.opensource.explanation": "Our application, website and extension source codes are open source. If you found a bug or want to add a new feature you can create an issue or pull request on our GitHub page!",
+  "presence.sections.description.title": "Description",
+  "presence.sections.information.title": "Information",
+  "presence.sections.information.author": "Author",
+  "presence.sections.information.version": "Version",
+  "presence.sections.information.tags": "Tags",
+  "presence.sections.information.supportedurls": "Supported URLs",
   "store.message.error": "Extension not found, locking functions...",
   "store.message.success": "Extension found, unlocking functions...",
   "store.cards.creator": "Creator",
   "store.cards.verified": "This presence was approved by a verified developer",
   "store.header.search": "Search",
   "store.card.presence.add": "Install presence",
-  "store.card.presence.remove": "Remove presence"
+  "store.card.presence.remove": "Remove presence",
+  "store.card.presence.included": "This presence is included in PreMiD by default, no need to install it."
 }

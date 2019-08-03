@@ -13,10 +13,10 @@
               <p><span class="steps__counter">1</span> {{ $t('downloads.instructions.step.1') }} [<a href="#app-downloads"><i class="fas fa-arrow-down"/></a>]</p>
             </li>
             <li>
-              <p><span class="steps__counter">2</span> {{ $t('downloads.instructions.step.2') }}.</p>
+              <p><span class="steps__counter">2</span> {{ $t('downloads.instructions.step.2') }}</p>
             </li>
             <li>
-              <p><span class="steps__counter">3</span> {{ $t('downloads.instructions.step.3') }}. [<a href="#ext-downloads"><i class="fas fa-arrow-down"/></a>]</p>
+              <p><span class="steps__counter">3</span> {{ $t('downloads.instructions.step.3') }} [<a href="#ext-downloads"><i class="fas fa-arrow-down"/></a>]</p>
             </li>
             <li>
               <p><span class="steps__counter">4</span>
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div id="app-downloads" class="dl-container__section dl-container__section_downloads waves-aligned on-desktop">
+    <div id="app-downloads" class="dl-container__section dl-container__section_downloads waves-aligned">
       <h1 class="section-header">{{ $t('downloads.appdownloading.header') }}</h1>
       <div class="dl-container__cards">
         <div v-bind:key="platform" v-for="(platform, index) of platform_order">
@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <div id="ext-downloads" class="dl-container__section dl-container__section_downloads on-desktop">
+    <div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
       <h1 class="section-header">{{ $t('downloads.extdownloading.header') }}</h1>
 
       <div class="dl-container__cards">
