@@ -139,9 +139,11 @@
 		display: flex;
 		max-width: 1600px;
 		margin: 0 auto;
+		justify-content: space-between;
+    	align-items: flex-start;
 
 		.header__content {
-			width: 65%;
+			width: 55%;
 
 			h1 {
 				font-weight: 800;
@@ -174,19 +176,32 @@
 				margin-inline-end: 0px;
 			}
 
-			ul {
-				list-style-type: none;
+			ol {
+				counter-reset: myCounter;
 				margin: 0;
 				padding: 0;
 
-				.steps__counter {
+				li {
+					display: flex;
+					list-style: none;
+					align-items: center;
+
+					p {
+						margin: 12px 38px;
+					}
+				}
+
+				li:before {
+					counter-increment: myCounter;
+					content: counter(myCounter);
 					line-height: 1;
 					text-align: center;
 					width: 16px;
 					height: 16px;
 					padding: 5px;
-					margin-right: 5px;
+					margin-right: 12px;
 					font-weight: bold;
+					position: absolute;
 					display: inline-block;
 					border-radius: 50rem;
 					background: linear-gradient(30deg, @accent-primary, #b3aeff);
