@@ -86,7 +86,7 @@
       </div>
       <div
         class="store-card__gradient"
-        :style="`background: linear-gradient(135deg, ${presence.color} 0%, black 100%);`"
+        :style="`background: linear-gradient(135deg, ${presence.color} 0%, rgba(0, 0, 0, 1) 100%);`"
       ></div>
     </div>
   </div>

@@ -8,24 +8,24 @@
         </div>
         <div class="header__steps">
           <h2>{{ $t('downloads.instructions.heading') }}</h2>
-          <ul>
+          <ol>
             <li>
-              <p><span class="steps__counter">1</span> {{ $t('downloads.instructions.step.1') }} [<a href="#app-downloads"><i class="fas fa-arrow-down"/></a>]</p>
+              <p>{{ $t('downloads.instructions.step.1') }} [<a href="#app-downloads"><i class="fas fa-arrow-down"/></a>]</p>
             </li>
             <li>
-              <p><span class="steps__counter">2</span> {{ $t('downloads.instructions.step.2') }}</p>
+              <p>{{ $t('downloads.instructions.step.2') }}</p>
             </li>
             <li>
-              <p><span class="steps__counter">3</span> {{ $t('downloads.instructions.step.3') }} [<a href="#ext-downloads"><i class="fas fa-arrow-down"/></a>]</p>
+              <p>{{ $t('downloads.instructions.step.3') }} [<a href="#ext-downloads"><i class="fas fa-arrow-down"/></a>]</p>
             </li>
             <li>
-              <p><span class="steps__counter">4</span>
+              <p>
               <i18n path="downloads.instructions.step.4">
                 <router-link to="/store">{{$t('downloads.instructions.step.4.store')}}</router-link>
               </i18n>
                </p>
             </li>
-          </ul>
+          </ol>
         </div>
       </div>
 

@@ -48,22 +48,25 @@
                     <div class="content__info">
                         <h2 class="content__title">{{ $t('presence.sections.information.title') }}</h2>
                         <ul class="info__sections">
-                            <li>
+                            <li v-if="presenceData.author">
                                 <p><i class="fas fa-user" /> {{ $t('presence.sections.information.author') }}:
                                     <router-link class="author-name" :style="`color: ${presenceAuthor.roleColor};`"
-                                        :to="`/users/${presenceAuthor.userID}`"><img :src="presenceAuthor.avatar"
-                                            class="author-avatar"> {{ presenceAuthor.name }}</router-link>
+                                        :to="`/users/${presenceAuthor.userID}`"><img v-if="presenceAuthor.avatar" :src="presenceAuthor.avatar"
+                                            class="author-avatar"> {{ presenceData.author.name }}</router-link>
                                 </p>
                             </li>
-                            <li v-if="presenceData.version !== undefined">
+                            <li v-if="presenceData.version">
                                 <p><i class="fas fa-code-branch" /> {{ $t('presence.sections.information.version') }}:
                                     <span class="presence-version"><b>{{ presenceData.version }}</b></span></p>
                             </li>
-                            <li v-if="presenceData.tags !== undefined">
-                                <p><i class="fas fa-hashtag" /> {{ $t('presence.sections.information.tags') }}: <a
+                            <li v-if="presenceData.tags">
+                                <p><i class="fas fa-hashtag" /> {{ $t('presence.sections.information.tags') }}:</p>
+                                <div class="presence-tags">
+                                    <a
                                         v-bind:key="tag" v-for="(tag, index) of presenceData.tags"
                                         :style="`background: ${presenceData.color};`"
-                                        class="label label_tag">{{tag}}</a></p>
+                                        class="label label_tag">{{tag}}</a>
+                                </div>
                             </li>
                             <!-- <li>
                                 <p><i class="fas fa-heart" /> Likes: <span :style="`background: ${presenceData.color};`"
@@ -71,9 +74,10 @@
                             </li> -->
                             <li>
                                 <p><i class="fas fa-external-link-square-alt" />
-                                    {{ $t('presence.sections.information.supportedurls') }}: <span
-                                        class="presence-url"><a
-                                            :href="'https://' + presenceData.url">{{ presenceData.url }}</a></span></p>
+                                    {{ $t('presence.sections.information.supportedurls') }}:</p>
+                                <ul class="presence-urls">
+                                    <li v-for="url in presenceURLs" :key="presence"><a :href="`https://${url}`">{{ url }}</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -101,6 +105,7 @@
             return {
                 presenceData: [],
                 presenceAuthor: [],
+                presenceURLs: [],
                 processing: false,
                 isInstalled: false
             };
@@ -115,6 +120,13 @@
                 )
                 .then((res) => {
                     Vue.$data.presenceData = res.data.metadata;
+
+                    if(Array.isArray(Vue.$data.presenceData.url)) {
+                        Vue.$data.presenceURLs = Vue.$data.presenceData.url;
+                    } else {
+                        Vue.$data.presenceURLs = Array.of(Vue.$data.presenceData.url);
+                    }
+
                     if (this.isPresenceInstalled(Vue.$data.presenceData.service)) {
                         Vue.$data.isInstalled = true;
                     }
