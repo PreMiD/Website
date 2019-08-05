@@ -88,4 +88,19 @@ a.button {
 
     }
 
+    &.button_pagination {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        &[disabled] {
+            cursor: not-allowed;
+            pointer-events: none;
+            background: lighten(@background-secondary, 10%);
+        }
+    }
+
 }

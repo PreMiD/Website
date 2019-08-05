@@ -17,174 +17,198 @@
       </div>
     </div>
     <div class="presence-container">
-      <listing
-        v-for="presence of filteredPresences"
-        v-bind:key="presence.service"
-        :presence="presence"
-      />
+      <listing v-for="presence in paginatedData" v-bind:key="presence.service" :presence="presence" />
+    </div>
+    <div class="pagination-container">
+      <Pagination :pageNumber="currentPageNumber" :pageCount="pageCount" />
     </div>
   </div>
 </template>
 
 <script>
-import Listing from "./../components/Listing.vue";
-import Checkbox from "./../components/Checkbox.vue";
-import request from "request";
+  import Listing from "./../components/Listing.vue";
+  import Pagination from "./../components/Pagination";
 
-import axios from "axios";
-import { Promise } from 'q';
+  import request from "request";
 
-export default {
-  name: "store",
-  components: {
-    Listing,
-  },
-  data() {
-    return {
-      presences: [],
-      nsfw: false,
-      presenceSearch: "",
-    };
-  },
-  created() {
-    let self = this;
+  import axios from "axios";
+  import {
+    Promise
+  } from 'q';
 
-    this.$parent.isProcessing = true;
+  export default {
+    name: "store",
+    components: {
+      Listing,
+      Pagination
+    },
+    data() {
+      return {
+        presences: [],
+        nsfw: false,
+        presenceSearch: "",
+        presencesPerPage: 8
+      };
+    },
+    created() {
+      let self = this;
 
-    // Requesting presences data from our API and adding it into our Vue data.
-    axios(`https://api.premid.app/v2/presences`)
-      .then(function(res) {
-        let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
+      this.$parent.isProcessing = true;
 
-        var foreach = res.data.map((presence) => {
-          self.$data.presences.push(presence.metadata);
-        });
+      // Requesting presences data from our API and adding it into our Vue data.
+      axios(`https://api.premid.app/v2/presences`)
+        .then(function (res) {
+          let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
 
-        Promise.all(foreach).finally(() => {
-          self.$parent.isProcessing = false;
-        });
+          var foreach = res.data.map((presence) => {
+            self.$data.presences.push(presence.metadata);
+          });
 
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
-  },
-  computed: {
-    filteredPresences() {
-      return this.$data.presences
-        .filter(presence => {
-          return presence.service
-            .toLowerCase()
-            .includes(this.presenceSearch.toLowerCase());
+          Promise.all(foreach).finally(() => {
+            self.$parent.isProcessing = false;
+          });
+
         })
-        .filter(presence =>
-          this.$data.nsfw ? true : !presence.tags.includes("nsfw")
-        )
-        .sort((a, b) => a.service.localeCompare(b.service));
-    }
-  },
-  methods: {
-  }
-};
+        .catch(function (error) {
+          console.error(error);
+        });
+    },
+    computed: {
+      filteredPresences() {
+        return this.$data.presences
+          .filter(presence => {
+            return presence.service
+              .toLowerCase()
+              .includes(this.presenceSearch.toLowerCase());
+          })
+          .filter(presence =>
+            this.$data.nsfw ? true : !presence.tags.includes("nsfw")
+          )
+          .sort((a, b) => a.service.localeCompare(b.service));
+      },
+      currentPageNumber() {
+        if(Number(this.$route.query.page)) {
+          return Number(this.$route.query.page);
+        } else {
+          return 1;
+        }
+      },
+      pageCount() {
+        let length = this.$data.presences.length,
+          size = this.$data.presencesPerPage;
+
+        return Math.floor(length / size);
+      },
+      paginatedData() {
+        let start = this.currentPageNumber * this.$data.presencesPerPage,
+          end = start + this.$data.presencesPerPage;
+        return this.$data.presences.slice(start, end);
+      }
+    },
+    methods: {}
+  };
+
 </script>
 
 <style lang="less" scoped>
-@import "./../stylesheets/variables.less";
+  @import "./../stylesheets/variables.less";
 
-.store-menu {
-  display: flex;
-  background: hsl(216, 7%, 11%);
-  padding-bottom: 0.5rem;
-}
+  .store-menu {
+    display: flex;
+    background: hsl(216, 7%, 11%);
+    padding-bottom: 0.5rem;
+  }
 
-.store-menu__searchbar-container {
-  flex: 1 1 auto;
-  display: flex;
+  .store-menu__searchbar-container {
+    flex: 1 1 auto;
+    display: flex;
     align-items: center;
 
-  position: relative;
+    position: relative;
 
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
 
-  width: 1%;
+    width: 1%;
 
-  input {
-    width: stretch;
-    border-radius: 99em;
-  }
-
-  .searchbar-container__controls {
-    margin: 0 2em;
-  }
-
-  button,
-  .button {
-    &:not(:last-child),
-    &:not(:first-child) {
-      border-radius: 0 0 0 0;
+    input {
+      width: stretch;
+      border-radius: 99em;
     }
 
-    display: inline-block;
-    padding: 0.09rem 10px;
+    .searchbar-container__controls {
+      margin: 0 2em;
+    }
+
+    button,
+    .button {
+
+      &:not(:last-child),
+      &:not(:first-child) {
+        border-radius: 0 0 0 0;
+      }
+
+      display: inline-block;
+      padding: 0.09rem 10px;
+      font-size: 14px;
+      line-height: 25px;
+      font-weight: bold;
+    }
+  }
+
+  .searchbar {
+    height: 1.8rem;
+    padding: 0 10px;
+    padding-left: 32px;
     font-size: 14px;
+    transition: all 300ms ease;
+    border: none;
+    background: lighten(@background-secondary, 4%);
+    color: #74787c;
     line-height: 25px;
     font-weight: bold;
-  }
-}
+    font-family: Inter;
 
-.searchbar {
-  height: 1.8rem;
-  padding: 0 10px;
-  padding-left: 32px;
-  font-size: 14px;
-  transition: all 300ms ease;
-  border: none;
-  background: lighten(@background-secondary, 4%);
-  color: #74787c;
-  line-height: 25px;
-  font-weight: bold;
-  font-family: Inter;
+    &:focus {
+      background: lighten(@background-secondary, 7%);
+      outline: none;
+    }
 
-  &:focus {
-    background: lighten(@background-secondary, 7%);
-    outline: none;
+    * {
+      margin-left: -17.5rem;
+    }
+
+    &::placeholder {
+      color: #74787c;
+    }
   }
 
-  * {
-    margin-left: -17.5rem;
-  }
-
-  &::placeholder {
+  .fa-search {
+    position: absolute;
+    margin-left: 0.6rem;
     color: #74787c;
   }
-}
 
-.fa-search {
-  position: absolute;
-  margin-left: 0.6rem;
-  color: #74787c;
-}
+  .nsfw_toggle {
+    height: 35px;
+    display: flex;
+    align-items: center;
 
-.nsfw_toggle {
-	height: 35px;
-	display: flex;
-	align-items: center;
-
-	p {
-		margin: 0;
-		margin-right: 10px;
-		font-size: 1.1rem;
-		font-weight: 800;
-	}
-}
-
-.nsfw-check {
-  &-c {
-    position: absolute;
-    margin-top: -2.7rem;
-    margin-left: 20rem;
+    p {
+      margin: 0;
+      margin-right: 10px;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
   }
-}
+
+  .nsfw-check {
+    &-c {
+      position: absolute;
+      margin-top: -2.7rem;
+      margin-left: 20rem;
+    }
+  }
+
 </style>

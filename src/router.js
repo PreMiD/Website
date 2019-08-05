@@ -22,7 +22,7 @@ export default new Router({
       path: "/store",
       name: "store",
       component: require("@/pages/Store").default,
-      props: route => ({ tags: route.query.tags }),
+      props: route => ({ page: route.query.page }),
     },
     {
       path: "/users/:userid",
