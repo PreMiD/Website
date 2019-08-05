@@ -43,7 +43,8 @@
                 <div class="fullpresence__content">
                     <div class="content__description">
                         <h2 class="content__title">{{ $t('presence.sections.description.title') }}</h2>
-                        <div class="description-container" v-html="presenceData.description" />
+                        <div class="description-container" v-if="!presenceData.fullDescription && presenceData.description" v-html="getPresenceDescription()" />
+                        <div class="description-container" v-if="presenceData.fullDescription" v-html="presenceData.fullDescription" />
                     </div>
                     <div class="content__info">
                         <h2 class="content__title">{{ $t('presence.sections.information.title') }}</h2>
@@ -76,7 +77,7 @@
                                 <p><i class="fas fa-external-link-square-alt" />
                                     {{ $t('presence.sections.information.supportedurls') }}:</p>
                                 <ul class="presence-urls">
-                                    <li v-for="url in presenceURLs" :key="presence"><a :href="`https://${url}`">{{ url }}</a></li>
+                                    <li v-for="url in presenceURLs" :key="url"><a :href="`https://${url}`">{{ url }}</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -115,6 +116,7 @@
 
             this.$parent.isProcessing = true;
 
+            //TODO: Optimize code for a better readability.
             axios(
                     `https://api.premid.app/v2/presences/${this.$route.params.presenceName}`
                 )
@@ -137,11 +139,12 @@
                     });
                     return false;
                 }).finally(() => {
+                    var ReadmeFileName = (Vue.$root.getI18nLanguage() == "en") ? "README" : "README_" + Vue.$root.getI18nLanguage();
                     axios(
-                            `https://raw.githubusercontent.com/PreMiD/Presences/master/${this.$route.params.presenceName}/README.md`
+                            `https://raw.githubusercontent.com/PreMiD/Presences/master/${Vue.$route.params.presenceName}/dist/${ReadmeFileName}.md`
                         )
                         .then((res) => {
-                            Vue.$data.presenceData.description = marked(res.data);
+                            Vue.$data.presenceData.fullDescription = marked(res.data);
                         }).catch((error) => {
                             if (error.response.status == 404)
                                 return;
@@ -153,7 +156,7 @@
                             }).finally(() => {
                                 Vue.$parent.isProcessing = false;
                             });
-                        });
+                    });
                 });
         },
         methods: {
@@ -190,7 +193,20 @@
                     }
                 }
                 return false;
-            }
+            },
+            /**
+            * Returns description of the presence according to your language.
+            * If presence has non-multilingual description then we just parsing the "description" data.
+            */
+            getPresenceDescription() {
+                if (this.$data.presenceData.description[this.$root.getI18nLanguage()]) {
+                    return this.$data.presenceData.description[this.$root.getI18nLanguage()];
+                } else if (this.$data.presenceData.description['en']) {
+                    return this.$data.presenceData.description['en'];
+                } else {
+                    return this.$data.presenceData.description;
+                }
+            },
         }
     };
 
