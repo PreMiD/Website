@@ -47,7 +47,7 @@
         presences: [],
         nsfw: false,
         presenceSearch: "",
-        presencesPerPage: 8
+        presencesPerPage: 9
       };
     },
     created() {
@@ -100,6 +100,7 @@
         return Math.floor(length / size);
       },
       paginatedData() {
+        if(Number(this.$data.presenceSearch) !== 0) return this.filteredPresences;
         let start = this.currentPageNumber * this.$data.presencesPerPage,
           end = start + this.$data.presencesPerPage;
         return this.filteredPresences.slice(start, end);
