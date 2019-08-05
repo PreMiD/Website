@@ -94,6 +94,7 @@
               <a href="https://discord.premid.app/">Discord</a>
               <a href="https://github.com/PreMiD/">GitHub</a>
               <a href="https://wiki.premid.app/">{{ $t(`footer.more.wiki`) }}</a>
+              <a>How did you find me...</a>
             </div>
           </div>
         </div>
