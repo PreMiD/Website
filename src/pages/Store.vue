@@ -97,11 +97,11 @@
         let length = this.filteredPresences.length,
           size = this.$data.presencesPerPage;
 
-        return Math.floor(length / size);
+        return Math.ceil(length / size);
       },
       paginatedData() {
-        if(Number(this.$data.presenceSearch) !== 0) return this.filteredPresences;
-        let start = this.currentPageNumber * this.$data.presencesPerPage,
+        if(this.$data.presenceSearch !== "") return this.filteredPresences;
+        let start = (this.currentPageNumber - 1) * this.$data.presencesPerPage,
           end = start + this.$data.presencesPerPage;
         return this.filteredPresences.slice(start, end);
       }
