@@ -11,7 +11,7 @@
       <navigation />
     </header>
     <div class="page-wrapper">
-      <div class="content"> 
+      <div class="content">
         <transition name="route-animation" mode="out-in">
           <router-view></router-view>
         </transition>
@@ -94,7 +94,7 @@
               <a href="https://discord.premid.app/">Discord</a>
               <a href="https://github.com/PreMiD/">GitHub</a>
               <a href="https://wiki.premid.app/">{{ $t(`footer.more.wiki`) }}</a>
-              <a>How did you find me...</a>
+              <a>Hiya!</a>
             </div>
           </div>
         </div>
