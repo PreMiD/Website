@@ -20,7 +20,7 @@
       <listing v-for="presence in paginatedData" v-bind:key="presence.service" :presence="presence" />
     </div>
     <div class="pagination-container">
-      <Pagination :pageNumber="currentPageNumber" :pageCount="pageCount" />
+      <Pagination v-if="this.$data.presenceSearch == ''" :pageNumber="currentPageNumber" :pageCount="pageCount" />
     </div>
   </div>
 </template>
