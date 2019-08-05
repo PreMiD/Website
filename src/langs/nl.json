@@ -75,7 +75,7 @@
   "store.cards.creator": "Maker",
   "store.cards.verified": "Deze presence is goedgekeurd door een geverifiëerde ontwikkelaar",
   "store.header.search": "Zoek",
-  "store.card.presence.add": "Installeer presence",
+  "store.card.presence.add": "Add presence",
   "store.card.presence.remove": "Verwijder presence",
   "store.card.presence.included": "Deze presence is standaard inbegrepen in PreMiD, u hoeft deze niet te installeren."
 }

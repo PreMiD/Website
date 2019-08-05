@@ -41,7 +41,7 @@
   "footer.copyright.line1": "{0} od {1}",
   "footer.copyright.line2": "Stránka byla dělaná {0}om ",
   "header.language": "Čeština",
-  "header.languageNotification.title": "Podporujeme tvůj jazyk, chceš si přepnout?",
+  "header.languageNotification.title": "Podporujeme tvůj jazyk, chceš na něho přepnout?",
   "header.languageNotification.text": "Naše stránka byla přeložená do tvého jazyku. V případě ti to může být v pomoci když nemluvíš Anglicky dobře.",
   "header.languageNotification.btnDecline": "Ne, děkuji",
   "header.languageNotification.btnAccept": "Změnit teď  ",
@@ -75,7 +75,7 @@
   "store.cards.creator": "Tvůrce",
   "store.cards.verified": "Táto přítomnost byla schválena ověřeným vývojarem ",
   "store.header.search": "Hledat",
-  "store.card.presence.add": "Nainstalovat přítomnost",
+  "store.card.presence.add": "Add presence",
   "store.card.presence.remove": "Odstranit přítomnost ",
   "store.card.presence.included": "Tato přítomnost je ve výchozím nastavení součástí PreMiD, není třeba jej instalovat."
 }

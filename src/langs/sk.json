@@ -75,7 +75,7 @@
   "store.cards.creator": "Vytvoril",
   "store.cards.verified": "Táto prítomnosť bola schválená overeným vývojárom ",
   "store.header.search": "Hľadať",
-  "store.card.presence.add": "Nainštalovať prítomnosť",
+  "store.card.presence.add": "Add presence",
   "store.card.presence.remove": "Odstrániť prítomnosť",
   "store.card.presence.included": "Táto prítomnosť je už v PreMiDe pred inštalovaná, nemusíš si ju tak nainštalovať."
 }

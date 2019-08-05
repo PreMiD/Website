@@ -75,7 +75,7 @@
   "store.cards.creator": "Creator",
   "store.cards.verified": "This presence was approved by a verified developer",
   "store.header.search": "Search",
-  "store.card.presence.add": "Install presence",
+  "store.card.presence.add": "Add presence",
   "store.card.presence.remove": "Remove presence",
   "store.card.presence.included": "This presence is included in PreMiD by default, no need to install it."
 }

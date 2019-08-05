@@ -75,7 +75,7 @@
   "store.cards.creator": "Creator",
   "store.cards.verified": "Această prezență a fost acceptată de către un developer verificat. ",
   "store.header.search": "Caută",
-  "store.card.presence.add": "Instalează prezența",
+  "store.card.presence.add": "Add presence",
   "store.card.presence.remove": "Șterge prezența",
   "store.card.presence.included": "Această prezență este deja inclusă în PreMiD în mod implicit, nu ai nevoie să o instalezi."
 }

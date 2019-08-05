@@ -75,7 +75,7 @@
   "store.cards.creator": "Twórca",
   "store.cards.verified": "Ten status został zatwierdzony przez zaufanego developera",
   "store.header.search": "Wyszukaj",
-  "store.card.presence.add": "Zainstaluj status",
+  "store.card.presence.add": "Dodaj Status",
   "store.card.presence.remove": "Odinstaluj status",
   "store.card.presence.included": "Ten status jest wbudowany w apkę PreMiD, nie musisz jej instalować."
 }
