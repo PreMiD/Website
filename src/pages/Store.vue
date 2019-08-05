@@ -94,7 +94,7 @@
         }
       },
       pageCount() {
-        let length = this.$data.presences.length,
+        let length = this.filteredPresences.length,
           size = this.$data.presencesPerPage;
 
         return Math.floor(length / size);
@@ -102,7 +102,7 @@
       paginatedData() {
         let start = this.currentPageNumber * this.$data.presencesPerPage,
           end = start + this.$data.presencesPerPage;
-        return this.$data.presences.slice(start, end);
+        return this.filteredPresences.slice(start, end);
       }
     },
     methods: {}
