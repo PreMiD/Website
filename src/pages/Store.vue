@@ -47,7 +47,7 @@
         presences: [],
         nsfw: false,
         presenceSearch: "",
-        presencesPerPage: 9
+        presencesPerPage: 10
       };
     },
     created() {
