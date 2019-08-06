@@ -68,14 +68,14 @@
   "presence.sections.information.title": "Информация",
   "presence.sections.information.author": "Автор",
   "presence.sections.information.version": "Версия",
-  "presence.sections.information.tags": "Тэги",
+  "presence.sections.information.tags": "Теги",
   "presence.sections.information.supportedurls": "Поддерживает",
   "store.message.error": "Расширение не найдено, блокировка функций...",
   "store.message.success": "Расширение найдено, разблокировка функций...",
   "store.cards.creator": "Создатель",
   "store.cards.verified": "Этот статус был проверен доверенным разработчиком",
   "store.header.search": "Искать",
-  "store.card.presence.add": "Add presence",
+  "store.card.presence.add": "Установить статус",
   "store.card.presence.remove": "Удалить статус",
-  "store.card.presence.included": "This presence is included in PreMiD by default, no need to install it."
+  "store.card.presence.included": "Этот статус установлен в PreMiD по умолчанию, нет необходимости его устанавливать."
 }

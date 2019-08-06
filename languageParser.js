@@ -10,20 +10,31 @@ process.stdout.write("\u001b[2J\u001b[0;0H");
 
 axios
   .get(apiURL + "/list")
-  .then(function (response) {
-
+  .then(function(response) {
     console.log(chalk.green(`${successEmoji} Language list fetched.`));
-    response.data.forEach(function (lang) {
-
-      axios.get(apiURL + "/website/" + lang).then(function (responce) {
+    response.data.forEach(function(lang) {
+      axios.get(apiURL + "/website/" + lang).then(function(responce) {
         if (responce.data["header.language"] !== "English" || lang == "en") {
           var langJSON = JSON.stringify(responce.data, null, 2);
-          var savePath = __dirname + `/src/langs/${lang.substring(0, 2)}.json`;
+          var savePath;
+
+          if (lang.length == 2) {
+            savePath =
+              __dirname + `/src/langs/${lang}_${lang.toUpperCase()}.json`;
+          } else {
+            savePath =
+              __dirname + `/src/langs/${lang}.json`;
+          }
+
           fs.writeFile(savePath, langJSON, "utf8", function(err) {
             if (err) {
               return console.error(err);
             }
-            console.log(chalk.green(`${successEmoji} Successfully fetched and saved ${lang} to ${savePath}.`));
+            console.log(
+              chalk.green(
+                `${successEmoji} Successfully fetched and saved ${lang} to ${savePath}.`
+              )
+            );
           });
         } else {
           console.warn(
@@ -33,10 +44,8 @@ axios
           );
         }
       });
-
     });
-
   })
-  .catch(function (error) {
+  .catch(function(error) {
     console.error(error);
-  })
+  });

@@ -89,8 +89,12 @@ Vue.mixin({
     },
     // </Debug Messages>
     getNavigatorLanguage() {
-      //* Turns "en-US" into "en" to make detection simpler.
-      return navigator.language.slice(0, 2);
+      //* Filters navigator language to provide capability with browsers.
+      var navigatorLanguage = navigator.language.slice(0, 4).replace("-", "_");
+      if (navigator.language.length == 2) {
+        navigatorLanguage = `${navigatorLanguage}_${navigatorLanguage.toUpperCase()}`;
+      }
+      return navigatorLanguage;
     },
     getI18nLanguage() {
       return this.$i18n.locale;
