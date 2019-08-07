@@ -46,11 +46,11 @@
             <router-link :to="`/users/${presence.author.id}`">{{ presence.author.name }}</router-link>
           </p>
 
-          <transition-group name="card-animation" mode="out-in">
-            <div key="desc" v-if="!card_hovered || !this.$root.extension_installed">
+          <transition name="card-animation" mode="out-in">
+            <div :key="presence.service + '_desc'" v-if="!card_hovered || !this.$root.extension_installed">
               <p class="store-card__desc">{{ this.getPresenceDescription() }}</p>
             </div>
-            <div key="buttons" v-if="card_hovered">
+            <div :key="presence.service + '_buttons'" v-if="card_hovered && this.$root.extension_installed">
               <div
                 v-if="this.$root.extension_installed && typeof presence.button == 'undefined'"
                 class="store-card__buttons on-desktop"
@@ -80,7 +80,7 @@
                 <p class="store-card__warning">{{ $t('store.card.presence.included') }}</p>
               </div>
             </div>
-          </transition-group>
+          </transition>
         </div>
       </div>
       <div
