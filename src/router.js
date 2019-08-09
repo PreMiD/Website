@@ -10,54 +10,57 @@ export default new Router({
       // If URL not matching any registered one then we drop user to 404 page.
       path: "*",
       name: "notfound",
-      component: require("@/pages/errors/NotFound").default,
+      component: require("@/pages/errors/NotFound").default
     },
     {
       path: "",
       alias: "/home",
       name: "home",
-      component: require("@/pages/Home").default,
+      component: require("@/pages/Home").default
     },
     {
       path: "/store",
       name: "store",
       component: require("@/pages/Store").default,
-      props: route => ({ page: route.query.page }),
+      props: route => ({ page: route.query.page })
     },
     {
       path: "/users/:userid",
       name: "userPage",
-      component: require("@/pages/store/Userpage").default,
+      component: require("@/pages/store/Userpage").default
     },
     {
       path: "/store/:presenceName",
       name: "presencePage",
-      component: require("@/pages/store/PresenceFullpage").default,
+      component: require("@/pages/store/PresenceFullpage").default
     },
     {
       path: "/downloads",
       name: "downloads",
-      component: require("@/pages/Downloads").default,
+      alias: "/download",
+      component: require("@/pages/Downloads").default
     },
     {
       path: "/contributors",
       name: "contributors",
-      component: require("@/pages/Contributors").default,
+      alias: "/credits",
+      component: require("@/pages/Contributors").default
     },
     {
       path: "/privacy",
       name: "privacy",
-      component: require("@/pages/legal/Privacy").default,
+      component: require("@/pages/legal/Privacy").default
     },
     {
       path: "/cookies",
       name: "cookies",
-      component: require("@/pages/legal/Cookies").default,
+      component: require("@/pages/legal/Cookies").default
     },
     {
       path: "/tos",
       name: "tos",
-      component: require("@/pages/legal/ToS").default,
-    },
-  ],
+      alias: "/terms",
+      component: require("@/pages/legal/ToS").default
+    }
+  ]
 });
