@@ -169,15 +169,6 @@ export default {
         },
         {
           profile: {
-            DiscordID: "465105167751315471"
-          },
-          service_title: "Netflix",
-          service_logo: netflix_logo,
-          data: ["Breaking Bad", "S5:E16 Felina"],
-          presence_time: "15:35"
-        },
-        {
-          profile: {
             DiscordID: "223238938716798978",
             badges: ["brilliance", "early"]
           },
