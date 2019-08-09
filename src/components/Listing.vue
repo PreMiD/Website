@@ -149,8 +149,8 @@ export default {
     getPresenceDescription() {
       if (this.presence.description[this.$root.getI18nLanguage()]) {
         return this.presence.description[this.$root.getI18nLanguage()];
-      } else if (this.presence.description["en"]) {
-        return this.presence.description["en"];
+      } else if (this.presence.description["en_EN"]) {
+        return this.presence.description["en_EN"];
       } else {
         return this.presence.description;
       }
