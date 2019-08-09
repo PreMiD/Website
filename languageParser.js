@@ -16,15 +16,7 @@ axios
       axios.get(apiURL + "/website/" + lang).then(function(responce) {
         if (responce.data["header.language"] !== "English" || lang == "en") {
           var langJSON = JSON.stringify(responce.data, null, 2);
-          var savePath;
-
-          if (lang.length == 2) {
-            savePath =
-              __dirname + `/src/langs/${lang}_${lang.toUpperCase()}.json`;
-          } else {
-            savePath =
-              __dirname + `/src/langs/${lang}.json`;
-          }
+          var savePath = __dirname + `/src/langs/${lang}.json`;
 
           fs.writeFile(savePath, langJSON, "utf8", function(err) {
             if (err) {

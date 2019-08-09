@@ -89,11 +89,15 @@ Vue.mixin({
     },
     // </Debug Messages>
     getNavigatorLanguage() {
-      //* Filters navigator language to provide capability with browsers.
-      var navigatorLanguage = navigator.language.slice(0, 4).replace("-", "_");
+      //* Filtering language codes to make them compatible with i18n.
+      var navigatorLanguage;
+
       if (navigator.language.length == 2) {
-        navigatorLanguage = `${navigatorLanguage}_${navigatorLanguage.toUpperCase()}`;
+        navigatorLanguage = navigator.language.slice(0, 2);
+      } else {
+        navigatorLanguage = navigator.language.slice(0, 2) + "_" + navigator.language.slice(3, 5);
       }
+
       return navigatorLanguage;
     },
     getI18nLanguage() {
