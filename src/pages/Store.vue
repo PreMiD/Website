@@ -4,152 +4,115 @@
     <div class="store-menu">
       <div class="store-menu__searchbar-container">
         <i class="fas fa-search"></i>
-        <input class="searchbar" placeholder="Search" v-on:input="update_search()">
-        <!-- // TODO: Implement when we will be moving to DB.-->
-        <!-- <div class="searchbar-container__controls">
-          <a href="#" class="button">Submit</a>
-          <a href="#" class="button">Toggle NSFW</a>
-        </div> -->
+        <input class="searchbar" placeholder="Search" v-model="presenceSearch" />
+        <div class="searchbar-container__controls">
+          <div class="nsfw_toggle pmd_checkbox">
+            <p>NSFW</p>
+            <label>
+              <input type="checkbox" :value="nsfw" @change="nsfw =!nsfw" />
+              <span ref="checkbox" class="checkbox-container"></span>
+            </label>
+          </div>
+        </div>
       </div>
-      <!-- TODO: Implement when we will be moving to DB.-->
-      <!-- <div class="nsfw-check-c"><checkbox selector="nsfw-check" text="NSFW" toggle="nsfw" /></div> -->
     </div>
     <div class="presence-container">
-      <listing v-if="!searching" v-for="presence of presences" v-bind:key="presence.service" :presence="presence"
-        :nsfw="nsfw" />
-      <listing v-if="searching" v-for="presence of presence_search" v-bind:key="presence_search.service"
-        :presence="presence" />
+      <listing v-for="presence in paginatedData" v-bind:key="presence.service" :presence="presence" />
     </div>
-  </div>
+    <div class="pagination-container">
+      <Pagination v-if="this.$data.presenceSearch == ''" :pageNumber="currentPageNumber" :pageCount="pageCount" />
+    </div>
   </div>
 </template>
 
 <script>
-  import Listing from "./../components/layout/Listing.vue";
-  import Checkbox from "./../components/Checkbox.vue";
+  import Listing from "./../components/Listing.vue";
+  import Pagination from "./../components/Pagination";
+
   import request from "request";
 
   import axios from "axios";
+  import {
+    Promise
+  } from 'q';
 
   export default {
     name: "store",
     components: {
       Listing,
-      Checkbox
+      Pagination
     },
     data() {
       return {
         presences: [],
-        extension_installed: false,
-        presences_installed: "",
-        searching: false,
         nsfw: false,
-        presence_search: [],
+        presenceSearch: "",
+        presencesPerPage: 10
       };
     },
     created() {
-      // Vue hook to call it inside JS functions.
-      var self = this;
+      let self = this;
 
-      // Capturing event with presence data from extension.
-      window.addEventListener('PreMiD_GetWebisteFallback', function (data) {
-        console.log('Recieved information from Extension!');
-        var dataString = data.detail.toString().split(',');
-        self.$data.presences_installed = dataString;
-      });
-    },
-    mounted() {
-
-      // Vue hook to call it inside JS functions.
-      var self = this;
-
-      // Checking if user has the extension installed.
-      setTimeout(function () {
-        if (document.getElementById('PreMiD_PageVariables') !== null) {
-          self.$data.extension_installed = true;
-          self.debugMessage('Extension installed, unlocking functions...');
-        } else {
-          self.$data.extension_installed = false;
-          self.errorMessage('Extension not found, locking functions...');
-        }
-      }, 1000);
-
-      // Firing event to get response from Extension with installed presences data.
-      var event = new CustomEvent('PreMiD_GetPresenceList', {});
-      window.dispatchEvent(event);
+      this.$parent.isProcessing = true;
 
       // Requesting presences data from our API and adding it into our Vue data.
-      axios.get(`https://api.premid.app/presences`)
+      axios(`https://api.premid.app/v2/presences`)
         .then(function (res) {
-          let presences = res.data;
-          for (let presence of presences) {
-            let url = presence.url.replace("https://gist.githubusercontent.com/", 'https://gistcdn.githack.com/')
-              .slice(0, -1) + '/metadata.json';
-            self.getPresenceData(url);
-          }
-        }).catch(function (error) {
-          console.log(error);
-        });
+          let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
 
-    },
-    methods: {
-
-      getPresenceData: async function (url) {
-        await axios.get(url)
-          .then((res) => {
-            this.$data.presences.push(res.data);
-          }).catch((err) => {
-            console.log(err);
+          var foreach = res.data.map((presence) => {
+            self.$data.presences.push(presence.metadata);
           });
-      },
-      dynamicSort(property) {
-        var sortOrder = 1;
 
-        if (property[0] === "-") {
-          sortOrder = -1;
-          property = property.substr(1);
-        }
+          Promise.all(foreach).finally(() => {
+            self.$parent.isProcessing = false;
+          });
 
-        return function (a, b) {
-          if (sortOrder == -1) {
-            return b[property].localeCompare(a[property]);
-          } else {
-            return a[property].localeCompare(b[property]);
-          }
-        };
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    },
+    computed: {
+      filteredPresences() {
+        return this.$data.presences
+          .filter(presence => {
+            return presence.service
+              .toLowerCase()
+              .includes(this.presenceSearch.toLowerCase());
+          })
+          .filter(presence =>
+            this.$data.nsfw ? true : !presence.tags.includes("nsfw")
+          )
+          .sort((a, b) => a.service.localeCompare(b.service));
       },
-      update_search() {
-        let input = document.getElementsByClassName("searchbar")[0];
-        //this.$data.searching = true;
-        if (input.value != "") {
-          this.$data.searching = true;
-          this.$data.presence_search = [];
-          for (let presence of this.$data.presences) {
-            let stop = false;
-            if (
-              presence.service.toLowerCase().search(input.value.toLowerCase()) !=
-              -1
-            ) {
-              this.$data.presence_search.push(presence);
-              stop = true;
-            }
-          }
+      currentPageNumber() {
+        if(Number(this.$route.query.page)) {
+          return Number(this.$route.query.page);
         } else {
-          this.$data.searching = false;
+          return 1;
         }
       },
-      toggleInput(input) {
-        if (input == "nsfw")
-          if (!this.$data.nsfw) this.$data.nsfw = true;
-          else this.$data.nsfw = false;
+      pageCount() {
+        let length = this.filteredPresences.length,
+          size = this.$data.presencesPerPage;
+
+        return Math.ceil(length / size);
+      },
+      paginatedData() {
+        if(this.$data.presenceSearch !== "") return this.filteredPresences;
+        let start = (this.currentPageNumber - 1) * this.$data.presencesPerPage,
+          end = start + this.$data.presencesPerPage;
+        return this.filteredPresences.slice(start, end);
       }
-    }
+    },
+    methods: {}
   };
 
 </script>
 
 <style lang="less" scoped>
-  @import "./../stylesheets/colors.less";
+  @import "./../stylesheets/variables.less";
 
   .store-menu {
     display: flex;
@@ -160,6 +123,7 @@
   .store-menu__searchbar-container {
     flex: 1 1 auto;
     display: flex;
+    align-items: center;
 
     position: relative;
 
@@ -170,12 +134,12 @@
     width: 1%;
 
     input {
-      width: fill-available;
+      width: stretch;
       border-radius: 99em;
     }
 
     .searchbar-container__controls {
-      margin: 0 4em;
+      margin: 0 2em;
     }
 
     button,
@@ -192,7 +156,6 @@
       line-height: 25px;
       font-weight: bold;
     }
-
   }
 
   .searchbar {
@@ -203,7 +166,7 @@
     transition: all 300ms ease;
     border: none;
     background: lighten(@background-secondary, 4%);
-    color: fadeOut(@white-2, 15%);
+    color: #74787c;
     line-height: 25px;
     font-weight: bold;
     font-family: Inter;
@@ -218,15 +181,27 @@
     }
 
     &::placeholder {
-      color: fadeOut(@white-2, 65%);
+      color: #74787c;
     }
   }
 
   .fa-search {
     position: absolute;
     margin-left: 0.6rem;
-    margin-top: 7px;
-    color: fadeOut(@white-2, 65%);
+    color: #74787c;
+  }
+
+  .nsfw_toggle {
+    height: 35px;
+    display: flex;
+    align-items: center;
+
+    p {
+      margin: 0;
+      margin-right: 10px;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
   }
 
   .nsfw-check {

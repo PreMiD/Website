@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "./../stylesheets/colors.less";
+@import "./../stylesheets/variables.less";
 
 .label-cbx {
   user-select: none;
@@ -86,7 +86,7 @@ export default {
 .text {
   margin-left: 1.9rem;
   margin-top: 0.2rem;
-  color: @white-2;
+  color: #c8ccd4;
 }
 
 .invisible {

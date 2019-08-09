@@ -1,21 +1,35 @@
-# premid
+<div align="center">
+<img src="https://avatars3.githubusercontent.com/u/46326568?s=400&u=15e4a4988014780288d30ffb969fd1569fec23e6&v=4" width="128px" draggable="false">
 
-> Website + Server for PreMiD.
+# PreMiD Website
+  
+</div>  
+  
+This repository contains source code of **PreMiD**'s website that allows you to install presences from our presence store.
+If you want to get more information or help us by **[contributing](#development)** in this project, we would like to see you in our **Discord** server: <br><a target="_blank" href="https://discord.gg/WvfVZ8T" title="Join our Discord!">
+<img draggable="false" src="https://discordapp.com/api/guilds/493130730549805057/widget.png?style=banner2" height="76px" draggable="false" alt="Join our Discord!">
+</a>
 
-## Build Setup
+## Additional information
+Our server automatically builds the latest website versions from **[master](https://beta.premid.app/)** and **[stable](https://premid.app/)** branches.    
+The `master` branch includes all changes that was not tested yet and may have perfomance issues. 
+
+## Building
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
+# build website in /dist
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Development
+
+``` bash
+# install dependencies
+npm install
+
+# host local server
+npm run serve
+```
