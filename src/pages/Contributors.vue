@@ -78,7 +78,7 @@ export default {
     isStaffRole(roleName) {
       var roleName = roleName.toLowerCase();
       if (
-        roleName == "Creator" ||
+        roleName == "creator" ||
         roleName == "developer" ||
         roleName == "ticket manager" ||
         roleName == "moderator" ||
