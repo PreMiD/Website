@@ -11,7 +11,10 @@
           :style="`background-image: url('${presenceData.thumbnail}')`"
         >
           <div class="header__title">
-            <h1 class="presence-name">
+            <h1
+              class="presence-name"
+              :style="`color: ${getContrastYIQ(presenceData.color.slice(1,7))}`"
+            >
               {{ presenceData.service }}
               <span>
                 <svg
@@ -23,7 +26,6 @@
                   :title="`${$t('store.cards.verified')}.`"
                   v-tippy
                   class="fullpresence__verified"
-                  :style="`fill: ${presenceData.color}`"
                 >
                   <g>
                     <path
@@ -109,7 +111,9 @@
                 <p>
                   <i class="fas fa-code-branch" />
                   {{ $t('presence.sections.information.version') }}:
-                  <span class="presence-version">
+                  <span
+                    class="presence-version"
+                  >
                     <b>{{ presenceData.version }}</b>
                   </span>
                 </p>
@@ -123,7 +127,7 @@
                   <a
                     v-bind:key="tag"
                     v-for="(tag) of presenceData.tags"
-                    :style="`background: ${presenceData.color};`"
+                    :style="`background: ${presenceData.color};color: ${getContrastYIQ(presenceData.color.slice(1,7))}`"
                     class="label label_tag"
                   >{{tag}}</a>
                 </div>
@@ -274,6 +278,14 @@ export default {
       } else {
         return this.$data.presenceData.description;
       }
+    },
+    getContrastYIQ(hexcolor) {
+      var r = parseInt(hexcolor.substr(0, 2), 16);
+      var g = parseInt(hexcolor.substr(2, 2), 16);
+      var b = parseInt(hexcolor.substr(4, 2), 16);
+      console.log(r, g, b);
+      var yiq = (r * 299 + g * 587 + b * 114) / 1000;
+      return yiq >= 128 ? "black" : "white";
     }
   }
 };

@@ -23,7 +23,6 @@
                 :title="`${$t('store.cards.verified')}.`"
                 v-tippy
                 class="store-card__verified"
-                :style="`fill: ${presence.color}`"
               >
                 <g>
                   <path
@@ -47,10 +46,16 @@
           </p>
 
           <transition name="card-animation" mode="out-in">
-            <div :key="presence.service + '_desc'" v-if="!card_hovered || !this.$root.extension_installed">
+            <div
+              :key="presence.service + '_desc'"
+              v-if="!card_hovered || !this.$root.extension_installed"
+            >
               <p class="store-card__desc">{{ this.getPresenceDescription() }}</p>
             </div>
-            <div :key="presence.service + '_buttons'" v-if="card_hovered && this.$root.extension_installed">
+            <div
+              :key="presence.service + '_buttons'"
+              v-if="card_hovered && this.$root.extension_installed"
+            >
               <div
                 v-if="this.$root.extension_installed && typeof presence.button == 'undefined'"
                 class="store-card__buttons on-desktop"
