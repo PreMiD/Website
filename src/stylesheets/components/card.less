@@ -190,7 +190,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             -webkit-box-orient: vertical;
-            
+
         }
 
         p {
@@ -608,68 +608,6 @@
 
                 }
             }
-        }
-    }
-}
-
-
-.contributor {
-    width: 11.5rem;
-    height: 15.2rem;
-    border-radius: 0.3rem;
-    background: @background-secondary;
-    transform: translate(0.5rem);
-    margin-bottom: 1rem;
-    padding-left: 0.5rem;
-    @transition-time: 150ms;
-    transition: box-shadow @transition-time ease, transform @transition-time ease,
-        color @transition-time, background @transition-time;
-
-    &:hover {
-        transform: translate(0.2rem, -0.3rem);
-        margin-bottom: 0.5rem;
-        box-shadow: 0.35rem 0.35rem rgba(0, 0, 0, 0.2);
-        transition: box-shadow @transition-time ease,
-            transform @transition-time ease, color @transition-time,
-            background @transition-time;
-
-        .picture {
-            width: 11rem;
-            height: 11rem;
-            margin-top: 0.5rem;
-            margin-left: 0rem;
-            transition: margin-top @transition-time ease,
-                margin-left @transition-time ease, width @transition-time ease,
-                height @transition-time ease;
-
-            img {
-                transition: border-radius @transition-time ease;
-                border-radius: 0.3rem;
-            }
-        }
-    }
-
-    .picture {
-        width: 12rem;
-        height: 12rem;
-        margin-bottom: 0.25rem;
-        margin-left: -0.5rem;
-        transition: margin-top @transition-time ease,
-            margin-left @transition-time ease, width @transition-time ease,
-            height @transition-time ease;
-
-        img {
-            border-radius: 0.3rem 0.3rem 0 0;
-        }
-    }
-
-    span {
-        font-weight: bold;
-        font-family: "Discord Font";
-
-        &.name {
-            color: white;
-            font-size: 0.8rem;
         }
     }
 }

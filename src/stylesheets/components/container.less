@@ -338,80 +338,14 @@
 	color: #f8f9fd;
 }
 
-.contributors {
-	max-width: 1600px;
-	margin: 0 auto;
-	padding: 6px;
+.contributor-container {
+	margin-top: 25px;
+	margin-left: 5%;
+	width: 90%;
 
-	.section-header {
-		font-weight: 800;
-		font-size: 42px;
-		color: white;
-		padding: 10px;
-
-		position: relative;
-
-		&::before {
-			content: '';
-			position: absolute;
-			background: white;
-			border-radius: 50rem;
-			width: 30%;
-			height: 6px;
-			bottom: -6px;
-		}
-
-	}
-
-	.contributor-container {
-
+	.contributor-inner {
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: relative;
 		flex-wrap: wrap;
-		padding: 10px;
-
-		.contributor-card {
-			width: 200px;
-			height: 280px;
-			position: relative;
-
-			color: white;
-			background: #1A1C1E;
-			margin: 10px;
-			border-radius: 20px;
-			overflow: hidden;
-
-			transition: all 0.2s ease;
-
-			z-index: 1;
-
-			&:hover {
-				z-index: 2;
-				transform: translateY(-12px);
-			}
-
-			img {
-				border-radius: 20px;
-				width: 200px;
-			}
-
-			.contributor-card__content {
-				padding: 10px;
-
-				.usertitle {
-					font-size: 1.1rem;
-					font-weight: bold;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-					overflow: hidden;
-					margin: 6px 0;
-				}
-
-			}
-
-		}
 	}
 }
 

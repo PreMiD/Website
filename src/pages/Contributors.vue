@@ -2,48 +2,42 @@
   <div>
     <title>PreMiD - Contributors</title>
     <section class="contributors">
-      <h1 class="section-header">{{ $t(`contributors.headings.coreteam`) }}</h1>
       <div class="contributor-container">
-        <div
-          v-for="(contributor, index) of contributors"
-          v-bind:key="contributor.name"
-          class="contributor-card"
-          v-if="isStaffRole(contributor.role)"
-        >
-          <ContributorCard :contributor="contributor" />
+        <h1 v-text="$t('contributors.headings.staff')" />
+        <div class="contributor-inner">
+          <div
+            v-for="(contributor) of contributors"
+            v-bind:key="contributor.name"
+            class="contributor-card"
+          >
+            <ContributorCard v-if="isStaffRole(contributor.role)" :contributor="contributor" />
+          </div>
         </div>
       </div>
-      <h1 class="section-header">{{ $t(`contributors.headings.supporters`) }}</h1>
+
       <div class="contributor-container">
-        <div
-          v-for="(contributor, index) of contributors"
-          v-bind:key="contributor.name"
-          class="contributor-card"
-          v-if="isSupporterRole(contributor.role)"
-        >
-          <ContributorCard :contributor="contributor" />
+        <h1 v-text="$t('contributors.headings.supporters')" />
+        <div class="contributor-inner">
+          <div
+            v-for="(contributor) of contributors"
+            v-bind:key="contributor.name"
+            class="contributor-card"
+          >
+            <ContributorCard v-if="isSupporterRole(contributor.role)" :contributor="contributor" />
+          </div>
         </div>
       </div>
-      <h1 class="section-header">{{ $t(`contributors.headings.translators`) }}</h1>
+
       <div class="contributor-container">
-        <div
-          v-for="(contributor, index) of contributors"
-          v-bind:key="contributor.name"
-          class="contributor-card"
-          v-if="isTranslatorRole(contributor.role)"
-        >
-          <ContributorCard :contributor="contributor" />
-        </div>
-      </div>
-      <h1 class="section-header">{{ $t(`contributors.headings.contributors`) }}</h1>
-      <div class="contributor-container">
-        <div
-          v-for="(contributor, index) of contributors"
-          v-bind:key="contributor.name"
-          class="contributor-card"
-          v-if="isContributorRole(contributor.role)"
-        >
-          <ContributorCard :contributor="contributor" />
+        <h1 v-text="$t('contributors.headings.translators')" />
+        <div class="contributor-inner">
+          <div
+            v-for="(contributor) of contributors"
+            v-bind:key="contributor.name"
+            class="contributor-card"
+          >
+            <ContributorCard v-if="isTranslatorRole(contributor.role)" :contributor="contributor" />
+          </div>
         </div>
       </div>
     </section>
@@ -51,8 +45,7 @@
 </template>
 
 <script>
-import request from "request";
-import gif_frames from "gif-frames";
+import axios from "axios";
 
 import ContributorCard from "../components/ContributorCard";
 
@@ -68,8 +61,8 @@ export default {
     };
   },
   created() {
-    request("https://api.premid.app/credits", (err, res, dat) => {
-      let data = JSON.parse(dat);
+    axios.get("https://api.premid.app/v2/credits").then(res => {
+      var data = res.data;
       data.sort((a, b) => b.rolePosition - a.rolePosition);
       this.$data.contributors = data;
     });
@@ -78,12 +71,11 @@ export default {
     isStaffRole(roleName) {
       var roleName = roleName.toLowerCase();
       if (
-        roleName == "creator" ||
-        roleName == "developer" ||
+        roleName == "core developer" ||
+        roleName == "administrator" ||
         roleName == "ticket manager" ||
         roleName == "moderator" ||
-        roleName == "jr. moderator" ||
-        roleName == "head moderator"
+        roleName == "jr. moderator"
       ) {
         return true;
       } else {
