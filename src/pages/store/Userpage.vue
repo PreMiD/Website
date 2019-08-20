@@ -1,7 +1,7 @@
 <template>
   <div>
     <title>PreMiD - Store</title>
-    <div v-if="!isProcessing" class="userpage-container">
+    <div v-if="!$root.isProcessing" class="userpage-container">
         <div class="userpage__header">
             <div class="user-avatar"><img :src="userdata.avatar"></div>
             <div class="user-data">
@@ -41,7 +41,7 @@ export default {
   },
   created() {
       let Vue = this;
-      Vue.$parent.isProcessing = true;
+      Vue.$root.isProcessing = true;
       axios(`https://api.premid.app/credits/${Vue.$route.params.userid}`)
       .then((res) => {
           Vue.$data.userdata = res.data;
@@ -60,7 +60,7 @@ export default {
               });
 
               Promise.all(foreach).finally((res) => {
-                  Vue.$parent.isProcessing = false;
+                  Vue.$root.isProcessing = false;
               })
           })
           .catch((error) => {

@@ -10,7 +10,7 @@
             v-bind:key="contributor.name"
             class="contributor-card"
           >
-            <ContributorCard v-if="isStaffRole(contributor.role)" :contributor="contributor" />
+            <CreditCard v-if="isStaffRole(contributor.role)" :user="contributor" />
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
             v-bind:key="contributor.name"
             class="contributor-card"
           >
-            <ContributorCard v-if="isSupporterRole(contributor.role)" :contributor="contributor" />
+            <CreditCard v-if="isSupporterRole(contributor.role)" :user="contributor" />
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
             v-bind:key="contributor.name"
             class="contributor-card"
           >
-            <ContributorCard v-if="isTranslatorRole(contributor.role)" :contributor="contributor" />
+            <CreditCard v-if="isTranslatorRole(contributor.role)" :user="contributor" />
           </div>
         </div>
       </div>
@@ -47,12 +47,12 @@
 <script>
 import axios from "axios";
 
-import ContributorCard from "../components/ContributorCard";
+import CreditCard from "../components/CreditCard";
 
 export default {
   name: "contributors",
   components: {
-    ContributorCard
+    CreditCard
   },
   data() {
     return {
@@ -61,10 +61,17 @@ export default {
     };
   },
   created() {
+
+    const $Vue = this;
+
+    this.$root.isProcessing = true;
+
     axios.get("https://api.premid.app/v2/credits").then(res => {
       var data = res.data;
       data.sort((a, b) => b.rolePosition - a.rolePosition);
-      this.$data.contributors = data;
+      $Vue.$data.contributors = data;
+    }).finally((res) => {
+      $Vue.$root.isProcessing = false;
     });
   },
   methods: {

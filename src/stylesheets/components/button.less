@@ -1,5 +1,4 @@
-button,
-a.button {
+.button {
     user-select: none;
     border: none;
     padding: 10px 20px;
@@ -50,8 +49,7 @@ a.button {
     }
 }
 
-button,
-a.button {
+.button {
     &.button_gray {
         .colored-button(#2c2f33);
     }
@@ -96,10 +94,13 @@ a.button {
         width: 42px;
         height: 42px;
         padding: 0;
+
+        .colored-button(lighten(@background-secondary, 15%));
+
         &[disabled] {
             cursor: not-allowed;
             pointer-events: none;
-            background: lighten(@background-secondary, 10%);
+            background: lighten(@background-primary, 20%);
         }
     }
 

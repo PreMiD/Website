@@ -1,35 +1,18 @@
 <template>
     <div>
         <div class="languages-container">
-            <div class="languages-list"><a href="#" @click="changeLanguage(lang)" :class="{'active': currentLanguage === lang}"
-                    class="languages-list__item" v-for="(lang, i) in langs"
-                    :key="`Lang${i}`">{{ $t(`header.language`, lang) }}</a>
+            <div class="languages-list"><button href="#" @click="setLanguage(lang); $root.$data.switcherVisible = false;" :class="{'active': getCurrentLanguage() === lang}"
+                    class="languages-list__item" v-for="(lang, i) in $root.i18nLanguageList"
+                    :key="`Lang${i}`">{{ $t(`header.language`, lang) }}</button>
             </div>
-            <a href="javascript:void(0);" @click="$parent.switcherVisible = false;" class="languages-container__close"><i class="fas fa-times"/></a>
+            <a href="javascript:void(0);" @click="$root.$data.switcherVisible = false;" class="languages-container__close"><i class="fas fa-times"/></a>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'language-switcher',
-        data() {
-            return {
-                currentLanguage: null,
-                langs: this.$i18n.availableLocales
-            }
-        },
-        methods: {
-            changeLanguage(lang) {
-                this.$parent.switcherVisible = false;
-                
-                this.setLanguage(lang);
-                this.$data.currentLanguage = localStorage.language;
-            }
-        },
-        created() {
-            this.$data.currentLanguage = this.getI18nLanguage();
-        }
+        name: 'language-switcher'
     }
 
 </script>

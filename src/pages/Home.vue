@@ -132,7 +132,7 @@
         presences: [{
             profile: {
               DiscordID: "259407123782434816",
-              badges: ["hypesquad", "balance", "early", "nitro", "boost-lvl2"]
+              badges: ["hypesquad", "balance", "early", "nitro"]
             },
             service_title: "Twitch",
             service_logo: twitch_logo,
@@ -142,7 +142,7 @@
           {
             profile: {
               DiscordID: "515668127829458945",
-              badges: ["balance", "nitro", "boost-lvl2"]
+              badges: ["balance", "nitro", "boost-lvl3"]
             },
             service_title: "YouTube Music",
             service_logo: youtube_music_logo,
@@ -152,7 +152,7 @@
           {
             profile: {
               DiscordID: "223238938716798978",
-              badges: ["brilliance", "nitro", "boost-lvl2"]
+              badges: ["brilliance", "nitro"]
             },
             service_title: "YouTube",
             service_logo: youtube_logo,
@@ -198,7 +198,7 @@
       // Updating user information in presence examples.
       this.$data.presences_display.forEach(function (presence_item, index) {
         // Axios provides Promises that will help us with handling errors and getting data.
-        Vue.$parent.isProcessing = true;
+        Vue.$root.isProcessing = true;
         axios(
             `https://api.premid.app/credits/${presence_item.profile.DiscordID}`
           )
@@ -217,7 +217,7 @@
             Vue.errorMessage(error);
           })
           .finally(() => {
-            Vue.$parent.isProcessing = false;
+            Vue.$root.isProcessing = false;
           });
       });
     },

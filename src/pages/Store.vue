@@ -16,10 +16,10 @@
         </div>
       </div>
     </div>
-    <div class="presence-container">
+    <div v-if="!$root.isProcessing" class="presence-container">
       <listing v-for="presence in paginatedData" v-bind:key="presence.service" :presence="presence" />
     </div>
-    <div class="pagination-container">
+    <div v-if="!$root.isProcessing" class="pagination-container">
       <Pagination v-if="this.$data.presenceSearch == ''" :pageNumber="currentPageNumber" :pageCount="pageCount" />
     </div>
   </div>
@@ -53,7 +53,7 @@
     created() {
       let self = this;
 
-      this.$parent.isProcessing = true;
+      this.$root.isProcessing = true;
 
       // Requesting presences data from our API and adding it into our Vue data.
       axios(`https://api.premid.app/v2/presences`)
@@ -65,7 +65,13 @@
           });
 
           Promise.all(foreach).finally(() => {
-            self.$parent.isProcessing = false;
+            self.$root.isProcessing = false;
+
+            if (self.pageCount < Number(self.$route.query.page) || self.$route.query.page <= -1) {
+              self.$router.push({
+                path: "/notfound"
+              });
+            }
           });
 
         })
@@ -87,7 +93,7 @@
           .sort((a, b) => a.service.localeCompare(b.service));
       },
       currentPageNumber() {
-        if(Number(this.$route.query.page)) {
+        if (Number(this.$route.query.page)) {
           return Number(this.$route.query.page);
         } else {
           return 1;
@@ -100,7 +106,7 @@
         return Math.ceil(length / size);
       },
       paginatedData() {
-        if(this.$data.presenceSearch !== "") return this.filteredPresences;
+        if (this.$data.presenceSearch !== "") return this.filteredPresences;
         let start = (this.currentPageNumber - 1) * this.$data.presencesPerPage,
           end = start + this.$data.presencesPerPage;
         return this.filteredPresences.slice(start, end);

@@ -75,26 +75,32 @@
                 transform: scale(1);
                 transform-origin: 0% 0%;
             }
+
             position: absolute;
             overflow: hidden;
             opacity: 0.8;
             bottom: -120px;
+
             &.card-theme_media {
                 bottom: -15rem;
                 left: 2.5rem;
-                            img {
-                                transform: scale(0.8);
-                            }
+
+                img {
+                    transform: scale(0.8);
+                }
             }
+
             &.card-theme_lang {
                 bottom: -13rem;
 
             }
+
             &.card-theme_opensource {
                 bottom: -4rem;
                 left: 3rem;
 
             }
+
             left: 0;
             right: 0;
             font-size: 14em;
@@ -108,7 +114,6 @@
     }
 
 }
-
 
 .store-card {
     width: 400px;
@@ -127,9 +132,11 @@
     justify-content: flex-start;
     align-items: center;
 
+    z-index: 1;
+
     transform: translateY(0px);
 
-    transition: all 0.1s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     user-select: none;
 
@@ -161,7 +168,7 @@
 
         img {
             max-width: 100px;
-            max-height:100px;
+            max-height: 100px;
             border-radius: 5px;
             filter: drop-shadow(0 4px 0.75rem rgba(0, 0, 0, 0.2));
         }
@@ -186,11 +193,21 @@
         }
 
         h2 {
+            font-size: 1.3em;
             margin: 0;
             overflow: hidden;
             text-overflow: ellipsis;
             -webkit-box-orient: vertical;
 
+            a {
+                display: flex;
+                align-items: center;
+            }
+
+            .fa-stack {
+                margin-left: 4px;
+                font-size: 0.45em;
+            }
         }
 
         p {
@@ -244,7 +261,7 @@
     }
 
     &:hover {
-        box-shadow: 0 6px 42px 0 rgba(9, 10, 10, 0.8);
+        z-index: 2;
         transform: translateY(-8px);
     }
 
@@ -292,6 +309,7 @@
                 font-size: 1.2em;
                 font-weight: bold;
             }
+
             .platform-warning {
                 color: #ED6347;
                 text-shadow: 0 0 12px rgba(237, 99, 71, 0.5);
@@ -610,4 +628,98 @@
             }
         }
     }
+}
+
+.credit-card {
+    margin: 10px 5px;
+    position: relative;
+    width: 250px;
+    height: 50px;
+    border-radius: 6px;
+    padding: 10px;
+    background: rgb(41, 45, 51);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    transition: all 0.15s ease-in-out;
+    user-select: none;
+
+    &__user {
+
+        flex: 0.8;
+        overflow: hidden;
+
+        h1,
+        h2 {
+            margin: 0;
+            margin-left: 5px;
+        }
+
+        h1 {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: normal;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 900;
+            display: inline-block;
+            font-family: 'Discord Font', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+    }
+
+    &__avatar {
+        img {
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        span {
+            z-index: 1;
+
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+
+            display: block;
+            width: 9px;
+            height: 9px;
+
+            border: 2px solid #2C2F33;
+            border-radius: 100%;
+
+            &.online {
+                background: #43B581;
+            }
+
+            &.dnd {
+                background: rgb(240, 71, 71);
+            }
+
+            &.idle {
+                background: rgb(250, 166, 26);
+            }
+
+            &.offline {
+                background: rgb(116, 127, 141);
+            }
+        }
+    }
+
+    &:hover {
+        transform: translateY(-6px);
+        z-index: 6px;
+        box-shadow: 0 2px 74px 0 rgba(0, 0, 0, 0.5);
+    }
+
 }
