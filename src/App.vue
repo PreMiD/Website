@@ -37,8 +37,8 @@
               <a class="partner-logo" href="https://statuspage.io/">
                 <img src="./assets/images/atlassian_statuspage.svg" />
               </a>
-              <a class="partner-logo" href="https://www.transifex.com/">
-                <img src="./assets/images/atlassian_transifex.png" />
+              <a class="partner-logo" href="https://www.crowdin.com/">
+                <img src="./assets/images/crowdin.png" />
               </a>
             </div>
           </div>
