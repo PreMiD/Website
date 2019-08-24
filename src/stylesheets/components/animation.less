@@ -115,3 +115,14 @@
       transform: rotateZ(360deg) scale(1);
     }
   }
+
+[data-aos="sliding-down"] {
+   transform: translateY(-30px);
+   opacity: 0;
+   transition-property: transform, opacity;
+
+   &.aos-animate {
+     transform: translateY(0);
+     opacity: 1;
+   }
+}

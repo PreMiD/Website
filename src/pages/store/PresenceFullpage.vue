@@ -165,13 +165,11 @@
             `https://raw.githubusercontent.com/PreMiD/Presences/master/${Vue.$route.params.presenceName}/dist/${ReadmeFileName}.md`
             );
         }).then((res) => {
-          console.log(res);
           Vue.$data.presenceData.fullDescription = marked(res.data);
         }).finally(() => {
           Vue.$root.isProcessing = false;
         }).catch((error) => {
           if(error.responce == undefined || error.response.status == 404) return;
-          
           Vue.$router.push({
             path: "/store"
           });

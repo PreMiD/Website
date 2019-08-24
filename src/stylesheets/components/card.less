@@ -116,7 +116,7 @@
 }
 
 .store-card {
-    width: 400px;
+    width: 380px;
     height: 200px;
     position: relative;
     background: hsl(216, 7%, 9%);
@@ -195,14 +195,14 @@
         h2 {
             font-size: 1.3em;
             margin: 0;
-            overflow: hidden;
+
             text-overflow: ellipsis;
             -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            display: -webkit-box;
 
-            a {
-                display: flex;
-                align-items: center;
-            }
+            a {}
 
             .fa-stack {
                 margin-left: 4px;
@@ -722,4 +722,48 @@
         box-shadow: 0 2px 74px 0 rgba(0, 0, 0, 0.5);
     }
 
+}
+
+.category-card {
+
+    width: 480px;
+    height: 150px;
+    position: relative;
+    background: hsl(216, 7%, 9%);
+    background-size: cover;
+    box-shadow: 0 4px 32px 0 rgba(9, 10, 10, 0.2);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin: 0.6em;
+    padding: 0.5rem;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    z-index: 1;
+
+    transform: translateY(0px);
+
+    transition: all 0.2s ease-in-out;
+
+    user-select: none;
+    color: white;
+
+    .category__icon {
+        font-size: 2em;
+        padding: 0.5em;
+    }
+
+    .category__data {
+        h2 {
+            margin: 4px 0;
+        }
+
+        p {
+            margin: 4px 0;
+            max-width: 330px;
+            font-size: 0.9em;
+        }
+    }
 }

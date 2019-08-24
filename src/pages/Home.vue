@@ -68,13 +68,13 @@
             fill="currentColor"></path>
         </svg>
       </div>
-      <div class="section-heading">
+      <div data-aos="sliding-down" class="section-heading">
         <h1 class="section-heading__title">{{ $t('home.cards.heading') }}</h1>
         <p class="section-heading__subtitle">
           {{ $t('home.cards.subheading') }}
         </p>
       </div>
-      <div class="feature-cards">
+      <div data-aos="sliding-down" class="feature-cards">
         <Card :title="$t('home.cards.presencesystem.title')"
           :desc="$t('home.cards.presencesystem.explanation')"
           icon="fas fa-puzzle-piece" :image="cardThumbnail1" />

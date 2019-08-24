@@ -1,7 +1,7 @@
 <template>
   <div>
     <title>PreMiD - Store</title>
-    <div class="store-menu">
+    <div v-if="this.$route.params.category !== undefined && !$root.isProcessing" class="store-menu">
       <div class="store-menu__searchbar-container">
         <i class="fas fa-search"></i>
         <input class="searchbar" placeholder="Search" v-model="presenceSearch" />
@@ -16,17 +16,33 @@
         </div>
       </div>
     </div>
-    <div v-if="!$root.isProcessing" class="presence-container">
-      <listing v-for="presence in paginatedData" v-bind:key="presence.service" :presence="presence" />
+
+    <transition name="slide-down" mode="in-out">
+      <div v-if="this.$route.params.category == undefined && !$root.isProcessing" class="container">
+        <h1>Available Categories</h1>
+        <div class="category-container">
+          <CategoryCard :category="category" v-for="category in categories" :key="category.title" />
+        </div>
+      </div>
+      <div v-if="this.$route.params.category !== undefined && !$root.isProcessing" class="container">
+        <h1 v-if="filteredPresences.length <= 0">We can't find that presence <i class="fas fa-sad-tear"></i></h1>
+        <div class="presence-container">
+          <StoreCard v-for="presence in paginatedData" v-bind:key="presence.service" :presence="presence" />
+        </div>
+      </div>
+    </transition>
+  {{presenceSearch}}
+    <div v-if="this.$route.params.category !== undefined && !$root.isProcessing" class="pagination-container">
+      <Pagination v-if="this.$data.presenceSearch == ''" :pageCategory="this.$route.params.category"
+        :pageNumber="currentPageNumber" :pageCount="pageCount" />
     </div>
-    <div v-if="!$root.isProcessing" class="pagination-container">
-      <Pagination v-if="this.$data.presenceSearch == ''" :pageNumber="currentPageNumber" :pageCount="pageCount" />
-    </div>
+
   </div>
 </template>
 
 <script>
-  import Listing from "./../components/Listing.vue";
+  import StoreCard from "./../components/StoreCard.vue";
+  import CategoryCard from "./../components/CategoryCard";
   import Pagination from "./../components/Pagination";
 
   import request from "request";
@@ -39,11 +55,56 @@
   export default {
     name: "store",
     components: {
-      Listing,
+      CategoryCard,
+      StoreCard,
       Pagination
     },
     data() {
       return {
+        categories: {
+          anime: {
+            color: "#F9304B",
+            description: "This category contains presences for websites that provide anime news, videos and etc.",
+            icon: "star",
+            id: "anime",
+            title: "Anime"
+          },
+          games: {
+            color: "#001835",
+            description: "Websites with gamer content or browser games are located here.",
+            icon: "leaf",
+            id: "games",
+            title: "Games"
+          },
+          music: {
+            color: "#39dc64",
+            description: "This category contains presences for websites that have unusual thematics.",
+            icon: "music",
+            id: "music",
+            title: "Music"
+          },
+          socials: {
+            color: "#4786ff",
+            description: "All social networks are located in this category.",
+            icon: "comments",
+            id: "socials",
+            title: "Socials"
+          },
+          videos: {
+            color: "#e41919",
+            description: "This category contains presences for websites that have unusual thematics.",
+            icon: "play",
+            id: "videos",
+            title: "Videos & Streams"
+          },
+          other: {
+            color: "#99aab5",
+            description: "This category contains presences for websites that have unusual thematics.",
+            icon: "box",
+            id: "other",
+            title: "Other"
+          }
+        },
         presences: [],
         nsfw: false,
         presenceSearch: "",
@@ -61,7 +122,22 @@
           let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
 
           var foreach = res.data.map((presence) => {
-            self.$data.presences.push(presence.metadata);
+
+            var presenceTags = presence.metadata.tags;
+
+            if (presenceTags.includes("anime")) {
+              presence.metadata.category = "anime";
+              self.$data.presences.push(presence.metadata);
+            } else if (presenceTags.includes("video") || presenceTags.includes("streaming")) {
+              presence.metadata.category = "videos";
+              self.$data.presences.push(presence.metadata);
+            } else if (presenceTags.includes("music") || presenceTags.includes("audio")) {
+              presence.metadata.category = "music";
+              self.$data.presences.push(presence.metadata);
+            } else {
+              presence.metadata.category = "other";
+              self.$data.presences.push(presence.metadata);
+            }
           });
 
           Promise.all(foreach).finally(() => {
@@ -86,10 +162,11 @@
             return presence.service
               .toLowerCase()
               .includes(this.presenceSearch.toLowerCase());
-          })
-          .filter(presence =>
+          }).filter(presence =>
             this.$data.nsfw ? true : !presence.tags.includes("nsfw")
-          )
+          ).filter(presence => {
+            return presence.category == this.$route.params.category;
+          })
           .sort((a, b) => a.service.localeCompare(b.service));
       },
       currentPageNumber() {
@@ -102,6 +179,10 @@
       pageCount() {
         let length = this.filteredPresences.length,
           size = this.$data.presencesPerPage;
+
+        if (length <= 0 && this.$route.params.category) this.$router.push({
+          path: "/notfound"
+        });
 
         return Math.ceil(length / size);
       },

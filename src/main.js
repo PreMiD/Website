@@ -3,6 +3,14 @@ import App from "./App";
 
 import "./stylesheets/root.less";
 
+// Animations on scroll.
+import AOS from "aos";
+import "../node_modules/aos/dist/aos.css";
+
+AOS.init({
+  offset: 100,
+});
+
 //* Importing plugins for Vue.
 import router from "./router.js";
 import Debug from "./plugins/Debug";

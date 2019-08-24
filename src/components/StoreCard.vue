@@ -1,6 +1,6 @@
 <template>
   <div class="presence-container__item">
-    <div
+    <div data-aos="sliding-down"
       class="store-card"
       @mouseover="card_hovered = true"
       @mouseleave="card_hovered = false"
@@ -12,7 +12,7 @@
       <div class="store-card__service-info">
         <div class="store-card__service">
           <h2>
-            <router-link :key="presenceLinkName" :to="`/store/${presenceLinkName}`">
+            <router-link :key="presenceLinkName" :to="`/store/presences/${presenceLinkName}`">
               {{ presence.service }}
               <span v-if="isHot" class="fa-stack" content="This presence is very popular around users." v-tippy>
   <i class="fas fa-circle fa-stack-2x"></i>
@@ -81,7 +81,7 @@ import PresenceMixin from "./mixins/Presence";
 const tinycolor = require("tinycolor2");
 
 export default {
-  name: "listing",
+  name: "StoreCard",
   props: ["presence", "submit", "nsfw"],
   mixins: [PresenceMixin],
   data() {

@@ -11,7 +11,6 @@
 		color: white;
 		height: 50vh;
 	}
-
 }
 
 .content {
@@ -46,6 +45,7 @@
 				font-size: 3.5em;
 				font-family: "Discord Font";
 				text-transform: uppercase;
+				color: @accent-primary;
 				margin: 0;
 			}
 
@@ -74,15 +74,29 @@
 }
 
 .presence-container {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	position: relative;
-
 	max-width: 1600px;
-	margin: 1em auto;
+	margin: 2em auto;
+	display: flex;
+	align-items: flex-start;
+	position: relative;
 	justify-content: center;
+	flex-wrap: wrap;
 }
+
+.category-container {
+	margin: 5em auto;
+	display: flex;
+	align-items: flex-start;
+	position: relative;
+	justify-content: center;
+	flex-wrap: wrap;
+
+	.category-card {
+
+	}
+
+}
+
 
 .section-heading {
 	* {
@@ -361,12 +375,13 @@
 
 .contributor-container {
 	margin-top: 25px;
-	margin-left: 5%;
-	width: 90%;
+	max-width: 1400px;
+	margin: 0 auto;
 
 	.contributor-inner {
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
 	}
 }
 

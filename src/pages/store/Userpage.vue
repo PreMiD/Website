@@ -11,7 +11,7 @@
         <div class="userpage__presences">
             <h1>User presences</h1>
             <div class="presence-container">
-            <listing
+            <StoreCard
                 v-for="presence of userpresences"
                 v-bind:key="presence.service"
                 :presence="presence"
@@ -25,13 +25,13 @@
 
 <script>
 import axios from "axios";
-import Listing from "../../components/Listing";
+import StoreCard from "../../components/StoreCard";
 import { Promise, isPromise } from 'q';
 
 export default {
   name: "userpage",
   components: {
-      Listing
+      StoreCard
   },
   data() {
     return {
