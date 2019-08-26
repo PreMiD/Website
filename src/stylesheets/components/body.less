@@ -8,6 +8,9 @@ body {
 	height: 100%;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
+
+	  scrollbar-color: @background-primary @background-secondary;
+	  scrollbar-width: thin;
 }
 
 #app {
@@ -116,7 +119,6 @@ a {
 
 ::-webkit-scrollbar {
 	width: 12px;
-	height: 0.6rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -125,12 +127,12 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-	border: 3px solid @background-secondary;
+	border: 4px solid @background-secondary;
 	border-radius: 20px;
-	background: @accent-primary;
+	background: @background-primary;
 
 	&:hover {
-		background: lighten(@accent-secondary, 3%);
+		background: lighten(@background-primary, 5%);
 	}
 }
 
