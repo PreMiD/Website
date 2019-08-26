@@ -199,19 +199,14 @@
       this.$data.presences_display.forEach(function (presence_item, index) {
         // Axios provides Promises that will help us with handling errors and getting data.
         Vue.$root.isProcessing = true;
-        axios(
-            `https://api.premid.app/credits/${presence_item.profile.DiscordID}`
-          )
+        axios(`https://api.premid.app/credits/${presence_item.profile.DiscordID}`)
           .then(function (res) {
             let data = res.data;
-            // TODO: Remove dirty code from here.
-            Vue.$set(
-              Vue.$data.presences_display[index].profile, "image", data.avatar
-            );
-            Vue.$set(
-              Vue.$data.presences_display[index].profile, "name", data.name
-            );
-            Vue.$set(Vue.$data.presences_display[index].profile, "id", data.tag);
+            let presence = Vue.$data.presences_display[index];
+
+            Vue.$set(presence.profile, "image", data.avatar);
+            Vue.$set(presence.profile, "name", data.name);
+            Vue.$set(presence.profile, "id", data.tag);
           })
           .catch(function (error) {
             Vue.errorMessage(error);

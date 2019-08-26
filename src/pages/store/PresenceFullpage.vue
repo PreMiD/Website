@@ -133,27 +133,19 @@
 
       this.$root.isProcessing = true;
 
-      //TODO: Optimize code for a better readability.
       await axios(`https://api.premid.app/v2/presences/${this.$route.params.presenceName}`)
         .then(res => {
           Vue.$data.presenceData = res.data.metadata;
+          Array.isArray(Vue.$data.presenceData.url) ? Vue.$data.presenceURLs = Vue.$data.presenceData.url : Vue.$data.presenceURLs = Array.of(Vue.$data.presenceData.url);
+          if (this.isPresenceInstalled(Vue.$data.presenceData.service)) Vue.$data.isInstalled = true;
 
-          if (Array.isArray(Vue.$data.presenceData.url)) {
-            Vue.$data.presenceURLs = Vue.$data.presenceData.url;
-          } else {
-            Vue.$data.presenceURLs = Array.of(Vue.$data.presenceData.url);
-          }
-
-          if (this.isPresenceInstalled(Vue.$data.presenceData.service)) {
-            Vue.$data.isInstalled = true;
-          }
         }).catch((error) => {
           Vue.$router.push({
             path: "/store"
           });
           return;
         }).then(() => {
-            return axios(`https://api.premid.app/credits/${Vue.$data.presenceData.author.id}`);
+          return axios(`https://api.premid.app/credits/${Vue.$data.presenceData.author.id}`);
         }).then((res) => {
           Vue.$data.presenceAuthor = res.data;
         }).then(() => {
@@ -163,13 +155,13 @@
             "README_" + Vue.$root.getCurrentLanguage();
           return axios(
             `https://raw.githubusercontent.com/PreMiD/Presences/master/${Vue.$route.params.presenceName}/dist/${ReadmeFileName}.md`
-            );
+          );
         }).then((res) => {
           Vue.$data.presenceData.fullDescription = marked(res.data);
         }).finally(() => {
           Vue.$root.isProcessing = false;
         }).catch((error) => {
-          if(error.responce == undefined || error.response.status == 404) return;
+          if (error.responce == undefined || error.response.status == 404) return;
           Vue.$router.push({
             path: "/store"
           });
@@ -177,7 +169,7 @@
         });
     },
     updated() {
-      if(this.$root.isProcessing == true) return;
+      if (this.$root.isProcessing == true) return;
       if (this.isPresenceInstalled(this.$data.presenceData.service)) {
         this.$data.isInstalled = true;
       }

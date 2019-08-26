@@ -52,8 +52,6 @@
           <div class="grid__section">
             <p class="section__title">{{ $t(`footer.supportus.heading`) }}</p>
             <div>
-              <!-- // TODO finish after V2
-              <a v-on:click="openNavigation()">Donate</a>-->
               <a href="https://patreon.com/timeraa/">{{ $t(`footer.supportus.donate`) }}</a>
               <a href="https://github.com/PreMiD/">{{ $t(`footer.supportus.contribute`) }}</a>
               <a href="https://discord.premid.app/">{{ $t(`footer.supportus.design`) }}</a>

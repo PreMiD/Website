@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section>
     <title>PreMiD - Store</title>
     <div v-if="this.$route.params.category !== undefined && !$root.isProcessing" class="store-menu">
       <div class="store-menu__searchbar-container">
@@ -37,7 +37,7 @@
         :pageNumber="currentPageNumber" :pageCount="pageCount" />
     </div>
 
-  </div>
+  </section>
 </template>
 
 <script>
@@ -91,7 +91,7 @@
             title: "Socials"
           },
           videos: {
-            color: "#e41919",
+            color: "red",
             description: "This category contains presences for websites that have unusual thematics.",
             icon: "play",
             id: "videos",

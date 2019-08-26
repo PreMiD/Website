@@ -132,8 +132,7 @@
       if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
       if (ua.includes("Windows")) platform_temp = "windows";
 
-      // TODO: Find better implementation.
-      // Centering the current platform in array. Only works if array has 3 items.
+      //* Centering the current platform in array. Only works if array has 3 items.
       platform_order.splice(platform_order.indexOf(platform_temp), 1);
       platform_order.splice(1, 0, platform_temp);
 

@@ -726,8 +726,8 @@
 
 .category-card {
 
-    width: 480px;
-    height: 150px;
+    width: 495px;
+    height: 170px; 
     position: relative;
     background: hsl(216, 7%, 9%);
     background-size: cover;
@@ -749,6 +749,11 @@
 
     user-select: none;
     color: white;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 4px 42px 0 rgba(9, 10, 10, 0.4);
+    }
 
     .category__icon {
         font-size: 2em;
