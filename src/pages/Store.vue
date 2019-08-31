@@ -9,7 +9,7 @@
           <div class="nsfw_toggle pmd_checkbox">
             <p>NSFW</p>
             <label>
-              <input type="checkbox" :value="nsfw" @change="nsfw =!nsfw" />
+              <input type="checkbox" :checked="nsfw" @change="nsfw =!nsfw" />
               <span ref="checkbox" class="checkbox-container"></span>
             </label>
           </div>
