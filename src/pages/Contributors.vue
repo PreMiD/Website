@@ -59,15 +59,20 @@
       });
     },
     methods: {
-      isStaffRole(roleName) {
-        var roleName = roleName.toLowerCase();
-        if (roleName == 'developer' || roleName == 'ticket manager' || roleName == 'moderator' || roleName ==
-          'jr. moderator' || roleName == 'head moderator') {
-          return true;
-        } else {
-          return false;
-        }
-      },
+    isStaffRole(roleName) {
+      var roleName = roleName.toLowerCase();
+      if (
+        roleName == "core developer" ||
+        roleName == "administrator" ||
+        roleName == "ticket manager" ||
+        roleName == "moderator" ||
+        roleName == "jr. moderator"
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
       isSupporterRole(roleName) {
         var roleName = roleName.toLowerCase();
         if (roleName == 'donator' || roleName == 'patreon' || roleName == 'supporter') {
