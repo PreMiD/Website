@@ -2,7 +2,7 @@
   <div>
     <title>PreMiD - Contributors</title>
     <section class="contributors">
-      <h1 class="section-header">{{ $t(`contributors.headings.coreteam`) }}</h1>
+      <h1 class="section-header">{{ $t(`contributors.headings.staff`) }}</h1>
       <div class="contributor-container">
         <div v-for="(contributor, index) of contributors" v-bind:key="contributor.name" class="contributor-card"
           v-if="isStaffRole(contributor.role)">
