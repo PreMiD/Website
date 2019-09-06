@@ -157,18 +157,6 @@ export default {
   mounted() {
     // Vue hook to call it inside JS functions.
     var self = this;
-    // Checking if user has the extension installed.
-    setTimeout(function() {
-      if (self.extensionInstalled()) {
-        self.$root.extension_installed = true;
-        self.$noty.success(self.$t(`store.message.success`));
-        self.debugMessage("Extension installed, unlocking functions...");
-      } else {
-        self.$root.extension_installed = false;
-        self.$noty.error(self.$t(`store.message.error`));
-        self.errorMessage("Extension not found, locking functions...");
-      }
-    }, 1000);
 
     // Firing event to get response from Extension with installed presences data.
     var event = new CustomEvent("PreMiD_GetPresenceList", {});
