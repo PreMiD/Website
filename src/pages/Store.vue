@@ -1,7 +1,7 @@
 <template>
   <section>
     <title>PreMiD - Store</title>
-    <div v-if="this.$route.params.category !== undefined && !$root.isProcessing" class="store-menu">
+    <div v-if="!$root.isProcessing" class="store-menu">
       <div class="store-menu__searchbar-container">
         <i class="fas fa-search"></i>
         <input class="searchbar" placeholder="Search" v-model="presenceSearch" />
@@ -18,14 +18,17 @@
     </div>
 
     <transition name="slide-down" mode="in-out">
-      <div v-if="this.$route.params.category == undefined && !$root.isProcessing" class="container">
+      <div
+        v-if="this.presenceSearch == '' && this.$route.params.category == undefined && !$root.isProcessing"
+        class="container"
+      >
         <h1>Available Categories</h1>
         <div class="category-container">
           <CategoryCard :category="category" v-for="category in categories" :key="category.title" />
         </div>
       </div>
       <div
-        v-if="this.$route.params.category !== undefined && !$root.isProcessing"
+        v-if="(this.presenceSearch != '' || this.$route.params.category !== undefined) && !$root.isProcessing"
         class="container"
       >
         <h1 v-if="filteredPresences.length <= 0">
@@ -41,7 +44,6 @@
         </div>
       </div>
     </transition>
-    {{presenceSearch}}
     <div
       v-if="this.$route.params.category !== undefined && !$root.isProcessing"
       class="pagination-container"
@@ -64,9 +66,7 @@ import Pagination from "./../components/Pagination";
 import request from "request";
 
 import axios from "axios";
-import {
-  Promise
-} from 'q';
+import { Promise } from "q";
 
 export default {
   name: "store",
@@ -80,21 +80,24 @@ export default {
       categories: {
         anime: {
           color: "#F9304B",
-          description: "This category contains presences for websites that provide anime news, videos and etc.",
+          description:
+            "This category contains presences for websites that provide anime news, videos and etc.",
           icon: "star",
           id: "anime",
           title: "Anime"
         },
         games: {
           color: "#001835",
-          description: "Websites with gamer content or browser games are located here.",
+          description:
+            "Websites with gamer content or browser games are located here.",
           icon: "leaf",
           id: "games",
           title: "Games"
         },
         music: {
           color: "#39dc64",
-          description: "This category contains presences for websites that have unusual thematics.",
+          description:
+            "This category contains presences for websites that have unusual thematics.",
           icon: "music",
           id: "music",
           title: "Music"
@@ -108,14 +111,16 @@ export default {
         },
         videos: {
           color: "red",
-          description: "This category contains presences for websites that have unusual thematics.",
+          description:
+            "This category contains presences for websites that have unusual thematics.",
           icon: "play",
           id: "videos",
           title: "Videos & Streams"
         },
         other: {
           color: "#99aab5",
-          description: "This category contains presences for websites that have unusual thematics.",
+          description:
+            "This category contains presences for websites that have unusual thematics.",
           icon: "box",
           id: "other",
           title: "Other"
@@ -134,25 +139,27 @@ export default {
 
     // Requesting presences data from our API and adding it into our Vue data.
     axios(`https://api.premid.app/v2/presences`)
-      .then(function (res) {
+      .then(function(res) {
         let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
 
-        var foreach = res.data.map((presence) => {
+        var foreach = res.data.map(presence => {
           self.$data.presences.push(presence.metadata);
         });
 
         Promise.all(foreach).finally(() => {
           self.$root.isProcessing = false;
 
-          if (self.pageCount < Number(self.$route.query.page) || self.$route.query.page <= -1) {
+          if (
+            self.pageCount < Number(self.$route.query.page) ||
+            self.$route.query.page <= -1
+          ) {
             self.$router.push({
               path: "/notfound"
             });
           }
         });
-
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.error(error);
       });
   },
@@ -163,10 +170,14 @@ export default {
           return presence.service
             .toLowerCase()
             .includes(this.presenceSearch.toLowerCase());
-        }).filter(presence =>
+        })
+        .filter(presence =>
           this.$data.nsfw ? true : !presence.tags.includes("nsfw")
-        ).filter(presence => {
-          return presence.category == this.$route.params.category;
+        )
+        .filter(presence => {
+          if (this.$route.params.category !== undefined)
+            return presence.category == this.$route.params.category;
+          else return true;
         })
         .sort((a, b) => a.service.localeCompare(b.service));
     },
@@ -181,9 +192,10 @@ export default {
       let length = this.filteredPresences.length,
         size = this.$data.presencesPerPage;
 
-      if (length <= 0 && this.$route.params.category) this.$router.push({
-        path: "/notfound"
-      });
+      if (length <= 0 && this.$route.params.category)
+        this.$router.push({
+          path: "/notfound"
+        });
 
       return Math.ceil(length / size);
     },
@@ -196,7 +208,6 @@ export default {
   },
   methods: {}
 };
-
 </script>
 
 <style lang="less" scoped>
