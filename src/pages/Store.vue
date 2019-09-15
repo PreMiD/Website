@@ -296,7 +296,7 @@ export default {
     margin: 0;
     margin-right: 10px;
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: bold;
   }
 }
 
