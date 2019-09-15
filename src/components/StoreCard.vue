@@ -1,6 +1,7 @@
 <template>
   <div class="presence-container__item">
-    <div data-aos="sliding-down"
+    <div
+      data-aos="sliding-down"
       class="store-card"
       @mouseover="card_hovered = true"
       @mouseleave="card_hovered = false"
@@ -14,10 +15,18 @@
           <h2>
             <router-link :key="presenceLinkName" :to="`/store/presences/${presenceLinkName}`">
               {{ presence.service }}
-              <span v-if="isHot" class="fa-stack" content="This presence is very popular around users." v-tippy>
-  <i class="fas fa-circle fa-stack-2x"></i>
-  <i :style="`color: ${presence.color};`" class="fas fa-fire-alt fa-stack-1x fa-inverse"></i>
-</span>
+              <span
+                v-if="isHot"
+                class="fa-stack"
+                content="This presence is very popular around users."
+                v-tippy
+              >
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i
+                  :style="`color: ${presence.color};`"
+                  class="fas fa-fire-alt fa-stack-1x fa-inverse"
+                ></i>
+              </span>
             </router-link>
           </h2>
           <p>
@@ -115,24 +124,30 @@ export default {
     }
   },
   computed: {
-      isHot() {
-        if(this.getHotPresences().includes(this.presence.service.toLowerCase())) {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      presenceGradientColor() {
-          return tinycolor(this.presence.color).darken(45).toHexString();
-      },
-      presenceShadowColor() {
-        if(this.$data.card_hovered) {
-          return tinycolor(this.presence.color).setAlpha(.3).toRgbString();
-        } else {
-          return "transparent";
-        }
+    isHot() {
+      if (
+        this.getHotPresences().includes(this.presence.service.toLowerCase())
+      ) {
+        return true;
+      } else {
+        return false;
       }
-  },
+    },
+    presenceGradientColor() {
+      return tinycolor(this.presence.color)
+        .darken(45)
+        .toHexString();
+    },
+    presenceShadowColor() {
+      if (this.$data.card_hovered) {
+        return tinycolor(this.presence.color)
+          .setAlpha(0.3)
+          .toRgbString();
+      } else {
+        return "transparent";
+      }
+    }
+  }
 };
 </script>
 

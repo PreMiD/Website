@@ -6,7 +6,7 @@ import LanguageSwitcher from "../components/LanguageSwitcher.vue";
 import LanguageNotification from "../components/LanguageNotification.vue";
 
 export default {
-  install(Vue, options) {
+  install(Vue) {
     Vue.component("LanguageSwitcher", LanguageSwitcher);
     Vue.component("LanguageNotification", LanguageNotification);
 
@@ -33,8 +33,8 @@ export default {
           localStorage.setItem("language", lang);
           this.$i18n.locale = lang;
           return true;
-        },
-        },
+        }
+      }
     });
-  },
+  }
 };

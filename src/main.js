@@ -8,7 +8,7 @@ import AOS from "aos";
 import "../node_modules/aos/dist/aos.css";
 
 AOS.init({
-  offset: 100,
+  offset: 100
 });
 
 //* Importing plugins for Vue.
@@ -30,7 +30,7 @@ Vue.use(VueTippy, {
   theme: "discord",
   arrow: true,
   animation: "scale",
-  duration: [100, 100],
+  duration: [100, 100]
 });
 Vue.component("tippy", TippyComponent);
 
@@ -38,7 +38,7 @@ Vue.use(VueNoty, {
   timeout: 1000,
   progressBar: false,
   layout: "topRight",
-  theme: "premid",
+  theme: "premid"
 });
 
 Vue.use(Loader);
@@ -56,7 +56,7 @@ new Vue({
     switcherVisible: false,
     isProcessing: false,
     extensionInstalled: false,
-    presenceList: "",
+    presenceList: ""
   },
-  render: h => h(App),
+  render: h => h(App)
 }).$mount("#app");

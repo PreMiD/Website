@@ -63,8 +63,6 @@ import StoreCard from "./../components/StoreCard.vue";
 import CategoryCard from "./../components/CategoryCard";
 import Pagination from "./../components/Pagination";
 
-import request from "request";
-
 import axios from "axios";
 import { Promise } from "q";
 

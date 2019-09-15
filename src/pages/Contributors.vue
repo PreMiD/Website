@@ -61,18 +61,20 @@ export default {
     };
   },
   created() {
-
     const $Vue = this;
 
     this.$root.isProcessing = true;
 
-    axios.get("https://api.premid.app/v2/credits").then(res => {
-      var data = res.data;
-      data.sort((a, b) => b.rolePosition - a.rolePosition);
-      $Vue.$data.contributors = data;
-    }).finally((res) => {
-      $Vue.$root.isProcessing = false;
-    });
+    axios
+      .get("https://api.premid.app/v2/credits")
+      .then(res => {
+        var data = res.data;
+        data.sort((a, b) => b.rolePosition - a.rolePosition);
+        $Vue.$data.contributors = data;
+      })
+      .finally(res => {
+        $Vue.$root.isProcessing = false;
+      });
   },
   methods: {
     isStaffRole(roleName) {

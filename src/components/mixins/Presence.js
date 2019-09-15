@@ -1,7 +1,7 @@
 var PresenceMixin = {
   data() {
     return {
-      isInstalled: false,
+      isInstalled: false
     };
   },
   methods: {
@@ -9,7 +9,7 @@ var PresenceMixin = {
       this.debugMessage("Trying to add " + name + "...");
 
       var event = new CustomEvent("PreMiD_AddPresence", {
-        detail: name,
+        detail: name
       });
       window.dispatchEvent(event);
 
@@ -20,7 +20,7 @@ var PresenceMixin = {
       this.debugMessage("Trying to remove " + name + "...");
 
       var event = new CustomEvent("PreMiD_RemovePresence", {
-        detail: name,
+        detail: name
       });
       window.dispatchEvent(event);
 
@@ -53,9 +53,11 @@ var PresenceMixin = {
         "GitHub",
         "Dream Animes"
       ];
-      return hotPresencesArray.map((item) => {return item.toLowerCase()});
-    },
-  },
+      return hotPresencesArray.map(item => {
+        return item.toLowerCase();
+      });
+    }
+  }
 };
 
 export default PresenceMixin;

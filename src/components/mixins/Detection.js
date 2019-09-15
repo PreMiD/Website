@@ -9,7 +9,7 @@ var DetectionMixin = {
       } else {
         return false;
       }
-    },
+    }
   },
   mounted() {
     // Vue hook to call it inside JS functions.
@@ -37,7 +37,7 @@ var DetectionMixin = {
     // Firing event to get response from Extension with installed presences data.
     var event = new CustomEvent("PreMiD_GetPresenceList", {});
     window.dispatchEvent(event);
-  },
+  }
 };
 
 export default DetectionMixin;
