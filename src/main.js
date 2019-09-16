@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App";
 
+import "../public/static/assets/fonts/Inter/stylesheet.css";
 import "./stylesheets/root.less";
 
 // Animations on scroll.

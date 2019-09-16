@@ -11,8 +11,8 @@
           <ol>
             <li>
               <p>
-                {{ $t('downloads.instructions.step.1') }} [
-                <a href="#app-downloads">
+                {{ $t('downloads.instructions.step.1') }} 
+                [<a href="#app-downloads">
                   <i class="fas fa-arrow-down" />
                 </a>]
               </p>
@@ -22,8 +22,8 @@
             </li>
             <li>
               <p>
-                {{ $t('downloads.instructions.step.3') }} [
-                <a href="#ext-downloads">
+                {{ $t('downloads.instructions.step.3') }} 
+                [<a href="#ext-downloads">
                   <i class="fas fa-arrow-down" />
                 </a>]
               </p>

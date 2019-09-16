@@ -11,14 +11,12 @@
           <p>{{ $t(`home.introduction.catchphrase`) }}</p>
         </div>
         <div class="heading__button-group">
-          <button
-            v-on:click="openInNewTab('https://github.com/PreMiD/PreMiD')"
-            class="button button_black"
-          >
-            <i class="fab fa-github"></i>SOURCE CODE
-          </button>
+          <a class="button button_black button_uppercase" href="https://github.com/PreMiD" target="_blank">
+            <i class="fab fa-github"></i>
+            SOURCE CODE
+          </a>
           <router-link class="button button_uppercase" replace to="/downloads">
-            <i class="fas fa-download"></i>
+            <i class="fas fa-file-export"></i>
             {{ $t(`home.introduction.button.downloads`) }}
           </router-link>
         </div>
@@ -56,7 +54,7 @@
               <div class="info__header">{{ $t(`home.examples.playingagame`) }}</div>
               <div class="info__game">
                 <div class="game__icon">
-                  <img class="game" :src="presence.service_logo" />
+                  <img class="game" alt="./../assets/images/logo-big.svg" :src="presence.service_logo" v-tippy="{content: 'PreMiD v2.0'}"/>
                   <img
                     class="status-icon"
                     src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
