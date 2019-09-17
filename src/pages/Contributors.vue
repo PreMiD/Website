@@ -23,13 +23,6 @@
           <ContributorCard :contributor="contributor" />
         </div>
       </div>
-      <h1 class="section-header">{{ $t(`contributors.headings.contributors`) }}</h1>
-      <div class="contributor-container">
-        <div v-for="(contributor, index) of contributors" v-bind:key="contributor.name" class="contributor-card"
-          v-if="isContributorRole(contributor.role)">
-          <ContributorCard :contributor="contributor" />
-        </div>
-      </div>
     </section>
   </div>
 </template>
@@ -79,14 +72,6 @@
       isTranslatorRole(roleName) {
         var roleName = roleName.toLowerCase();
         if (roleName == 'translator' || roleName == 'proofreader') {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      isContributorRole(roleName) {
-        var roleName = roleName.toLowerCase();
-        if (roleName == 'contributor' || roleName == 'designer') {
           return true;
         } else {
           return false;
