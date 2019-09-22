@@ -9,10 +9,17 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
+  scroll-behavior: smooth;
+  quotes: "“" "”";
+
   font-weight: 500;
 
   scrollbar-color: @background-primary @background-secondary;
   scrollbar-width: thin;
+}
+
+&:focus {
+  outline: none;
 }
 
 #app {
@@ -35,6 +42,13 @@ body {
 header {
   z-index: 10000;
   width: 100%;
+}
+
+.text-highlight {
+  color: #b3aeff;
+	background: linear-gradient(30deg, @accent-primary, #b3aeff);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 #footer {
@@ -159,7 +173,7 @@ img {
 
 .tippy-popper[x-placement^="top"] .tippy-tooltip.discord-theme .tippy-arrow {
   border-top-color: black;
-  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(0 2px 16px 0 rgba(0, 0, 0, 0.5));
 }
 
 .tippy-tooltip.discord-theme .tippy-content {

@@ -8,9 +8,7 @@ import "./stylesheets/root.less";
 import AOS from "aos";
 import "../node_modules/aos/dist/aos.css";
 
-AOS.init({
-  offset: 100
-});
+AOS.init({ offset: 350 });
 
 //* Importing plugins for Vue.
 import router from "./router.js";

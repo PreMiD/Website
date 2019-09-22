@@ -1,7 +1,7 @@
 //* Hack for Gecko engine that will help fix styles for it.
 @-moz-document url-prefix() {
     .navbar__container .navbar .navbar__logotype .logotype__title {
-        top: 1px; 
+        top: 1px;
     }
 }
 
@@ -10,7 +10,7 @@
  * Phone & Tablet screen
  * 
  */
-@media only screen and (max-width: 870px) {
+@media only screen and (max-width: 1200px) {
     body {
         .on-desktop {
             display: none !important;
@@ -18,6 +18,7 @@
 
         .feature-cards {
             flex-wrap: wrap;
+            flex-flow: wrap;
 
             .feature-cards__card {
                 width: 250px;
@@ -39,6 +40,7 @@
 
         .promo-container {
             flex-wrap: wrap;
+            flex-flow: wrap;
             justify-content: center;
         }
 
@@ -76,56 +78,80 @@
 
         .language-notify {
             flex-wrap: wrap;
+
             .language-notify__content {
                 flex: 1 1 0;
                 margin: 0;
             }
+
             .language-notify__buttons {
                 margin: 1rem auto;
             }
         }
     }
 
-        .dl-container .dl-container__section_header {
-            padding-top: 1em;
+    .dl-container .dl-container__section_header {
+        padding-top: 1em;
+    }
+
+    .section-heading .section-heading__title {
+        font-size: 2.5rem;
+    }
+
+    .section-heading .section-heading__subtitle {
+        font-size: 1rem;
+    }
+
+    .dl-container .dl-container__header {
+        flex-wrap: wrap;
+
+        >div {
+            margin-bottom: 1em;
         }
 
-        .section-heading .section-heading__title {
-            font-size: 2.5rem;
-        }
+        .header__content {
+            width: 100%;
 
-        .section-heading .section-heading__subtitle {
-            font-size: 1rem;
-        }
-
-        .dl-container .dl-container__header {
-            flex-wrap: wrap;
-
-            >div {
-                margin-bottom: 1em;
+            h1 {
+                font-size: 46px;
             }
 
-            .header__content {
-                width: 100%;
-
-                h1 {
-                    font-size: 46px;
-                }
-
-                p {
-                    font-size: 18px;
-                }
-
+            p {
+                font-size: 18px;
             }
 
-            .header__steps {
-                width: 100%;
-            }
         }
 
-        .dl-container__cards {
-            flex-wrap: wrap;
+        .header__steps {
+            width: 100%;
         }
+    }
+
+    .dl-container__cards {
+        flex-wrap: wrap;
+    }
+
+    .section-container {
+
+        min-height: 600px;
+
+        .section-container__details {
+            font-size: 0.7em;
+        }
+
+        .section-container__promo {
+
+            .section-container__promo--image1 {
+                max-width: 400px;
+            }
+        }
+    }
+
+    .button.button_large {
+            padding: 10px 20px;
+            font-size: 1em;
+    }
+    
 }
 
 /**
@@ -170,7 +196,7 @@
         width: auto;
         margin: 1em;
     }
-    
+
     .fullpresence-container {
 
         .fullpresence__content h2.content__title {
@@ -180,7 +206,7 @@
         .fullpresence__header {
             padding: 2em;
             margin: 1rem 0;
-        
+
             .header__title h1 {
                 font-size: 24px;
             }
@@ -194,22 +220,24 @@
         .fullpresence__content {
             flex-wrap: wrap;
             justify-content: center;
-            .content__description, .content__info {
+
+            .content__description,
+            .content__info {
                 flex: 1;
-                    margin: 0.5em 0;
+                margin: 0.5em 0;
             }
 
             .content__description {
                 margin-right: 0;
             }
-            
+
             .content__info {
                 margin-left: 0;
             }
         }
     }
 
-        body .store-card {
+    body .store-card {
         width: 280px;
         height: 120px;
 
@@ -230,10 +258,42 @@
             margin: 5px 1em;
         }
     }
+
+    .section-heading .section-heading__title {
+        font-size: 2em;
+    }
+
+    .features-container {
+        padding: 0;
+    }
+    
+    .section-container {
+
+        min-height: 600px;
+        flex-flow: column-reverse;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        &_reverse {
+            flex-flow: column;
+        }
+
+        .section-container__details {
+            width: 100%;
+            font-size: 0.6em;
+            margin-bottom: 3em;
+        }
+
+        .section-container__promo {
+            .section-container__promo--image1, video {
+                max-width: 300px;
+            }
+        }
+    }
 }
 
 // Desktop
-@media (min-width: 870px) {
+@media (min-width: 1200px) {
     .on-mobile {
         display: none !important;
     }
