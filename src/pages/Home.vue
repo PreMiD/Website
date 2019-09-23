@@ -78,7 +78,7 @@
         <div data-aos="sliding-left" class="section-container__details">
           <h1>Find <span class="text-highlight">your</span> presence.</h1>
           <p>{{ $t('home.cards.presencesystem.explanation') }}</p>
-          <p><a class="button button_large" href="/store">Open store</a></p> 
+          <p><a class="button button_large" href="/store">Open store</a></p>
         </div>
         <div data-aos="sliding-right" class="section-container__promo">
           <img class="section-container__promo--image1" :src="cardThumbnail1">
@@ -86,7 +86,7 @@
       </div>
       <div class="container section-container section-container_reverse">
         <div data-aos="sliding-down" class="section-container__details">
-          <h1>Simple user interface.</h1> 
+          <h1>Simple user interface.</h1>
           <p>Tired of complicated user interfaces? That's why we created a simple and useful interface with only important functions included:</p>
           <ul>
             <li><p>App and Extension settings.</p></li>
@@ -110,11 +110,11 @@
           <img class="section-container__promo--image1" :src="cardThumbnail3">
         </div>
       </div> -->
-      <div class="container section-container"> 
+      <div class="container section-container">
         <div data-aos="sliding-left" class="section-container__details">
           <h1>Quick support.</h1>
           <p>Something is glitching or sending you tons of errors? We will help you to get rid of that on our Discord sever, we also developed a support system that will make your life easier.</p>
-          <p><a class="button button_large" href="/store">Visit our server</a></p> 
+          <p><a class="button button_large" href="https://discord.gg/premid">Visit our server</a></p>
         </div>
         <div data-aos="sliding-down" class="section-container__promo">
           <img class="section-container__promo--image1" :src="cardThumbnail4">
