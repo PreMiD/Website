@@ -6,11 +6,11 @@
         <div data-aos="sliding-down" class="heading__logo">
           <img src="./../assets/images/logo.gif" />
         </div>
-        <div data-aos="sliding-down" class="heading__text">
+        <div class="heading__text">
           <h1>PreMiD</h1>
           <p>{{ $t(`home.introduction.catchphrase`) }}</p>
         </div>
-        <div data-aos="sliding-up" class="heading__button-group">
+        <div class="heading__button-group">
           <a class="button button_uppercase" href="#features">
             <i class="fas fa-stream"></i>
             Our features
@@ -98,7 +98,7 @@
           />
         </svg>
       </div>
-      <div data-aos="sliding-down" class="section-heading section-heading__features">
+      <div class="section-heading section-heading__features">
         <h1 class="section-heading__title">You will love these features!</h1>
       </div>
       <div class="container section-container">
