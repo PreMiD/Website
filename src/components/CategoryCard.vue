@@ -1,7 +1,6 @@
 <template>
   <router-link :to="`/store/${this.$props.category.id}`">
     <div
-      data-aos="sliding-down"
       class="category-card"
       :style="`background: linear-gradient(165deg, ${category.color} -20%, ${categoryGradientColor} 100%);`"
     >

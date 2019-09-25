@@ -22,7 +22,7 @@
         v-if="this.presenceSearch == '' && this.$route.params.category == undefined && !$root.isProcessing"
         class="container"
       >
-        <h1>Available Categories</h1>
+        <h1 class="heading">Available Categories</h1>
         <div class="category-container">
           <CategoryCard :category="category" v-for="category in categories" :key="category.title" />
         </div>
@@ -31,7 +31,7 @@
         v-if="(this.presenceSearch != '' || this.$route.params.category !== undefined) && !$root.isProcessing"
         class="container"
       >
-        <h1 v-if="filteredPresences.length <= 0">
+        <h1 class="heading" v-if="filteredPresences.length <= 0">
           We can't find that presence
           <i class="fas fa-sad-tear"></i>
         </h1>

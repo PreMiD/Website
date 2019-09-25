@@ -1,7 +1,6 @@
 <template>
   <div class="presence-container__item">
     <div
-      data-aos="sliding-down"
       class="store-card"
       @mouseover="card_hovered = true"
       @mouseleave="card_hovered = false"

@@ -3,7 +3,7 @@
     <title>PreMiD - Contributors</title>
     <section class="contributors">
       <div class="contributor-container">
-        <h1 v-text="$t('contributors.headings.staff')" />
+        <h1 class="heading" v-text="$t('contributors.headings.staff')" />
         <div class="contributor-inner">
           <div
             v-for="(contributor) of contributors"
@@ -16,7 +16,7 @@
       </div>
 
       <div class="contributor-container">
-        <h1 v-text="$t('contributors.headings.supporters')" />
+        <h1 class="heading" v-text="$t('contributors.headings.supporters')" />
         <div class="contributor-inner">
           <div
             v-for="(contributor) of contributors"
@@ -29,7 +29,7 @@
       </div>
 
       <div class="contributor-container">
-        <h1 v-text="$t('contributors.headings.translators')" />
+        <h1 class="heading" v-text="$t('contributors.headings.translators')" />
         <div class="contributor-inner">
           <div
             v-for="(contributor) of contributors"
