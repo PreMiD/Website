@@ -56,12 +56,22 @@
               <div class="info__game">
                 <div class="game__icon">
                   <img
+                    v-if="presence.smallImage == false"
+                    class="game"
+                    style="-webkit-mask: none;"
+                    alt="./../assets/images/logo-big.svg"
+                    :src="presence.service_logo"
+                    v-tippy="{content: 'PreMiD v2.0'}"
+                  />
+                  <img
+                    v-if="presence.smallImage == true"
                     class="game"
                     alt="./../assets/images/logo-big.svg"
                     :src="presence.service_logo"
                     v-tippy="{content: 'PreMiD v2.0'}"
                   />
                   <img
+                    v-if="presence.smallImage == true"
                     class="status-icon"
                     src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
                   />
@@ -243,6 +253,7 @@ export default {
           },
           service_title: "PreMiD",
           service_logo: premid_logo,
+          smallImage: false,
           data: ["Store"],
           presence_time: "00:12"
         },
@@ -253,6 +264,7 @@ export default {
           },
           service_title: "YouTube",
           service_logo: youtube_logo,
+          smallImage: true,
           data: [
             "Noisestorm - Crab Rave [Monstercat Release]",
             "Monstercat: Instinct"
@@ -266,6 +278,7 @@ export default {
           },
           service_title: "SoundCloud",
           service_logo: soundcloud_logo,
+          smallImage: true,
           data: ["Dion Timmer - Panic", "Dion Timmer"],
           presence_time: "2:15"
         },
@@ -276,6 +289,7 @@ export default {
           },
           service_title: "YouTube Music",
           service_logo: youtube_music_logo,
+          smallImage: true,
           data: ["supercombo - Piloto Automático (Clipe Oficial)", "supercombo"],
           presence_time: "00:26"
         },
@@ -286,6 +300,7 @@ export default {
           },
           service_title: "Steam",
           service_logo: steam_logo,
+          smallImage: false,
           data: ["Steam Store", "F1 2019"],
           presence_time: "03:32"
         },
@@ -296,6 +311,7 @@ export default {
           },
           service_title: "YouTube Music",
           service_logo: youtube_music_logo,
+          smallImage: true,
           data: ["Dance Monkey", "Tones and I - The Kids Are Coming (2019)"],
           presence_time: "3:12"
         },
@@ -306,6 +322,7 @@ export default {
           },
           service_title: "Twitch",
           service_logo: twitch_logo,
+          smallImage: true,
           data: ["Just Chattin", "Bas950"],
           presence_time: "49:12"
         }
