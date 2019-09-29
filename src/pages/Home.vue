@@ -214,7 +214,7 @@ import youtube_logo from "./../assets/images/youtube.png";
 import soundcloud_logo from "./../assets/images/soundcloud.png";
 import netflix_logo from "./../assets/images/netflix.png";
 import youtube_music_logo from "./../assets/images/youtube-music.png";
-import premid_logo from "./../assets/images/premid-presence";
+import premid_logo from "./../assets/images/premid-presence.png";
 import steam_logo from "./../assets/images/steam.png";
 
 import cardThumbnail1 from "./../assets/images/cards/card1.png";
