@@ -45,7 +45,12 @@
                   v-bind:key="badge"
                   class="badge-wrapper"
                 >
-                  <div :class="`badge badge_${badge}`"></div>
+                  <div v-if="badge == 'brilliance' || badge == 'bravery' || badge == 'balance'" v-tippy="{content: 'HypeSquad ' + badge.charAt(0).toUpperCase() + badge.slice(1)}" :class="`badge badge_${badge}`"></div>
+                  <div v-if="badge == 'early'" v-tippy="{content: 'Early Supporter'}" :class="`badge badge_${badge}`"></div>
+                  <div v-if="badge == 'hypesquad'" v-tippy="{content: 'HypeSquad Events'}" :class="`badge badge_${badge}`"></div>
+                  <div v-if="badge == 'nitro'" v-tippy="{content: 'Discord Nitro'}" :class="`badge badge_${badge}`"></div>
+                  <div v-if="badge == 'boost-lvl3'" v-tippy="{content: 'Nitro Boosting'}" :class="`badge badge_${badge}`"></div>
+
                 </div>
               </div>
             </div>
@@ -74,6 +79,7 @@
                     v-if="presence.smallImage == true"
                     class="status-icon"
                     src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
+                    v-tippy="{content: 'Playing back'}"
                   />
                 </div>
                 <div class="game__content">
