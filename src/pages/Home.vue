@@ -296,6 +296,16 @@ export default {
           service_logo: youtube_music_logo,
           data: ["Dance Monkey", "Tones and I - The Kids Are Coming (2019)"],
           presence_time: "3:12"
+        },
+        {
+          profile: {
+            DiscordID: "241278257335500811",
+            badges: ["balance", "early", "nitro"]
+          },
+          service_title: "Twitch",
+          service_logo: twitch_logo,
+          data: ["Just Chattin", "Bas950"],
+          presence_time: "49:12"
         }
       ]
     };
