@@ -251,7 +251,7 @@ export default {
           },
           service_title: "YouTube Music",
           service_logo: youtube_music_logo,
-          data: ["Old Town Road [cover]", "senzawa"],
+          data: ["supercombo - Piloto Automático (Clipe Oficial)", "supercombo"],
           presence_time: "00:26"
         },
         {
