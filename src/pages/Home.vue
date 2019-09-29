@@ -214,6 +214,8 @@ import youtube_logo from "./../assets/images/youtube.png";
 import soundcloud_logo from "./../assets/images/soundcloud.png";
 import netflix_logo from "./../assets/images/netflix.png";
 import youtube_music_logo from "./../assets/images/youtube-music.png";
+import premid_logo from "./../assets/images/premid-presence";
+import steam_logo from "./../assets/images/steam.png";
 
 import cardThumbnail1 from "./../assets/images/cards/card1.png";
 import cardThumbnail2 from "./../assets/images/cards/card2.png";
@@ -239,22 +241,12 @@ export default {
             DiscordID: "259407123782434816",
             badges: ["hypesquad", "balance", "early", "nitro"]
           },
-          service_title: "Twitch",
-          service_logo: twitch_logo,
-          data: ["osu! World Cup 2018 Grand Finals", "osulive"],
-          presence_time: "44:18"
+          service_title: "PreMiD",
+          service_logo: premid_logo,
+          data: ["Store"],
+          presence_time: "00:12"
         },
-        {
-          profile: {
-            DiscordID: "515668127829458945",
-            badges: ["balance", "nitro", "boost-lvl3"]
-          },
-          service_title: "YouTube Music",
-          service_logo: youtube_music_logo,
-          data: ["supercombo - Piloto Automático (Clipe Oficial)", "supercombo"],
-          presence_time: "00:26"
-        },
-        {
+                {
           profile: {
             DiscordID: "223238938716798978",
             badges: ["brilliance", "nitro"]
@@ -267,7 +259,7 @@ export default {
           ],
           presence_time: "1:36"
         },
-        {
+                {
           profile: {
             DiscordID: "213305189657083905",
             badges: ["bravery", "early"]
@@ -279,13 +271,23 @@ export default {
         },
         {
           profile: {
-            DiscordID: "291599690812882945",
+            DiscordID: "515668127829458945",
             badges: ["balance"]
           },
-          service_title: "Netflix",
-          service_logo: netflix_logo,
-          data: ["You", "S1:E6 Amour Fou"],
-          presence_time: "17:37"
+          service_title: "YouTube Music",
+          service_logo: youtube_music_logo,
+          data: ["supercombo - Piloto Automático (Clipe Oficial)", "supercombo"],
+          presence_time: "00:26"
+        },
+        {
+          profile: {
+            DiscordID: "293828021134295040",
+            badges: ["brilliance"]
+          },
+          service_title: "Steam",
+          service_logo: steam_logo,
+          data: ["Steam Store", "F1 2019"],
+          presence_time: "03:32"
         },
         {
           profile: {
