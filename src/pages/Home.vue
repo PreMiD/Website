@@ -251,7 +251,7 @@ export default {
           },
           service_title: "YouTube Music",
           service_logo: youtube_music_logo,
-          data: ["Old Town Road [cover]", "senzawa"],
+          data: ["supercombo - Piloto Automático (Clipe Oficial)", "supercombo"],
           presence_time: "00:26"
         },
         {
@@ -286,6 +286,26 @@ export default {
           service_logo: netflix_logo,
           data: ["You", "S1:E6 Amour Fou"],
           presence_time: "17:37"
+        },
+        {
+          profile: {
+            DiscordID: "163319338403627008",
+            badges: ["brilliance", "early", "nitro", "boost-lvl3"]
+          },
+          service_title: "YouTube Music",
+          service_logo: youtube_music_logo,
+          data: ["Dance Monkey", "Tones and I - The Kids Are Coming (2019)"],
+          presence_time: "3:12"
+        },
+        {
+          profile: {
+            DiscordID: "241278257335500811",
+            badges: ["balance", "early", "nitro"]
+          },
+          service_title: "Twitch",
+          service_logo: twitch_logo,
+          data: ["Just Chattin", "Bas950"],
+          presence_time: "49:12"
         }
       ]
     };
