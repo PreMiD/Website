@@ -23,7 +23,7 @@
         class="container"
       >
         <div class="category-container">
-          <router-link class="label" :to="{ query: {page: currentPageNumber, category: 'all' } }"><i :class="'fas fa-map'" /> All</router-link>
+          <router-link class="label" :class="{'router-link-exact-active': currentCategory == 'all'}" :to="{ query: {page: currentPageNumber, category: 'all' } }"><i :class="'fas fa-map'" /> All</router-link>
           <router-link class="label" v-for="category in this.categories" :key="category.id" :to="{ query: {page: currentPageNumber, category: category.id } }"><i :class="'fas fa-' + category.icon" /> {{ category.title }}</router-link>
         </div>
 
