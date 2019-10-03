@@ -2,10 +2,6 @@
   <div>
     <title>PreMiD - Contributors</title>
     <section class="contributors">
-<<<<<<< HEAD
-      <h1 class="section-header">{{ $t(`contributors.headings.staff`) }}</h1>
-=======
->>>>>>> master
       <div class="contributor-container">
         <h1 class="heading" v-text="$t('contributors.headings.staff')" />
         <div class="contributor-inner">
@@ -31,8 +27,6 @@
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-=======
 
       <div class="contributor-container">
         <h1 class="heading" v-text="$t('contributors.headings.translators')" />
@@ -46,7 +40,6 @@
           </div>
         </div>
       </div>
->>>>>>> master
     </section>
   </div>
 </template>
@@ -128,46 +121,11 @@ export default {
         return false;
       }
     },
-<<<<<<< HEAD
-    methods: {
-      isStaffRole(roleName) {
-        var roleName = roleName.toLowerCase();
-        if (roleName == 'developer' || roleName == 'ticket manager' || roleName == 'moderator' || roleName ==
-          'jr. moderator' || roleName == 'head moderator') {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      isSupporterRole(roleName) {
-        var roleName = roleName.toLowerCase();
-        if (roleName == 'donator' || roleName == 'patreon' || roleName == 'supporter') {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      isTranslatorRole(roleName) {
-        var roleName = roleName.toLowerCase();
-        if (roleName == 'translator' || roleName == 'proofreader') {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      userNameColor(patronColor, userColor) {
-        if (patronColor == '#fff') {
-          return userColor;
-        } else {
-          return patronColor;
-        }
-=======
     userNameColor(patronColor, userColor) {
       if (patronColor == "#fff") {
         return userColor;
       } else {
         return patronColor;
->>>>>>> master
       }
     }
   }

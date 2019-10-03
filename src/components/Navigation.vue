@@ -52,16 +52,12 @@ export default {
       mobileMenuActive: false,
       categories: [
         {
-<<<<<<< HEAD
-          logo: "download",
-=======
           logo: "box-open",
           route: "store",
           title: "STORE"
         },
         {
           logo: "file-export",
->>>>>>> master
           route: "downloads",
           title: "DOWNLOADS"
         },

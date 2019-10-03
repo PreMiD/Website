@@ -138,27 +138,6 @@ export default {
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, "."))
       );
-<<<<<<< HEAD
-
-    // Vue hook to call it inside JS functions.
-    var self = this;
-
-    // Capturing event with presence data from extension.
-    window.addEventListener("PreMiD_GetWebisteFallback", function(data) {
-      self.debugMessage("Recieved information from Extension!");
-      var dataString = data.detail.toString().split(",");
-      self.$root.presences_installed = dataString;
-    });
-  },
-  mounted() {
-    // Vue hook to call it inside JS functions.
-    var self = this;
-
-    // Firing event to get response from Extension with installed presences data.
-    var event = new CustomEvent("PreMiD_GetPresenceList", {});
-    window.dispatchEvent(event);
-=======
->>>>>>> master
   },
   data() {
     return {
