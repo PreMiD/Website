@@ -2,55 +2,133 @@
   <div>
     <title>PreMiD - Contributors</title>
     <section class="contributors">
+<<<<<<< HEAD
       <h1 class="section-header">{{ $t(`contributors.headings.staff`) }}</h1>
+=======
+>>>>>>> master
       <div class="contributor-container">
-        <div v-for="(contributor, index) of contributors" v-bind:key="contributor.name" class="contributor-card"
-          v-if="isStaffRole(contributor.role)">
-          <ContributorCard :contributor="contributor" />
+        <h1 class="heading" v-text="$t('contributors.headings.staff')" />
+        <div class="contributor-inner">
+          <div
+            v-for="(contributor) of contributors"
+            v-bind:key="contributor.name"
+            class="contributor-card"
+          >
+            <CreditCard v-if="isStaffRole(contributor.role)" :user="contributor" />
+          </div>
         </div>
       </div>
-      <h1 class="section-header">{{ $t(`contributors.headings.supporters`) }}</h1>
+
       <div class="contributor-container">
-        <div v-for="(contributor, index) of contributors" v-bind:key="contributor.name" class="contributor-card"
-          v-if="isSupporterRole(contributor.role)">
-          <ContributorCard :contributor="contributor" />
+        <h1 class="heading" v-text="$t('contributors.headings.supporters')" />
+        <div class="contributor-inner">
+          <div
+            v-for="(contributor) of contributors"
+            v-bind:key="contributor.name"
+            class="contributor-card"
+          >
+            <CreditCard v-if="isSupporterRole(contributor.role)" :user="contributor" />
+          </div>
         </div>
       </div>
-      <h1 class="section-header">{{ $t(`contributors.headings.translators`) }}</h1>
+<<<<<<< HEAD
+=======
+
       <div class="contributor-container">
-        <div v-for="(contributor, index) of contributors" v-bind:key="contributor.name" class="contributor-card"
-          v-if="isTranslatorRole(contributor.role)">
-          <ContributorCard :contributor="contributor" />
+        <h1 class="heading" v-text="$t('contributors.headings.translators')" />
+        <div class="contributor-inner">
+          <div
+            v-for="(contributor) of contributors"
+            v-bind:key="contributor.name"
+            class="contributor-card"
+          >
+            <CreditCard v-if="isTranslatorRole(contributor.role)" :user="contributor" />
+          </div>
         </div>
       </div>
+>>>>>>> master
     </section>
   </div>
 </template>
 
 <script>
-  import request from "request";
-  import gif_frames from "gif-frames";
+import axios from "axios";
 
-  import ContributorCard from "../components/ContributorCard";
+import CreditCard from "../components/CreditCard";
 
-  export default {
-    name: "contributors",
-    components: {
-      ContributorCard,
-    },
-    data() {
-      return {
-        contributors: [],
-        display: false
-      };
-    },
-    created() {
-      request("https://api.premid.app/credits", (err, res, dat) => {
-        let data = JSON.parse(dat);
+export default {
+  name: "contributors",
+  components: {
+    CreditCard
+  },
+  data() {
+    return {
+      contributors: [],
+      display: false
+    };
+  },
+  created() {
+    const $Vue = this;
+
+    this.$root.isProcessing = true;
+
+    axios
+      .get("https://api.premid.app/v2/credits")
+      .then(res => {
+        var data = res.data;
         data.sort((a, b) => b.rolePosition - a.rolePosition);
-        this.$data.contributors = data;
+        $Vue.$data.contributors = data;
+      })
+      .finally(res => {
+        $Vue.$root.isProcessing = false;
       });
+  },
+  methods: {
+    isStaffRole(roleName) {
+      var roleName = roleName.toLowerCase();
+      if (
+        roleName == "main developer" ||
+        roleName == "website developer" ||
+        roleName == "community manager" ||
+        roleName == "ticket manager" ||
+        roleName == "moderator" ||
+        roleName == "jr. moderator"
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     },
+    isSupporterRole(roleName) {
+      var roleName = roleName.toLowerCase();
+      if (
+        roleName == "donator" ||
+        roleName == "patron" ||
+        roleName == "supporter" ||
+        roleName == "booster"
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    isTranslatorRole(roleName) {
+      var roleName = roleName.toLowerCase();
+      if (roleName == "translator" || roleName == "proofreader") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    isContributorRole(roleName) {
+      var roleName = roleName.toLowerCase();
+      if (roleName == "contributor" || roleName == "designer") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+<<<<<<< HEAD
     methods: {
       isStaffRole(roleName) {
         var roleName = roleName.toLowerCase();
@@ -83,8 +161,15 @@
         } else {
           return patronColor;
         }
+=======
+    userNameColor(patronColor, userColor) {
+      if (patronColor == "#fff") {
+        return userColor;
+      } else {
+        return patronColor;
+>>>>>>> master
       }
     }
-  };
-
+  }
+};
 </script>

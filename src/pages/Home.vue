@@ -3,14 +3,20 @@
     <title>PreMiD</title>
     <div class="promo-container">
       <div class="promo-container__heading">
+<<<<<<< HEAD
         <div class="heading__logo">
           <img src="./../assets/images/logo-big.svg" />
+=======
+        <div data-aos="sliding-down" class="heading__logo">
+          <img src="./../assets/images/logo.gif" />
+>>>>>>> master
         </div>
         <div class="heading__text">
           <h1>PreMiD</h1>
           <p>{{ $t(`home.introduction.catchphrase`) }}</p>
         </div>
         <div class="heading__button-group">
+<<<<<<< HEAD
           <button
             v-on:click="openInNewTab('https://github.com/PreMiD/PreMiD')"
             class="button button_black"
@@ -19,12 +25,24 @@
           </button>
           <router-link class="button button_uppercase" replace to="/downloads">
             <i class="fas fa-download"></i>
+=======
+          <a class="button button_uppercase" href="#features">
+            <i class="fas fa-stream"></i>
+            Our features
+          </a>
+          <router-link class="button button_black button_uppercase" replace to="/downloads">
+            <i class="fas fa-file-export"></i>
+>>>>>>> master
             {{ $t(`home.introduction.button.downloads`) }}
           </router-link>
         </div>
       </div>
       <div class="promo-container__presences">
         <div
+<<<<<<< HEAD
+=======
+          data-aos="sliding-down"
+>>>>>>> master
           class="discord-usercard"
           v-for="presence of presences_display"
           v-bind:key="presence.service"
@@ -46,7 +64,16 @@
                   v-bind:key="badge"
                   class="badge-wrapper"
                 >
+<<<<<<< HEAD
                   <div :class="`badge badge_${badge}`"></div>
+=======
+                  <div v-if="badge == 'brilliance' || badge == 'bravery' || badge == 'balance'" v-tippy="{content: 'HypeSquad ' + badge.charAt(0).toUpperCase() + badge.slice(1)}" :class="`badge badge_${badge}`"></div>
+                  <div v-if="badge == 'early'" v-tippy="{content: 'Early Supporter'}" :class="`badge badge_${badge}`"></div>
+                  <div v-if="badge == 'hypesquad'" v-tippy="{content: 'HypeSquad Events'}" :class="`badge badge_${badge}`"></div>
+                  <div v-if="badge == 'nitro'" v-tippy="{content: 'Discord Nitro'}" :class="`badge badge_${badge}`"></div>
+                  <div v-if="badge == 'boost-lvl3'" v-tippy="{content: 'Nitro Boosting'}" :class="`badge badge_${badge}`"></div>
+
+>>>>>>> master
                 </div>
               </div>
             </div>
@@ -56,10 +83,33 @@
               <div class="info__header">{{ $t(`home.examples.playingagame`) }}</div>
               <div class="info__game">
                 <div class="game__icon">
+<<<<<<< HEAD
                   <img class="game" :src="presence.service_logo" />
                   <img
                     class="status-icon"
                     src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
+=======
+                  <img
+                    v-if="presence.smallImage == false"
+                    class="game"
+                    style="-webkit-mask: none;"
+                    alt="./../assets/images/logo-big.svg"
+                    :src="presence.service_logo"
+                    v-tippy="{content: 'PreMiD v2.0'}"
+                  />
+                  <img
+                    v-if="presence.smallImage == true"
+                    class="game"
+                    alt="./../assets/images/logo-big.svg"
+                    :src="presence.service_logo"
+                    v-tippy="{content: 'PreMiD v2.0'}"
+                  />
+                  <img
+                    v-if="presence.smallImage == true"
+                    class="status-icon"
+                    src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
+                    v-tippy="{content: 'Playing back'}"
+>>>>>>> master
                   />
                 </div>
                 <div class="game__content">
@@ -78,7 +128,7 @@
         </div>
       </div>
     </div>
-    <div class="features-container">
+    <div class="features-container" id="features">
       <div class="waves-divider waves-divider_top">
         <svg
           class="wave"
@@ -94,11 +144,77 @@
           />
         </svg>
       </div>
+<<<<<<< HEAD
       <div class="section-heading">
         <h1 class="section-heading__title">{{ $t('home.cards.heading') }}</h1>
         <p class="section-heading__subtitle">{{ $t('home.cards.subheading') }}</p>
       </div>
       <div class="feature-cards">
+=======
+      <div class="section-heading section-heading__features">
+        <h1 class="section-heading__title">You will love these features!</h1>
+      </div>
+      <div class="container section-container">
+        <div data-aos="sliding-left" class="section-container__details">
+          <h1>
+            Find
+            <span class="text-highlight">your</span> presence.
+          </h1>
+          <p>{{ $t('home.cards.presencesystem.explanation') }}</p>
+          <p>
+            <a class="button button_large" href="/store">Open store</a>
+          </p>
+        </div>
+        <div data-aos="sliding-right" class="section-container__promo">
+          <img class="section-container__promo--image1" :src="cardThumbnail1" />
+        </div>
+      </div>
+      <div class="container section-container section-container_reverse">
+        <div data-aos="sliding-down" class="section-container__details">
+          <h1>Simple user interface.</h1>
+          <p>Tired of complicated user interfaces? That's why we created a simple and useful interface with only important functions included:</p>
+          <ul>
+            <li>
+              <p>App and Extension settings.</p>
+            </li>
+            <li>
+              <p>Presence management.</p>
+            </li>
+            <li>
+              <p>Sorting by category.</p>
+            </li>
+          </ul>
+        </div>
+        <div data-aos="sliding-left-2" class="section-container__promo">
+          <video autoplay loop>
+            <source src="./../assets/images/cards/card2_video.mp4" type="video/mp4" />
+            <img class="section-container__promo--image2" :src="cardThumbnail2" />
+          </video>
+        </div>
+      </div>
+      <!-- <div class="container section-container section-container_alternative">
+        <div data-aos="sliding-down" class="section-container__details">
+          <h1>Not enough languages.</h1>
+          <p>We know that we have users using our software around the globe and we're providing everyone an ability to translate our extension and app to your language!</p>
+        </div>
+        <div data-aos="sliding-down" class="section-container__promo">
+          <img class="section-container__promo--image1" :src="cardThumbnail3">
+        </div>
+      </div>-->
+      <div class="container section-container">
+        <div data-aos="sliding-left" class="section-container__details">
+          <h1>Quick support.</h1>
+          <p>Something is glitching or sending you tons of errors? We will help you to get rid of that on our Discord sever, we also developed a support system that will make your life easier.</p>
+          <p>
+            <a class="button button_large" href="https://discord.gg/premid">Visit our server</a>
+          </p>
+        </div>
+        <div data-aos="sliding-down" class="section-container__promo">
+          <img class="section-container__promo--image1" :src="cardThumbnail4" />
+        </div>
+      </div>
+      <!-- <div data-aos="sliding-down" class="feature-cards">
+>>>>>>> master
         <Card
           :title="$t('home.cards.presencesystem.title')"
           :desc="$t('home.cards.presencesystem.explanation')"
@@ -126,7 +242,11 @@
           theme="opensource"
           :image="cardThumbnail4"
         />
+<<<<<<< HEAD
       </div>
+=======
+      </div>-->
+>>>>>>> master
       <div class="waves-divider waves-divider_bottom">
         <svg
           class="wave"
@@ -147,12 +267,20 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import request from "request";
+=======
+>>>>>>> master
 import twitch_logo from "./../assets/images/twitch.png";
 import youtube_logo from "./../assets/images/youtube.png";
 import soundcloud_logo from "./../assets/images/soundcloud.png";
 import netflix_logo from "./../assets/images/netflix.png";
 import youtube_music_logo from "./../assets/images/youtube-music.png";
+<<<<<<< HEAD
+=======
+import premid_logo from "./../assets/images/premid-presence.png";
+import steam_logo from "./../assets/images/steam.png";
+>>>>>>> master
 
 import cardThumbnail1 from "./../assets/images/cards/card1.png";
 import cardThumbnail2 from "./../assets/images/cards/card2.png";
@@ -165,9 +293,12 @@ import axios from "axios";
 
 export default {
   name: "home",
+<<<<<<< HEAD
   components: {
     Card
   },
+=======
+>>>>>>> master
   data() {
     return {
       cardThumbnail1,
@@ -179,25 +310,70 @@ export default {
         {
           profile: {
             DiscordID: "259407123782434816",
+<<<<<<< HEAD
             badges: ["hypesquad", "balance", "early", "nitro", "boost-lvl2"]
           },
           service_title: "Twitch",
           service_logo: twitch_logo,
           data: ["osu! World Cup 2018 Grand Finals", "osulive"],
           presence_time: "44:18"
+=======
+            badges: ["hypesquad", "balance", "early", "nitro"]
+          },
+          service_title: "PreMiD",
+          service_logo: premid_logo,
+          smallImage: false,
+          data: ["Store"],
+          presence_time: "00:12"
+        },
+                {
+          profile: {
+            DiscordID: "223238938716798978",
+            badges: ["brilliance", "nitro"]
+          },
+          service_title: "YouTube",
+          service_logo: youtube_logo,
+          smallImage: true,
+          data: [
+            "Noisestorm - Crab Rave [Monstercat Release]",
+            "Monstercat: Instinct"
+          ],
+          presence_time: "1:36"
+        },
+                {
+          profile: {
+            DiscordID: "213305189657083905",
+            badges: ["bravery", "early"]
+          },
+          service_title: "SoundCloud",
+          service_logo: soundcloud_logo,
+          smallImage: true,
+          data: ["Dion Timmer - Panic", "Dion Timmer"],
+          presence_time: "2:15"
+>>>>>>> master
         },
         {
           profile: {
             DiscordID: "515668127829458945",
+<<<<<<< HEAD
             badges: ["balance", "nitro", "boost-lvl2"]
           },
           service_title: "YouTube Music",
           service_logo: youtube_music_logo,
           data: ["Old Town Road [cover]", "senzawa"],
+=======
+            badges: ["balance"]
+          },
+          service_title: "YouTube Music",
+          service_logo: youtube_music_logo,
+          smallImage: true,
+          data: ["supercombo - Piloto Automático (Clipe Oficial)", "supercombo"],
+>>>>>>> master
           presence_time: "00:26"
         },
         {
           profile: {
+<<<<<<< HEAD
             DiscordID: "223238938716798978",
             badges: ["brilliance", "nitro", "boost-lvl2"]
           },
@@ -228,6 +404,38 @@ export default {
           service_logo: netflix_logo,
           data: ["You", "S1:E6 Amour Fou"],
           presence_time: "17:37"
+=======
+            DiscordID: "293828021134295040",
+            badges: ["brilliance"]
+          },
+          service_title: "Steam",
+          service_logo: steam_logo,
+          smallImage: false,
+          data: ["Steam Store", "F1 2019"],
+          presence_time: "03:32"
+        },
+        {
+          profile: {
+            DiscordID: "163319338403627008",
+            badges: ["brilliance", "early", "nitro", "boost-lvl3"]
+          },
+          service_title: "YouTube Music",
+          service_logo: youtube_music_logo,
+          smallImage: true,
+          data: ["Dance Monkey", "Tones and I - The Kids Are Coming (2019)"],
+          presence_time: "3:12"
+        },
+        {
+          profile: {
+            DiscordID: "241278257335500811",
+            badges: ["balance", "early", "nitro"]
+          },
+          service_title: "Twitch",
+          service_logo: twitch_logo,
+          smallImage: true,
+          data: ["Just Chattin", "Bas950"],
+          presence_time: "49:12"
+>>>>>>> master
         }
       ]
     };
@@ -245,6 +453,7 @@ export default {
     // Updating user information in presence examples.
     this.$data.presences_display.forEach(function(presence_item, index) {
       // Axios provides Promises that will help us with handling errors and getting data.
+<<<<<<< HEAD
       Vue.$parent.isProcessing = true;
       axios(`https://api.premid.app/credits/${presence_item.profile.DiscordID}`)
         .then(function(res) {
@@ -261,12 +470,27 @@ export default {
             data.name
           );
           Vue.$set(Vue.$data.presences_display[index].profile, "id", data.tag);
+=======
+      Vue.$root.isProcessing = true;
+      axios(`https://api.premid.app/credits/${presence_item.profile.DiscordID}`)
+        .then(function(res) {
+          let data = res.data;
+          let presence = Vue.$data.presences_display[index];
+
+          Vue.$set(presence.profile, "image", data.avatar);
+          Vue.$set(presence.profile, "name", data.name);
+          Vue.$set(presence.profile, "id", data.tag);
+>>>>>>> master
         })
         .catch(function(error) {
           Vue.errorMessage(error);
         })
         .finally(() => {
+<<<<<<< HEAD
           Vue.$parent.isProcessing = false;
+=======
+          Vue.$root.isProcessing = false;
+>>>>>>> master
         });
     });
   },

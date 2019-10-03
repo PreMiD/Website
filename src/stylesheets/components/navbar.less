@@ -1,5 +1,4 @@
 .navbar__container {
-
   background: @background-secondary;
   position: relative;
   // box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
@@ -10,10 +9,11 @@
   .far,
   .fas {
     padding: 1px 4px;
+    font-size: 0.9em;
+    vertical-align: middle;
   }
 
   .navbar {
-
     max-width: 1600px;
     margin: 0 auto;
     padding-top: 0.5rem;
@@ -29,7 +29,6 @@
     }
 
     .navbar__logotype {
-
       img {
         margin-left: 0.5rem;
         margin-right: 0.3rem;
@@ -39,16 +38,16 @@
 
       .logotype__title {
         position: relative;
-        top: 1px;
+        top: 3px;
         vertical-align: super;
         display: inline-block;
         margin: 10px 0;
         font-family: "Discord Font";
         font-size: 1.8rem;
-        transition: filter .12s;
+        transition: filter 0.12s;
 
         &:hover {
-          transition: filter .12s;
+          transition: filter 0.12s;
         }
       }
     }
@@ -57,7 +56,7 @@
       vertical-align: top;
       line-height: 2.5rem;
       font-size: 1.2rem;
-      font-weight: bold;
+      font-weight: 800;
       display: flex;
       margin-left: auto;
 
@@ -66,10 +65,9 @@
         position: relative;
 
         .item__title {
+          vertical-align: middle;
           text-transform: uppercase;
-          font-family: Inter;
-          font-weight: 800;
-          font-size: 1.35rem;
+          font-size: 1.3rem;
         }
 
         &::after {
@@ -83,7 +81,7 @@
           border-radius: 5px;
           // box-shadow: 0 1px 16px 0 @accent-primary;
           background: @accent-primary;
-          transition: all .4s cubic-bezier(0.26, 0.08, 0, 0.97);
+          transition: all 0.4s cubic-bezier(0.26, 0.08, 0, 0.97);
         }
 
         &:hover {
@@ -106,12 +104,10 @@
       a {
         font-size: 23px;
       }
-
     }
   }
 
   .mobile-navbar__items {
-
     background: @background-secondary;
 
     left: 0;
@@ -125,6 +121,7 @@
 
     .navbar__item {
       .item__title {
+        vertical-align: middle;
         text-transform: uppercase;
       }
     }
@@ -133,7 +130,7 @@
       padding: 5px 0;
       line-height: 2.5rem;
       font-size: 1.2rem;
-      font-weight: bold;
+      font-weight: 800;
 
       transition: all 0.2s ease;
       box-shadow: inset 0px 0 0 0 @accent-primary;
@@ -142,8 +139,6 @@
         box-shadow: inset 4px 0 0 0 @accent-primary;
         background: rgba(255, 255, 255, 0.01);
       }
-
     }
-
   }
 }

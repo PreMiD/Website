@@ -2,12 +2,20 @@
 @import "variables.less";
 
 // Noty
-@import 'addons/vuejs-noty.less';
+@import "addons/vuejs-noty.less";
 
 /*
  *      PreMiD Website CSS
  *          Authors: Voknehzyr, Timeraa, Fruxh.
  */
+
+@font-face {
+  font-family: "Discord Font";
+  font-weight: 900;
+  src: url("../../public/static/assets/fonts/Discord/DiscordFontBlack.woff2")
+    format("woff2");
+  font-style: normal;
+}
 
 // Importing base styles
 @import "components/body.less";
@@ -15,6 +23,7 @@
 // Loading components
 @import "components/animation.less";
 @import "components/button.less";
+@import "components/breadcrumb.less";
 @import "components/checkbox.less";
 @import "components/card.less";
 @import "components/container.less";

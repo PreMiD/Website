@@ -1,7 +1,7 @@
 <template>
   <div>
     <title>PreMiD - Store</title>
-    <div v-if="!isProcessing" class="userpage-container">
+    <div v-if="!$root.isProcessing" class="userpage-container">
         <div class="userpage__header">
             <div class="user-avatar"><img :src="userdata.avatar"></div>
             <div class="user-data">
@@ -11,7 +11,7 @@
         <div class="userpage__presences">
             <h1>User presences</h1>
             <div class="presence-container">
-            <listing
+            <StoreCard
                 v-for="presence of userpresences"
                 v-bind:key="presence.service"
                 :presence="presence"
@@ -25,13 +25,13 @@
 
 <script>
 import axios from "axios";
-import Listing from "../../components/Listing";
+import StoreCard from "../../components/StoreCard";
 import { Promise, isPromise } from 'q';
 
 export default {
   name: "userpage",
   components: {
-      Listing
+      StoreCard
   },
   data() {
     return {
@@ -41,7 +41,7 @@ export default {
   },
   created() {
       let Vue = this;
-      Vue.$parent.isProcessing = true;
+      Vue.$root.isProcessing = true;
       axios(`https://api.premid.app/credits/${Vue.$route.params.userid}`)
       .then((res) => {
           Vue.$data.userdata = res.data;
@@ -60,7 +60,7 @@ export default {
               });
 
               Promise.all(foreach).finally((res) => {
-                  Vue.$parent.isProcessing = false;
+                  Vue.$root.isProcessing = false;
               })
           })
           .catch((error) => {
