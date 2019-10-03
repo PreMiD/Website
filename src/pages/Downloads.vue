@@ -11,7 +11,7 @@
           <ol>
             <li>
               <p>
-                {{ $t('downloads.instructions.step.1') }} 
+                {{ $t('downloads.instructions.step.1') }}
                 [<a href="#app-downloads">
                   <i class="fas fa-arrow-down" />
                 </a>]
@@ -22,7 +22,7 @@
             </li>
             <li>
               <p>
-                {{ $t('downloads.instructions.step.3') }} 
+                {{ $t('downloads.instructions.step.3') }}
                 [<a href="#ext-downloads">
                   <i class="fas fa-arrow-down" />
                 </a>]
@@ -190,7 +190,7 @@ export default {
               win64_links.push(asset.browser_download_url);
             if (asset.name.endsWith("x32.exe"))
               win32_links.push(asset.browser_download_url);
-            if (asset.name.endsWith("Mac.dmg"))
+            if (asset.name.endsWith(".app.zip"))
               mac_links.push(asset.browser_download_url);
             if (asset.name.endsWith(".xpi"))
               ff_links.push(asset.browser_download_url);
