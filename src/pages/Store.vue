@@ -19,38 +19,35 @@
 
     <transition name="slide-down" mode="in-out">
       <div
-        v-if="this.presenceSearch == '' && this.$route.params.category == undefined && !$root.isProcessing"
+        v-if="!$root.isProcessing"
         class="container"
       >
-        <h1 class="heading">Available Categories</h1>
         <div class="category-container">
-          <CategoryCard :category="category" v-for="category in categories" :key="category.title" />
+          <router-link class="label" :class="{'router-link-exact-active': currentCategory == 'all'}" :to="{ query: {page: currentPageNumber, category: 'all' } }"><i :class="'fas fa-map'" /> All</router-link>
+          <router-link class="label" v-for="category in this.categories" :key="category.id" :to="{ query: {page: currentPageNumber, category: category.id } }"><i :class="'fas fa-' + category.icon" /> {{ category.title }}</router-link>
         </div>
-      </div>
-      <div
-        v-if="(this.presenceSearch != '' || this.$route.params.category !== undefined) && !$root.isProcessing"
-        class="container"
-      >
+
         <h1 class="heading" v-if="filteredPresences.length <= 0">
           We can't find that presence
           <i class="fas fa-sad-tear"></i>
         </h1>
         <div class="presence-container">
+          
           <StoreCard
             v-for="presence in paginatedData"
             v-bind:key="presence.service"
             :presence="presence"
           />
+         
         </div>
       </div>
     </transition>
     <div
-      v-if="this.$route.params.category !== undefined && !$root.isProcessing"
       class="pagination-container"
     >
       <Pagination
         v-if="this.$data.presenceSearch == ''"
-        :pageCategory="this.$route.params.category"
+        :pageCategory="this.currentCategory"
         :pageNumber="currentPageNumber"
         :pageCount="pageCount"
       />
@@ -77,48 +74,31 @@ export default {
     return {
       categories: {
         anime: {
-          color: "#F9304B",
-          description:
-            "This category contains presences for websites that provide anime news, videos and etc.",
           icon: "star",
           id: "anime",
           title: "Anime"
         },
         games: {
-          color: "#001835",
-          description:
-            "Websites with gamer content or browser games are located here.",
           icon: "leaf",
           id: "games",
           title: "Games"
         },
         music: {
-          color: "#39dc64",
-          description:
-            "This category contains presences for websites that have unusual thematics.",
           icon: "music",
           id: "music",
           title: "Music"
         },
         socials: {
-          color: "#4786ff",
-          description: "All social networks are located in this category.",
           icon: "comments",
           id: "socials",
           title: "Socials"
         },
         videos: {
-          color: "red",
-          description:
-            "This category contains presences for websites that have unusual thematics.",
           icon: "play",
           id: "videos",
           title: "Videos & Streams"
         },
         other: {
-          color: "#99aab5",
-          description:
-            "This category contains presences for websites that have unusual thematics.",
           icon: "box",
           id: "other",
           title: "Other"
@@ -162,6 +142,13 @@ export default {
       });
   },
   computed: {
+    currentCategory() {
+        if(this.$attrs.category) {
+          return this.$attrs.category;
+        } else {
+          return 'all';
+        }
+    },
     filteredPresences() {
       return this.$data.presences
         .filter(presence => {
@@ -173,15 +160,23 @@ export default {
           this.$data.nsfw ? true : !presence.tags.includes("nsfw")
         )
         .filter(presence => {
-          if (this.$route.params.category !== undefined)
-            return presence.category == this.$route.params.category;
-          else return true;
+          console.log(this.currentCategory);
+          if(this.currentCategory == 'all') {
+            return presence;
+          } else {
+            return presence.category == this.currentCategory;
+          }
+          
         })
         .sort((a, b) => a.service.localeCompare(b.service));
     },
     currentPageNumber() {
       if (Number(this.$route.query.page)) {
-        return Number(this.$route.query.page);
+        if(this.pageCount < this.$route.query.page) {
+          return 1;
+        } else {
+          return Number(this.$route.query.page);
+        }
       } else {
         return 1;
       }
@@ -189,11 +184,6 @@ export default {
     pageCount() {
       let length = this.filteredPresences.length,
         size = this.$data.presencesPerPage;
-
-      if (length <= 0 && this.$route.params.category)
-        this.$router.push({
-          path: "/notfound"
-        });
 
       return Math.ceil(length / size);
     },

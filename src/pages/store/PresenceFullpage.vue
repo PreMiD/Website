@@ -117,9 +117,9 @@
                                 <p><i class="fas fa-heart" /> Likes: <span :style="`background: ${presenceData.color};`"
                                         class="label label_tag">36</span></p>
               </li>-->
-              <li>
+              <li v-if="!presenceData.regExp">
                 <p>
-                  <i class="fas fa-external-link-square-alt" />
+                  <i class="fas fa-link" />
                   {{ $t('presence.sections.information.supportedurls') }}:
                 </p>
                 <ul class="presence-urls">
@@ -127,6 +127,19 @@
                     <a :href="`https://${url}`">{{ url }}</a>
                   </li>
                 </ul>
+              </li>
+              <li v-if="presenceData.regExp">
+                <p>
+                  <i class="fas fa-link" />
+                  URL RegExp:
+                </p>
+                <div class="presence-regexp">
+                  <ul class="presence-urls">
+                    <li>
+                  <p>{{ presenceData.regExp }}</p>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </ul>
           </div>

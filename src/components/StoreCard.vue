@@ -1,4 +1,5 @@
 <template>
+<transition name="fade" mode="out-in">
   <div class="presence-container__item">
     <div
       class="store-card"
@@ -82,6 +83,7 @@
       ></div>
     </div>
   </div>
+</transition>
 </template>
 
 <script>

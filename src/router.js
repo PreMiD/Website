@@ -21,13 +21,8 @@ export default new Router({
     {
       path: "/store",
       name: "presenceCategories",
-      component: require("@/pages/Store").default
-    },
-    {
-      path: "/store/:category",
-      name: "presenceStore",
       component: require("@/pages/Store").default,
-      props: route => ({ page: route.query.page }),
+      props: route => ({ page: route.query.page, category: route.query.category })
     },
     {
       path: "/users/:userid",
