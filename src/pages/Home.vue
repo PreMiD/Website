@@ -353,13 +353,12 @@ export default {
         .then(function(res) {
           let data = res.data;
           let presence = Vue.$data.presences_display[index];
-          console.log(res)
+
           Vue.$set(presence.profile, "image", data.avatar);
           Vue.$set(presence.profile, "name", data.name);
           Vue.$set(presence.profile, "id", data.tag);
         })
         .catch(function(error) {
-          console.log(error)
           if(error.request) Vue.$router.push({path: '/maintenance'});
           Vue.errorMessage(error);
         })
