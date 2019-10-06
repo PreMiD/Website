@@ -50,7 +50,9 @@ export default {
       })
       .catch((error) => {
           console.error(error);
+          Vue.$root.isProcessing = false;
           if (error.response.status == 404) Vue.$router.push({path: '/notfound'});
+          if(error.request) Vue.$router.push({path: '/maintenance'});
       })
       .finally(() => {
           axios(`https://api.premid.app/v2/presences`).then((res) => {

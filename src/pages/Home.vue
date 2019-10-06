@@ -359,6 +359,7 @@ export default {
           Vue.$set(presence.profile, "id", data.tag);
         })
         .catch(function(error) {
+          if(error.request) Vue.$router.push({path: '/maintenance'});
           Vue.errorMessage(error);
         })
         .finally(() => {
