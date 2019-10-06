@@ -56,7 +56,7 @@ export default {
           axios(`https://api.premid.app/v2/presences`).then((res) => {
 
               var foreach = res.data.map((presence) => {
-                  if(presence.metadata.author.name == Vue.$data.userdata.name) Vue.$data.userpresences.push(presence.metadata);
+                  if(presence.metadata.author.id == Vue.$data.userdata.userID) Vue.$data.userpresences.push(presence.metadata);
               });
 
               Promise.all(foreach).finally((res) => {
