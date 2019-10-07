@@ -1,6 +1,6 @@
 <template>
     <div class="container container_maintenance-page">
-        <img data-aos="sliding-up" src="./../../assets/images/logo.gif" style="width: 300px" />
+        <img data-aos="sliding-up" src="./../../assets/images/logo.gif" class="logo" />
         <h1 data-aos="sliding-up" class="text-highlight">Maintenance</h1>
         <p data-aos="sliding-right">Unfortunately we are experiencing technical difficulties. We will return shortly. Sorry for the inconvenience.</p>
         <p data-aos="sliding-left">Please come back later for more info.</p>
