@@ -139,6 +139,8 @@ export default {
       })
       .catch(function(error) {
         console.error(error);
+        self.$root.isProcessing = false;
+        if(error.request) self.$router.push({path: '/maintenance'});
       });
   },
   computed: {
