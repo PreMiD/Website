@@ -64,6 +64,12 @@ export default new Router({
       name: "tos",
       alias: "/terms",
       component: require("@/pages/legal/ToS").default
+    },
+    {
+      path: "/maintenance",
+      name: "maintenance",
+      alias: "/maintenance",
+      component: require("@/pages/errors/Maintenance").default
     }
   ]
 });
