@@ -72,6 +72,10 @@ export default {
         data.sort((a, b) => b.rolePosition - a.rolePosition);
         $Vue.$data.contributors = data;
       })
+      .catch(function(error) {
+        $Vue.$root.isProcessing = false;
+        if(error.request) $Vue.$router.push({path: '/maintenance'});
+      })
       .finally(res => {
         $Vue.$root.isProcessing = false;
       });
