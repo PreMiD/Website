@@ -174,15 +174,6 @@
           </video>
         </div>
       </div>
-      <!-- <div class="container section-container section-container_alternative">
-        <div data-aos="sliding-down" class="section-container__details">
-          <h1>Not enough languages.</h1>
-          <p>We know that we have users using our software around the globe and we're providing everyone an ability to translate our extension and app to your language!</p>
-        </div>
-        <div data-aos="sliding-down" class="section-container__promo">
-          <img class="section-container__promo--image1" :src="cardThumbnail3">
-        </div>
-      </div>-->
       <div class="container section-container">
         <div data-aos="sliding-left" class="section-container__details">
           <h1>{{$t('home.features.quickSupport.heading')}}</h1>
@@ -198,35 +189,6 @@
           <img class="section-container__promo--image1" :src="cardThumbnail4" />
         </div>
       </div>
-      <!-- <div data-aos="sliding-down" class="feature-cards">
-        <Card
-          :title="$t('home.cards.presencesystem.title')"
-          :desc="$t('home.cards.presencesystem.explanation')"
-          icon="fas fa-puzzle-piece"
-          :image="cardThumbnail1"
-        />
-        <Card
-          :title="$t('home.cards.mediacontrols.title')"
-          :desc="$t('home.cards.mediacontrols.explanation')"
-          icon="fas fa-keyboard"
-          theme="media"
-          :image="cardThumbnail2"
-        />
-        <Card
-          :title="$t('home.cards.multilingual.title')"
-          :desc="$t('home.cards.multilingual.explanation')"
-          icon="fas fa-laptop"
-          theme="lang"
-          :image="cardThumbnail3"
-        />
-        <Card
-          :title="$t('home.cards.opensource.title')"
-          :desc="$t('home.cards.opensource.explanation')"
-          icon="fas fa-code"
-          theme="opensource"
-          :image="cardThumbnail4"
-        />
-      </div>-->
       <div class="waves-divider waves-divider_bottom">
         <svg
           class="wave"
@@ -372,8 +334,6 @@ export default {
       );
     });
 
-    console.log(this.$data.presenceSystemHeading);
-
     // Randomly selects 2 presences to display.
     this.$data.presences_display.push(
       this.$data.presences.splice((Math.random() * length) | 0, 1)[0],
@@ -394,7 +354,7 @@ export default {
           Vue.$set(presence.profile, "id", data.tag);
         })
         .catch(function(error) {
-          if(error.request) Vue.$router.push({path: '/maintenance'});
+          if (error.request) Vue.$router.push({ path: "/maintenance" });
           Vue.errorMessage(error);
         })
         .finally(() => {
