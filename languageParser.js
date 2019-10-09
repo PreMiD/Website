@@ -8,6 +8,10 @@ let successEmoji = emoji.emojify("✔️");
 
 process.stdout.write("\u001b[2J\u001b[0;0H");
 
+
+//* Create folder if not present
+if (!fs.existsSync("./src/langs/")) fs.mkdirSync("./src/langs/");
+
 axios
   .get(apiURL + "/list")
   .then(function(response) {
