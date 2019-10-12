@@ -1,13 +1,13 @@
 <template>
-    <div class="container container_error-page">
-        <h1>Ough! Should this even exist?</h1>
-        <p>Sorry, looks like the page that you want to see was moved to another address or deleted.</p>
-        <p>Check your link, maybe you made an error somewhere in it.</p>
-    </div>
+  <div class="container container_error-page">
+    <title>PreMiD - 404</title>
+    <h1>{{$t("404.heading")}}</h1>
+    <p>{{$t("404.message")}}</p>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "notfound",
-    };
+export default {
+  name: "notfound"
+};
 </script>

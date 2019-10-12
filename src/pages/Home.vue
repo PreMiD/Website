@@ -13,7 +13,7 @@
         <div class="heading__button-group">
           <a class="button button_uppercase" href="#features">
             <i class="fas fa-stream"></i>
-            Our features
+            {{$t('home.introduction.button.features')}}
           </a>
           <router-link class="button button_black button_uppercase" replace to="/downloads">
             <i class="fas fa-file-export"></i>
@@ -45,12 +45,31 @@
                   v-bind:key="badge"
                   class="badge-wrapper"
                 >
-                  <div v-if="badge == 'brilliance' || badge == 'bravery' || badge == 'balance'" v-tippy="{content: 'HypeSquad ' + badge.charAt(0).toUpperCase() + badge.slice(1)}" :class="`badge badge_${badge}`"></div>
-                  <div v-if="badge == 'early'" v-tippy="{content: 'Early Supporter'}" :class="`badge badge_${badge}`"></div>
-                  <div v-if="badge == 'hypesquad'" v-tippy="{content: 'HypeSquad Events'}" :class="`badge badge_${badge}`"></div>
-                  <div v-if="badge == 'nitro'" v-tippy="{content: 'Discord Nitro'}" :class="`badge badge_${badge}`"></div>
-                  <div v-if="badge == 'boost-lvl3'" v-tippy="{content: 'Nitro Boosting'}" :class="`badge badge_${badge}`"></div>
-
+                  <div
+                    v-if="badge == 'brilliance' || badge == 'bravery' || badge == 'balance'"
+                    v-tippy="{content: 'HypeSquad ' + badge.charAt(0).toUpperCase() + badge.slice(1)}"
+                    :class="`badge badge_${badge}`"
+                  ></div>
+                  <div
+                    v-if="badge == 'early'"
+                    v-tippy="{content: 'Early Supporter'}"
+                    :class="`badge badge_${badge}`"
+                  ></div>
+                  <div
+                    v-if="badge == 'hypesquad'"
+                    v-tippy="{content: 'HypeSquad Events'}"
+                    :class="`badge badge_${badge}`"
+                  ></div>
+                  <div
+                    v-if="badge == 'nitro'"
+                    v-tippy="{content: 'Discord Nitro'}"
+                    :class="`badge badge_${badge}`"
+                  ></div>
+                  <div
+                    v-if="badge == 'boost-lvl3'"
+                    v-tippy="{content: 'Nitro Boosting'}"
+                    :class="`badge badge_${badge}`"
+                  ></div>
                 </div>
               </div>
             </div>
@@ -115,17 +134,17 @@
         </svg>
       </div>
       <div class="section-heading section-heading__features">
-        <h1 class="section-heading__title">You will love these features!</h1>
+        <h1 class="section-heading__title">{{$t('home.features.heading')}}</h1>
       </div>
       <div class="container section-container">
         <div data-aos="sliding-left" class="section-container__details">
-          <h1>
-            Find
-            <span class="text-highlight">your</span> presence.
-          </h1>
-          <p>{{ $t('home.cards.presencesystem.explanation') }}</p>
+          <h1 v-html="this.$data.presenceSystemHeading" />
+          <p>{{ $t('home.features.presencesystem.description') }}</p>
           <p>
-            <a class="button button_large" href="/store">Open store</a>
+            <a
+              class="button button_large"
+              href="/store"
+            >{{$t('home.features.presencesystem.button')}}</a>
           </p>
         </div>
         <div data-aos="sliding-right" class="section-container__promo">
@@ -134,17 +153,17 @@
       </div>
       <div class="container section-container section-container_reverse">
         <div data-aos="sliding-down" class="section-container__details">
-          <h1>Simple user interface.</h1>
-          <p>Tired of complicated user interfaces? That's why we created a simple and useful interface with only important functions included:</p>
+          <h1>{{$t('home.features.simpleInterface.heading')}}</h1>
+          <p>{{$t('home.features.simpleInterface.description')}}</p>
           <ul>
             <li>
-              <p>App and Extension settings.</p>
+              <p>{{$t('home.features.simpleInterface.description.1')}}</p>
             </li>
             <li>
-              <p>Presence management.</p>
+              <p>{{$t('home.features.simpleInterface.description.2')}}</p>
             </li>
             <li>
-              <p>Sorting by category.</p>
+              <p>{{$t('home.features.simpleInterface.description.3')}}</p>
             </li>
           </ul>
         </div>
@@ -155,56 +174,21 @@
           </video>
         </div>
       </div>
-      <!-- <div class="container section-container section-container_alternative">
-        <div data-aos="sliding-down" class="section-container__details">
-          <h1>Not enough languages.</h1>
-          <p>We know that we have users using our software around the globe and we're providing everyone an ability to translate our extension and app to your language!</p>
-        </div>
-        <div data-aos="sliding-down" class="section-container__promo">
-          <img class="section-container__promo--image1" :src="cardThumbnail3">
-        </div>
-      </div>-->
       <div class="container section-container">
         <div data-aos="sliding-left" class="section-container__details">
-          <h1>Quick support.</h1>
-          <p>Something is glitching or sending you tons of errors? We will help you to get rid of that on our Discord sever, we also developed a support system that will make your life easier.</p>
+          <h1>{{$t('home.features.quickSupport.heading')}}</h1>
+          <p>{{$t('home.features.quickSupport.description')}}</p>
           <p>
-            <a class="button button_large" href="https://discord.gg/premid">Visit our server</a>
+            <a
+              class="button button_large"
+              href="https://discord.gg/premid"
+            >{{$t('home.features.quickSupport.button')}}</a>
           </p>
         </div>
         <div data-aos="sliding-down" class="section-container__promo">
           <img class="section-container__promo--image1" :src="cardThumbnail4" />
         </div>
       </div>
-      <!-- <div data-aos="sliding-down" class="feature-cards">
-        <Card
-          :title="$t('home.cards.presencesystem.title')"
-          :desc="$t('home.cards.presencesystem.explanation')"
-          icon="fas fa-puzzle-piece"
-          :image="cardThumbnail1"
-        />
-        <Card
-          :title="$t('home.cards.mediacontrols.title')"
-          :desc="$t('home.cards.mediacontrols.explanation')"
-          icon="fas fa-keyboard"
-          theme="media"
-          :image="cardThumbnail2"
-        />
-        <Card
-          :title="$t('home.cards.multilingual.title')"
-          :desc="$t('home.cards.multilingual.explanation')"
-          icon="fas fa-laptop"
-          theme="lang"
-          :image="cardThumbnail3"
-        />
-        <Card
-          :title="$t('home.cards.opensource.title')"
-          :desc="$t('home.cards.opensource.explanation')"
-          icon="fas fa-code"
-          theme="opensource"
-          :image="cardThumbnail4"
-        />
-      </div>-->
       <div class="waves-divider waves-divider_bottom">
         <svg
           class="wave"
@@ -251,6 +235,7 @@ export default {
       cardThumbnail3,
       cardThumbnail4,
       presences_display: [],
+      presenceSystemHeading: this.$t("home.features.presencesystem.heading"),
       presences: [
         {
           profile: {
@@ -263,7 +248,7 @@ export default {
           data: ["Store"],
           presence_time: "00:12"
         },
-                {
+        {
           profile: {
             DiscordID: "223238938716798978",
             badges: ["brilliance", "nitro"]
@@ -277,7 +262,7 @@ export default {
           ],
           presence_time: "1:36"
         },
-                {
+        {
           profile: {
             DiscordID: "213305189657083905",
             badges: ["bravery", "early"]
@@ -296,7 +281,10 @@ export default {
           service_title: "YouTube Music",
           service_logo: youtube_music_logo,
           smallImage: true,
-          data: ["supercombo - Piloto Automático (Clipe Oficial)", "supercombo"],
+          data: [
+            "supercombo - Piloto Automático (Clipe Oficial)",
+            "supercombo"
+          ],
           presence_time: "00:26"
         },
         {
@@ -339,6 +327,13 @@ export default {
     const Vue = this;
     const length = this.$data.presences.length;
 
+    this.$data.presenceSystemHeading.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
+      this.$data.presenceSystemHeading = this.$data.presenceSystemHeading.replace(
+        ch,
+        `<span class="text-highlight">${ch.slice(2, ch.length - 2)}</span>`
+      );
+    });
+
     // Randomly selects 2 presences to display.
     this.$data.presences_display.push(
       this.$data.presences.splice((Math.random() * length) | 0, 1)[0],
@@ -359,7 +354,7 @@ export default {
           Vue.$set(presence.profile, "id", data.tag);
         })
         .catch(function(error) {
-          if(error.request) Vue.$router.push({path: '/maintenance'});
+          if (error.request) Vue.$router.push({ path: "/maintenance" });
           Vue.errorMessage(error);
         })
         .finally(() => {
