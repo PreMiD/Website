@@ -34,9 +34,6 @@
           <div class="grid__section">
             <p class="section__title">{{ $t(`footer.partners.heading`) }}</p>
             <div class="section__promo">
-              <a class="partner-logo" href="https://gitbook.com/">
-                <img src="./assets/images/gitbook.png" />
-              </a>
               <a class="partner-logo" href="https://installbuilder.bitrock.com/">
                 <img src="./assets/images/bitrock_installbuilder.png" />
               </a>
