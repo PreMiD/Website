@@ -190,7 +190,7 @@ export default {
               win64_links.push(asset.browser_download_url);
             if (asset.name.endsWith("x32.exe"))
               win32_links.push(asset.browser_download_url);
-            if (asset.name.endsWith(".tar.gz"))
+            if (asset.name.endsWith(".app.zip") || asset.name.endsWith(".tar.gz"))
               mac_links.push(asset.browser_download_url);
             if (asset.name.endsWith(".xpi"))
               ff_links.push(asset.browser_download_url);
