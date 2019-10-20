@@ -11,20 +11,6 @@
 		color: white;
 		height: 50vh;
 	}
-
-	&_maintenance-page {
-		margin-top: 5em;
-		h1 {
-			font-size: 3em;
-		}
-		color: white;
-		height: 50vh;
-		align-items: center;
-		text-align: center;
-		.maintenance-links {
-			margin-top: 12em;
-		}
-	}
 }
 
 .content {
@@ -650,6 +636,19 @@
 				.tag {
 					color: rgba(255, 255, 255, 0.3);
 					font-size: 24px;
+					margin-left: 5px;
+				}
+			}
+			.roles {
+				margin: 0 12px;
+				margin-top: 5px;
+				text-align: center;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				i {
+					font-size: 17px;
+					margin: 10px;
 				}
 			}
 			.userrole {
@@ -744,16 +743,6 @@
 
 		&--image1 {
 			position: relative;
-		}
-	}
-}
-
-.category-container {
-	.label {
-		margin: 6px;
-		&.router-link-exact-active {
-			background: @accent-primary;
-			box-shadow: 0 3px 26px -5px fade(@accent-primary, 50%);
 		}
 	}
 }
