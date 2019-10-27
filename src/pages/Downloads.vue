@@ -221,6 +221,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import "../stylesheets/variables.less";
+<style lang="scss" scoped>
+@import "../stylesheets/variables.scss";
 </style>

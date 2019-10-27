@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import Logo from "../assets/images/logo.svg"
+  import Logo from "../assets/images/pmd_newlogo.svg"
 
   export default {
     name: "loading",

@@ -3,11 +3,10 @@
     <title>PreMiD</title>
     <div class="promo-container">
       <div class="promo-container__heading">
-        <div class="heading__logo">
-          <img src="./../assets/images/logo-big.svg" />
+        <div data-aos="sliding-down" class="heading__logo">
+          <img src="./../assets/images/pmd_newlogo.svg" />
         </div>
         <div class="heading__text">
-          <h1>PreMiD</h1>
           <p>{{ $t(`home.introduction.catchphrase`) }}</p>
         </div>
         <div class="heading__button-group">
@@ -369,6 +368,6 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import "../stylesheets/variables.less";
+<style lang="scss" scoped>
+@import "../stylesheets/variables.scss";
 </style>

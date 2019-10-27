@@ -205,8 +205,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import "./../stylesheets/variables.less";
+<style lang="scss" scoped>
+@import "./../stylesheets/variables.scss";
 
 .store-menu {
   display: flex;
@@ -258,14 +258,14 @@ export default {
   font-size: 14px;
   transition: all 300ms ease;
   border: none;
-  background: lighten(@background-secondary, 4%);
+  background: lighten($background-secondary, 4%);
   color: #74787c;
   line-height: 25px;
   font-weight: bold;
   font-family: Inter;
 
   &:focus {
-    background: lighten(@background-secondary, 7%);
+    background: lighten($background-secondary, 7%);
     outline: none;
   }
 

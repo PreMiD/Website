@@ -3,8 +3,7 @@
     <div class="navbar">
       <router-link to="/home">
         <div class="navbar__logotype">
-          <img src="./../assets/images/logo.svg" />
-          <p class="logotype__title">PREMID</p>
+          <img src="./../assets/images/pmd_newlogo.svg" />
         </div>
       </router-link>
       <div class="navbar__items on-desktop">
@@ -12,7 +11,7 @@
           :to="'/' + category.route"
           v-for="category of categories"
           v-bind:key="category.route"
-          class="navbar__item"
+          class="navbar__item" 
         >
           <i :class="'fas fa-' + category.logo" />
           <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
