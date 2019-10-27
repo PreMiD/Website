@@ -3,8 +3,8 @@
     <title>PreMiD</title>
     <div class="promo-container">
       <div class="promo-container__heading">
-        <div data-aos="sliding-down" class="heading__logo">
-          <img src="./../assets/images/logo.gif" />
+        <div class="heading__logo">
+          <img src="./../assets/images/logo-big.svg" />
         </div>
         <div class="heading__text">
           <h1>PreMiD</h1>
@@ -22,13 +22,8 @@
         </div>
       </div>
       <div class="promo-container__presences">
-        <div
-          data-aos="sliding-down"
-          class="discord-usercard"
-          v-for="presence of presences_display"
-          v-bind:key="presence.service"
-          :v-if="presence.profile.name !== ''"
-        >
+        <div class="discord-usercard" v-for="presence of presences_display" v-bind:key="presence.service"
+          :v-if="presence.profile.name !== ''">
           <div class="usercard__header">
             <div
               class="header__avatar"
@@ -134,7 +129,7 @@
         </svg>
       </div>
       <div class="section-heading section-heading__features">
-        <h1 class="section-heading__title">{{$t('home.features.heading')}}</h1>
+        <h1 class="section-heading__title">You will love these features!</h1>
       </div>
       <div class="container section-container">
         <div data-aos="sliding-left" class="section-container__details">
