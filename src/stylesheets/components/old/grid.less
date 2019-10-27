@@ -1,0 +1,54 @@
+.footer-grid {
+  max-width: 1600px;
+  margin: 0 auto;
+
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-content: center;
+
+  .grid__section {
+    margin: 1em;
+    .section__title {
+      font-weight: bold;
+      margin: 7px auto;
+      font-size: 18px;
+      color: white;
+    }
+
+    div {
+      p {
+        color: #99aab5;
+        margin: 7px auto;
+        font-weight: 600;
+      }
+
+      a:not(.partner-logo) {
+        &:not(.button) {
+          color: #99aab5;
+          transition: color 0.2s ease;
+
+          &:hover {
+            color: lighten(#99aab5, 10%);
+            transition: color 0s ease;
+          }
+        }
+
+        font-weight: 600;
+        display: block;
+        margin: 2px 0;
+      }
+    }
+  }
+}
+
+.grid {
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .col {
+    flex: 1;
+  }
+}

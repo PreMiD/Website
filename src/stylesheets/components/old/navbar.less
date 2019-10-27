@@ -1,0 +1,144 @@
+.navbar__container {
+  background: @background-secondary;
+  position: relative;
+  // box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+
+  .fa,
+  .fab,
+  .fal,
+  .far,
+  .fas {
+    padding: 1px 4px;
+    font-size: 0.9em;
+    vertical-align: middle;
+  }
+
+  .navbar {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: @accent-primary;
+    display: flex;
+    align-items: center;
+
+    * {
+      user-select: none;
+    }
+
+    .navbar__logotype {
+      img {
+        margin-left: 0.5rem;
+        margin-right: 0.3rem;
+        vertical-align: sub;
+        display: inline-block;
+      }
+
+      .logotype__title {
+        position: relative;
+        top: 3px;
+        vertical-align: super;
+        display: inline-block;
+        margin: 10px 0;
+        font-family: "Discord Font";
+        font-size: 1.8rem;
+        transition: filter 0.12s;
+
+        &:hover {
+          transition: filter 0.12s;
+        }
+      }
+    }
+
+    .navbar__items {
+      vertical-align: top;
+      line-height: 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 800;
+      display: flex;
+      margin-left: auto;
+
+      .navbar__item {
+        margin: 0 20px;
+        position: relative;
+
+        .item__title {
+          vertical-align: middle;
+          text-transform: uppercase;
+          font-size: 1.3rem;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%);
+          width: 0;
+          height: 3px;
+          bottom: -1px;
+          border-radius: 5px;
+          // box-shadow: 0 1px 16px 0 @accent-primary;
+          background: @accent-primary;
+          transition: all 0.4s cubic-bezier(0.26, 0.08, 0, 0.97);
+        }
+
+        &:hover {
+          &::after {
+            width: 50%;
+          }
+        }
+
+        &.router-link-active {
+          &::after {
+            width: 80%;
+          }
+        }
+      }
+    }
+
+    .mobile-navbar__menu {
+      margin-left: auto;
+
+      a {
+        font-size: 23px;
+      }
+    }
+  }
+
+  .mobile-navbar__items {
+    background: @background-secondary;
+
+    left: 0;
+    right: 0;
+    z-index: 1111;
+    position: absolute;
+
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+
+    .navbar__item {
+      .item__title {
+        vertical-align: middle;
+        text-transform: uppercase;
+      }
+    }
+
+    a {
+      padding: 5px 0;
+      line-height: 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 800;
+
+      transition: all 0.2s ease;
+      box-shadow: inset 0px 0 0 0 @accent-primary;
+
+      &.router-link-active {
+        box-shadow: inset 4px 0 0 0 @accent-primary;
+        background: rgba(255, 255, 255, 0.01);
+      }
+    }
+  }
+}
