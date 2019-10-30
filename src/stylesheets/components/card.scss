@@ -43,7 +43,7 @@
         }
 
         .card__desc {
-            opacity: .7;
+            opacity: 7;
             text-align: left;
             position: relative;
             z-index: 2;
@@ -58,8 +58,8 @@
         // .card__background-overlay {
         //     position: absolute;
         //     overflow: hidden;
-        //     opacity: .1;
-        //     background: linear-gradient(135deg, @accent-secondary 0%, @background-secondary 100%);
+        //     opacity: @include 1;
+        //     background: linear-gradient(135deg, $accent-secondary 0%, $background-secondary 100%);
         //     z-index: 1;
         //     top: 0;
         //     bottom: 0;
@@ -148,7 +148,7 @@
         bottom: 0;
         left: 0;
         background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
-        opacity: .7;
+        opacity: 7;
 
         z-index: 1;
     }
@@ -343,7 +343,7 @@
 
         &.current-platform,
         &:hover {
-            background: @accent-primary;
+            background: $accent-primary;
 
             .platform-warning {
                 color: white;
@@ -372,7 +372,7 @@
         //     }
 
         //     p {
-        //         opacity: .8;
+        //         opacity: @include 8;
         //         margin: 0;
         //         padding: 0;
         //     }
@@ -404,7 +404,7 @@
     border-radius: 8px;
     position: relative;
     width: 550px;
-    background: #7289da;
+    background: desaturate(lighten($background-primary, 11%), 5%);
 
     * {
         margin: 0;
@@ -490,45 +490,45 @@
                         height: 24px;
 
                         &_hypesquad {
-                            background-image: url(../../assets/images/hypesquad.svg);
+                            background-image: url('../assets/images/hypesquad.svg');
                         }
 
                         &_nitro {
-                            background-image: url(../../assets/images/nitro.svg);
+                            background-image: url('../assets/images/nitro.svg');
                             width: 28px;
                         }
 
                         &_early {
-                            background-image: url(../../assets/images/early.svg);
+                            background-image: url('../assets/images/early.svg');
                             width: 28px;
                         }
 
                         &_bravery {
-                            background-image: url(../../assets/images/bravery.svg);
+                            background-image: url('../assets/images/bravery.svg');
                         }
 
                         &_brilliance {
-                            background-image: url(../../assets/images/brilliance.svg);
+                            background-image: url('../assets/images/brilliance.svg');
                         }
 
                         &_balance {
-                            background-image: url(../../assets/images/balance.svg);
+                            background-image: url('../assets/images/balance.svg');
                         }
 
                         &_boost-lvl1 {
-                            background-image: url(../../assets/images/boost-lvl1.svg);
+                            background-image: url('../assets/images/boost-lvl1.svg');
                         }
 
                         &_boost-lvl2 {
-                            background-image: url(../../assets/images/boost-lvl2.svg);
+                            background-image: require('../../assets/images/boost-lvl2.svg');
                         }
 
                         &_boost-lvl3 {
-                            background-image: url(../../assets/images/boost-lvl3.svg);
+                            background-image: require('../../assets/images/boost-lvl3.svg');
                         }
 
                         &_boost-lvl4 {
-                            background-image: url(../../assets/images/boost-lvl4.svg);
+                            background-image: require('../../assets/images/boost-lvl4.svg');
                         }
                     }
                 }
@@ -568,7 +568,7 @@
                         object-fit: cover;
                         -webkit-user-drag: none;
 
-                        mask: url(../../assets/images/mask.svg);
+                        mask: url('../assets/images/mask.svg');
                     }
 
                     img.status-icon {
@@ -727,7 +727,7 @@
 .category-card {
 
     width: 495px;
-    height: 170px; 
+    height: 170px;
     position: relative;
     background: hsl(216, 7%, 9%);
     background-size: cover;

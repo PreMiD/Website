@@ -1,8 +1,9 @@
 import Vue from "vue";
 import App from "./App";
 
-import "../public/static/assets/fonts/Inter/stylesheet.css";
-import "./stylesheets/root.less";
+// import "../public/static/assets/fonts/Inter/stylesheet.css";
+import "./stylesheets/addons/vuejs-noty.less";
+import "./stylesheets/root.scss";
 
 // Animations on scroll.
 import AOS from "aos";
