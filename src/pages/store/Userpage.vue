@@ -11,8 +11,10 @@
                         <i v-if="role == 'Main Developer'" class="fas fa-tools" v-tippy="{content: 'Main Developer', placement: 'bottom'}"></i>
                         <i v-if="role == 'Website Developer'" class="fas fa-tools" v-tippy="{content: 'Website Developer', placement: 'bottom'}"></i>
                         <i v-if="role == 'Community Manager'" class="fas fa-users" v-tippy="{content: 'Community Manager', placement: 'bottom'}"></i>
+                        <i v-if="role == 'Head Moderator'" class="fas fa-glasses" v-tippy="{content: `Head Moderator`, placement: 'bottom'}"></i>
                         <i v-if="role == 'Moderator'" class="fas fa-user-cog" v-tippy="{content: `Moderator`, placement: 'bottom'}"></i>
                         <i v-if="role == 'Ticket Manager'" class="fas fa-ticket-alt" v-tippy="{content: 'Ticket Manager', placement: 'bottom'}"></i>
+                        <i v-if="role == 'Presence Verifier'" class="fas fa-clipboard-check" v-tippy="{content: 'Presence Verifier', placement: 'bottom'}"></i>
                         <i v-if="role == 'Presence Developer'" class="fas fa-user-astronaut" v-tippy="{content: 'Presence Developer', placement: 'bottom'}"></i>
                         <i v-if="role == 'Patron'" class="fab fa-patreon" v-tippy="{content: 'Patron', placement: 'bottom'}"></i>
                         <i v-if="role == 'Donator'" class="fas fa-meteor" v-tippy="{content: 'Donator', placement: 'bottom'}"></i>
