@@ -1,5 +1,6 @@
 <template>
     <div class="container container_maintenance-page">
+        <title>PreMiD - Maintenance</title>
         <img data-aos="sliding-up" src="./../../assets/images/logo.gif" class="logo" />
         <h1 data-aos="sliding-up" class="text-highlight">{{ $t(`maintenance.big`) }}</h1>
         <p data-aos="sliding-right">{{ $t(`maintenance.heading`) }}</p>
