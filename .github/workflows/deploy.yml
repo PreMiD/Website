@@ -1,0 +1,26 @@
+name: DePloY
+on:
+  push:
+    branches: stable
+    paths:
+      - "public/**/*"
+      - "src/**/*"
+      - "package.json"
+      - "**.js"
+jobs:
+  DePloY:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Deploying...
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSHHOST }}
+          username: ${{ secrets.SSHUSERNAME }}
+          password: ${{ secrets.SSHPASSWORD }}
+          script: |
+            cd /home/PreMiD/Website/Stable
+            git reset --hard
+            git pull
+            yarn
+            yarn build
+            mv dist/ /var/www/html/premid
