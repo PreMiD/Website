@@ -76,7 +76,7 @@
                     v-if="presenceAuthor"
                     class="author-name"
                     :style="`color: ${presenceAuthor.roleColor};`"
-                    :to="`/users/${presenceAuthor.userID}`"
+                    :to="`/users/${presenceAuthor.userId}`"
                   >
                     <img
                       v-if="presenceAuthor.avatar"
@@ -177,7 +177,7 @@ export default {
       })
       .then(() => {
         return axios(
-          `https://api.premid.app/credits/${Vue.$data.presenceData.author.id}`
+          `https://api.premid.app/v2/credits/${Vue.$data.presenceData.author.id}`
         );
       })
       .then(res => {
