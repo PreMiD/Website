@@ -338,7 +338,7 @@ export default {
     this.$data.presences_display.forEach(function(presence_item, index) {
       // Axios provides Promises that will help us with handling errors and getting data.
       Vue.$root.isProcessing = true;
-      axios(`https://api.premid.app/credits/${presence_item.profile.DiscordID}`)
+      axios(`https://api.premid.app/v2/credits/${presence_item.profile.DiscordID}`)
         .then(function(res) {
           let data = res.data;
           let presence = Vue.$data.presences_display[index];
