@@ -24,4 +24,4 @@ jobs:
             git pull
             yarn
             yarn build
-            mv dist/* /var/www/html/premidBeta
+            mv -r dist/* /var/www/html/premidBeta
