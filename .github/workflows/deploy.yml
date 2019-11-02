@@ -8,6 +8,7 @@ on:
       - "package.json"
       - "**.js"
       - "yarn.lock"
+      - "**/*.yml"
 jobs:
   DePloY:
     runs-on: "ubuntu-latest"
@@ -24,4 +25,4 @@ jobs:
             git pull
             yarn
             yarn build
-            mv -r dist/* /var/www/html/premidBeta
+            mv -rf dist/* /var/www/html/premidBeta
