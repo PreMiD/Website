@@ -1,7 +1,7 @@
 name: DePloY
 on:
   push:
-    branches: stable
+    branches: master
     paths:
       - "public/**/*"
       - "src/**/*"
@@ -23,4 +23,4 @@ jobs:
             git pull
             yarn
             yarn build
-            mv dist/* /var/www/html/premid
+            mv dist/* /var/www/html/premidBeta
