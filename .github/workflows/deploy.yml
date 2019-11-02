@@ -25,4 +25,4 @@ jobs:
             git pull
             yarn
             yarn build
-            mv -rf dist/* /var/www/html/premidBeta
+            cp -r dist/* /var/www/html/premidBeta
