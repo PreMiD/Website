@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.SSHUSERNAME }}
           password: ${{ secrets.SSHPASSWORD }}
           script: |
-            cd /home/PreMiD/Website/Stable
+            cd /home/PreMiD/Website/Master
             git reset --hard
             git pull
             yarn
