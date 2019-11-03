@@ -91,18 +91,22 @@ export default {
       title: `PreMiD - ${this.user.name}`,
       meta: [
         {
+          hid: "description",
           name: "description",
           content: `${this.user.name}'s profile.`
         },
         {
+          hid: "og:description",
           property: "og:description",
           content: `${this.user.name}'s profile.`
         },
         {
+          hid: "og:title",
           property: "og:title",
           content: this.user.name
         },
         {
+          hid: "og:image",
           property: "og:image",
           content: this.user.avatar
         }
