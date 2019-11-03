@@ -12,7 +12,8 @@
             <li>
               <p>
                 {{ $t('downloads.instructions.step.1') }}
-                [<a href="#app-downloads">
+                [
+                <a href="#app-downloads">
                   <i class="fas fa-arrow-down" />
                 </a>]
               </p>
@@ -23,7 +24,8 @@
             <li>
               <p>
                 {{ $t('downloads.instructions.step.3') }}
-                [<a href="#ext-downloads">
+                [
+                <a href="#ext-downloads">
                   <i class="fas fa-arrow-down" />
                 </a>]
               </p>
@@ -31,7 +33,7 @@
             <li>
               <p>
                 <i18n path="downloads.instructions.step.4">
-                  <router-link to="/store">{{$t('downloads.instructions.step.4.store')}}</router-link>
+                  <nuxt-link to="/store">{{$t('downloads.instructions.step.4.store')}}</nuxt-link>
                 </i18n>
               </p>
             </li>
@@ -124,6 +126,11 @@
 import axios from "axios";
 export default {
   name: "downloads",
+  head() {
+    return {
+      title: "Downloads"
+    };
+  },
   data() {
     return {
       platforms: [],
@@ -152,7 +159,9 @@ export default {
     };
   },
   mounted() {
-    let ua = navigator.userAgent;
+    let ua = "";
+
+    if (process.browser) ua = navigator.userAgent;
 
     //* Browser detection.
     // Thanks to https://stackoverflow.com/a/9851769 for providing code.
@@ -190,7 +199,10 @@ export default {
               win64_links.push(asset.browser_download_url);
             if (asset.name.endsWith("x32.exe"))
               win32_links.push(asset.browser_download_url);
-            if (asset.name.endsWith(".app.zip") || asset.name.endsWith(".tar.gz"))
+            if (
+              asset.name.endsWith(".app.zip") ||
+              asset.name.endsWith(".tar.gz")
+            )
               mac_links.push(asset.browser_download_url);
             if (asset.name.endsWith(".xpi"))
               ff_links.push(asset.browser_download_url);

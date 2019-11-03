@@ -2,11 +2,8 @@
   "name": "premid-website",
   "version": "2.0.0",
   "scripts": {
-    "init": "npm i && node languageParser.js",
-    "serve": "vue-cli-service serve",
-    "build": "node languageParser.js && vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/langs/**/*.json'"
+    "dev": "nuxt",
+    "build": "node languageParser.js && nuxt build"
   },
   "dependencies": {
     "aos": "^3.0.0-beta.6",
@@ -15,6 +12,7 @@
     "gif-frames": "^1.0.1",
     "marked": "^0.7.0",
     "node-emoji": "^1.10.0",
+    "nuxt": "^2.10.2",
     "postcss-scss": "^2.0.0",
     "tinycolor2": "^1.4.1",
     "vue": "^2.6.10",

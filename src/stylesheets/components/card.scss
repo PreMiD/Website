@@ -404,7 +404,7 @@
     border-radius: 8px;
     position: relative;
     width: 550px;
-    background: desaturate(lighten($background-primary, 11%), 5%);
+    background: $accent-primary;
 
     * {
         margin: 0;
@@ -669,7 +669,7 @@
 
         h2 {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 1);
             font-weight: 900;
             display: inline-block;
             font-family: 'Discord Font', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

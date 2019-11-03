@@ -1,21 +1,22 @@
 <template>
   <div class="navbar__container">
     <div class="navbar">
-      <router-link to="/home">
+      <nuxt-link to="/">
         <div class="navbar__logotype">
-          <img src="./../assets/images/pmd_newlogo.svg" />
+          <img src="./../assets/images/logo.svg" />
+          <h1>PreMiD</h1>
         </div>
-      </router-link>
+      </nuxt-link>
       <div class="navbar__items on-desktop">
-        <router-link
+        <nuxt-link
           :to="'/' + category.route"
           v-for="category of categories"
           v-bind:key="category.route"
-          class="navbar__item" 
+          class="navbar__item"
         >
           <i :class="'fas fa-' + category.logo" />
           <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
-        </router-link>
+        </nuxt-link>
       </div>
       <div class="mobile-navbar__menu on-mobile">
         <a ref="menuTrigger" v-on:click="mobileMenuActive = !mobileMenuActive">
@@ -29,7 +30,7 @@
         v-on:click="mobileMenuActive = false"
         class="mobile-navbar__items on-mobile"
       >
-        <router-link
+        <nuxt-link
           :to="'/' + category.route"
           v-for="category of categories"
           v-bind:key="category.route"
@@ -37,7 +38,7 @@
         >
           <i :class="'fas fa-' + category.logo" />
           <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
-        </router-link>
+        </nuxt-link>
       </div>
     </transition>
   </div>

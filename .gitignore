@@ -6,3 +6,4 @@ package-lock.json
 dist
 .vscode/settings.json
 src/langs
+.nuxt

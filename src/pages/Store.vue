@@ -1,7 +1,6 @@
 <template>
   <section>
-    <title>PreMiD - Store</title>
-    <div v-if="!$root.isProcessing" class="store-menu">
+    <div class="store-menu">
       <div class="store-menu__searchbar-container">
         <i class="fas fa-search"></i>
         <input class="searchbar" :placeholder="$t('store.search')" v-model="presenceSearch" />
@@ -18,17 +17,17 @@
     </div>
 
     <transition name="slide-down" mode="in-out">
-      <div v-if="!$root.isProcessing" class="container">
+      <div class="container">
         <div class="category-container">
-          <router-link
+          <nuxt-link
             class="label"
-            :class="{'router-link-exact-active': currentCategory == 'all'}"
+            :class="{'nuxt-link-exact-active': currentCategory == 'all'}"
             :to="{ query: {page: currentPageNumber, category: 'all' } }"
           >
             <i :class="'fas fa-map'" />
             {{$t('store.category.all')}}
-          </router-link>
-          <router-link
+          </nuxt-link>
+          <nuxt-link
             class="label"
             v-for="category in this.categories"
             :key="category.id"
@@ -36,7 +35,7 @@
           >
             <i :class="'fas fa-' + category.icon" />
             {{ category.title }}
-          </router-link>
+          </nuxt-link>
         </div>
 
         <h1 class="heading" v-if="filteredPresences.length <= 0">
@@ -65,7 +64,7 @@
 
 <script>
 import StoreCard from "./../components/StoreCard.vue";
-import Pagination from "./../components/Pagination";
+import Pagination from "./../components/Pagination.vue";
 
 import axios from "axios";
 import { Promise } from "q";
@@ -111,51 +110,42 @@ export default {
         }
       },
       presences: [],
+      addedPresences: [],
       nsfw: false,
       presenceSearch: "",
       presencesPerPage: 9
     };
   },
+  async asyncData() {
+    return {
+      presences: (await axios(`https://api.premid.app/v2/presences`)).data
+    };
+  },
   created() {
     let self = this;
 
-    this.$root.isProcessing = true;
-
     // Requesting presences data from our API and adding it into our Vue data.
-    axios(`https://api.premid.app/v2/presences`)
-      .then(function(res) {
-        let presences = res.data.sort((a, b) => a.name.localeCompare(b.name));
 
-        var foreach = res.data.map(presence => {
-          self.$data.presences.push(presence.metadata);
-        });
+    this.$data.presences = this.$data.presences.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
 
-        Promise.all(foreach).finally(() => {
-          self.$root.isProcessing = false;
+    this.$data.presences = this.$data.presences.map(
+      presence => presence.metadata
+    );
 
-          if (
-            self.pageCount < Number(self.$route.query.page) ||
-            self.$route.query.page <= -1
-          ) {
-            self.$router.push({
-              path: "/notfound"
-            });
-          }
-        });
-      })
-      .catch(function(error) {
-        console.error(error);
-        self.$root.isProcessing = false;
-        if (error.request) self.$router.push({ path: "/maintenance" });
+    if (
+      this.pageCount < Number(this.$route.query.page) ||
+      this.$route.query.page <= -1
+    ) {
+      this.$router.push({
+        path: "/notfound"
       });
+    }
   },
   computed: {
     currentCategory() {
-      if (this.$attrs.category) {
-        return this.$attrs.category;
-      } else {
-        return "all";
-      }
+      return this.$route.query.category ? this.$route.query.category : "all";
     },
     filteredPresences() {
       return this.$data.presences
@@ -168,7 +158,6 @@ export default {
           this.$data.nsfw ? true : !presence.tags.includes("nsfw")
         )
         .filter(presence => {
-          console.log(this.currentCategory);
           if (this.currentCategory == "all") {
             return presence;
           } else {
@@ -201,7 +190,11 @@ export default {
       return this.filteredPresences.slice(start, end);
     }
   },
-  methods: {}
+  head() {
+    return {
+      title: "Store"
+    };
+  }
 };
 </script>
 

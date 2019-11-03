@@ -7,7 +7,7 @@
         <div class="contributor-inner">
           <div
             v-for="(contributor) of contributors"
-            v-bind:key="contributor.name"
+            v-bind:key="contributor.id"
             class="contributor-card"
           >
             <CreditCard v-if="isStaffRole(contributor.role)" :user="contributor" />
@@ -20,7 +20,7 @@
         <div class="contributor-inner">
           <div
             v-for="(contributor) of contributors"
-            v-bind:key="contributor.name"
+            v-bind:key="contributor.id"
             class="contributor-card"
           >
             <CreditCard v-if="isSupporterRole(contributor.role)" :user="contributor" />
@@ -33,7 +33,7 @@
         <div class="contributor-inner">
           <div
             v-for="(contributor) of contributors"
-            v-bind:key="contributor.name"
+            v-bind:key="contributor.id"
             class="contributor-card"
           >
             <CreditCard v-if="isTranslatorRole(contributor.role)" :user="contributor" />
@@ -51,6 +51,11 @@ import CreditCard from "../components/CreditCard";
 
 export default {
   name: "contributors",
+  head() {
+    return {
+      title: "Contributors"
+    };
+  },
   components: {
     CreditCard
   },
@@ -60,25 +65,12 @@ export default {
       display: false
     };
   },
-  created() {
-    const $Vue = this;
-
-    this.$root.isProcessing = true;
-
-    axios
-      .get("https://api.premid.app/v2/credits")
-      .then(res => {
-        var data = res.data;
-        data.sort((a, b) => b.rolePosition - a.rolePosition);
-        $Vue.$data.contributors = data;
-      })
-      .catch(function(error) {
-        $Vue.$root.isProcessing = false;
-        if(error.request) $Vue.$router.push({path: '/maintenance'});
-      })
-      .finally(res => {
-        $Vue.$root.isProcessing = false;
-      });
+  async asyncData() {
+    return {
+      contributors: (await axios(
+        "https://api.premid.app/v2/credits"
+      )).data.sort((a, b) => b.rolePosition - a.rolePosition)
+    };
   },
   methods: {
     isStaffRole(roleName) {

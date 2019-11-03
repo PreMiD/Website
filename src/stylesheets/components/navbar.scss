@@ -1,113 +1,120 @@
 .navbar__container {
-    background: $background-primary;
-    position: relative;
-    // box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
-  
-    .fa,
-    .fab,
-    .fal,
-    .far,
-    .fas {
-      padding: 1px 4px;
-      font-size: 0.9em;
-      vertical-align: middle;
+  background: $background-primary;
+  position: relative;
+  // box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+
+  .fa,
+  .fab,
+  .fal,
+  .far,
+  .fas {
+    padding: 1px 4px;
+    font-size: 0.9em;
+    vertical-align: middle;
+  }
+
+  .navbar {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: $purplewhite;
+    display: flex;
+    align-items: center;
+
+    * {
+      user-select: none;
     }
-  
-    .navbar {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      color: $purplewhite;
-      display: flex;
+
+    .navbar__logotype {
+      display: inline-flex;
       align-items: center;
-  
-      * {
-        user-select: none;
-      }
-  
-      .navbar__logotype {
-        img {
-          width: 148px;
-          position: relative;
-          display: inline-block;
-          margin: 10px 20px;
-        }
-      }
-  
-      .navbar__items {
-        vertical-align: top;
-        line-height: 2.5rem;
-        font-size: 1.2rem;
-        font-weight: 900;
-        display: flex;
-        margin-left: auto;
-        text-transform: uppercase;
 
-        a.navbar__item { 
-          margin: 0 30px;
-          position: relative;
-          color: lighten($background-primary, 40%);
-          transition: 0.05s ease-in;
-  
-          .item__title {
-            vertical-align: middle;
-            // text-transform: uppercase;
-            font-size: 1.15rem;
-          }
-          
-          &:hover, &.router-link-active {
-            color: $accent-primary;
-          }
-        }
-
-        
+      img {
+        height: 100%;
+        position: relative;
+        display: inline-block;
       }
-  
-      .mobile-navbar__menu {
-        margin-left: auto;
-  
-        a {
-          font-size: 23px;
-        }
+
+      h1 {
+        font-size: 1.5rem;
+        font-family: "Discord Font";
+        margin: 0 5px;
+        margin-top: 5px;
       }
     }
-  
-    .mobile-navbar__items {
-      background: $background-secondary;
-  
-      left: 0;
-      right: 0;
-      z-index: 1111;
-      position: absolute;
-  
+
+    .navbar__items {
+      vertical-align: top;
+      line-height: 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 900;
       display: flex;
-      flex-flow: column;
-      text-align: center;
-  
-      .navbar__item {
+      margin-left: auto;
+      text-transform: uppercase;
+
+      a.navbar__item {
+        margin: 0 30px;
+        position: relative;
+        color: lighten($background-primary, 40%);
+        transition: 0.05s ease-in;
+
         .item__title {
           vertical-align: middle;
-          text-transform: uppercase;
+          // text-transform: uppercase;
+          font-size: 1.15rem;
+        }
+
+        &:hover,
+        &.nuxt-link-active {
+          color: $accent-primary;
         }
       }
-  
+    }
+
+    .mobile-navbar__menu {
+      margin-left: auto;
+
       a {
-        padding: 5px 0;
-        line-height: 2.5rem;
-        font-size: 1.2rem;
-        font-weight: 800;
-  
-        transition: all 0.2s ease;
-        box-shadow: inset 0px 0 0 0 $accent-primary;
-  
-        &.router-link-active {
-          box-shadow: inset 4px 0 0 0 $accent-primary;
-          background: rgba(255, 255, 255, 0.01);
-        }
+        font-size: 23px;
       }
     }
   }
-  
+
+  .mobile-navbar__items {
+    background: $background-secondary;
+
+    left: 0;
+    right: 0;
+    z-index: 1111;
+    position: absolute;
+
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+
+    .navbar__item {
+      .item__title {
+        vertical-align: middle;
+        text-transform: uppercase;
+      }
+    }
+
+    a {
+      padding: 5px 0;
+      line-height: 2.5rem;
+      font-size: 1.2rem;
+      font-weight: 800;
+
+      transition: all 0.2s ease;
+      box-shadow: inset 0px 0 0 0 $accent-primary;
+
+      &.nuxt-link-active {
+        box-shadow: inset 4px 0 0 0 $accent-primary;
+        background: rgba(255, 255, 255, 0.01);
+      }
+    }
+  }
+}
