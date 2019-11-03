@@ -2,13 +2,14 @@
   "name": "premid-website",
   "version": "2.0.0",
   "scripts": {
+    "start": "nuxt start --port 3003",
     "dev": "nuxt",
     "build": "node languageParser.js && nuxt build"
   },
   "dependencies": {
     "aos": "^3.0.0-beta.6",
     "axios": "^0.19.0",
-    "core-js": "^3.2.1",
+    "core-js": "2",
     "gif-frames": "^1.0.1",
     "marked": "^0.7.0",
     "node-emoji": "^1.10.0",
