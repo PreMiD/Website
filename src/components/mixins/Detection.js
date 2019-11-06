@@ -1,9 +1,4 @@
 var DetectionMixin = {
-  data() {
-    return {
-      switcherVisible: false
-    };
-  },
   methods: {
     isExtensionInstalled: () => {
       // Checking if user has the extension installed.

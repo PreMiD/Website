@@ -3,7 +3,6 @@
     <div class="languages-container">
       <div class="languages-list">
         <button
-          href="#"
           @click="setLanguage(lang); closeSwitcher();"
           :class="{'active': getCurrentLanguage() === lang}"
           class="languages-list__item"
@@ -11,7 +10,7 @@
           :key="`Lang${i}`"
         >{{ $t(`header.language`, lang) }}</button>
       </div>
-      <a href="#" @click="closeSwitcher" class="languages-container__close">
+      <a @click="closeSwitcher" class="languages-container__close">
         <i class="fas fa-times" />
       </a>
     </div>

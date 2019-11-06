@@ -16,41 +16,39 @@
       </div>
     </div>
 
-    <transition name="slide-down" mode="in-out">
-      <div class="container">
-        <div class="category-container">
-          <nuxt-link
-            class="label"
-            :class="{'nuxt-link-exact-active': currentCategory == 'all'}"
-            :to="{ query: {page: currentPageNumber, category: 'all' } }"
-          >
-            <i :class="'fas fa-map'" />
-            {{$t('store.category.all')}}
-          </nuxt-link>
-          <nuxt-link
-            class="label"
-            v-for="category in this.categories"
-            :key="category.id"
-            :to="{ query: {page: currentPageNumber, category: category.id } }"
-          >
-            <i :class="'fas fa-' + category.icon" />
-            {{ category.title }}
-          </nuxt-link>
-        </div>
-
-        <h1 class="heading" v-if="filteredPresences.length <= 0">
-          We can't find that presence
-          <i class="fas fa-sad-tear"></i>
-        </h1>
-        <div class="presence-container">
-          <StoreCard
-            v-for="presence in paginatedData"
-            v-bind:key="presence.service"
-            :presence="presence"
-          />
-        </div>
+    <div class="container">
+      <div class="category-container">
+        <nuxt-link
+          class="label"
+          :class="{'nuxt-link-exact-active': currentCategory == 'all'}"
+          :to="{ query: {page: currentPageNumber, category: 'all' } }"
+        >
+          <i :class="'fas fa-map'" />
+          {{$t('store.category.all')}}
+        </nuxt-link>
+        <nuxt-link
+          class="label"
+          v-for="category in this.categories"
+          :key="category.id"
+          :to="{ query: {page: currentPageNumber, category: category.id } }"
+        >
+          <i :class="'fas fa-' + category.icon" />
+          {{ category.title }}
+        </nuxt-link>
       </div>
-    </transition>
+
+      <h1 class="heading" v-if="filteredPresences.length <= 0">
+        We can't find that presence
+        <i class="fas fa-sad-tear"></i>
+      </h1>
+      <div class="presence-container">
+        <StoreCard
+          v-for="presence in paginatedData"
+          v-bind:key="presence.service"
+          :presence="presence"
+        />
+      </div>
+    </div>
     <div class="pagination-container">
       <Pagination
         v-if="this.$data.presenceSearch == ''"
@@ -67,7 +65,6 @@ import StoreCard from "./../components/StoreCard.vue";
 import Pagination from "./../components/Pagination.vue";
 
 import axios from "axios";
-import { Promise } from "q";
 
 export default {
   name: "store",
@@ -148,6 +145,7 @@ export default {
       return this.$route.query.category ? this.$route.query.category : "all";
     },
     filteredPresences() {
+      console.log(this.$data.presences.length, this.presenceSearch);
       return this.$data.presences
         .filter(presence => {
           return presence.service

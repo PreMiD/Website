@@ -1,10 +1,9 @@
 <template>
   <div>
-    <title>PreMiD</title>
     <div class="promo-container">
       <div class="promo-container__heading">
         <div class="heading__logo">
-          <img src="./../assets/images/logo.gif" />
+          <img src="@/assets/images/logo.gif" />
         </div>
         <div class="heading__text">
           <p>{{ $t(`home.introduction.catchphrase`) }}</p>
@@ -31,7 +30,7 @@
             <div
               class="header__avatar"
               :style="'background-image: url(' + presence.profile.image + ');'"
-            ></div>
+            />
             <div class="header__info">
               <div class="info__nameTag">
                 <span class="username">{{presence.profile.name}}</span>
@@ -81,14 +80,14 @@
                     v-if="presence.smallImage == false"
                     class="game"
                     style="-webkit-mask: none;"
-                    alt="./../assets/images/logo-big.svg"
+                    alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
                     v-tippy="{content: 'PreMiD v2.0'}"
                   />
                   <img
                     v-if="presence.smallImage == true"
                     class="game"
-                    alt="./../assets/images/logo-big.svg"
+                    alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
                     v-tippy="{content: 'PreMiD v2.0'}"
                   />
@@ -139,10 +138,11 @@
           <h1 v-html="this.$data.presenceSystemHeading" />
           <p>{{ $t('home.features.presencesystem.description') }}</p>
           <p>
-            <a
+            <nuxt-link
               class="button button_large"
-              href="/store"
-            >{{$t('home.features.presencesystem.button')}}</a>
+              to="/store"
+              v-text="$t('home.features.presencesystem.button')"
+            />
           </p>
         </div>
         <div data-aos="sliding-right" class="section-container__promo">
@@ -208,20 +208,20 @@
 
 
 <script>
-import twitch_logo from "./../assets/images/twitch.png";
-import youtube_logo from "./../assets/images/youtube.png";
-import soundcloud_logo from "./../assets/images/soundcloud.png";
-import netflix_logo from "./../assets/images/netflix.png";
-import youtube_music_logo from "./../assets/images/youtube-music.png";
-import premid_logo from "./../assets/images/premid-presence.png";
-import steam_logo from "./../assets/images/steam.png";
+import twitch_logo from "@/assets/images/twitch.png";
+import youtube_logo from "@/assets/images/youtube.png";
+import soundcloud_logo from "@/assets/images/soundcloud.png";
+import netflix_logo from "@/assets/images/netflix.png";
+import youtube_music_logo from "@/assets/images/youtube-music.png";
+import premid_logo from "@/assets/images/premid-presence.png";
+import steam_logo from "@/assets/images/steam.png";
 
-import cardThumbnail1 from "./../assets/images/cards/card1.png";
-import cardThumbnail2 from "./../assets/images/cards/card2.png";
-import cardThumbnail3 from "./../assets/images/cards/card3.png";
-import cardThumbnail4 from "./../assets/images/cards/card4.png";
+import cardThumbnail1 from "@/assets/images/cards/card1.png";
+import cardThumbnail2 from "@/assets/images/cards/card2.png";
+import cardThumbnail3 from "@/assets/images/cards/card3.png";
+import cardThumbnail4 from "@/assets/images/cards/card4.png";
 
-import Card from "../components/Card.vue";
+import Card from "@/components/Card.vue";
 
 import axios from "axios";
 
@@ -349,19 +349,14 @@ export default {
       // Axios provides Promises that will help us with handling errors and getting data.
       axios(
         `https://api.premid.app/v2/credits/${presence_item.profile.DiscordID}`
-      )
-        .then(function(res) {
-          let data = res.data;
-          let presence = Vue.$data.presences_display[index];
+      ).then(function(res) {
+        let data = res.data;
+        let presence = Vue.$data.presences_display[index];
 
-          Vue.$set(presence.profile, "image", data.avatar);
-          Vue.$set(presence.profile, "name", data.name);
-          Vue.$set(presence.profile, "id", data.tag);
-        })
-        .catch(function(error) {
-          if (error.request) this.$router.push({ path: "/maintenance" });
-          Vue.errorMessage(error);
-        });
+        Vue.$set(presence.profile, "image", data.avatar);
+        Vue.$set(presence.profile, "name", data.name);
+        Vue.$set(presence.profile, "id", data.tag);
+      });
     });
   },
   methods: {
@@ -372,7 +367,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../stylesheets/variables.scss";
-</style>
