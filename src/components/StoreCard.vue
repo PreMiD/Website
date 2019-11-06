@@ -150,9 +150,3 @@ export default {
   }
 };
 </script>
-
-<style lang="less">
-.presence-container__item {
-  flex: 0 0;
-}
-</style>
