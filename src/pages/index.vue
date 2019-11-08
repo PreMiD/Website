@@ -134,7 +134,7 @@
         <h1 class="section-heading__title">You will love these features!</h1>
       </div>
       <div class="container section-container">
-        <div data-aos="sliding-left" class="section-container__details">
+        <div class="section-container__details">
           <h1 v-html="this.$data.presenceSystemHeading" />
           <p>{{ $t('home.features.presencesystem.description') }}</p>
           <p>
@@ -145,12 +145,12 @@
             />
           </p>
         </div>
-        <div data-aos="sliding-right" class="section-container__promo">
+        <div class="section-container__promo">
           <img class="section-container__promo--image1" :src="cardThumbnail1" />
         </div>
       </div>
       <div class="container section-container section-container_reverse">
-        <div data-aos="sliding-down" class="section-container__details">
+        <div class="section-container__details">
           <h1>{{$t('home.features.simpleInterface.heading')}}</h1>
           <p>{{$t('home.features.simpleInterface.description')}}</p>
           <ul>
@@ -165,7 +165,7 @@
             </li>
           </ul>
         </div>
-        <div data-aos="sliding-left-2" class="section-container__promo">
+        <div class="section-container__promo">
           <video autoplay loop>
             <source src="./../assets/images/cards/card2_video.mp4" type="video/mp4" />
             <img class="section-container__promo--image2" :src="cardThumbnail2" />
@@ -173,7 +173,7 @@
         </div>
       </div>
       <div class="container section-container">
-        <div data-aos="sliding-left" class="section-container__details">
+        <div class="section-container__details">
           <h1>{{$t('home.features.quickSupport.heading')}}</h1>
           <p>{{$t('home.features.quickSupport.description')}}</p>
           <p>
@@ -183,7 +183,7 @@
             >{{$t('home.features.quickSupport.button')}}</a>
           </p>
         </div>
-        <div data-aos="sliding-down" class="section-container__promo">
+        <div class="section-container__promo">
           <img class="section-container__promo--image1" :src="cardThumbnail4" />
         </div>
       </div>

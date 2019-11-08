@@ -4,7 +4,6 @@ module.exports = {
   plugins: [
     "~/plugins/i18n.js",
     "~/plugins/Languages.js",
-    { src: "~/plugins/aos.js", ssr: false },
     { src: "~/plugins/tippy.js", ssr: false },
     { src: "~/plugins/noty.js", ssr: false }
   ],

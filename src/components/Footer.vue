@@ -23,16 +23,6 @@
         </div>
       </div>
       <div class="grid__section">
-        <p class="section__title" v-text="$t(`footer.developers.heading`)" />
-        <div>
-          <a href="https://docs.premid.app/" v-text="$t(`footer.developers.documentation`)" />
-          <a
-            href="https://discordapp.com/rich-presence/"
-            v-text="$t(`footer.developers.richpresence`)"
-          />
-        </div>
-      </div>
-      <div class="grid__section">
         <p class="section__title" v-text="$t(`footer.supportus.heading`)" />
         <div>
           <a href="https://patreon.com/timeraa/" v-text="$t(`footer.supportus.donate`)" />
@@ -41,15 +31,9 @@
         </div>
       </div>
       <div class="grid__section">
-        <p class="section__title" v-text="$t(`footer.help.heading`)" />
-        <div>
-          <a href="https://wiki.premid.app/" v-text="$t(`footer.help.troubleshooting`)" />
-          <a href="https://discord.gg/premid/" v-text="$t(`footer.help.getsupport`)" />
-        </div>
-      </div>
-      <div class="grid__section">
         <p class="section__title" v-text="$t(`footer.help.information`)" />
         <div>
+          <a href="https://github.com/PreMiD/">GitHub</a>
           <nuxt-link to="/cookies" v-text="$t(`footer.help.information.cookies`)" />
           <nuxt-link to="/privacy" v-text="$t(`footer.help.information.privacy`)" />
           <nuxt-link to="/tos" v-text="$t(`footer.help.information.terms`)" />
@@ -58,9 +42,10 @@
       <div class="grid__section">
         <p class="section__title" v-text="$t(`footer.more.heading`)" />
         <div>
-          <a href="https://status.premid.app/" v-text=" $t(`footer.more.status`)" />
           <a href="https://discord.gg/premid">Discord</a>
-          <a href="https://github.com/PreMiD/">GitHub</a>
+          <a href="https://wiki.premid.app/" v-text="$t(`footer.help.troubleshooting`)" />
+          <a href="https://docs.premid.app/" v-text="$t(`footer.developers.documentation`)" />
+          <a href="https://status.premid.app/" v-text=" $t(`footer.more.status`)" />
         </div>
       </div>
     </div>
