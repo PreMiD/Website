@@ -33,6 +33,11 @@
                 v-tippy="{content: `Moderator`, placement: 'bottom'}"
               ></i>
               <i
+                v-if="role == 'Head Moderator'"
+                class="fas fa-glasses"
+                v-tippy="{content: `Head Moderator`, placement: 'bottom'}"
+              ></i>
+              <i
                 v-if="role == 'Ticket Manager'"
                 class="fas fa-ticket-alt"
                 v-tippy="{content: 'Ticket Manager', placement: 'bottom'}"
