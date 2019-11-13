@@ -33,6 +33,11 @@
                 v-tippy="{content: `Moderator`, placement: 'bottom'}"
               ></i>
               <i
+                v-if="role == 'Head Moderator'"
+                class="fas fa-glasses"
+                v-tippy="{content: `Head Moderator`, placement: 'bottom'}"
+              ></i>
+              <i
                 v-if="role == 'Ticket Manager'"
                 class="fas fa-ticket-alt"
                 v-tippy="{content: 'Ticket Manager', placement: 'bottom'}"
@@ -41,6 +46,11 @@
                 v-if="role == 'Presence Developer'"
                 class="fas fa-user-astronaut"
                 v-tippy="{content: 'Presence Developer', placement: 'bottom'}"
+              ></i>
+              <i
+                v-if="role == 'Presence Verifier'"
+                class="fas fa-clipboard-check"
+                v-tippy="{content: 'Presence Verifier', placement: 'bottom'}"
               ></i>
               <i
                 v-if="role == 'Patron'"
