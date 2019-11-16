@@ -8,10 +8,7 @@ module.exports = {
     { src: "~/plugins/noty.js", ssr: false }
   ],
   env: {
-    apiBase:
-      process.env.NODE_ENV === "production"
-        ? "http://localhost:3001/v2/"
-        : "https://api.premid.app/v2/"
+    apiBase: "https://api.premid.app/v2/"
   },
   loading: {
     color: "#7289DA",
