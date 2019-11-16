@@ -7,66 +7,72 @@
         </div>
         <div class="user-data">
           <p class="username">
-            {{user.name}}
-            <span class="tag">#{{user.tag}}</span>
+            {{ user.name }}
+            <span class="tag">#{{ user.tag }}</span>
           </p>
           <div class="roles">
             <div v-for="role in user.roles" v-bind:key="role" :role="role">
               <i
                 v-if="role == 'Main Developer'"
                 class="fas fa-tools"
-                v-tippy="{content: 'Main Developer', placement: 'bottom'}"
+                v-tippy="{ content: 'Main Developer', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Website Developer'"
                 class="fas fa-tools"
-                v-tippy="{content: 'Website Developer', placement: 'bottom'}"
+                v-tippy="{ content: 'Website Developer', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Community Manager'"
                 class="fas fa-users"
-                v-tippy="{content: 'Community Manager', placement: 'bottom'}"
+                v-tippy="{ content: 'Community Manager', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Moderator'"
                 class="fas fa-user-cog"
-                v-tippy="{content: `Moderator`, placement: 'bottom'}"
+                v-tippy="{ content: `Moderator`, placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Head Moderator'"
                 class="fas fa-glasses"
-                v-tippy="{content: `Head Moderator`, placement: 'bottom'}"
+                v-tippy="{ content: `Head Moderator`, placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Ticket Manager'"
                 class="fas fa-ticket-alt"
-                v-tippy="{content: 'Ticket Manager', placement: 'bottom'}"
+                v-tippy="{ content: 'Ticket Manager', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Presence Developer'"
                 class="fas fa-user-astronaut"
-                v-tippy="{content: 'Presence Developer', placement: 'bottom'}"
+                v-tippy="{ content: 'Presence Developer', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Presence Verifier'"
                 class="fas fa-clipboard-check"
-                v-tippy="{content: 'Presence Verifier', placement: 'bottom'}"
+                v-tippy="{ content: 'Presence Verifier', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Patron'"
                 class="fab fa-patreon"
-                v-tippy="{content: 'Patron', placement: 'bottom'}"
+                v-tippy="{ content: 'Patron', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Donator'"
                 class="fas fa-meteor"
-                v-tippy="{content: 'Donator', placement: 'bottom'}"
+                v-tippy="{ content: 'Donator', placement: 'bottom' }"
               ></i>
             </div>
             <i
               v-if="userPresences.length > 20"
               class="fas fa-crown"
-              v-tippy="{content: 'Important Presence Developer Badge<br>Created ' + userPresences.length + ' presences.', placement: 'bottom'}"
+              v-tippy="{
+                content:
+                  'Important Presence Developer Badge<br>Created ' +
+                  userPresences.length +
+                  ' presences.',
+                placement: 'bottom'
+              }"
             ></i>
           </div>
         </div>
@@ -130,10 +136,9 @@ export default {
     };
   },
   async asyncData({ params }) {
-    const user = (await axios(
-        `https://api.premid.app/v2/credits/${params.userid}`
-      )).data,
-      presences = (await axios(`https://api.premid.app/v2/presences`)).data;
+    const user = (await axios(`${process.env.apiBase}credits/${params.userid}`))
+        .data,
+      presences = (await axios(`${process.env.apiBase}presences`)).data;
 
     return {
       user: user,

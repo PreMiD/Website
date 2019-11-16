@@ -3,12 +3,16 @@
     <div class="store-menu">
       <div class="store-menu__searchbar-container">
         <i class="fas fa-search"></i>
-        <input class="searchbar" :placeholder="$t('store.search')" v-model="presenceSearch" />
+        <input
+          class="searchbar"
+          :placeholder="$t('store.search')"
+          v-model="presenceSearch"
+        />
         <div class="searchbar-container__controls">
           <div class="nsfw_toggle pmd_checkbox">
             <p>NSFW</p>
             <label>
-              <input type="checkbox" :checked="nsfw" @change="nsfw =!nsfw" />
+              <input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" />
               <span ref="checkbox" class="checkbox-container"></span>
             </label>
           </div>
@@ -20,17 +24,17 @@
       <div class="category-container">
         <nuxt-link
           class="label"
-          :class="{'nuxt-link-exact-active': currentCategory == 'all'}"
-          :to="{ query: {page: currentPageNumber, category: 'all' } }"
+          :class="{ 'nuxt-link-exact-active': currentCategory == 'all' }"
+          :to="{ query: { page: currentPageNumber, category: 'all' } }"
         >
           <i :class="'fas fa-map'" />
-          {{$t('store.category.all')}}
+          {{ $t("store.category.all") }}
         </nuxt-link>
         <nuxt-link
           class="label"
           v-for="category in this.categories"
           :key="category.id"
-          :to="{ query: {page: currentPageNumber, category: category.id } }"
+          :to="{ query: { page: currentPageNumber, category: category.id } }"
         >
           <i :class="'fas fa-' + category.icon" />
           {{ category.title }}
@@ -46,6 +50,7 @@
           v-for="presence in paginatedData"
           v-bind:key="presence.service"
           :presence="presence"
+          :hot="hotPresences.includes(presence.service)"
         />
       </div>
     </div>
@@ -114,8 +119,18 @@ export default {
     };
   },
   async asyncData() {
+    const usage = (await axios(`${process.env.apiBase}usage`)).data.users,
+      presenceRanking = (await axios(`${process.env.apiBase}presenceUsage`))
+        .data;
+
     return {
-      presences: (await axios(`https://api.premid.app/v2/presences`)).data
+      presences: (await axios(`${process.env.apiBase}presences`)).data,
+      hotPresences: Object.keys(presenceRanking)
+        .map((k, i) => {
+          if ((presenceRanking[k] / usage) * 100 > 5) return k;
+          else false;
+        })
+        .filter(p => p)
     };
   },
   created() {
@@ -145,7 +160,6 @@ export default {
       return this.$route.query.category ? this.$route.query.category : "all";
     },
     filteredPresences() {
-      console.log(this.$data.presences.length, this.presenceSearch);
       return this.$data.presences
         .filter(presence => {
           return presence.service

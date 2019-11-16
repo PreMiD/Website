@@ -6,11 +6,14 @@
         <h1 class="heading" v-text="$t('contributors.headings.staff')" />
         <div class="contributor-inner">
           <div
-            v-for="(contributor) of contributors"
+            v-for="contributor of contributors"
             v-bind:key="contributor.id"
             class="contributor-card"
           >
-            <CreditCard v-if="isStaffRole(contributor.role)" :user="contributor" />
+            <CreditCard
+              v-if="isStaffRole(contributor.role)"
+              :user="contributor"
+            />
           </div>
         </div>
       </div>
@@ -19,11 +22,14 @@
         <h1 class="heading" v-text="$t('contributors.headings.supporters')" />
         <div class="contributor-inner">
           <div
-            v-for="(contributor) of contributors"
+            v-for="contributor of contributors"
             v-bind:key="contributor.id"
             class="contributor-card"
           >
-            <CreditCard v-if="isSupporterRole(contributor.role)" :user="contributor" />
+            <CreditCard
+              v-if="isSupporterRole(contributor.role)"
+              :user="contributor"
+            />
           </div>
         </div>
       </div>
@@ -32,11 +38,14 @@
         <h1 class="heading" v-text="$t('contributors.headings.translators')" />
         <div class="contributor-inner">
           <div
-            v-for="(contributor) of contributors"
+            v-for="contributor of contributors"
             v-bind:key="contributor.id"
             class="contributor-card"
           >
-            <CreditCard v-if="isTranslatorRole(contributor.role)" :user="contributor" />
+            <CreditCard
+              v-if="isTranslatorRole(contributor.role)"
+              :user="contributor"
+            />
           </div>
         </div>
       </div>
@@ -67,9 +76,9 @@ export default {
   },
   async asyncData() {
     return {
-      contributors: (await axios(
-        "https://api.premid.app/v2/credits"
-      )).data.sort((a, b) => b.rolePosition - a.rolePosition)
+      contributors: (await axios(`${process.env.apiBase}credits`)).data.sort(
+        (a, b) => b.rolePosition - a.rolePosition
+      )
     };
   },
   methods: {

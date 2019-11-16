@@ -11,22 +11,43 @@
           :style="`background-image: url('${presence.metadata.thumbnail}')`"
         >
           <div class="header__title">
-            <h1 class="presence-name">{{ presence.metadata.service }}</h1>
+            <h1 class="presence-name">
+              {{ presence.metadata.service }}
+              <span
+                v-if="hot"
+                class="fa-stack"
+                content="This presence is very popular around users."
+                v-tippy
+                style="font-size:1rem;"
+              >
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i
+                  :style="`color: ${presence.metadata.color};`"
+                  class="fas fa-fire-alt fa-stack-1x fa-inverse"
+                ></i>
+              </span>
+            </h1>
             <div
               class="fullpresence__gradient"
-              :style="`background: linear-gradient(155deg, ${presence.metadata.color} 0%, ${presenceGradientColor} 100%);`"
+              :style="
+                `background: linear-gradient(155deg, ${presence.metadata.color} 0%, ${presenceGradientColor} 100%);`
+              "
             ></div>
           </div>
           <div class="header__buttons">
             <button
-              v-if="!isInstalled && this.$root.extensionInstalled && typeof presence.metadata.button == 'undefined'"
+              v-if="
+                !isInstalled &&
+                  this.$root.extensionInstalled &&
+                  typeof presence.metadata.button == 'undefined'
+              "
               class="button button_light"
               v-on:click="sendPresence(presence.metadata.service)"
             >
               <span class="icon">
                 <i class="fas fa-plus"></i>
               </span>
-              {{ $t('store.card.presence.add') }}
+              {{ $t("store.card.presence.add") }}
             </button>
             <button
               v-if="isInstalled"
@@ -36,11 +57,13 @@
               <span class="icon">
                 <i class="fas fa-minus"></i>
               </span>
-              {{ $t('store.card.presence.remove') }}
+              {{ $t("store.card.presence.remove") }}
             </button>
             <a
               class="button button_black"
-              :href="`https://github.com/PreMiD/Presences/tree/master/${$route.params.presenceName}`"
+              :href="
+                `https://github.com/PreMiD/Presences/tree/master/${$route.params.presenceName}`
+              "
               target="_blank"
             >
               <span class="icon">
@@ -53,16 +76,23 @@
         </div>
         <div class="fullpresence__content">
           <div class="content__description">
-            <h2 class="content__title">{{ $t('presence.sections.description.title') }}</h2>
-            <div class="description-container" v-text="getPresenceDescription()" />
+            <h2 class="content__title">
+              {{ $t("presence.sections.description.title") }}
+            </h2>
+            <div
+              class="description-container"
+              v-text="getPresenceDescription()"
+            />
           </div>
           <div class="content__info">
-            <h2 class="content__title">{{ $t('presence.sections.information.title') }}</h2>
+            <h2 class="content__title">
+              {{ $t("presence.sections.information.title") }}
+            </h2>
             <ul class="info__sections">
               <li v-if="presence.metadata.author">
                 <p>
                   <i class="fas fa-user" />
-                  {{ $t('presence.sections.information.author') }}:
+                  {{ $t("presence.sections.information.author") }}:
                   <nuxt-link
                     v-if="author && author.userId"
                     class="author-name"
@@ -70,7 +100,11 @@
                     :to="`/users/${author.userId}`"
                     :disabled="true"
                   >
-                    <img v-if="author.avatar" :src="author.avatar" class="author-avatar" />
+                    <img
+                      v-if="author.avatar"
+                      :src="author.avatar"
+                      class="author-avatar"
+                    />
                     {{ presence.metadata.author.name }}
                   </nuxt-link>
                   <b v-else>{{ presence.metadata.author.name }}</b>
@@ -79,10 +113,8 @@
               <li v-if="presence.metadata.version">
                 <p>
                   <i class="fas fa-code-branch" />
-                  {{ $t('presence.sections.information.version') }}:
-                  <span
-                    class="presence-version"
-                  >
+                  {{ $t("presence.sections.information.version") }}:
+                  <span class="presence-version">
                     <b>{{ presence.metadata.version }}</b>
                   </span>
                 </p>
@@ -90,15 +122,18 @@
               <li v-if="presence.metadata.tags">
                 <p>
                   <i class="fas fa-hashtag" />
-                  {{ $t('presence.sections.information.tags') }}:
+                  {{ $t("presence.sections.information.tags") }}:
                 </p>
                 <div class="presence-tags">
                   <a
                     v-bind:key="tag"
-                    v-for="(tag) of presence.metadata.tags"
-                    :style="`background: ${presence.metadata.color}; color: ${presenceTextColor};`"
+                    v-for="tag of presence.metadata.tags"
+                    :style="
+                      `background: ${presence.metadata.color}; color: ${presenceTextColor};`
+                    "
                     class="label label_tag"
-                  >{{tag}}</a>
+                    >{{ tag }}</a
+                  >
                 </div>
               </li>
               <!-- <li>
@@ -108,7 +143,7 @@
               <li>
                 <p>
                   <i class="fas fa-link" />
-                  {{ $t('presence.sections.information.supportedurls') }}:
+                  {{ $t("presence.sections.information.supportedurls") }}:
                 </p>
                 <ul class="presence-urls">
                   <li v-for="url in presence.metadata.url" :key="url">
@@ -167,15 +202,22 @@ export default {
     };
   },
   async asyncData({ params }) {
-    let presence = (await axios(
-      `https://api.premid.app/v2/presences/${params.presenceName}`
-    )).data;
+    const usage = (await axios(`${process.env.apiBase}usage`)).data.users,
+      presenceRanking = (await axios(`${process.env.apiBase}presenceUsage`))
+        .data;
+
+    let presence = (
+      await axios(`${process.env.apiBase}presences/${params.presenceName}`)
+    ).data;
 
     let res = {
+      hot: (presenceRanking[params.presenceName] / usage) * 100 > 30,
       presence: presence,
-      author: (await axios(
-        `https://api.premid.app/v2/credits/${presence.metadata.author.id}`
-      )).data
+      author: (
+        await axios(
+          `${process.env.apiBase}credits/${presence.metadata.author.id}`
+        )
+      ).data
     };
 
     if (

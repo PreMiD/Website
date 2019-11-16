@@ -5,7 +5,9 @@
         class="store-card"
         @mouseover="card_hovered = true"
         @mouseleave="card_hovered = false"
-        :style="`background-image: url('${presence.thumbnail}'); box-shadow: 0 2px 64px 0 ${presenceShadowColor};`"
+        :style="
+          `background-image: url('${presence.thumbnail}'); box-shadow: 0 2px 64px 0 ${presenceShadowColor};`
+        "
       >
         <div class="store-card__service-logo">
           <img :src="presence.logo" />
@@ -13,10 +15,13 @@
         <div class="store-card__service-info">
           <div class="store-card__service">
             <h2>
-              <nuxt-link :key="presenceLinkName" :to="`/store/presences/${presenceLinkName}`">
+              <nuxt-link
+                :key="presenceLinkName"
+                :to="`/store/presences/${presenceLinkName}`"
+              >
                 {{ presence.service }}
                 <span
-                  v-if="isHot"
+                  v-if="hot"
                   class="fa-stack"
                   content="This presence is very popular around users."
                   v-tippy
@@ -30,8 +35,10 @@
               </nuxt-link>
             </h2>
             <p>
-              {{ $t('store.cards.creator') }}:
-              <nuxt-link :to="`/users/${presence.author.id}`">{{ presence.author.name }}</nuxt-link>
+              {{ $t("store.cards.creator") }}:
+              <nuxt-link :to="`/users/${presence.author.id}`">{{
+                presence.author.name
+              }}</nuxt-link>
             </p>
 
             <transition name="card-animation" mode="out-in">
@@ -39,14 +46,19 @@
                 :key="presence.service + '_desc'"
                 v-if="!card_hovered || !this.$root.extensionInstalled"
               >
-                <p class="store-card__desc">{{ this.getPresenceDescription() }}</p>
+                <p class="store-card__desc">
+                  {{ this.getPresenceDescription() }}
+                </p>
               </div>
               <div
                 :key="presence.service + '_buttons'"
                 v-if="card_hovered && this.$root.extensionInstalled"
               >
                 <div
-                  v-if="this.$root.extensionInstalled && typeof presence.button == 'undefined'"
+                  v-if="
+                    this.$root.extensionInstalled &&
+                      typeof presence.button == 'undefined'
+                  "
                   class="store-card__buttons on-desktop"
                 >
                   <button
@@ -57,7 +69,7 @@
                     <span class="icon">
                       <i class="fas fa-plus"></i>
                     </span>
-                    {{ $t('store.card.presence.add') }}
+                    {{ $t("store.card.presence.add") }}
                   </button>
                   <button
                     v-if="isInstalled"
@@ -67,11 +79,17 @@
                     <span class="icon">
                       <i class="fas fa-minus"></i>
                     </span>
-                    {{ $t('store.card.presence.remove') }}
+                    {{ $t("store.card.presence.remove") }}
                   </button>
                 </div>
-                <div v-if="this.$root.extensionInstalled && presence.button == false">
-                  <p class="store-card__warning">{{ $t('store.card.presence.included') }}</p>
+                <div
+                  v-if="
+                    this.$root.extensionInstalled && presence.button == false
+                  "
+                >
+                  <p class="store-card__warning">
+                    {{ $t("store.card.presence.included") }}
+                  </p>
                 </div>
               </div>
             </transition>
@@ -79,7 +97,9 @@
         </div>
         <div
           class="store-card__gradient"
-          :style="`background: linear-gradient(135deg, ${presence.color} 0%, ${presenceGradientColor} 100%);`"
+          :style="
+            `background: linear-gradient(135deg, ${presence.color} 0%, ${presenceGradientColor} 100%);`
+          "
         ></div>
       </div>
     </div>
@@ -89,10 +109,11 @@
 <script>
 import PresenceMixin from "./mixins/Presence";
 import tinycolor from "tinycolor2";
+import axios from "axios";
 
 export default {
   name: "StoreCard",
-  props: ["presence", "submit", "nsfw"],
+  props: ["presence", "submit", "nsfw", "hot"],
   mixins: [PresenceMixin],
   data() {
     return {
@@ -124,15 +145,6 @@ export default {
       this.$data.isInstalled = true;
   },
   computed: {
-    isHot() {
-      if (
-        this.getHotPresences().includes(this.presence.service.toLowerCase())
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    },
     presenceGradientColor() {
       return tinycolor(this.presence.color)
         .darken(45)
