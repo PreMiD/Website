@@ -202,12 +202,12 @@ export default {
     };
   },
   async asyncData({ params }) {
-    const usage = (await axios(`${process.env.apiBase}usage`)).data.users,
-      presenceRanking = (await axios(`${process.env.apiBase}presenceUsage`))
+    const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
+      presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
         .data;
 
     let presence = (
-      await axios(`${process.env.apiBase}presences/${params.presenceName}`)
+      await axios(`${process.env.apiBase}/presences/${params.presenceName}`)
     ).data;
 
     let res = {
@@ -215,7 +215,7 @@ export default {
       presence: presence,
       author: (
         await axios(
-          `${process.env.apiBase}credits/${presence.metadata.author.id}`
+          `${process.env.apiBase}/credits/${presence.metadata.author.id}`
         )
       ).data
     };

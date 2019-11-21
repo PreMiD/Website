@@ -136,9 +136,9 @@ export default {
     };
   },
   async asyncData({ params }) {
-    const user = (await axios(`${process.env.apiBase}credits/${params.userid}`))
+    const user = (await axios(`${process.env.apiBase}/credits/${params.userid}`))
         .data,
-      presences = (await axios(`${process.env.apiBase}presences`)).data;
+      presences = (await axios(`${process.env.apiBase}/presences`)).data;
 
     return {
       user: user,

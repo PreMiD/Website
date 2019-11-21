@@ -5,14 +5,15 @@ module.exports = {
     "~/plugins/i18n.js",
     "~/plugins/Languages.js",
     { src: "~/plugins/tippy.js", ssr: false },
-    { src: "~/plugins/noty.js", ssr: false }
+    { src: "~/plugins/noty.js", ssr: false },
+    { src: "~/plugins/pagination.js", ssr: false }
   ],
   env: {
-    apiBase: "https://api.premid.app/v2/"
+    apiBase: "https://api.premid.app/v2"
   },
   loading: {
     color: "#7289DA",
-    height: "5px"
+    height: "2px"
   },
   head() {
     return {

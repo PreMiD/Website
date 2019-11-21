@@ -96,6 +96,11 @@
       padding: 0;
   
       @include colored-button(lighten($background-secondary, 15%));
+
+      &.active {
+        box-shadow: 0 3px 36px -7px transparentize(lighten($accent-primary, 2%), 0.3);
+        background: lighten($accent-primary, 2%);
+      }
   
       &[disabled] {
         cursor: not-allowed;

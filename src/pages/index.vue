@@ -348,7 +348,7 @@ export default {
     this.$data.presences_display.forEach(function(presence_item, index) {
       // Axios provides Promises that will help us with handling errors and getting data.
       axios(
-        `${process.env.apiBase}credits/${presence_item.profile.DiscordID}`
+        `${process.env.apiBase}/credits/${presence_item.profile.DiscordID}`
       ).then(function(res) {
         let data = res.data;
         let presence = Vue.$data.presences_display[index];

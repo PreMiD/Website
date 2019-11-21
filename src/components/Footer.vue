@@ -119,7 +119,7 @@ export default {
   mounted() {
     let self = this;
 
-    axios(`${process.env.apiBase}usage`).then(({ data }) => {
+    axios(`${process.env.apiBase}/usage`).then(({ data }) => {
       self.$data.installStats = data.users
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ".");

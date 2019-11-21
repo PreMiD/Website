@@ -76,7 +76,7 @@ export default {
   },
   async asyncData() {
     return {
-      contributors: (await axios(`${process.env.apiBase}credits`)).data.sort(
+      contributors: (await axios(`${process.env.apiBase}/credits`)).data.sort(
         (a, b) => b.rolePosition - a.rolePosition
       )
     };
