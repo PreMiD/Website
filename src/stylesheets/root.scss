@@ -1,9 +1,6 @@
-/*
- *      PreMiD Website CSS
- *          Authors: Voknehzyr, Timeraa, Fruxh.
- */
 
-// Importing base styles
+/* Website design by Igor Ryzhenkov (@Voknehzyr) & @Timeraa */
+
 @import "variables.scss";
 
 @font-face {
@@ -23,24 +20,10 @@
 @import "components/figure.scss";
 @import "components/footer.scss";
 @import "components/navbar.scss";
+@import "components/label.scss";
+@import "components/switcher.scss";
 
 //* Plugins
 @import "plugins/vuejs-noty.scss";
 
 @import "components/visibility.scss";
-
-* {
-  a {
-    user-select: none;
-    outline: 0 !important;
-  }
-}
-
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.25s;
-}
-.page-enter,
-.page-leave-to {
-  opacity: 0;
-}

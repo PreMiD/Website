@@ -1,18 +1,18 @@
 .button {
     user-select: none;
     border: none;
-    padding: 10px 20px;
-    border-radius: 1.5rem;
-    font-size: 1.15rem;
+    padding: 12px 30px;
+    border-radius: 55rem;
+    font-size: 1.05em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
     background: $accent-primary;
-    font-weight: bold;
-    letter-spacing: 0.04rem;
     color: $purplewhite;
     cursor: pointer;
     display: inline-block;
     margin-right: 0.7rem;
     transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 0 0 0 transparent;
+    box-shadow: 0 3px 16px -7px transparentize($background-primary, 0.3);
     text-align: center;
     text-transform: uppercase;
   

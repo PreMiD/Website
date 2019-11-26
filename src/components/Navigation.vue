@@ -3,8 +3,8 @@
     <div class="navbar">
       <nuxt-link to="/">
         <div class="navbar__logotype">
-          <img src="./../assets/images/logo.svg" />
-          <h1>PreMiD</h1>
+          <img src="@/assets/images/logo_round.svg" />
+          <p v-html="latestReleaseVersion"/>
         </div>
       </nuxt-link>
       <div class="navbar__items on-desktop">
@@ -45,10 +45,13 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "navigation",
   data() {
     return {
+      latestReleaseVersion: undefined,
       mobileMenuActive: false,
       categories: [
         {
@@ -68,6 +71,13 @@ export default {
         }
       ]
     };
+  },
+  async created() {
+   
+    let latestRelease = (await axios('https://api.github.com/repos/PreMiD/PreMiD/releases/latest')).data.tag_name;
+    
+    await (this.$data.latestReleaseVersion = latestRelease);
+  
   },
   methods: {
     showMobileNavigation() {

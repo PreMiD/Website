@@ -3,7 +3,7 @@
     <div class="promo-container">
       <div class="promo-container__heading">
         <div class="heading__logo">
-          <img src="@/assets/images/logo.gif" />
+          <img src="@/assets/images/logo_round.svg" />
         </div>
         <div class="heading__text">
           <p>{{ $t(`home.introduction.catchphrase`) }}</p>
@@ -36,7 +36,7 @@
                 <span class="username">{{presence.profile.name}}</span>
                 <span class="discriminator">#{{presence.profile.id}}</span>
               </div>
-              <div class="info__badges">
+              <!-- <div class="info__badges">
                 <div
                   v-for="badge of presence.profile.badges"
                   v-bind:key="badge"
@@ -68,7 +68,7 @@
                     :class="`badge badge_${badge}`"
                   ></div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="usercard__activity">
@@ -82,14 +82,14 @@
                     style="-webkit-mask: none;"
                     alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
-                    v-tippy="{content: 'PreMiD v2.0'}"
+                    v-tippy="{content: 'PreMiD v2.0.1.4'}"
                   />
                   <img
                     v-if="presence.smallImage == true"
                     class="game"
                     alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
-                    v-tippy="{content: 'PreMiD v2.0'}"
+                    v-tippy="{content: 'PreMiD v2.0.1.4'}"
                   />
                   <img
                     v-if="presence.smallImage == true"
@@ -346,18 +346,24 @@ export default {
 
     // Updating user information in presence examples.
     this.$data.presences_display.forEach(function(presence_item, index) {
-      // Axios provides Promises that will help us with handling errors and getting data.
-      axios(
-        `${process.env.apiBase}/credits/${presence_item.profile.DiscordID}`
-      ).then(function(res) {
-        let data = res.data;
-        let presence = Vue.$data.presences_display[index];
+      let presence = Vue.$data.presences_display[index];
 
-        Vue.$set(presence.profile, "image", data.avatar);
-        Vue.$set(presence.profile, "name", data.name);
-        Vue.$set(presence.profile, "id", data.tag);
-      });
+      presence.profile['image'] = Vue.$data.users[index].avatar;
+      presence.profile['name'] = Vue.$data.users[index].name;
+      presence.profile['id'] = Vue.$data.users[index].tag;
     });
+  },
+  async asyncData() {
+    const credits = (await axios(`${process.env.apiBase}/credits`)).data;
+    
+    let creditsLength = credits.length;
+
+    return {
+      users: [
+        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))],
+        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))]
+      ]
+    }
   },
   methods: {
     openInNewTab(url) {

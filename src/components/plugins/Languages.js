@@ -2,8 +2,8 @@
 
 import Vue from "vue";
 
-import LanguageSwitcher from "../components/LanguageSwitcher.vue";
-import LanguageNotification from "../components/LanguageNotification.vue";
+import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
+import LanguageNotification from "~/components/LanguageNotification.vue";
 
 export default () => {
   Vue.component("LanguageSwitcher", LanguageSwitcher);

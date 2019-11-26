@@ -5,22 +5,27 @@
 
   &_error-page {
     margin-top: 8em;
+
     h1 {
       font-size: 3em;
     }
+
     color: white;
     height: 50vh;
   }
 
   &_maintenance-page {
     margin-top: 5em;
+
     h1 {
       font-size: 3em;
     }
+
     color: white;
     height: 50vh;
     align-items: center;
     text-align: center;
+
     .maintenance-links {
       margin-top: 12em;
     }
@@ -45,6 +50,8 @@
   .promo-container__heading {
     margin: auto 0;
     text-align: center;
+
+      flex-flow: column;
 
     .heading__logo {
       display: inline-block;
@@ -104,8 +111,7 @@
   justify-content: center;
   flex-wrap: wrap;
 
-  .category-card {
-  }
+  .category-card {}
 }
 
 .section-heading {
@@ -365,11 +371,9 @@
 
   padding: 120px 0 150px;
 
-  background-image: linear-gradient(
-    125deg,
-    $background-secondary,
-    $background-primary
-  );
+  background-image: linear-gradient(125deg,
+      $background-secondary,
+      $background-primary);
   color: #f8f9fd;
 }
 
@@ -471,7 +475,7 @@
     align-items: flex-start;
     color: white;
 
-    > div {
+    >div {
       background: #2f3136;
       padding: 1.5em;
       margin: 1em 0;
@@ -608,7 +612,7 @@
     justify-content: center;
     align-items: center;
 
-    > div {
+    >div {
       margin: 0 6px;
     }
 
@@ -625,6 +629,7 @@
       width: 128px;
       height: 128px;
     }
+
     .user-data {
       color: white;
 
@@ -639,11 +644,13 @@
       .username {
         font-size: 32px;
         font-weight: bold;
+
         .tag {
           color: rgba(255, 255, 255, 0.3);
           font-size: 24px;
         }
       }
+
       .userrole {
         font-size: 22px;
       }
@@ -713,6 +720,7 @@
     ul {
       margin: 0;
       padding: 0 1.2em;
+
       li {
         p {
           font-size: 1.2em;
@@ -723,6 +731,7 @@
   }
 
   &__promo {
+
     img,
     video {
       max-width: 720px;
@@ -741,7 +750,8 @@
     padding: 3px 10px;
     border-radius: 50px;
 
-    &.nuxt-link-exact-active {
+    &.nuxt-link-exact-active,
+    &.router-link-exact-active {
       background: $accent-primary;
       color: $background-secondary;
       box-shadow: 0 3px 26px -5px fade($accent-primary, 50%);

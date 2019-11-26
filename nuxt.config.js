@@ -1,20 +1,21 @@
 module.exports = {
   rootDir: "./",
   srcDir: "src",
+  buildModules: [
+    ['@nuxtjs/router', { /* module options */ }],
+  ],
   plugins: [
-    "~/plugins/i18n.js",
-    "~/plugins/Languages.js",
-    { src: "~/plugins/tippy.js", ssr: false },
-    { src: "~/plugins/noty.js", ssr: false },
-    { src: "~/plugins/pagination.js", ssr: false }
+    "~/router.js",
+    "~/components/plugins/I18n.js",
+    "~/components//plugins/Languages.js",
+    { src: "~/components//plugins/Tippy.js", ssr: false },
+    { src: "~/components//plugins/Noty.js", ssr: false },
+    { src: "~/components//plugins/Pagination.js", ssr: false }
   ],
   env: {
     apiBase: "https://api.premid.app/v2"
   },
-  loading: {
-    color: "#7289DA",
-    height: "2px"
-  },
+  loading: '~/components/Loader.vue', 
   head() {
     return {
       titleTemplate: "%s - PreMiD",

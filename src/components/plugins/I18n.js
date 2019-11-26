@@ -23,7 +23,7 @@ export default ({ app, store }) => {
 
 function loadLocaleMessages() {
   const locales = require.context(
-    "../langs",
+    "~/langs",
     true,
     /[A-Za-z0-9-_,\s]+\.json$/i
   );

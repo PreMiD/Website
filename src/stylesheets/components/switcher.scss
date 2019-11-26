@@ -1,4 +1,4 @@
-.pmd_checkbox {
+.checkbox-switcher {
 	span {
 		transition: all .15s ease-out;
 	}
@@ -19,11 +19,13 @@
 		pointer-events: none;
 	}
 
-	input[type="checkbox"]:checked + .checkbox-container {
-		background-color: @accent-primary;
+	input[type="checkbox"]:checked+.checkbox-container {
+		background-color: $accent-primary;
+
 		&:after {
 			left: 21px;
 		}
+
 		&:active {
 			&:after {
 				width: 26px;
@@ -51,6 +53,7 @@
 		cursor: pointer;
 
 		margin: 4px 0;
+
 		&:after {
 			content: "";
 			position: absolute;

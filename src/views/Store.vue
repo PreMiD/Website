@@ -5,7 +5,7 @@
         <i class="fas fa-search"></i>
         <input class="searchbar" :placeholder="$t('store.search')" v-model="presenceSearch" />
         <div class="searchbar-container__controls">
-          <div class="nsfw_toggle pmd_checkbox">
+          <div class="nsfw_toggle checkbox-switcher">
             <p>NSFW</p>
             <label>
               <input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" />
@@ -34,15 +34,16 @@
         We can't find that presence
         <i class="fas fa-sad-tear"></i>
       </h1>
-      <div class="presence-container">
+      <transition-group name="card-animation" class="presence-container" tag="div">
         <StoreCard v-for="presence in paginatedData" v-bind:key="presence.service" :presence="presence"
           :hot="hotPresences.includes(presence.service)" />
-      </div>
+      </transition-group>
     </div>
     <div class="pagination-container">
-      <paginate :no-li-surround="true" :break-view-link-class="'hidden'" :page-link-class="'button button_pagination'" :page-count="pageCount" v-model="currentPageNumber" :page-range="3" :click-handler="paginationEvent" :prev-text="``" :next-text="``"
-        :container-class="'pagination'" :page-class="'page-item'">
-          <span slot="breakViewContent"></span>
+      <paginate :no-li-surround="true" :break-view-link-class="'hidden'" :page-link-class="'button button_pagination'"
+        :page-count="pageCount" v-model="currentPageNumber" :page-range="9" :click-handler="paginationEvent"
+        :prev-text="``" :next-text="``" :container-class="'pagination'" :page-class="'page-item'">
+        <span slot="breakViewContent"></span>
       </paginate>
       <!-- <Pagination
         v-if="this.$data.presenceSearch == ''"
@@ -109,7 +110,12 @@
     },
     methods: {
       paginationEvent(pageNumber) {
-        this.$router.push({query: {page: pageNumber, category: this.currentCategory}});
+        this.$router.push({
+          query: {
+            page: pageNumber,
+            category: this.currentCategory
+          }
+        });
       },
     },
     async asyncData() {
