@@ -1,12 +1,12 @@
 <template>
   <div class="navbar__container">
     <div class="navbar">
-      <nuxt-link to="/">
+      
         <div class="navbar__logotype">
-          <img src="@/assets/images/logo_round.svg" />
-          <p v-html="latestReleaseVersion"/>
+          <nuxt-link to="/"><img src="@/assets/images/logo_round.svg" /></nuxt-link>
+          <a href="https://github.com/PreMiD/PreMiD/releases" target="_blank" class="label label_pmd-version" v-html="'2.0.1.5'"/>
         </div>
-      </nuxt-link>
+      
       <div class="navbar__items on-desktop">
         <nuxt-link
           :to="'/' + category.route"
@@ -71,13 +71,6 @@ export default {
         }
       ]
     };
-  },
-  async created() {
-   
-    let latestRelease = (await axios('https://api.github.com/repos/PreMiD/PreMiD/releases/latest')).data.tag_name;
-    
-    await (this.$data.latestReleaseVersion = latestRelease);
-  
   },
   methods: {
     showMobileNavigation() {

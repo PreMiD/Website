@@ -1,56 +1,65 @@
 <template>
   <section>
-    <div class="store-menu">
-      <div class="store-menu__searchbar-container">
-        <i class="fas fa-search"></i>
-        <input class="searchbar" :placeholder="$t('store.search')" v-model="presenceSearch" />
-        <div class="searchbar-container__controls">
-          <div class="nsfw_toggle checkbox-switcher">
-            <p>NSFW</p>
-            <label>
-              <input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" />
-              <span ref="checkbox" class="checkbox-container"></span>
-            </label>
+    <div class="store-grid">
+      <div class="store-menu store-grid__sidebar">
+        <p class="sidebar__subheader">Presence search</p>
+        <div class="store-menu__searchbar-container">
+          <input type="text" class="searchbar" :placeholder="$t('store.search')" v-model="presenceSearch" />
+        </div>
+
+        <p class="sidebar__subheader">Search filters</p>
+
+        <div class="checkbox-switcher">
+          <label>
+            <input type="checkbox" :checked="mostUsed" @change="mostUsed = !mostUsed" />
+            <span ref="checkbox" class="checkbox-container"></span>
+             <p>Show most used first</p>
+          </label>
+        </div>
+
+        <div class="checkbox-switcher">
+          <label>
+            <input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" />
+            <span ref="checkbox" class="checkbox-container"></span>
+             <p>Allow adult content</p>
+          </label>
+        </div>
+
+        <p class="sidebar__subheader">Categories</p>
+        <div class="container">
+          <div class="category-container">
+            <nuxt-link class="category-item" :class="{ 'nuxt-link-exact-active': currentCategory == 'all' }"
+              :to="{ query: { page: currentPageNumber, category: 'all' } }">
+              <i :class="'fas fa-map'" />
+              {{ $t("store.category.all") }}
+            </nuxt-link>
+            <nuxt-link class="category-item" v-for="category in this.categories" :key="category.id"
+              :to="{ query: { page: currentPageNumber, category: category.id } }">
+              <i :class="'fas fa-' + category.icon" />
+              {{ category.title }}
+            </nuxt-link>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="container">
-      <div class="category-container">
-        <nuxt-link class="label" :class="{ 'nuxt-link-exact-active': currentCategory == 'all' }"
-          :to="{ query: { page: currentPageNumber, category: 'all' } }">
-          <i :class="'fas fa-map'" />
-          {{ $t("store.category.all") }}
-        </nuxt-link>
-        <nuxt-link class="label" v-for="category in this.categories" :key="category.id"
-          :to="{ query: { page: currentPageNumber, category: category.id } }">
-          <i :class="'fas fa-' + category.icon" />
-          {{ category.title }}
-        </nuxt-link>
+      <div class="store-grid__content">
+        <h1 class="heading" v-if="filteredPresences.length <= 0">
+          We can't find that presence
+          <i class="fas fa-sad-tear"></i>
+        </h1>
+        <transition-group name="card-animation" class="presence-container" tag="div">
+          <StoreCard v-for="presence in paginatedData" v-bind:key="presence.service" :presence="presence"
+            :hot="hotPresences.includes(presence.service)" />
+        </transition-group>
       </div>
-
-      <h1 class="heading" v-if="filteredPresences.length <= 0">
-        We can't find that presence
-        <i class="fas fa-sad-tear"></i>
-      </h1>
-      <transition-group name="card-animation" class="presence-container" tag="div">
-        <StoreCard v-for="presence in paginatedData" v-bind:key="presence.service" :presence="presence"
-          :hot="hotPresences.includes(presence.service)" />
-      </transition-group>
     </div>
+
     <div class="pagination-container">
       <paginate :no-li-surround="true" :break-view-link-class="'hidden'" :page-link-class="'button button_pagination'"
-        :page-count="pageCount" v-model="currentPageNumber" :page-range="9" :click-handler="paginationEvent"
+        :page-count="pageCount" v-model="currentPageNumber" :page-range="6" :click-handler="paginationEvent"
         :prev-text="``" :next-text="``" :container-class="'pagination'" :page-class="'page-item'">
         <span slot="breakViewContent"></span>
       </paginate>
-      <!-- <Pagination
-        v-if="this.$data.presenceSearch == ''"
-        :pageCategory="this.currentCategory"
-        :pageNumber="currentPageNumber"
-        :pageCount="pageCount"
-      /> -->
     </div>
   </section>
 </template>
@@ -104,8 +113,9 @@
         presences: [],
         addedPresences: [],
         nsfw: false,
+        mostUsed: true,
         presenceSearch: "",
-        presencesPerPage: 9
+        presencesPerPage: 12
       };
     },
     methods: {
@@ -120,11 +130,27 @@
     },
     async asyncData() {
       const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
-        presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
-        .data;
+      presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`)).data,
+      presencesList = (await axios(`${process.env.apiBase}/presences`)).data;
+
+      //! This code must be deleted after API will be updated
+      //! to have presence usage count inside the returned data already.
+      for (var presence in presenceRanking) {
+        let score = presenceRanking[presence];
+        presencesList.some((element, index) => {
+          // Setting zero score for all presences.
+          if(!element.metadata.usage) presencesList[index].metadata.usage = 0;
+          // Setting presence usage score based on the API's results.
+          if(element.metadata.service.toLowerCase() == presence.toLowerCase()) {
+            presencesList[index].metadata.usage = score;
+            return true;
+          } else return false;
+        });
+      }
 
       return {
-        presences: (await axios(`${process.env.apiBase}/presences`)).data,
+        presences: presencesList,
+        topPresences: presenceRanking,
         hotPresences: Object.keys(presenceRanking)
           .map((k, i) => {
             if ((presenceRanking[k] / usage) * 100 > 5) return k;
@@ -132,7 +158,7 @@
           })
           .filter(p => p)
       };
-    },
+    }, 
     created() {
       let self = this;
 
@@ -176,7 +202,12 @@
               return presence.category == this.currentCategory;
             }
           })
-          .sort((a, b) => a.service.localeCompare(b.service));
+          .sort((a, b) => a.service.localeCompare(b.service))
+          .sort((a, b) => {
+            if(this.$data.mostUsed) {
+              return b.usage - a.usage;
+            }
+          });
       },
       currentPageNumber: {
         get() {
@@ -219,33 +250,9 @@
 <style lang="scss" scoped>
   @import "./../stylesheets/variables.scss";
 
-  .store-menu {
-    display: flex;
-    background: hsl(216, 7%, 11%);
-    padding-bottom: 0.5rem;
-  }
-
   .store-menu__searchbar-container {
-    flex: 1 1 auto;
+
     display: flex;
-    align-items: center;
-
-    position: relative;
-
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 20px;
-
-    width: 1%;
-
-    input {
-      width: stretch;
-      border-radius: 99em;
-    }
-
-    .searchbar-container__controls {
-      margin: 0 2em;
-    }
 
     button,
     .button {
@@ -263,58 +270,10 @@
     }
   }
 
-  .searchbar {
-    height: 1.8rem;
-    padding: 0 10px;
-    padding-left: 32px;
-    font-size: 14px;
-    transition: all 300ms ease;
-    border: none;
-    background: lighten($background-secondary, 4%);
-    color: #74787c;
-    line-height: 25px;
-    font-weight: bold;
-    font-family: Inter;
-
-    &:focus {
-      background: lighten($background-secondary, 7%);
-      outline: none;
-    }
-
-    * {
-      margin-left: -17.5rem;
-    }
-
-    &::placeholder {
-      color: #74787c;
-    }
-  }
-
   .fa-search {
     position: absolute;
     margin-left: 0.6rem;
     color: #74787c;
-  }
-
-  .nsfw_toggle {
-    height: 35px;
-    display: flex;
-    align-items: center;
-
-    p {
-      margin: 0;
-      margin-right: 10px;
-      font-size: 1.1rem;
-      font-weight: bold;
-    }
-  }
-
-  .nsfw-check {
-    &-c {
-      position: absolute;
-      margin-top: -2.7rem;
-      margin-left: 20rem;
-    }
   }
 
 </style>

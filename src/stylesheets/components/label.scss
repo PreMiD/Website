@@ -15,6 +15,16 @@
         font-weight: bold;
       }
     }
+
+    &_pmd-version {
+      position: relative;
+      top: 2px;
+      background: $accent-primary;
+      color: $purplewhite;
+      margin-left: 6px;
+      padding: 4px 10px;
+      font-size: 0.8em;
+    }
   
     &_role {
       margin: 2px 0;

@@ -43,7 +43,7 @@ module.exports = {
         {
           rel: "stylesheet",
           type: "text/css",
-          href: "/assets/fonts/Inter/stylesheet.css"
+          href: "https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css"
         }
       ],
       meta: [
