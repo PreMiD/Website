@@ -88,7 +88,8 @@
   }
 
   .mobile-navbar__items {
-    background: $background-secondary;
+    background: $background-primary;
+    box-shadow: 0 4px 32px 0 $background-primary; 
 
     left: 0;
     right: 0;
@@ -115,7 +116,7 @@
       transition: all 0.2s ease;
       box-shadow: inset 0px 0 0 0 $accent-primary;
 
-      &.nuxt-link-active {
+      &.nuxt-link-exact-active, &.router-link-exact-active {
         box-shadow: inset 4px 0 0 0 $accent-primary;
         background: rgba(255, 255, 255, 0.01);
       }

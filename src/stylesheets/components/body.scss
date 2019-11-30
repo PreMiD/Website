@@ -107,11 +107,11 @@ a {
   padding: 5em 0;
 
   &__sidebar {
-    margin: 2.6em auto;
+    margin: 2.6em 1em;
     background: $background-secondary;
     width: 15%; 
     padding: 1.2em;
-     border-radius: 0.5rem;
+    border-radius: 0.5rem;
     overflow: hidden;
 
     font-weight: 600;
@@ -167,7 +167,8 @@ a {
   }
 
   &__content {
-    flex: 85%;
+    margin: 0 1em;
+    flex: 55%;
   }
 }
 
