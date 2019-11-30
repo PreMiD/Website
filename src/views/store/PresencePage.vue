@@ -186,14 +186,15 @@
 
       return res;
     },
-    async created() {
-      if (this.isPresenceInstalled(this.$data.presence.metadata.service))
-        this.$data.isInstalled = true;
+    created() {
+      this.isPresenceInstalled(this.$data.presence.metadata.service).then((responce) => {
+        if(responce) this.$data.isInstalled = true;
+      });
     },
     updated() {
-      if (this.isPresenceInstalled(this.$data.presenceData.service)) {
-        this.$data.isInstalled = true;
-      }
+      // this.isPresenceInstalled(this.$data.presenceData.service).then((responce) => {
+      //   if(responce) this.$data.isInstalled = true;
+      // });
     },
     methods: {
       /**

@@ -161,7 +161,6 @@
     }, 
     created() {
       let self = this;
-
       // Requesting presences data from our API and adding it into our Vue data.
 
       this.$data.presences = this.$data.presences.sort((a, b) =>

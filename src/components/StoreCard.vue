@@ -103,8 +103,9 @@
       }
     },
     mounted() {
-      if (this.isPresenceInstalled(this.presence.service))
-        this.$data.isInstalled = true;
+      this.isPresenceInstalled(this.presence.service).then((responce) => {
+        if(responce) this.$data.isInstalled = true;
+      });
     },
     computed: {
       presenceGradientColor() {
