@@ -29,7 +29,8 @@ module.exports = {
       home: "/"
     },
     strategies: {
-      local: {
+      local: false,
+      discord: {
         _scheme: "oauth2",
         authorization_endpoint: "https://discordapp.com/api/oauth2/authorize",
         userinfo_endpoint: "https://discordapp.com/api/users/@me",
