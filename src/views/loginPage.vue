@@ -13,7 +13,7 @@ export default {
       this.$router.push("/");
       return;
     }
-    this.$auth.login("discord").then(() => console.log("LOL"));
+    this.$auth.login("local");
   }
 };
 </script>
