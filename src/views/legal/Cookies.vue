@@ -5,7 +5,9 @@
 
     <p>
       This is the Cookie Policy for PreMiD, accessible from
-      <a href="https://premid.app">https://premid.app</a>
+      <a
+        href="https://premid.app"
+      >https://premid.app</a>
     </p>
 
     <p>
@@ -16,7 +18,9 @@
 
     <p>
       For more general information on cookies see the
-      <a href="https://en.wikipedia.org/wiki/HTTP_cookie">Wikipedia article on HTTP Cookies</a>.
+      <a
+        href="https://en.wikipedia.org/wiki/HTTP_cookie"
+      >Wikipedia article on HTTP Cookies</a>.
     </p>
 
     <p>
@@ -53,7 +57,9 @@
         <p>This site uses Google Analytics which is one of the most widespread and trusted analytics solution on the web for helping us to understand how you use the site and ways that we can improve your experience. These cookies may track things such as how long you spend on the site and the pages that you visit so we can continue to produce engaging content.</p>
         <p>
           For more information on Google Analytics cookies, see the
-          <a href="https://analytics.google.com/">official Google Analytics page</a>.
+          <a
+            href="https://analytics.google.com/"
+          >official Google Analytics page</a>.
         </p>
       </li>
     </ul>
@@ -77,3 +83,9 @@
     </ul>
   </div>
 </template>
+
+<script>
+export default {
+  auth: false
+};
+</script>

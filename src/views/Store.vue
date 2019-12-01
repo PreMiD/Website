@@ -76,6 +76,7 @@
       StoreCard,
       Pagination
     },
+    auth: false,
     data() {
       return {
         categories: {
@@ -158,7 +159,7 @@
           })
           .filter(p => p)
       };
-    }, 
+    },
     created() {
       let self = this;
       // Requesting presences data from our API and adding it into our Vue data.

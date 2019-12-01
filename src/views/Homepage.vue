@@ -68,7 +68,7 @@
                     :class="`badge badge_${badge}`"
                   ></div>
                 </div>
-              </div> -->
+              </div>-->
             </div>
           </div>
           <div class="usercard__activity">
@@ -227,6 +227,7 @@ import axios from "axios";
 
 export default {
   name: "home",
+  auth: false,
   head() {
     return {
       title: "Home"
@@ -328,6 +329,7 @@ export default {
     };
   },
   beforeMount() {
+    console.log(this.$auth);
     const Vue = this;
     const length = this.$data.presences.length;
 
@@ -348,14 +350,14 @@ export default {
     this.$data.presences_display.forEach(function(presence_item, index) {
       let presence = Vue.$data.presences_display[index];
 
-      presence.profile['image'] = Vue.$data.users[index].avatar;
-      presence.profile['name'] = Vue.$data.users[index].name;
-      presence.profile['id'] = Vue.$data.users[index].tag;
+      presence.profile["image"] = Vue.$data.users[index].avatar;
+      presence.profile["name"] = Vue.$data.users[index].name;
+      presence.profile["id"] = Vue.$data.users[index].tag;
     });
   },
   async asyncData() {
     const credits = (await axios(`${process.env.apiBase}/credits`)).data;
-    
+
     let creditsLength = credits.length;
 
     return {
@@ -363,7 +365,7 @@ export default {
         credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))],
         credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))]
       ]
-    }
+    };
   },
   methods: {
     openInNewTab(url) {

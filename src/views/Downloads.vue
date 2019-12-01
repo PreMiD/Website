@@ -126,6 +126,8 @@
 import axios from "axios";
 export default {
   name: "downloads",
+  auth: false,
+
   head() {
     return {
       title: "Downloads"

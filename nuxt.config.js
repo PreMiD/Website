@@ -2,7 +2,12 @@ module.exports = {
   rootDir: "./",
   srcDir: "src",
   buildModules: [
-    ['@nuxtjs/router', { /* module options */ }],
+    [
+      "@nuxtjs/router",
+      {
+        /* module options */
+      }
+    ]
   ],
   plugins: [
     "~/router.js",
@@ -12,10 +17,31 @@ module.exports = {
     { src: "~/components//plugins/Noty.js", ssr: false },
     { src: "~/components//plugins/Pagination.js", ssr: false }
   ],
+  router: {
+    middleware: ["auth"]
+  },
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth"],
+  auth: {
+    redirect: {
+      login: "/login",
+      logout: "/",
+      callback: "/callback",
+      home: "/"
+    },
+    strategies: {
+      discord: {
+        _scheme: "oauth2",
+        authorization_endpoint: "https://discordapp.com/api/oauth2/authorize",
+        userinfo_endpoint: "https://discordapp.com/api/users/@me",
+        scope: ["identify"],
+        client_id: "503557087041683458"
+      }
+    }
+  },
   env: {
     apiBase: "https://api.premid.app/v2"
   },
-  loading: '~/components/Loader.vue', 
+  loading: "~/components/Loader.vue",
   head() {
     return {
       titleTemplate: "%s - PreMiD",

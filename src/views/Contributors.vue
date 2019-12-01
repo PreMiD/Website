@@ -10,10 +10,7 @@
             v-bind:key="contributor.id"
             class="contributor-card"
           >
-            <CreditCard
-              v-if="isStaffRole(contributor.role)"
-              :user="contributor"
-            />
+            <CreditCard v-if="isStaffRole(contributor.role)" :user="contributor" />
           </div>
         </div>
       </div>
@@ -26,10 +23,7 @@
             v-bind:key="contributor.id"
             class="contributor-card"
           >
-            <CreditCard
-              v-if="isSupporterRole(contributor.role)"
-              :user="contributor"
-            />
+            <CreditCard v-if="isSupporterRole(contributor.role)" :user="contributor" />
           </div>
         </div>
       </div>
@@ -42,10 +36,7 @@
             v-bind:key="contributor.id"
             class="contributor-card"
           >
-            <CreditCard
-              v-if="isTranslatorRole(contributor.role)"
-              :user="contributor"
-            />
+            <CreditCard v-if="isTranslatorRole(contributor.role)" :user="contributor" />
           </div>
         </div>
       </div>
@@ -60,6 +51,8 @@ import CreditCard from "../components/CreditCard";
 
 export default {
   name: "contributors",
+  auth: false,
+
   head() {
     return {
       title: "Contributors"

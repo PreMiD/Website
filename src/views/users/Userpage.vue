@@ -99,6 +99,7 @@ import { Promise, isPromise } from "q";
 
 export default {
   name: "userpage",
+  auth: false,
   components: {
     StoreCard
   },
@@ -136,8 +137,9 @@ export default {
     };
   },
   async asyncData({ params }) {
-    const user = (await axios(`${process.env.apiBase}/credits/${params.userid}`))
-        .data,
+    const user = (await axios(
+        `${process.env.apiBase}/credits/${params.userid}`
+      )).data,
       presences = (await axios(`${process.env.apiBase}/presences`)).data;
 
     return {
