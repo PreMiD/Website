@@ -633,10 +633,10 @@
     margin: 10px 5px;
     position: relative;
     width: 250px;
-    height: 50px;
+    height: 70px;
     border-radius: 6px;
     padding: 10px;
-    background: rgb(41, 45, 51);
+    background: $background-secondary;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -667,18 +667,20 @@
         }
 
         h2 {
-            font-size: 14px;
+            font-size: 13px;
             color: rgba(255, 255, 255, 1);
             font-weight: 900;
             display: inline-block;
-            font-family: 'Discord Font', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-transform: uppercase;
+            // font-family: 'Discord Font', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
         }
 
     }
 
     &__avatar {
         img {
-            height: 40px;
+            height: 48px;
             border-radius: 50%;
             margin-right: 5px;
         }
@@ -687,7 +689,7 @@
             z-index: 1;
 
             position: absolute;
-            bottom: 14px;
+            bottom: 24px;
             right: 14px;
 
             display: block;

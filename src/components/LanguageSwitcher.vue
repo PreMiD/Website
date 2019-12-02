@@ -22,7 +22,7 @@ export default {
   name: "language-switcher",
   methods: {
     closeSwitcher() {
-      this.$parent.switcherVisible = false;
+      this.$parent.$data.switcherVisible = false;
     }
   }
 };

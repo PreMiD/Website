@@ -11,9 +11,9 @@ import Userpage from "~/views/users/Userpage";
 import Contributors from "~/views/Contributors";
 import Downloads from "~/views/Downloads";
 import NotFound from "~/views/errors/NotFound";
-import loginPage from "~/views/loginPage";
-import logoutPage from "~/views/logoutPage";
-import callbackPage from "~/views/callbackPage";
+import loginPage from "~/views/auth/Login";
+import logoutPage from '~/views/auth/Logout';
+import callbackPage from '~/views/auth/AuthCallback';
 
 Vue.use(Router);
 

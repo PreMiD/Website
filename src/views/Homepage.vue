@@ -329,6 +329,7 @@ export default {
     };
   },
   beforeMount() {
+
     const Vue = this;
     const length = this.$data.presences.length;
 

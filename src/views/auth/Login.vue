@@ -4,7 +4,7 @@
 export default {
   head() {
     return {
-      title: "Redirecting...",
+      title: "Authorization",
       titleTemplate: ""
     };
   },

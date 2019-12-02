@@ -92,12 +92,6 @@
       <i18n path="footer.copyright.line2" tag="p">
         <a class="hover-effect" href="https://iryzhenkov.ru/">Voknehzyr</a>
       </i18n>
-      <p class="footer__language-switcher">
-        {{ $t(`footer.language`) }}:
-        <a class="hover-effect" @click="toggleSwitcher">{{
-          $t(`header.language`)
-        }}</a>
-      </p>
     </div>
   </div>
 </template>
@@ -110,11 +104,6 @@ export default {
     return {
       installStats: 0
     };
-  },
-  methods: {
-    toggleSwitcher() {
-      this.$parent.$data.switcherVisible = !this.$parent.$data.switcherVisible;
-    }
   },
   mounted() {
     let self = this;

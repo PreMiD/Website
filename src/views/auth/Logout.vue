@@ -4,9 +4,13 @@
 export default {
   head() {
     return {
-      title: "logging in...",
+      title: "Logout",
       titleTemplate: ""
     };
+  },
+  created() {
+    this.$auth.logout();
+    this.$router.push("/");
   }
 };
 </script>

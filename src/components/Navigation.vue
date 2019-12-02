@@ -17,6 +17,14 @@
           <i :class="'fas fa-' + category.logo" />
           <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
         </nuxt-link>
+        <nuxt-link to="/login" class="navbar__item" v-if="!this.$auth.loggedIn">
+           <i class="fas fa-sign-in-alt"></i>
+          <span class="item__title">Sign in</span>
+        </nuxt-link>
+        <nuxt-link :to="'/users/' + this.$auth.user.id" class="navbar__item" v-if="this.$auth.loggedIn">
+           <i class="fas fa-user-circle"></i>
+          <span class="item__title">My profile</span>
+        </nuxt-link>
       </div>
       <div class="mobile-navbar__menu on-mobile">
         <a ref="menuTrigger" v-on:click="mobileMenuActive = !mobileMenuActive">
@@ -71,13 +79,6 @@ export default {
         }
       ]
     };
-  },
-  methods: {
-    showMobileNavigation() {
-      if (this.$refs.menuMobile.style.display !== "flex") {
-        this.$refs.menuMobile.style.display = "flex";
-      } else this.$refs.menuMobile.style.display = "none";
-    }
   }
 };
 </script>
