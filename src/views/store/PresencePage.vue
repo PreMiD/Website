@@ -8,7 +8,7 @@
       <div class="fullpresence-container">
         <div
           class="fullpresence__header"
-          :style="`background-image: url('${presence.metadata.thumbnail}')`"
+          :style="`background-image: url('${presence.metadata.thumbnail.includes('imgur.com') ? 'https://proxy.duckduckgo.com/iu/?u=' + presence.metadata.thumbnail : presence.metadata.thumbnail}')`"
         >
           <div class="header__title">
             <h1 class="presence-name">
@@ -188,7 +188,7 @@ export default {
         {
           hid: "og:image",
           property: "og:image",
-          content: this.$data.presence.metadata.logo
+          content: this.$data.presence.metadata.logo.includes('imgur.com') ? 'https://proxy.duckduckgo.com/iu/?u=' + this.$data.presence.metadata.logo : this.$data.presence.metadata.logo
         }
       ]
     };

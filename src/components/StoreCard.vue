@@ -2,10 +2,10 @@
 
     <div>
       <div class="store-card" @mouseover="card_hovered = true" @mouseleave="card_hovered = false" :style="
-          `background-image: url('${presence.thumbnail}'); box-shadow: 0 2px 64px 0 ${presenceShadowColor};`
+          `background-image: url('${presence.thumbnail.includes('imgur.com') ? 'https://proxy.duckduckgo.com/iu/?u=' + presence.thumbnail : presence.thumbnail}'); box-shadow: 0 2px 64px 0 ${presenceShadowColor};`
         ">
         <div class="store-card__service-logo">
-          <img :src="presence.logo" />
+          <img :src="presence.logo.includes('imgur.com') ? 'https://proxy.duckduckgo.com/iu/?u=' + presence.logo : presence.logo" />
         </div>
         <div class="store-card__service-info">
           <div class="store-card__service">
