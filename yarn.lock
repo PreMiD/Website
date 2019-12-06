@@ -4538,20 +4538,10 @@ lodash.kebabcase@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
   integrity sha1-hImxyw0p/4gZXM7KRI/21swpXDY=
 
-lodash.mapvalues@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
-  integrity sha1-G6+lAF3p3W9PJmaMMMo3IwzJaJw=
-
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
-
-lodash.pickby@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.pickby/-/lodash.pickby-4.6.0.tgz#7dea21d8c18d7703a27c704c15d3b84a67e33aff"
-  integrity sha1-feoh2MGNdwOifHBMFdO4SmfjOv8=
 
 lodash.template@^4.4.0, lodash.template@^4.5.0:
   version "4.5.0"
@@ -7899,14 +7889,12 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-tippy@4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/vue-tippy/-/vue-tippy-4.0.3.tgz#c85efc9523fb50f8cb431d4aec1909a847105a1f"
-  integrity sha512-Pq3CyEEA7uM7WePwyQitOd8nCEt9w6GEl2/902QJAU6kiFIJKVtjfLL5Z3krxdUF8bbZzf7YEq7yq7cIuwU6ZQ==
+vue-tippy@4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/vue-tippy/-/vue-tippy-4.2.1.tgz#df011bca537a334d48c84ddfa665f0786bf9c783"
+  integrity sha512-de4OK7jWM7MYt+u+DPZrfQXKRnLVBiae+nDhFiYJpD9GWK8Muj1KLNeFbsv44mg88EghOGUEnc9VUtcUxw3mFg==
   dependencies:
     humps "^2.0.1"
-    lodash.mapvalues "^4.6.0"
-    lodash.pickby "^4.6.0"
     tippy.js "^4.2.1"
 
 vue@^2.6.10:
