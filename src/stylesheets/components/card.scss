@@ -154,7 +154,7 @@
     }
 
     .store-card__overlay {
-        
+
         position: absolute;
         top: 8px;
         right: 0px;
@@ -633,10 +633,10 @@
     margin: 10px 5px;
     position: relative;
     width: 250px;
-    height: 70px;
+    height: 50px;
     border-radius: 6px;
     padding: 10px;
-    background: $background-secondary;
+    background: rgb(41, 45, 51);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -667,20 +667,18 @@
         }
 
         h2 {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 1);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
             font-weight: 900;
             display: inline-block;
-            text-transform: uppercase;
-            // font-family: 'Discord Font', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            
+            font-family: 'Discord Font', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
     }
 
     &__avatar {
         img {
-            height: 48px;
+            height: 40px;
             border-radius: 50%;
             margin-right: 5px;
         }
@@ -689,7 +687,7 @@
             z-index: 1;
 
             position: absolute;
-            bottom: 24px;
+            bottom: 14px;
             right: 14px;
 
             display: block;
