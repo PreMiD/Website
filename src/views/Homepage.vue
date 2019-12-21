@@ -36,7 +36,7 @@
                 <span class="username">{{presence.profile.name}}</span>
                 <span class="discriminator">#{{presence.profile.id}}</span>
               </div>
-              <!-- <div class="info__badges">
+              <div class="info__badges">
                 <div
                   v-for="badge of presence.profile.badges"
                   v-bind:key="badge"
@@ -68,7 +68,7 @@
                     :class="`badge badge_${badge}`"
                   ></div>
                 </div>
-              </div>-->
+              </div>
             </div>
           </div>
           <div class="usercard__activity">
@@ -213,7 +213,7 @@ import youtube_logo from "@/assets/images/youtube.png";
 import soundcloud_logo from "@/assets/images/soundcloud.png";
 import netflix_logo from "@/assets/images/netflix.png";
 import youtube_music_logo from "@/assets/images/youtube-music.png";
-import premid_logo from "@/assets/images/premid-presence.png";
+import premid_logo from "@/assets/images/pmd_logo.png";
 import steam_logo from "@/assets/images/steam.png";
 
 import cardThumbnail1 from "@/assets/images/cards/card1.png";

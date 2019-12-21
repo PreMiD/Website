@@ -92,12 +92,12 @@ module.exports = {
         {
           hid: "og:description",
           property: "og:description",
-          content: "Your rich presence for web services. "
+          content: "Your rich presence for web services."
         },
         {
           hid: "og:image",
           property: "og:image",
-          content: "https://beta.premid.app/assets/images/logo.gif"
+          content: "https://beta.premid.app/assets/images/pmd_logo.png"
         }
       ]
     };
