@@ -2,60 +2,27 @@
   "name": "premid-website",
   "version": "2.0.0",
   "scripts": {
-    "init": "npm i && node languageParser.js",
-    "serve": "vue-cli-service serve",
-    "build": "node languageParser.js && vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/langs/**/*.json'"
+    "start": "nuxt start --port 3004",
+    "dev": "nuxt",
+    "build": "rimraf src/langs/* && node languageParser.js && nuxt build"
   },
   "dependencies": {
-    "aos": "^3.0.0-beta.6",
-    "axios": "^0.19.0",
-    "core-js": "^3.2.1",
-    "gif-frames": "^1.0.1",
-    "marked": "^0.7.0",
-    "node-emoji": "^1.10.0",
-    "tinycolor2": "^1.4.1",
-    "vue": "^2.6.10",
-    "vue-meta": "^2.3.0",
-    "vue-router": "^3.1.3",
-    "vue-tippy": "^4.0.3",
-    "vuejs-noty": "^0.1.3"
+    "@nuxtjs/auth": "4.8.4",
+    "@nuxtjs/axios": "5.8.0",
+    "axios": "0.19.0",
+    "marked": "0.7.0",
+    "node-sass": "4.13.0",
+    "nuxt": "2.10.2",
+    "sass-loader": "8.0.0",
+    "tinycolor2": "1.4.1",
+    "vue-i18n": "8.15.1",
+    "vue-tippy": "4.2.1",
+    "vuejs-noty": "0.1.3",
+    "vuejs-paginate": "2.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.0.4",
-    "@vue/cli-plugin-eslint": "^4.0.3",
-    "@vue/cli-service": "^4.0.4",
-    "@vue/eslint-config-prettier": "^5.0.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.5.1",
-    "eslint-plugin-vue": "^5.2.3",
-    "less": "^3.10.3",
-    "less-loader": "^5.0.0",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.0",
-    "vue-cli-plugin-i18n": "^0.6.0",
-    "vue-template-compiler": "^2.6.10"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential"
-    ],
-    "rules": {
-      "no-console": "off"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+    "@nuxtjs/router": "1.5.0",
+    "rimraf": "3.0.0",
+    "node-emoji": "1.10.0"
+  }
 }

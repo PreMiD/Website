@@ -1,0 +1,131 @@
+.button {
+    user-select: none;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 55rem;
+    font-size: 1.05em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: $accent-primary;
+    color: $purplewhite;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.7rem;
+    transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 3px 16px -7px transparentize($background-primary, 0.3);
+    text-align: center;
+    text-transform: uppercase;
+  
+    i {
+      margin-right: 2px;
+    }
+  
+    &:hover {
+      box-shadow: 0 3px 22px -7px transparentize(lighten($accent-primary, 2%), 0.3);
+      background: lighten($accent-primary, 5%);
+    }
+  
+    &:active {
+      background: darken($accent-primary, 5%);
+      box-shadow: none;
+      transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+  
+    &:focus {
+      outline: none;
+      cursor: pointer;
+    }
+  }
+  
+  @mixin colored-button($color){
+    background: $color;
+  
+    &:hover {
+      box-shadow: 0 3px 22px -7px transparentize(lighten($color, 2%), 0.3);
+      background: lighten($color, 2%);
+    }
+  
+    &:active {
+      box-shadow: none;
+      background: darken($color, 2%);
+    }
+  }
+  
+  .button {
+    &.button_gray {
+      @include colored-button(#2c2f33);
+    }
+  
+    &.button_black {
+      @include colored-button(lighten($background-primary, 8%));
+    }
+  
+    &.button_red {
+      @include colored-button(rgb(255, 60, 60));
+    }
+  
+    &.button_light {
+      color: black;
+      @include colored-button(#fff);
+    }
+  
+    &.button_uppercase {
+      text-transform: uppercase;
+    }
+  
+    &.button_small {
+      padding: 8px 20px;
+      font-size: 0.95rem;
+    }
+  
+    &.button_medium {
+    }
+  
+    &.button_large {
+      padding: 14px 40px;
+      font-size: 1.2rem;
+    }
+
+    &.button_language-switch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 56px;
+      width: 56px;
+      font-size: 1.6em;
+      padding: 0;
+      i {
+        margin: 0;
+      }
+    }
+  
+    &.button_pagination {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+  
+      @include colored-button(lighten($background-secondary, 15%));
+
+      &.active {
+        box-shadow: 0 3px 36px -7px transparentize(lighten($accent-primary, 2%), 0.3);
+        background: lighten($accent-primary, 2%);
+      }
+  
+      &[disabled] {
+        cursor: not-allowed;
+        pointer-events: none;
+        background: lighten($background-primary, 20%);
+      }
+    }
+  }
+  
+.floating-button {
+  position: fixed;
+  bottom: 1em;
+  right: 0.5em;
+  z-index: 666;
+}

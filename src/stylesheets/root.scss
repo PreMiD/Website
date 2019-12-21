@@ -1,0 +1,30 @@
+
+/* Website design by Igor Ryzhenkov (@Voknehzyr) & @Timeraa */
+
+@import "variables.scss";
+
+@font-face {
+  font-family: "Discord Font";
+  font-weight: 900;
+  src: url("../static/assets/fonts/DiscordFontBlack.woff2") format("woff2");
+  font-style: normal;
+}
+
+// Importing base styles
+@import "components/body.scss";
+
+@import "components/animation.scss";
+@import "components/button.scss";
+@import "components/card.scss";
+@import "components/container.scss";
+@import "components/figure.scss";
+@import "components/footer.scss";
+@import "components/navbar.scss";
+@import "components/label.scss";
+@import "components/switcher.scss";
+@import "components/input.scss";
+
+//* Plugins
+@import "plugins/vuejs-noty.scss";
+
+@import "components/visibility.scss";

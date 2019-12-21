@@ -1,26 +1,33 @@
-<template>
-  <div>
-    <div class="loader-container">
+<template lang="html">
+  <transition name="loader">
+    <div class="loader-container" v-if="loading">
       <div class="loader">
         <img :src="Logo">
         <p>{{ randomLoadingString() }}</p>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
-  import Logo from "../assets/images/logo.svg"
+  import Logo from "../assets/images/pmd_logo.svg"
 
   export default {
-    name: "loading",
+    name: "loader",
     data() {
       return {
+        loading: false,
         Logo
       }
     },
     mounted() {},
     methods: {
+      start() {
+        this.loading = true
+      },
+      finish() {
+        this.loading = false
+      },
       randomLoadingString() {
         var textArray = this.$t('header.loader.phrases').split(';');
         var randomNumber = Math.floor(Math.random() * textArray.length);

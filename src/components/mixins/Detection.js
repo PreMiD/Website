@@ -29,9 +29,9 @@ var DetectionMixin = {
 
     // Catching response event from extension after we'll fire `PreMiD_GetPresenceList`.
     window.addEventListener("PreMiD_GetWebisteFallback", function(data) {
-      self.debugMessage("Recieved information from Extension!");
       var dataString = data.detail.toString().split(",");
-      self.$root.presenceList = dataString;
+      self.$store.commit('presences/set', dataString);
+      self.debugMessage("Recieved information from Extension!");
     });
 
     // Firing event to get response from Extension with installed presences data.

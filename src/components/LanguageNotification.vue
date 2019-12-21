@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="lang in $root.i18nLanguageList" v-bind:key="lang">
+    <div v-for="lang in $root.$data.i18nLanguageList" v-bind:key="lang">
       <div
         class="language-notify__wrapper"
         v-if="!declined && getBrowserLanguage() === lang && getCurrentLanguage() !== lang"
@@ -38,11 +38,13 @@ export default {
   },
   methods: {
     declineNotify() {
+      if (process.server) return;
       localStorage.declined = true;
       this.$data.declined = localStorage.declined;
     }
   },
   created() {
+    if (process.server) return;
     if (localStorage.declined !== "false")
       this.$data.declined = localStorage.declined;
   }

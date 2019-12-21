@@ -35,7 +35,7 @@ export default {
           .darken(5)
           .toRgbString(),
         secondary: tinycolor(this.$props.user.roleColor)
-          .analogous()[1]
+          .analogous()[4]
           .setAlpha(0.5)
           .saturate(20)
           .toRgbString()
@@ -43,8 +43,9 @@ export default {
     },
     cardShadowColor() {
       if (this.$data.hovered) {
-        return tinycolor(this.cardSecondaryColor)
-          .setAlpha(0.5)
+        return tinycolor(this.cardGradientColor.primary)
+          .setAlpha(0.3)
+          .saturate(20)
           .toRgbString();
       } else {
         return "transparent";

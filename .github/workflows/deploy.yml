@@ -7,6 +7,8 @@ on:
       - "src/**/*"
       - "package.json"
       - "**.js"
+      - "yarn.lock"
+      - "**/*.yml"
 jobs:
   DePloY:
     runs-on: "ubuntu-latest"
@@ -23,4 +25,4 @@ jobs:
             git pull
             yarn
             yarn build
-            mv dist/* /var/www/html/premid
+            pm2 restart PMD_WebStable

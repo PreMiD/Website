@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`/store/${this.$props.category.id}`">
+  <nuxt-link :to="`/store/${this.$props.category.id}`">
     <div
       class="category-card"
       :style="`background: linear-gradient(165deg, ${category.color} -20%, ${categoryGradientColor} 100%);`"
@@ -18,7 +18,7 @@
         <p>{{category.description}}</p>
       </div>
     </div>
-  </router-link>
+  </nuxt-link>
 </template>
 
 <script>
