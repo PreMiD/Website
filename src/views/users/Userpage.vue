@@ -8,7 +8,7 @@
           <li>
             The user has created enough presences and has the Presence Developer role in our Discord server.
           </li>
-          <li>Everything is fine with your connection to the PreMiD API.</li>
+          <li>Check if others are experiencing the same issue on our Discord server.</li>
         </ul>
         <span>
           If you believe this was a mistake, please contact us from
