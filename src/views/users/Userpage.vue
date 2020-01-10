@@ -6,8 +6,7 @@
         <ul style="max-width:50%">
           <li>User's ID you're looking for is correct.</li>
           <li>
-            The user has created enough presence and has got the
-            <code>Presence Developer</code> role in our Discord server.
+            The user has created enough presences and has the Presence Developer role in our Discord server.
           </li>
           <li>Everything is fine with your connection to the PreMiD API.</li>
         </ul>
