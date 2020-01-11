@@ -32,7 +32,7 @@
           <div class="usercard__header">
             <div
               class="header__avatar"
-              :style="'background-image: url(' + presence.profile.image + ');'"
+              :style="'background-image: url(' + presence.profile.image + '?size=128' + ');'"
             />
             <div class="header__info">
               <div class="info__nameTag">

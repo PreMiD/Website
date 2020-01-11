@@ -20,7 +20,7 @@ module.exports = {
   router: {
     middleware: ["auth"]
   },
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth"],
+  modules: ["nuxt-lazy-load", "@nuxtjs/axios", "@nuxtjs/auth"],
   auth: {
     redirect: {
       login: "/login",

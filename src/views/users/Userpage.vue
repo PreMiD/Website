@@ -1,7 +1,23 @@
 <template>
   <div>
     <div class="userpage-container">
-      <div class="userpage__header">
+      <div v-if="error">
+        <span>That user couldn't be found. Try to make sure:</span>
+        <ul style="max-width:50%">
+          <li>User's ID you're looking for is correct.</li>
+          <li>
+            The user has created enough presences and has the Presence Developer role in our Discord server.
+          </li>
+          <li>Everything is fine with your connection to the PreMiD API.</li>
+        </ul>
+        <span>
+          If you believe this was a mistake, please contact us from
+          <a
+            href="https://discord.gg/premid"
+          >our Discord server</a>.
+        </span>
+      </div>
+      <div v-else class="userpage__header">
         <div class="user-avatar">
           <img :src="user.avatar" />
         </div>
@@ -77,8 +93,8 @@
           </div>
         </div>
       </div>
-      <div class="userpage__presences">
-        <h1 class="heading">User presences</h1>
+      <div class="userpage__presences" v-if="!error">
+        <h1 class="heading">{{ $t("store.userpage.userPresences") }}</h1>
         <div class="presence-container">
           <StoreCard
             v-for="presence of userPresences"
@@ -105,27 +121,29 @@ export default {
   },
   head() {
     return {
-      title: `PreMiD - ${this.user.name}`,
+      title: `PreMiD - ${!this.error ? this.user.name : "Unknown User"}`,
       meta: [
         {
           hid: "description",
           name: "description",
-          content: `${this.user.name}'s profile.`
+          content: `${!this.error ? this.user.name : "Unknown User"}'s profile.`
         },
         {
           hid: "og:description",
           property: "og:description",
-          content: `${this.user.name}'s profile.`
+          content: `${!this.error ? this.user.name : "Unknown User"}'s profile.`
         },
         {
           hid: "og:title",
           property: "og:title",
-          content: this.user.name
+          content: !this.error ? this.user.name : "Unknown User"
         },
         {
           hid: "og:image",
           property: "og:image",
-          content: this.user.avatar
+          content: !this.error
+            ? this.user.avatar
+            : "https://premid.app/assets/images/logo.png"
         }
       ]
     };
@@ -143,6 +161,7 @@ export default {
       presences = (await axios(`${process.env.apiBase}/presences`)).data;
 
     return {
+      error: user.error ? true : false,
       user: user,
       userPresences: presences
         .filter(p => p.metadata.author.id === user.userId)
