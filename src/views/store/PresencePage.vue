@@ -62,7 +62,7 @@
             <a
               class="button button_black"
               :href="
-                `https://github.com/PreMiD/Presences/tree/master/${$route.params.presenceName}`
+                `https://github.com/PreMiD/Presences/tree/master/${encodeURIComponent($route.params.presenceName)}`
               "
               target="_blank"
             >
@@ -199,7 +199,7 @@ export default {
         .data;
 
     let presence = (await axios(
-      `${process.env.apiBase}/presences/${params.presenceName}`
+      `${process.env.apiBase}/presences/${encodeURIComponent(params.presenceName)}`
     )).data;
 
     let res = {

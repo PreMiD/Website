@@ -1,7 +1,7 @@
 <template>
   <div>
     <title>PreMiD - Contributors</title>
-    <section class="contributors">
+    <section style="margin-left:20px;" class="contributors">
       <div class="contributor-container">
         <h1 class="heading" v-text="$t('contributors.headings.staff')" />
         <div class="contributor-inner">

@@ -97,7 +97,7 @@ module.exports = {
         {
           hid: "og:image",
           property: "og:image",
-          content: "https://beta.premid.app/assets/images/logo.png"
+          content: "https://premid.app/assets/images/logo.png"
         }
       ]
     };
