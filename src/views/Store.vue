@@ -12,13 +12,13 @@
           />
         </div>
 
-        <p class="sidebar__subheader">Search filters</p>
+        <p class="sidebar__subheader">{{ $t("store.category.filters.heading") }}</p>
 
         <div class="checkbox-switcher">
           <label>
             <input type="checkbox" :checked="mostUsed" @change="mostUsed = !mostUsed" />
             <span ref="checkbox" class="checkbox-container"></span>
-            <p>Show most used first</p>
+            <p>{{ $t("store.category.filters.mostUsed") }}</p>
           </label>
         </div>
 
@@ -26,11 +26,11 @@
           <label>
             <input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" />
             <span ref="checkbox" class="checkbox-container"></span>
-            <p>Allow adult content</p>
+            <p>{{ $t("store.category.filters.allowAdult") }}</p>
           </label>
         </div>
 
-        <p class="sidebar__subheader">Categories</p>
+        <p class="sidebar__subheader">{{ $t("store.category.heading") }}</p>
         <div class="container">
           <div class="category-container">
             <nuxt-link
@@ -89,7 +89,7 @@
 
       <div class="store-grid__content">
         <h1 class="heading" v-if="filteredPresences.length <= 0">
-          We can't find that presence
+          {{ $t("store.search.notFound") }}
           <i class="fas fa-sad-tear"></i>
         </h1>
         <transition-group name="card-animation" class="presence-container" tag="div">
@@ -138,38 +138,6 @@ export default {
   auth: false,
   data() {
     return {
-      categories: {
-        anime: {
-          icon: "star",
-          id: "anime",
-          title: "Anime"
-        },
-        games: {
-          icon: "leaf",
-          id: "games",
-          title: this.$t("store.category.games")
-        },
-        music: {
-          icon: "music",
-          id: "music",
-          title: this.$t("store.category.music")
-        },
-        socials: {
-          icon: "comments",
-          id: "socials",
-          title: this.$t("store.category.socials")
-        },
-        videos: {
-          icon: "play",
-          id: "videos",
-          title: this.$t("store.category.videos")
-        },
-        other: {
-          icon: "box",
-          id: "other",
-          title: this.$t("store.category.other")
-        }
-      },
       presences: [],
       addedPresences: [],
       nsfw: false,
