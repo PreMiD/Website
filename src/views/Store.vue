@@ -43,12 +43,45 @@
             </nuxt-link>
             <nuxt-link
               class="category-item"
-              v-for="category in this.categories"
-              :key="category.id"
-              :to="{ query: { page: currentPageNumber, category: category.id } }"
+              :to="{ query: { page: currentPageNumber, category: 'anime' } }"
             >
-              <i :class="'fas fa-' + category.icon" />
-              {{ category.title }}
+              <i class="fas fa-star" />
+              Anime
+            </nuxt-link>
+            <nuxt-link
+              class="category-item"
+              :to="{ query: { page: currentPageNumber, category: 'games' } }"
+            >
+              <i class="fas fa-leaf" />
+              {{ $t("store.category.games") }}
+            </nuxt-link>
+            <nuxt-link
+              class="category-item"
+              :to="{ query: { page: currentPageNumber, category: 'music' } }"
+            >
+              <i class="fas fa-music" />
+              {{ $t("store.category.music") }}
+            </nuxt-link>
+            <nuxt-link
+              class="category-item"
+              :to="{ query: { page: currentPageNumber, category: 'socials' } }"
+            >
+              <i class="fas fa-comments" />
+              {{ $t("store.category.socials") }}
+            </nuxt-link>
+            <nuxt-link
+              class="category-item"
+              :to="{ query: { page: currentPageNumber, category: 'videos' } }"
+            >
+              <i class="fas fa-play" />
+              {{ $t("store.category.videos") }}
+            </nuxt-link>
+            <nuxt-link
+              class="category-item"
+              :to="{ query: { page: currentPageNumber, category: 'other' } }"
+            >
+              <i class="fas fa-box" />
+              {{ $t("store.category.other") }}
             </nuxt-link>
           </div>
         </div>
