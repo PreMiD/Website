@@ -131,11 +131,11 @@
         </svg>
       </div>
       <div class="section-heading section-heading__features">
-        <h1 class="section-heading__title">You will love these features!</h1>
+        <h1 class="section-heading__title">{{ $t('home.features.heading') }}</h1>
       </div>
       <div class="container section-container">
         <div class="section-container__details">
-          <h1 v-html="this.$data.presenceSystemHeading" />
+          <h1 v-html="markdown($t('home.features.presencesystem.heading'))" />
           <p>{{ $t('home.features.presencesystem.description') }}</p>
           <p>
             <nuxt-link
@@ -240,7 +240,6 @@ export default {
       cardThumbnail3,
       cardThumbnail4,
       presences_display: [],
-      presenceSystemHeading: this.$t("home.features.presencesystem.heading"),
       presences: [
         {
           profile: {
@@ -329,16 +328,8 @@ export default {
     };
   },
   beforeMount() {
-
     const Vue = this;
     const length = this.$data.presences.length;
-
-    this.$data.presenceSystemHeading.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
-      this.$data.presenceSystemHeading = this.$data.presenceSystemHeading.replace(
-        ch,
-        `<span class="text-highlight">${ch.slice(2, ch.length - 2)}</span>`
-      );
-    });
 
     // Randomly selects 2 presences to display.
     this.$data.presences_display.push(
@@ -371,6 +362,14 @@ export default {
     openInNewTab(url) {
       let page = window.open(url, "_blank");
       win.focus();
+    },
+    markdown(pls) {
+      return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
+        return pls.replace(
+          ch,
+          `<span class="text-highlight">${ch.slice(2, ch.length - 2)}</span>`
+        );
+      })[0];
     }
   }
 };

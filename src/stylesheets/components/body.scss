@@ -97,12 +97,12 @@ a {
 
   max-width: 1600px;
   margin: 0 auto;
-  padding: 5em 0;
+  /* padding: 5em 0; Disabled because looks better this way. */
 
   &__sidebar {
     margin: 2.6em 1em;
     background: $background-secondary;
-    width: 15%; 
+    width: 15%;
     padding: 1.2em;
     border-radius: 0.5rem;
     overflow: hidden;
