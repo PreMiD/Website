@@ -204,9 +204,7 @@ export default {
       this.pageCount < Number(this.$route.query.page) ||
       this.$route.query.page <= -1
     ) {
-      this.$router.push({
-        path: "/notfound"
-      });
+      this.$nuxt.error({ statusCode: 404, message: 'No presences available.' })
     }
   },
   computed: {
