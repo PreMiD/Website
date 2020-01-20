@@ -18,23 +18,21 @@
           </div>
           <div class="header__buttons">
             <button v-if="
-                !isInstalled &&
-                  this.$root.extensionInstalled &&
-                  typeof presence.metadata.button == 'undefined'
-              " class="button button_light" v-on:click="sendPresence(presence.metadata.service)">
+                !isInstalled && this.$store.state.extension.extensionInstalled
+              " class="button button--" v-on:click="sendPresence(presence.metadata.service)">
               <span class="icon">
                 <i class="fas fa-plus"></i>
               </span>
               {{ $t("store.card.presence.add") }}
             </button>
-            <button v-if="isInstalled" class="button button_black"
+            <button v-if="isInstalled && this.$store.state.extension.extensionInstalled" class="button button--black"
               v-on:click="removePresence(presence.metadata.service)">
               <span class="icon">
                 <i class="fas fa-minus"></i>
               </span>
               {{ $t("store.card.presence.remove") }}
             </button>
-            <a class="button button_black" :href="
+            <a class="button button--black" :href="
                 `https://github.com/PreMiD/Presences/tree/master/${encodeURIComponent($route.params.presenceName)}`
               " target="_blank">
               <span class="icon">
@@ -42,7 +40,7 @@
               </span>
               Source Code
             </a>
-            <!-- TODO: Implement like system. <a class="button button_large button_red button_like"><i class="far fa-heart"/></a> -->
+            <!-- TODO: Implement like system. <a class="button button--lg button--red button--like"><i class="far fa-heart"/></a> -->
           </div>
         </div>
         <div class="fullpresence__content">

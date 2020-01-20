@@ -107,7 +107,7 @@
       <paginate
         :no-li-surround="true"
         :break-view-link-class="'hidden'"
-        :page-link-class="'button button_pagination'"
+        :page-link-class="'button button--pagination'"
         :page-count="pageCount"
         v-model="currentPageNumber"
         :page-range="6"

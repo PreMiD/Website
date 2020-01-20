@@ -1,7 +1,36 @@
 .container {
+
   position: relative;
-  max-width: 1600px;
-  margin: 0 auto;
+  overflow: hidden;
+
+  &--size--desktop {
+    max-width: 1600px;
+  }
+
+  &--size--mobile {
+    max-width: 600px;
+  }
+
+  .container__heading {
+
+    .heading--center {
+      text-align: center;
+    }
+    .heading--right {
+      text-align: right;
+    }
+
+    .heading--subtitle {
+      font-size: small;
+    }
+
+  }
+
+}
+
+.container {
+  position: relative;
+  
 
   &_error-page {
     margin-top: 8em;
@@ -55,7 +84,7 @@
 
     .heading__logo {
       display: inline-block;
-      margin: 1em 0;
+      margin: 1.5em 0;
 
       img {
         width: 450px;
@@ -68,13 +97,11 @@
       p {
         position: relative;
         left: 3px;
-
-        margin-left: 3px;
         font-size: 1.2em;
         margin: 0;
         font-weight: 500;
         color: rgba(255, 255, 255, 0.9);
-        max-width: 300px;
+        max-width: 530px;
       }
     }
 
@@ -469,7 +496,7 @@
         line-height: 1;
       }
 
-      .button_like {
+      .button--like {
         padding: 14px 20px;
 
         i {
@@ -791,7 +818,15 @@
   h1 {
     margin: 0;
     margin-bottom: 0.6em;
-    font-size: 1.7em;
+    font-weight: 800;
+    line-height: 1.1;
+    font-size: 3.8em;
+    letter-spacing: -3px;
+    background: linear-gradient(30deg, $accent-primary, #b3aeff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    max-width: 600px;
   }
 
   .error-container--btns {
