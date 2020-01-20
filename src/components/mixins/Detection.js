@@ -4,13 +4,21 @@ var DetectionMixin = {
       extensionInstalled: false
     }
   },
-  mounted() {
+  async mounted() {
 
-    if (document.getElementById("app").getAttribute("extension-ready") == "true") {
-      this.$store.commit('extension/setInstalled', true);
-    } else {
-      this.$store.commit('extension/setInstalled', false);
-    }
+    const Checker = new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        resolve(document.getElementById("app").getAttribute("extension-ready") == "true");
+      }, 500);
+    });
+
+    await Checker.then((result) => {
+      if (result) {
+        this.$store.commit('extension/setInstalled', true);
+      } else {
+        this.$store.commit('extension/setInstalled', false);
+      }
+    });
 
     if (this.$store.state.extension.extensionInstalled) {
       this.$data.extensionInstalled = true;
