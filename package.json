@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@nuxtjs/auth": "4.8.5",
-    "@nuxtjs/axios": "5.9.2",
+    "@nuxtjs/axios": "5.9.3",
     "axios": "0.19.1",
     "marked": "0.8.0",
     "node-sass": "4.13.1",
