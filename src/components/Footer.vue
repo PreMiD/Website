@@ -82,7 +82,7 @@
       <p
         v-html="
           $t('footer.copyright.line1')
-            .replace('{0}', '<i class=\'far fa-copyright\'></i> ' + new Date().getFullYear() + ' PreMiD')
+            .replace('{0}', '<i class=\'far fa-copyright\'></i> 2019 PreMiD')
             .replace(
               '{1}',
               '<a class=\'hover-effect\' href=\'https://github.com/Timeraa/\'>Timeraa</a> & <a class=\'hover-effect\' href=\'https://github.com/Fruxh/\'>Fruxh</a>'

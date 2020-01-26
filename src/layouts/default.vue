@@ -2,7 +2,7 @@
   <div id="app">
     <LanguageSwitcher v-if="switcherVisible" />
     <div class="floating-button">
-      <a content="Choose website language" v-tippy class="button button--gray button--language-switch" @click="toggleSwitcher"><i class="fas fa-language"></i></a>
+      <a content="Choose website language" v-tippy class="button button_gray button_language-switch" @click="toggleSwitcher"><i class="fas fa-language"></i></a>
     </div>
     <!--     
       ! Disabled for now as it somehow breaks the page in production
@@ -11,7 +11,7 @@
     <header>
       <navigation />
     </header>
-    <div class="app-wrapper">
+    <div class="page-wrapper">
       <div class="content">
         <nuxt />
       </div>
