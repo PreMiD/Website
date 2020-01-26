@@ -12,13 +12,13 @@
           />
         </div>
 
-        <p class="sidebar__subheader">{{ $t("store.category.filters.heading") }}</p>
+        <p class="sidebar__subheader">Search filters</p>
 
         <div class="checkbox-switcher">
           <label>
             <input type="checkbox" :checked="mostUsed" @change="mostUsed = !mostUsed" />
             <span ref="checkbox" class="checkbox-container"></span>
-            <p>{{ $t("store.category.filters.mostUsed") }}</p>
+            <p>Show most used first</p>
           </label>
         </div>
 
@@ -26,11 +26,11 @@
           <label>
             <input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" />
             <span ref="checkbox" class="checkbox-container"></span>
-            <p>{{ $t("store.category.filters.allowAdult") }}</p>
+            <p>Allow adult content</p>
           </label>
         </div>
 
-        <p class="sidebar__subheader">{{ $t("store.category.heading") }}</p>
+        <p class="sidebar__subheader">Categories</p>
         <div class="container">
           <div class="category-container">
             <nuxt-link
@@ -89,7 +89,7 @@
 
       <div class="store-grid__content">
         <h1 class="heading" v-if="filteredPresences.length <= 0">
-          {{ $t("store.search.notFound") }}
+          We can't find that presence
           <i class="fas fa-sad-tear"></i>
         </h1>
         <transition-group name="card-animation" class="presence-container" tag="div">
@@ -107,7 +107,7 @@
       <paginate
         :no-li-surround="true"
         :break-view-link-class="'hidden'"
-        :page-link-class="'button button--pagination'"
+        :page-link-class="'button button_pagination'"
         :page-count="pageCount"
         v-model="currentPageNumber"
         :page-range="6"
@@ -138,6 +138,38 @@ export default {
   auth: false,
   data() {
     return {
+      categories: {
+        anime: {
+          icon: "star",
+          id: "anime",
+          title: "Anime"
+        },
+        games: {
+          icon: "leaf",
+          id: "games",
+          title: this.$t("store.category.games")
+        },
+        music: {
+          icon: "music",
+          id: "music",
+          title: this.$t("store.category.music")
+        },
+        socials: {
+          icon: "comments",
+          id: "socials",
+          title: this.$t("store.category.socials")
+        },
+        videos: {
+          icon: "play",
+          id: "videos",
+          title: this.$t("store.category.videos")
+        },
+        other: {
+          icon: "box",
+          id: "other",
+          title: this.$t("store.category.other")
+        }
+      },
       presences: [],
       addedPresences: [],
       nsfw: false,
@@ -204,7 +236,9 @@ export default {
       this.pageCount < Number(this.$route.query.page) ||
       this.$route.query.page <= -1
     ) {
-      this.$nuxt.error({ statusCode: 404, message: 'No presences available.' })
+      this.$router.push({
+        path: "/notfound"
+      });
     }
   },
   computed: {

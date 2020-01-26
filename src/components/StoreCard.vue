@@ -45,24 +45,24 @@
           <transition name="card-animation" mode="out-in">
             <div
               :key="presence.service + '_desc'"
-              v-if="!card_hovered || !this.$store.state.extension.extensionInstalled"
+              v-if="!card_hovered || !this.$root.extensionInstalled"
             >
               <p class="store-card__desc">{{ this.getPresenceDescription() }}</p>
             </div>
             <div
               :key="presence.service + '_buttons'"
-              v-if="card_hovered && this.$store.state.extension.extensionInstalled"
+              v-if="card_hovered && this.$root.extensionInstalled"
             >
               <div
                 v-if="
-                    this.$store.state.extension.extensionInstalled &&
+                    this.$root.extensionInstalled &&
                       typeof presence.button == 'undefined'
                   "
                 class="store-card__buttons on-desktop"
               >
                 <button
                   v-if="!isInstalled"
-                  class="button button--"
+                  class="button button_light"
                   v-on:click="sendPresence(presence.service)"
                 >
                   <span class="icon">
@@ -72,7 +72,7 @@
                 </button>
                 <button
                   v-if="isInstalled"
-                  class="button button--black"
+                  class="button button_black"
                   v-on:click="removePresence(presence.service)"
                 >
                   <span class="icon">
@@ -83,7 +83,7 @@
               </div>
               <div
                 v-if="
-                    this.$store.state.extension.extensionInstalled && presence.button == false
+                    this.$root.extensionInstalled && presence.button == false
                   "
               >
                 <p class="store-card__warning">{{ $t("store.card.presence.included") }}</p>

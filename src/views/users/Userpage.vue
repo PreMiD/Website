@@ -2,13 +2,20 @@
   <div>
     <div class="userpage-container">
       <div v-if="error">
-        <span>{{ $t("user.notFound.heading") }}</span>
+        <span>That user couldn't be found. Try to make sure:</span>
         <ul style="max-width:50%">
-          <li>{{ $t("user.notFound.message1") }}</li>
-          <li>{{ $t("user.notFound.message2") }}</li>
-          <li>{{ $t("user.notFound.message3") }}</li>
+          <li>User's ID you're looking for is correct.</li>
+          <li>
+            The user has created enough presences and has the Presence Developer role in our Discord server.
+          </li>
+          <li>Check if others are experiencing the same issue on our Discord server.</li>
         </ul>
-        <span v-html="linkify($t('user.notFound.message4'))" />
+        <span>
+          If you believe this was a mistake, please contact us from
+          <a
+            href="https://discord.gg/premid"
+          >our Discord server</a>.
+        </span>
       </div>
       <div v-else class="userpage__header">
         <div class="user-avatar">
@@ -24,42 +31,42 @@
               <i
                 v-if="role == 'Main Developer'"
                 class="fas fa-tools"
-                v-tippy="{ content: $t('contributors.roles.mainDeveloper'), placement: 'bottom' }"
+                v-tippy="{ content: 'Main Developer', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Website Developer'"
                 class="fas fa-tools"
-                v-tippy="{ content: $t('contributors.roles.websiteDeveloper'), placement: 'bottom' }"
+                v-tippy="{ content: 'Website Developer', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Community Manager'"
                 class="fas fa-users"
-                v-tippy="{ content: $t('contributors.roles.communityManager'), placement: 'bottom' }"
+                v-tippy="{ content: 'Community Manager', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Moderator'"
                 class="fas fa-user-cog"
-                v-tippy="{ content: $t('contributors.roles.moderator'), placement: 'bottom' }"
+                v-tippy="{ content: `Moderator`, placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Head Moderator'"
                 class="fas fa-glasses"
-                v-tippy="{ content: $t('contributors.roles.headModerator'), placement: 'bottom' }"
+                v-tippy="{ content: `Head Moderator`, placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Ticket Manager'"
                 class="fas fa-ticket-alt"
-                v-tippy="{ content: $t('contributors.roles.ticketManager'), placement: 'bottom' }"
+                v-tippy="{ content: 'Ticket Manager', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Presence Developer'"
                 class="fas fa-user-astronaut"
-                v-tippy="{ content: $t('user.roles.presenceDeveloper'), placement: 'bottom' }"
+                v-tippy="{ content: 'Presence Developer', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Presence Verifier'"
                 class="fas fa-clipboard-check"
-                v-tippy="{ content: $t('user.roles.presenceVerifier'), placement: 'bottom' }"
+                v-tippy="{ content: 'Presence Verifier', placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Patron'"
@@ -69,7 +76,7 @@
               <i
                 v-if="role == 'Donator'"
                 class="fas fa-meteor"
-                v-tippy="{ content: $t('contributors.roles.donator'), placement: 'bottom' }"
+                v-tippy="{ content: 'Donator', placement: 'bottom' }"
               ></i>
             </div>
             <i
@@ -77,7 +84,9 @@
               class="fas fa-crown"
               v-tippy="{
                 content:
-                `${$t('user.importantPresenceDev.message1')}<br>${$t('user.importantPresenceDev.message2').replace('{0}', userPresences.length)}`,
+                  'Important Presence Developer Badge<br>Created ' +
+                  userPresences.length +
+                  ' presences.',
                 placement: 'bottom'
               }"
             ></i>
@@ -158,16 +167,6 @@ export default {
         .filter(p => p.metadata.author.id === user.userId)
         .map(p => p.metadata)
     };
-  },
-  methods: {
-    linkify(pls) {
-      return pls.match(/(\[.*?\])/g).map((ch, i) => {
-        return pls.replace(
-          ch,
-          `<a href="https://discord.gg/premid">${ch.slice(1, ch.length - 1)}</a>`
-        );
-      })[0];
-    }
   }
 };
 </script>
