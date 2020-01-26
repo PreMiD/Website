@@ -6,17 +6,14 @@
           <img src="@/assets/images/logo_round.svg" />
         </div>
         <div class="heading__text">
-          <p>{{ $t(`home.introduction.catchphrase`) }}</p>
+          <p><strong>PreMiD</strong> is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.</p>
         </div>
         <div class="heading__button-group">
-          <a class="button button_uppercase" href="#features">
+          <a class="button text--uppercase" href="#features">
             <i class="fas fa-stream"></i>
             {{$t('home.introduction.button.features')}}
           </a>
-          <nuxt-link
-            class="button button_black button_uppercase"
-            to="/downloads"
-          >
+          <nuxt-link class="button button--black text--uppercase" to="/downloads">
             <i class="fas fa-file-export"></i>
             {{ $t(`home.introduction.button.downloads`) }}
           </nuxt-link>
@@ -142,7 +139,7 @@
           <p>{{ $t('home.features.presencesystem.description') }}</p>
           <p>
             <nuxt-link
-              class="button button_large"
+              class="button button--lg"
               to="/store"
               v-text="$t('home.features.presencesystem.button')"
             />
@@ -180,9 +177,10 @@
           <h1>{{$t('home.features.quickSupport.heading')}}</h1>
           <p>{{$t('home.features.quickSupport.description')}}</p>
           <p>
-            <a class="button button_large" href="https://discord.gg/premid">{{
-              $t("home.features.quickSupport.button")
-            }}</a>
+            <a
+              class="button button--lg"
+              href="https://discord.gg/premid"
+            >{{$t('home.features.quickSupport.button')}}</a>
           </p>
         </div>
         <div class="section-container__promo">
