@@ -12,7 +12,7 @@ module.exports = {
   plugins: [
     "~/router.js",
     "~/components/plugins/I18n.js",
-    "~/components//plugins/Languages.js",
+    "~/components/plugins/Languages.js",
     { src: "~/components//plugins/Tippy.js", ssr: false },
     { src: "~/components//plugins/Noty.js", ssr: false },
     { src: "~/components//plugins/Pagination.js", ssr: false }
@@ -74,6 +74,8 @@ module.exports = {
         }
       ],
       meta: [
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
         {
           hid: "theme-color",
           name: "theme-color",
