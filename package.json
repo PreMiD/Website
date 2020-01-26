@@ -2,7 +2,7 @@
   "name": "premid-website",
   "version": "2.0.0",
   "scripts": {
-    "start": "nuxt start --port 3004",
+    "start": "nuxt start --port 3003",
     "dev": "nuxt",
     "build": "rimraf src/langs/* && node languageParser.js && nuxt build"
   },
