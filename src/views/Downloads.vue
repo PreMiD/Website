@@ -137,12 +137,12 @@ export default {
     return {
       platforms: [],
       browser: null,
-      windows_url: "",
-      apple_url: "",
+      windows_url: "https://dl.premid.app/PreMiD-installer.exe",
+      apple_url: "https://dl.premid.app/PreMiD-installer.app.zip",
       linux_url: "",
       chrome_url:
         "https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
-      firefox_url: "",
+      firefox_url: "https://dl.premid.app/PreMiD.xpi",
       platform_order: ["windows", "apple", "linux"],
       builds: {
         windows: {
@@ -185,41 +185,6 @@ export default {
     //* Centering the current platform in array. Only works if array has 3 items.
     platform_order.splice(platform_order.indexOf(platform_temp), 1);
     platform_order.splice(1, 0, platform_temp);
-
-    axios("https://api.github.com/repos/PreMiD/PreMiD/releases/latest").then(
-      ({ data, err }) => {
-        if (err) {
-          console.error(err);
-        } else {
-          let win64_links = [];
-          let win32_links = [];
-          let mac_links = [];
-          let ff_links = [];
-
-          for (let asset of data.assets) {
-            if (asset.name.endsWith("x64.exe"))
-              win64_links.push(asset.browser_download_url);
-            if (asset.name.endsWith("x32.exe"))
-              win32_links.push(asset.browser_download_url);
-            if (
-              asset.name.endsWith(".app.zip") ||
-              asset.name.endsWith(".tar.gz")
-            )
-              mac_links.push(asset.browser_download_url);
-            if (asset.name.endsWith(".xpi"))
-              ff_links.push(asset.browser_download_url);
-          }
-
-          // Windows 64-bit detection
-          if (ua.indexOf("WOW64") != -1 || ua.indexOf("Win64") != -1) {
-            this.$data.windows_url = win64_links[0];
-          } else this.$data.windows_url = win32_links[0];
-
-          this.$data.apple_url = mac_links[0];
-          this.$data.firefox_url = ff_links[0];
-        }
-      }
-    );
   },
   methods: {
     open(platform) {
