@@ -31,7 +31,7 @@
 
     .pagination-container {
       margin: 0;
-      .button.button--pagination.hidden {
+      .button.button_pagination.hidden {
         width: 0;
         height: 0;
       }
@@ -165,7 +165,7 @@
     }
   }
 
-  .button.button--lg {
+  .button.button_large {
     padding: 10px 20px;
     font-size: 1em;
   }
