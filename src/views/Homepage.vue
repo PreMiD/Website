@@ -11,7 +11,7 @@
         <div class="heading__button-group">
           <a class="button text--uppercase" href="#features">
             <i class="fas fa-stream"></i>
-            {{$t('home.introduction.button.features')}}
+            {{ $t("home.introduction.button.features") }}
           </a>
           <nuxt-link class="button button--black text--uppercase" to="/downloads">
             <i class="fas fa-file-export"></i>
@@ -29,12 +29,17 @@
           <div class="usercard__header">
             <div
               class="header__avatar"
-              :style="'background-image: url(' + presence.profile.image + '?size=128' + ');'"
+              :style="
+                'background-image: url(' +
+                  presence.profile.image +
+                  '?size=128' +
+                  ');'
+              "
             />
             <div class="header__info">
               <div class="info__nameTag">
-                <span class="username">{{presence.profile.name}}</span>
-                <span class="discriminator">#{{presence.profile.id}}</span>
+                <span class="username">{{ presence.profile.name }}</span>
+                <span class="discriminator">#{{ presence.profile.id }}</span>
               </div>
               <div class="info__badges">
                 <div
@@ -43,28 +48,37 @@
                   class="badge-wrapper"
                 >
                   <div
-                    v-if="badge == 'brilliance' || badge == 'bravery' || badge == 'balance'"
-                    v-tippy="{content: 'HypeSquad ' + badge.charAt(0).toUpperCase() + badge.slice(1)}"
+                    v-if="
+                      badge == 'brilliance' ||
+                        badge == 'bravery' ||
+                        badge == 'balance'
+                    "
+                    v-tippy="{
+                      content:
+                        'HypeSquad ' +
+                        badge.charAt(0).toUpperCase() +
+                        badge.slice(1)
+                    }"
                     :class="`badge badge_${badge}`"
                   ></div>
                   <div
                     v-if="badge == 'early'"
-                    v-tippy="{content: 'Early Supporter'}"
+                    v-tippy="{ content: 'Early Supporter' }"
                     :class="`badge badge_${badge}`"
                   ></div>
                   <div
                     v-if="badge == 'hypesquad'"
-                    v-tippy="{content: 'HypeSquad Events'}"
+                    v-tippy="{ content: 'HypeSquad Events' }"
                     :class="`badge badge_${badge}`"
                   ></div>
                   <div
                     v-if="badge == 'nitro'"
-                    v-tippy="{content: 'Discord Nitro'}"
+                    v-tippy="{ content: 'Discord Nitro' }"
                     :class="`badge badge_${badge}`"
                   ></div>
                   <div
                     v-if="badge == 'boost-lvl3'"
-                    v-tippy="{content: 'Nitro Boosting'}"
+                    v-tippy="{ content: 'Nitro Boosting' }"
                     :class="`badge badge_${badge}`"
                   ></div>
                 </div>
@@ -73,7 +87,9 @@
           </div>
           <div class="usercard__activity">
             <div class="activity__info">
-              <div class="info__header">{{ $t(`home.examples.playingagame`) }}</div>
+              <div class="info__header">
+                {{ $t(`home.examples.playingagame`) }}
+              </div>
               <div class="info__game">
                 <div class="game__icon">
                   <img
@@ -82,31 +98,37 @@
                     style="-webkit-mask: none;"
                     alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
-                    v-tippy="{content: 'PreMiD v2.0.1.4'}"
+                    v-tippy="{ content: 'PreMiD v2.0.1.4' }"
                   />
                   <img
                     v-if="presence.smallImage == true"
                     class="game"
                     alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
-                    v-tippy="{content: 'PreMiD v2.0.1.4'}"
+                    v-tippy="{ content: 'PreMiD v2.0.1.4' }"
                   />
                   <img
                     v-if="presence.smallImage == true"
                     class="status-icon"
                     src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
-                    v-tippy="{content: 'Playing back'}"
+                    v-tippy="{ content: 'Playing back' }"
                   />
                 </div>
                 <div class="game__content">
                   <div class="game__title text-row">
-                    <span>{{presence.service_title}}</span>
+                    <span>{{ presence.service_title }}</span>
                   </div>
-                  <div class="game__st-line text-row">{{ presence.data[0] }}</div>
-                  <div v-if="presence.data[1]" class="game__nd-line text-row">{{ presence.data[1] }}</div>
-                  <div
-                    class="game__time text-row"
-                  >{{ $t(`home.examples.timestamp`, [presence.presence_time]) }}</div>
+                  <div class="game__st-line text-row">
+                    {{ presence.data[0] }}
+                  </div>
+                  <div v-if="presence.data[1]" class="game__nd-line text-row">
+                    {{ presence.data[1] }}
+                  </div>
+                  <div class="game__time text-row">
+                    {{
+                      $t(`home.examples.timestamp`, [presence.presence_time])
+                    }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -131,12 +153,14 @@
         </svg>
       </div>
       <div class="section-heading section-heading__features">
-        <h1 class="section-heading__title">{{ $t('home.features.heading') }}</h1>
+        <h1 class="section-heading__title">
+          {{ $t("home.features.heading") }}
+        </h1>
       </div>
       <div class="container section-container">
         <div class="section-container__details">
           <h1 v-html="markdown($t('home.features.presencesystem.heading'))" />
-          <p>{{ $t('home.features.presencesystem.description') }}</p>
+          <p>{{ $t("home.features.presencesystem.description") }}</p>
           <p>
             <nuxt-link
               class="button button--lg"
@@ -151,31 +175,37 @@
       </div>
       <div class="container section-container section-container_reverse">
         <div class="section-container__details">
-          <h1>{{$t('home.features.simpleInterface.heading')}}</h1>
-          <p>{{$t('home.features.simpleInterface.description')}}</p>
+          <h1>{{ $t("home.features.simpleInterface.heading") }}</h1>
+          <p>{{ $t("home.features.simpleInterface.description") }}</p>
           <ul>
             <li>
-              <p>{{$t('home.features.simpleInterface.description.1')}}</p>
+              <p>{{ $t("home.features.simpleInterface.description.1") }}</p>
             </li>
             <li>
-              <p>{{$t('home.features.simpleInterface.description.2')}}</p>
+              <p>{{ $t("home.features.simpleInterface.description.2") }}</p>
             </li>
             <li>
-              <p>{{$t('home.features.simpleInterface.description.3')}}</p>
+              <p>{{ $t("home.features.simpleInterface.description.3") }}</p>
             </li>
           </ul>
         </div>
         <div class="section-container__promo">
           <video autoplay loop>
-            <source src="./../assets/images/cards/card2_video.mp4" type="video/mp4" />
-            <img class="section-container__promo--image2" :src="cardThumbnail2" />
+            <source
+              src="./../assets/images/cards/card2_video.mp4"
+              type="video/mp4"
+            />
+            <img
+              class="section-container__promo--image2"
+              :src="cardThumbnail2"
+            />
           </video>
         </div>
       </div>
       <div class="container section-container">
         <div class="section-container__details">
-          <h1>{{$t('home.features.quickSupport.heading')}}</h1>
-          <p>{{$t('home.features.quickSupport.description')}}</p>
+          <h1>{{ $t("home.features.quickSupport.heading") }}</h1>
+          <p>{{ $t("home.features.quickSupport.description") }}</p>
           <p>
             <a
               class="button button--lg"
@@ -205,7 +235,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import twitch_logo from "@/assets/images/twitch.png";
