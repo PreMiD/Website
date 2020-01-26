@@ -1,37 +1,31 @@
 var DetectionMixin = {
-  data() {
-    return {
-      extensionInstalled: false
+  methods: {
+    isExtensionInstalled: () => {
+      // Checking if user has the extension installed.
+      if (
+        document.getElementById("app").getAttribute("extension-ready") == "true"
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
-  async mounted() {
-
-    const Checker = new Promise(function (resolve, reject) {
-      setTimeout(function () {
-        resolve(document.getElementById("app").getAttribute("extension-ready") == "true");
-      }, 500);
-    });
-
-    await Checker.then((result) => {
-      if (result) {
-        this.$store.commit('extension/setInstalled', true);
-      } else {
-        this.$store.commit('extension/setInstalled', false);
-      }
-    });
-
-    if (this.$store.state.extension.extensionInstalled) {
-      this.$data.extensionInstalled = true;
-      this.$noty.success(this.$t(`store.message.success`));
-      this.debugMessage("Extension installed, unlocking functions...");
-    } else {
-      this.$data.extensionInstalled = false;
-      this.$noty.error(this.$t(`store.message.error`));
-      this.errorMessage("Extension not found, locking functions...");
-    }
-
-    // Registering Vue hook.
+  mounted() {
+    // Vue hook to call it inside JS functions.
     var self = this;
+    // Checking if user has the extension installed.
+    setTimeout(function() {
+      if (self.isExtensionInstalled()) {
+        self.$root.extensionInstalled = true;
+        self.$noty.success(self.$t(`store.message.success`));
+        self.debugMessage("Extension installed, unlocking functions...");
+      } else {
+        self.$root.extensionInstalled = false;
+        self.$noty.error(self.$t(`store.message.error`));
+        self.errorMessage("Extension not found, locking functions...");
+      }
+    }, 1000);
 
     // Catching response event from extension after we'll fire `PreMiD_GetPresenceList`.
     window.addEventListener("PreMiD_GetWebisteFallback", function(data) {

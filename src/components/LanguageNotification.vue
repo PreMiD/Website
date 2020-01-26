@@ -12,12 +12,12 @@
           </div>
           <div class="language-notify__buttons">
             <a
-              class="button button--sm"
+              class="button button_small"
               @click="setLanguage(lang)"
               href="#"
             >{{ $t(`header.languageNotification.btnAccept`, lang) }}</a>
             <a
-              class="button button--sm"
+              class="button button_small"
               @click="declineNotify()"
               href="#"
             >{{ $t(`header.languageNotification.btnDecline`, lang) }}</a>

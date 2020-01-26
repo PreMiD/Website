@@ -18,12 +18,12 @@
 
     .store-grid {
       flex-direction: column;
+      padding: 0;
     }
 
     .store-grid .store-grid__sidebar {
+      position: relative;
       width: 90%;
-      max-height: 160px;
-      overflow-y: scroll;
       z-index: 999;
       margin: 0 auto;
       box-shadow: 0 2px 32px 0 $background-primary;
@@ -31,7 +31,7 @@
 
     .pagination-container {
       margin: 0;
-      .button.button--pagination.hidden {
+      .button.button_pagination.hidden {
         width: 0;
         height: 0;
       }
@@ -165,7 +165,7 @@
     }
   }
 
-  .button.button--lg {
+  .button.button_large {
     padding: 10px 20px;
     font-size: 1em;
   }
