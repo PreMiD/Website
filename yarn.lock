@@ -7303,7 +7303,7 @@ tinycolor2@1.4.1:
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
   integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
 
-tippy.js@^4.2.1:
+tippy.js@^4.3.5:
   version "4.3.5"
   resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-4.3.5.tgz#882bff8d92f09bb0546d2826d5668c0560006f54"
   integrity sha512-NDq3efte8nGK6BOJ1dDN1/WelAwfmh3UtIYXXck6+SxLzbIQNZE/cmRSnwScZ/FyiKdIcvFHvYUgqmoGx8CcyA==
@@ -7729,13 +7729,13 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-tippy@4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/vue-tippy/-/vue-tippy-4.2.1.tgz#df011bca537a334d48c84ddfa665f0786bf9c783"
-  integrity sha512-de4OK7jWM7MYt+u+DPZrfQXKRnLVBiae+nDhFiYJpD9GWK8Muj1KLNeFbsv44mg88EghOGUEnc9VUtcUxw3mFg==
+vue-tippy@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/vue-tippy/-/vue-tippy-4.3.1.tgz#fb664aa97745769ff561afc3cb144dd87c16a4dc"
+  integrity sha512-0Gg0EcU/43rq3fK5/cpQRz0lCESz4kEzjdbW+YTDDJXbHnFlgh6pQk3Aga2lawza/YlnnZjTWI+xwFJHY5U16A==
   dependencies:
     humps "^2.0.1"
-    tippy.js "^4.2.1"
+    tippy.js "^4.3.5"
 
 vue@^2.6.11:
   version "2.6.11"
