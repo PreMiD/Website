@@ -11,7 +11,7 @@
 		"@nuxtjs/axios": "5.9.3",
 		"axios": "0.19.2",
 		"marked": "0.8.0",
-		"node-sass": "4.13.0",
+		"node-sass": "4.13.1",
 		"nuxt": "2.11.0",
 		"nuxt-lazy-load": "^1.0.5",
 		"sass-loader": "8.0.2",
