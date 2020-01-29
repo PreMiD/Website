@@ -5046,10 +5046,10 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
-nuxt-lazy-load@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/nuxt-lazy-load/-/nuxt-lazy-load-1.0.6.tgz#ff7ff9f3be94a50b1497a8667869e8d6f1e6cdd2"
-  integrity sha512-gTr/WaNmCpAupbjTWXP+QRmaQGMjKe5DlzAszVtlfrLsBxm+ZcB34PM2kOBZzazitwrOjaYA42I0jwGhKppEJQ==
+nuxt-lazy-load@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/nuxt-lazy-load/-/nuxt-lazy-load-1.0.7.tgz#83827ece1ad04693938d83df7ef87a391b3d1a65"
+  integrity sha512-HTTzz61dKddbMQeiG2D3Oz6rIHA8KEZXcttHQ5NdbOnntNYTycj8fOR4jpHFzjf+QLjCBiS46r99Ighrw+xGwA==
   dependencies:
     intersection-observer "^0.7.0"
     string-replace-loader "^2.1.1"
