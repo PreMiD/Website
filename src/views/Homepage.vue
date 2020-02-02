@@ -3,7 +3,7 @@
     <div class="promo-container">
       <div class="promo-container__heading">
         <div class="heading__logo">
-          <img src="https://premid-13268.kxcdn.com/assets/images/logo.png" />
+          <img src="@/assets/images/logo_round.svg" />
         </div>
         <div class="heading__text">
           <p>
