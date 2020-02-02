@@ -3,10 +3,12 @@
     <div class="promo-container">
       <div class="promo-container__heading">
         <div class="heading__logo">
-          <img src="@/assets/images/logo_round.svg" />
+          <img src="https://premid-13268.kxcdn.com/assets/images/logo.png" />
         </div>
         <div class="heading__text">
-          <p><strong>PreMiD</strong> is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.</p>
+          <p>
+            <strong>PreMiD</strong> is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.
+          </p>
         </div>
         <div class="heading__button-group">
           <a class="button text--uppercase" href="#features">
