@@ -116,7 +116,7 @@
         </div>
       </div>
     </div>
-    <div class="features-container" id="features">
+    <div class="section section--features" id="features">
       <div class="waves-divider waves-divider_top">
         <svg
           class="wave"
@@ -132,11 +132,12 @@
           />
         </svg>
       </div>
-      <div class="section-heading section-heading__features">
-        <h1 class="section-heading__title">{{ $t('home.features.heading') }}</h1>
+      <div class="section__heading section__heading--center">
+        <h1>{{ $t('home.features.heading') }}</h1>
+        <p class="section__subheading">{{ $t('home.features.presencesystem.description') }}</p>
       </div>
-      <div class="container section-container">
-        <div class="section-container__details">
+      <div class="card--feature">
+        <div class="card--feature__details">
           <h1 v-html="markdown($t('home.features.presencesystem.heading'))" />
           <p>{{ $t('home.features.presencesystem.description') }}</p>
           <p>
@@ -147,12 +148,12 @@
             />
           </p>
         </div>
-        <div class="section-container__promo">
-          <img class="section-container__promo--image1" :src="cardThumbnail1" />
+        <div class="card--feature__promo">
+          <img class="card--feature__promo--image1" :src="cardThumbnail1" />
         </div>
       </div>
-      <div class="container section-container section-container_reverse">
-        <div class="section-container__details">
+      <div class="card--feature card--feature--reverse">
+        <div class="card--feature__details">
           <h1>{{$t('home.features.simpleInterface.heading')}}</h1>
           <p>{{$t('home.features.simpleInterface.description')}}</p>
           <ul>
@@ -167,15 +168,15 @@
             </li>
           </ul>
         </div>
-        <div class="section-container__promo">
+        <div class="card--feature__promo">
           <video autoplay loop>
             <source src="./../assets/images/cards/card2_video.mp4" type="video/mp4" />
-            <img class="section-container__promo--image2" :src="cardThumbnail2" />
+            <img class="card--feature__promo--image2" :src="cardThumbnail2" />
           </video>
         </div>
       </div>
-      <div class="container section-container">
-        <div class="section-container__details">
+      <div class="card--feature">
+        <div class="card--feature__details">
           <h1>{{$t('home.features.quickSupport.heading')}}</h1>
           <p>{{$t('home.features.quickSupport.description')}}</p>
           <p>
@@ -185,8 +186,8 @@
             >{{$t('home.features.quickSupport.button')}}</a>
           </p>
         </div>
-        <div class="section-container__promo">
-          <img class="section-container__promo--image1" :src="cardThumbnail4" />
+        <div class="card--feature__promo">
+          <img class="card--feature__promo--image1" :src="cardThumbnail4" />
         </div>
       </div>
       <div class="waves-divider waves-divider_bottom">
@@ -222,8 +223,6 @@ import cardThumbnail1 from "@/assets/images/cards/card1.png";
 import cardThumbnail2 from "@/assets/images/cards/card2.png";
 import cardThumbnail3 from "@/assets/images/cards/card3.png";
 import cardThumbnail4 from "@/assets/images/cards/card4.png";
-
-import Card from "@/components/Card.vue";
 
 import axios from "axios";
 
