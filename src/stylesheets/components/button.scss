@@ -18,6 +18,8 @@ $button-padding-rl-default: 2rem;
     transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow: 0 3px 16px -7px transparentize($background-primary, 0.3);
     text-align: center;
+
+    font-family: inherit;
   
     i {
       margin-right: 2px;

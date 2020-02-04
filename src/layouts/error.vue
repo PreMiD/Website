@@ -17,7 +17,6 @@
       <router-link to="/" class="button button--sm">Return to the homepage</router-link>
     </div>
   </div>
-  </div>
 </template>
 
 <script>

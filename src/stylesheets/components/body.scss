@@ -12,8 +12,8 @@ body {
   scrollbar-color: $background-primary $background-secondary;
   scrollbar-width: thin;
 
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 :focus {
@@ -40,6 +40,11 @@ body {
 header {
   z-index: 10000;
   width: 100%;
+}
+
+.content {
+  min-height: calc(100vh - 150px);
+  flex: 1 0 auto;
 }
 
 // .text-highlight {

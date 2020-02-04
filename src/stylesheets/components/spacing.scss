@@ -11,38 +11,38 @@
 }
 
 @mixin margin($margin-size) {
-    .mr--#{$margin-size} {
+    .m-r--#{$margin-size} {
         margin-right: $margin-size + rem;
     }
 
-    .mt--#{$margin-size} {
+    .m-t--#{$margin-size} {
         margin-top: $margin-size + rem;
     }
 
-    .mb--#{$margin-size} {
+    .m-b--#{$margin-size} {
         margin-bottom: $margin-size + rem;
     }
 
-    .ml--#{$margin-size} {
+    .m-l--#{$margin-size} {
         margin-left: $margin-size + rem;
     }
 
 }
 
 @mixin padding($padding-size) {
-    .pr--#{$padding-size} {
+    .p-r--#{$padding-size} {
         padding-right: $padding-size + rem;
     }
 
-    .pt--#{$padding-size} {
+    .p-t--#{$padding-size} {
         padding-top: $padding-size + rem;
     }
 
-    .pb--#{$padding-size} {
+    .p-b--#{$padding-size} {
         padding-bottom: $padding-size + rem;
     }
 
-    .pl--#{$padding-size} {
+    .p-l--#{$padding-size} {
         padding-left: $padding-size + rem;
     }
 
