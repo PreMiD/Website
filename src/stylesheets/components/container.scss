@@ -1,7 +1,38 @@
+
 .container {
   position: relative;
-  max-width: 1600px;
-  margin: 0 auto;
+  overflow: hidden;
+
+  &--width--desktop {
+    max-width: 1600px;
+  }
+
+  &--width--mobile {
+    max-width: 600px;
+  }
+
+  &--large {
+    padding-top: 3.5em;
+    padding-bottom: 3.5em;
+    text-align: center;
+  }
+
+  .container__heading {
+    .heading--center {
+      text-align: center;
+    }
+    .heading--right {
+      text-align: right;
+    }
+
+    .heading--subtitle {
+      font-size: small;
+    }
+  }
+}
+
+.container {
+  position: relative;
 
   &_error-page {
     margin-top: 8em;
@@ -32,11 +63,6 @@
   }
 }
 
-.content {
-  min-height: calc(100vh - 150px);
-  flex: 1 0 auto;
-}
-
 .promo-container {
   display: flex;
   position: relative;
@@ -51,11 +77,11 @@
     margin: auto 0;
     text-align: center;
 
-      flex-flow: column;
+    flex-flow: column;
 
     .heading__logo {
       display: inline-block;
-      margin: 1em 0;
+      margin: 1.5em 0;
 
       img {
         width: 450px;
@@ -68,13 +94,11 @@
       p {
         position: relative;
         left: 3px;
-
-        margin-left: 3px;
         font-size: 1.2em;
         margin: 0;
         font-weight: 500;
         color: rgba(255, 255, 255, 0.9);
-        max-width: 300px;
+        max-width: 530px;
       }
     }
 
@@ -118,7 +142,7 @@
     border: 1px solid lighten($background-secondary, 5%);
     color: lighten($background-secondary, 35%);
 
-transition: all 0.2s ease;
+    transition: all 0.2s ease;
 
     &:hover {
       border: 1px solid lighten($background-secondary, 10%);
@@ -126,12 +150,12 @@ transition: all 0.2s ease;
       background-color: transparentize(lighten($background-secondary, 35%), 0.95);
     }
 
-    &.nuxt-link-exact-active, &.router-link-exact-active {
+    &.nuxt-link-exact-active,
+    &.router-link-exact-active {
       border: 1px solid $accent-primary;
       background-color: $accent-primary;
       color: $purplewhite;
     }
-
   }
 }
 
@@ -385,19 +409,6 @@ transition: all 0.2s ease;
   }
 }
 
-.features-container {
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-
-  padding: 120px 0 150px;
-
-  background-image: linear-gradient(125deg,
-      $background-secondary,
-      $background-primary);
-  color: #f8f9fd;
-}
-
 .contributor-container {
   margin-top: 25px;
   max-width: 1400px;
@@ -468,7 +479,7 @@ transition: all 0.2s ease;
         line-height: 1;
       }
 
-      .button_like {
+      .button--like {
         padding: 14px 20px;
 
         i {
@@ -496,7 +507,7 @@ transition: all 0.2s ease;
     align-items: flex-start;
     color: white;
 
-    >div {
+    > div {
       background: #2f3136;
       padding: 1.5em;
       margin: 1em 0;
@@ -633,7 +644,7 @@ transition: all 0.2s ease;
     justify-content: center;
     align-items: center;
 
-    >div {
+    > div {
       margin: 0 6px;
     }
 
@@ -696,75 +707,6 @@ transition: all 0.2s ease;
   align-items: center;
 }
 
-.section-heading__features {
-  padding-top: 6em;
-  padding-bottom: 1em;
-}
-
-.section-container {
-  padding: 0 2em;
-  display: flex;
-  min-height: 800px;
-  justify-content: space-around;
-  align-items: center;
-
-  &_reverse {
-    flex-flow: row-reverse;
-  }
-
-  &_alternative {
-    flex-flow: column;
-    flex-wrap: wrap;
-
-    justify-content: center;
-
-    .section-container__details {
-      width: 80%;
-    }
-  }
-
-  &__details {
-    color: #c4c4c4;
-
-    width: 45%;
-    margin: 0 1em;
-
-    h1 {
-      font-size: 3.5em;
-      color: white;
-    }
-
-    p {
-      font-size: 1.7em;
-    }
-
-    ul {
-      margin: 0;
-      padding: 0 1.2em;
-
-      li {
-        p {
-          font-size: 1.2em;
-          margin: 0.2em 0;
-        }
-      }
-    }
-  }
-
-  &__promo {
-
-    img,
-    video {
-      max-width: 720px;
-      border-radius: 0.5em;
-    }
-
-    &--image1 {
-      position: relative;
-    }
-  }
-}
-
 // .category-container {
 //   .category-item {
 //     margin: 0 2px;
@@ -779,3 +721,34 @@ transition: all 0.2s ease;
 //     }
 //   }
 // }
+
+.error-container {
+  max-width: 800px;
+  background-color: $background-secondary;
+  padding: 3em;
+  border-radius: 0.4em;
+  margin: 4em auto;
+
+  h1 {
+    margin: 0;
+    margin-bottom: 0.6em;
+    font-weight: 800;
+    line-height: 1.1;
+    font-size: 3.8em;
+    letter-spacing: -3px;
+    background: linear-gradient(30deg, $accent-primary, #b3aeff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    max-width: 600px;
+  }
+
+  .error-container--btns {
+    margin-top: 2em;
+  }
+
+  .error-textarea p {
+    margin: 0.5em 0;
+    font-family: monospace;
+  }
+}

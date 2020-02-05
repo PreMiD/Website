@@ -10,7 +10,6 @@ import Presence from "~/views/store/PresencePage";
 import Userpage from "~/views/users/Userpage";
 import Contributors from "~/views/Contributors";
 import Downloads from "~/views/Downloads";
-import NotFound from "~/views/errors/NotFound";
 import loginPage from "~/views/auth/Login";
 import logoutPage from '~/views/auth/Logout';
 import callbackPage from '~/views/auth/AuthCallback';
@@ -22,10 +21,6 @@ export function createRouter() {
     mode: "history",
     auth: false,
     routes: [
-      {
-        path: "*",
-        component: NotFound
-      },
       {
         path: "/",
         component: Index

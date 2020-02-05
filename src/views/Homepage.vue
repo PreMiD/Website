@@ -6,14 +6,16 @@
           <img src="@/assets/images/logo_round.svg" />
         </div>
         <div class="heading__text">
-          <p>{{ $t(`home.introduction.catchphrase`) }}</p>
+          <p>
+            <strong>PreMiD</strong> is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.
+          </p>
         </div>
         <div class="heading__button-group">
-          <a class="button button_uppercase" href="#features">
+          <a class="button text--uppercase" href="#features">
             <i class="fas fa-stream"></i>
             {{$t('home.introduction.button.features')}}
           </a>
-          <nuxt-link class="button button_black button_uppercase" to="/downloads">
+          <nuxt-link class="button button--black text--uppercase" to="/downloads">
             <i class="fas fa-file-export"></i>
             {{ $t(`home.introduction.button.downloads`) }}
           </nuxt-link>
@@ -29,7 +31,7 @@
           <div class="usercard__header">
             <div
               class="header__avatar"
-              :style="'background-image: url(' + presence.profile.image + ');'"
+              :style="'background-image: url(' + presence.profile.image + '?size=128' + ');'"
             />
             <div class="header__info">
               <div class="info__nameTag">
@@ -114,7 +116,7 @@
         </div>
       </div>
     </div>
-    <div class="features-container" id="features">
+    <div class="section section--features" id="features">
       <div class="waves-divider waves-divider_top">
         <svg
           class="wave"
@@ -130,27 +132,28 @@
           />
         </svg>
       </div>
-      <div class="section-heading section-heading__features">
-        <h1 class="section-heading__title">{{ $t('home.features.heading') }}</h1>
+      <div class="section__heading section__heading--center">
+        <h1>{{ $t('home.features.heading') }}</h1>
+        <p class="section__subheading">{{ $t('home.features.presencesystem.description') }}</p>
       </div>
-      <div class="container section-container">
-        <div class="section-container__details">
+      <div class="card--feature">
+        <div class="card--feature__details">
           <h1 v-html="markdown($t('home.features.presencesystem.heading'))" />
           <p>{{ $t('home.features.presencesystem.description') }}</p>
           <p>
             <nuxt-link
-              class="button button_large"
+              class="button button--lg"
               to="/store"
               v-text="$t('home.features.presencesystem.button')"
             />
           </p>
         </div>
-        <div class="section-container__promo">
-          <img class="section-container__promo--image1" :src="cardThumbnail1" />
+        <div class="card--feature__promo">
+          <img class="card--feature__promo--image1" :src="cardThumbnail1" />
         </div>
       </div>
-      <div class="container section-container section-container_reverse">
-        <div class="section-container__details">
+      <div class="card--feature card--feature--reverse">
+        <div class="card--feature__details">
           <h1>{{$t('home.features.simpleInterface.heading')}}</h1>
           <p>{{$t('home.features.simpleInterface.description')}}</p>
           <ul>
@@ -165,26 +168,26 @@
             </li>
           </ul>
         </div>
-        <div class="section-container__promo">
+        <div class="card--feature__promo">
           <video autoplay loop>
             <source src="./../assets/images/cards/card2_video.mp4" type="video/mp4" />
-            <img class="section-container__promo--image2" :src="cardThumbnail2" />
+            <img class="card--feature__promo--image2" :src="cardThumbnail2" />
           </video>
         </div>
       </div>
-      <div class="container section-container">
-        <div class="section-container__details">
+      <div class="card--feature">
+        <div class="card--feature__details">
           <h1>{{$t('home.features.quickSupport.heading')}}</h1>
           <p>{{$t('home.features.quickSupport.description')}}</p>
           <p>
             <a
-              class="button button_large"
+              class="button button--lg"
               href="https://discord.gg/premid"
             >{{$t('home.features.quickSupport.button')}}</a>
           </p>
         </div>
-        <div class="section-container__promo">
-          <img class="section-container__promo--image1" :src="cardThumbnail4" />
+        <div class="card--feature__promo">
+          <img class="card--feature__promo--image1" :src="cardThumbnail4" />
         </div>
       </div>
       <div class="waves-divider waves-divider_bottom">
@@ -220,8 +223,6 @@ import cardThumbnail1 from "@/assets/images/cards/card1.png";
 import cardThumbnail2 from "@/assets/images/cards/card2.png";
 import cardThumbnail3 from "@/assets/images/cards/card3.png";
 import cardThumbnail4 from "@/assets/images/cards/card4.png";
-
-import Card from "@/components/Card.vue";
 
 import axios from "axios";
 

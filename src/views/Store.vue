@@ -107,7 +107,7 @@
       <paginate
         :no-li-surround="true"
         :break-view-link-class="'hidden'"
-        :page-link-class="'button button_pagination'"
+        :page-link-class="'button button--pagination'"
         :page-count="pageCount"
         v-model="currentPageNumber"
         :page-range="6"
@@ -204,9 +204,7 @@ export default {
       this.pageCount < Number(this.$route.query.page) ||
       this.$route.query.page <= -1
     ) {
-      this.$router.push({
-        path: "/notfound"
-      });
+      this.$nuxt.error({ statusCode: 404, message: 'No presences available.' })
     }
   },
   computed: {
