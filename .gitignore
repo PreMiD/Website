@@ -3,6 +3,7 @@ node_modules
 static/assets
 www
 package-lock.json
+yarn.lock
 dist
 .vscode/settings.json
 src/langs
