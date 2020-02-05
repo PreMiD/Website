@@ -101,8 +101,8 @@ module.exports = {
 				}
 			]
 		};
-	},
+	}/*,
 	build: {
 		publicPath: "https://cdn.premid.app"
-	}
+	}*/
 };
