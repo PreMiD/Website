@@ -112,7 +112,7 @@ export default {
   },
   head() {
     return {
-      title: `PreMiD - ${!this.error ? this.user.name : "Unknown User"}`,
+      title: `${!this.error ? this.user.name : "Unknown User"}`,
       meta: [
         {
           hid: "description",

@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     isStaffRole(roleName) {
-      var roleName = roleName.toLowerCase();
+      roleName = roleName.toLowerCase();
       if (
         roleName == "main developer" ||
         roleName == "website developer" ||
@@ -84,47 +84,34 @@ export default {
         roleName == "ticket manager" ||
         roleName == "moderator" ||
         roleName == "jr. moderator"
-      ) {
+      )
         return true;
-      } else {
-        return false;
-      }
+      else return false;
     },
     isSupporterRole(roleName) {
-      var roleName = roleName.toLowerCase();
+      roleName = roleName.toLowerCase();
       if (
         roleName == "donator" ||
         roleName == "patron" ||
         roleName == "supporter" ||
         roleName == "booster"
-      ) {
+      )
         return true;
-      } else {
-        return false;
-      }
+      else return false;
     },
     isTranslatorRole(roleName) {
-      var roleName = roleName.toLowerCase();
-      if (roleName == "translator" || roleName == "proofreader") {
-        return true;
-      } else {
-        return false;
-      }
+      roleName = roleName.toLowerCase();
+      if (roleName == "translator" || roleName == "proofreader") return true;
+      else return false;
     },
     isContributorRole(roleName) {
-      var roleName = roleName.toLowerCase();
-      if (roleName == "contributor" || roleName == "designer") {
-        return true;
-      } else {
-        return false;
-      }
+      roleName = roleName.toLowerCase();
+      if (roleName == "contributor" || roleName == "designer") return true;
+      else return false;
     },
     userNameColor(patronColor, userColor) {
-      if (patronColor == "#fff") {
-        return userColor;
-      } else {
-        return patronColor;
-      }
+      if (patronColor == "#fff") return userColor;
+      else return patronColor;
     }
   }
 };

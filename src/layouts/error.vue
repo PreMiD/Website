@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: Add these errors to strings. -->
   <div class="container error-container">
     <div v-if="error.statusCode === 404">
       <h1>Sorry, we can't find this page.</h1>
@@ -10,7 +11,9 @@
       <h1>Internal server error has occurred.</h1>
     </div>
     <div v-if="$props.error.message" class="error-textarea">
-      <p><b>Details:</b></p>
+      <p>
+        <b>Details:</b>
+      </p>
       <p>{{ $props.error.message }}</p>
     </div>
     <div class="error-container--btns">
@@ -20,12 +23,16 @@
 </template>
 
 <script>
-  export default {
-    props: ['error'],
-    layout: 'default',
-    mounted() {
-      console.log(this.$props.error);
-    },
+export default {
+  props: ["error"],
+  layout: "default",
+  head() {
+    return {
+      title: "Error"
+    }
+  },
+  mounted() {
+    console.log(this.$props.error);
   }
-
+};
 </script>

@@ -3,10 +3,11 @@
     <div class="promo-container">
       <div class="promo-container__heading">
         <div class="heading__logo">
-          <img src="@/assets/images/logo_round.svg" />
+          <img width="100%" src="@/assets/images/logo_round.svg" />
         </div>
         <div class="heading__text">
           <p>
+            <!-- TODO: Add this to strings. -->
             <strong>PreMiD</strong> is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.
           </p>
         </div>
@@ -149,7 +150,7 @@
           </p>
         </div>
         <div class="card--feature__promo">
-          <img class="card--feature__promo--image1" :src="cardThumbnail1" />
+          <img class="card--feature__promo--image1" style="max-width:100%" :src="cardThumbnail1" />
         </div>
       </div>
       <div class="card--feature card--feature--reverse">

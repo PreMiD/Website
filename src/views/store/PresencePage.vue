@@ -2,42 +2,68 @@
   <div v-if="!presence.error">
     <transition name="fade" mode="in-out">
       <div class="fullpresence-container">
-        <div class="fullpresence__header" :style="`background-image: url('${presence.metadata.thumbnail}')`">
+        <div
+          class="fullpresence__header"
+          :style="`background-image: url('${presence.metadata.thumbnail}')`"
+        >
           <div class="header__title">
             <h1 class="presence-name">
               {{ presence.metadata.service }}
-              <span v-if="hot" class="fa-stack" content="This presence is very popular around users." v-tippy
-                style="font-size:1rem;">
+              <span
+                v-if="hot"
+                class="fa-stack"
+                content="This presence is very popular around users."
+                v-tippy
+                style="font-size:1rem;"
+              >
                 <i class="fas fa-circle fa-stack-2x"></i>
-                <i :style="`color: ${presence.metadata.color};`" class="fas fa-fire-alt fa-stack-1x fa-inverse"></i>
+                <i
+                  :style="`color: ${presence.metadata.color};`"
+                  class="fas fa-fire-alt fa-stack-1x fa-inverse"
+                ></i>
               </span>
             </h1>
-            <div class="fullpresence__gradient" :style="
+            <div
+              class="fullpresence__gradient"
+              :style="
                 `background: linear-gradient(155deg, ${presence.metadata.color} 0%, ${presenceGradientColor} 100%);`
-              "></div>
+              "
+            ></div>
           </div>
           <div class="header__buttons">
-            <button v-if="
+            <button
+              v-if="
                 !isInstalled && this.$store.state.extension.extensionInstalled
-              " class="button button--" v-on:click="sendPresence(presence.metadata.service)">
+              "
+              class="button button--"
+              v-on:click="sendPresence(presence.metadata.service)"
+            >
               <span class="icon">
                 <i class="fas fa-plus"></i>
               </span>
               {{ $t("store.card.presence.add") }}
             </button>
-            <button v-if="isInstalled && this.$store.state.extension.extensionInstalled" class="button button--black"
-              v-on:click="removePresence(presence.metadata.service)">
+            <button
+              v-if="isInstalled && this.$store.state.extension.extensionInstalled"
+              class="button button--black"
+              v-on:click="removePresence(presence.metadata.service)"
+            >
               <span class="icon">
                 <i class="fas fa-minus"></i>
               </span>
               {{ $t("store.card.presence.remove") }}
             </button>
-            <a class="button button--black" :href="
+            <a
+              class="button button--black"
+              :href="
                 `https://github.com/PreMiD/Presences/tree/master/${encodeURIComponent($route.params.presenceName)}`
-              " target="_blank">
+              "
+              target="_blank"
+            >
               <span class="icon">
                 <i class="fab fa-github"></i>
               </span>
+              <!-- TODO: Add this to strings. -->
               Source Code
             </a>
             <!-- TODO: Implement like system. <a class="button button--lg button--red button--like"><i class="far fa-heart"/></a> -->
@@ -55,21 +81,45 @@
                 <p>
                   <i class="fas fa-user" />
                   {{ $t("presence.sections.information.author") }}:
-                  <nuxt-link v-if="presence.metadata.author.userId" class="author-name"
+                  <nuxt-link
+                    v-if="presence.metadata.author.userId"
+                    class="author-name"
                     :style="`color: ${presence.metadata.author.roleColor};`"
-                    :to="`/users/${presence.metadata.author.userId}`" :disabled="true">
-                    <img v-if="presence.metadata.author.avatar" :src="presence.metadata.author.avatar"
-                      class="author-avatar" />
+                    :to="`/users/${presence.metadata.author.userId}`"
+                    :disabled="true"
+                  >
+                    <img
+                      v-if="presence.metadata.author.avatar"
+                      :src="presence.metadata.author.avatar"
+                      class="author-avatar"
+                    />
                     {{ presence.metadata.author.name }}
                   </nuxt-link>
                   <b v-else>{{ presence.metadata.author.name }}</b>
                 </p>
               </li>
+              <li
+                v-if="presence.metadata.contributors && typeof presence.metadata.contributors === 'object'"
+              >
+                <p>
+                  <i class="fas fa-user-tie" />
+                  {{ $t("header.contributors") }}:
+                  <nuxt-link
+                    v-for="(contributor, index) in presence.metadata.contributors"
+                    :key="contributor.id"
+                    class="author-name"
+                    :to="`/users/${contributor.id}`"
+                    :disabled="true"
+                  >{{ contributor.name + `${presence.metadata.contributors.length === index+1 ? "" : ", "}` }}</nuxt-link>
+                </p>
+              </li>
               <li v-if="presence.metadata.version">
                 <p>
-                  <i class="fas fa-code-branch" />
+                  <i style="margin-right:2px;" class="fas fa-code-branch" />
                   {{ $t("presence.sections.information.version") }}:
-                  <span class="presence-version">
+                  <span
+                    class="presence-version"
+                  >
                     <b>{{ presence.metadata.version }}</b>
                   </span>
                 </p>
@@ -80,9 +130,14 @@
                   {{ $t("presence.sections.information.tags") }}:
                 </p>
                 <div class="presence-tags">
-                  <a v-bind:key="tag" v-for="tag of presence.metadata.tags" :style="
+                  <a
+                    v-bind:key="tag"
+                    v-for="tag of presence.metadata.tags"
+                    :style="
                       `background: ${presence.metadata.color}; color: ${presenceTextColor};`
-                    " class="label label_tag">{{ tag }}</a>
+                    "
+                    class="label label_tag"
+                  >{{ tag }}</a>
                 </div>
               </li>
               <!-- <li>
@@ -109,149 +164,166 @@
 </template>
 
 <script>
-  import PresenceMixin from "~/components/mixins/Presence";
-  import axios from "axios";
+import PresenceMixin from "~/components/mixins/Presence";
+import axios from "axios";
 
-  import tinycolor from "tinycolor2";
-  import marked from "marked";
+import tinycolor from "tinycolor2";
+import marked from "marked";
 
-  export default {
-    name: "presencePage",
-    mixins: [PresenceMixin],
-    auth: false,
+export default {
+  name: "presencePage",
+  mixins: [PresenceMixin],
+  auth: false,
 
-    head() {
-      if(this.$data.presence.error) return;
-      let description =
-        this.$data.presence.metadata.description["en"] ||
-        this.$data.presence.metadata.description;
-      if (description.length >= 256)
-        description = description.slice(0, 256) + "...";
-      return {
-        title: this.$data.presence.metadata.service,
-        meta: [{
-            hid: "theme-color",
-            property: "theme-color",
-            content: this.$data.presence.metadata.color
-          },
-          {
-            hid: "og:title",
-            property: "og:title",
-            content: this.$data.presence.metadata.service
-          },
-          {
-            hid: "og:description",
-            property: "og:description",
-            content: description
-          },
-          {
-            hid: "og:image",
-            property: "og:image",
-            content: this.$data.presence.metadata.logo
-          }
-        ]
-      };
-    },
-    async asyncData({
-      params
-    }) {
+  head() {
+    if (this.$data.presence.error) return;
+    let description =
+      this.$data.presence.metadata.description["en"] ||
+      this.$data.presence.metadata.description;
+    if (description.length >= 256)
+      description = description.slice(0, 256) + "...";
+    return {
+      title: this.$data.presence.metadata.service,
+      meta: [
+        {
+          hid: "theme-color",
+          property: "theme-color",
+          content: this.$data.presence.metadata.color
+        },
+        {
+          hid: "og:title",
+          property: "og:title",
+          content: this.$data.presence.metadata.service
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: description
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: this.$data.presence.metadata.logo
+        }
+      ]
+    };
+  },
+  async asyncData({ params }) {
+    let presenceUsage = (await axios(`${process.env.apiBase}/usage`)).data
+        .users,
+      presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
+        .data;
 
-      let presenceUsage = (await axios(`${process.env.apiBase}/usage`)).data.users,
-        presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`)).data;
-
-      let presenceData = await new Promise((resolve, reject) => {
-        axios(`${process.env.apiBase}/presences/${encodeURIComponent(params.presenceName)}`).then((res) => {
+    let presenceData = await new Promise((resolve, reject) => {
+      axios(
+        `${process.env.apiBase}/presences/${encodeURIComponent(
+          params.presenceName
+        )}`
+      )
+        .then(res => {
           resolve(res.data);
-        }).catch((err) => {
+        })
+        .catch(err => {
           console.log(err);
           reject({
             error: true,
             code: 401
           });
         });
-      });
+    });
 
-      let data = {
-        hot: (presenceRanking[encodeURIComponent(params.presenceName)] / presenceUsage) * 100 > 30,
-        presence: presenceData
-      };
+    let data = {
+      hot:
+        (presenceRanking[encodeURIComponent(params.presenceName)] /
+          presenceUsage) *
+          100 >
+        30,
+      presence: presenceData
+    };
 
-      if(!presenceData.error) {
-        let authorData = await new Promise((resolve, reject) => {
-          axios(`${process.env.apiBase}/credits/${data.presence.metadata.author.id}`).then((res) => {
-            if(res.data.error) reject({error: true});
+    if (!presenceData.error) {
+      let authorData = await new Promise((resolve, reject) => {
+        axios(
+          `${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
+        )
+          .then(res => {
+            console.log(res)
+            if (res.data.error) reject({ error: true });
             resolve(res.data);
-          }).catch((err) => {
+          })
+          .catch(err => {
             console.log(err);
             reject({
               error: true,
               code: 401
             });
           });
-        });
-
-        if(!authorData.error) {
-          data.presence.metadata.author = authorData;
-        }
-      }
-
-      return data;
-    },
-    mounted() {
-      if(this.$data.presence.error) return this.$nuxt.error({ statusCode: this.$data.presence.error });
-    },
-    created() {
-      if(!this.$data.presence.error) {
-        this.isPresenceInstalled(this.$data.presence.metadata.service).then(
-          responce => {
-            if (responce) this.$data.isInstalled = true;
-          }
-        );
-      }
-    },
-    updated() {
-      this.isPresenceInstalled(this.$data.presence.metadata.service).then((responce) => {
-        if (responce) this.$data.isInstalled = true;
       });
-    },
-    methods: {
-      /**
-       * Returns description of the presence according to your language.
-       * If presence has non-multilingual description then we just parsing the "description" data.
-       */
-      getPresenceDescription() {
-        if(this.$data.presence.error) return;
 
-        if (
-          this.$data.presence.metadata.description[
-            this.$root.getCurrentLanguage()
-          ]
-        ) {
-          return this.$data.presence.metadata.description[
-            this.$root.getCurrentLanguage()
-          ];
-        } else if (this.$data.presence.metadata.description["en"]) {
-          return this.$data.presence.metadata.description["en"];
-        } else {
-          return this.$data.presence.metadata.description;
-        }
-      }
-    },
-    computed: {
-      presenceTextColor() {
-        var presenceColor = tinycolor(this.$data.presence.metadata.color);
-        if (presenceColor.getLuminance() > 0.6) {
-          return "#202225";
-        } else {
-          return "#fff";
-        }
-      },
-      presenceGradientColor() {
-        return tinycolor(this.$data.presence.metadata.color)
-          .darken(45)
-          .toHexString();
+      if (!authorData.error) {
+        data.presence.metadata.author = authorData;
       }
     }
-  };
 
+    return data;
+  },
+  mounted() {
+    if (this.$data.presence.error)
+      return this.$nuxt.error({ statusCode: this.$data.presence.error });
+  },
+  created() {
+    if (!this.$data.presence.error) {
+      this.isPresenceInstalled(this.$data.presence.metadata.service).then(
+        responce => {
+          if (responce) this.$data.isInstalled = true;
+        }
+      );
+    }
+  },
+  updated() {
+    this.isPresenceInstalled(this.$data.presence.metadata.service).then(
+      responce => {
+        if (responce) this.$data.isInstalled = true;
+      }
+    );
+  },
+  methods: {
+    /**
+     * Returns description of the presence according to your language.
+     * If presence has non-multilingual description then we just parsing the "description" data.
+     */
+    getPresenceDescription() {
+      if (this.$data.presence.error) return;
+
+      if (
+        this.$data.presence.metadata.description[
+          this.$root.getCurrentLanguage()
+        ]
+      ) {
+        return this.$data.presence.metadata.description[
+          this.$root.getCurrentLanguage()
+        ];
+      } else if (this.$data.presence.metadata.description["en"]) {
+        return this.$data.presence.metadata.description["en"];
+      } else {
+        return this.$data.presence.metadata.description;
+      }
+    }
+  },
+  computed: {
+    presenceTextColor() {
+      var presenceColor = tinycolor(this.$data.presence.metadata.color);
+      if (presenceColor.getLuminance() > 0.6) {
+        return "#202225";
+      } else {
+        return "#fff";
+      }
+    },
+    presenceGradientColor() {
+      return tinycolor(this.$data.presence.metadata.color)
+        .darken(45)
+        .toHexString();
+    }
+  }
+};
 </script>

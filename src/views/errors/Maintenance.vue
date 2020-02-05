@@ -14,6 +14,6 @@
 
 <script>
     export default {
-        name: "maintenance",
+        name: "maintenance"
     };
 </script>
