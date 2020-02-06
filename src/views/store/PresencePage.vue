@@ -63,8 +63,7 @@
               <span class="icon">
                 <i class="fab fa-github"></i>
               </span>
-              <!-- TODO: Add this to strings. -->
-              Source Code
+              {{ $t("presence.page.buttons.sourceCode") }}
             </a>
             <!-- TODO: Implement like system. <a class="button button--lg button--red button--like"><i class="far fa-heart"/></a> -->
           </div>
@@ -103,7 +102,7 @@
               >
                 <p>
                   <i class="fas fa-user-tie" />
-                  {{ $t("header.contributors") }}:
+                  {{ $t("presence.sections.information.contributors") }}:
                   <nuxt-link
                     v-for="(contributor, index) in presence.metadata.contributors"
                     :key="contributor.id"
@@ -247,7 +246,6 @@ export default {
           `${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
         )
           .then(res => {
-            console.log(res)
             if (res.data.error) reject({ error: true });
             resolve(res.data);
           })

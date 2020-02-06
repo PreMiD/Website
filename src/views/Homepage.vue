@@ -6,10 +6,7 @@
           <img width="100%" src="@/assets/images/logo_round.svg" />
         </div>
         <div class="heading__text">
-          <p>
-            <!-- TODO: Add this to strings. -->
-            <strong>PreMiD</strong> is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.
-          </p>
+          <p v-html="markdown($t('home.introduction.paragraph'))" />
         </div>
         <div class="heading__button-group">
           <a class="button text--uppercase" href="#features">
@@ -139,7 +136,7 @@
       </div>
       <div class="card--feature">
         <div class="card--feature__details">
-          <h1 v-html="markdown($t('home.features.presencesystem.heading'))" />
+          <h1>{{ $t('home.features.presencesystem.heading').replace(/\*/g, "") }}</h1>
           <p>{{ $t('home.features.presencesystem.description') }}</p>
           <p>
             <nuxt-link
@@ -369,7 +366,7 @@ export default {
       return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
         return pls.replace(
           ch,
-          `<span class="text-highlight">${ch.slice(2, ch.length - 2)}</span>`
+          `<strong>${ch.slice(2, ch.length - 2)}</strong>`
         );
       })[0];
     }
