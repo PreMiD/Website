@@ -136,7 +136,7 @@
       </div>
       <div class="card--feature">
         <div class="card--feature__details">
-          <h1>{{ $t('home.features.presencesystem.heading').replace(/\*/g, "") }}</h1>
+          <h1 v-html="markdown($t('home.features.presencesystem.heading'))" />
           <p>{{ $t('home.features.presencesystem.description') }}</p>
           <p>
             <nuxt-link
@@ -360,13 +360,14 @@ export default {
   methods: {
     openInNewTab(url) {
       let page = window.open(url, "_blank");
-      win.focus();
+      page.focus();
     },
     markdown(pls) {
+      if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
       return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
         return pls.replace(
           ch,
-          `<strong>${ch.slice(2, ch.length - 2)}</strong>`
+          `<strong><span class="text-highlight">${ch.slice(2, ch.length - 2)}</span></strong>`
         );
       })[0];
     }

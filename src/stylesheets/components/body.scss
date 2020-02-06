@@ -37,6 +37,14 @@ body {
   color: #99aab5;
 }
 
+.text-highlight {
+  color: #b3aeff;
+  background: linear-gradient(30deg, #7289da, #b3aeff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .userpage__presences > .heading > div.noContributes {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
