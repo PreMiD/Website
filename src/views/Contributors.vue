@@ -83,7 +83,11 @@ export default {
         roleName == "community manager" ||
         roleName == "ticket manager" ||
         roleName == "moderator" ||
-        roleName == "jr. moderator"
+        roleName == "jr. moderator" ||
+        roleName == "administrator" ||
+        roleName == "community secretary" ||
+        roleName == "head moderator" ||
+        roleName == "senior moderator"
       )
         return true;
       else return false;

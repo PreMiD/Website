@@ -1,23 +1,22 @@
 <template>
-  <!-- TODO: Add these errors to strings. -->
   <div class="container error-container">
     <div v-if="error.statusCode === 404">
-      <h1>Sorry, we can't find this page.</h1>
+      <h1>{{ $t("error.code.404") }}</h1>
     </div>
     <div v-else-if="error.statusCode === 4">
-      <h1>You're looking for not existing or deleted presence.</h1>
+      <h1>{{ $t("error.code.4") }}</h1>
     </div>
     <div v-else>
-      <h1>Internal server error has occurred.</h1>
+      <h1>{{ $t("error.code.500") }}</h1>
     </div>
     <div v-if="$props.error.message" class="error-textarea">
       <p>
-        <b>Details:</b>
+        <b>{{ $t("error.page.details") }}:</b>
       </p>
       <p>{{ $props.error.message }}</p>
     </div>
     <div class="error-container--btns">
-      <router-link to="/" class="button button--sm">Return to the homepage</router-link>
+      <router-link to="/" class="button button--sm">{{ $t("error.page.button") }}</router-link>
     </div>
   </div>
 </template>
@@ -29,7 +28,7 @@ export default {
   head() {
     return {
       title: "Error"
-    }
+    };
   },
   mounted() {
     console.log(this.$props.error);

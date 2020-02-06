@@ -13,7 +13,7 @@ body {
   scrollbar-width: thin;
 
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-  Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 :focus {
@@ -35,6 +35,31 @@ body {
   margin: 0;
   background: $background-primary;
   color: #99aab5;
+}
+
+.text-highlight {
+  color: #b3aeff;
+  background: linear-gradient(30deg, #7289da, #b3aeff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.userpage__presences > .heading > div.noContributes {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.userpage__presences > .heading > div.contributes {
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 header {
@@ -119,31 +144,30 @@ img {
   box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
 }
 
-.tippy-tooltip[data-inertia][data-state='visible'] {
-  transition-timing-function: cubic-bezier(.175,.885,.32,1.275);
+.tippy-tooltip[data-inertia][data-state="visible"] {
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-
 .tippy-popper[x-placement^="top"] {
-  .tippy-tooltip[data-animation='discord-anim'] {
+  .tippy-tooltip[data-animation="discord-anim"] {
     transform-origin: center !important;
-    &[data-state='hidden'] {
+    &[data-state="hidden"] {
       opacity: 0;
       transform: scale(0.9) translateY(-11px);
     }
-    &[data-state='visible'] {
+    &[data-state="visible"] {
       transform: scale(1) translateY(-11px);
     }
   }
 }
 
 .tippy-popper[x-placement^="bottom"] {
-  .tippy-tooltip[data-animation='discord-anim'] {
-    &[data-state='hidden'] {
+  .tippy-tooltip[data-animation="discord-anim"] {
+    &[data-state="hidden"] {
       opacity: 0;
       transform: scale(0.9) translateY(11px);
     }
-    &[data-state='visible'] {
+    &[data-state="visible"] {
       transform: scale(1) translateY(11px);
     }
   }
