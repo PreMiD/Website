@@ -29,7 +29,6 @@ export default {
         Booster: "contributors.roles.booster",
         Translator: "contributors.roles.translator",
         Moderator: "contributors.roles.moderator",
-        Donator: "contributors.roles.donator",
         Administrator: "contributors.roles.administrator",
         "Presence Developer": "user.roles.presenceDeveloper",
         "Presence Verifier": "user.roles.presenceVerifier",
