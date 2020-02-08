@@ -2,12 +2,8 @@ module.exports = {
 	rootDir: "./",
 	srcDir: "src",
 	buildModules: [
-		[
-			"@nuxtjs/router",
-			{
-				/* module options */
-			}
-		]
+		"@nuxtjs/router",
+		["@nuxtjs/google-analytics", { id: "UA-129058596-1" }]
 	],
 	plugins: [
 		"~/router.js",
@@ -101,7 +97,7 @@ module.exports = {
 				}
 			]
 		};
-	}/*,
+	} /*,
 	build: {
 		publicPath: "https://cdn.premid.app"
 	}*/
