@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import Index from "~/views/Homepage";
+import partners from "~/views/partners";
 import Store from "~/views/Store";
 import Cookies from "~/views/legal/Cookies";
 import Privacy from "~/views/legal/Privacy";
@@ -68,6 +69,10 @@ export function createRouter() {
       {
         path: "/logout",
         component: logoutPage
+      },
+      {
+        path: "/partners",
+        component: partners
       }
     ],
     scrollBehavior(to, from, savedPosition) {
