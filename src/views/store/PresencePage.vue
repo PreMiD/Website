@@ -71,7 +71,7 @@
         <div class="fullpresence__content">
           <div class="content__description">
             <h2 class="content__title">{{ $t("presence.sections.description.title") }}</h2>
-            <div class="description-container" v-text="getPresenceDescription()" />
+            <div class="description-container" v-html="linkify(getPresenceDescription())" />
           </div>
           <div class="content__info">
             <h2 class="content__title">{{ $t("presence.sections.information.title") }}</h2>
@@ -153,6 +153,11 @@
                     <a :href="`https://${url}`">{{ url }}</a>
                   </li>
                 </ul>
+                <ul v-else-if="presence.metadata.url" class="presence-urls">
+                  <li>
+                    <a :href="`https://${presence.metadata.url}`">{{ presence.metadata.url }}</a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>
@@ -179,8 +184,17 @@ export default {
     let description =
       this.$data.presence.metadata.description["en"] ||
       this.$data.presence.metadata.description;
+
+    if (description.match(/\[([^\]]+)\]\(([^)]+)\)/g)) {
+      description = description.replace(
+        description.match(/\[([^\]]+)\]\(([^)]+)\)/g),
+        /\[([^\]]+)\]\(([^)]+)\)/g.exec(description)[1]
+      );
+    }
+
     if (description.length >= 256)
       description = description.slice(0, 256) + "...";
+
     return {
       title: this.$data.presence.metadata.service,
       meta: [
@@ -306,6 +320,23 @@ export default {
         return this.$data.presence.metadata.description["en"];
       } else {
         return this.$data.presence.metadata.description;
+      }
+    },
+    linkify(description) {
+      if (!description) return;
+      else if (
+        !description.match(/\[([^\]]+)\]\(([^)]+)\)/g) ||
+        !/\[([^\]]+)\]\(([^)]+)\)/g.exec(description)
+      )
+        return description;
+      else {
+        const match = description.match(/\[([^\]]+)\]\(([^)]+)\)/g),
+          exec = /\[([^\]]+)\]\(([^)]+)\)/g.exec(description);
+
+        return description.replace(
+          match,
+          `<a target="_blank" href="${exec[2]}">${exec[1]}</a>`
+        );
       }
     }
   },
