@@ -184,8 +184,17 @@ export default {
     let description =
       this.$data.presence.metadata.description["en"] ||
       this.$data.presence.metadata.description;
+
+    if (description.match(/\[([^\]]+)\]\(([^)]+)\)/g)) {
+      description = description.replace(
+        description.match(/\[([^\]]+)\]\(([^)]+)\)/g),
+        /\[([^\]]+)\]\(([^)]+)\)/g.exec(description)[1]
+      );
+    }
+
     if (description.length >= 256)
       description = description.slice(0, 256) + "...";
+
     return {
       title: this.$data.presence.metadata.service,
       meta: [
