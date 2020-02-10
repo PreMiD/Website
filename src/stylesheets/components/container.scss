@@ -704,10 +704,43 @@
 }
 
 .pagination-container {
+	user-select: none;
+
 	margin: 2em;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	.hidden {
+		display: none !important;
+	}
+
+	.button--pagination {
+		transition: 0.15s background-color ease-out;
+
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+
+		min-width: 50px;
+		min-height: 50px;
+
+		color: #fff;
+		background-color: lighten($background-secondary, 10);
+		font-weight: 700;
+		font-size: 20px;
+
+		border-radius: 50%;
+		margin: 0 5px;
+
+		&.active {
+			background-color: $accent-primary;
+		}
+
+		&:hover {
+			background-color: lighten($background-secondary, 15);
+		}
+	}
 }
 
 // .category-container {
