@@ -246,7 +246,8 @@ export default {
           `${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
         )
           .then(res => {
-            if (res.data.error) reject({ error: true });
+            if (res.data.error)
+              reject({ error: true, message: res.data.message });
             resolve(res.data);
           })
           .catch(err => {

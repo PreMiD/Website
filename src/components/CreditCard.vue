@@ -33,7 +33,7 @@ export default {
         "Presence Developer": "user.roles.presenceDeveloper",
         "Presence Verifier": "user.roles.presenceVerifier",
         "Important Presence Developer": "user.importantPresenceDev.message1",
-        "Main Developer": "contributors.roles.mainDeveloper",
+        Creator: "contributors.roles.creator",
         "Website Developer": "contributors.roles.websiteDeveloper",
         "Head Moderator": "contributors.roles.headModerator",
         "Ticket Manager": "contributors.roles.ticketManager",
