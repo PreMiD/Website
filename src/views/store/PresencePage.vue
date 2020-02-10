@@ -153,6 +153,11 @@
                     <a :href="`https://${url}`">{{ url }}</a>
                   </li>
                 </ul>
+                <ul v-else-if="presence.metadata.url" class="presence-urls">
+                  <li>
+                    <a :href="`https://${presence.metadata.url}`">{{ presence.metadata.url }}</a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>
