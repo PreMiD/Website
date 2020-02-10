@@ -1,0 +1,59 @@
+.m-rl--auto {
+    margin: 0 auto;
+}
+
+.m-tb--auto {
+    margin: auto 0;
+}
+
+.m--auto {
+    margin: auto;
+}
+
+@mixin margin($margin-size) {
+    .m-r--#{$margin-size} {
+        margin-right: $margin-size + rem;
+    }
+
+    .m-t--#{$margin-size} {
+        margin-top: $margin-size + rem;
+    }
+
+    .m-b--#{$margin-size} {
+        margin-bottom: $margin-size + rem;
+    }
+
+    .m-l--#{$margin-size} {
+        margin-left: $margin-size + rem;
+    }
+
+}
+
+@mixin padding($padding-size) {
+    .p-r--#{$padding-size} {
+        padding-right: $padding-size + rem;
+    }
+
+    .p-t--#{$padding-size} {
+        padding-top: $padding-size + rem;
+    }
+
+    .p-b--#{$padding-size} {
+        padding-bottom: $padding-size + rem;
+    }
+
+    .p-l--#{$padding-size} {
+        padding-left: $padding-size + rem;
+    }
+
+}
+
+@include margin(1)
+@include margin(2)
+@include margin(4)
+@include margin(5)
+
+@include padding(1)
+@include padding(2)
+@include padding(4)
+@include padding(5)

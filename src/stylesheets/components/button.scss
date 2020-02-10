@@ -1,7 +1,11 @@
+$button-padding-tb-default: 0.8rem;
+$button-padding-rl-default: 2rem;
+
 .button {
+    font-family: inherit;
     user-select: none;
     border: none;
-    padding: 12px 30px;
+    padding: $button-padding-tb-default $button-padding-rl-default * 1.5;
     border-radius: 55rem;
     font-size: 1.05em;
     font-weight: 700;
@@ -14,7 +18,8 @@
     transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow: 0 3px 16px -7px transparentize($background-primary, 0.3);
     text-align: center;
-    text-transform: uppercase;
+
+    font-family: inherit;
   
     i {
       margin-right: 2px;
@@ -37,90 +42,72 @@
     }
   }
   
-  @mixin colored-button($color){
-    background: $color;
-  
-    &:hover {
-      box-shadow: 0 3px 22px -7px transparentize(lighten($color, 2%), 0.3);
-      background: lighten($color, 2%);
-    }
-  
-    &:active {
-      box-shadow: none;
-      background: darken($color, 2%);
+  @mixin color-button($name, $color){
+      &--#{$name} {
+      background: $color;
+    
+      &:hover {
+        box-shadow: 0 3px 22px -7px transparentize(lighten($color, 2%), 0.3);
+        background: lighten($color, 2%);
+      }
+    
+      &:active {
+        box-shadow: none;
+        background: darken($color, 2%);
+      }
     }
   }
   
   .button {
-    &.button_gray {
-      @include colored-button(#2c2f33);
+    @include color-button('gray', lighten($background-secondary, 8%));
+    @include color-button('black', lighten($background-primary, 8%));
+    @include color-button('red', rgb(255, 60, 60));
+    @include color-button('white', #fff);
+  
+    &.button--sm {
+      padding: calc(#{$button-padding-tb-default} / 1.5) calc(#{$button-padding-tb-default} / 1.5 * 3.5);
+      font-size: 1rem;
     }
   
-    &.button_black {
-      @include colored-button(lighten($background-primary, 8%));
-    }
-  
-    &.button_red {
-      @include colored-button(rgb(255, 60, 60));
-    }
-  
-    &.button_light {
-      color: black;
-      @include colored-button(#fff);
-    }
-  
-    &.button_uppercase {
-      text-transform: uppercase;
-    }
-  
-    &.button_small {
-      padding: 8px 20px;
-      font-size: 0.95rem;
-    }
-  
-    &.button_medium {
-    }
-  
-    &.button_large {
-      padding: 14px 40px;
-      font-size: 1.2rem;
+    &.button--lg {
+      padding: calc(1.3 * #{$button-padding-tb-default}) calc(1.3 * #{$button-padding-tb-default} * 3.5);
+      font-size: 1.3rem;
     }
 
-    &.button_language-switch {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 56px;
-      width: 56px;
-      font-size: 1.6em;
-      padding: 0;
-      i {
-        margin: 0;
-      }
-    }
+  //   &.button--language-switch {
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //     height: 56px;
+  //     width: 56px;
+  //     font-size: 1.6em;
+  //     padding: 0;
+  //     i {
+  //       margin: 0;
+  //     }
+  //   }
   
-    &.button_pagination {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: nowrap;
-      width: 42px;
-      height: 42px;
-      padding: 0;
-  
-      @include colored-button(lighten($background-secondary, 15%));
+  //   &.button--pagination {
+  //     display: inline-flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     flex-wrap: nowrap;
+  //     width: 42px;
+  //     height: 42px;
+  //     padding: 0;
 
-      &.active {
-        box-shadow: 0 3px 36px -7px transparentize(lighten($accent-primary, 2%), 0.3);
-        background: lighten($accent-primary, 2%);
-      }
+  //     &.active {
+  //       box-shadow: 0 3px 36px -7px transparentize(lighten($accent-primary, 2%), 0.3);
+  //       background: lighten($accent-primary, 2%);
+  //     }
   
-      &[disabled] {
-        cursor: not-allowed;
-        pointer-events: none;
-        background: lighten($background-primary, 20%);
-      }
-    }
+  //     &[disabled] {
+  //       cursor: not-allowed;
+  //       pointer-events: none;
+  //       background: lighten($background-primary, 20%);
+  //     }
+  //   }
+  // }
   }
   
 .floating-button {

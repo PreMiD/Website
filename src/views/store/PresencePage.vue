@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <title>
-      PreMiD -
-      {{ presence.metadata.service }}
-    </title>
+  <div v-if="!presence.error">
     <transition name="fade" mode="in-out">
       <div class="fullpresence-container">
         <div
@@ -37,11 +33,9 @@
           <div class="header__buttons">
             <button
               v-if="
-                !isInstalled &&
-                  this.$root.extensionInstalled &&
-                  typeof presence.metadata.button == 'undefined'
+                !isInstalled && this.$store.state.extension.extensionInstalled
               "
-              class="button button_light"
+              class="button button--"
               v-on:click="sendPresence(presence.metadata.service)"
             >
               <span class="icon">
@@ -50,8 +44,8 @@
               {{ $t("store.card.presence.add") }}
             </button>
             <button
-              v-if="isInstalled"
-              class="button button_black"
+              v-if="isInstalled && this.$store.state.extension.extensionInstalled"
+              class="button button--black"
               v-on:click="removePresence(presence.metadata.service)"
             >
               <span class="icon">
@@ -60,7 +54,7 @@
               {{ $t("store.card.presence.remove") }}
             </button>
             <a
-              class="button button_black"
+              class="button button--black"
               :href="
                 `https://github.com/PreMiD/Presences/tree/master/${encodeURIComponent($route.params.presenceName)}`
               "
@@ -69,9 +63,9 @@
               <span class="icon">
                 <i class="fab fa-github"></i>
               </span>
-              Source Code
+              {{ $t("presence.page.buttons.sourceCode") }}
             </a>
-            <!-- TODO: Implement like system. <a class="button button_large button_red button_like"><i class="far fa-heart"/></a> -->
+            <!-- TODO: Implement like system. <a class="button button--lg button--red button--like"><i class="far fa-heart"/></a> -->
           </div>
         </div>
         <div class="fullpresence__content">
@@ -87,21 +81,40 @@
                   <i class="fas fa-user" />
                   {{ $t("presence.sections.information.author") }}:
                   <nuxt-link
-                    v-if="author && author.userId"
+                    v-if="presence.metadata.author.userId"
                     class="author-name"
-                    :style="`color: ${author.roleColor};`"
-                    :to="`/users/${author.userId}`"
+                    :style="`color: ${presence.metadata.author.roleColor};`"
+                    :to="`/users/${presence.metadata.author.userId}`"
                     :disabled="true"
                   >
-                    <img v-if="author.avatar" :src="author.avatar" class="author-avatar" />
+                    <img
+                      v-if="presence.metadata.author.avatar"
+                      :src="presence.metadata.author.avatar"
+                      class="author-avatar"
+                    />
                     {{ presence.metadata.author.name }}
                   </nuxt-link>
                   <b v-else>{{ presence.metadata.author.name }}</b>
                 </p>
               </li>
+              <li
+                v-if="presence.metadata.contributors && typeof presence.metadata.contributors === 'object'"
+              >
+                <p>
+                  <i class="fas fa-user-tie" />
+                  {{ $t("presence.sections.information.contributors") }}:
+                  <nuxt-link
+                    v-for="(contributor, index) in presence.metadata.contributors"
+                    :key="contributor.id"
+                    class="author-name"
+                    :to="`/users/${contributor.id}`"
+                    :disabled="true"
+                  >{{ contributor.name + `${presence.metadata.contributors.length === index+1 ? "" : ", "}` }}</nuxt-link>
+                </p>
+              </li>
               <li v-if="presence.metadata.version">
                 <p>
-                  <i class="fas fa-code-branch" />
+                  <i style="margin-right:2px;" class="fas fa-code-branch" />
                   {{ $t("presence.sections.information.version") }}:
                   <span
                     class="presence-version"
@@ -135,7 +148,7 @@
                   <i class="fas fa-link" />
                   {{ $t("presence.sections.information.supportedurls") }}:
                 </p>
-                <ul class="presence-urls">
+                <ul v-if="Array.isArray(presence.metadata.url)" class="presence-urls">
                   <li v-for="url in presence.metadata.url" :key="url">
                     <a :href="`https://${url}`">{{ url }}</a>
                   </li>
@@ -162,6 +175,7 @@ export default {
   auth: false,
 
   head() {
+    if (this.$data.presence.error) return;
     let description =
       this.$data.presence.metadata.description["en"] ||
       this.$data.presence.metadata.description;
@@ -194,41 +208,82 @@ export default {
     };
   },
   async asyncData({ params }) {
-    const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
+    let presenceUsage = (await axios(`${process.env.apiBase}/usage`)).data
+        .users,
       presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
         .data;
 
-    let presence = (await axios(
-      `${process.env.apiBase}/presences/${encodeURIComponent(params.presenceName)}`
-    )).data;
+    let presenceData = await new Promise((resolve, reject) => {
+      axios(
+        `${process.env.apiBase}/presences/${encodeURIComponent(
+          params.presenceName
+        )}`
+      )
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+          reject({
+            error: true,
+            code: 401
+          });
+        });
+    });
 
-    let res = {
-      hot: (presenceRanking[params.presenceName] / usage) * 100 > 30,
-      presence: presence,
-      author: (await axios(
-        `${process.env.apiBase}/credits/${presence.metadata.author.id}`
-      )).data
+    let data = {
+      hot:
+        (presenceRanking[encodeURIComponent(params.presenceName)] /
+          presenceUsage) *
+          100 >
+        30,
+      presence: presenceData
     };
 
-    if (
-      res.presence.metadata.url &&
-      typeof res.presence.metadata.url === "string"
-    )
-      res.presence.metadata.url = [res.presence.metadata.url];
+    if (!presenceData.error) {
+      let authorData = await new Promise((resolve, reject) => {
+        axios(
+          `${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
+        )
+          .then(res => {
+            if (res.data.error) reject({ error: true });
+            resolve(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+            reject({
+              error: true,
+              code: 401
+            });
+          });
+      });
 
-    return res;
+      if (!authorData.error) {
+        data.presence.metadata.author = authorData;
+      }
+    }
+
+    return data;
+  },
+  mounted() {
+    if (this.$data.presence.error)
+      return this.$nuxt.error({ statusCode: this.$data.presence.error });
   },
   created() {
+    if (!this.$data.presence.error) {
+      this.isPresenceInstalled(this.$data.presence.metadata.service).then(
+        responce => {
+          if (responce) this.$data.isInstalled = true;
+        }
+      );
+    }
+  },
+  updated() {
     this.isPresenceInstalled(this.$data.presence.metadata.service).then(
       responce => {
         if (responce) this.$data.isInstalled = true;
       }
     );
-  },
-  updated() {
-    // this.isPresenceInstalled(this.$data.presenceData.service).then((responce) => {
-    //   if(responce) this.$data.isInstalled = true;
-    // });
   },
   methods: {
     /**
@@ -236,6 +291,8 @@ export default {
      * If presence has non-multilingual description then we just parsing the "description" data.
      */
     getPresenceDescription() {
+      if (this.$data.presence.error) return;
+
       if (
         this.$data.presence.metadata.description[
           this.$root.getCurrentLanguage()

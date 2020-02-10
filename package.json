@@ -2,7 +2,7 @@
 	"name": "premid-website",
 	"version": "2.0.0",
 	"scripts": {
-		"start": "nuxt start --port 3004",
+		"start": "nuxt start --port 3003",
 		"dev": "nuxt",
 		"build": "rimraf src/langs/* && node languageParser.js && nuxt build"
 	},
@@ -13,7 +13,7 @@
 		"marked": "0.8.0",
 		"node-sass": "4.13.1",
 		"nuxt": "2.11.0",
-		"nuxt-lazy-load": "^1.0.7",
+		"nuxt-lazy-load": "^1.0.5",
 		"sass-loader": "8.0.2",
 		"tinycolor2": "1.4.1",
 		"vue-i18n": "8.15.3",
@@ -25,6 +25,6 @@
 		"@nuxtjs/google-analytics": "^2.2.3",
 		"@nuxtjs/router": "1.5.0",
 		"node-emoji": "1.10.0",
-		"rimraf": "3.0.2"
+		"rimraf": "3.0.1"
 	}
 }

@@ -2,20 +2,13 @@
   <div>
     <div class="userpage-container">
       <div v-if="error">
-        <span>That user couldn't be found. Try to make sure:</span>
+        <span>{{ $t("user.notFound.heading") }}</span>
         <ul style="max-width:50%">
-          <li>User's ID you're looking for is correct.</li>
-          <li>
-            The user has created enough presences and has the Presence Developer role in our Discord server.
-          </li>
-          <li>Check if others are experiencing the same issue on our Discord server.</li>
+          <li>{{ $t("user.notFound.message1") }}</li>
+          <li>{{ $t("user.notFound.message2") }}</li>
+          <li>{{ $t("user.notFound.message3") }}</li>
         </ul>
-        <span>
-          If you believe this was a mistake, please contact us from
-          <a
-            href="https://discord.gg/premid"
-          >our Discord server</a>.
-        </span>
+        <span v-html="linkify($t('user.notFound.message4'))" />
       </div>
       <div v-else class="userpage__header">
         <div class="user-avatar">
@@ -31,42 +24,42 @@
               <i
                 v-if="role == 'Main Developer'"
                 class="fas fa-tools"
-                v-tippy="{ content: 'Main Developer', placement: 'bottom' }"
+                v-tippy="{ content: $t('contributors.roles.mainDeveloper'), placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Website Developer'"
                 class="fas fa-tools"
-                v-tippy="{ content: 'Website Developer', placement: 'bottom' }"
+                v-tippy="{ content: $t('contributors.roles.websiteDeveloper'), placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Community Manager'"
                 class="fas fa-users"
-                v-tippy="{ content: 'Community Manager', placement: 'bottom' }"
+                v-tippy="{ content: $t('contributors.roles.communityManager'), placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Moderator'"
                 class="fas fa-user-cog"
-                v-tippy="{ content: `Moderator`, placement: 'bottom' }"
+                v-tippy="{ content: $t('contributors.roles.moderator'), placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Head Moderator'"
                 class="fas fa-glasses"
-                v-tippy="{ content: `Head Moderator`, placement: 'bottom' }"
+                v-tippy="{ content: $t('contributors.roles.headModerator'), placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Ticket Manager'"
                 class="fas fa-ticket-alt"
-                v-tippy="{ content: 'Ticket Manager', placement: 'bottom' }"
+                v-tippy="{ content: $t('contributors.roles.ticketManager'), placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Presence Developer'"
                 class="fas fa-user-astronaut"
-                v-tippy="{ content: 'Presence Developer', placement: 'bottom' }"
+                v-tippy="{ content: $t('user.roles.presenceDeveloper'), placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Presence Verifier'"
                 class="fas fa-clipboard-check"
-                v-tippy="{ content: 'Presence Verifier', placement: 'bottom' }"
+                v-tippy="{ content: $t('user.roles.presenceVerifier'), placement: 'bottom' }"
               ></i>
               <i
                 v-if="role == 'Patron'"
@@ -76,7 +69,7 @@
               <i
                 v-if="role == 'Donator'"
                 class="fas fa-meteor"
-                v-tippy="{ content: 'Donator', placement: 'bottom' }"
+                v-tippy="{ content: $t('contributors.roles.donator'), placement: 'bottom' }"
               ></i>
             </div>
             <i
@@ -84,9 +77,7 @@
               class="fas fa-crown"
               v-tippy="{
                 content:
-                  'Important Presence Developer Badge<br>Created ' +
-                  userPresences.length +
-                  ' presences.',
+                `${$t('user.importantPresenceDev.message1')}<br>${$t('user.importantPresenceDev.message2').replace('{0}', userPresences.length)}`,
                 placement: 'bottom'
               }"
             ></i>
@@ -94,10 +85,33 @@
         </div>
       </div>
       <div class="userpage__presences" v-if="!error">
-        <h1 class="heading">{{ $t("store.userpage.userPresences") }}</h1>
-        <div class="presence-container">
+        <h1 class="heading">
+          <div
+            v-if="userContributions.length > 0"
+            class="contributes"
+            v-tippy="{
+                content:  showContributions ? $t('user.presences.created') : $t('user.presences.contributed'),
+                placement: 'top'
+              }"
+            @click="showContributions = !showContributions"
+            v-html="tabbify($t('user.switch.contributed'))"
+          />
+          <div v-else class="noContributes" v-html="tabbify($t('user.switch.contributed'))" />
+        </h1>
+        <div class="presence-container" v-if="!showContributions">
           <StoreCard
             v-for="presence of userPresences"
+            v-bind:key="presence.service"
+            :presence="presence"
+            storeFunctions="true"
+          />
+        </div>
+        <div
+          class="presence-container"
+          v-else-if="showContributions && userContributions.length > 0"
+        >
+          <StoreCard
+            v-for="presence of userContributions"
             v-bind:key="presence.service"
             :presence="presence"
             storeFunctions="true"
@@ -121,29 +135,37 @@ export default {
   },
   head() {
     return {
-      title: `PreMiD - ${!this.error ? this.user.name : "Unknown User"}`,
+      title: `${
+        !this.error && this.user.name ? this.user.name : "Unknown User"
+      }`,
       meta: [
         {
           hid: "description",
           name: "description",
-          content: `${!this.error ? this.user.name : "Unknown User"}'s profile.`
+          content: `${
+            !this.error && this.user.name ? this.user.name : "Unknown user"
+          }'s profile.`
         },
         {
           hid: "og:description",
           property: "og:description",
-          content: `${!this.error ? this.user.name : "Unknown User"}'s profile.`
+          content: `${
+            !this.error && this.user.name ? this.user.name : "Unknown user"
+          }'s profile.`
         },
         {
           hid: "og:title",
           property: "og:title",
-          content: !this.error ? this.user.name : "Unknown User"
+          content:
+            !this.error && this.user.name ? this.user.name : "Unknown User"
         },
         {
           hid: "og:image",
           property: "og:image",
-          content: !this.error
-            ? this.user.avatar
-            : "https://premid.app/assets/images/logo.png"
+          content:
+            !this.error && this.user.avatar
+              ? this.user.avatar
+              : "https://premid.app/assets/images/logo.png"
         }
       ]
     };
@@ -151,22 +173,66 @@ export default {
   data() {
     return {
       user: [],
-      userPresences: []
+      userPresences: [],
+      userContributions: [],
+      showContributions: false
     };
   },
   async asyncData({ params }) {
-    const user = (await axios(
-        `${process.env.apiBase}/credits/${params.userid}`
-      )).data,
+    const user = (
+        await axios(`${process.env.apiBase}/credits/${params.userid}`)
+      ).data,
       presences = (await axios(`${process.env.apiBase}/presences`)).data;
 
     return {
       error: user.error ? true : false,
       user: user,
+      showContributions: false,
       userPresences: presences
         .filter(p => p.metadata.author.id === user.userId)
+        .map(p => p.metadata),
+      userContributions: presences
+        .filter(p =>
+          p.metadata.contributors?.some(cont => cont.id == user.userId)
+        )
         .map(p => p.metadata)
     };
+  },
+  methods: {
+    linkify(pls) {
+      if (!pls.match(/(\[.*?\])/g)) return pls;
+      else
+        return pls.match(/(\[.*?\])/g).map((ch, i) => {
+          return pls.replace(
+            ch,
+            `<a href="https://discord.gg/premid">${ch.slice(
+              1,
+              ch.length - 1
+            )}</a>`
+          );
+        })[0];
+    },
+    tabbify(pls) {
+      if (!pls.match(/(\[.*?\])/g)) return pls;
+      else if (!this.showContributions)
+        return pls.match(/(\[.*?\])/g).map((ch, i) => {
+          return pls.replace(
+            ch,
+            `<span style="color:#7288da">${
+              ch.slice(1, ch.length - 1).split("/")[0]
+            }</span>`
+          );
+        })[0];
+      else if (this.showContributions)
+        return pls.match(/(\[.*?\])/g).map((ch, i) => {
+          return pls.replace(
+            ch,
+            `<span style="color:#7288da">${
+              ch.slice(1, ch.length - 1).split("/")[1]
+            }</span>`
+          );
+        })[0];
+    }
   }
 };
 </script>

@@ -3,18 +3,18 @@
 		<div class="promo-container">
 			<div class="promo-container__heading">
 				<div class="heading__logo">
-					<img src="@/assets/images/logo_round.svg" />
+					<img width="100%" src="@/assets/images/logo_round.svg" />
 				</div>
 				<div class="heading__text">
-					<p>{{ $t(`home.introduction.catchphrase`) }}</p>
+					<p v-html="markdown($t('home.introduction.paragraph'))" />
 				</div>
 				<div class="heading__button-group">
-					<a class="button button_uppercase" href="#features">
+					<a class="button text--uppercase" href="#features">
 						<i class="fas fa-stream"></i>
 						{{ $t("home.introduction.button.features") }}
 					</a>
 					<nuxt-link
-						class="button button_black button_uppercase"
+						class="button button--black text--uppercase"
 						to="/downloads"
 					>
 						<i class="fas fa-file-export"></i>
@@ -139,7 +139,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="features-container" id="features">
+		<div class="section section--features" id="features">
 			<div class="waves-divider waves-divider_top">
 				<svg
 					class="wave"
@@ -155,27 +155,31 @@
 					/>
 				</svg>
 			</div>
-			<div class="section-heading section-heading__features">
-				<h1 class="section-heading__title">You will love these features!</h1>
+			<div class="section__heading section__heading--center">
+				<h1>{{ $t("home.features.heading") }}</h1>
 			</div>
-			<div class="container section-container">
-				<div class="section-container__details">
-					<h1 v-html="this.$data.presenceSystemHeading" />
+			<div class="card--feature">
+				<div class="card--feature__details">
+					<h1 v-html="markdown($t('home.features.presencesystem.heading'))" />
 					<p>{{ $t("home.features.presencesystem.description") }}</p>
 					<p>
 						<nuxt-link
-							class="button button_large"
+							class="button button--lg"
 							to="/store"
 							v-text="$t('home.features.presencesystem.button')"
 						/>
 					</p>
 				</div>
-				<div class="section-container__promo">
-					<img class="section-container__promo--image1" :src="cardThumbnail1" />
+				<div class="card--feature__promo">
+					<img
+						class="card--feature__promo--image1"
+						style="max-width:100%"
+						:src="cardThumbnail1"
+					/>
 				</div>
 			</div>
-			<div class="container section-container section-container_reverse">
-				<div class="section-container__details">
+			<div class="card--feature card--feature--reverse">
+				<div class="card--feature__details">
 					<h1>{{ $t("home.features.simpleInterface.heading") }}</h1>
 					<p>{{ $t("home.features.simpleInterface.description") }}</p>
 					<ul>
@@ -190,31 +194,28 @@
 						</li>
 					</ul>
 				</div>
-				<div class="section-container__promo">
+				<div class="card--feature__promo">
 					<video autoplay loop>
 						<source
 							src="./../assets/images/cards/card2_video.mp4"
 							type="video/mp4"
 						/>
-						<img
-							class="section-container__promo--image2"
-							:src="cardThumbnail2"
-						/>
+						<img class="card--feature__promo--image2" :src="cardThumbnail2" />
 					</video>
 				</div>
 			</div>
-			<div class="container section-container">
-				<div class="section-container__details">
+			<div class="card--feature">
+				<div class="card--feature__details">
 					<h1>{{ $t("home.features.quickSupport.heading") }}</h1>
 					<p>{{ $t("home.features.quickSupport.description") }}</p>
 					<p>
-						<a class="button button_large" href="https://discord.gg/premid">{{
+						<a class="button button--lg" href="https://discord.gg/premid">{{
 							$t("home.features.quickSupport.button")
 						}}</a>
 					</p>
 				</div>
-				<div class="section-container__promo">
-					<img class="section-container__promo--image1" :src="cardThumbnail4" />
+				<div class="card--feature__promo">
+					<img class="card--feature__promo--image1" :src="cardThumbnail4" />
 				</div>
 			</div>
 			<div class="waves-divider waves-divider_bottom">
@@ -250,8 +251,6 @@ import cardThumbnail2 from "@/assets/images/cards/card2.png";
 import cardThumbnail3 from "@/assets/images/cards/card3.png";
 import cardThumbnail4 from "@/assets/images/cards/card4.png";
 
-import Card from "@/components/Card.vue";
-
 import axios from "axios";
 
 export default {
@@ -269,7 +268,6 @@ export default {
 			cardThumbnail3,
 			cardThumbnail4,
 			presences_display: [],
-			presenceSystemHeading: this.$t("home.features.presencesystem.heading"),
 			presences: [
 				{
 					profile: {
@@ -361,13 +359,6 @@ export default {
 		const Vue = this;
 		const length = this.$data.presences.length;
 
-		this.$data.presenceSystemHeading.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
-			this.$data.presenceSystemHeading = this.$data.presenceSystemHeading.replace(
-				ch,
-				`<span class="text-highlight">${ch.slice(2, ch.length - 2)}</span>`
-			);
-		});
-
 		// Randomly selects 2 presences to display.
 		this.$data.presences_display.push(
 			this.$data.presences.splice((Math.random() * length) | 0, 1)[0],
@@ -398,7 +389,19 @@ export default {
 	methods: {
 		openInNewTab(url) {
 			let page = window.open(url, "_blank");
-			win.focus();
+			page.focus();
+		},
+		markdown(pls) {
+			if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
+			return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
+				return pls.replace(
+					ch,
+					`<strong><span class="text-highlight">${ch.slice(
+						2,
+						ch.length - 2
+					)}</span></strong>`
+				);
+			})[0];
 		}
 	}
 };

@@ -3,13 +3,11 @@
     @mouseover="hovered = true"
     @mouseleave="hovered = false"
     class="credit-card"
-    :style="
-      `background: linear-gradient(165deg, ${cardGradientColor.primary} 0%, ${cardGradientColor.secondary} 100%); box-shadow: 0 2px 42px 0 ${cardShadowColor}`
-    "
+    :style="`background: linear-gradient(-35deg, ${cardGradientColor.secondary} 20%, ${cardGradientColor.primary} 130%); box-shadow: 0 2px 52px 0 ${cardShadowColor}`"
   >
     <div class="credit-card__user">
       <h1 :title="user.name" v-text="user.name" />
-      <h2>{{ user.role }}</h2>
+      <h2>{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}</h2>
     </div>
     <div class="credit-card__avatar">
       <span :class="user.status" />
@@ -26,6 +24,24 @@ export default {
   props: ["user"],
   data() {
     return {
+      translationKeys: {
+        Donator: "contributors.roles.donator",
+        Booster: "contributors.roles.booster",
+        Translator: "contributors.roles.translator",
+        Moderator: "contributors.roles.moderator",
+        Administrator: "contributors.roles.administrator",
+        "Presence Developer": "user.roles.presenceDeveloper",
+        "Presence Verifier": "user.roles.presenceVerifier",
+        "Important Presence Developer": "user.importantPresenceDev.message1",
+        "Main Developer": "contributors.roles.mainDeveloper",
+        "Website Developer": "contributors.roles.websiteDeveloper",
+        "Head Moderator": "contributors.roles.headModerator",
+        "Ticket Manager": "contributors.roles.ticketManager",
+        "Community Manager": "contributors.roles.communityManager",
+        "Community Secretary": "contributors.roles.secretary",
+        "Senior Moderator": "contributors.roles.seniorModerator",
+        "Head of Presence Verifying": "contributors.roles.verificationHead"
+      },
       hovered: false
     };
   },
@@ -37,7 +53,7 @@ export default {
           .darken(5)
           .toRgbString(),
         secondary: tinycolor(this.$props.user.roleColor)
-          .analogous()[4]
+          .analogous()[2]
           .setAlpha(0.5)
           .saturate(20)
           .toRgbString()
