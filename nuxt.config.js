@@ -90,7 +90,7 @@ module.exports = {
 				{
 					hid: "og:description",
 					property: "og:description",
-					content: "Your rich presence for web services."
+					content: "PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status."
 				},
 				{
 					hid: "og:image",
