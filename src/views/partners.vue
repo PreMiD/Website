@@ -2,10 +2,18 @@
 .partnertitle {
   font-size: 46px;
   color: #7289DA;
+  padding-bottom: 50px;
   }
+.main {
+      padding-top: 50px;
+    padding-bottom: 50px;
+  margin: 0 auto;
+}
 .partnerreqna {
   font-size: 23px;
   color: #ffffff;
+        padding-top: -20px;
+    padding-bottom: -20px;
   }
 .partnerreq {
   font-size: 39px;
@@ -18,16 +26,40 @@
 .partnerdesc {
     font-size: 15px;
   color: #808080;
-  line-height:-59px
+  padding-bottom: 50px;
+  padding-top: -29px;
+}
+.partnertext {
+    font-size: 15px;
+  color: #808080;
+  padding-bottom: 50px;
+  padding-top: -29px;
 }
 .partnershow {
     font-size: 25px;
   color: #ffffff;
+  padding-bottom: 50px;
 }
-.button.button_larg {
-  border-radius: 10px;
-    padding: 14px 40px;
-    font-size: 1.2rem;
+.butto {
+    font-family: inherit;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 3rem;
+    font-size: 1.2rem; 
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: #7288da;
+    color: #fdfcff;
+    cursor: pointer;
+    display: block;
+    transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 3px 16px -7px rgba(17, 18, 24, 0.7);
+    text-align: center;
+    font-family: inherit;
 }
 span.a {
   display: inline-block;
@@ -41,42 +73,43 @@ span.b {
   display: inline-block;
   border-radius: 5px;
   width: 880px;
-  height: 231px;
+  height: 320px;
   padding: 5px;
   background-color: rgba(35, 39, 42, 0.25);; 
 }
+.button-container {
+padding-top: 50px;
+padding-bottom: 50px;
+}
 </style>
 
-<template>
-  <div class="main"><center>
-      <br><strong class="partnertitle">PARTNERS</strong><br>
-          <b class="partnerdesc">Here you can see partners who did help us grow premid!</b>
-         <br><br><p class="partnershow">Our lovely pets</p>
-</center>
+<template><center>
+  <div class="main">
+      <strong class="partnertitle">PARTNERS</strong>
+          <p class="partnerdesc">Here you can see partners who did help us grow premid!</p>
+         <p class="partnershow">Our lovely pets</p>
 
 <!-- Here Add What You Wnat I Could Not Add Photo Slider -->
-<br><br><br><br><br><br><br><br>
-<!-- Here Add What You Wnat I Could Not Add Photo Slider -->
 
-<center><span class="b">
-  <strong class="partnerreq">REQUIREMENTS</strong><br>
-<b class="partnerreqna">Whitch specific animal you should be</b><br>
-<b class="partnerdes">We keep an out for growing communities and exiting things around the internet. TL;DR you should already using PreMiD and be ready to spread it to even more internet freakes. Acceptance into the program is extremely qualitative and will vary from one candidate to the next.</b><br>
+<span class="b">
+  <strong class="partnerreq">REQUIREMENTS</strong>
+<p class="partnerreqna">Whitch specific animal you should be</p>
+<p class="partnerdes">We keep an out for growing communities and exiting things around the internet. TL;DR you should already using PreMiD and be ready to spread it to even more internet freakes. Acceptance into the program is extremely qualitative and will vary from one candidate to the next.</p>
 
-<b class="partnerreqna">Your current online barrier</b><br>
-<b class="partnerdes">We are currently accepting any kind of effort into our partnership program. Anyone should have a chance to noticed. Twitch broadcasters should have at least 100 followers and at least 10 cuncurrent viewers. You must be streaming at least 1 time per week.</b><br>
-</span></center>
+<p class="partnerreqna">Your current online barrier</p>
+<p class="partnerdes">We are currently accepting any kind of effort into our partnership program. Anyone should have a chance to noticed. Twitch broadcasters should have at least 100 followers and at least 10 cuncurrent viewers. You must be streaming at least 1 time per week.</p>
+</span>
 
-<br><br><br><br><br><center><button type="button" class="button button_larg">Apply now!</button></center>
-
-<br><br><br><br><br><center><b class="partnerdesc">If you are rather interesed in a direct job at PreMiD, then take a look at our job advertisement.</b><br></center>
-
-<br><br><br><br><br><br><center><strong class="partnertitle">THE GUCCI GANG</strong><br></center>
-
-<br>
-<center>
-<span class="a"></span>
-<span class="a"></span>
-</center>
+<div class="button-container">
+<button type="button" class="butto">Apply now!</button>
 </div>
+
+<p class="partnertext">If you are rather interesed in a direct job at PreMiD, then take a look at our job advertisement.</p>
+
+<p><strong class="partnertitle">THE GUCCI GANG</strong></p>
+
+<!-- I did try but could not place stuff in to block but i made space -->
+<span class="a"></span>
+<span class="a"></span>
+</div></center>
 </template>
