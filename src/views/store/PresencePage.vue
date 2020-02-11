@@ -260,7 +260,7 @@ export default {
           `${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
         )
           .then(res => {
-            if (res.data.error)
+            if (res.data.error && res.data.message !== "User not found.")
               reject({ error: true, message: res.data.message });
             resolve(res.data);
           })
