@@ -2,7 +2,7 @@
   "name": "premid-website",
   "version": "2.0.1",
   "scripts": {
-    "start": "nuxt start --port 3003",
+    "start": "nuxt start --port 3004",
     "dev": "nuxt",
     "build": "rimraf src/langs/* && node languageParser.js && nuxt build"
   },
@@ -13,7 +13,7 @@
     "marked": "0.8.0",
     "node-sass": "4.13.1",
     "nuxt": "2.11.0",
-    "nuxt-lazy-load": "^1.0.5",
+    "nuxt-lazy-load": "^1.0.7",
     "sass-loader": "8.0.2",
     "tinycolor2": "1.4.1",
     "vue-i18n": "8.15.3",
