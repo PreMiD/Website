@@ -10,6 +10,7 @@ import Presence from "~/views/store/PresencePage";
 import Userpage from "~/views/users/Userpage";
 import Contributors from "~/views/Contributors";
 import Downloads from "~/views/Downloads";
+import Beta from "~/views/Beta";
 import NotFound from "~/views/errors/NotFound";
 import loginPage from "~/views/auth/Login";
 import logoutPage from '~/views/auth/Logout';
@@ -53,6 +54,10 @@ export function createRouter() {
       {
         path: "/downloads",
         component: Downloads
+      },
+      {
+        path: "/beta",
+        component: Beta
       },
       {
         path: "/store/presences/:presenceName",

@@ -5,12 +5,7 @@
         <p class="section__title" v-text="$t(`footer.usercount.heading`)" />
         <div class="section__promo">
           <p v-text="$t(`footer.usercount.message`, [$data.installStats])" />
-          <nuxt-link
-            class="button"
-            replace
-            to="/downloads"
-            v-text="$t(`footer.usercount.button`)"
-          />
+          <nuxt-link class="button" replace to="/downloads" v-text="$t(`footer.usercount.button`)" />
         </div>
       </div>
       <div class="grid__section">
@@ -30,32 +25,17 @@
       <div class="grid__section">
         <p class="section__title" v-text="$t(`footer.supportus.heading`)" />
         <div>
-          <a
-            href="https://patreon.com/timeraa/"
-            v-text="$t(`footer.supportus.donate`)"
-          />
-          <a
-            href="https://github.com/PreMiD/"
-            v-text="$t(`footer.supportus.contribute`)"
-          />
-          <a
-            href="https://translate.premid.app/"
-            v-text="$t(`footer.supportus.translate`)"
-          />
+          <a href="https://patreon.com/timeraa/" v-text="$t(`footer.supportus.donate`)" />
+          <a href="https://github.com/PreMiD/" v-text="$t(`footer.supportus.contribute`)" />
+          <a href="https://translate.premid.app/" v-text="$t(`footer.supportus.translate`)" />
         </div>
       </div>
       <div class="grid__section">
         <p class="section__title" v-text="$t(`footer.help.information`)" />
         <div>
           <a href="https://github.com/PreMiD/">GitHub</a>
-          <nuxt-link
-            to="/cookies"
-            v-text="$t(`footer.help.information.cookies`)"
-          />
-          <nuxt-link
-            to="/privacy"
-            v-text="$t(`footer.help.information.privacy`)"
-          />
+          <nuxt-link to="/cookies" v-text="$t(`footer.help.information.cookies`)" />
+          <nuxt-link to="/privacy" v-text="$t(`footer.help.information.privacy`)" />
           <nuxt-link to="/tos" v-text="$t(`footer.help.information.terms`)" />
         </div>
       </div>
@@ -67,14 +47,8 @@
             href="https://docs.premid.app/troubleshooting/"
             v-text="$t(`footer.help.troubleshooting`)"
           />
-          <a
-            href="https://docs.premid.app/"
-            v-text="$t(`footer.developers.documentation`)"
-          />
-          <a
-            href="https://status.premid.app/"
-            v-text="$t(`footer.more.status`)"
-          />
+          <a href="https://docs.premid.app/" v-text="$t(`footer.developers.documentation`)" />
+          <a href="https://status.premid.app/" v-text="$t(`footer.more.status`)" />
         </div>
       </div>
     </div>

@@ -385,6 +385,24 @@ transition: all 0.2s ease;
   }
 }
 
+#beta {
+  padding: 50px 0 150px;
+}
+
+#beta-container {
+  min-height: 500px;
+}
+
+.beta-join {
+  padding-top: 1em;
+  padding-bottom: 5em;
+  text-align: center;
+
+  p {
+    font-size: 1.5em;
+  }
+}
+
 .features-container {
   position: relative;
   z-index: 1;
@@ -694,6 +712,11 @@ transition: all 0.2s ease;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#beta-heading {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .section-heading__features {
