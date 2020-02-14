@@ -62,6 +62,29 @@
 	}
 }
 
+#beta {
+  padding: 50px 0 150px;
+}
+
+#beta-container {
+  min-height: 500px;
+}
+
+#beta-heading {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.beta-join {
+  padding-top: 1em;
+  padding-bottom: 5em;
+  text-align: center;
+
+  p {
+    font-size: 1.5em;
+  }
+}
+
 .promo-container {
 	display: flex;
 	position: relative;
