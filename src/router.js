@@ -11,6 +11,7 @@ import Userpage from "~/views/users/Userpage";
 import Contributors from "~/views/Contributors";
 import Downloads from "~/views/Downloads";
 import Beta from "~/views/Beta";
+import ThankYou from "~/views/ThankYou";
 import loginPage from "~/views/auth/Login";
 import logoutPage from '~/views/auth/Logout';
 import callbackPage from '~/views/auth/AuthCallback';
@@ -53,6 +54,10 @@ export function createRouter() {
       {
         path: "/beta",
         component: Beta
+      },
+      {
+        path: "/thankyou",
+        component: ThankYou
       },
       {
         path: "/store/presences/:presenceName",
