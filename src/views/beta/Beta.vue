@@ -104,22 +104,6 @@ export default {
           )}</span></strong>`
         );
       })[0];
-    },
-    register() {
-      let userId = this.$auth.user.id;
-      if (userId) {
-        axios
-          .post(`${process.env.apiBase}/addBetaUser/${userId}`)
-          .then(response => {
-            if (!response.data.error) {
-              this.$router.push("/thankyou");
-            } else if (response.data.error) {
-              this.$nuxt.error({
-                message: response.data.message
-              });
-            }
-          });
-      }
     }
   }
 };
