@@ -34,7 +34,7 @@
           v-html="$t('beta.register.text')
             .replace('{0}', '<span class=\'text-highlight\'>' + betaUsers + '</span>')"
         ></p>
-        <a href="/beta/register" class="button text--uppercase">{{ $t(`beta.register.button`) }}</a>
+        <a class="button text--uppercase" v-on:click="register">{{ $t(`beta.register.button`) }}</a>
       </div>
       <div class="waves-divider waves-divider_bottom">
         <svg
@@ -64,7 +64,7 @@ import axios from "axios";
 
 export default {
   name: "beta",
-  auth: false,
+  auth: true,
   head() {
     return {
       title: "Beta"
@@ -104,6 +104,22 @@ export default {
           )}</span></strong>`
         );
       })[0];
+    },
+    register() {
+      let userId = this.$auth.user.id;
+      if (userId) {
+        axios
+          .post(`${process.env.apiBase}/addBetaUser/${userId}`)
+          .then(response => {
+            if (!response.data.error) {
+              this.$router.push("/thankyou");
+            } else if (response.data.error) {
+              this.$nuxt.error({
+                message: response.data.message
+              });
+            }
+          });
+      }
     }
   }
 };

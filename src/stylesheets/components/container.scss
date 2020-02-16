@@ -85,6 +85,22 @@
   }
 }
 
+#thankYou {
+	text-align: center;
+}
+
+#thankYou-container {
+	align-items: initial;
+
+	h1 {
+		margin-bottom: 0;
+	}
+
+	p {
+		font-size: 1.3em;
+	}
+}
+
 .promo-container {
 	display: flex;
 	position: relative;
