@@ -123,6 +123,17 @@
                   </span>
                 </p>
               </li>
+              <li v-if="presenceUsage && presenceUsage > 0">
+                <p>
+                  <i class="fas fa-cart-arrow-down" style="margin-left:-4px;" />
+                  {{ $t("presence.sections.information.users") }}:
+                  <span
+                    class="presence-version"
+                  >
+                    <b>{{presenceUsage}}</b>
+                  </span>
+                </p>
+              </li>
               <li v-if="presence.metadata.tags">
                 <p>
                   <i class="fas fa-hashtag" />
@@ -246,6 +257,7 @@ export default {
     });
 
     let data = {
+      presenceUsage: presenceRanking[encodeURIComponent(params.presenceName)],
       hot:
         (presenceRanking[encodeURIComponent(params.presenceName)] /
           presenceUsage) *
