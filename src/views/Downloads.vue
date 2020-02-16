@@ -104,8 +104,8 @@
           </div>
         </div>
 
-        <div
-          v-on:click="openInNewTab(firefox_url)"
+        <a
+          :href="firefox_url"
           v-bind:class="{ 'current-platform': browser == 'firefox' }"
           class="cards__card clickable"
         >
@@ -115,7 +115,7 @@
           <div class="card__content">
             <h3>Firefox</h3>
           </div>
-        </div>
+        </a>
       </div>
     </div>
     <title>PreMiD - Downloads</title>
