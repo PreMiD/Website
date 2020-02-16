@@ -8,8 +8,9 @@
       </div>
       <div class="card--feature card--feature--reverse" id="thankYou-container">
         <div class="card--feature__details">
-          <h1>{{ $t("thankyou.title") }}</h1>
-          <p>{{ $t("thankyou.description") }}</p>
+          <h1>{{ title }}</h1>
+          <p>{{ message }}</p>
+          <a href="/" class="button button--sm router-link-active">Return to the homepage</a>
         </div>
       </div>
       <div class="waves-divider waves-divider_bottom">
@@ -36,12 +37,11 @@
 import premidBeta from "@/assets/images/premid-beta.png";
 
 export default {
-  name: "thankyou",
+  name: "afterRegistration",
   auth: false,
-  head() {
-    return {
-      title: "Thank You"
-    };
+  props: {
+    title: String,
+    message: String
   },
   data() {
     return {

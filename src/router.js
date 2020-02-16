@@ -10,8 +10,8 @@ import Presence from "~/views/store/PresencePage";
 import Userpage from "~/views/users/Userpage";
 import Contributors from "~/views/Contributors";
 import Downloads from "~/views/Downloads";
-import Beta from "~/views/Beta";
-import ThankYou from "~/views/ThankYou";
+import Beta from "~/views/beta/Beta";
+import Register from "~/views/beta/Register";
 import loginPage from "~/views/auth/Login";
 import logoutPage from '~/views/auth/Logout';
 import callbackPage from '~/views/auth/AuthCallback';
@@ -56,8 +56,8 @@ export function createRouter() {
         component: Beta
       },
       {
-        path: "/thankyou",
-        component: ThankYou
+        path: "/beta/register",
+        component: Register
       },
       {
         path: "/store/presences/:presenceName",
