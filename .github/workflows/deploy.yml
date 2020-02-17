@@ -1,7 +1,7 @@
 name: DePloY
 on:
   push:
-    branches: stable
+    branches: master
     paths:
       - "public/**/*"
       - "src/**/*"
@@ -20,9 +20,9 @@ jobs:
           username: ${{ secrets.SSHUSERNAME }}
           password: ${{ secrets.SSHPASSWORD }}
           script: |
-            cd /home/PreMiD/Website/Stable
+            cd /home/PreMiD/Website/Master
             git reset --hard
             git pull
             yarn
             yarn build
-            pm2 restart PMD_WebStable
+            pm2 restart PMD_WebMaster
