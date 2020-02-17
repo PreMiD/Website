@@ -1,7 +1,7 @@
 name: DePloY
 on:
   push:
-    branches: master
+    branches: stable
     paths:
       - "public/**/*"
       - "src/**/*"
