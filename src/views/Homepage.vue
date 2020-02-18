@@ -3,38 +3,41 @@
     <div class="promo-container">
       <div class="promo-container__heading">
         <div class="heading__logo">
-          <img width="100%" src="@/assets/images/logo_round.svg" />
+          <img width="100%" src="@/assets/images/logo_round.svg" >
         </div>
         <div class="heading__text">
           <p v-html="markdown($t('home.introduction.paragraph'))" />
         </div>
         <div class="heading__button-group">
           <a class="button text--uppercase" href="#features">
-            <i class="fas fa-stream"></i>
+            <i class="fas fa-stream" />
             {{ $t("home.introduction.button.features") }}
           </a>
-          <nuxt-link class="button button--black text--uppercase" to="/downloads">
-            <i class="fas fa-file-export"></i>
+          <nuxt-link
+            class="button button--black text--uppercase"
+            to="/downloads"
+          >
+            <i class="fas fa-file-export" />
             {{ $t(`home.introduction.button.downloads`) }}
           </nuxt-link>
         </div>
       </div>
       <div class="promo-container__presences">
         <div
-          class="discord-usercard"
           v-for="presence of presences_display"
-          v-bind:key="presence.service"
+          :key="presence.service"
+          class="discord-usercard"
           :v-if="presence.profile.name !== ''"
         >
           <div class="usercard__header">
             <div
               class="header__avatar"
               :style="
-								'background-image: url(' +
-									presence.profile.image +
-									'?size=128' +
-									');'
-							"
+                'background-image: url(' +
+                  presence.profile.image +
+                  '?size=128' +
+                  ');'
+              "
             />
             <div class="header__info">
               <div class="info__nameTag">
@@ -44,83 +47,89 @@
               <div class="info__badges">
                 <div
                   v-for="badge of presence.profile.badges"
-                  v-bind:key="badge"
+                  :key="badge"
                   class="badge-wrapper"
                 >
                   <div
                     v-if="
-											badge == 'brilliance' ||
-												badge == 'bravery' ||
-												badge == 'balance'
-										"
+                      badge == 'brilliance' ||
+                        badge == 'bravery' ||
+                        badge == 'balance'
+                    "
                     v-tippy="{
-											content:
-												'HypeSquad ' +
-												badge.charAt(0).toUpperCase() +
-												badge.slice(1)
-										}"
+                      content:
+                        'HypeSquad ' +
+                        badge.charAt(0).toUpperCase() +
+                        badge.slice(1)
+                    }"
                     :class="`badge badge_${badge}`"
-                  ></div>
+                  />
                   <div
                     v-if="badge == 'early'"
                     v-tippy="{ content: 'Early Supporter' }"
                     :class="`badge badge_${badge}`"
-                  ></div>
+                  />
                   <div
                     v-if="badge == 'hypesquad'"
                     v-tippy="{ content: 'HypeSquad Events' }"
                     :class="`badge badge_${badge}`"
-                  ></div>
+                  />
                   <div
                     v-if="badge == 'nitro'"
                     v-tippy="{ content: 'Discord Nitro' }"
                     :class="`badge badge_${badge}`"
-                  ></div>
+                  />
                   <div
                     v-if="badge == 'boost-lvl3'"
                     v-tippy="{ content: 'Nitro Boosting' }"
                     :class="`badge badge_${badge}`"
-                  ></div>
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div class="usercard__activity">
             <div class="activity__info">
-              <div class="info__header">{{ $t(`home.examples.playingagame`) }}</div>
+              <div class="info__header">
+                {{ $t(`home.examples.playingagame`) }}
+              </div>
               <div class="info__game">
                 <div class="game__icon">
                   <img
                     v-if="presence.smallImage == false"
+                    v-tippy="{ content: `PreMiD v${extVersion}` }"
                     class="game"
                     style="-webkit-mask: none;"
                     alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
-                    v-tippy="{ content: `PreMiD v${extVersion}` }"
                   />
                   <img
                     v-if="presence.smallImage == true"
+                    v-tippy="{ content: `PreMiD v${extVersion}` }"
                     class="game"
                     alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
-                    v-tippy="{ content: `PreMiD v${extVersion}` }"
                   />
                   <img
                     v-if="presence.smallImage == true"
+                    v-tippy="{ content: 'Playing back' }"
                     class="status-icon"
                     src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
-                    v-tippy="{ content: 'Playing back' }"
                   />
                 </div>
                 <div class="game__content">
                   <div class="game__title text-row">
                     <span>{{ presence.service_title }}</span>
                   </div>
-                  <div class="game__st-line text-row">{{ presence.data[0] }}</div>
-                  <div v-if="presence.data[1]" class="game__nd-line text-row">{{ presence.data[1] }}</div>
+                  <div class="game__st-line text-row">
+                    {{ presence.data[0] }}
+                  </div>
+                  <div v-if="presence.data[1]" class="game__nd-line text-row">
+                    {{ presence.data[1] }}
+                  </div>
                   <div class="game__time text-row">
                     {{
-                    $t(`home.examples.timestamp`, [presence.presence_time])
+                      $t(`home.examples.timestamp`, [presence.presence_time])
                     }}
                   </div>
                 </div>
@@ -130,7 +139,7 @@
         </div>
       </div>
     </div>
-    <div class="section section--features" id="features">
+    <div id="features" class="section section--features">
       <div class="waves-divider waves-divider_top">
         <svg
           class="wave"
@@ -162,7 +171,11 @@
           </p>
         </div>
         <div class="card--feature__promo">
-          <img class="card--feature__promo--image1" style="max-width:100%" :src="cardThumbnail1" />
+          <img
+            class="card--feature__promo--image1"
+            style="max-width:100%"
+            :src="cardThumbnail1"
+          />
         </div>
       </div>
       <div class="card--feature card--feature--reverse">
@@ -183,8 +196,11 @@
         </div>
         <div class="card--feature__promo">
           <video autoplay loop>
-            <source src="./../assets/images/cards/card2_video.mp4" type="video/mp4" />
-            <img class="card--feature__promo--image2" :src="cardThumbnail2" />
+            <source
+              src="./../assets/images/cards/card2_video.mp4"
+              type="video/mp4"
+            />
+            <img class="card--feature__promo--image2" :src="cardThumbnail2" >
           </video>
         </div>
       </div>
@@ -194,14 +210,12 @@
           <p>{{ $t("home.features.quickSupport.description") }}</p>
           <p>
             <a class="button button--lg" href="https://discord.gg/premid">
-              {{
-              $t("home.features.quickSupport.button")
-              }}
+              {{ $t("home.features.quickSupport.button") }}
             </a>
           </p>
         </div>
         <div class="card--feature__promo">
-          <img class="card--feature__promo--image1" :src="cardThumbnail4" />
+          <img class="card--feature__promo--image1" :src="cardThumbnail4" >
         </div>
       </div>
       <div class="waves-divider waves-divider_bottom">
@@ -224,28 +238,37 @@
 </template>
 
 <script>
-import twitch_logo from "@/assets/images/twitch.png";
-import youtube_logo from "@/assets/images/youtube.png";
-import soundcloud_logo from "@/assets/images/soundcloud.png";
-import netflix_logo from "@/assets/images/netflix.png";
-import youtube_music_logo from "@/assets/images/youtube-music.png";
-import premid_logo from "@/assets/images/pmd_logo.png";
-import steam_logo from "@/assets/images/steam.png";
+import twitch_logo from "@/assets/images/twitch.png"
+import youtube_logo from "@/assets/images/youtube.png"
+import soundcloud_logo from "@/assets/images/soundcloud.png"
+import netflix_logo from "@/assets/images/netflix.png"
+import youtube_music_logo from "@/assets/images/youtube-music.png"
+import premid_logo from "@/assets/images/pmd_logo.png"
+import steam_logo from "@/assets/images/steam.png"
 
-import cardThumbnail1 from "@/assets/images/cards/card1.png";
-import cardThumbnail2 from "@/assets/images/cards/card2.png";
-import cardThumbnail3 from "@/assets/images/cards/card3.png";
-import cardThumbnail4 from "@/assets/images/cards/card4.png";
+import cardThumbnail1 from "@/assets/images/cards/card1.png"
+import cardThumbnail2 from "@/assets/images/cards/card2.png"
+import cardThumbnail3 from "@/assets/images/cards/card3.png"
+import cardThumbnail4 from "@/assets/images/cards/card4.png"
 
-import axios from "axios";
+import axios from "axios"
 
 export default {
-  name: "home",
+  name: "Home",
   auth: false,
-  head() {
+  async asyncData() {
+    const credits = (await axios(`${process.env.apiBase}/credits`)).data,
+      { extension } = (await axios(`${process.env.apiBase}/versions`)).data
+
+    let creditsLength = credits.length
+
     return {
-      title: "Home"
-    };
+      extVersion: extension,
+      users: [
+        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))],
+        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))]
+      ]
+    }
   },
   data() {
     return {
@@ -340,48 +363,34 @@ export default {
           presence_time: "49:12"
         }
       ]
-    };
+    }
   },
   beforeMount() {
-    const Vue = this;
-    const length = this.$data.presences.length;
+    const Vue = this
+    const length = this.$data.presences.length
 
     // Randomly selects 2 presences to display.
     this.$data.presences_display.push(
       this.$data.presences.splice((Math.random() * length) | 0, 1)[0],
       this.$data.presences.splice((Math.random() * (length - 1)) | 0, 1)[0]
-    );
+    )
 
     // Updating user information in presence examples.
     this.$data.presences_display.forEach(function(presence_item, index) {
-      let presence = Vue.$data.presences_display[index];
+      let presence = Vue.$data.presences_display[index]
 
-      presence.profile["image"] = Vue.$data.users[index].avatar;
-      presence.profile["name"] = Vue.$data.users[index].name;
-      presence.profile["id"] = Vue.$data.users[index].tag;
-    });
-  },
-  async asyncData() {
-    const credits = (await axios(`${process.env.apiBase}/credits`)).data,
-      { extension } = (await axios(`${process.env.apiBase}/versions`)).data;
-
-    let creditsLength = credits.length;
-
-    return {
-      extVersion: extension,
-      users: [
-        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))],
-        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))]
-      ]
-    };
+      presence.profile["image"] = Vue.$data.users[index].avatar
+      presence.profile["name"] = Vue.$data.users[index].name
+      presence.profile["id"] = Vue.$data.users[index].tag
+    })
   },
   methods: {
     openInNewTab(url) {
-      let page = window.open(url, "_blank");
-      page.focus();
+      let page = window.open(url, "_blank")
+      page.focus()
     },
     markdown(pls) {
-      if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
+      if (!pls.match(/(\*\*.*?\*\*)/g)) return pls
       return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
         return pls.replace(
           ch,
@@ -389,9 +398,14 @@ export default {
             2,
             ch.length - 2
           )}</span></strong>`
-        );
-      })[0];
+        )
+      })[0]
+    }
+  },
+  head() {
+    return {
+      title: "Home"
     }
   }
-};
+}
 </script>

@@ -11,16 +11,16 @@
               {{ presence.metadata.service }}
               <span
                 v-if="hot"
+                v-tippy
                 class="fa-stack"
                 content="This presence is very popular around users."
-                v-tippy
                 style="font-size:1rem;"
               >
-                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-circle fa-stack-2x" />
                 <i
                   :style="`color: ${presence.metadata.color};`"
                   class="fas fa-fire-alt fa-stack-1x fa-inverse"
-                ></i>
+                />
               </span>
             </h1>
             <div
@@ -28,7 +28,7 @@
               :style="
                 `background: linear-gradient(155deg, ${presence.metadata.color} 0%, ${presenceGradientColor} 100%);`
               "
-            ></div>
+            />
           </div>
           <div class="header__buttons">
             <button
@@ -36,32 +36,36 @@
                 !isInstalled && this.$store.state.extension.extensionInstalled
               "
               class="button button--"
-              v-on:click="sendPresence(presence.metadata.service)"
+              @click="sendPresence(presence.metadata.service)"
             >
               <span class="icon">
-                <i class="fas fa-plus"></i>
+                <i class="fas fa-plus" />
               </span>
               {{ $t("store.card.presence.add") }}
             </button>
             <button
-              v-if="isInstalled && this.$store.state.extension.extensionInstalled"
+              v-if="
+                isInstalled && this.$store.state.extension.extensionInstalled
+              "
               class="button button--black"
-              v-on:click="removePresence(presence.metadata.service)"
+              @click="removePresence(presence.metadata.service)"
             >
               <span class="icon">
-                <i class="fas fa-minus"></i>
+                <i class="fas fa-minus" />
               </span>
               {{ $t("store.card.presence.remove") }}
             </button>
             <a
               class="button button--black"
               :href="
-                `https://github.com/PreMiD/Presences/tree/master/${encodeURIComponent($route.params.presenceName)}`
+                `https://github.com/PreMiD/Presences/tree/master/${encodeURIComponent(
+                  $route.params.presenceName
+                )}`
               "
               target="_blank"
             >
               <span class="icon">
-                <i class="fab fa-github"></i>
+                <i class="fab fa-github" />
               </span>
               {{ $t("presence.page.buttons.sourceCode") }}
             </a>
@@ -70,11 +74,18 @@
         </div>
         <div class="fullpresence__content">
           <div class="content__description">
-            <h2 class="content__title">{{ $t("presence.sections.description.title") }}</h2>
-            <div class="description-container" v-html="linkify(getPresenceDescription())" />
+            <h2 class="content__title">
+              {{ $t("presence.sections.description.title") }}
+            </h2>
+            <div
+              class="description-container"
+              v-html="linkify(getPresenceDescription())"
+            />
           </div>
           <div class="content__info">
-            <h2 class="content__title">{{ $t("presence.sections.information.title") }}</h2>
+            <h2 class="content__title">
+              {{ $t("presence.sections.information.title") }}
+            </h2>
             <ul class="info__sections">
               <li v-if="presence.metadata.author">
                 <p>
@@ -98,27 +109,38 @@
                 </p>
               </li>
               <li
-                v-if="presence.metadata.contributors && typeof presence.metadata.contributors === 'object'"
+                v-if="
+                  presence.metadata.contributors &&
+                    typeof presence.metadata.contributors === 'object'
+                "
               >
                 <p>
                   <i class="fas fa-user-tie" />
                   {{ $t("presence.sections.information.contributors") }}:
                   <nuxt-link
-                    v-for="(contributor, index) in presence.metadata.contributors"
+                    v-for="(contributor, index) in presence.metadata
+                      .contributors"
                     :key="contributor.id"
                     class="author-name"
                     :to="`/users/${contributor.id}`"
                     :disabled="true"
-                  >{{ contributor.name + `${presence.metadata.contributors.length === index+1 ? "" : ", "}` }}</nuxt-link>
+                  >
+                    {{
+                      contributor.name +
+                        `${
+                          presence.metadata.contributors.length === index + 1
+                            ? ""
+                            : ", "
+                        }`
+                    }}
+                  </nuxt-link>
                 </p>
               </li>
               <li v-if="presence.metadata.version">
                 <p>
                   <i style="margin-right:2px;" class="fas fa-code-branch" />
                   {{ $t("presence.sections.information.version") }}:
-                  <span
-                    class="presence-version"
-                  >
+                  <span class="presence-version">
                     <b>{{ presence.metadata.version }}</b>
                   </span>
                 </p>
@@ -127,10 +149,8 @@
                 <p>
                   <i class="fas fa-cart-arrow-down" style="margin-left:-4px;" />
                   {{ $t("presence.sections.information.users") }}:
-                  <span
-                    class="presence-version"
-                  >
-                    <b>{{presenceUsage}}</b>
+                  <span class="presence-version">
+                    <b>{{ presenceUsage }}</b>
                   </span>
                 </p>
               </li>
@@ -141,8 +161,8 @@
                 </p>
                 <div class="presence-tags">
                   <a
-                    v-bind:key="tag"
                     v-for="tag of presence.metadata.tags"
+                    :key="tag"
                     :style="
                       `background: ${presence.metadata.color}; color: ${presenceTextColor};`
                     "
@@ -159,14 +179,19 @@
                   <i class="fas fa-link" />
                   {{ $t("presence.sections.information.supportedurls") }}:
                 </p>
-                <ul v-if="Array.isArray(presence.metadata.url)" class="presence-urls">
+                <ul
+                  v-if="Array.isArray(presence.metadata.url)"
+                  class="presence-urls"
+                >
                   <li v-for="url in presence.metadata.url" :key="url">
                     <a :href="`https://${url}`">{{ url }}</a>
                   </li>
                 </ul>
                 <ul v-else-if="presence.metadata.url" class="presence-urls">
                   <li>
-                    <a :href="`https://${presence.metadata.url}`">{{ presence.metadata.url }}</a>
+                    <a :href="`https://${presence.metadata.url}`">{{
+                      presence.metadata.url
+                    }}</a>
                   </li>
                 </ul>
               </li>
@@ -179,32 +204,167 @@
 </template>
 
 <script>
-import PresenceMixin from "~/components/mixins/Presence";
-import axios from "axios";
+import PresenceMixin from "~/components/mixins/Presence"
+import axios from "axios"
 
-import tinycolor from "tinycolor2";
-import marked from "marked";
+import tinycolor from "tinycolor2"
+import marked from "marked"
 
 export default {
-  name: "presencePage",
+  name: "PresencePage",
   mixins: [PresenceMixin],
   auth: false,
+  async asyncData({ params }) {
+    let presenceUsage = (await axios(`${process.env.apiBase}/usage`)).data
+        .users,
+      presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
+        .data
+
+    let presenceData = await new Promise((resolve, reject) => {
+      axios(
+        `${process.env.apiBase}/presences/${encodeURIComponent(
+          params.presenceName
+        )}`
+      )
+        .then(res => {
+          resolve(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+          reject({
+            error: true,
+            code: 401
+          })
+        })
+    })
+
+    let data = {
+      presenceUsage: presenceRanking[encodeURIComponent(params.presenceName)],
+      hot:
+        (presenceRanking[encodeURIComponent(params.presenceName)] /
+          presenceUsage) *
+          100 >
+        30,
+      presence: presenceData
+    }
+
+    if (!presenceData.error) {
+      let authorData = await new Promise((resolve, reject) => {
+        axios(
+          `${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
+        )
+          .then(res => {
+            if (res.data.error && res.data.message !== "User not found.")
+              reject({ error: true, message: res.data.message })
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject({
+              error: true,
+              code: 401
+            })
+          })
+      })
+
+      if (!authorData.error) {
+        data.presence.metadata.author = authorData
+      }
+    }
+
+    return data
+  },
+  computed: {
+    presenceTextColor() {
+      var presenceColor = tinycolor(this.$data.presence.metadata.color)
+      if (presenceColor.getLuminance() > 0.6) {
+        return "#202225"
+      } else {
+        return "#fff"
+      }
+    },
+    presenceGradientColor() {
+      return tinycolor(this.$data.presence.metadata.color)
+        .darken(45)
+        .toHexString()
+    }
+  },
+  mounted() {
+    if (this.$data.presence.error)
+      return this.$nuxt.error({ statusCode: this.$data.presence.error })
+  },
+  created() {
+    if (!this.$data.presence.error) {
+      this.isPresenceInstalled(this.$data.presence.metadata.service).then(
+        responce => {
+          if (responce) this.$data.isInstalled = true
+        }
+      )
+    }
+  },
+  updated() {
+    this.isPresenceInstalled(this.$data.presence.metadata.service).then(
+      responce => {
+        if (responce) this.$data.isInstalled = true
+      }
+    )
+  },
+  methods: {
+    /**
+     * Returns description of the presence according to your language.
+     * If presence has non-multilingual description then we just parsing the "description" data.
+     */
+    getPresenceDescription() {
+      if (this.$data.presence.error) return
+
+      if (
+        this.$data.presence.metadata.description[
+          this.$root.getCurrentLanguage()
+        ]
+      ) {
+        return this.$data.presence.metadata.description[
+          this.$root.getCurrentLanguage()
+        ]
+      } else if (this.$data.presence.metadata.description["en"]) {
+        return this.$data.presence.metadata.description["en"]
+      } else {
+        return this.$data.presence.metadata.description
+      }
+    },
+    linkify(description) {
+      if (!description) return
+      else if (
+        !description.match(/\[([^\]]+)\]\(([^)]+)\)/g) ||
+        !/\[([^\]]+)\]\(([^)]+)\)/g.exec(description)
+      )
+        return description
+      else {
+        const match = description.match(/\[([^\]]+)\]\(([^)]+)\)/g),
+          exec = /\[([^\]]+)\]\(([^)]+)\)/g.exec(description)
+
+        return description.replace(
+          match,
+          `<a target="_blank" href="${exec[2]}">${exec[1]}</a>`
+        )
+      }
+    }
+  },
 
   head() {
-    if (this.$data.presence.error) return;
+    if (this.$data.presence.error) return
     let description =
       this.$data.presence.metadata.description["en"] ||
-      this.$data.presence.metadata.description;
+      this.$data.presence.metadata.description
 
     if (description.match(/\[([^\]]+)\]\(([^)]+)\)/g)) {
       description = description.replace(
         description.match(/\[([^\]]+)\]\(([^)]+)\)/g),
         /\[([^\]]+)\]\(([^)]+)\)/g.exec(description)[1]
-      );
+      )
     }
 
     if (description.length >= 256)
-      description = description.slice(0, 256) + "...";
+      description = description.slice(0, 256) + "..."
 
     return {
       title: this.$data.presence.metadata.service,
@@ -230,142 +390,7 @@ export default {
           content: this.$data.presence.metadata.logo
         }
       ]
-    };
-  },
-  async asyncData({ params }) {
-    let presenceUsage = (await axios(`${process.env.apiBase}/usage`)).data
-        .users,
-      presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
-        .data;
-
-    let presenceData = await new Promise((resolve, reject) => {
-      axios(
-        `${process.env.apiBase}/presences/${encodeURIComponent(
-          params.presenceName
-        )}`
-      )
-        .then(res => {
-          resolve(res.data);
-        })
-        .catch(err => {
-          console.log(err);
-          reject({
-            error: true,
-            code: 401
-          });
-        });
-    });
-
-    let data = {
-      presenceUsage: presenceRanking[encodeURIComponent(params.presenceName)],
-      hot:
-        (presenceRanking[encodeURIComponent(params.presenceName)] /
-          presenceUsage) *
-          100 >
-        30,
-      presence: presenceData
-    };
-
-    if (!presenceData.error) {
-      let authorData = await new Promise((resolve, reject) => {
-        axios(
-          `${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
-        )
-          .then(res => {
-            if (res.data.error && res.data.message !== "User not found.")
-              reject({ error: true, message: res.data.message });
-            resolve(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-            reject({
-              error: true,
-              code: 401
-            });
-          });
-      });
-
-      if (!authorData.error) {
-        data.presence.metadata.author = authorData;
-      }
-    }
-
-    return data;
-  },
-  mounted() {
-    if (this.$data.presence.error)
-      return this.$nuxt.error({ statusCode: this.$data.presence.error });
-  },
-  created() {
-    if (!this.$data.presence.error) {
-      this.isPresenceInstalled(this.$data.presence.metadata.service).then(
-        responce => {
-          if (responce) this.$data.isInstalled = true;
-        }
-      );
-    }
-  },
-  updated() {
-    this.isPresenceInstalled(this.$data.presence.metadata.service).then(
-      responce => {
-        if (responce) this.$data.isInstalled = true;
-      }
-    );
-  },
-  methods: {
-    /**
-     * Returns description of the presence according to your language.
-     * If presence has non-multilingual description then we just parsing the "description" data.
-     */
-    getPresenceDescription() {
-      if (this.$data.presence.error) return;
-
-      if (
-        this.$data.presence.metadata.description[
-          this.$root.getCurrentLanguage()
-        ]
-      ) {
-        return this.$data.presence.metadata.description[
-          this.$root.getCurrentLanguage()
-        ];
-      } else if (this.$data.presence.metadata.description["en"]) {
-        return this.$data.presence.metadata.description["en"];
-      } else {
-        return this.$data.presence.metadata.description;
-      }
-    },
-    linkify(description) {
-      if (!description) return;
-      else if (
-        !description.match(/\[([^\]]+)\]\(([^)]+)\)/g) ||
-        !/\[([^\]]+)\]\(([^)]+)\)/g.exec(description)
-      )
-        return description;
-      else {
-        const match = description.match(/\[([^\]]+)\]\(([^)]+)\)/g),
-          exec = /\[([^\]]+)\]\(([^)]+)\)/g.exec(description);
-
-        return description.replace(
-          match,
-          `<a target="_blank" href="${exec[2]}">${exec[1]}</a>`
-        );
-      }
-    }
-  },
-  computed: {
-    presenceTextColor() {
-      var presenceColor = tinycolor(this.$data.presence.metadata.color);
-      if (presenceColor.getLuminance() > 0.6) {
-        return "#202225";
-      } else {
-        return "#fff";
-      }
-    },
-    presenceGradientColor() {
-      return tinycolor(this.$data.presence.metadata.color)
-        .darken(45)
-        .toHexString();
     }
   }
-};
+}
 </script>

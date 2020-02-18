@@ -1,26 +1,30 @@
 <template>
   <div
+    class="credit-card"
+    :style="
+      `background: linear-gradient(-35deg, ${cardGradientColor.secondary} 20%, ${cardGradientColor.primary} 130%); box-shadow: 0 2px 52px 0 ${cardShadowColor}`
+    "
     @mouseover="hovered = true"
     @mouseleave="hovered = false"
-    class="credit-card"
-    :style="`background: linear-gradient(-35deg, ${cardGradientColor.secondary} 20%, ${cardGradientColor.primary} 130%); box-shadow: 0 2px 52px 0 ${cardShadowColor}`"
   >
     <div class="credit-card__user">
       <h1 :title="user.name" v-text="user.name" />
-      <h2>{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}</h2>
+      <h2>
+        {{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}
+      </h2>
     </div>
     <div class="credit-card__avatar">
       <span :class="user.status" />
-      <img :src="user.avatar + '?size=64'" draggable="false" />
+      <img :src="user.avatar + '?size=64'" draggable="false" >
     </div>
   </div>
 </template>
 
 <script>
-import tinycolor from "tinycolor2";
+import tinycolor from "tinycolor2"
 
 export default {
-  name: "creditcard",
+  name: "Creditcard",
   props: ["user"],
   data() {
     return {
@@ -43,7 +47,7 @@ export default {
         "Head of Presence Verifying": "contributors.roles.verificationHead"
       },
       hovered: false
-    };
+    }
   },
   computed: {
     cardGradientColor() {
@@ -57,18 +61,18 @@ export default {
           .setAlpha(0.5)
           .saturate(20)
           .toRgbString()
-      };
+      }
     },
     cardShadowColor() {
       if (this.$data.hovered) {
         return tinycolor(this.cardGradientColor.primary)
           .setAlpha(0.3)
           .saturate(20)
-          .toRgbString();
+          .toRgbString()
       } else {
-        return "transparent";
+        return "transparent"
       }
     }
   }
-};
+}
 </script>

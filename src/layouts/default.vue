@@ -2,7 +2,12 @@
   <div id="app">
     <LanguageSwitcher v-if="switcherVisible" />
     <div class="floating-button">
-      <a content="Choose website language" v-tippy class="button button--gray button--language-switch" @click="toggleSwitcher"><i class="fas fa-language"></i></a>
+      <a
+        v-tippy
+        content="Choose website language"
+        class="button button--gray button--language-switch"
+        @click="toggleSwitcher"
+      ><i class="fas fa-language"/></a>
     </div>
     <!--     
       ! Disabled for now as it somehow breaks the page in production
@@ -21,50 +26,48 @@
 </template>
 
 <style lang="scss">
-  @import "~/stylesheets/root.scss";
-
+@import "~/stylesheets/root.scss";
 </style>
 
 <script>
-  import Navigation from "~/components/Navigation.vue";
-  import Footer from "~/components/Footer.vue";
-  import Detection from "~/components/mixins/Detection";
-  import Debug from "~/components/mixins/Debug";
-  import LanguageNotification from "~/components/LanguageNotification";
-  import LanguageSwitcher from "~/components/LanguageSwitcher";
+import Navigation from "~/components/Navigation.vue"
+import Footer from "~/components/Footer.vue"
+import Detection from "~/components/mixins/Detection"
+import Debug from "~/components/mixins/Debug"
+import LanguageNotification from "~/components/LanguageNotification"
+import LanguageSwitcher from "~/components/LanguageSwitcher"
 
-  export default {
-    name: "premid-web",
-    components: {
-      Navigation,
-      Footer,
-      LanguageNotification,
-      LanguageSwitcher
-    },
-    mixins: [Debug, Detection],
-    data() {
-      return {
-        switcherVisible: false,
-        ua: process.server ? "" : navigator.userAgent
-      };
-    },
-    methods: {
-      toggleSwitcher() {
-        this.$data.switcherVisible = !this.$data.switcherVisible;
-      }
-    },
-    created() {
-      this.$root.$data.i18nLanguageList = this.$i18n.availableLocales;
-
-      if (process.browser) {
-        if (localStorage.language !== undefined) {
-          this.$root.$i18n.locale = localStorage.language;
-        }
-      } else this.$root.$i18n.locale = "en";
-
-      this.$root.$data.navigatorLanguage = this.getBrowserLanguage();
-      this.$root.$data.i18nLanguage = this.getCurrentLanguage();
+export default {
+  name: "PremidWeb",
+  components: {
+    Navigation,
+    Footer,
+    LanguageNotification,
+    LanguageSwitcher
+  },
+  mixins: [Debug, Detection],
+  data() {
+    return {
+      switcherVisible: false,
+      ua: process.server ? "" : navigator.userAgent
     }
-  };
+  },
+  created() {
+    this.$root.$data.i18nLanguageList = this.$i18n.availableLocales
 
+    if (process.browser) {
+      if (localStorage.language !== undefined) {
+        this.$root.$i18n.locale = localStorage.language
+      }
+    } else this.$root.$i18n.locale = "en"
+
+    this.$root.$data.navigatorLanguage = this.getBrowserLanguage()
+    this.$root.$data.i18nLanguage = this.getCurrentLanguage()
+  },
+  methods: {
+    toggleSwitcher() {
+      this.$data.switcherVisible = !this.$data.switcherVisible
+    }
+  }
+}
 </script>

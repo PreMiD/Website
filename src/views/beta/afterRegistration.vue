@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="section section--features" id="thankYou">
-      <div class="section-heading section-heading__features" id="beta-heading">
+    <div id="thankYou" class="section section--features">
+      <div id="beta-heading" class="section-heading section-heading__features">
         <h1 class="section-heading__title">
-          <img :src="premidBeta" />
+          <img :src="premidBeta" >
         </h1>
       </div>
-      <div class="card--feature card--feature--reverse" id="thankYou-container">
+      <div id="thankYou-container" class="card--feature card--feature--reverse">
         <div class="card--feature__details">
           <h1>{{ title }}</h1>
           <p>{{ message }}</p>
@@ -32,12 +32,11 @@
   </div>
 </template>
 
-
 <script>
-import premidBeta from "@/assets/images/premid-beta.png";
+import premidBeta from "@/assets/images/premid-beta.png"
 
 export default {
-  name: "afterRegistration",
+  name: "AfterRegistration",
   auth: false,
   props: {
     title: String,
@@ -46,7 +45,7 @@ export default {
   data() {
     return {
       premidBeta
-    };
+    }
   }
-};
+}
 </script>

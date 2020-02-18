@@ -1,15 +1,21 @@
 <template>
   <div>
-    <div class="section section--features" id="beta">
-      <div class="section-heading section-heading__features" id="beta-heading">
+    <div id="beta" class="section section--features">
+      <div id="beta-heading" class="section-heading section-heading__features">
         <h1 class="section-heading__title">
-          <img :src="premidBeta" />
+          <img :src="premidBeta" >
         </h1>
       </div>
-      <div class="card--feature card--feature--reverse" id="beta-container">
+      <div id="beta-container" class="card--feature card--feature--reverse">
         <div class="card--feature__details">
           <h1>{{ $t("beta.title") }}</h1>
-          <p v-html="markdown($t('beta.description.1')) + '<br />' + $t('beta.description.2')"></p>
+          <p
+            v-html="
+              markdown($t('beta.description.1')) +
+                '<br />' +
+                $t('beta.description.2')
+            "
+          />
           <ul>
             <li>
               <p>{{ $t("beta.features.1") }}</p>
@@ -24,17 +30,26 @@
         </div>
         <div class="card--feature__promo">
           <video autoplay loop>
-            <source src="./../../assets/images/cards/card2_video.mp4" type="video/mp4" />
-            <img class="card--feature__promo--image2" :src="cardThumbnail2" />
+            <source
+              src="./../../assets/images/cards/card2_video.mp4"
+              type="video/mp4"
+            />
+            <img class="card--feature__promo--image2" :src="cardThumbnail2" >
           </video>
         </div>
       </div>
       <div class="beta-join">
         <p
-          v-html="$t('beta.register.text')
-            .replace('{0}', '<span class=\'text-highlight\'>' + betaUsers + '</span>')"
-        ></p>
-        <a class="button text--uppercase" href="/beta/register">{{ $t(`beta.register.button`) }}</a>
+          v-html="
+            $t('beta.register.text').replace(
+              '{0}',
+              '<span class=\'text-highlight\'>' + betaUsers + '</span>'
+            )
+          "
+        />
+        <a class="button text--uppercase" href="/beta/register">{{
+          $t(`beta.register.button`)
+        }}</a>
       </div>
       <div class="waves-divider waves-divider_bottom">
         <svg
@@ -55,46 +70,40 @@
   </div>
 </template>
 
-
 <script>
-import premidBeta from "@/assets/images/premid-beta.png";
-import cardThumbnail2 from "@/assets/images/cards/card2.png";
+import premidBeta from "@/assets/images/premid-beta.png"
+import cardThumbnail2 from "@/assets/images/cards/card2.png"
 
-import axios from "axios";
+import axios from "axios"
 
 export default {
-  name: "beta",
+  name: "Beta",
   auth: false,
-  head() {
+  async asyncData() {
+    const credits = (await axios(`${process.env.apiBase}/credits`)).data
+
+    var betaUsers = 0
+
+    credits.map(user => {
+      if (user.roles.includes("BETA")) betaUsers++
+    })
+
     return {
-      title: "Beta"
-    };
+      betaUsers: betaUsers
+    }
   },
   data() {
     return {
       premidBeta,
       cardThumbnail2
-    };
+    }
   },
   beforeMount() {
-    this.betaUsers = this.$data.betaUsers;
-  },
-  async asyncData() {
-    const credits = (await axios(`${process.env.apiBase}/credits`)).data;
-
-    var betaUsers = 0;
-
-    credits.map(user => {
-      if (user.roles.includes("BETA")) betaUsers++;
-    });
-
-    return {
-      betaUsers: betaUsers
-    };
+    this.betaUsers = this.$data.betaUsers
   },
   methods: {
     markdown(pls) {
-      if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
+      if (!pls.match(/(\*\*.*?\*\*)/g)) return pls
       return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
         return pls.replace(
           ch,
@@ -102,9 +111,14 @@ export default {
             2,
             ch.length - 2
           )}</span></strong>`
-        );
-      })[0];
+        )
+      })[0]
+    }
+  },
+  head() {
+    return {
+      title: "Beta"
     }
   }
-};
+}
 </script>

@@ -3,22 +3,22 @@
     <div class="navbar">
       <div class="navbar__logotype">
         <nuxt-link to="/">
-          <img src="@/assets/images/logo_round.svg" />
+          <img src="@/assets/images/logo_round.svg" >
         </nuxt-link>
         <a
+          v-if="latestReleaseVersion"
           href="https://github.com/PreMiD/PreMiD/releases"
           target="_blank"
           class="label label_pmd-version"
-          v-if="latestReleaseVersion"
           v-text="latestReleaseVersion"
         />
       </div>
 
       <div class="navbar__items on-desktop">
         <nuxt-link
-          :to="'/' + category.route"
           v-for="category of categories"
-          v-bind:key="category.route"
+          :key="category.route"
+          :to="'/' + category.route"
           class="navbar__item"
         >
           <i :class="'fas fa-' + category.logo" />
@@ -34,21 +34,21 @@
         </nuxt-link>-->
       </div>
       <div class="mobile-navbar__menu on-mobile">
-        <a ref="menuTrigger" v-on:click="mobileMenuActive = !mobileMenuActive">
-          <i class="fas fa-bars"></i>
+        <a ref="menuTrigger" @click="mobileMenuActive = !mobileMenuActive">
+          <i class="fas fa-bars" />
         </a>
       </div>
     </div>
     <transition name="slide-down" mode="out-in">
       <div
         v-if="mobileMenuActive"
-        v-on:click="mobileMenuActive = false"
         class="mobile-navbar__items on-mobile"
+        @click="mobileMenuActive = false"
       >
         <nuxt-link
-          :to="'/' + category.route"
           v-for="category of categories"
-          v-bind:key="category.route"
+          :key="category.route"
+          :to="'/' + category.route"
           class="navbar__item"
         >
           <i :class="'fas fa-' + category.logo" />
@@ -60,10 +60,10 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
 
 export default {
-  name: "navigation",
+  name: "Navigation",
   data() {
     return {
       latestReleaseVersion: undefined,
@@ -85,12 +85,14 @@ export default {
           title: "CONTRIBUTORS"
         }
       ]
-    };
+    }
   },
   async created() {
-    this.$data.latestReleaseVersion = (await axios("versions", {
-      baseURL: process.env.apiBase
-    })).data.extension;
+    this.$data.latestReleaseVersion = (
+      await axios("versions", {
+        baseURL: process.env.apiBase
+      })
+    ).data.extension
   }
-};
+}
 </script>

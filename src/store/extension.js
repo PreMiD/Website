@@ -1,15 +1,15 @@
 export const state = () => ({
-    extensionInstalled: false
-});
+  extensionInstalled: false
+})
 
 export const getters = {
-    userHasExtension(state) {
-        return state.extensionInstalled;
-    },
+  userHasExtension(state) {
+    return state.extensionInstalled
+  }
 }
 
 export const mutations = {
-    setInstalled(state, boolean) {
-        state.extensionInstalled = boolean;
-    },
+  setInstalled(state, boolean) {
+    state.extensionInstalled = boolean
+  }
 }

@@ -2,6 +2,8 @@
 	"name": "premid-website",
 	"version": "2.0.1",
 	"scripts": {
+		"lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+		"lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
 		"start": "nuxt start --port 3003",
 		"dev": "nuxt",
 		"build": "rimraf src/langs/* && node languageParser.js && nuxt build"
@@ -22,9 +24,17 @@
 		"vuejs-paginate": "2.1.0"
 	},
 	"devDependencies": {
+		"@nuxtjs/eslint-config": "^2.0.2",
 		"@nuxtjs/google-analytics": "^2.2.3",
 		"@nuxtjs/router": "1.5.0",
+		"babel-eslint": "^10.0.3",
+		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.10.0",
+		"eslint-loader": "^3.0.3",
+		"eslint-plugin-prettier": "^3.1.2",
+		"eslint-plugin-vue": "^6.2.1",
 		"node-emoji": "1.10.0",
-		"rimraf": "3.0.2"
+		"rimraf": "3.0.2",
+		"prettier": "^1.19.1"
 	}
 }

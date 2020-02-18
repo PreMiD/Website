@@ -3,37 +3,35 @@
     <div class="dl-container__section dl-container__section_header">
       <div class="dl-container__header">
         <div class="header__content">
-          <h1>{{ $t('downloads.header.title') }}</h1>
-          <p>{{ $t('downloads.header.subtitle') }}</p>
+          <h1>{{ $t("downloads.header.title") }}</h1>
+          <p>{{ $t("downloads.header.subtitle") }}</p>
         </div>
         <div class="header__steps">
-          <h2>{{ $t('downloads.instructions.heading') }}</h2>
+          <h2>{{ $t("downloads.instructions.heading") }}</h2>
           <ol>
             <li>
               <p>
-                {{ $t('downloads.instructions.step.1') }}
+                {{ $t("downloads.instructions.step.1") }}
                 [
-                <a href="#app-downloads">
-                  <i class="fas fa-arrow-down" />
-                </a>]
+                <a href="#app-downloads"> <i class="fas fa-arrow-down" /> </a>]
               </p>
             </li>
             <li>
-              <p>{{ $t('downloads.instructions.step.2') }}</p>
+              <p>{{ $t("downloads.instructions.step.2") }}</p>
             </li>
             <li>
               <p>
-                {{ $t('downloads.instructions.step.3') }}
+                {{ $t("downloads.instructions.step.3") }}
                 [
-                <a href="#ext-downloads">
-                  <i class="fas fa-arrow-down" />
-                </a>]
+                <a href="#ext-downloads"> <i class="fas fa-arrow-down" /> </a>]
               </p>
             </li>
             <li>
               <p>
                 <i18n path="downloads.instructions.step.4">
-                  <nuxt-link to="/store">{{$t('downloads.instructions.step.4.store')}}</nuxt-link>
+                  <nuxt-link to="/store">
+                    {{ $t("downloads.instructions.step.4.store") }}
+                  </nuxt-link>
                 </i18n>
               </p>
             </li>
@@ -62,22 +60,33 @@
       id="app-downloads"
       class="dl-container__section dl-container__section_downloads waves-aligned"
     >
-      <h1 class="section-header">{{ $t('downloads.appdownloading.header') }}</h1>
+      <h1 class="section-header">
+        {{ $t("downloads.appdownloading.header") }}
+      </h1>
       <div class="dl-container__cards">
-        <div v-bind:key="platform" v-for="(platform, index) of platform_order">
-          <div v-on:click="open(platform)">
-            <div v-bind:class="{ 'current-platform': index == 1 }" class="cards__card clickable">
+        <div v-for="(platform, index) of platform_order" :key="platform">
+          <div @click="open(platform)">
+            <div
+              :class="{ 'current-platform': index == 1 }"
+              class="cards__card clickable"
+            >
               <div class="card__icon">
-                <i :class="`fab fa-${platform}`"></i>
+                <i :class="`fab fa-${platform}`" />
               </div>
               <div class="card__content">
                 <h3>
-                  {{builds[platform].os_name}}
+                  {{ builds[platform].os_name }}
                   <i
                     v-if="!builds[platform].has_installer"
-                    class="fas fa-exclamation-circle platform-warning"
-                    :content="$t('downloads.tooltips.os.not.supported.part2', {0: `<b>${$t('downloads.tooltips.os.not.supported.part1')}</b> `})"
                     v-tippy
+                    class="fas fa-exclamation-circle platform-warning"
+                    :content="
+                      $t('downloads.tooltips.os.not.supported.part2', {
+                        0: `<b>${$t(
+                          'downloads.tooltips.os.not.supported.part1'
+                        )}</b> `
+                      })
+                    "
                   />
                 </h3>
               </div>
@@ -87,17 +96,22 @@
       </div>
     </div>
 
-    <div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
-      <h1 class="section-header">{{ $t('downloads.extdownloading.header') }}</h1>
+    <div
+      id="ext-downloads"
+      class="dl-container__section dl-container__section_downloads"
+    >
+      <h1 class="section-header">
+        {{ $t("downloads.extdownloading.header") }}
+      </h1>
 
       <div class="dl-container__cards">
         <div
-          v-on:click="openInNewTab(chrome_url)"
-          v-bind:class="{ 'current-platform': browser == 'chrome' }"
+          :class="{ 'current-platform': browser == 'chrome' }"
           class="cards__card clickable"
+          @click="openInNewTab(chrome_url)"
         >
           <div class="card__icon">
-            <i class="fab fa-chrome"></i>
+            <i class="fab fa-chrome" />
           </div>
           <div class="card__content">
             <h3>Chromium</h3>
@@ -106,11 +120,11 @@
 
         <a
           :href="firefox_url"
-          v-bind:class="{ 'current-platform': browser == 'firefox' }"
+          :class="{ 'current-platform': browser == 'firefox' }"
           class="cards__card clickable"
         >
           <div class="card__icon">
-            <i class="fab fa-firefox"></i>
+            <i class="fab fa-firefox" />
           </div>
           <div class="card__content">
             <h3>Firefox</h3>
@@ -123,16 +137,10 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
 export default {
-  name: "downloads",
+  name: "Downloads",
   auth: false,
-
-  head() {
-    return {
-      title: "Downloads"
-    };
-  },
   data() {
     return {
       platforms: [],
@@ -158,12 +166,12 @@ export default {
           has_installer: false
         }
       }
-    };
+    }
   },
   mounted() {
-    let ua = "";
+    let ua = ""
 
-    if (process.browser) ua = navigator.userAgent;
+    if (process.browser) ua = navigator.userAgent
 
     //* Browser detection.
     // Thanks to https://stackoverflow.com/a/9851769 for providing code.
@@ -171,33 +179,39 @@ export default {
       !!window.chrome &&
       (!!window.chrome.webstore || !!window.chrome.runtime)
     ) {
-      this.$data.browser = "chrome";
+      this.$data.browser = "chrome"
     } else if (typeof InstallTrigger !== "undefined") {
-      this.$data.browser = "firefox";
+      this.$data.browser = "firefox"
     }
 
-    let platform_temp = "linux";
-    var platform_order = this.$data.platform_order;
+    let platform_temp = "linux"
+    var platform_order = this.$data.platform_order
 
-    if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
-    if (ua.includes("Windows")) platform_temp = "windows";
+    if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple"
+    if (ua.includes("Windows")) platform_temp = "windows"
 
     //* Centering the current platform in array. Only works if array has 3 items.
-    platform_order.splice(platform_order.indexOf(platform_temp), 1);
-    platform_order.splice(1, 0, platform_temp);
+    platform_order.splice(platform_order.indexOf(platform_temp), 1)
+    platform_order.splice(1, 0, platform_temp)
   },
   methods: {
     open(platform) {
       if (platform == "linux")
-        this.openInNewTab("https://github.com/PreMiD/PreMiD");
-      if (platform == "windows") this.openInNewTab(this.$data.windows_url);
-      if (platform == "apple") this.openInNewTab(this.$data.apple_url);
+        this.openInNewTab("https://github.com/PreMiD/PreMiD")
+      if (platform == "windows") this.openInNewTab(this.$data.windows_url)
+      if (platform == "apple") this.openInNewTab(this.$data.apple_url)
     },
     openInNewTab(url) {
-      let page = window.open(url, "_blank");
+      let page = window.open(url, "_blank")
+    }
+  },
+
+  head() {
+    return {
+      title: "Downloads"
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
