@@ -2,6 +2,9 @@
 <img src="https://avatars3.githubusercontent.com/u/46326568?s=400&u=15e4a4988014780288d30ffb969fd1569fec23e6&v=4" width="128px" draggable="false" >
 
 # PreMiD Website
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/46ffbb5367274f99a263dbc654e14b21)](https://app.codacy.com/gh/PreMiD/Website?utm_source=github.com&utm_medium=referral&utm_content=PreMiD/Website&utm_campaign=Badge_Grade_Dashboard)
+
   
 </div>  
   
