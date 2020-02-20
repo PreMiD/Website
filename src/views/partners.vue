@@ -40,27 +40,6 @@
   color: #ffffff;
   padding-bottom: 50px;
 }
-.butto {
-    font-family: inherit;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: none;
-    border-radius: 10px;
-    padding: 0.8rem 3rem;
-    font-size: 1.2rem; 
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    background: #7288da;
-    color: #fdfcff;
-    cursor: pointer;
-    display: block;
-    transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 3px 16px -7px rgba(17, 18, 24, 0.7);
-    text-align: center;
-    font-family: inherit;
-}
 span.a {
   display: inline-block;
   border-radius: 10px;
@@ -101,7 +80,7 @@ padding-bottom: 50px;
 </span>
 
 <div class="button-container">
-<button type="button" class="butto">Apply now!</button>
+<button type="button" class="button">Apply now!</button>
 </div>
 
 <p class="partnertext">If you are rather interesed in a direct job at PreMiD, then take a look at our job advertisement.</p>
