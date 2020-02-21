@@ -31,28 +31,33 @@
             ></div>
           </div>
           <div class="header__buttons">
-            <button
-              v-if="
+            <div
+              style="display: initial"
+              v-if="this.$store.state.extension.extensionInstalled && presence.metadata.button != false"
+            >
+              <button
+                v-if="
                 !isInstalled && this.$store.state.extension.extensionInstalled
               "
-              class="button button--"
-              v-on:click="sendPresence(presence.metadata.service)"
-            >
-              <span class="icon">
-                <i class="fas fa-plus"></i>
-              </span>
-              {{ $t("store.card.presence.add") }}
-            </button>
-            <button
-              v-if="isInstalled && this.$store.state.extension.extensionInstalled"
-              class="button button--black"
-              v-on:click="removePresence(presence.metadata.service)"
-            >
-              <span class="icon">
-                <i class="fas fa-minus"></i>
-              </span>
-              {{ $t("store.card.presence.remove") }}
-            </button>
+                class="button button--"
+                v-on:click="sendPresence(presence.metadata.service)"
+              >
+                <span class="icon">
+                  <i class="fas fa-plus"></i>
+                </span>
+                {{ $t("store.card.presence.add") }}
+              </button>
+              <button
+                v-if="isInstalled && this.$store.state.extension.extensionInstalled"
+                class="button button--black"
+                v-on:click="removePresence(presence.metadata.service)"
+              >
+                <span class="icon">
+                  <i class="fas fa-minus"></i>
+                </span>
+                {{ $t("store.card.presence.remove") }}
+              </button>
+            </div>
             <a
               class="button button--black"
               :href="
