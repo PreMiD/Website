@@ -13,7 +13,7 @@
       :container-class="'pagination'"
       :page-class="'page-item'"
     >
-      <span slot="breakViewContent" />
+      <span slot="breakViewContent"></span>
     </paginate>
   </div>
 </template>

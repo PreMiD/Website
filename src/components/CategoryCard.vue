@@ -8,11 +8,11 @@
     >
       <div class="category__icon">
         <span class="fa-stack">
-          <i class="fas fa-circle fa-stack-2x" />
+          <i class="fa-circle fa-stack-2x fas"></i>
           <i
             :style="`color: ${category.color};`"
             :class="`fas fa-${category.icon} fa-stack-1x fa-inverse`"
-          />
+          ></i>
         </span>
       </div>
       <div class="category__data">

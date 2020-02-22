@@ -3,7 +3,7 @@
     <div class="navbar">
       <div class="navbar__logotype">
         <nuxt-link to="/">
-          <img src="@/assets/images/logo_round.svg" >
+          <img src="@/assets/images/logo_round.svg" />
         </nuxt-link>
         <a
           v-if="latestReleaseVersion"
@@ -11,7 +11,7 @@
           target="_blank"
           class="label label_pmd-version"
           v-text="latestReleaseVersion"
-        />
+        ></a>
       </div>
 
       <div class="navbar__items on-desktop">
@@ -21,7 +21,7 @@
           :to="'/' + category.route"
           class="navbar__item"
         >
-          <i :class="'fas fa-' + category.logo" />
+          <i :class="'fas fa-' + category.logo"></i>
           <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
         </nuxt-link>
         <!--  <nuxt-link to="/login" class="navbar__item" v-if="!this.$auth.loggedIn">
@@ -35,7 +35,7 @@
       </div>
       <div class="mobile-navbar__menu on-mobile">
         <a ref="menuTrigger" @click="mobileMenuActive = !mobileMenuActive">
-          <i class="fas fa-bars" />
+          <i class="fa-bars fas"></i>
         </a>
       </div>
     </div>
@@ -51,7 +51,7 @@
           :to="'/' + category.route"
           class="navbar__item"
         >
-          <i :class="'fas fa-' + category.logo" />
+          <i :class="'fas fa-' + category.logo"></i>
           <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
         </nuxt-link>
       </div>

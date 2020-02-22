@@ -6,9 +6,9 @@
       @mouseover="card_hovered = true"
       @mouseleave="card_hovered = false"
     >
-      <img class="store-card__background" :src="presence.thumbnail" >
+      <img class="store-card__background" :src="presence.thumbnail" />
       <div class="store-card__service-logo">
-        <img :src="presence.logo" >
+        <img :src="presence.logo" />
       </div>
       <div class="store-card__service-info">
         <div class="store-card__service">
@@ -24,11 +24,11 @@
                 class="fa-stack"
                 :content="$t('store.cards.popular')"
               >
-                <i class="fas fa-circle fa-stack-2x" />
+                <i class="fa-circle fa-stack-2x fas"></i>
                 <i
                   :style="`color: ${presence.color};`"
-                  class="fas fa-fire-alt fa-stack-1x fa-inverse"
-                />
+                  class="fa-fire-alt fa-inverse fa-stack-1x fas"
+                ></i>
               </span>
             </nuxt-link>
           </h2>
@@ -49,7 +49,7 @@
               <p
                 class="store-card__desc"
                 v-html="linkify(this.getPresenceDescription())"
-              />
+              ></p>
             </div>
             <div
               v-if="
@@ -62,7 +62,7 @@
                   this.$store.state.extension.extensionInstalled &&
                     typeof presence.button == 'undefined'
                 "
-                class="store-card__buttons on-desktop"
+                class="on-desktop store-card__buttons"
               >
                 <button
                   v-if="!isInstalled"
@@ -70,7 +70,7 @@
                   @click="sendPresence(presence.service)"
                 >
                   <span class="icon">
-                    <i class="fas fa-plus" />
+                    <i class="fa-plus fas"></i>
                   </span>
                   {{ $t("store.card.presence.add") }}
                 </button>
@@ -80,7 +80,7 @@
                   @click="removePresence(presence.service)"
                 >
                   <span class="icon">
-                    <i class="fas fa-minus" />
+                    <i class="fa-minus fas"></i>
                   </span>
                   {{ $t("store.card.presence.remove") }}
                 </button>
@@ -104,7 +104,7 @@
         :style="
           `background: linear-gradient(135deg, ${presence.color} 0%, ${presenceGradientColor} 100%);`
         "
-      />
+      ></div>
     </div>
   </div>
 </template>

@@ -3,7 +3,7 @@
     <div id="beta" class="section section--features">
       <div id="beta-heading" class="section-heading section-heading__features">
         <h1 class="section-heading__title">
-          <img :src="premidBeta" >
+          <img :src="premidBeta" />
         </h1>
       </div>
       <div id="beta-container" class="card--feature card--feature--reverse">
@@ -15,7 +15,7 @@
                 '<br />' +
                 $t('beta.description.2')
             "
-          />
+          ></p>
           <ul>
             <li>
               <p>{{ $t("beta.features.1") }}</p>
@@ -34,7 +34,7 @@
               src="./../../assets/images/cards/card2_video.mp4"
               type="video/mp4"
             />
-            <img class="card--feature__promo--image2" :src="cardThumbnail2" >
+            <img class="card--feature__promo--image2" :src="cardThumbnail2" />
           </video>
         </div>
       </div>
@@ -46,7 +46,7 @@
               '<span class=\'text-highlight\'>' + betaUsers + '</span>'
             )
           "
-        />
+        ></p>
         <a class="button text--uppercase" href="/beta/register">{{
           $t(`beta.register.button`)
         }}</a>

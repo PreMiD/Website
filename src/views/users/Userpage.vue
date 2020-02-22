@@ -8,11 +8,11 @@
           <li>{{ $t("user.notFound.message2") }}</li>
           <li>{{ $t("user.notFound.message3") }}</li>
         </ul>
-        <span v-html="linkify($t('user.notFound.message4'))" />
+        <span v-html="linkify($t('user.notFound.message4'))"></span>
       </div>
       <div v-else class="userpage__header">
         <div class="user-avatar">
-          <img :src="user.avatar" >
+          <img :src="user.avatar"//>
         </div>
         <div class="user-data">
           <p class="username">
@@ -27,77 +27,77 @@
                   content: $t('contributors.roles.mainDeveloper'),
                   placement: 'bottom'
                 }"
-                class="fas fa-tools"
-              />
+                class="fa-tools fas"
+              ></i>
               <i
                 v-if="role == 'Website Developer'"
                 v-tippy="{
                   content: $t('contributors.roles.websiteDeveloper'),
                   placement: 'bottom'
                 }"
-                class="fas fa-tools"
-              />
+                class="fa-tools fas"
+              ></i>
               <i
                 v-if="role == 'Community Manager'"
                 v-tippy="{
                   content: $t('contributors.roles.communityManager'),
                   placement: 'bottom'
                 }"
-                class="fas fa-users"
-              />
+                class="fa-users fas"
+              ></i>
               <i
                 v-if="role == 'Moderator'"
                 v-tippy="{
                   content: $t('contributors.roles.moderator'),
                   placement: 'bottom'
                 }"
-                class="fas fa-user-cog"
-              />
+                class="fa-user-cog fas"
+              ></i>
               <i
                 v-if="role == 'Head Moderator'"
                 v-tippy="{
                   content: $t('contributors.roles.headModerator'),
                   placement: 'bottom'
                 }"
-                class="fas fa-glasses"
-              />
+                class="fa-glasses fas"
+              ></i>
               <i
                 v-if="role == 'Ticket Manager'"
                 v-tippy="{
                   content: $t('contributors.roles.ticketManager'),
                   placement: 'bottom'
                 }"
-                class="fas fa-ticket-alt"
-              />
+                class="fa-ticket-alt fas"
+              ></i>
               <i
                 v-if="role == 'Presence Developer'"
                 v-tippy="{
                   content: $t('user.roles.presenceDeveloper'),
                   placement: 'bottom'
                 }"
-                class="fas fa-user-astronaut"
-              />
+                class="fa-user-astronaut fas"
+              ></i>
               <i
                 v-if="role == 'Presence Verifier'"
                 v-tippy="{
                   content: $t('user.roles.presenceVerifier'),
                   placement: 'bottom'
                 }"
-                class="fas fa-clipboard-check"
-              />
+                class="fa-clipboard-check fas"
+              ></i>
               <i
                 v-if="role == 'Patron'"
                 v-tippy="{ content: 'Patron', placement: 'bottom' }"
-                class="fab fa-patreon"
-              />
+                class="fa-patreon fab"
+              ></i>
               <i
                 v-if="role == 'Donator'"
                 v-tippy="{
                   content: $t('contributors.roles.donator'),
                   placement: 'bottom'
                 }"
-                class="fas fa-meteor"
-              />
+                class="fa-meteor fas"
+              ></i>
             </div>
             <i
               v-if="userPresences.length > 20"
@@ -107,8 +107,8 @@
                 ).replace('{0}', userPresences.length)}`,
                 placement: 'bottom'
               }"
-              class="fas fa-crown"
-            />
+              class="fa-crown fas"
+            ></i>
           </div>
         </div>
       </div>
@@ -125,12 +125,12 @@
             class="contributes"
             @click="showContributions = !showContributions"
             v-html="tabbify($t('user.switch.contributed'))"
-          />
+          ></div>
           <div
             v-else
             class="noContributes"
             v-html="tabbify($t('user.switch.contributed'))"
-          />
+          ></div>
         </h1>
         <div v-if="!showContributions" class="presence-container">
           <StoreCard

@@ -8,14 +8,14 @@
     @mouseleave="hovered = false"
   >
     <div class="credit-card__user">
-      <h1 :title="user.name" v-text="user.name" />
+      <h1 :title="user.name" v-text="user.name"></h1>
       <h2>
         {{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}
       </h2>
     </div>
     <div class="credit-card__avatar">
-      <span :class="user.status" />
-      <img :src="user.avatar + '?size=64'" draggable="false" >
+      <span :class="user.status"></span>
+      <img :src="user.avatar + '?size=64'" draggable="false" />
     </div>
   </div>
 </template>

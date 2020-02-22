@@ -3,7 +3,7 @@
     <div id="thankYou" class="section section--features">
       <div id="beta-heading" class="section-heading section-heading__features">
         <h1 class="section-heading__title">
-          <img :src="premidBeta" >
+          <img :src="premidBeta" />
         </h1>
       </div>
       <div id="thankYou-container" class="card--feature card--feature--reverse">

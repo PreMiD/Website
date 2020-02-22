@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="store-grid">
-      <div class="store-menu store-grid__sidebar">
+      <div class="store-grid__sidebar store-menu">
         <p class="sidebar__subheader">
           {{ $t("store.header.search") }}
         </p>
@@ -25,15 +25,15 @@
               :checked="mostUsed"
               @change="mostUsed = !mostUsed"
             />
-            <span ref="checkbox" class="checkbox-container" />
+            <span ref="checkbox" class="checkbox-container"></span>
             <p>{{ $t("store.category.filters.mostUsed") }}</p>
           </label>
         </div>
 
         <div class="checkbox-switcher">
           <label>
-            <input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" >
-            <span ref="checkbox" class="checkbox-container" />
+            <input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" />
+            <span ref="checkbox" class="checkbox-container"></span>
             <p>{{ $t("store.category.filters.allowAdult") }}</p>
           </label>
         </div>
@@ -48,49 +48,49 @@
               :class="{ 'nuxt-link-exact-active': currentCategory == 'all' }"
               :to="{ query: { page: currentPageNumber, category: 'all' } }"
             >
-              <i :class="'fas fa-map'" />
+              <i :class="'fas fa-map'"></i>
               {{ $t("store.category.all") }}
             </nuxt-link>
             <nuxt-link
               class="category-item"
               :to="{ query: { page: currentPageNumber, category: 'anime' } }"
             >
-              <i class="fas fa-star" />
+              <i class="fa-star fas"></i>
               Anime
             </nuxt-link>
             <nuxt-link
               class="category-item"
               :to="{ query: { page: currentPageNumber, category: 'games' } }"
             >
-              <i class="fas fa-leaf" />
+              <i class="fa-leaf fas"></i>
               {{ $t("store.category.games") }}
             </nuxt-link>
             <nuxt-link
               class="category-item"
               :to="{ query: { page: currentPageNumber, category: 'music' } }"
             >
-              <i class="fas fa-music" />
+              <i class="fa-music fas"></i>
               {{ $t("store.category.music") }}
             </nuxt-link>
             <nuxt-link
               class="category-item"
               :to="{ query: { page: currentPageNumber, category: 'socials' } }"
             >
-              <i class="fas fa-comments" />
+              <i class="fa-comments fas"></i>
               {{ $t("store.category.socials") }}
             </nuxt-link>
             <nuxt-link
               class="category-item"
               :to="{ query: { page: currentPageNumber, category: 'videos' } }"
             >
-              <i class="fas fa-play" />
+              <i class="fa-play fas"></i>
               {{ $t("store.category.videos") }}
             </nuxt-link>
             <nuxt-link
               class="category-item"
               :to="{ query: { page: currentPageNumber, category: 'other' } }"
             >
-              <i class="fas fa-box" />
+              <i class="fa-box fas"></i>
               {{ $t("store.category.other") }}
             </nuxt-link>
           </div>
@@ -100,7 +100,7 @@
       <div class="store-grid__content">
         <h1 v-if="filteredPresences.length <= 0" class="heading">
           {{ $t("store.search.notFound") }}
-          <i class="fas fa-sad-tear" />
+          <i class="fa-sad-tear fas"></i>
         </h1>
         <div class="presence-container">
           <StoreCard
@@ -126,7 +126,7 @@
       next-text
       page-class="page-item"
     >
-      <span slot="breakViewContent" />
+      <span slot="breakViewContent"></span>
     </paginate>
   </section>
 </template>

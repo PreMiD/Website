@@ -1,5 +1,3 @@
-<template />
-
 <script>
 export default {
   head() {

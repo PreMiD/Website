@@ -3,21 +3,21 @@
     <div class="promo-container">
       <div class="promo-container__heading">
         <div class="heading__logo">
-          <img width="100%" src="@/assets/images/logo_round.svg" >
+          <img width="100%" src="@/assets/images/logo_round.svg" />
         </div>
         <div class="heading__text">
-          <p v-html="markdown($t('home.introduction.paragraph'))" />
+          <p v-html="markdown($t('home.introduction.paragraph'))"></p>
         </div>
         <div class="heading__button-group">
           <a class="button text--uppercase" href="#features">
-            <i class="fas fa-stream" />
+            <i class="fa-stream fas"></i>
             {{ $t("home.introduction.button.features") }}
           </a>
           <nuxt-link
             class="button button--black text--uppercase"
             to="/downloads"
           >
-            <i class="fas fa-file-export" />
+            <i class="fa-file-export fas"></i>
             {{ $t(`home.introduction.button.downloads`) }}
           </nuxt-link>
         </div>
@@ -38,7 +38,7 @@
                   '?size=128' +
                   ');'
               "
-            />
+            ></div>
             <div class="header__info">
               <div class="info__nameTag">
                 <span class="username">{{ presence.profile.name }}</span>
@@ -63,27 +63,27 @@
                         badge.slice(1)
                     }"
                     :class="`badge badge_${badge}`"
-                  />
+                  ></div>
                   <div
                     v-if="badge == 'early'"
                     v-tippy="{ content: 'Early Supporter' }"
                     :class="`badge badge_${badge}`"
-                  />
+                  ></div>
                   <div
                     v-if="badge == 'hypesquad'"
                     v-tippy="{ content: 'HypeSquad Events' }"
                     :class="`badge badge_${badge}`"
-                  />
+                  ></div>
                   <div
                     v-if="badge == 'nitro'"
                     v-tippy="{ content: 'Discord Nitro' }"
                     :class="`badge badge_${badge}`"
-                  />
+                  ></div>
                   <div
                     v-if="badge == 'boost-lvl3'"
                     v-tippy="{ content: 'Nitro Boosting' }"
                     :class="`badge badge_${badge}`"
-                  />
+                  ></div>
                 </div>
               </div>
             </div>
@@ -160,7 +160,9 @@
       </div>
       <div class="card--feature">
         <div class="card--feature__details">
-          <h1 v-html="markdown($t('home.features.presencesystem.heading'))" />
+          <h1
+            v-html="markdown($t('home.features.presencesystem.heading'))"
+          ></h1>
           <p>{{ $t("home.features.presencesystem.description") }}</p>
           <p>
             <nuxt-link
@@ -200,7 +202,7 @@
               src="./../assets/images/cards/card2_video.mp4"
               type="video/mp4"
             />
-            <img class="card--feature__promo--image2" :src="cardThumbnail2" >
+            <img class="card--feature__promo--image2" :src="cardThumbnail2" />
           </video>
         </div>
       </div>
@@ -215,7 +217,7 @@
           </p>
         </div>
         <div class="card--feature__promo">
-          <img class="card--feature__promo--image1" :src="cardThumbnail4" >
+          <img class="card--feature__promo--image1" :src="cardThumbnail4" />
         </div>
       </div>
       <div class="waves-divider waves-divider_bottom">

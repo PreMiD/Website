@@ -16,7 +16,7 @@
         </button>
       </div>
       <a class="languages-container__close" @click="closeSwitcher">
-        <i class="fas fa-times" />
+        <i class="fa-times fas"></i>
       </a>
     </div>
   </div>

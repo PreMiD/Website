@@ -7,7 +7,7 @@
         content="Choose website language"
         class="button button--gray button--language-switch"
         @click="toggleSwitcher"
-      ><i class="fas fa-language"/></a>
+      ><i class="fa-language fas"></i></a>
     </div>
     <!--     
       ! Disabled for now as it somehow breaks the page in production

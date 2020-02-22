@@ -16,11 +16,11 @@
                 content="This presence is very popular around users."
                 style="font-size:1rem;"
               >
-                <i class="fas fa-circle fa-stack-2x" />
+                <i class="fa-circle fa-stack-2x fas"></i>
                 <i
                   :style="`color: ${presence.metadata.color};`"
-                  class="fas fa-fire-alt fa-stack-1x fa-inverse"
-                />
+                  class="fa-fire-alt fa-inverse fa-stack-1x fas"
+                ></i>
               </span>
             </h1>
             <div
@@ -28,7 +28,7 @@
               :style="
                 `background: linear-gradient(155deg, ${presence.metadata.color} 0%, ${presenceGradientColor} 100%);`
               "
-            />
+            ></div>
           </div>
           <div class="header__buttons">
             <button
@@ -39,7 +39,7 @@
               @click="sendPresence(presence.metadata.service)"
             >
               <span class="icon">
-                <i class="fas fa-plus" />
+                <i class="fa-plus fas"></i>
               </span>
               {{ $t("store.card.presence.add") }}
             </button>
@@ -51,7 +51,7 @@
               @click="removePresence(presence.metadata.service)"
             >
               <span class="icon">
-                <i class="fas fa-minus" />
+                <i class="fa-minus fas"></i>
               </span>
               {{ $t("store.card.presence.remove") }}
             </button>
@@ -65,7 +65,7 @@
               target="_blank"
             >
               <span class="icon">
-                <i class="fab fa-github" />
+                <i class="fa-github fab"></i>
               </span>
               {{ $t("presence.page.buttons.sourceCode") }}
             </a>
@@ -80,7 +80,7 @@
             <div
               class="description-container"
               v-html="linkify(getPresenceDescription())"
-            />
+            ></div>
           </div>
           <div class="content__info">
             <h2 class="content__title">
@@ -89,7 +89,7 @@
             <ul class="info__sections">
               <li v-if="presence.metadata.author">
                 <p>
-                  <i class="fas fa-user" />
+                  <i class="fa-user fas"></i>
                   {{ $t("presence.sections.information.author") }}:
                   <nuxt-link
                     v-if="presence.metadata.author.userId"
@@ -115,7 +115,7 @@
                 "
               >
                 <p>
-                  <i class="fas fa-user-tie" />
+                  <i class="fa-user-tie fas"></i>
                   {{ $t("presence.sections.information.contributors") }}:
                   <nuxt-link
                     v-for="(contributor, index) in presence.metadata
@@ -138,7 +138,7 @@
               </li>
               <li v-if="presence.metadata.version">
                 <p>
-                  <i style="margin-right:2px;" class="fas fa-code-branch" />
+                  <i style="margin-right:2px;" class="fa-code-branch fas"></i>
                   {{ $t("presence.sections.information.version") }}:
                   <span class="presence-version">
                     <b>{{ presence.metadata.version }}</b>
@@ -147,7 +147,10 @@
               </li>
               <li v-if="presenceUsage && presenceUsage > 0">
                 <p>
-                  <i class="fas fa-cart-arrow-down" style="margin-left:-4px;" />
+                  <i
+                    class="fa-cart-arrow-down fas"
+                    style="margin-left:-4px;"
+                  ></i>
                   {{ $t("presence.sections.information.users") }}:
                   <span class="presence-version">
                     <b>{{ presenceUsage }}</b>
@@ -156,7 +159,7 @@
               </li>
               <li v-if="presence.metadata.tags">
                 <p>
-                  <i class="fas fa-hashtag" />
+                  <i class="fa-hashtag fas"></i>
                   {{ $t("presence.sections.information.tags") }}:
                 </p>
                 <div class="presence-tags">
@@ -176,7 +179,7 @@
               </li>-->
               <li>
                 <p>
-                  <i class="fas fa-link" />
+                  <i class="fa-link fas"></i>
                   {{ $t("presence.sections.information.supportedurls") }}:
                 </p>
                 <ul

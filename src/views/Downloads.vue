@@ -13,7 +13,8 @@
               <p>
                 {{ $t("downloads.instructions.step.1") }}
                 [
-                <a href="#app-downloads"> <i class="fas fa-arrow-down" /> </a>]
+                <a href="#app-downloads"> <i class="fa-arrow-down fas"></i> </a
+                >]
               </p>
             </li>
             <li>
@@ -23,7 +24,8 @@
               <p>
                 {{ $t("downloads.instructions.step.3") }}
                 [
-                <a href="#ext-downloads"> <i class="fas fa-arrow-down" /> </a>]
+                <a href="#ext-downloads"> <i class="fa-arrow-down fas"></i> </a
+                >]
               </p>
             </li>
             <li>
@@ -71,7 +73,7 @@
               class="cards__card clickable"
             >
               <div class="card__icon">
-                <i :class="`fab fa-${platform}`" />
+                <i :class="`fab fa-${platform}`"></i>
               </div>
               <div class="card__content">
                 <h3>
@@ -79,7 +81,7 @@
                   <i
                     v-if="!builds[platform].has_installer"
                     v-tippy
-                    class="fas fa-exclamation-circle platform-warning"
+                    class="fa-exclamation-circle fas platform-warning"
                     :content="
                       $t('downloads.tooltips.os.not.supported.part2', {
                         0: `<b>${$t(
@@ -87,7 +89,7 @@
                         )}</b> `
                       })
                     "
-                  />
+                  ></i>
                 </h3>
               </div>
             </div>
@@ -111,7 +113,7 @@
           @click="openInNewTab(chrome_url)"
         >
           <div class="card__icon">
-            <i class="fab fa-chrome" />
+            <i class="fa-chrome fab"></i>
           </div>
           <div class="card__content">
             <h3>Chromium</h3>
@@ -124,7 +126,7 @@
           class="cards__card clickable"
         >
           <div class="card__icon">
-            <i class="fab fa-firefox" />
+            <i class="fa-firefox fab"></i>
           </div>
           <div class="card__content">
             <h3>Firefox</h3>

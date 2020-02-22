@@ -3,7 +3,7 @@
     <h1>Terms of Service</h1>
     <p>
       Last modified: July 19, 2019.
-      <br >
+      <br />
     </p>
     <p>
       These terms of service outline the rules and regulations for the use of

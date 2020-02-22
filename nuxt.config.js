@@ -110,6 +110,20 @@ module.exports = {
     }
   },
   build: {
+    cssSourceMap: true,
+    babel: {
+      babelrc: true,
+      presets: ["@nuxt/babel-preset-app"]
+    },
+    ssr: true,
+    analyze: true,
+    friendlyErrors: true,
+    hotMiddleware: {
+      client: {
+        // turn off client overlay when errors are present
+        overlay: false
+      }
+    },
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
