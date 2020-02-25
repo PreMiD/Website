@@ -9,6 +9,7 @@
 	"dependencies": {
 		"@nuxtjs/auth": "4.8.5",
 		"@nuxtjs/axios": "5.9.5",
+		"animejs": "^3.1.0",
 		"axios": "0.19.2",
 		"marked": "0.8.0",
 		"node-sass": "4.13.1",
