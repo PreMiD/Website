@@ -13,10 +13,7 @@
             <i class="fa-stream fas"></i>
             {{ $t("home.introduction.button.features") }}
           </a>
-          <nuxt-link
-            class="button button--black text--uppercase"
-            to="/downloads"
-          >
+          <nuxt-link class="button button--black text--uppercase" to="/downloads">
             <i class="fa-file-export fas"></i>
             {{ $t(`home.introduction.button.downloads`) }}
           </nuxt-link>
@@ -45,11 +42,7 @@
                 <span class="discriminator">#{{ presence.profile.id }}</span>
               </div>
               <div class="info__badges">
-                <div
-                  v-for="badge of presence.profile.badges"
-                  :key="badge"
-                  class="badge-wrapper"
-                >
+                <div v-for="badge of presence.profile.badges" :key="badge" class="badge-wrapper">
                   <div
                     v-if="
                       badge == 'brilliance' ||
@@ -90,9 +83,7 @@
           </div>
           <div class="usercard__activity">
             <div class="activity__info">
-              <div class="info__header">
-                {{ $t(`home.examples.playingagame`) }}
-              </div>
+              <div class="info__header">{{ $t(`home.examples.playingagame`) }}</div>
               <div class="info__game">
                 <div class="game__icon">
                   <img
@@ -121,15 +112,11 @@
                   <div class="game__title text-row">
                     <span>{{ presence.service_title }}</span>
                   </div>
-                  <div class="game__st-line text-row">
-                    {{ presence.data[0] }}
-                  </div>
-                  <div v-if="presence.data[1]" class="game__nd-line text-row">
-                    {{ presence.data[1] }}
-                  </div>
+                  <div class="game__st-line text-row">{{ presence.data[0] }}</div>
+                  <div v-if="presence.data[1]" class="game__nd-line text-row">{{ presence.data[1] }}</div>
                   <div class="game__time text-row">
                     {{
-                      $t(`home.examples.timestamp`, [presence.presence_time])
+                    $t(`home.examples.timestamp`, [presence.presence_time])
                     }}
                   </div>
                 </div>
@@ -160,9 +147,7 @@
       </div>
       <div class="card--feature">
         <div class="card--feature__details">
-          <h1
-            v-html="markdown($t('home.features.presencesystem.heading'))"
-          ></h1>
+          <h1 v-html="markdown($t('home.features.presencesystem.heading'))"></h1>
           <p>{{ $t("home.features.presencesystem.description") }}</p>
           <p>
             <nuxt-link
@@ -173,11 +158,7 @@
           </p>
         </div>
         <div class="card--feature__promo">
-          <img
-            class="card--feature__promo--image1"
-            style="max-width:100%"
-            :src="cardThumbnail1"
-          />
+          <img class="card--feature__promo--image1" style="max-width:100%" :src="cardThumbnail1" />
         </div>
       </div>
       <div class="card--feature card--feature--reverse">
@@ -198,10 +179,7 @@
         </div>
         <div class="card--feature__promo">
           <video autoplay loop>
-            <source
-              src="./../assets/images/cards/card2_video.mp4"
-              type="video/mp4"
-            />
+            <source src="./../assets/images/cards/card2_video.mp4" type="video/mp4" />
             <img class="card--feature__promo--image2" :src="cardThumbnail2" />
           </video>
         </div>
@@ -211,9 +189,10 @@
           <h1>{{ $t("home.features.quickSupport.heading") }}</h1>
           <p>{{ $t("home.features.quickSupport.description") }}</p>
           <p>
-            <a class="button button--lg" href="https://discord.gg/premid">
-              {{ $t("home.features.quickSupport.button") }}
-            </a>
+            <a
+              class="button button--lg"
+              href="https://discord.premid.app"
+            >{{ $t("home.features.quickSupport.button") }}</a>
           </p>
         </div>
         <div class="card--feature__promo">
@@ -240,29 +219,29 @@
 </template>
 
 <script>
-import twitch_logo from "@/assets/images/twitch.png"
-import youtube_logo from "@/assets/images/youtube.png"
-import soundcloud_logo from "@/assets/images/soundcloud.png"
-import netflix_logo from "@/assets/images/netflix.png"
-import youtube_music_logo from "@/assets/images/youtube-music.png"
-import premid_logo from "@/assets/images/pmd_logo.png"
-import steam_logo from "@/assets/images/steam.png"
+import twitch_logo from "@/assets/images/twitch.png";
+import youtube_logo from "@/assets/images/youtube.png";
+import soundcloud_logo from "@/assets/images/soundcloud.png";
+import netflix_logo from "@/assets/images/netflix.png";
+import youtube_music_logo from "@/assets/images/youtube-music.png";
+import premid_logo from "@/assets/images/pmd_logo.png";
+import steam_logo from "@/assets/images/steam.png";
 
-import cardThumbnail1 from "@/assets/images/cards/card1.png"
-import cardThumbnail2 from "@/assets/images/cards/card2.png"
-import cardThumbnail3 from "@/assets/images/cards/card3.png"
-import cardThumbnail4 from "@/assets/images/cards/card4.png"
+import cardThumbnail1 from "@/assets/images/cards/card1.png";
+import cardThumbnail2 from "@/assets/images/cards/card2.png";
+import cardThumbnail3 from "@/assets/images/cards/card3.png";
+import cardThumbnail4 from "@/assets/images/cards/card4.png";
 
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "Home",
   auth: false,
   async asyncData() {
     const credits = (await axios(`${process.env.apiBase}/credits`)).data,
-      { extension } = (await axios(`${process.env.apiBase}/versions`)).data
+      { extension } = (await axios(`${process.env.apiBase}/versions`)).data;
 
-    let creditsLength = credits.length
+    let creditsLength = credits.length;
 
     return {
       extVersion: extension,
@@ -270,7 +249,7 @@ export default {
         credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))],
         credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))]
       ]
-    }
+    };
   },
   data() {
     return {
@@ -365,34 +344,34 @@ export default {
           presence_time: "49:12"
         }
       ]
-    }
+    };
   },
   beforeMount() {
-    const Vue = this
-    const length = this.$data.presences.length
+    const Vue = this;
+    const length = this.$data.presences.length;
 
     // Randomly selects 2 presences to display.
     this.$data.presences_display.push(
       this.$data.presences.splice((Math.random() * length) | 0, 1)[0],
       this.$data.presences.splice((Math.random() * (length - 1)) | 0, 1)[0]
-    )
+    );
 
     // Updating user information in presence examples.
     this.$data.presences_display.forEach(function(presence_item, index) {
-      let presence = Vue.$data.presences_display[index]
+      let presence = Vue.$data.presences_display[index];
 
-      presence.profile["image"] = Vue.$data.users[index].avatar
-      presence.profile["name"] = Vue.$data.users[index].name
-      presence.profile["id"] = Vue.$data.users[index].tag
-    })
+      presence.profile["image"] = Vue.$data.users[index].avatar;
+      presence.profile["name"] = Vue.$data.users[index].name;
+      presence.profile["id"] = Vue.$data.users[index].tag;
+    });
   },
   methods: {
     openInNewTab(url) {
-      let page = window.open(url, "_blank")
-      page.focus()
+      let page = window.open(url, "_blank");
+      page.focus();
     },
     markdown(pls) {
-      if (!pls.match(/(\*\*.*?\*\*)/g)) return pls
+      if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
       return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
         return pls.replace(
           ch,
@@ -400,14 +379,14 @@ export default {
             2,
             ch.length - 2
           )}</span></strong>`
-        )
-      })[0]
+        );
+      })[0];
     }
   },
   head() {
     return {
       title: "Home"
-    }
+    };
   }
-}
+};
 </script>

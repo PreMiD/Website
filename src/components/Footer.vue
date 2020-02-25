@@ -62,7 +62,7 @@
       <div class="grid__section">
         <p class="section__title" v-text="$t(`footer.more.heading`)"></p>
         <div>
-          <a href="https://discord.gg/premid">Discord</a>
+          <a href="https://discord.premid.app">Discord</a>
           <a
             href="https://docs.premid.app/troubleshooting/"
             v-text="$t(`footer.help.troubleshooting`)"
