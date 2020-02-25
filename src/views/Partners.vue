@@ -61,7 +61,7 @@
 
       <img
         class="random-img"
-        src="https://i.imgur.com/ofVt9zJ.png"
+        src="https://i.imgur.com/yz6eVNk.jpg"
         style="top: 1100px; left: 800px;"
       />
 
