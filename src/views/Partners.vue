@@ -1,33 +1,39 @@
 <template>
   <div class="partners">
     <div class="main">
-      <strong class="title text-highlight">PARTNERS</strong>
-      <p class="description">
-        Join the fam and get some partner-only benefits to show off how much swag you
-        have.
-      </p>
-      <p class="slideshow-title">Our lovely pets</p>
+      <strong class="title text-highlight" v-t="'partners.header.title'" />
+      <p class="description" v-t="'partners.header.description'" />
+      <p class="slideshow-title" v-t="'partners.slideshow.description'" />
 
       <div class="slider">
-        <div class="left" v-bind:style="{ 'background-image': `url(${left.image})` }">
+        <div
+          class="left"
+          v-bind:style="{ 'background-image': `url(${left.image})` }"
+        >
           <div class="arrow" v-on:click="goPrev()">
             <i class="fas fa-arrow-left"></i>
           </div>
         </div>
-        <div class="middle" v-bind:style="{ 'background-image': `url(${middle.image})` }">
+        <div
+          class="middle"
+          v-bind:style="{ 'background-image': `url(${middle.image})` }"
+        >
           <div class="text">
             <h1>{{ middle.name }}</h1>
             <p>{{ middle.description }}</p>
           </div>
         </div>
-        <div class="right" v-bind:style="{ 'background-image': `url(${right.image})` }">
+        <div
+          class="right"
+          v-bind:style="{ 'background-image': `url(${right.image})` }"
+        >
           <div class="arrow" v-on:click="goNext()">
             <i class="fas fa-arrow-right"></i>
           </div>
         </div>
       </div>
 
-      <p class="why">Why you should partner with us?</p>
+      <p class="why" v-t="'partners.why.title'" />
 
       <img
         class="random-img"
@@ -91,48 +97,41 @@
 
       <div class="reasons">
         <div class="reason" style="margin-right: 50em">
-          <h1>Your free presence</h1>
-          <p>Our team will provide you with a Presence of your Homepage.</p>
+          <h1 v-t="'partners.why.benefit1.title'" />
+          <p v-t="'partners.why.benefit1.description'" />
         </div>
         <div class="reason" style="margin-left: 50em">
-          <h1>Become verified</h1>
-          <p>A special role and great honor will be given to you in our Discord server.</p>
+          <h1 v-t="'partners.why.benefit2.title'" />
+          <p v-t="'partners.why.benefit2.description'" />
         </div>
         <div class="reason" style="margin-right: 30em">
-          <h1>Meta-tag integration</h1>
-          <p>Automatically enables your Presence when someone is visiting your Website.</p>
+          <h1 v-t="'partners.why.benefit3.title'" />
+          <p v-t="'partners.why.benefit3.description'" />
         </div>
       </div>
 
       <div class="requirments">
-        <h1 class="rTitle">REQUIREMENTS</h1>
-        <p class="rText">Which specific animal you should be</p>
-        <p class="rDescription">
-          We keep an out out for growing communities and exiting things around the
-          internet. TL;DR you should already using PreMiD and be ready to spread it to
-          even more internet freaks. Acceptance into the program is extremely qualitative
-          and will vary from one candidate to the next.
-        </p>
+        <h1 class="rTitle" v-t="'partners.requirements.title'" />
+        <p class="rText" v-t="'partners.requirements.first.title'" />
+        <p
+          class="rDescription"
+          v-t="'partners.requirements.first.description'"
+        />
 
-        <p class="rText">Your current online barrier</p>
-        <p class="rDescription">
-          We are currently accepting any kind of effort into our partnership program.
-          Anyone should have the chance to be noticed. Twitch broadcasters should have at
-          least 100 followers and at least 10 concurrent viewers. You must be streaming at
-          least 1 time per week.
-        </p>
+        <p class="rText" v-t="'partners.requirements.second.title'" />
+        <p
+          class="rDescription"
+          v-t="'partners.requirements.second.description'"
+        />
       </div>
 
       <div class="button-container">
-        <button type="button" class="button">Apply now!</button>
+        <button type="button" class="button" v-t="'partners.apply.button'" />
       </div>
 
-      <p class="jobs">
-        If you are rather interesed in a direct job at PreMiD, then take a look at our
-        job advertisement.
-      </p>
+      <p class="jobs" v-t="'partners.apply.jobs'" />
 
-      <p class="sponsor-title text-highlight">THE GUCCI GANG</p>
+      <p class="sponsor-title text-highlight" v-t="'partners.sponsors.title'" />
 
       <div class="sponsor-cards">
         <Sponsor
