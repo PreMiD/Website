@@ -10,7 +10,10 @@
             v-bind:key="contributor.id"
             class="contributor-card"
           >
-            <CreditCard v-if="isStaffRole(contributor.role)" :user="contributor" />
+            <CreditCard
+              v-if="isStaffRole(contributor.role)"
+              :user="contributor"
+            />
           </div>
         </div>
       </div>
@@ -23,7 +26,10 @@
             v-bind:key="contributor.id"
             class="contributor-card"
           >
-            <CreditCard v-if="isSupporterRole(contributor.role)" :user="contributor" />
+            <CreditCard
+              v-if="isSupporterRole(contributor.role)"
+              :user="contributor"
+            />
           </div>
         </div>
       </div>
@@ -36,7 +42,10 @@
             v-bind:key="contributor.id"
             class="contributor-card"
           >
-            <CreditCard v-if="isTranslatorRole(contributor.role)" :user="contributor" />
+            <CreditCard
+              v-if="isTranslatorRole(contributor.role)"
+              :user="contributor"
+            />
           </div>
         </div>
       </div>
@@ -79,15 +88,15 @@ export default {
       roleName = roleName.toLowerCase();
       if (
         roleName == "creator" ||
-        roleName == "website developer" ||
         roleName == "community manager" ||
-        roleName == "ticket manager" ||
-        roleName == "moderator" ||
-        roleName == "jr. moderator" ||
+        roleName == "asst. community manager" ||
         roleName == "administrator" ||
-        roleName == "community secretary" ||
+        roleName == "website developer" ||
         roleName == "head moderator" ||
-        roleName == "senior moderator"
+        roleName == "asst. head moderator" ||
+        roleName == "moderator" ||
+        roleName == "ticket manager" ||
+        roleName == "jr. moderator"
       )
         return true;
       else return false;
