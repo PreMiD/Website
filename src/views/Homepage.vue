@@ -13,7 +13,10 @@
             <i class="fas fa-stream"></i>
             {{ $t("home.introduction.button.features") }}
           </a>
-          <nuxt-link class="button button--black text--uppercase" to="/downloads">
+          <nuxt-link
+            class="button button--black text--uppercase"
+            to="/downloads"
+          >
             <i class="fas fa-file-export"></i>
             {{ $t(`home.introduction.button.downloads`) }}
           </nuxt-link>
@@ -30,11 +33,11 @@
             <div
               class="header__avatar"
               :style="
-								'background-image: url(' +
-									presence.profile.image +
-									'?size=128' +
-									');'
-							"
+                'background-image: url(' +
+                  presence.profile.image +
+                  '?size=128' +
+                  ');'
+              "
             />
             <div class="header__info">
               <div class="info__nameTag">
@@ -49,16 +52,16 @@
                 >
                   <div
                     v-if="
-											badge == 'brilliance' ||
-												badge == 'bravery' ||
-												badge == 'balance'
-										"
+                      badge == 'brilliance' ||
+                        badge == 'bravery' ||
+                        badge == 'balance'
+                    "
                     v-tippy="{
-											content:
-												'HypeSquad ' +
-												badge.charAt(0).toUpperCase() +
-												badge.slice(1)
-										}"
+                      content:
+                        'HypeSquad ' +
+                        badge.charAt(0).toUpperCase() +
+                        badge.slice(1)
+                    }"
                     :class="`badge badge_${badge}`"
                   ></div>
                   <div
@@ -87,7 +90,9 @@
           </div>
           <div class="usercard__activity">
             <div class="activity__info">
-              <div class="info__header">{{ $t(`home.examples.playingagame`) }}</div>
+              <div class="info__header">
+                {{ $t(`home.examples.playingagame`) }}
+              </div>
               <div class="info__game">
                 <div class="game__icon">
                   <img
@@ -116,11 +121,15 @@
                   <div class="game__title text-row">
                     <span>{{ presence.service_title }}</span>
                   </div>
-                  <div class="game__st-line text-row">{{ presence.data[0] }}</div>
-                  <div v-if="presence.data[1]" class="game__nd-line text-row">{{ presence.data[1] }}</div>
+                  <div class="game__st-line text-row">
+                    {{ presence.data[0] }}
+                  </div>
+                  <div v-if="presence.data[1]" class="game__nd-line text-row">
+                    {{ presence.data[1] }}
+                  </div>
                   <div class="game__time text-row">
                     {{
-                    $t(`home.examples.timestamp`, [presence.presence_time])
+                      $t(`home.examples.timestamp`, [presence.presence_time])
                     }}
                   </div>
                 </div>
@@ -162,7 +171,11 @@
           </p>
         </div>
         <div class="card--feature__promo">
-          <img class="card--feature__promo--image1" style="max-width:100%" :src="cardThumbnail1" />
+          <img
+            class="card--feature__promo--image1"
+            style="max-width:100%"
+            :src="cardThumbnail1"
+          />
         </div>
       </div>
       <div class="card--feature card--feature--reverse">
@@ -183,7 +196,10 @@
         </div>
         <div class="card--feature__promo">
           <video autoplay loop>
-            <source src="./../assets/images/cards/card2_video.mp4" type="video/mp4" />
+            <source
+              src="./../assets/images/cards/card2_video.mp4"
+              type="video/mp4"
+            />
             <img class="card--feature__promo--image2" :src="cardThumbnail2" />
           </video>
         </div>
@@ -193,10 +209,8 @@
           <h1>{{ $t("home.features.quickSupport.heading") }}</h1>
           <p>{{ $t("home.features.quickSupport.description") }}</p>
           <p>
-            <a class="button button--lg" href="https://discord.gg/premid">
-              {{
-              $t("home.features.quickSupport.button")
-              }}
+            <a class="button button--lg" href="https://discord.premid.app/">
+              {{ $t("home.features.quickSupport.button") }}
             </a>
           </p>
         </div>

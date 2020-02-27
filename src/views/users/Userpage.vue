@@ -24,42 +24,66 @@
               <i
                 v-if="role == 'Main Developer'"
                 class="fas fa-tools"
-                v-tippy="{ content: $t('contributors.roles.mainDeveloper'), placement: 'bottom' }"
+                v-tippy="{
+                  content: $t('contributors.roles.mainDeveloper'),
+                  placement: 'bottom'
+                }"
               ></i>
               <i
                 v-if="role == 'Website Developer'"
                 class="fas fa-tools"
-                v-tippy="{ content: $t('contributors.roles.websiteDeveloper'), placement: 'bottom' }"
+                v-tippy="{
+                  content: $t('contributors.roles.websiteDeveloper'),
+                  placement: 'bottom'
+                }"
               ></i>
               <i
                 v-if="role == 'Community Manager'"
                 class="fas fa-users"
-                v-tippy="{ content: $t('contributors.roles.communityManager'), placement: 'bottom' }"
+                v-tippy="{
+                  content: $t('contributors.roles.communityManager'),
+                  placement: 'bottom'
+                }"
               ></i>
               <i
                 v-if="role == 'Moderator'"
                 class="fas fa-user-cog"
-                v-tippy="{ content: $t('contributors.roles.moderator'), placement: 'bottom' }"
+                v-tippy="{
+                  content: $t('contributors.roles.moderator'),
+                  placement: 'bottom'
+                }"
               ></i>
               <i
                 v-if="role == 'Head Moderator'"
                 class="fas fa-glasses"
-                v-tippy="{ content: $t('contributors.roles.headModerator'), placement: 'bottom' }"
+                v-tippy="{
+                  content: $t('contributors.roles.headModerator'),
+                  placement: 'bottom'
+                }"
               ></i>
               <i
                 v-if="role == 'Ticket Manager'"
                 class="fas fa-ticket-alt"
-                v-tippy="{ content: $t('contributors.roles.ticketManager'), placement: 'bottom' }"
+                v-tippy="{
+                  content: $t('contributors.roles.ticketManager'),
+                  placement: 'bottom'
+                }"
               ></i>
               <i
                 v-if="role == 'Presence Developer'"
                 class="fas fa-user-astronaut"
-                v-tippy="{ content: $t('user.roles.presenceDeveloper'), placement: 'bottom' }"
+                v-tippy="{
+                  content: $t('user.roles.presenceDeveloper'),
+                  placement: 'bottom'
+                }"
               ></i>
               <i
                 v-if="role == 'Presence Verifier'"
                 class="fas fa-clipboard-check"
-                v-tippy="{ content: $t('user.roles.presenceVerifier'), placement: 'bottom' }"
+                v-tippy="{
+                  content: $t('user.roles.presenceVerifier'),
+                  placement: 'bottom'
+                }"
               ></i>
               <i
                 v-if="role == 'Patron'"
@@ -69,15 +93,19 @@
               <i
                 v-if="role == 'Donator'"
                 class="fas fa-meteor"
-                v-tippy="{ content: $t('contributors.roles.donator'), placement: 'bottom' }"
+                v-tippy="{
+                  content: $t('contributors.roles.donator'),
+                  placement: 'bottom'
+                }"
               ></i>
             </div>
             <i
               v-if="userPresences.length > 20"
               class="fas fa-crown"
               v-tippy="{
-                content:
-                `${$t('user.importantPresenceDev.message1')}<br>${$t('user.importantPresenceDev.message2').replace('{0}', userPresences.length)}`,
+                content: `${$t('user.importantPresenceDev.message1')}<br>${$t(
+                  'user.importantPresenceDev.message2'
+                ).replace('{0}', userPresences.length)}`,
                 placement: 'bottom'
               }"
             ></i>
@@ -90,13 +118,19 @@
             v-if="userContributions.length > 0"
             class="contributes"
             v-tippy="{
-                content:  showContributions ? $t('user.presences.created') : $t('user.presences.contributed'),
-                placement: 'top'
-              }"
+              content: showContributions
+                ? $t('user.presences.created')
+                : $t('user.presences.contributed'),
+              placement: 'top'
+            }"
             @click="showContributions = !showContributions"
             v-html="tabbify($t('user.switch.contributed'))"
           />
-          <div v-else class="noContributes" v-html="tabbify($t('user.switch.contributed'))" />
+          <div
+            v-else
+            class="noContributes"
+            v-html="tabbify($t('user.switch.contributed'))"
+          />
         </h1>
         <div class="presence-container" v-if="!showContributions">
           <StoreCard
@@ -205,7 +239,7 @@ export default {
         return pls.match(/(\[.*?\])/g).map((ch, i) => {
           return pls.replace(
             ch,
-            `<a href="https://discord.gg/premid">${ch.slice(
+            `<a href="https://discord.premid.app/">${ch.slice(
               1,
               ch.length - 1
             )}</a>`
