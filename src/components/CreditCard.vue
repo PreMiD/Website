@@ -41,7 +41,6 @@ export default {
         "Head of Presence Verifying": "contributors.roles.verificationHead",
         "Ticket Manager": "contributors.roles.ticketManager",
         "Presence Verifier": "user.roles.presenceVerifier",
-        Developer: "user.roles.developer",
         Proofreader: "user.roles.proofreader",
         Donator: "contributors.roles.donator",
         Booster: "contributors.roles.booster",
