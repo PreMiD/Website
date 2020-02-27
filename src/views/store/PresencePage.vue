@@ -242,9 +242,9 @@ export default {
     })
 
     let data = {
-      presenceUsage: presenceRanking[encodeURIComponent(params.presenceName)],
+      presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
       hot:
-        (presenceRanking[encodeURIComponent(params.presenceName)] /
+        (presenceRanking[decodeURIComponent(params.presenceName)] /
           presenceUsage) *
           100 >
         30,
