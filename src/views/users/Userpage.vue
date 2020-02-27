@@ -22,18 +22,10 @@
           <div class="roles">
             <div v-for="role in user.roles" v-bind:key="role" :role="role">
               <i
-                v-if="role == 'Main Developer'"
+                v-if="role == 'Creator'"
                 class="fas fa-tools"
                 v-tippy="{
-                  content: $t('contributors.roles.mainDeveloper'),
-                  placement: 'bottom'
-                }"
-              ></i>
-              <i
-                v-if="role == 'Website Developer'"
-                class="fas fa-tools"
-                v-tippy="{
-                  content: $t('contributors.roles.websiteDeveloper'),
+                  content: $t('contributors.roles.creator'),
                   placement: 'bottom'
                 }"
               ></i>
@@ -46,10 +38,26 @@
                 }"
               ></i>
               <i
-                v-if="role == 'Moderator'"
-                class="fas fa-user-cog"
+                v-if="role == 'Asst. Community Manager'"
+                class="fas fa-users"
                 v-tippy="{
-                  content: $t('contributors.roles.moderator'),
+                  content: $t('contributors.roles.asstCommunityManager'),
+                  placement: 'bottom'
+                }"
+              ></i>
+              <i
+                v-if="role == 'Administrator'"
+                class="fas fa-database"
+                v-tippy="{
+                  content: $t('contributors.roles.administrator'),
+                  placement: 'bottom'
+                }"
+              ></i>
+              <i
+                v-if="role == 'Website Developer'"
+                class="fas fa-tools"
+                v-tippy="{
+                  content: $t('contributors.roles.websiteDeveloper'),
                   placement: 'bottom'
                 }"
               ></i>
@@ -58,6 +66,14 @@
                 class="fas fa-glasses"
                 v-tippy="{
                   content: $t('contributors.roles.headModerator'),
+                  placement: 'bottom'
+                }"
+              ></i>
+              <i
+                v-if="role == 'Moderator'"
+                class="fas fa-user-cog"
+                v-tippy="{
+                  content: $t('contributors.roles.moderator'),
                   placement: 'bottom'
                 }"
               ></i>
@@ -95,6 +111,22 @@
                 class="fas fa-meteor"
                 v-tippy="{
                   content: $t('contributors.roles.donator'),
+                  placement: 'bottom'
+                }"
+              ></i>
+              <i
+                v-if="role == 'Proofreader'"
+                class="fas fa-check"
+                v-tippy="{
+                  content: $t('contributors.roles.proofreader'),
+                  placement: 'bottom'
+                }"
+              ></i>
+              <i
+                v-if="role == 'Translator'"
+                class="fas fa-globe"
+                v-tippy="{
+                  content: $t('contributors.roles.translator'),
                   placement: 'bottom'
                 }"
               ></i>
