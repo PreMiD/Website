@@ -34,5 +34,5 @@ npm run build
 npm install
 
 # host local server
-npm run serve
+npm run dev
 ```
