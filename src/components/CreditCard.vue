@@ -3,11 +3,15 @@
     @mouseover="hovered = true"
     @mouseleave="hovered = false"
     class="credit-card"
-    :style="`background: linear-gradient(-35deg, ${cardGradientColor.secondary} 20%, ${cardGradientColor.primary} 130%); box-shadow: 0 2px 52px 0 ${cardShadowColor}`"
+    :style="
+      `background: linear-gradient(-35deg, ${cardGradientColor.secondary} 20%, ${cardGradientColor.primary} 130%); box-shadow: 0 2px 52px 0 ${cardShadowColor}`
+    "
   >
     <div class="credit-card__user">
       <h1 :title="user.name" v-text="user.name" />
-      <h2>{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}</h2>
+      <h2>
+        {{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}
+      </h2>
     </div>
     <div class="credit-card__avatar">
       <span :class="user.status" />
@@ -25,22 +29,25 @@ export default {
   data() {
     return {
       translationKeys: {
+        Creator: "contributors.roles.creator",
+        "Community Manager": "contributors.roles.communityManager",
+        "Asst. Community Manager": "contributors.roles.asstCommunityManager",
+        Administrator: "contributors.roles.administrator",
+        "Website Developer": "contributors.roles.websiteDeveloper",
+        "Head Moderator": "contributors.roles.headModerator",
+        "Asst. Head Moderator": "contributors.roles.asstHeadModerator",
+        Moderator: "contributors.roles.moderator",
+        "Jr. Moderator": "contributors.roles.jrModerator",
+        "Head of Presence Verifying": "contributors.roles.verificationHead",
+        "Ticket Manager": "contributors.roles.ticketManager",
+        "Presence Verifier": "user.roles.presenceVerifier",
+        Developer: "user.roles.developer",
+        Proofreader: "user.roles.proofreader",
         Donator: "contributors.roles.donator",
         Booster: "contributors.roles.booster",
         Translator: "contributors.roles.translator",
-        Moderator: "contributors.roles.moderator",
-        Administrator: "contributors.roles.administrator",
-        "Presence Developer": "user.roles.presenceDeveloper",
-        "Presence Verifier": "user.roles.presenceVerifier",
         "Important Presence Developer": "user.importantPresenceDev.message1",
-        Creator: "contributors.roles.creator",
-        "Website Developer": "contributors.roles.websiteDeveloper",
-        "Head Moderator": "contributors.roles.headModerator",
-        "Ticket Manager": "contributors.roles.ticketManager",
-        "Community Manager": "contributors.roles.communityManager",
-        "Community Secretary": "contributors.roles.secretary",
-        "Senior Moderator": "contributors.roles.seniorModerator",
-        "Head of Presence Verifying": "contributors.roles.verificationHead"
+        "Presence Developer": "user.roles.presenceDeveloper"
       },
       hovered: false
     };
