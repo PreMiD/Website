@@ -95,8 +95,8 @@ export default {
         roleName == "head moderator" ||
         roleName == "asst. head moderator" ||
         roleName == "moderator" ||
-        roleName == "ticket manager" ||
-        roleName == "jr. moderator"
+        roleName == "jr. moderator" ||
+        roleName == "ticket manager"
       )
         return true;
       else return false;
@@ -106,7 +106,6 @@ export default {
       if (
         roleName == "donator" ||
         roleName == "patron" ||
-        roleName == "supporter" ||
         roleName == "booster"
       )
         return true;
@@ -115,11 +114,6 @@ export default {
     isTranslatorRole(roleName) {
       roleName = roleName.toLowerCase();
       if (roleName == "translator" || roleName == "proofreader") return true;
-      else return false;
-    },
-    isContributorRole(roleName) {
-      roleName = roleName.toLowerCase();
-      if (roleName == "contributor" || roleName == "designer") return true;
       else return false;
     },
     userNameColor(patronColor, userColor) {
