@@ -1,10 +1,10 @@
 <template>
   <div>
     <div
-      :class="'store-card ' + (card_hovered ? 'hovered' : '')"
+      :class="'store-card ' + (cardHovered ? 'hovered' : '')"
       :style="`box-shadow: 0 2px 64px 0 ${presenceShadowColor};`"
-      @mouseover="card_hovered = true"
-      @mouseleave="card_hovered = false"
+      @mouseover="cardHovered = true"
+      @mouseleave="cardHovered = false"
     >
       <img class="store-card__background" :src="presence.thumbnail" />
       <div class="store-card__service-logo">
@@ -35,14 +35,14 @@
           <p>
             {{ $t("store.cards.creator") }}:
             <nuxt-link :to="`/users/${presence.author.id}`">
-              presence.author.name }}
+              {{ presence.author.name }}
             </nuxt-link>
           </p>
 
           <transition name="card-animation" mode="out-in">
             <div
               v-if="
-                !card_hovered || !this.$store.state.extension.extensionInstalled
+                !cardHovered || !this.$store.state.extension.extensionInstalled
               "
               :key="presence.service + '_desc'"
             >
@@ -53,7 +53,7 @@
             </div>
             <div
               v-if="
-                card_hovered && this.$store.state.extension.extensionInstalled
+                cardHovered && this.$store.state.extension.extensionInstalled
               "
               :key="presence.service + '_buttons'"
             >
@@ -120,7 +120,7 @@ export default {
   props: ["presence", "submit", "nsfw", "hot"],
   data() {
     return {
-      card_hovered: false,
+      cardHovered: false,
       presenceLinkName: this.$props.presence.service
     }
   },
@@ -131,7 +131,7 @@ export default {
         .toHexString()
     },
     presenceShadowColor() {
-      if (this.$data.card_hovered) {
+      if (this.$data.cardHovered) {
         return tinycolor(this.presence.color)
           .setAlpha(0.3)
           .toRgbString()

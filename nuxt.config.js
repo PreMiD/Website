@@ -8,15 +8,28 @@ module.exports = {
   plugins: [
     "~/router.js",
     "~/components/plugins/I18n.js",
-    "~/components//plugins/Languages.js",
-    { src: "~/components//plugins/Tippy.js", ssr: false },
-    { src: "~/components//plugins/Noty.js", ssr: false },
-    { src: "~/components//plugins/Pagination.js", ssr: false }
+    "~/components/plugins/Languages.js",
+    { src: "~/components/plugins/Tippy.js", ssr: false },
+    { src: "~/components/plugins/Noty.js", ssr: false },
+    { src: "~/components/plugins/Pagination.js", ssr: false }
   ],
   router: {
     middleware: ["auth"]
   },
-  modules: ["nuxt-lazy-load", "@nuxtjs/axios", "@nuxtjs/auth"],
+  modules: [
+    [
+      "nuxt-lazy-load",
+      {
+        observerConfig: {
+          rootMargin: "50px 0px 50px 0px",
+          threshold: 0
+          // See IntersectionObserver documentation
+        }
+      }
+    ],
+    "@nuxtjs/axios",
+    "@nuxtjs/auth"
+  ],
   auth: {
     redirect: {
       login: "/login",
@@ -109,8 +122,10 @@ module.exports = {
       ]
     }
   },
+  css: ["~stylesheets/root.scss"],
   build: {
-    cssSourceMap: true,
+    cache: true,
+    vendor: ["axios"],
     babel: {
       babelrc: true,
       presets: ["@nuxt/babel-preset-app"]

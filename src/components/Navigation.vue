@@ -5,13 +5,15 @@
         <nuxt-link to="/">
           <img src="@/assets/images/logo_round.svg" />
         </nuxt-link>
-        <a
-          v-if="latestReleaseVersion"
-          href="https://github.com/PreMiD/PreMiD/releases"
-          target="_blank"
-          class="label label_pmd-version"
-          v-text="latestReleaseVersion"
-        ></a>
+        <transition name="card-animation" mode="out-in">
+          <a
+            v-if="appVersion"
+            href="https://github.com/PreMiD/PreMiD/releases"
+            target="_blank"
+            class="label label_pmd-version"
+            v-text="appVersion"
+          ></a>
+        </transition>
       </div>
 
       <div class="navbar__items on-desktop">
@@ -21,8 +23,10 @@
           :to="'/' + category.route"
           class="navbar__item"
         >
-          <i :class="'fas fa-' + category.logo"></i>
-          <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
+          <span class="fa-stack" style="vertical-align: top;">
+            <i class="fa-circle fa-stack-2x fas"></i>
+            <i class="fa-flag fa-inverse fa-stack-1x fas"></i>
+          </span>
         </nuxt-link>
         <!--  <nuxt-link to="/login" class="navbar__item" v-if="!this.$auth.loggedIn">
            <i class="fas fa-sign-in-alt"></i>
@@ -66,7 +70,7 @@ export default {
   name: "Navigation",
   data() {
     return {
-      latestReleaseVersion: undefined,
+      appVersion: undefined,
       mobileMenuActive: false,
       categories: [
         {
@@ -87,12 +91,14 @@ export default {
       ]
     }
   },
-  async created() {
-    this.$data.latestReleaseVersion = (
-      await axios("versions", {
-        baseURL: process.env.apiBase
+  created() {
+    axios(`${process.env.apiBase}/versions`)
+      .then(res => {
+        this.$data.appVersion = res.data.app
       })
-    ).data.extension
+      .catch(err => {
+        console.error(err)
+      })
   }
 }
 </script>
