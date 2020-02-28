@@ -73,7 +73,7 @@
                 v-if="role == 'Asst. Head Moderator'"
                 class="fas fa-user-cog"
                 v-tippy="{
-                  content: $t('contributors.roles.headModerator'),
+                  content: $t('contributors.roles.asstHeadModerator'),
                   placement: 'bottom'
                 }"
               ></i>
