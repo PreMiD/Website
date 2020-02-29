@@ -23,10 +23,10 @@
           :to="'/' + category.route"
           class="navbar__item"
         >
-          <span class="fa-stack" style="vertical-align: top;">
-            <i class="fa-circle fa-stack-2x fas"></i>
-            <i class="fa-flag fa-inverse fa-stack-1x fas"></i>
+          <span class="round-icon">
+            <i :class="`fa-${category.logo} fa-stack-1x fas`"></i>
           </span>
+          <p>{{ category.title }}</p>
         </nuxt-link>
         <!--  <nuxt-link to="/login" class="navbar__item" v-if="!this.$auth.loggedIn">
            <i class="fas fa-sign-in-alt"></i>
@@ -74,17 +74,17 @@ export default {
       mobileMenuActive: false,
       categories: [
         {
-          logo: "box-open",
+          logo: "cart-arrow-down",
           route: "store",
           title: "STORE"
         },
         {
-          logo: "file-export",
+          logo: "download",
           route: "downloads",
           title: "DOWNLOADS"
         },
         {
-          logo: "project-diagram",
+          logo: "hands-helping",
           route: "contributors",
           title: "CONTRIBUTORS"
         }

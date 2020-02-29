@@ -53,17 +53,41 @@
     .navbar__items {
       vertical-align: top;
       line-height: 2.5rem;
-      font-size: 1.2rem;
-      font-weight: 900;
+      font-size: 1.10rem;
+      letter-spacing: 0.05rem;
+      font-weight: 800;
+      text-transform: uppercase;
       display: flex;
       margin-left: auto;
-      text-transform: uppercase;
 
       a.navbar__item {
-        margin: 0 25px;
+        display: flex;
+        align-items: center;
+        margin: 0 1.3em;
         position: relative;
-        color: lighten($background-primary, 40%);
+        color: lighten($background-secondary, 40%);
         transition: 0.05s ease-in;
+
+        .round-icon {
+          align-items: center;
+          display: flex;
+          width: 28px;
+          height: 28px;
+          border-radius: 100em;
+          background-color: lighten($background-secondary, 12%);
+          margin-right: 0.5em;
+          transition: 0.05s ease-in;
+
+          i {
+            transition: 0.05s ease-in;
+            font-size: 0.8em;
+            color: lighten($background-secondary, 40%);
+          }
+        }
+
+        p {
+          margin: 0;
+        }
 
         .item__title {
           vertical-align: middle;
@@ -71,9 +95,19 @@
           font-size: 1.15rem;
         }
 
+        &:hover {
+          .round-icon {
+            background-color: $accent-primary;
+            i {
+              
+              color: white;
+            }
+          }
+        }
+
         &:hover,
         &.router-link-active {
-          color: $accent-primary;
+          color: lighten($accent-primary, 15%);
         }
       }
     }
@@ -89,7 +123,7 @@
 
   .mobile-navbar__items {
     background: $background-primary;
-    box-shadow: 0 4px 32px 0 $background-primary; 
+    box-shadow: 0 4px 32px 0 $background-primary;
 
     left: 0;
     right: 0;
@@ -116,7 +150,8 @@
       transition: all 0.2s ease;
       box-shadow: inset 0px 0 0 0 $accent-primary;
 
-      &.nuxt-link-exact-active, &.router-link-exact-active {
+      &.nuxt-link-exact-active,
+      &.router-link-exact-active {
         box-shadow: inset 4px 0 0 0 $accent-primary;
         background: rgba(255, 255, 255, 0.01);
       }

@@ -7,7 +7,8 @@
         content="Choose website language"
         class="button button--gray button--language-switch"
         @click="toggleSwitcher"
-      ><i class="fa-language fas"></i></a>
+        ><i class="fa-language fas"></i
+      ></a>
     </div>
     <!--     
       ! Disabled for now as it somehow breaks the page in production
@@ -24,10 +25,6 @@
     </div>
   </div>
 </template>
-
-<style lang="scss">
-@import "~/stylesheets/root.scss";
-</style>
 
 <script>
 import Navigation from "~/components/Navigation.vue"
