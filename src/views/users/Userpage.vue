@@ -149,6 +149,16 @@
                 placement: 'bottom'
               }"
             ></i>
+            <i
+              v-if="userPresences.length > 100"
+              class="fas fa-brain"
+              v-tippy="{
+                content: `${$t('user.geniusPresenceDev.message1')}<br>${$t(
+                  'user.geniusPresenceDev.message2'
+                )}`,
+                placement: 'bottom'
+              }"
+            ></i>
           </div>
         </div>
       </div>
