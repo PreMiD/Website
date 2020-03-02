@@ -20,9 +20,10 @@
               {{ presence.service }}
               <span
                 v-if="hot"
-                v-tippy
+                v-tippy="{
+                  content: $t('store.cards.popular')
+                }"
                 class="fa-stack"
-                :content="$t('store.cards.popular')"
               >
                 <i class="fa-circle fa-stack-2x fas"></i>
                 <i
@@ -30,13 +31,26 @@
                   class="fa-fire-alt fa-inverse fa-stack-1x fas"
                 ></i>
               </span>
+
+              <span
+                v-if="presence.warning && typeof presence.warning == Boolean && presence.warning === true"
+                v-tippy="{
+                  content: $t('store.cards.extraStepsRequired')
+                }"
+                class="fa-stack"
+                :style="hot ? 'margin-left:-4px' : ''"
+              >
+                <i class="fa-circle fa-stack-2x fas"></i>
+                <i
+                  :style="`color: ${presence.color};`"
+                  class="fa-exclamation fa-inverse fa-stack-1x fas"
+                ></i>
+              </span>
             </nuxt-link>
           </h2>
           <p>
             {{ $t("store.cards.creator") }}:
-            <nuxt-link :to="`/users/${presence.author.id}`">
-              {{ presence.author.name }}
-            </nuxt-link>
+            <nuxt-link :to="`/users/${presence.author.id}`">{{ presence.author.name }}</nuxt-link>
           </p>
 
           <transition name="card-animation" mode="out-in">
@@ -46,10 +60,7 @@
               "
               :key="presence.service + '_desc'"
             >
-              <p
-                class="store-card__desc"
-                v-html="linkify(this.getPresenceDescription())"
-              ></p>
+              <p class="store-card__desc" v-html="linkify(this.getPresenceDescription())"></p>
             </div>
             <div
               v-if="
@@ -91,9 +102,7 @@
                     presence.button == false
                 "
               >
-                <p class="store-card__warning">
-                  {{ $t("store.card.presence.included") }}
-                </p>
+                <p class="store-card__warning">{{ $t("store.card.presence.included") }}</p>
               </div>
             </div>
           </transition>
@@ -110,9 +119,9 @@
 </template>
 
 <script>
-import PresenceMixin from "./mixins/Presence"
-import tinycolor from "tinycolor2"
-import axios from "axios"
+import PresenceMixin from "./mixins/Presence";
+import tinycolor from "tinycolor2";
+import axios from "axios";
 
 export default {
   name: "StoreCard",
@@ -122,50 +131,50 @@ export default {
     return {
       cardHovered: false,
       presenceLinkName: this.$props.presence.service
-    }
+    };
   },
   computed: {
     presenceGradientColor() {
       return tinycolor(this.presence.color)
         .darken(45)
-        .toHexString()
+        .toHexString();
     },
     presenceShadowColor() {
       if (this.$data.cardHovered) {
         return tinycolor(this.presence.color)
           .setAlpha(0.3)
-          .toRgbString()
+          .toRgbString();
       } else {
-        return "transparent"
+        return "transparent";
       }
     }
   },
   mounted() {
     this.isPresenceInstalled(this.presence.service).then(responce => {
-      if (responce) this.$data.isInstalled = true
-    })
+      if (responce) this.$data.isInstalled = true;
+    });
   },
   methods: {
     linkify(description) {
-      if (!description) return
+      if (!description) return;
       else if (
         !description.match(/\[([^\]]+)\]\(([^)]+)\)/g) ||
         !/\[([^\]]+)\]\(([^)]+)\)/g.exec(description)
       )
-        return description
+        return description;
       else {
         const match = description.match(/\[([^\]]+)\]\(([^)]+)\)/g),
-          exec = /\[([^\]]+)\]\(([^)]+)\)/g.exec(description)
+          exec = /\[([^\]]+)\]\(([^)]+)\)/g.exec(description);
 
         return description.replace(
           match,
           `<a target="_blank" href="${exec[2]}">${exec[1]}</a>`
-        )
+        );
       }
     },
     openInNewTab(url) {
-      let page = window.open(url, "_blank")
-      win.focus()
+      let page = window.open(url, "_blank");
+      win.focus();
     },
     /**
      * Returns description of the presence according to your language.
@@ -173,13 +182,13 @@ export default {
      */
     getPresenceDescription() {
       if (this.presence.description[this.$root.getCurrentLanguage()]) {
-        return this.presence.description[this.$root.getCurrentLanguage()]
+        return this.presence.description[this.$root.getCurrentLanguage()];
       } else if (this.presence.description["en"]) {
-        return this.presence.description["en"]
+        return this.presence.description["en"];
       } else {
-        return this.presence.description
+        return this.presence.description;
       }
     }
   }
-}
+};
 </script>

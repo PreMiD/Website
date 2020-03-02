@@ -11,7 +11,8 @@ module.exports = {
     "~/components/plugins/Languages.js",
     { src: "~/components/plugins/Tippy.js", ssr: false },
     { src: "~/components/plugins/Noty.js", ssr: false },
-    { src: "~/components/plugins/Pagination.js", ssr: false }
+    { src: "~/components/plugins/Pagination.js", ssr: false },
+    { src: "~/components/plugins/Carousel.js", ssr: false }
   ],
   router: {
     middleware: ["auth"]
@@ -120,7 +121,7 @@ module.exports = {
           defer: true
         }
       ]
-    }
+    };
   },
   css: ["~stylesheets/root.scss"],
   build: {
@@ -147,9 +148,9 @@ module.exports = {
           test: /\.(js|vue)$/,
           loader: "eslint-loader",
           exclude: /(node_modules)/
-        })
+        });
       }
     }
     //publicPath: "https://cdn.premid.app"
   }
-}
+};
