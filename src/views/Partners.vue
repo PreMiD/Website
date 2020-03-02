@@ -6,7 +6,8 @@
       <p class="slideshow-title" v-t="'partners.slideshow.description'" />
 
       <carousel-3d
-        :space="365"
+        :width="540"
+        :height="405"
         :controls-visible="partners.length > 3 ? true : false"
       >
         <slide
@@ -18,26 +19,6 @@
           <img class="partnerImg" :src="partner.image" />
         </slide>
       </carousel-3d>
-
-      <!--
-      <div class="slider">
-        <div class="left" v-bind:style="{ 'background-image': `url(${left.image})` }">
-          <div class="arrow" v-on:click="goPrev()">
-            <i class="fas fa-arrow-left"></i>
-          </div>
-        </div>
-        <div class="middle" v-bind:style="{ 'background-image': `url(${middle.image})` }">
-          <div class="text">
-            <h1>{{ middle.name }}</h1>
-            <p>{{ $t(middle.tString) }}</p>
-          </div>
-        </div>
-        <div class="right" v-bind:style="{ 'background-image': `url(${right.image})` }">
-          <div class="arrow" v-on:click="goNext()">
-            <i class="fas fa-arrow-right"></i>
-          </div>
-        </div>
-      </div>-->
 
       <p class="why" v-t="'partners.why.title'" />
 

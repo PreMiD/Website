@@ -90,7 +90,11 @@
 }
 
 @media only screen and (max-width: 600px) {
-  #footer > .footer-grid {
-    justify-content: center;
+  #footer .grid__section:first-child {
+    margin: auto;
+  }
+
+  .footer-copyright {
+    margin-top: 24px;
   }
 }

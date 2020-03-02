@@ -33,7 +33,7 @@
               </span>
 
               <span
-                v-if="presence.warning && typeof presence.warning == Boolean && presence.warning === true"
+                v-if="typeof presence.warning == 'boolean' && presence.warning  === true"
                 v-tippy="{
                   content: $t('store.cards.extraStepsRequired')
                 }"
