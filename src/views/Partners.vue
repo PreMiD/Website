@@ -6,7 +6,8 @@
       <p class="slideshow-title" v-t="'partners.slideshow.description'" />
 
       <carousel-3d
-        :space="365"
+        :width="540"
+        :height="405"
         :controls-visible="partners.length > 3 ? true : false"
       >
         <slide
