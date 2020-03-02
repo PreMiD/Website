@@ -160,13 +160,13 @@ export default {
       function ImgRandomPosition(image) {
         let left =
             Math.floor(
-              Math.random() * (Math.random(window?.innerWidth) - 1200)
+              Math.random() * (Math.random() - 1200)
             ) +
             1200 +
             "px",
           top =
             Math.floor(
-              Math.random() * (Math.random(window?.innerWidth) - 1200)
+              Math.random() * (Math.random() - 1200)
             ) +
             1200 +
             "px";
