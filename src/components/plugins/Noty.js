@@ -1,5 +1,5 @@
-import Vue from "vue";
-import VueNoty from "vuejs-noty";
+import Vue from "vue"
+import VueNoty from "vuejs-noty"
 
 export default () => {
   Vue.use(VueNoty, {
@@ -7,5 +7,5 @@ export default () => {
     progressBar: false,
     layout: "topRight",
     theme: "premid"
-  });
-};
+  })
+}

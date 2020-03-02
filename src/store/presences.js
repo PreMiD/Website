@@ -1,21 +1,21 @@
 export const state = () => ({
   addedPresences: []
-});
+})
 
 export const getters = {
   presenceList(state) {
-    return state.addedPresences;
-  },
+    return state.addedPresences
+  }
 }
 
 export const actions = {
   getPresences(store) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(store.state.addedPresences);
-      }, 100);
-    });
-  },
+        resolve(store.state.addedPresences)
+      }, 100)
+    })
+  }
 }
 
 export const mutations = {
@@ -27,5 +27,5 @@ export const mutations = {
   },
   remove(state, presence) {
     state.addedPresences.pop(presence)
-  },
+  }
 }

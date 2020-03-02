@@ -5,24 +5,28 @@
         <nuxt-link to="/">
           <img src="@/assets/images/logo_round.svg" />
         </nuxt-link>
-        <a
-          href="https://github.com/PreMiD/PreMiD/releases"
-          target="_blank"
-          class="label label_pmd-version"
-          v-if="latestReleaseVersion"
-          v-text="latestReleaseVersion"
-        />
+        <transition name="card-animation" mode="out-in">
+          <a
+            v-if="appVersion"
+            href="https://github.com/PreMiD/PreMiD/releases"
+            target="_blank"
+            class="label label_pmd-version"
+            v-text="appVersion"
+          ></a>
+        </transition>
       </div>
 
       <div class="navbar__items on-desktop">
         <nuxt-link
-          :to="'/' + category.route"
           v-for="category of categories"
-          v-bind:key="category.route"
+          :key="category.route"
+          :to="'/' + category.route"
           class="navbar__item"
         >
-          <i :class="'fas fa-' + category.logo" />
-          <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
+          <span class="round-icon">
+            <i :class="`fa-${category.logo} fa-stack-1x fas`"></i>
+          </span>
+          <p>{{ category.title }}</p>
         </nuxt-link>
         <!--  <nuxt-link to="/login" class="navbar__item" v-if="!this.$auth.loggedIn">
            <i class="fas fa-sign-in-alt"></i>
@@ -34,24 +38,24 @@
         </nuxt-link>-->
       </div>
       <div class="mobile-navbar__menu on-mobile">
-        <a ref="menuTrigger" v-on:click="mobileMenuActive = !mobileMenuActive">
-          <i class="fas fa-bars"></i>
+        <a ref="menuTrigger" @click="mobileMenuActive = !mobileMenuActive">
+          <i class="fa-bars fas"></i>
         </a>
       </div>
     </div>
     <transition name="slide-down" mode="out-in">
       <div
         v-if="mobileMenuActive"
-        v-on:click="mobileMenuActive = false"
         class="mobile-navbar__items on-mobile"
+        @click="mobileMenuActive = false"
       >
         <nuxt-link
-          :to="'/' + category.route"
           v-for="category of categories"
-          v-bind:key="category.route"
+          :key="category.route"
+          :to="'/' + category.route"
           class="navbar__item"
         >
-          <i :class="'fas fa-' + category.logo" />
+          <i :class="'fas fa-' + category.logo"></i>
           <span class="item__title">{{ $t(`header.${category.route}`) }}</span>
         </nuxt-link>
       </div>
@@ -60,37 +64,41 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
 
 export default {
-  name: "navigation",
+  name: "Navigation",
   data() {
     return {
-      latestReleaseVersion: undefined,
+      appVersion: undefined,
       mobileMenuActive: false,
       categories: [
         {
-          logo: "box-open",
+          logo: "cart-arrow-down",
           route: "store",
           title: "STORE"
         },
         {
-          logo: "file-export",
+          logo: "download",
           route: "downloads",
           title: "DOWNLOADS"
         },
         {
-          logo: "project-diagram",
+          logo: "hands-helping",
           route: "contributors",
           title: "CONTRIBUTORS"
         }
       ]
-    };
+    }
   },
-  async created() {
-    this.$data.latestReleaseVersion = (await axios("versions", {
-      baseURL: process.env.apiBase
-    })).data.extension;
+  created() {
+    axios(`${process.env.apiBase}/versions`)
+      .then(res => {
+        this.$data.appVersion = res.data.app
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
-};
+}
 </script>

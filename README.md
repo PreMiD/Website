@@ -1,12 +1,14 @@
 <div align="center">
-<img src="https://avatars3.githubusercontent.com/u/46326568?s=400&u=15e4a4988014780288d30ffb969fd1569fec23e6&v=4" width="128px" draggable="false" >
+<img src="https://cdn.discordapp.com/banners/493130730549805057/d692c501b8ce9d7ceb8eb7a38ffc3edd.jpg?size=512" style="border-radius: 1.3em;" width="512px" draggable="false" >
 
 # PreMiD Website
-  
+
 </div>  
-  
+
 This repository contains source code of **PreMiD**'s website that allows you to install presences from our presence store.
-If you want to get more information or help us by **[contributing](#development)** in this project, we would like to see you in our **Discord** server: <br><a target="_blank" href="https://discord.gg/WvfVZ8T" title="Join our Discord!">
+If you want to get more information or help us by **[contributing](#development)** in this project, we would like to see you in our **Discord** server:  
+  
+  <a target="_blank" href="https://discord.gg/WvfVZ8T" title="Join our Discord!">
 <img draggable="false" src="https://discordapp.com/api/guilds/493130730549805057/widget.png?style=banner2" height="76px" draggable="false" alt="Join our Discord!">
 </a>
 
@@ -18,18 +20,18 @@ The `master` branch includes all changes that was not tested yet and may have pe
 
 ``` bash
 # install dependencies
-npm install
+yarn
 
 # build website in /dist
-npm run build
+yarn build
 ```
 
 ## Development
 
 ``` bash
 # install dependencies
-npm install
+yarn
 
 # host local server
-npm run serve
+yarn dev
 ```

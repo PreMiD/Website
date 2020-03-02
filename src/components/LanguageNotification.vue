@@ -1,9 +1,13 @@
 <template>
   <div>
-    <div v-for="lang in $root.$data.i18nLanguageList" v-bind:key="lang">
+    <div v-for="lang in $root.$data.i18nLanguageList" :key="lang">
       <div
+        v-if="
+          !declined &&
+            getBrowserLanguage() === lang &&
+            getCurrentLanguage() !== lang
+        "
         class="language-notify__wrapper"
-        v-if="!declined && getBrowserLanguage() === lang && getCurrentLanguage() !== lang"
       >
         <div class="language-notify">
           <div class="language-notify__content">
@@ -11,16 +15,12 @@
             <p>{{ $t(`header.languageNotification.text`, lang) }}</p>
           </div>
           <div class="language-notify__buttons">
-            <a
-              class="button button--sm"
-              @click="setLanguage(lang)"
-              href="#"
-            >{{ $t(`header.languageNotification.btnAccept`, lang) }}</a>
-            <a
-              class="button button--sm"
-              @click="declineNotify()"
-              href="#"
-            >{{ $t(`header.languageNotification.btnDecline`, lang) }}</a>
+            <a class="button button--sm" href="#" @click="setLanguage(lang)">{{
+              $t(`header.languageNotification.btnAccept`, lang)
+            }}</a>
+            <a class="button button--sm" href="#" @click="declineNotify()">{{
+              $t(`header.languageNotification.btnDecline`, lang)
+            }}</a>
           </div>
         </div>
       </div>
@@ -30,23 +30,23 @@
 
 <script>
 export default {
-  name: "language-notification",
+  name: "LanguageNotification",
   data() {
     return {
       declined: false
-    };
-  },
-  methods: {
-    declineNotify() {
-      if (process.server) return;
-      localStorage.declined = true;
-      this.$data.declined = localStorage.declined;
     }
   },
   created() {
-    if (process.server) return;
+    if (process.server) return
     if (localStorage.declined !== "false")
-      this.$data.declined = localStorage.declined;
+      this.$data.declined = localStorage.declined
+  },
+  methods: {
+    declineNotify() {
+      if (process.server) return
+      localStorage.declined = true
+      this.$data.declined = localStorage.declined
+    }
   }
-};
+}
 </script>

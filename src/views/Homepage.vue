@@ -6,59 +6,55 @@
           <img width="100%" src="@/assets/images/logo_round.svg" />
         </div>
         <div class="heading__text">
-          <p v-html="markdown($t('home.introduction.paragraph'))" />
+          <p v-html="markdown($t('home.introduction.paragraph'))"></p>
         </div>
         <div class="heading__button-group">
           <a class="button text--uppercase" href="#features">
-            <i class="fas fa-stream"></i>
+            <i class="fa-stream fas"></i>
             {{ $t("home.introduction.button.features") }}
           </a>
           <nuxt-link class="button button--black text--uppercase" to="/downloads">
-            <i class="fas fa-file-export"></i>
+            <i class="fa-file-export fas"></i>
             {{ $t(`home.introduction.button.downloads`) }}
           </nuxt-link>
         </div>
       </div>
       <div class="promo-container__presences">
         <div
-          class="discord-usercard"
           v-for="presence of presences_display"
-          v-bind:key="presence.service"
+          :key="presence.service"
+          class="discord-usercard"
           :v-if="presence.profile.name !== ''"
         >
           <div class="usercard__header">
             <div
               class="header__avatar"
               :style="
-								'background-image: url(' +
-									presence.profile.image +
-									'?size=128' +
-									');'
-							"
-            />
+                'background-image: url(' +
+                  presence.profile.image +
+                  '?size=128' +
+                  ');'
+              "
+            ></div>
             <div class="header__info">
               <div class="info__nameTag">
                 <span class="username">{{ presence.profile.name }}</span>
                 <span class="discriminator">#{{ presence.profile.id }}</span>
               </div>
               <div class="info__badges">
-                <div
-                  v-for="badge of presence.profile.badges"
-                  v-bind:key="badge"
-                  class="badge-wrapper"
-                >
+                <div v-for="badge of presence.profile.badges" :key="badge" class="badge-wrapper">
                   <div
                     v-if="
-											badge == 'brilliance' ||
-												badge == 'bravery' ||
-												badge == 'balance'
-										"
+                      badge == 'brilliance' ||
+                        badge == 'bravery' ||
+                        badge == 'balance'
+                    "
                     v-tippy="{
-											content:
-												'HypeSquad ' +
-												badge.charAt(0).toUpperCase() +
-												badge.slice(1)
-										}"
+                      content:
+                        'HypeSquad ' +
+                        badge.charAt(0).toUpperCase() +
+                        badge.slice(1)
+                    }"
                     :class="`badge badge_${badge}`"
                   ></div>
                   <div
@@ -92,24 +88,24 @@
                 <div class="game__icon">
                   <img
                     v-if="presence.smallImage == false"
+                    v-tippy="{ content: `PreMiD v${extVersion}` }"
                     class="game"
                     style="-webkit-mask: none;"
                     alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
-                    v-tippy="{ content: `PreMiD v${extVersion}` }"
                   />
                   <img
                     v-if="presence.smallImage == true"
+                    v-tippy="{ content: `PreMiD v${extVersion}` }"
                     class="game"
                     alt="@/assets/images/logo-big.svg"
                     :src="presence.service_logo"
-                    v-tippy="{ content: `PreMiD v${extVersion}` }"
                   />
                   <img
                     v-if="presence.smallImage == true"
+                    v-tippy="{ content: 'Playing back' }"
                     class="status-icon"
                     src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
-                    v-tippy="{ content: 'Playing back' }"
                   />
                 </div>
                 <div class="game__content">
@@ -130,7 +126,7 @@
         </div>
       </div>
     </div>
-    <div class="section section--features" id="features">
+    <div id="features" class="section section--features">
       <div class="waves-divider waves-divider_top">
         <svg
           class="wave"
@@ -151,7 +147,7 @@
       </div>
       <div class="card--feature">
         <div class="card--feature__details">
-          <h1 v-html="markdown($t('home.features.presencesystem.heading'))" />
+          <h1 v-html="markdown($t('home.features.presencesystem.heading'))"></h1>
           <p>{{ $t("home.features.presencesystem.description") }}</p>
           <p>
             <nuxt-link
@@ -193,11 +189,10 @@
           <h1>{{ $t("home.features.quickSupport.heading") }}</h1>
           <p>{{ $t("home.features.quickSupport.description") }}</p>
           <p>
-            <a class="button button--lg" href="https://discord.gg/premid">
-              {{
-              $t("home.features.quickSupport.button")
-              }}
-            </a>
+            <a
+              class="button button--lg"
+              href="https://discord.premid.app"
+            >{{ $t("home.features.quickSupport.button") }}</a>
           </p>
         </div>
         <div class="card--feature__promo">
@@ -240,11 +235,20 @@ import cardThumbnail4 from "@/assets/images/cards/card4.png";
 import axios from "axios";
 
 export default {
-  name: "home",
+  name: "Home",
   auth: false,
-  head() {
+  async asyncData() {
+    const credits = (await axios(`${process.env.apiBase}/credits`)).data,
+      { extension } = (await axios(`${process.env.apiBase}/versions`)).data;
+
+    let creditsLength = credits.length;
+
     return {
-      title: "Home"
+      extVersion: extension,
+      users: [
+        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))],
+        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))]
+      ]
     };
   },
   data() {
@@ -361,20 +365,6 @@ export default {
       presence.profile["id"] = Vue.$data.users[index].tag;
     });
   },
-  async asyncData() {
-    const credits = (await axios(`${process.env.apiBase}/credits`)).data,
-      { extension } = (await axios(`${process.env.apiBase}/versions`)).data;
-
-    let creditsLength = credits.length;
-
-    return {
-      extVersion: extension,
-      users: [
-        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))],
-        credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))]
-      ]
-    };
-  },
   methods: {
     openInNewTab(url) {
       let page = window.open(url, "_blank");
@@ -392,6 +382,11 @@ export default {
         );
       })[0];
     }
+  },
+  head() {
+    return {
+      title: "Home"
+    };
   }
 };
 </script>
