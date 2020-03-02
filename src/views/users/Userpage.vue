@@ -8,7 +8,7 @@
           <li>{{ $t("user.notFound.message2") }}</li>
           <li>{{ $t("user.notFound.message3") }}</li>
         </ul>
-        <span>{{ linkify($t("user.notFound.message4")) }}</span>
+        <span v-html="linkify($t('user.notFound.message4'))"></span>
       </div>
       <div v-else class="userpage__header">
         <div class="user-avatar">
