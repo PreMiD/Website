@@ -22,65 +22,7 @@
 
       <p class="why" v-t="'partners.why.title'" />
 
-      <img
-        class="random-img"
-        src="https://i.imgur.com/NC2A7y8.png"
-        style="top: 200px; left: 250px; max-width: 175px; max-height: 175px;"
-      />
-
-      <img
-        class="random-img"
-        src="https://i.imgur.com/XXZNBIa.png"
-        style="top: 150px; right: 250px; max-width: 175px; max-height: 175px;"
-      />
-
-      <img
-        class="random-img"
-        src="https://i.imgur.com/7a8eQeG.png"
-        style="top: 300px; left: 500px; max-width: 175px; max-height: 175px;"
-      />
-
-      <img
-        class="random-img"
-        src="https://i.imgur.com/clun1ID.png"
-        style="top: 750px; left: 650px; max-width: 150px; max-height: 150px;"
-      />
-
-      <img
-        class="random-img"
-        src="https://i.imgur.com/6QKrzSk.png"
-        style="top: 700px; right: 600px; max-width: 175px; max-height: 175px;"
-      />
-
-      <img
-        class="random-img"
-        src="https://media.giphy.com/media/Pn1oMgIy1tH45Wv16s/giphy.gif"
-        style="top: 1100px; left: 800px; max-width: 125px; max-height: 125px;"
-      />
-
-      <img
-        class="random-img"
-        src="https://i.imgur.com/o7BRcfM.png"
-        style="top: 950px; left: 350px; max-width: 175px; max-height: 175px;"
-      />
-
-      <img
-        class="random-img"
-        src="https://i.imgur.com/5LJlH5W.png"
-        style="top: 1075px; right: 410px; max-width: 175px; max-height: 175px;"
-      />
-
-      <img
-        class="random-img"
-        src="https://i.imgur.com/m2D8rgd.png"
-        style="top: 1250px; left: 450px; max-width: 175px; max-height: 175px;"
-      />
-
-      <img
-        class="random-img"
-        src="https://i.imgur.com/DoO8SMp.png"
-        style="top: 1350px; right: 450px; max-width: 175px; max-height: 100pxx;"
-      />
+      <div class="randomImages"></div>
 
       <div class="reasons">
         <div class="reason" style="margin-right: 50em">
@@ -146,6 +88,18 @@ export default {
   },
   data() {
     return {
+      randomImages: [
+        "https://i.imgur.com/NC2A7y8.png",
+        "https://i.imgur.com/XXZNBIa.png",
+        "https://i.imgur.com/7a8eQeG.png",
+        "https://i.imgur.com/clun1ID.png",
+        "https://i.imgur.com/6QKrzSk.png",
+        "https://media.giphy.com/media/Pn1oMgIy1tH45Wv16s/giphy.gif",
+        "https://i.imgur.com/o7BRcfM.png",
+        "https://i.imgur.com/5LJlH5W.png",
+        "https://i.imgur.com/m2D8rgd.png",
+        "https://i.imgur.com/DoO8SMp.png"
+      ],
       partners: [
         {
           name: "Arena of Kings",
@@ -193,6 +147,36 @@ export default {
     };
   },
   mounted() {
+    this.randomImages.forEach(img => {
+      let imgDestination = document.querySelector(".randomImages"),
+        newImg = document.createElement("img");
+
+      newImg.src = img;
+      newImg.classList = ["random-img"];
+      imgDestination.appendChild(newImg);
+
+      ImgRandomPosition(newImg);
+
+      function ImgRandomPosition(image) {
+        let left =
+            Math.floor(
+              Math.random() * (Math.random(window?.innerWidth) - 1200)
+            ) +
+            1200 +
+            "px",
+          top =
+            Math.floor(
+              Math.random() * (Math.random(window?.innerWidth) - 1200)
+            ) +
+            1200 +
+            "px";
+
+        image.style.position = "absolute";
+        image.style.top = top;
+        image.style.left = left;
+      }
+    });
+
     anime({
       targets: ".random-img",
       scale: [1, 1.1],
