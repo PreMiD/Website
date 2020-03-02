@@ -419,6 +419,8 @@
   }
 
   .languages-list {
+    max-height: 100%;
+    max-width: 100%;
     position: relative;
     z-index: 3;
     text-align: center;
@@ -451,7 +453,8 @@
 }
 
 .contributor-container {
-  margin-top: 25px;
+  padding-left: 25px;
+  padding-top: 25px;
   max-width: 1400px;
   margin: 0 auto;
 
@@ -976,7 +979,8 @@
 
 @media only screen and (max-width: 600px) {
   .contributor-container {
-    margin-top: 25px;
+    padding-top: 25px;
+    padding-left: 0;
     max-width: 100%;
     margin: 0 auto;
 
@@ -989,6 +993,10 @@
       flex-wrap: wrap;
       justify-content: center;
     }
+  }
+
+  .languages-container {
+    overflow: scroll;
   }
 
   .dl-container .dl-container__section_header {

@@ -722,6 +722,10 @@
 }
 
 @media only screen and (max-width: 600px) {
+  .credit-card {
+    width: 85vw;
+  }
+
   .card {
     &--feature {
       padding: 0 1em;

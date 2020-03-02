@@ -67,7 +67,7 @@
               <span class="icon">
                 <i class="fa-github fab"></i>
               </span>
-              {{ $t("presence.page.buttons.sourceCode") }}
+              {{ !isMobile ? $t("presence.page.buttons.sourceCode") : "" }}
             </a>
             <!-- TODO: Implement like system. <a class="button button--lg button--red button--like"><i class="far fa-heart"/></a> -->
           </div>
@@ -267,6 +267,8 @@ export default {
       }
     }
 
+    data["isMobile"] = false;
+
     return data;
   },
   computed: {
@@ -285,6 +287,10 @@ export default {
     }
   },
   mounted() {
+    this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+
     if (this.$data.presence.error)
       return this.$nuxt.error({ statusCode: this.$data.presence.error });
   },

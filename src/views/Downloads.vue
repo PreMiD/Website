@@ -15,7 +15,8 @@
                 [
                 <a href="#app-downloads">
                   <i class="fa-arrow-down fas"></i>
-                </a>]
+                </a>
+                ]
               </p>
             </li>
             <li>
@@ -27,7 +28,8 @@
                 [
                 <a href="#ext-downloads">
                   <i class="fa-arrow-down fas"></i>
-                </a>]
+                </a>
+                ]
               </p>
             </li>
             <li>

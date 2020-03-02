@@ -81,5 +81,11 @@
       width: 80% !important;
       margin: 0 auto;
     }
+
+    &__content {
+      align-self: center;
+      margin: 0 1em;
+      flex: 55%;
+    }
   }
 }
