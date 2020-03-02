@@ -1,6 +1,11 @@
 <template>
   <label for="cbx" class="label-cbx">
-    <input id="cbx" type="checkbox" :class="'invisible ' + selector" @input="toggleInput" />
+    <input
+      id="cbx"
+      type="checkbox"
+      :class="'invisible ' + selector"
+      @input="toggleInput"
+    />
     <div class="checkbox">
       <svg width="1.4rem" height="1.4rem" viewBox="0 0 20 20">
         <path
@@ -25,8 +30,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-@import "./../stylesheets/variables.less";
+<style lang="scss" scoped>
+@import "./../stylesheets/variables.scss";
 
 .label-cbx {
   user-select: none;
@@ -34,10 +39,10 @@ export default {
   margin-bottom: 0;
 }
 .label-cbx input:checked + .checkbox {
-  border-color: @color-btn-green;
+  border-color: $color-btn-green;
 }
 .label-cbx input:checked + .checkbox svg path {
-  fill: @color-btn-green;
+  fill: $color-btn-green;
 }
 .label-cbx input:checked + .checkbox svg polyline {
   stroke-dashoffset: 0;
@@ -62,7 +67,7 @@ export default {
 }
 .label-cbx .checkbox svg path {
   fill: none;
-  stroke: @color-btn-green;
+  stroke: $color-btn-green;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
