@@ -7,7 +7,6 @@
 
       <carousel-3d
         :space="365"
-        :clickable="false"
         :controls-visible="partners.length > 3 ? true : false"
       >
         <slide
