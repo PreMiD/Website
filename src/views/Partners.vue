@@ -10,7 +10,12 @@
         :clickable="false"
         :controls-visible="partners.length > 3 ? true : false"
       >
-        <slide v-for="(partner, index) in partners" :index="index" :key="partner.name">
+        <slide
+          v-tippy="{content: $t(partner.tString) }"
+          v-for="(partner, index) in partners"
+          :index="index"
+          :key="partner.name"
+        >
           <img class="partnerImg" :src="partner.image" />
         </slide>
       </carousel-3d>
