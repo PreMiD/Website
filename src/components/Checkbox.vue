@@ -1,11 +1,6 @@
 <template>
   <label for="cbx" class="label-cbx">
-    <input
-      id="cbx"
-      type="checkbox"
-      :class="'invisible ' + selector"
-      @input="toggleInput"
-    />
+    <input id="cbx" type="checkbox" :class="'invisible ' + selector" @input="toggleInput" />
     <div class="checkbox">
       <svg width="1.4rem" height="1.4rem" viewBox="0 0 20 20">
         <path
@@ -24,10 +19,10 @@ export default {
   props: ["selector", "text", "toggle"],
   methods: {
     toggleInput() {
-      this.$parent.toggleInput(this.$props.toggle)
+      this.$parent.toggleInput(this.$props.toggle);
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

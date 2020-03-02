@@ -9,9 +9,7 @@
   >
     <div class="credit-card__user">
       <h1 :title="user.name" v-text="user.name"></h1>
-      <h2>
-        {{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}
-      </h2>
+      <h2>{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}</h2>
     </div>
     <div class="credit-card__avatar">
       <span :class="user.status"></span>
@@ -21,7 +19,7 @@
 </template>
 
 <script>
-import tinycolor from "tinycolor2"
+import tinycolor from "tinycolor2";
 
 export default {
   name: "Creditcard",
@@ -29,25 +27,25 @@ export default {
   data() {
     return {
       translationKeys: {
-        Donator: "contributors.roles.donator",
-        Booster: "contributors.roles.booster",
-        Translator: "contributors.roles.translator",
-        Moderator: "contributors.roles.moderator",
-        Administrator: "contributors.roles.administrator",
-        "Presence Developer": "user.roles.presenceDeveloper",
-        "Presence Verifier": "user.roles.presenceVerifier",
-        "Important Presence Developer": "user.importantPresenceDev.message1",
         Creator: "contributors.roles.creator",
+        "Community Manager": "contributors.roles.communityManager",
+        "Asst. Community Manager": "contributors.roles.asstCommunityManager",
+        Administrator: "contributors.roles.administrator",
         "Website Developer": "contributors.roles.websiteDeveloper",
         "Head Moderator": "contributors.roles.headModerator",
+        "Asst. Head Moderator": "contributors.roles.asstHeadModerator",
+        Moderator: "contributors.roles.moderator",
+        "Jr. Moderator": "contributors.roles.jrModerator",
+        "Head of Presence Verifying": "contributors.roles.verificationHead",
         "Ticket Manager": "contributors.roles.ticketManager",
-        "Community Manager": "contributors.roles.communityManager",
-        "Community Secretary": "contributors.roles.secretary",
-        "Senior Moderator": "contributors.roles.seniorModerator",
-        "Head of Presence Verifying": "contributors.roles.verificationHead"
+        "Presence Verifier": "user.roles.presenceVerifier",
+        Proofreader: "contributors.roles.proofreader",
+        Donator: "contributors.roles.donator",
+        Booster: "contributors.roles.booster",
+        Translator: "contributors.roles.translator"
       },
       hovered: false
-    }
+    };
   },
   computed: {
     cardGradientColor() {
@@ -61,18 +59,18 @@ export default {
           .setAlpha(0.5)
           .saturate(20)
           .toRgbString()
-      }
+      };
     },
     cardShadowColor() {
       if (this.$data.hovered) {
         return tinycolor(this.cardGradientColor.primary)
           .setAlpha(0.3)
           .saturate(20)
-          .toRgbString()
+          .toRgbString();
       } else {
-        return "transparent"
+        return "transparent";
       }
     }
   }
-}
+};
 </script>

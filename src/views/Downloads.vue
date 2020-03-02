@@ -13,8 +13,9 @@
               <p>
                 {{ $t("downloads.instructions.step.1") }}
                 [
-                <a href="#app-downloads"> <i class="fa-arrow-down fas"></i> </a
-                >]
+                <a href="#app-downloads">
+                  <i class="fa-arrow-down fas"></i>
+                </a>]
               </p>
             </li>
             <li>
@@ -24,16 +25,15 @@
               <p>
                 {{ $t("downloads.instructions.step.3") }}
                 [
-                <a href="#ext-downloads"> <i class="fa-arrow-down fas"></i> </a
-                >]
+                <a href="#ext-downloads">
+                  <i class="fa-arrow-down fas"></i>
+                </a>]
               </p>
             </li>
             <li>
               <p>
                 <i18n path="downloads.instructions.step.4">
-                  <nuxt-link to="/store">
-                    {{ $t("downloads.instructions.step.4.store") }}
-                  </nuxt-link>
+                  <nuxt-link to="/store">{{ $t("downloads.instructions.step.4.store") }}</nuxt-link>
                 </i18n>
               </p>
             </li>
@@ -64,14 +64,18 @@
     >
       <h1 class="section-header">
         {{ $t("downloads.appdownloading.header") }}
+        <a
+          href="https://github.com/PreMiD/PreMiD/releases"
+          target="_blank"
+          class="label label_downloads-version"
+          v-text="appVersion"
+        ></a>
       </h1>
+      <transition name="card-animation" mode="out-in"></transition>
       <div class="dl-container__cards">
         <div v-for="(platform, index) of platform_order" :key="platform">
           <div @click="open(platform)">
-            <div
-              :class="{ 'current-platform': index == 1 }"
-              class="cards__card clickable"
-            >
+            <div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
               <div class="card__icon">
                 <i :class="`fab fa-${platform}`"></i>
               </div>
@@ -98,12 +102,15 @@
       </div>
     </div>
 
-    <div
-      id="ext-downloads"
-      class="dl-container__section dl-container__section_downloads"
-    >
+    <div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
       <h1 class="section-header">
         {{ $t("downloads.extdownloading.header") }}
+        <a
+          href="https://github.com/PreMiD/Extension"
+          target="_blank"
+          class="label label_downloads-version"
+          v-text="extVersion"
+        ></a>
       </h1>
 
       <div class="dl-container__cards">
@@ -139,12 +146,25 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
+
 export default {
   name: "Downloads",
   auth: false,
+  async asyncData() {
+    const { extension, app } = (
+      await axios(`${process.env.apiBase}/versions`)
+    ).data;
+
+    return {
+      extVersion: extension,
+      appVersion: app
+    };
+  },
   data() {
     return {
+      extVersion: null,
+      appVersion: null,
       platforms: [],
       browser: null,
       windows_url: "https://dl.premid.app/PreMiD-installer.exe",
@@ -167,13 +187,14 @@ export default {
           os_name: "Linux",
           has_installer: false
         }
-      }
-    }
+      },
+      isMobile: false
+    };
   },
   mounted() {
-    let ua = ""
+    let ua = "";
 
-    if (process.browser) ua = navigator.userAgent
+    if (process.browser) ua = navigator.userAgent;
 
     //* Browser detection.
     // Thanks to https://stackoverflow.com/a/9851769 for providing code.
@@ -181,39 +202,43 @@ export default {
       !!window.chrome &&
       (!!window.chrome.webstore || !!window.chrome.runtime)
     ) {
-      this.$data.browser = "chrome"
+      this.$data.browser = "chrome";
     } else if (typeof InstallTrigger !== "undefined") {
-      this.$data.browser = "firefox"
+      this.$data.browser = "firefox";
     }
 
-    let platform_temp = "linux"
-    var platform_order = this.$data.platform_order
+    let platform_temp = "linux";
+    var platform_order = this.$data.platform_order;
 
-    if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple"
-    if (ua.includes("Windows")) platform_temp = "windows"
+    if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
+    if (ua.includes("Windows")) platform_temp = "windows";
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)
+    )
+      this.$noty.error(this.$t(`downloads.mobile.errorMessage`));
 
     //* Centering the current platform in array. Only works if array has 3 items.
-    platform_order.splice(platform_order.indexOf(platform_temp), 1)
-    platform_order.splice(1, 0, platform_temp)
+    platform_order.splice(platform_order.indexOf(platform_temp), 1);
+    platform_order.splice(1, 0, platform_temp);
   },
   methods: {
     open(platform) {
       if (platform == "linux")
-        this.openInNewTab("https://github.com/PreMiD/PreMiD")
-      if (platform == "windows") this.openInNewTab(this.$data.windows_url)
-      if (platform == "apple") this.openInNewTab(this.$data.apple_url)
+        this.openInNewTab("https://github.com/PreMiD/PreMiD");
+      if (platform == "windows") this.openInNewTab(this.$data.windows_url);
+      if (platform == "apple") this.openInNewTab(this.$data.apple_url);
     },
     openInNewTab(url) {
-      let page = window.open(url, "_blank")
+      let page = window.open(url, "_blank");
     }
   },
 
   head() {
     return {
       title: "Downloads"
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

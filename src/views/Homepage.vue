@@ -3,7 +3,7 @@
     <div class="promo-container">
       <div class="promo-container__heading">
         <div class="heading__logo">
-          <img width="100%" src="@/assets/images/logo_round.svg" />
+          <img src="@/assets/images/logo_round.svg" />
         </div>
         <div class="heading__text">
           <p v-html="markdown($t('home.introduction.paragraph'))"></p>
@@ -360,9 +360,11 @@ export default {
     this.$data.presences_display.forEach(function(presence_item, index) {
       let presence = Vue.$data.presences_display[index];
 
-      presence.profile["image"] = Vue.$data.users[index].avatar;
-      presence.profile["name"] = Vue.$data.users[index].name;
-      presence.profile["id"] = Vue.$data.users[index].tag;
+      presence.profile["image"] =
+        Vue.$data.users[index]?.avatar ||
+        "https://premid.app/assets/images/logo.png";
+      presence.profile["name"] = Vue.$data.users[index]?.name || "Unknown";
+      presence.profile["id"] = Vue.$data.users[index]?.tag || "0000";
     });
   },
   methods: {

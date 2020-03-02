@@ -5,15 +5,6 @@
         <nuxt-link to="/">
           <img src="@/assets/images/logo_round.svg" />
         </nuxt-link>
-        <transition name="card-animation" mode="out-in">
-          <a
-            v-if="appVersion"
-            href="https://github.com/PreMiD/PreMiD/releases"
-            target="_blank"
-            class="label label_pmd-version"
-            v-text="appVersion"
-          ></a>
-        </transition>
       </div>
 
       <div class="navbar__items on-desktop">
@@ -64,13 +55,13 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "Navigation",
   data() {
     return {
-      appVersion: undefined,
+      extVersion: undefined,
       mobileMenuActive: false,
       categories: [
         {
@@ -89,16 +80,16 @@ export default {
           title: "CONTRIBUTORS"
         }
       ]
-    }
+    };
   },
   created() {
     axios(`${process.env.apiBase}/versions`)
       .then(res => {
-        this.$data.appVersion = res.data.app
+        this.$data.extVersion = res.data.extension;
       })
       .catch(err => {
-        console.error(err)
-      })
+        console.error(err);
+      });
   }
-}
+};
 </script>

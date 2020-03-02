@@ -74,18 +74,11 @@
         </div>
         <div class="fullpresence__content">
           <div class="content__description">
-            <h2 class="content__title">
-              {{ $t("presence.sections.description.title") }}
-            </h2>
-            <div
-              class="description-container"
-              v-html="linkify(getPresenceDescription())"
-            ></div>
+            <h2 class="content__title">{{ $t("presence.sections.description.title") }}</h2>
+            <div class="description-container" v-html="linkify(getPresenceDescription())"></div>
           </div>
           <div class="content__info">
-            <h2 class="content__title">
-              {{ $t("presence.sections.information.title") }}
-            </h2>
+            <h2 class="content__title">{{ $t("presence.sections.information.title") }}</h2>
             <ul class="info__sections">
               <li v-if="presence.metadata.author">
                 <p>
@@ -126,12 +119,12 @@
                     :disabled="true"
                   >
                     {{
-                      contributor.name +
-                        `${
-                          presence.metadata.contributors.length === index + 1
-                            ? ""
-                            : ", "
-                        }`
+                    contributor.name +
+                    `${
+                    presence.metadata.contributors.length === index + 1
+                    ? ""
+                    : ", "
+                    }`
                     }}
                   </nuxt-link>
                 </p>
@@ -140,19 +133,20 @@
                 <p>
                   <i style="margin-right:2px;" class="fa-code-branch fas"></i>
                   {{ $t("presence.sections.information.version") }}:
-                  <span class="presence-version">
+                  <span
+                    class="presence-version"
+                  >
                     <b>{{ presence.metadata.version }}</b>
                   </span>
                 </p>
               </li>
               <li v-if="presenceUsage && presenceUsage > 0">
                 <p>
-                  <i
-                    class="fa-cart-arrow-down fas"
-                    style="margin-left:-4px;"
-                  ></i>
+                  <i class="fa-cart-arrow-down fas" style="margin-left:-4px;"></i>
                   {{ $t("presence.sections.information.users") }}:
-                  <span class="presence-version">
+                  <span
+                    class="presence-version"
+                  >
                     <b>{{ presenceUsage }}</b>
                   </span>
                 </p>
@@ -182,19 +176,18 @@
                   <i class="fa-link fas"></i>
                   {{ $t("presence.sections.information.supportedurls") }}:
                 </p>
-                <ul
-                  v-if="Array.isArray(presence.metadata.url)"
-                  class="presence-urls"
-                >
+                <ul v-if="Array.isArray(presence.metadata.url)" class="presence-urls">
                   <li v-for="url in presence.metadata.url" :key="url">
                     <a :href="`https://${url}`">{{ url }}</a>
                   </li>
                 </ul>
                 <ul v-else-if="presence.metadata.url" class="presence-urls">
                   <li>
-                    <a :href="`https://${presence.metadata.url}`">{{
+                    <a :href="`https://${presence.metadata.url}`">
+                      {{
                       presence.metadata.url
-                    }}</a>
+                      }}
+                    </a>
                   </li>
                 </ul>
               </li>
@@ -207,11 +200,10 @@
 </template>
 
 <script>
-import PresenceMixin from "~/components/mixins/Presence"
-import axios from "axios"
+import PresenceMixin from "~/components/mixins/Presence";
+import axios from "axios";
 
-import tinycolor from "tinycolor2"
-import marked from "marked"
+import tinycolor from "tinycolor2";
 
 export default {
   name: "PresencePage",
@@ -221,7 +213,7 @@ export default {
     let presenceUsage = (await axios(`${process.env.apiBase}/usage`)).data
         .users,
       presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
-        .data
+        .data;
 
     let presenceData = await new Promise((resolve, reject) => {
       axios(
@@ -230,16 +222,16 @@ export default {
         )}`
       )
         .then(res => {
-          resolve(res.data)
+          resolve(res.data);
         })
         .catch(err => {
-          console.log(err)
+          console.log(err);
           reject({
             error: true,
             code: 401
-          })
-        })
-    })
+          });
+        });
+    });
 
     let data = {
       presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
@@ -249,7 +241,7 @@ export default {
           100 >
         30,
       presence: presenceData
-    }
+    };
 
     if (!presenceData.error) {
       let authorData = await new Promise((resolve, reject) => {
@@ -258,59 +250,59 @@ export default {
         )
           .then(res => {
             if (res.data.error && res.data.message !== "User not found.")
-              reject({ error: true, message: res.data.message })
-            resolve(res.data)
+              reject({ error: true, message: res.data.message });
+            resolve(res.data);
           })
           .catch(err => {
-            console.log(err)
+            console.log(err);
             reject({
               error: true,
               code: 401
-            })
-          })
-      })
+            });
+          });
+      });
 
       if (!authorData.error) {
-        data.presence.metadata.author = authorData
+        data.presence.metadata.author = authorData;
       }
     }
 
-    return data
+    return data;
   },
   computed: {
     presenceTextColor() {
-      var presenceColor = tinycolor(this.$data.presence.metadata.color)
+      var presenceColor = tinycolor(this.$data.presence.metadata.color);
       if (presenceColor.getLuminance() > 0.6) {
-        return "#202225"
+        return "#202225";
       } else {
-        return "#fff"
+        return "#fff";
       }
     },
     presenceGradientColor() {
       return tinycolor(this.$data.presence.metadata.color)
         .darken(45)
-        .toHexString()
+        .toHexString();
     }
   },
   mounted() {
     if (this.$data.presence.error)
-      return this.$nuxt.error({ statusCode: this.$data.presence.error })
+      return this.$nuxt.error({ statusCode: this.$data.presence.error });
   },
   created() {
     if (!this.$data.presence.error) {
       this.isPresenceInstalled(this.$data.presence.metadata.service).then(
         responce => {
-          if (responce) this.$data.isInstalled = true
+          if (responce) this.$data.isInstalled = true;
         }
-      )
+      );
     }
   },
   updated() {
     this.isPresenceInstalled(this.$data.presence.metadata.service).then(
       responce => {
-        if (responce) this.$data.isInstalled = true
+        if (responce) this.$data.isInstalled = true;
       }
-    )
+    );
   },
   methods: {
     /**
@@ -318,7 +310,7 @@ export default {
      * If presence has non-multilingual description then we just parsing the "description" data.
      */
     getPresenceDescription() {
-      if (this.$data.presence.error) return
+      if (this.$data.presence.error) return;
 
       if (
         this.$data.presence.metadata.description[
@@ -327,47 +319,47 @@ export default {
       ) {
         return this.$data.presence.metadata.description[
           this.$root.getCurrentLanguage()
-        ]
+        ];
       } else if (this.$data.presence.metadata.description["en"]) {
-        return this.$data.presence.metadata.description["en"]
+        return this.$data.presence.metadata.description["en"];
       } else {
-        return this.$data.presence.metadata.description
+        return this.$data.presence.metadata.description;
       }
     },
     linkify(description) {
-      if (!description) return
+      if (!description) return;
       else if (
         !description.match(/\[([^\]]+)\]\(([^)]+)\)/g) ||
         !/\[([^\]]+)\]\(([^)]+)\)/g.exec(description)
       )
-        return description
+        return description;
       else {
         const match = description.match(/\[([^\]]+)\]\(([^)]+)\)/g),
-          exec = /\[([^\]]+)\]\(([^)]+)\)/g.exec(description)
+          exec = /\[([^\]]+)\]\(([^)]+)\)/g.exec(description);
 
         return description.replace(
           match,
           `<a target="_blank" href="${exec[2]}">${exec[1]}</a>`
-        )
+        );
       }
     }
   },
 
   head() {
-    if (this.$data.presence.error) return
+    if (this.$data.presence.error) return;
     let description =
       this.$data.presence.metadata.description["en"] ||
-      this.$data.presence.metadata.description
+      this.$data.presence.metadata.description;
 
     if (description.match(/\[([^\]]+)\]\(([^)]+)\)/g)) {
       description = description.replace(
         description.match(/\[([^\]]+)\]\(([^)]+)\)/g),
         /\[([^\]]+)\]\(([^)]+)\)/g.exec(description)[1]
-      )
+      );
     }
 
     if (description.length >= 256)
-      description = description.slice(0, 256) + "..."
+      description = description.slice(0, 256) + "...";
 
     return {
       title: this.$data.presence.metadata.service,
@@ -393,7 +385,7 @@ export default {
           content: this.$data.presence.metadata.logo
         }
       ]
-    }
+    };
   }
-}
+};
 </script>

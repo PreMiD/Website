@@ -11,6 +11,7 @@
 	"dependencies": {
 		"@nuxtjs/auth": "4.8.5",
 		"@nuxtjs/axios": "5.9.5",
+		"animejs": "^3.1.0",
 		"axios": "0.19.2",
 		"intersection-observer": "^0.7.0",
 		"marked": "0.8.0",
@@ -20,6 +21,7 @@
 		"nuxt-lazy-load": "^1.0.7",
 		"sass-loader": "8.0.2",
 		"tinycolor2": "1.4.1",
+		"vue-carousel-3d": "^0.2.0",
 		"vue-i18n": "8.15.3",
 		"vue-scrollama": "^1.1.9",
 		"vue-tippy": "4.4.0",

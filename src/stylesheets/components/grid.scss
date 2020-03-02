@@ -1,6 +1,4 @@
-
 .store-grid {
-
   display: flex;
   color: lighten($background-secondary, 45%);
 
@@ -70,11 +68,18 @@
         margin: 0 2em;
       }
     }
-
   }
 
   &__content {
     margin: 0 1em;
     flex: 55%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .store-grid {
+    &__sidebar {
+      width: 80% !important;
+      margin: 0 auto;
+    }
   }
 }
