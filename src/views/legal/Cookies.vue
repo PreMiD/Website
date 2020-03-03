@@ -1,5 +1,5 @@
 <template>
-  <div class="legal-section">
+  <div class="section__legal-section">
     <h1>Cookie Policy</h1>
     <p>Last modified: July 19, 2019.</p>
 
@@ -124,6 +124,9 @@
 
 <script>
 export default {
-  auth: false
+  auth: false,
+  head: {
+    title: "Cookie Policy"
+  }
 }
 </script>

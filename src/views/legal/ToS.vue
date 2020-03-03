@@ -1,5 +1,5 @@
 <template>
-  <div class="legal-section">
+  <div class="section__legal-section">
     <h1>Terms of Service</h1>
     <p>
       Last modified: July 19, 2019.
@@ -201,6 +201,9 @@
 </template>
 <script>
 export default {
-  auth: false
+  auth: false,
+  head: {
+    title: "Terms of Services"
+  }
 }
 </script>

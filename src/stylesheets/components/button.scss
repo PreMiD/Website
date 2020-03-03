@@ -20,55 +20,55 @@ $button-padding-rl-default: 2rem;
     text-align: center;
 
     font-family: inherit;
-  
+
     i {
       margin-right: 2px;
     }
-  
+
     &:hover {
       box-shadow: 0 3px 22px -7px transparentize(lighten($accent-primary, 2%), 0.3);
       background: lighten($accent-primary, 5%);
     }
-  
+
     &:active {
       background: darken($accent-primary, 5%);
       box-shadow: none;
       transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-  
+
     &:focus {
       outline: none;
       cursor: pointer;
     }
   }
-  
+
   @mixin color-button($name, $color){
       &--#{$name} {
       background: $color;
-    
+
       &:hover {
         box-shadow: 0 3px 22px -7px transparentize(lighten($color, 2%), 0.3);
         background: lighten($color, 2%);
       }
-    
+
       &:active {
         box-shadow: none;
         background: darken($color, 2%);
       }
     }
   }
-  
+
   .button {
     @include color-button('gray', lighten($background-secondary, 8%));
     @include color-button('black', lighten($background-primary, 8%));
     @include color-button('red', rgb(255, 60, 60));
     @include color-button('white', #fff);
-  
+
     &.button--sm {
       padding: calc(#{$button-padding-tb-default} / 1.5) calc(#{$button-padding-tb-default} / 1.5 * 3.5);
       font-size: 1rem;
     }
-  
+
     &.button--lg {
       padding: calc(1.3 * #{$button-padding-tb-default}) calc(1.3 * #{$button-padding-tb-default} * 3.5);
       font-size: 1.3rem;
@@ -86,7 +86,7 @@ $button-padding-rl-default: 2rem;
   //       margin: 0;
   //     }
   //   }
-  
+
   //   &.button--pagination {
   //     display: inline-flex;
   //     justify-content: center;
@@ -100,7 +100,7 @@ $button-padding-rl-default: 2rem;
   //       box-shadow: 0 3px 36px -7px transparentize(lighten($accent-primary, 2%), 0.3);
   //       background: lighten($accent-primary, 2%);
   //     }
-  
+
   //     &[disabled] {
   //       cursor: not-allowed;
   //       pointer-events: none;
@@ -109,7 +109,7 @@ $button-padding-rl-default: 2rem;
   //   }
   // }
   }
-  
+
 .floating-button {
   position: fixed;
   bottom: 1em;

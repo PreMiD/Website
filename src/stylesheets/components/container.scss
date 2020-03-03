@@ -227,6 +227,21 @@
   color: white;
   position: relative;
 
+  &__mobile-warning {
+    margin-top: 2em;
+    background-color: red;
+    border-radius: 4px;
+    margin: 2em 2em 0;
+    padding: 1em !important;
+  }
+
+  &__showDownloads {
+    margin-top: 1em;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+  }
+
   .dl-container__section {
     padding: 0 2rem;
 
@@ -1004,17 +1019,14 @@
     padding-bottom: 3em;
   }
 
-  .dl-container .dl-container__section h1.section-header {
-    white-space: pre-line;
-    margin-top: 0px;
-  }
+  .promo-container {
+    .heading__logo img {
+      width: 80vw !important;
+      max-width: 100%;
+    }
 
-  .promo-container .heading__logo img {
-    width: 80vw !important;
-    max-width: 100%;
-  }
-
-  .promo-container .heading__text p {
-    padding: 8px;
+    .heading__text p {
+      padding: 0.5em;
+    }
   }
 }

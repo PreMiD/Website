@@ -92,14 +92,14 @@
                     class="game"
                     style="-webkit-mask: none;"
                     alt="@/assets/images/logo-big.svg"
-                    :src="presence.service_logo"
+                    :src="presence.serviceLogo"
                   />
                   <img
                     v-if="presence.smallImage == true"
                     v-tippy="{ content: `PreMiD v${extVersion}` }"
                     class="game"
                     alt="@/assets/images/logo-big.svg"
-                    :src="presence.service_logo"
+                    :src="presence.serviceLogo"
                   />
                   <img
                     v-if="presence.smallImage == true"
@@ -219,13 +219,13 @@
 </template>
 
 <script>
-import twitch_logo from "@/assets/images/twitch.png";
-import youtube_logo from "@/assets/images/youtube.png";
-import soundcloud_logo from "@/assets/images/soundcloud.png";
-import netflix_logo from "@/assets/images/netflix.png";
-import youtube_music_logo from "@/assets/images/youtube-music.png";
-import premid_logo from "@/assets/images/pmd_logo.png";
-import steam_logo from "@/assets/images/steam.png";
+import twitchLogo from "@/assets/images/twitch.png";
+import youtubeLogo from "@/assets/images/youtube.png";
+import soundcloudLogo from "@/assets/images/soundcloud.png";
+import netflixLogo from "@/assets/images/netflix.png";
+import ytmusicLogo from "@/assets/images/youtube-music.png";
+import premidLogo from "@/assets/images/pmd_logo.png";
+import steamLogo from "@/assets/images/steam.png";
 
 import cardThumbnail1 from "@/assets/images/cards/card1.png";
 import cardThumbnail2 from "@/assets/images/cards/card2.png";
@@ -266,9 +266,9 @@ export default {
             badges: ["hypesquad", "balance", "early", "nitro"]
           },
           service_title: "PreMiD",
-          service_logo: premid_logo,
+          serviceLogo: premidLogo,
           smallImage: false,
-          data: ["Store"],
+          data: ["Viewing a Page", "Store"],
           presence_time: "00:12"
         },
         {
@@ -277,7 +277,7 @@ export default {
             badges: ["brilliance", "nitro"]
           },
           service_title: "YouTube",
-          service_logo: youtube_logo,
+          serviceLogo: youtubeLogo,
           smallImage: true,
           data: [
             "Noisestorm - Crab Rave [Monstercat Release]",
@@ -291,7 +291,7 @@ export default {
             badges: ["bravery", "early"]
           },
           service_title: "SoundCloud",
-          service_logo: soundcloud_logo,
+          serviceLogo: soundcloudLogo,
           smallImage: true,
           data: ["Dion Timmer - Panic", "Dion Timmer"],
           presence_time: "2:15"
@@ -302,7 +302,7 @@ export default {
             badges: ["balance"]
           },
           service_title: "YouTube Music",
-          service_logo: youtube_music_logo,
+          serviceLogo: ytmusicLogo,
           smallImage: true,
           data: [
             "supercombo - Piloto Automático (Clipe Oficial)",
@@ -316,7 +316,7 @@ export default {
             badges: ["brilliance"]
           },
           service_title: "Steam",
-          service_logo: steam_logo,
+          serviceLogo: steamLogo,
           smallImage: false,
           data: ["Steam Store", "F1 2019"],
           presence_time: "03:32"
@@ -327,7 +327,7 @@ export default {
             badges: ["brilliance", "early", "nitro", "boost-lvl3"]
           },
           service_title: "YouTube Music",
-          service_logo: youtube_music_logo,
+          serviceLogo: ytmusicLogo,
           smallImage: true,
           data: ["Dance Monkey", "Tones and I - The Kids Are Coming (2019)"],
           presence_time: "3:12"
@@ -338,7 +338,7 @@ export default {
             badges: ["balance", "early", "nitro"]
           },
           service_title: "Twitch",
-          service_logo: twitch_logo,
+          serviceLogo: twitchLogo,
           smallImage: true,
           data: ["Just Chattin", "Bas950"],
           presence_time: "49:12"

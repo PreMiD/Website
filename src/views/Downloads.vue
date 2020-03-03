@@ -60,90 +60,107 @@
       </div>
     </div>
 
-    <div
-      id="app-downloads"
-      class="dl-container__section dl-container__section_downloads waves-aligned"
-    >
-      <h1 class="section-header">
-        {{ $t("downloads.appdownloading.header") }}
-        <a
-          href="https://github.com/PreMiD/PreMiD/releases"
-          target="_blank"
-          class="label label_downloads-version"
-          v-text="appVersion"
-        ></a>
-      </h1>
-      <transition name="card-animation" mode="out-in"></transition>
-      <div class="dl-container__cards">
-        <div v-for="(platform, index) of platform_order" :key="platform">
-          <div @click="open(platform)">
-            <div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
-              <div class="card__icon">
-                <i :class="`fab fa-${platform}`"></i>
-              </div>
-              <div class="card__content">
-                <h3>
-                  {{ builds[platform].os_name }}
-                  <i
-                    v-if="!builds[platform].has_installer"
-                    v-tippy
-                    class="fa-exclamation-circle fas platform-warning"
-                    :content="
+    <transition name="card-animation" mode="out-in">
+      <div
+        v-if="isMobile"
+        class="dl-container__section dl-container__mobile-warning waves-aligned"
+      >{{ $t("downloads.mobile.errorMessage") }}</div>
+    </transition>
+
+    <transition name="card-animation" mode="out-in">
+      <div v-if="showDownloads">
+        <div
+          id="app-downloads"
+          class="dl-container__section dl-container__section_downloads waves-aligned"
+        >
+          <h1 class="section-header">
+            {{ $t("downloads.appdownloading.header") }}
+            <a
+              href="https://github.com/PreMiD/PreMiD/releases"
+              target="_blank"
+              class="label label_downloads-version"
+              v-text="appVersion"
+            ></a>
+          </h1>
+          <div class="dl-container__cards">
+            <div v-for="(platform, index) of platform_order" :key="platform">
+              <div @click="open(platform)">
+                <div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
+                  <div class="card__icon">
+                    <i :class="`fab fa-${platform}`"></i>
+                  </div>
+                  <div class="card__content">
+                    <h3>
+                      {{ builds[platform].os_name }}
+                      <i
+                        v-if="!builds[platform].has_installer"
+                        v-tippy
+                        class="fa-exclamation-circle fas platform-warning"
+                        :content="
                       $t('downloads.tooltips.os.not.supported.part2', {
                         0: `<b>${$t(
                           'downloads.tooltips.os.not.supported.part1'
                         )}</b> `
                       })
                     "
-                  ></i>
-                </h3>
+                      ></i>
+                    </h3>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
-      <h1 class="section-header">
-        {{ $t("downloads.extdownloading.header") }}
-        <a
-          href="https://github.com/PreMiD/Extension"
-          target="_blank"
-          class="label label_downloads-version"
-          v-text="extVersion"
-        ></a>
-      </h1>
+        <div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
+          <h1 class="section-header">
+            {{ $t("downloads.extdownloading.header") }}
+            <a
+              href="https://github.com/PreMiD/Extension"
+              target="_blank"
+              class="label label_downloads-version"
+              v-text="extVersion"
+            ></a>
+          </h1>
 
-      <div class="dl-container__cards">
-        <div
-          :class="{ 'current-platform': browser == 'chrome' }"
-          class="cards__card clickable"
-          @click="openInNewTab(chrome_url)"
-        >
-          <div class="card__icon">
-            <i class="fa-chrome fab"></i>
-          </div>
-          <div class="card__content">
-            <h3>Chromium</h3>
+          <div class="dl-container__cards">
+            <div
+              :class="{ 'current-platform': browser == 'chrome' }"
+              class="cards__card clickable"
+              @click="openInNewTab(chrome_url)"
+            >
+              <div class="card__icon">
+                <i class="fa-chrome fab"></i>
+              </div>
+              <div class="card__content">
+                <h3>Chromium</h3>
+              </div>
+            </div>
+
+            <a
+              :href="firefox_url"
+              :class="{ 'current-platform': browser == 'firefox' }"
+              class="cards__card clickable"
+            >
+              <div class="card__icon">
+                <i class="fa-firefox fab"></i>
+              </div>
+              <div class="card__content">
+                <h3>Firefox</h3>
+              </div>
+            </a>
           </div>
         </div>
-
-        <a
-          :href="firefox_url"
-          :class="{ 'current-platform': browser == 'firefox' }"
-          class="cards__card clickable"
-        >
-          <div class="card__icon">
-            <i class="fa-firefox fab"></i>
-          </div>
-          <div class="card__content">
-            <h3>Firefox</h3>
-          </div>
-        </a>
       </div>
-    </div>
-    <title>PreMiD - Downloads</title>
+    </transition>
+
+    <transition name="card-animation" mode="out-in">
+      <div v-if="isMobile " class="dl-container__showDownloads">
+        <span
+          @click="showDownloads = !showDownloads"
+        >{{ showDownloads ? $t("downloads.mobile.hideDownloads") : $t("downloads.mobile.showDownloads") }}</span>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -153,6 +170,9 @@ import axios from "axios";
 export default {
   name: "Downloads",
   auth: false,
+  head: {
+    title: "PreMiD - Downloads"
+  },
   async asyncData() {
     const { extension, app } = (
       await axios(`${process.env.apiBase}/versions`)
@@ -190,7 +210,8 @@ export default {
           has_installer: false
         }
       },
-      isMobile: false
+      isMobile: false,
+      showDownloads: true
     };
   },
   mounted() {
@@ -216,8 +237,10 @@ export default {
     if (ua.includes("Windows")) platform_temp = "windows";
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)
-    )
-      this.$noty.error(this.$t(`downloads.mobile.errorMessage`));
+    ) {
+      this.$data.isMobile = true;
+      this.$data.showDownloads = false;
+    }
 
     //* Centering the current platform in array. Only works if array has 3 items.
     platform_order.splice(platform_order.indexOf(platform_temp), 1);
@@ -226,7 +249,9 @@ export default {
   methods: {
     open(platform) {
       if (platform == "linux")
-        this.openInNewTab("https://github.com/PreMiD/PreMiD");
+        this.openInNewTab(
+          "https://github.com/PreMiD/Linux/blob/master/README.md"
+        );
       if (platform == "windows") this.openInNewTab(this.$data.windows_url);
       if (platform == "apple") this.openInNewTab(this.$data.apple_url);
     },

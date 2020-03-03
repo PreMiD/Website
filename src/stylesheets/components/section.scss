@@ -2,6 +2,10 @@
   position: relative;
   overflow: hidden;
 
+  &__legal-section {
+    margin: 1.5em;
+  }
+
   &__heading {
     font-size: 1.8em;
     padding: 0 4em;
