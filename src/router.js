@@ -1,23 +1,23 @@
-import Vue from "vue"
-import Router from "vue-router"
+import Vue from "vue";
+import Router from "vue-router";
 
-import Index from "~/views/Homepage"
-import Store from "~/views/Store"
-import Cookies from "~/views/legal/Cookies"
-import Privacy from "~/views/legal/Privacy"
-import ToS from "~/views/legal/ToS"
-import Presence from "~/views/store/PresencePage"
-import Userpage from "~/views/users/Userpage"
-import Contributors from "~/views/Contributors"
-import Downloads from "~/views/Downloads"
-import Beta from "~/views/beta/Beta"
-import Register from "~/views/beta/Register"
-import loginPage from "~/views/auth/Login"
-import logoutPage from "~/views/auth/Logout"
-import callbackPage from "~/views/auth/AuthCallback"
-import Partners from "~/views/partners/Partners"
+import Index from "~/views/Homepage";
+import Store from "~/views/Store";
+import Cookies from "~/views/legal/Cookies";
+import Privacy from "~/views/legal/Privacy";
+import ToS from "~/views/legal/ToS";
+import Presence from "~/views/store/PresencePage";
+import Userpage from "~/views/users/Userpage";
+import Contributors from "~/views/Contributors";
+import Downloads from "~/views/Downloads";
+import Beta from "~/views/beta/Beta";
+import Register from "~/views/beta/Register";
+import loginPage from "~/views/auth/Login";
+import logoutPage from "~/views/auth/Logout";
+import callbackPage from "~/views/auth/AuthCallback";
+import Partners from "~/views/partners/Partners";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export function createRouter() {
 	return new Router({
@@ -92,8 +92,8 @@ export function createRouter() {
 				return {
 					selector: to.hash
 					// , offset: { x: 0, y: 10 }
-				}
+				};
 			}
 		}
-	})
+	});
 }
