@@ -1,75 +1,75 @@
 html,
 body {
-  height: 100%;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+	height: 100%;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
 
-  scroll-behavior: smooth;
-  quotes: "“" "”";
+	scroll-behavior: smooth;
+	quotes: "“" "”";
 
-  font-weight: 500;
+	font-weight: 500;
 
-  scrollbar-color: $background-primary $background-secondary;
-  scrollbar-width: thin;
+	scrollbar-color: $background-primary $background-secondary;
+	scrollbar-width: thin;
 
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 :focus {
-  outline: none;
+	outline: none;
 }
 
 #app {
-  overflow: -webkit-paged-x;
+	overflow: -webkit-paged-x;
 }
 
 .app-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  background: $background-primary;
-  color: #99aab5;
+	padding: 0;
+	margin: 0;
+	background: $background-primary;
+	color: #99aab5;
 }
 
 .text-highlight {
-  color: #b3aeff;
-  background: linear-gradient(30deg, #7289da, #b3aeff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	color: #b3aeff;
+	background: linear-gradient(30deg, #7289da, #b3aeff);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .userpage__presences > .heading > div.noContributes {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .userpage__presences > .heading > div.contributes {
-  cursor: pointer;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 header {
-  z-index: 10000;
-  width: 100%;
+	z-index: 10000;
+	width: 100%;
 }
 
 .content {
-  min-height: calc(100vh - 150px);
-  flex: 1 0 auto;
+	min-height: calc(100vh - 150px);
+	flex: 1 0 auto;
 }
 
 // .text-highlight {
@@ -81,52 +81,52 @@ header {
 // }
 
 h3 {
-  font-weight: 600;
+	font-weight: 600;
 }
 
 a {
-  position: relative;
-  text-decoration: none;
-  color: $accent-primary;
-  cursor: pointer;
+	position: relative;
+	text-decoration: none;
+	color: $accent-primary;
+	cursor: pointer;
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+	width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: $background-secondary;
-  border: none;
+	background: $background-secondary;
+	border: none;
 }
 
 ::-webkit-scrollbar-thumb {
-  border: 4px solid $background-secondary;
-  border-radius: 20px;
-  background: $background-primary;
+	border: 4px solid $background-secondary;
+	border-radius: 20px;
+	background: $background-primary;
 
-  &:hover {
-    background: lighten($background-primary, 5%);
-  }
+	&:hover {
+		background: lighten($background-primary, 5%);
+	}
 }
 
 ::-webkit-scrollbar-corner {
-  background: transparent;
+	background: transparent;
 }
 
 footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
 }
 
 img {
-  user-select: none;
-  -webkit-user-drag: none;
+	user-select: none;
+	-webkit-user-drag: none;
 }
 
 .hidden {
-  visibility: hidden;
+	visibility: hidden;
 }
 
 // .legal-section {
@@ -139,60 +139,60 @@ img {
 // }
 
 .tippy-tooltip.discord-theme {
-  /* Your styling here. Example: */
-  background-color: black;
-  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
+	/* Your styling here. Example: */
+	background-color: black;
+	box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.5);
 }
 
 .tippy-tooltip[data-inertia][data-state="visible"] {
-  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .tippy-popper[x-placement^="top"] {
-  .tippy-tooltip[data-animation="discord-anim"] {
-    transform-origin: center !important;
-    &[data-state="hidden"] {
-      opacity: 0;
-      transform: scale(0.9) translateY(-11px);
-    }
-    &[data-state="visible"] {
-      transform: scale(1) translateY(-11px);
-    }
-  }
+	.tippy-tooltip[data-animation="discord-anim"] {
+		transform-origin: center !important;
+		&[data-state="hidden"] {
+			opacity: 0;
+			transform: scale(0.9) translateY(-11px);
+		}
+		&[data-state="visible"] {
+			transform: scale(1) translateY(-11px);
+		}
+	}
 }
 
 .tippy-popper[x-placement^="bottom"] {
-  .tippy-tooltip[data-animation="discord-anim"] {
-    &[data-state="hidden"] {
-      opacity: 0;
-      transform: scale(0.9) translateY(11px);
-    }
-    &[data-state="visible"] {
-      transform: scale(1) translateY(11px);
-    }
-  }
+	.tippy-tooltip[data-animation="discord-anim"] {
+		&[data-state="hidden"] {
+			opacity: 0;
+			transform: scale(0.9) translateY(11px);
+		}
+		&[data-state="visible"] {
+			transform: scale(1) translateY(11px);
+		}
+	}
 }
 
 .tippy-popper[x-placement^="top"] .tippy-tooltip.discord-theme .tippy-arrow {
-  border-top-color: black;
-  filter: drop-shadow(0 2px 16px 0 rgba(0, 0, 0, 0.5));
+	border-top-color: black;
+	filter: drop-shadow(0 2px 16px 0 rgba(0, 0, 0, 0.5));
 }
 
 .tippy-popper[x-placement^="bottom"] .tippy-tooltip.discord-theme .tippy-arrow {
-  border-bottom-color: black;
-  filter: drop-shadow(0 2px 16px 0 rgba(0, 0, 0, 0.5));
+	border-bottom-color: black;
+	filter: drop-shadow(0 2px 16px 0 rgba(0, 0, 0, 0.5));
 }
 
 .tippy-tooltip.discord-theme .tippy-content {
-  /* Your styling here. Example: */
-  padding: 3px 5px;
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 500;
-  letter-spacing: 0.4px;
-  font-size: 0.965em;
+	/* Your styling here. Example: */
+	padding: 3px 5px;
+	color: rgba(255, 255, 255, 0.95);
+	font-weight: 500;
+	letter-spacing: 0.4px;
+	font-size: 0.965em;
 
-  h2 {
-    margin: 0;
-    margin-bottom: 8px;
-  }
+	h2 {
+		margin: 0;
+		margin-bottom: 8px;
+	}
 }
