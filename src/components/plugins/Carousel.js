@@ -1,4 +1,4 @@
-import Vue from "vue"
-import VueCarousel from "vue-carousel-3d"
+import Vue from "vue";
+import VueCarousel from "vue-carousel-3d";
 
-Vue.use(VueCarousel)
+Vue.use(VueCarousel);

@@ -16,9 +16,7 @@
       <p>{{ $props.error.message }}</p>
     </div>
     <div class="error-container--btns">
-      <router-link to="/" class="button button--sm">
-        $t("error.page.button") }}
-      </router-link>
+      <router-link to="/" class="button button--sm">{{ $t("error.page.button") }}</router-link>
     </div>
   </div>
 </template>
@@ -28,12 +26,12 @@ export default {
   props: ["error"],
   layout: "default",
   mounted() {
-    console.log(this.$props.error)
+    console.log(this.$props.error);
   },
   head() {
     return {
       title: "Error"
-    }
+    };
   }
-}
+};
 </script>
