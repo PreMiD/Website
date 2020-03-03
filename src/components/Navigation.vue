@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
 
 export default {
   name: "Navigation",
@@ -80,16 +80,16 @@ export default {
           title: "CONTRIBUTORS"
         }
       ]
-    };
+    }
   },
   created() {
     axios(`${process.env.apiBase}/versions`)
       .then(res => {
-        this.$data.extVersion = res.data.extension;
+        this.$data.extVersion = res.data.extension
       })
       .catch(err => {
-        console.error(err);
-      });
+        console.error(err)
+      })
   }
-};
+}
 </script>

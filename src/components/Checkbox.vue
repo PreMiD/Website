@@ -24,10 +24,10 @@ export default {
   props: ["selector", "text", "toggle"],
   methods: {
     toggleInput() {
-      this.$parent.toggleInput(this.$props.toggle);
+      this.$parent.toggleInput(this.$props.toggle)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
