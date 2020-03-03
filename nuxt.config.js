@@ -121,7 +121,7 @@ module.exports = {
           defer: true
         }
       ]
-    }
+    };
   },
   css: ["~stylesheets/root.scss"],
   build: {
@@ -148,9 +148,9 @@ module.exports = {
           test: /\.(js|vue)$/,
           loader: "eslint-loader",
           exclude: /(node_modules)/
-        })
+        });
       }
     }
     //publicPath: "https://cdn.premid.app"
   }
-}
+};

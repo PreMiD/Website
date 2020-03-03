@@ -2,9 +2,7 @@
   <section>
     <div class="store-grid">
       <div class="store-grid__sidebar store-menu">
-        <p class="sidebar__subheader">
-          {{ $t("store.header.search") }}
-        </p>
+        <p class="sidebar__subheader">{{ $t("store.header.search") }}</p>
         <div class="store-menu__searchbar-container">
           <input
             v-model="presenceSearch"
@@ -14,17 +12,11 @@
           />
         </div>
 
-        <p class="sidebar__subheader">
-          {{ $t("store.category.filters.heading") }}
-        </p>
+        <p class="sidebar__subheader">{{ $t("store.category.filters.heading") }}</p>
 
         <div class="checkbox-switcher">
           <label>
-            <input
-              type="checkbox"
-              :checked="mostUsed"
-              @change="mostUsed = !mostUsed"
-            />
+            <input type="checkbox" :checked="mostUsed" @change="mostUsed = !mostUsed" />
             <span ref="checkbox" class="checkbox-container"></span>
             <p>{{ $t("store.category.filters.mostUsed") }}</p>
           </label>
@@ -38,9 +30,7 @@
           </label>
         </div>
 
-        <p class="sidebar__subheader">
-          {{ $t("store.category.heading") }}
-        </p>
+        <p class="sidebar__subheader">{{ $t("store.category.heading") }}</p>
         <div class="container">
           <div class="category-container">
             <nuxt-link
@@ -132,10 +122,10 @@
 </template>
 
 <script>
-import StoreCard from "./../components/StoreCard.vue"
-import Pagination from "./../components/Pagination.vue"
+import StoreCard from "./../components/StoreCard.vue";
+import Pagination from "./../components/Pagination.vue";
 
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "Store",
@@ -148,21 +138,21 @@ export default {
     const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
       presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
         .data,
-      presencesList = (await axios(`${process.env.apiBase}/presences`)).data
+      presencesList = (await axios(`${process.env.apiBase}/presences`)).data;
 
     //! This code must be deleted after API will be updated
     //! to have presence usage count inside the returned data already.
     for (var presence in presenceRanking) {
-      let score = presenceRanking[presence]
+      let score = presenceRanking[presence];
       presencesList.some((element, index) => {
         // Setting zero score for all presences.
-        if (!element.metadata.usage) presencesList[index].metadata.usage = 0
+        if (!element.metadata.usage) presencesList[index].metadata.usage = 0;
         // Setting presence usage score based on the API's results.
         if (element.metadata.service.toLowerCase() == presence.toLowerCase()) {
-          presencesList[index].metadata.usage = score
-          return true
-        } else return false
-      })
+          presencesList[index].metadata.usage = score;
+          return true;
+        } else return false;
+      });
     }
 
     return {
@@ -170,11 +160,11 @@ export default {
       topPresences: presenceRanking,
       hotPresences: Object.keys(presenceRanking)
         .map((k, i) => {
-          if ((presenceRanking[k] / usage) * 100 > 5) return k
-          else false
+          if ((presenceRanking[k] / usage) * 100 > 5) return k;
+          else false;
         })
         .filter(p => p)
-    }
+    };
   },
   data() {
     return {
@@ -184,82 +174,82 @@ export default {
       mostUsed: true,
       presenceSearch: "",
       presencesPerPage: 12
-    }
+    };
   },
   computed: {
     currentCategory() {
-      return this.$route.query.category ? this.$route.query.category : "all"
+      return this.$route.query.category ? this.$route.query.category : "all";
     },
     filteredPresences() {
       return this.$data.presences
         .filter(presence => {
           return presence.service
             .toLowerCase()
-            .includes(this.presenceSearch.toLowerCase())
+            .includes(this.presenceSearch.toLowerCase());
         })
         .filter(presence =>
           this.$data.nsfw ? true : !presence.tags.includes("nsfw")
         )
         .filter(presence => {
           if (this.currentCategory == "all") {
-            return presence
+            return presence;
           } else {
-            return presence.category == this.currentCategory
+            return presence.category == this.currentCategory;
           }
         })
         .sort((a, b) => a.service.localeCompare(b.service))
         .sort((a, b) => {
           if (this.$data.mostUsed) {
-            return b.usage - a.usage
+            return b.usage - a.usage;
           }
-        })
+        });
     },
     currentPageNumber: {
       get() {
         if (Number(this.$route.query.page)) {
           if (this.pageCount < this.$route.query.page) {
-            return 1
+            return 1;
           } else {
-            return Number(this.$route.query.page)
+            return Number(this.$route.query.page);
           }
         } else {
-          return 1
+          return 1;
         }
       },
       set(val) {
-        return val
+        return val;
       }
     },
     pageCount() {
       let length = this.filteredPresences.length,
-        size = this.$data.presencesPerPage
+        size = this.$data.presencesPerPage;
 
-      return Math.ceil(length / size)
+      return Math.ceil(length / size);
     },
     paginatedData() {
-      if (this.$data.presenceSearch !== "") return this.filteredPresences
+      if (this.$data.presenceSearch !== "") return this.filteredPresences;
       let start = (this.currentPageNumber - 1) * this.$data.presencesPerPage,
-        end = start + this.$data.presencesPerPage
-      return this.filteredPresences.slice(start, end)
+        end = start + this.$data.presencesPerPage;
+      return this.filteredPresences.slice(start, end);
     }
   },
   created() {
-    let self = this
+    let self = this;
     // Requesting presences data from our API and adding it into our Vue data.
 
     this.$data.presences = this.$data.presences.sort((a, b) =>
       a.name.localeCompare(b.name)
-    )
+    );
 
     this.$data.presences = this.$data.presences.map(
       presence => presence.metadata
-    )
+    );
 
     if (
       this.pageCount < Number(this.$route.query.page) ||
       this.$route.query.page <= -1
     ) {
-      this.$nuxt.error({ statusCode: 404, message: "No presences available." })
+      this.$nuxt.error({ statusCode: 404, message: "No presences available." });
     }
   },
   methods: {
@@ -269,15 +259,15 @@ export default {
           page: pageNumber,
           category: this.currentCategory
         }
-      })
+      });
     }
   },
   head() {
     return {
       title: "Store"
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

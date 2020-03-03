@@ -9,9 +9,7 @@
   >
     <div class="credit-card__user">
       <h1 :title="user.name" v-text="user.name"></h1>
-      <h2>
-        {{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}
-      </h2>
+      <h2>{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}</h2>
     </div>
     <div class="credit-card__avatar">
       <span :class="user.status"></span>
@@ -21,7 +19,7 @@
 </template>
 
 <script>
-import tinycolor from "tinycolor2"
+import tinycolor from "tinycolor2";
 
 export default {
   name: "Creditcard",
@@ -47,7 +45,7 @@ export default {
         Translator: "contributors.roles.translator"
       },
       hovered: false
-    }
+    };
   },
   computed: {
     cardGradientColor() {
@@ -61,18 +59,18 @@ export default {
           .setAlpha(0.5)
           .saturate(20)
           .toRgbString()
-      }
+      };
     },
     cardShadowColor() {
       if (this.$data.hovered) {
         return tinycolor(this.cardGradientColor.primary)
           .setAlpha(0.3)
           .saturate(20)
-          .toRgbString()
+          .toRgbString();
       } else {
-        return "transparent"
+        return "transparent";
       }
     }
   }
-}
+};
 </script>

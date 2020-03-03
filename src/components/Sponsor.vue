@@ -1,8 +1,8 @@
 <template>
   <div class="sponsor-card">
     <div class="sponsor-info">
-      <h1>{{ name }}</h1>
-      <p>{{ description }}</p>
+      <h1>{{name}}</h1>
+      <p>{{description}}</p>
     </div>
     <img class="sponsor-image" :src="rImage" />
   </div>
@@ -50,7 +50,7 @@
 
 <script>
 export default {
-  name: "Sponsor",
+  name: "sponsor",
   props: {
     name: String,
     description: String,
@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       rImage: require(`${this.image}`)
-    }
+    };
   }
-}
+};
 </script>

@@ -5,53 +5,26 @@
       <div class="contributor-container">
         <h1 class="heading" v-text="$t('contributors.headings.staff')"></h1>
         <div class="contributor-inner">
-          <div
-            v-for="contributor of contributors"
-            :key="contributor.id"
-            class="contributor-card"
-          >
-            <CreditCard
-              v-if="isStaffRole(contributor.role)"
-              :user="contributor"
-            />
+          <div v-for="contributor of contributors" :key="contributor.id" class="contributor-card">
+            <CreditCard v-if="isStaffRole(contributor.role)" :user="contributor" />
           </div>
         </div>
       </div>
 
       <div class="contributor-container">
-        <h1
-          class="heading"
-          v-text="$t('contributors.headings.supporters')"
-        ></h1>
+        <h1 class="heading" v-text="$t('contributors.headings.supporters')"></h1>
         <div class="contributor-inner">
-          <div
-            v-for="contributor of contributors"
-            :key="contributor.id"
-            class="contributor-card"
-          >
-            <CreditCard
-              v-if="isSupporterRole(contributor.role)"
-              :user="contributor"
-            />
+          <div v-for="contributor of contributors" :key="contributor.id" class="contributor-card">
+            <CreditCard v-if="isSupporterRole(contributor.role)" :user="contributor" />
           </div>
         </div>
       </div>
 
       <div class="contributor-container">
-        <h1
-          class="heading"
-          v-text="$t('contributors.headings.translators')"
-        ></h1>
+        <h1 class="heading" v-text="$t('contributors.headings.translators')"></h1>
         <div class="contributor-inner">
-          <div
-            v-for="contributor of contributors"
-            :key="contributor.id"
-            class="contributor-card"
-          >
-            <CreditCard
-              v-if="isTranslatorRole(contributor.role)"
-              :user="contributor"
-            />
+          <div v-for="contributor of contributors" :key="contributor.id" class="contributor-card">
+            <CreditCard v-if="isTranslatorRole(contributor.role)" :user="contributor" />
           </div>
         </div>
       </div>
@@ -60,9 +33,9 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
-import CreditCard from "../components/CreditCard"
+import CreditCard from "../components/CreditCard";
 
 export default {
   name: "Contributors",
@@ -75,13 +48,13 @@ export default {
       contributors: (await axios(`${process.env.apiBase}/credits`)).data.sort(
         (a, b) => b.rolePosition - a.rolePosition
       )
-    }
+    };
   },
   data() {
     return {
       contributors: [],
       display: false
-    }
+    };
   },
   methods: {
     isStaffRole(roleName) {
@@ -98,33 +71,33 @@ export default {
         "Head Moderator",
         "Senior Moderator",
         "Head of Presence Verifying"
-      ]
+      ];
 
-      if (staffRoles.indexOf(roleName) !== -1) return true
-      else return false
+      if (staffRoles.indexOf(roleName) !== -1) return true;
+      else return false;
     },
     isSupporterRole(roleName) {
-      const supportRoles = ["Donator", "Patron", "Booster"]
+      const supportRoles = ["Donator", "Patron", "Booster"];
 
-      if (supportRoles.indexOf(roleName) !== -1) return true
-      else return false
+      if (supportRoles.indexOf(roleName) !== -1) return true;
+      else return false;
     },
     isTranslatorRole(roleName) {
-      const translatorRoles = ["Translator", "Proofreader"]
+      const translatorRoles = ["Translator", "Proofreader"];
 
-      if (translatorRoles.indexOf(roleName) !== -1) return true
-      else return false
+      if (translatorRoles.indexOf(roleName) !== -1) return true;
+      else return false;
     },
     userNameColor(patronColor, userColor) {
-      if (patronColor == "#fff") return userColor
-      else return patronColor
+      if (patronColor == "#fff") return userColor;
+      else return patronColor;
     }
   },
 
   head() {
     return {
       title: "Contributors"
-    }
+    };
   }
-}
+};
 </script>
