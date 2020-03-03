@@ -940,7 +940,6 @@
   .reason {
     padding: 1em;
     width: 300px;
-    height: 100px;
     background: #23272a;
     border-radius: 5px;
     text-align: center;
@@ -970,6 +969,8 @@
   }
 
   .random-img {
+    width: 125px;
+    height: 125px;
     position: absolute;
     opacity: 0.6;
     z-index: -1;
