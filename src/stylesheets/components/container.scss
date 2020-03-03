@@ -1004,12 +1004,17 @@
     padding-bottom: 3em;
   }
 
+  .dl-container .dl-container__section h1.section-header {
+    white-space: pre-line;
+    margin-top: 0px;
+  }
+
   .promo-container .heading__logo img {
-    width: auto !important;
+    width: 80vw !important;
     max-width: 100%;
   }
 
   .promo-container .heading__text p {
-    padding: 4px;
+    padding: 8px;
   }
 }
