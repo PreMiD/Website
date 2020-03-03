@@ -1,10 +1,10 @@
 <script>
-export default {
-  head() {
-    return {
-      title: "Authorization...",
-      titleTemplate: ""
-    }
-  }
-}
+	export default {
+		head() {
+			return {
+				title: "Authorization...",
+				titleTemplate: ""
+			};
+		}
+	};
 </script>

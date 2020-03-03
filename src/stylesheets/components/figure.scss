@@ -1,35 +1,35 @@
 .waves-divider {
-    width: 100%;
-    max-height: 120px;
-    left: 0;
-  
-    z-index: -1;
-  
-    &_top {
-      transform: scaleX(1.5) rotate(180deg);
-      top: -1px;
-  
-      .wave-animation {
-        -webkit-animation: waveAnimation 25s linear infinite alternate;
-        animation: waveAnimation 25s linear infinite alternate;
-      }
-    }
-  
-    &_bottom {
-      bottom: -1px;
-  
-      .wave-animation {
-        -webkit-animation: waveAnimation 35s linear infinite alternate;
-        animation: waveAnimation 35s linear infinite alternate;
-      }
-    }
-  
-    position: absolute;
-  
-    svg.wave {
-      display: block;
-      overflow: hidden;
-      transform-origin: 0px 0px;
-      color: $background-primary;
-    }
-  }
+	width: 100%;
+	max-height: 120px;
+	left: 0;
+
+	z-index: -1;
+
+	&_top {
+		transform: scaleX(1.5) rotate(180deg);
+		top: -1px;
+
+		.wave-animation {
+			-webkit-animation: waveAnimation 25s linear infinite alternate;
+			animation: waveAnimation 25s linear infinite alternate;
+		}
+	}
+
+	&_bottom {
+		bottom: -1px;
+
+		.wave-animation {
+			-webkit-animation: waveAnimation 35s linear infinite alternate;
+			animation: waveAnimation 35s linear infinite alternate;
+		}
+	}
+
+	position: absolute;
+
+	svg.wave {
+		display: block;
+		overflow: hidden;
+		transform-origin: 0px 0px;
+		color: $background-primary;
+	}
+}
