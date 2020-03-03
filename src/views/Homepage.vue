@@ -298,6 +298,17 @@ export default {
         },
         {
           profile: {
+            DiscordID: "162969778699501569",
+            badges: ["balance", "early"]
+          },
+          service_title: "Netflix",
+          serviceLogo: netflixLogo,
+          smallImage: true,
+          data: ["Daredevil", "S1:E1 Into the Ring"],
+          presence_time: "22:15"
+        },
+        {
+          profile: {
             DiscordID: "515668127829458945",
             badges: ["balance"]
           },

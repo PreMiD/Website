@@ -170,9 +170,6 @@ import axios from "axios";
 export default {
   name: "Downloads",
   auth: false,
-  head: {
-    title: "PreMiD - Downloads"
-  },
   async asyncData() {
     const { extension, app } = (
       await axios(`${process.env.apiBase}/versions`)
