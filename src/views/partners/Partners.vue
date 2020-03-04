@@ -26,7 +26,7 @@
 						<figcaption>
 							<div>
 								<h1 v-text="partner.name" />
-								<p v-text="partner.description" />
+								<p v-text="$t(partner.tString)" />
 							</div>
 						</figcaption>
 					</figure>
