@@ -9,20 +9,27 @@
 			<p v-t="'partners.slideshow.description'" class="slideshow-title"></p>
 
 			<carousel-3d
-				:width="540"
-				:height="405"
 				:controls-visible="partners.length > 3 ? true : false"
+				:clickable="true"
+				:width="548"
+				:height="298"
 			>
 				<slide
 					v-for="(partner, index) in partners"
-					:key="partner.name"
-					v-tippy="{ content: $t(partner.tString) }"
 					:index="index"
+					:key="partner.name"
 				>
-					<img
-						class="partnerImg"
-						:src="require(`@/static/assets/images/partners/${partner.image}`)"
-					/>
+					<figure>
+						<img
+							:src="require(`@/static/assets/images/partners/${partner.image}`)"
+						/>
+						<figcaption>
+							<div>
+								<h1 v-text="partner.name" />
+								<p v-text="partner.description" />
+							</div>
+						</figcaption>
+					</figure>
 				</slide>
 			</carousel-3d>
 
