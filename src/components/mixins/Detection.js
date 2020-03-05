@@ -28,7 +28,12 @@ var DetectionMixin = {
 			this.debugMessage("Extension installed, unlocking functions...");
 		} else {
 			this.$data.extensionInstalled = false;
-			this.$noty.error(this.$t(`store.message.error`));
+			if (
+				!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+					`${navigator?.userAgent || true}`
+				)
+			)
+				this.$noty.error(this.$t(`store.message.error`));
 			this.errorMessage("Extension not found, locking functions...");
 		}
 
