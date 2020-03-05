@@ -6,6 +6,10 @@
 		justify-content: space-around;
 		align-items: center;
 
+		&--beta {
+			min-height: 500px !important;
+		}
+
 		&--reverse {
 			flex-flow: row-reverse;
 		}
@@ -384,12 +388,12 @@
 
 		.header__info {
 			flex: 1;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 
 			.info__nameTag {
 				vertical-align: middle;
-				text-overflow: ellipsis;
-				overflow: hidden;
-
 				padding-right: 20px;
 
 				line-height: 20px;
@@ -549,10 +553,6 @@
 						font-weight: 600;
 
 						span {
-							&:hover {
-								text-decoration: underline;
-							}
-
 							color: hsla(0, 0%, 100%, 0.8);
 						}
 					}
@@ -568,9 +568,6 @@
 
 					.game__nd-line {
 						color: hsla(0, 0%, 100%, 0.8);
-					}
-
-					.game__time {
 					}
 				}
 			}

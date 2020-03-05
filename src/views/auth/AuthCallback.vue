@@ -1,10 +1,14 @@
+<template></template>
+
 <script>
-	export default {
-		head() {
-			return {
-				title: "Authorization...",
-				titleTemplate: ""
-			};
-		}
-	};
+// Do not remove <template> from the document, it will not work without them.
+
+export default {
+	head() {
+		return {
+			title: "Authorization...",
+			titleTemplate: ""
+		};
+	}
+};
 </script>

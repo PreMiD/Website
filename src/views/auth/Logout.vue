@@ -1,14 +1,18 @@
+<template></template>
+
 <script>
-	export default {
-		created() {
-			this.$auth.logout();
-			this.$router.push("/");
-		},
-		head() {
-			return {
-				title: "Logout",
-				titleTemplate: ""
-			};
-		}
-	};
+// Do not remove <template> from the document, it will not work without them.
+
+export default {
+	created() {
+		this.$auth.logout();
+		this.$router.push("/");
+	},
+	head() {
+		return {
+			title: "Logout",
+			titleTemplate: ""
+		};
+	}
+};
 </script>
