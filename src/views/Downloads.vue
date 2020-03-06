@@ -35,9 +35,11 @@
 						<li>
 							<p>
 								<i18n path="downloads.instructions.step.4">
-									<nuxt-link to="/store">{{
+									<nuxt-link to="/store">
+										{{
 										$t("downloads.instructions.step.4.store")
-									}}</nuxt-link>
+										}}
+									</nuxt-link>
 								</i18n>
 							</p>
 						</li>
@@ -66,9 +68,7 @@
 			<div
 				v-if="isMobile"
 				class="dl-container__section dl-container__mobile-warning waves-aligned"
-			>
-				{{ $t("downloads.mobile.errorMessage") }}
-			</div>
+			>{{ $t("downloads.mobile.errorMessage") }}</div>
 		</transition>
 
 		<transition name="card-animation" mode="out-in">
@@ -89,10 +89,7 @@
 					<div class="dl-container__cards">
 						<div v-for="(platform, index) of platform_order" :key="platform">
 							<div @click="open(platform)">
-								<div
-									:class="{ 'current-platform': index == 1 }"
-									class="cards__card clickable"
-								>
+								<div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
 									<div class="card__icon">
 										<i :class="`fab fa-${platform}`"></i>
 									</div>
@@ -119,10 +116,7 @@
 					</div>
 				</div>
 
-				<div
-					id="ext-downloads"
-					class="dl-container__section dl-container__section_downloads"
-				>
+				<div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
 					<h1 class="section-header">
 						{{ $t("downloads.extdownloading.header") }}
 						<a
@@ -166,119 +160,119 @@
 
 		<transition name="card-animation" mode="out-in">
 			<div v-if="isMobile" class="dl-container__showDownloads">
-				<span @click="showDownloads = !showDownloads">{{
+				<span @click="showDownloads = !showDownloads">
+					{{
 					showDownloads
-						? $t("downloads.mobile.hideDownloads")
-						: $t("downloads.mobile.showDownloads")
-				}}</span>
+					? $t("downloads.mobile.hideDownloads")
+					: $t("downloads.mobile.showDownloads")
+					}}
+				</span>
 			</div>
 		</transition>
 	</div>
 </template>
 
 <script>
-	import axios from "axios";
+import axios from "axios";
 
-	export default {
-		name: "Downloads",
-		auth: false,
-		async asyncData() {
-			const { extension, app } = (
-				await axios(`${process.env.apiBase}/versions`)
-			).data;
+export default {
+	name: "Downloads",
+	auth: false,
+	async asyncData() {
+		const { extension, app } = (
+			await axios(`${process.env.apiBase}/versions`)
+		).data;
 
-			return {
-				extVersion: extension,
-				appVersion: app
-			};
-		},
-		data() {
-			return {
-				extVersion: null,
-				appVersion: null,
-				platforms: [],
-				browser: null,
-				windows_url: "https://dl.premid.app/PreMiD-installer.exe",
-				apple_url: "https://dl.premid.app/PreMiD-installer.app.zip",
-				linux_url: "",
-				chrome_url:
-					"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
-				firefox_url: "https://dl.premid.app/PreMiD.xpi",
-				platform_order: ["windows", "apple", "linux"],
-				builds: {
-					windows: {
-						os_name: "Windows",
-						has_installer: true
-					},
-					apple: {
-						os_name: "OS X",
-						has_installer: true
-					},
-					linux: {
-						os_name: "Linux",
-						has_installer: false
-					}
+		return {
+			extVersion: extension,
+			appVersion: app
+		};
+	},
+	data() {
+		return {
+			extVersion: null,
+			appVersion: null,
+			platforms: [],
+			browser: null,
+			windows_url: "https://dl.premid.app/PreMiD-installer.exe",
+			apple_url: "https://dl.premid.app/PreMiD-installer.app.zip",
+			linux_url: "",
+			chrome_url:
+				"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
+			firefox_url: "https://dl.premid.app/PreMiD.xpi",
+			platform_order: ["windows", "apple", "linux"],
+			builds: {
+				windows: {
+					os_name: "Windows",
+					has_installer: true
 				},
-				isMobile: false,
-				showDownloads: true
-			};
-		},
-		mounted() {
-			let ua = "";
-
-			if (process.browser) ua = navigator.userAgent;
-
-			//* Browser detection.
-			// Thanks to https://stackoverflow.com/a/9851769 for providing code.
-			if (
-				!!window.chrome &&
-				(!!window.chrome.webstore || !!window.chrome.runtime)
-			) {
-				this.$data.browser = "chrome";
-			} else if (typeof InstallTrigger !== "undefined") {
-				this.$data.browser = "firefox";
-			}
-
-			let platform_temp = "linux";
-			var platform_order = this.$data.platform_order;
-
-			if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
-			if (ua.includes("Windows")) platform_temp = "windows";
-			if (
-				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-					ua
-				)
-			) {
-				this.$data.isMobile = true;
-				this.$data.showDownloads = false;
-			}
-
-			//* Centering the current platform in array. Only works if array has 3 items.
-			platform_order.splice(platform_order.indexOf(platform_temp), 1);
-			platform_order.splice(1, 0, platform_temp);
-		},
-		methods: {
-			open(platform) {
-				if (platform == "linux")
-					this.openInNewTab(
-						"https://github.com/PreMiD/Linux/blob/master/README.md"
-					);
-				if (platform == "windows") this.openInNewTab(this.$data.windows_url);
-				if (platform == "apple") this.openInNewTab(this.$data.apple_url);
+				apple: {
+					os_name: "OS X",
+					has_installer: true
+				},
+				linux: {
+					os_name: "Linux",
+					has_installer: true // So no tippy warning.
+				}
 			},
-			openInNewTab(url) {
-				let page = window.open(url, "_blank");
-			}
-		},
+			isMobile: false,
+			showDownloads: true
+		};
+	},
+	mounted() {
+		let ua = "";
 
-		head() {
-			return {
-				title: "Downloads"
-			};
+		if (process.browser) ua = navigator.userAgent;
+
+		//* Browser detection.
+		// Thanks to https://stackoverflow.com/a/9851769 for providing code.
+		if (
+			!!window.chrome &&
+			(!!window.chrome.webstore || !!window.chrome.runtime)
+		) {
+			this.$data.browser = "chrome";
+		} else if (typeof InstallTrigger !== "undefined") {
+			this.$data.browser = "firefox";
 		}
-	};
+
+		let platform_temp = "linux";
+		var platform_order = this.$data.platform_order;
+
+		if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
+		if (ua.includes("Windows")) platform_temp = "windows";
+		if (
+			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)
+		) {
+			this.$data.isMobile = true;
+			this.$data.showDownloads = false;
+		}
+
+		//* Centering the current platform in array. Only works if array has 3 items.
+		platform_order.splice(platform_order.indexOf(platform_temp), 1);
+		platform_order.splice(1, 0, platform_temp);
+	},
+	methods: {
+		open(platform) {
+			if (platform == "linux")
+				this.openInNewTab(
+					"https://github.com/PreMiD/Linux/blob/master/README.md"
+				);
+			if (platform == "windows") this.openInNewTab(this.$data.windows_url);
+			if (platform == "apple") this.openInNewTab(this.$data.apple_url);
+		},
+		openInNewTab(url) {
+			let page = window.open(url, "_blank");
+		}
+	},
+
+	head() {
+		return {
+			title: "Downloads"
+		};
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import "../stylesheets/variables.scss";
+@import "../stylesheets/variables.scss";
 </style>

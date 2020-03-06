@@ -13,7 +13,11 @@
 				{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}
 			</h2>
 		</div>
-		<div class="credit-card__avatar">
+		<div
+			class="credit-card__avatar"
+			@click="copyId(user.userId)"
+			v-tippy="{ content: $t('contributors.cards.copyUserId') }"
+		>
 			<span :class="user.status"></span>
 			<img :src="user.avatar + '?size=64'" draggable="false" />
 		</div>
@@ -72,6 +76,21 @@
 				} else {
 					return "transparent";
 				}
+			}
+		},
+		methods: {
+			copyId(id) {
+				let el = document.createElement("textarea");
+
+				el.value = id;
+				document.body.appendChild(el);
+
+				el.select();
+
+				document.execCommand("copy");
+				document.body.removeChild(el);
+
+				this.$noty.success(this.$t("contributors.cards.userIdCopied"));
 			}
 		}
 	};
