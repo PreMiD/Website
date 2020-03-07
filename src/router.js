@@ -87,13 +87,11 @@ export function createRouter() {
 				component: logoutPage
 			}
 		],
-		scrollBehavior(to, from, savedPosition) {
-			if (to.hash) {
-				return {
-					selector: to.hash
-					// , offset: { x: 0, y: 10 }
-				};
-			}
+		scrollBehavior() {
+			return {
+				x: 0,
+				y: 0
+			};
 		}
 	});
 }
