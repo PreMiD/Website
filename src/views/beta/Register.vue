@@ -10,7 +10,9 @@
 				<div class="card--feature__details">
 					<h1>{{ title }}</h1>
 					<p>{{ message }}</p>
-					<a href="/" class="button button--sm router-link-active">{{ $t('error.page.button') }}</a>
+					<a href="/" class="button button--sm router-link-active">{{
+						$t("error.page.button")
+					}}</a>
 				</div>
 			</div>
 			<div class="waves-divider waves-divider_bottom">
@@ -33,41 +35,43 @@
 </template>
 
 <script>
-import axios from "axios";
+	import axios from "axios";
 
-export default {
-	name: "Register",
-	auth: true,
-	data() {
-		return {
-			title: "",
-			message: ""
-		};
-	},
-	mounted() {
-		if (this.$auth?.user?.id) {
-			axios
-				.post(`${process.env.apiBase}/addBetaUser/${this.$auth.user.id}`)
-				.then(response => {
-					if (!response.data.error) {
-						this.title = this.$t("thankyou.title");
-						this.message = this.$t("thankyou.description");
-					} else if (response.data.error) {
-						this.title = "Uh oh!";
-						if (response.data.error == 2) {
-							this.message =
-								"Our monkeys say that you are already a beta user.";
-						} else {
-							this.message = response.data.message;
+	export default {
+		name: "Register",
+		auth: true,
+		data() {
+			return {
+				title: "",
+				message: ""
+			};
+		},
+		mounted() {
+			if (this.$auth?.user?.id) {
+				axios
+					.post(
+						`${process.env.apiBase}/addBetaUser/${this.$auth.$storage._state["_token.discord"]}`
+					)
+					.then(response => {
+						if (!response.data.error) {
+							this.title = this.$t("thankyou.title");
+							this.message = this.$t("thankyou.description");
+						} else if (response.data.error) {
+							this.title = "Uh oh!";
+							if (response.data.error == 3) {
+								this.message =
+									"Our monkeys say that you are already a beta user.";
+							} else {
+								this.message = response.data.message;
+							}
 						}
-					}
-				});
-		} else {
-			this.$router.push("/");
+					});
+			} else {
+				this.$router.push("/");
+			}
+		},
+		head: {
+			title: "Register"
 		}
-	},
-	head: {
-		title: "Register"
-	}
-};
+	};
 </script>
