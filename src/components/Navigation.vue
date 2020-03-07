@@ -5,6 +5,19 @@
 				<nuxt-link to="/">
 					<img src="@/assets/images/logo_round.svg" />
 				</nuxt-link>
+
+				<div
+					v-if="!$store.state.extension.extensionInstalled"
+					class="status"
+					v-tippy="{
+						content: $t('store.message.error')
+					}"
+				>
+					<i
+						@click="redirect('https://docs.premid.app/en/troubleshooting')"
+						class="fa-exclamation fa-stack-1x fas"
+					></i>
+				</div>
 			</div>
 
 			<div class="navbar__items on-desktop">
@@ -81,6 +94,11 @@
 					}
 				]
 			};
+		},
+		methods: {
+			redirect(location) {
+				window.location.href = location || window.location.href;
+			}
 		},
 		created() {
 			axios(`${process.env.apiBase}/versions`)

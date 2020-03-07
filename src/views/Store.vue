@@ -15,15 +15,21 @@
 					/>
 
 					<span
-						v-if="filters.tag.enabled"
+						v-if="filters.url.enabled"
 						v-tippy="{ content: $t('store.search.removeFilter') }"
-						@click="removeFilter('tag')"
-						>tag:</span
+						@click="
+							removeFilter('url');
+							$refs.search.focus();
+						"
+						>url:</span
 					>
 					<span
 						v-if="filters.author.enabled"
 						v-tippy="{ content: $t('store.search.removeFilter') }"
-						@click="removeFilter('author')"
+						@click="
+							removeFilter('author');
+							$refs.search.focus();
+						"
 						>author:</span
 					>
 
@@ -32,23 +38,25 @@
 							v-if="
 								typing &&
 									filters.author.enabled == false &&
-									filters.tag.enabled == false
+									filters.url.enabled == false
 							"
 							class="searchSuggestions"
 						>
 							<div
 								@click="
-									filters.tag.enabled = true;
+									filters.url.enabled = true;
+									$refs.search.focus();
 									setSearchStyle();
 								"
 								class="filterBox"
 							>
-								<span>tag</span>
+								<span>url</span>
 								<span>{{ $t("store.search.filters") }}</span>
 							</div>
 							<div
 								@click="
 									filters.author.enabled = true;
+									$refs.search.focus();
 									setSearchStyle();
 								"
 								class="filterBox"
@@ -231,7 +239,7 @@
 				presenceSearch: "",
 				presencesPerPage: 12,
 				filters: {
-					tag: { enabled: false, padding: 50 },
+					url: { enabled: false, padding: 45 },
 					author: { enabled: false, padding: 75 }
 				},
 				typing: false
@@ -244,8 +252,19 @@
 			filteredPresences() {
 				return this.$data.presences
 					.filter(presence => {
-						if (this.$data.filters.tag.enabled == true)
-							return presence.tags.includes(this.presenceSearch);
+						if (this.$data.filters.url.enabled == true)
+							return (
+								(Array.isArray(presence.url) &&
+									presence.url.filter(url =>
+										url
+											.toLowerCase()
+											.includes(this.presenceSearch.toLowerCase())
+									).length > 0) ||
+								(typeof presence.url == "string" &&
+									presence.url
+										.toLowerCase()
+										.includes(this.presenceSearch.toLowerCase()))
+							);
 						else if (this.$data.filters.author.enabled == true)
 							return (
 								presence.author.name
@@ -254,9 +273,17 @@
 								presence.author.id.includes(this.presenceSearch)
 							);
 						else
-							return presence.service
-								.toLowerCase()
-								.includes(this.presenceSearch.toLowerCase());
+							return (
+								presence.service
+									?.toLowerCase()
+									.includes(this.presenceSearch.toLowerCase()) ||
+								(Array.isArray(presence.tags) &&
+									presence.tags.filter(tag =>
+										tag
+											.toLowerCase()
+											.includes(this.presenceSearch.toLowerCase())
+									).length > 0)
+							);
 					})
 					.filter(presence =>
 						this.$data.nsfw ? true : !presence.tags.includes("nsfw")
@@ -331,7 +358,14 @@
 				this.$route.query.query ||
 				this.$route.query.search;
 
-			query ? (this.$data.presenceSearch = query.replace(/\+/g, " ")) : false;
+			if (query) {
+				this.$data.presenceSearch = query
+					.replace("author:", "author ")
+					.replace("url:", "url ")
+					.replace(/\+/g, " ");
+
+				this.searchHandle();
+			}
 
 			// For search suggestions removal
 			this.$el.addEventListener("click", evt => {
@@ -355,27 +389,29 @@
 				if (!this.$data.presenceSearch) this.typing = false;
 
 				if (
+					evt &&
 					this.$data.presenceSearch == "" &&
 					evt.key.toLowerCase() == "backspace"
 				) {
 					for (let key in this.$data.filters)
 						this.$data.filters[key].enabled = false;
 					this.setSearchStyle();
-				} else if (evt.key.toLowerCase() != "backspace") {
+				} else if (!evt || evt.key.toLowerCase() != "backspace") {
 					this.typing = true;
 					const handles = Object.keys(this.$data.filters);
 
-					if (handles.indexOf(this.$data.presenceSearch) !== -1) {
+					if (handles.indexOf(this.$data.presenceSearch.split(" ")[0]) !== -1) {
 						for (let key in this.$data.filters) {
-							key == this.$data.presenceSearch
+							key == this.$data.presenceSearch.split(" ")[0]
 								? (this.$data.filters[key].enabled = true)
 								: (this.$data.filters[key].enabled = false);
 						}
 
-						this.$data.presenceSearch = this.$data.presenceSearch.replace(
-							this.$data.presenceSearch,
-							""
-						);
+						this.$data.presenceSearch =
+							this.$data.presenceSearch
+								.split(" ")[0]
+								.replace(this.$data.presenceSearch.split(" ")[0], "") +
+							this.$data.presenceSearch.split(" ").slice(1);
 
 						this.setSearchStyle();
 					}
@@ -471,5 +507,13 @@
 		position: absolute;
 		margin-left: 0.6rem;
 		color: #74787c;
+	}
+
+	@media only screen and (max-width: 600px) {
+		.store-menu__searchbar-container {
+			.searchSuggestions {
+				max-width: 77vw;
+			}
+		}
 	}
 </style>

@@ -44,10 +44,23 @@
 
 			h1 {
 				font-size: 1.5rem;
-				font-family: "Discord Font";
+				/* font-family: "Discord Font"; */
 				margin: 0 5px;
 				margin-top: 5px;
 			}
+		}
+
+		.status {
+			display: flex;
+			align-items: center;
+			font-size: small;
+			width: 24px;
+			height: 24px;
+			border-radius: 100%;
+			margin-left: 0.6em;
+			animation: pulseWarn 2s infinite;
+			background-color: #c0392b;
+			cursor: pointer;
 		}
 
 		.navbar__items {
