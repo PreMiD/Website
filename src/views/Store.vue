@@ -401,7 +401,6 @@
 					const handles = Object.keys(this.$data.filters);
 
 					if (handles.indexOf(this.$data.presenceSearch.split(" ")[0]) !== -1) {
-						console.log("omgg");
 						for (let key in this.$data.filters) {
 							key == this.$data.presenceSearch.split(" ")[0]
 								? (this.$data.filters[key].enabled = true)
