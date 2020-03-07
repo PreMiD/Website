@@ -4,13 +4,13 @@
 		<div class="floating-button">
 			<a
 				v-tippy
-				content="Choose website language"
+				:content="$t('home.languageSelector.tippy')"
 				class="button button--gray button--language-switch"
 				@click="toggleSwitcher"
 				><i class="fa-language fas"></i
 			></a>
 		</div>
-		<!--     
+		<!--
       ! Disabled for now as it somehow breaks the page in production
     <LanguageNotification />
     -->

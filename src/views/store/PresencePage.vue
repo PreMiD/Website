@@ -13,7 +13,7 @@
 								v-if="hot"
 								v-tippy
 								class="fa-stack"
-								content="This presence is very popular around users."
+								:content="$t('store.cards.popular')"
 								style="font-size:1rem;"
 							>
 								<i class="fa-circle fa-stack-2x fas"></i>

@@ -6,10 +6,58 @@
 				<div class="store-menu__searchbar-container">
 					<input
 						v-model="presenceSearch"
+						ref="search"
+						@keydown="searchHandle"
+						@click="typing = true"
 						type="text"
 						class="searchbar"
 						:placeholder="$t('store.search')"
 					/>
+
+					<span
+						v-if="filters.tag.enabled"
+						v-tippy="{ content: $t('store.search.removeFilter') }"
+						@click="removeFilter('tag')"
+						>tag:</span
+					>
+					<span
+						v-if="filters.author.enabled"
+						v-tippy="{ content: $t('store.search.removeFilter') }"
+						@click="removeFilter('author')"
+						>author:</span
+					>
+
+					<transition name="card-animation" mode="out-in">
+						<div
+							v-if="
+								typing &&
+									filters.author.enabled == false &&
+									filters.tag.enabled == false
+							"
+							class="searchSuggestions"
+						>
+							<div
+								@click="
+									filters.tag.enabled = true;
+									setSearchStyle();
+								"
+								class="filterBox"
+							>
+								<span>tag</span>
+								<span>{{ $t("store.search.filters") }}</span>
+							</div>
+							<div
+								@click="
+									filters.author.enabled = true;
+									setSearchStyle();
+								"
+								class="filterBox"
+							>
+								<span>author</span>
+								<span>{{ $t("store.search.filters") }}</span>
+							</div>
+						</div>
+					</transition>
 				</div>
 
 				<p class="sidebar__subheader">
@@ -181,7 +229,12 @@
 				nsfw: false,
 				mostUsed: true,
 				presenceSearch: "",
-				presencesPerPage: 12
+				presencesPerPage: 12,
+				filters: {
+					tag: { enabled: false, padding: 50 },
+					author: { enabled: false, padding: 75 }
+				},
+				typing: false
 			};
 		},
 		computed: {
@@ -191,9 +244,19 @@
 			filteredPresences() {
 				return this.$data.presences
 					.filter(presence => {
-						return presence.service
-							.toLowerCase()
-							.includes(this.presenceSearch.toLowerCase());
+						if (this.$data.filters.tag.enabled == true)
+							return presence.tags.includes(this.presenceSearch);
+						else if (this.$data.filters.author.enabled == true)
+							return (
+								presence.author.name
+									.toLowerCase()
+									.includes(this.presenceSearch.toLowerCase()) ||
+								presence.author.id.includes(this.presenceSearch)
+							);
+						else
+							return presence.service
+								.toLowerCase()
+								.includes(this.presenceSearch.toLowerCase());
 					})
 					.filter(presence =>
 						this.$data.nsfw ? true : !presence.tags.includes("nsfw")
@@ -235,7 +298,6 @@
 				return Math.ceil(length / size);
 			},
 			paginatedData() {
-				if (this.$data.presenceSearch !== "") return this.filteredPresences;
 				let start = (this.currentPageNumber - 1) * this.$data.presencesPerPage,
 					end = start + this.$data.presencesPerPage;
 				return this.filteredPresences.slice(start, end);
@@ -263,7 +325,67 @@
 				});
 			}
 		},
+		mounted() {
+			const query =
+				this.$route.query.q ||
+				this.$route.query.query ||
+				this.$route.query.search;
+
+			query ? (this.$data.presenceSearch = query.replace(/\+/g, " ")) : false;
+
+			// For search suggestions removal
+			this.$el.addEventListener("click", evt => {
+				evt.target.className != "searchbar" ? (this.typing = false) : false;
+			});
+		},
 		methods: {
+			setSearchStyle() {
+				let padding = 10;
+
+				for (let key in this.$data.filters) {
+					this.$data.filters[key].enabled === true
+						? (padding = this.$data.filters[key].padding)
+						: false;
+				}
+
+				this.$refs.search.style.paddingLeft = `${padding}px`;
+				return true;
+			},
+			searchHandle(evt) {
+				if (!this.$data.presenceSearch) this.typing = false;
+
+				if (
+					this.$data.presenceSearch == "" &&
+					evt.key.toLowerCase() == "backspace"
+				) {
+					for (let key in this.$data.filters)
+						this.$data.filters[key].enabled = false;
+					this.setSearchStyle();
+				} else if (evt.key.toLowerCase() != "backspace") {
+					this.typing = true;
+					const handles = Object.keys(this.$data.filters);
+
+					if (handles.indexOf(this.$data.presenceSearch) !== -1) {
+						for (let key in this.$data.filters) {
+							key == this.$data.presenceSearch
+								? (this.$data.filters[key].enabled = true)
+								: (this.$data.filters[key].enabled = false);
+						}
+
+						this.$data.presenceSearch = this.$data.presenceSearch.replace(
+							this.$data.presenceSearch,
+							""
+						);
+
+						this.setSearchStyle();
+					}
+				}
+			},
+			removeFilter(filter) {
+				this.$data.filters[filter].enabled = false;
+				this.setSearchStyle();
+				return true;
+			},
 			paginationEvent(pageNumber) {
 				this.$router.push({
 					query: {
@@ -281,10 +403,53 @@
 	};
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	@import "./../stylesheets/variables.scss";
 
 	.store-menu__searchbar-container {
+		span {
+			position: absolute;
+			margin: 2px;
+			background-color: #191b24;
+			padding: 2.5px 5px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		.searchSuggestions {
+			font-size: small;
+			z-index: 999;
+			min-height: 60px;
+			position: absolute;
+			margin: 2.5em 0;
+			background-color: #191b24;
+			max-width: 85%;
+			border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			width: 100%;
+			box-shadow: 0px 1px teal;
+
+			span {
+				position: unset;
+				width: 100%;
+			}
+
+			.filterBox {
+				width: 100%;
+				display: inline-flex;
+
+				span:nth-child(1) {
+					float: left;
+					text-align: left;
+				}
+
+				span:nth-child(2) {
+					float: right;
+					text-align: right;
+				}
+			}
+		}
+
 		display: flex;
 
 		button,
