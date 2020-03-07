@@ -73,6 +73,10 @@
 	&__content {
 		margin: 0 1em;
 		flex: 55%;
+
+		.heading {
+			margin: 1.6em 0;
+		}
 	}
 }
 @media only screen and (max-width: 600px) {
