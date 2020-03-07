@@ -24,16 +24,9 @@ var DetectionMixin = {
 
 		if (this.$store.state.extension.extensionInstalled) {
 			this.$data.extensionInstalled = true;
-			this.$noty.success(this.$t(`store.message.success`));
 			this.debugMessage("Extension installed, unlocking functions...");
 		} else {
 			this.$data.extensionInstalled = false;
-			if (
-				!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-					`${navigator?.userAgent || true}`
-				)
-			)
-				this.$noty.error(this.$t(`store.message.error`));
 			this.errorMessage("Extension not found, locking functions...");
 		}
 
