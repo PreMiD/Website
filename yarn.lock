@@ -5153,10 +5153,10 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
-nuxt-lazy-load@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/nuxt-lazy-load/-/nuxt-lazy-load-1.1.5.tgz#bae75ea86bd94cf91c134cd23620f76560c9e79a"
-  integrity sha512-ziba7ZBlE5tCPvGt1zgy+4/EZyIOqp/bvfBYaYpIZldb36G8lZIj4MXLuBSE9mUimXZ24B0590B24vXj9l48Zw==
+nuxt-lazy-load@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/nuxt-lazy-load/-/nuxt-lazy-load-1.1.6.tgz#b53271bf5b6a434f3583f9d52562d75ae2a2ba64"
+  integrity sha512-ufTK+FnKMqE7KHthHvZcS+rERjh6HUpe3n+ewioFuwWRrh4Wjyp+JISIk2d4HUFjHZ7o/iLaZ12jDsTqkWPIqw==
   dependencies:
     intersection-observer "^0.7.0"
     string-replace-loader "^2.1.1"
