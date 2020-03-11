@@ -25,4 +25,4 @@ jobs:
             git pull
             yarn
             yarn build
-            pm2 restart PMD_WebMaster
+            pm2 restart Website-master
