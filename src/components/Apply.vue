@@ -99,7 +99,6 @@
 					!this.name ||
 					!this.link ||
 					!this.description ||
-					!this.imageLink ||
 					!this.imageLink
 				)
 					this.error = "Please complete all the fields.";
