@@ -66,7 +66,8 @@
 			<p v-t="'partners.apply.disclaimer'" class="applyText"></p>
 
 			<div class="button-container">
-				<button v-t="'partners.apply.button'" type="button" class="button"></button>
+				<button v-t="'partners.apply.button'" type="button" class="button" @click="isLoggedIn()"></button>
+				<Apply v-if="showModal" @close="showModal = false" />
 			</div>
 
 			<p v-t="'partners.apply.jobs'" class="jobs"></p>
@@ -89,12 +90,14 @@
 <script>
 import axios from "axios";
 import Sponsor from "~/components/Sponsor";
+import Apply from "~/components/Apply";
 import anime from "animejs";
 
 export default {
 	name: "Partners",
 	components: {
-		Sponsor
+		Sponsor,
+		Apply
 	},
 	auth: false,
 	async asyncData() {
@@ -112,7 +115,8 @@ export default {
 				"https://i.imgur.com/5LJlH5W.png",
 				"https://i.imgur.com/m2D8rgd.png",
 				"https://i.imgur.com/DoO8SMp.png"
-			]
+			],
+			showModal: false
 		};
 	},
 	mounted() {
@@ -183,6 +187,11 @@ export default {
 					)}</span></strong>`
 				);
 			})[0];
+		},
+		isLoggedIn() {
+			console.log(this.$auth);
+			if (this.$auth.loggedIn) this.showModal = true;
+			else this.$router.push("/login");
 		}
 	},
 	head: {
