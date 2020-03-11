@@ -23,6 +23,7 @@
 						<img
 							:src="require(`@/static/assets/images/partners/${partner.image}`)"
 						/>
+
 						<figcaption>
 							<div>
 								<h1 v-text="partner.name" />
@@ -38,41 +39,43 @@
 			<div class="randomImages"></div>
 
 			<div class="reasons">
-				<div class="reason" style="margin-right: 50em">
-					<h1 v-t="'partners.why.benefit1.title'"></h1>
-					<p v-t="'partners.why.benefit1.description'"></p>
+				<div class="reason">
+					<h1 v-t="'partners.why.benefit1.title'" />
+					<p v-t="'partners.why.benefit1.description'" />
 				</div>
-				<div class="reason" style="margin-left: 50em">
+				<div class="reason">
 					<h1 v-t="'partners.why.benefit2.title'"></h1>
 					<p v-t="'partners.why.benefit2.description'"></p>
 				</div>
-				<div class="reason" style="margin-right: 40em">
+				<div class="reason">
 					<h1 v-t="'partners.why.benefit3.title'"></h1>
 					<p v-t="'partners.why.benefit3.description'"></p>
 				</div>
-				<div class="reason" style="margin-left: 60em">
+				<div class="reason">
 					<h1 v-t="'partners.why.benefit4.title'"></h1>
 					<p v-t="'partners.why.benefit4.description'"></p>
 				</div>
-				<div class="reason" style="margin-right: 30em">
+				<div class="reason">
 					<h1 v-t="'partners.why.benefit5.title'"></h1>
 					<p v-t="'partners.why.benefit5.description'"></p>
 				</div>
 			</div>
 
 			<div class="requirments">
-				<h1 v-t="'partners.requirements.title'" class="rTitle"></h1>
-				<p v-t="'partners.requirements.first.title'" class="rText"></p>
-				<p
-					v-t="'partners.requirements.first.description'"
-					class="rDescription"
-				></p>
+				<div class="requirments--content">
+					<h1 v-t="'partners.requirements.title'" class="rTitle"></h1>
+					<p v-t="'partners.requirements.first.title'" class="rText"></p>
+					<p
+						v-t="'partners.requirements.first.description'"
+						class="rDescription"
+					></p>
 
-				<p v-t="'partners.requirements.second.title'" class="rText"></p>
-				<p
-					v-t="'partners.requirements.second.description'"
-					class="rDescription"
-				></p>
+					<p v-t="'partners.requirements.second.title'" class="rText"></p>
+					<p
+						v-t="'partners.requirements.second.description'"
+						class="rDescription"
+					></p>
+				</div>
 			</div>
 
 			<p v-t="'partners.apply.disclaimer'" class="applyText"></p>
@@ -82,7 +85,9 @@
 					v-t="'partners.apply.button'"
 					type="button"
 					class="button"
+					@click="isLoggedIn()"
 				></button>
+				<Apply v-if="showModal" @close="showModal = false" />
 			</div>
 
 			<p v-t="'partners.apply.jobs'" class="jobs"></p>
@@ -108,22 +113,20 @@
 <script>
 	import axios from "axios";
 	import Sponsor from "~/components/Sponsor";
+	import Apply from "~/components/Apply";
 	import anime from "animejs";
 
 	export default {
 		name: "Partners",
 		components: {
-			Sponsor
+			Sponsor,
+			Apply
 		},
 		auth: false,
 		async asyncData() {
 			return {
 				partners: (await axios(`${process.env.apiBase}/partners`)).data,
-				sponsors: (await axios(`${process.env.apiBase}/sponsors`)).data
-			};
-		},
-		data() {
-			return {
+				sponsors: (await axios(`${process.env.apiBase}/sponsors`)).data,
 				randomImages: [
 					"https://i.imgur.com/NC2A7y8.png",
 					"https://i.imgur.com/XXZNBIa.png",
@@ -135,7 +138,8 @@
 					"https://i.imgur.com/5LJlH5W.png",
 					"https://i.imgur.com/m2D8rgd.png",
 					"https://i.imgur.com/DoO8SMp.png"
-				]
+				],
+				showModal: false
 			};
 		},
 		mounted() {
@@ -170,32 +174,29 @@
 				}
 			});
 
-			anime({
-				targets: ".random-img",
-				scale: [1, 1.1],
-				delay: 500,
-				direction: "alternate",
-				easing: "easeInBounce",
-				loop: true
-			});
+			if (
+				!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+					`${navigator?.userAgent || true}`
+				)
+			) {
+				anime({
+					targets: ".random-img",
+					scale: [1, 1.1],
+					delay: 500,
+					direction: "alternate",
+					easing: "easeInBounce",
+					loop: true
+				});
 
-			anime({
-				targets: this.$refs.test,
-				keyframes: [{ translateY: 100 }, { translateX: -100 }],
-				delay: 500,
-				easing: "easeOutExpo",
-				direction: "alternate",
-				duration: 1000
-			});
-
-			anime({
-				targets: ".reason",
-				scale: [1, 1.1],
-				delay: 500,
-				direction: "alternate",
-				easing: "easeInBounce",
-				loop: true
-			});
+				anime({
+					targets: ".reason",
+					scale: [1, 1.1],
+					delay: 500,
+					direction: "alternate",
+					easing: "easeInBounce",
+					loop: true
+				});
+			}
 		},
 		methods: {
 			markdown(pls) {
@@ -209,12 +210,15 @@
 						)}</span></strong>`
 					);
 				})[0];
+			},
+			isLoggedIn() {
+				console.log(this.$auth);
+				if (this.$auth.loggedIn) this.showModal = true;
+				else this.$router.push("/login");
 			}
 		},
-		head() {
-			return {
-				title: "Partners"
-			};
+		head: {
+			title: "Partners"
 		}
 	};
 </script>
