@@ -10,7 +10,7 @@
 				><i class="fa-language fas"></i
 			></a>
 		</div>
-		<!--     
+		<!--
       ! Disabled for now as it somehow breaks the page in production
     <LanguageNotification />
     -->
@@ -39,7 +39,6 @@
 		components: {
 			Navigation,
 			Footer,
-			LanguageNotification,
 			LanguageSwitcher
 		},
 		mixins: [Debug, Detection],
