@@ -31,7 +31,6 @@
 	import Footer from "~/components/Footer.vue";
 	import Detection from "~/components/mixins/Detection";
 	import Debug from "~/components/mixins/Debug";
-	import LanguageNotification from "~/components/LanguageNotification";
 	import LanguageSwitcher from "~/components/LanguageSwitcher";
 
 	export default {
