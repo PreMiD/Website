@@ -27,6 +27,18 @@
 			}
 		}
 	}
+
+	.partner-more {
+		font-size: small;
+		vertical-align: middle;
+		transition: all 0.2s ease;
+		opacity: 0.5;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
 }
 
 .footer-copyright {

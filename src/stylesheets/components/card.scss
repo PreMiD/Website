@@ -270,6 +270,11 @@
 				margin-left: 3px;
 				font-size: 17px;
 				transition: all 0.2s ease;
+
+				&.linux {
+					color: #f1c40f;
+					text-shadow: 0 0 12px rgba(	241, 196, 15, 0.5);
+				}
 			}
 		}
 
@@ -300,6 +305,10 @@
 
 			.platform-warning {
 				color: white;
+
+				&.linux {
+					color: white;
+				}
 			}
 		}
 

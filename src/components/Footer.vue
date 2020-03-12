@@ -14,7 +14,14 @@
 				</div>
 			</div>
 			<div class="grid__section">
-				<p class="section__title" v-text="$t(`footer.partners.heading`)"></p>
+				<p class="section__title">
+					{{ $t("footer.partners.heading") }}
+					<i
+						class="fas fa-external-link-square-alt partner-more"
+						@click="$router.push('/partners')"
+						v-tippy="{ content: $t('footer.partners.more') }"
+					></i>
+				</p>
 				<div class="section__promo">
 					<a class="partner-logo" href="https://installbuilder.bitrock.com/">
 						<img src="~/assets/images/bitrock_installbuilder.png" />
@@ -60,7 +67,7 @@
 				</div>
 			</div>
 			<div class="grid__section">
-				<p class="section__title" v-text="$t(`footer.more.heading`)"></p>
+				<p class="section__title" v-text="$t('footer.more.heading')"></p>
 				<div>
 					<a href="https://discord.premid.app">Discord</a>
 					<a
@@ -81,22 +88,20 @@
 		<div class="footer-copyright">
 			<p
 				v-html="
-					$t('footer.copyright.line1')
-						.replace(
-							'{0}',
-							'<i class=\'far fa-copyright\'></i> ' +
-								new Date().getFullYear() +
-								' PreMiD'
-						)
-						.replace(
-							'{1}',
-							'<a class=\'hover-effect\' href=\'https://github.com/Timeraa/\'>Timeraa</a> & <a class=\'hover-effect\' href=\'https://github.com/Fruxh/\'>Fruxh</a>'
-						)
+					$t('footer.copyright.line1', {
+						0: `<i class=\'far fa-copyright\'></i> ${new Date().getFullYear()}  PreMiD`,
+						1: `<a class='hover-effect' href='https://github.com/Timeraa/' target='_blank'>Timeraa</a> & <a class='hover-effect' href='https://github.com/Fruxh/' target='_blank'>Fruxh</a>`
+					})
 				"
 			></p>
-			<i18n path="footer.copyright.line2" tag="p">
-				<a class="hover-effect" href="https://iryzhenkov.ru/">Voknehzyr</a>
-			</i18n>
+			<p
+				v-html="
+					$t('footer.copyright.line2', {
+						0: `<a class='hover-effect' href='https://iryzhenkov.ru/' target='_blank'>Voknehzyr</a> &
+				<a class='hover-effect' href='https://eggsy.codes/' target='_blank'>EGGSY</a>`
+					})
+				"
+			></p>
 		</div>
 	</div>
 </template>

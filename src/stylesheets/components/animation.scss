@@ -82,6 +82,51 @@
 	opacity: 0;
 }
 
+.slide-left-enter-active {
+	position: absolute;
+	transition: opacity 0.2s ease, transform 0.5s ease;
+}
+
+.slide-left-leave-active {
+	transition: opacity 0.3s ease, transform 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-left-enter,
+.slide-left-leave-to {
+	transform: translateX(20px);
+	opacity: 0;
+}
+
+.slide-right-enter-active {
+	position: absolute;
+	transition: opacity 0.2s ease, transform 0.5s ease;
+}
+
+.slide-right-leave-active {
+	transition: opacity 0.3s ease, transform 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-right-enter,
+.slide-right-leave-to {
+	transform: translateX(-20px);
+	opacity: 0;
+}
+
+.fade-enter-active {
+	position: absolute;
+	transition: opacity 0.2s ease-in;
+}
+
+.fade-leave-active {
+	transition: opacity 0.3s ease-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+	transition: opacity 0.2s ease-out;
+	opacity: 0;
+}
+
 @-webkit-keyframes waveAnimation {
 	0% {
 		d: path(
