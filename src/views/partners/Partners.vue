@@ -61,7 +61,7 @@
 				</div>
 			</div>
 
-			<div class="requirments">
+			<div class="requirments" id="req">
 				<div class="requirments--content">
 					<h1 v-t="'partners.requirements.title'" class="rTitle"></h1>
 					<p v-t="'partners.requirements.first.title'" class="rText"></p>
@@ -85,9 +85,7 @@
 					v-t="'partners.apply.button'"
 					type="button"
 					class="button"
-					@click="
-						$auth.loggedIn ? (showModal = true) : $router.push('/login')
-					"
+					@click="$auth.loggedIn ? (showModal = true) : $router.push('/login')"
 				></button>
 				<transition name="slide-down" mode="in-out">
 					<Apply v-if="showModal" @close="showModal = false" />
@@ -147,6 +145,7 @@
 			};
 		},
 		mounted() {
+			this.$auth.$storage.setUniversal("redirect", "/partners#req");
 			this.randomImages.forEach(img => {
 				let imgDestination = document.querySelector(".randomImages"),
 					newImg = document.createElement("img");
