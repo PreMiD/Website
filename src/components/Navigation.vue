@@ -7,14 +7,18 @@
 				</nuxt-link>
 
 				<div
-					v-if="!$store.state.extension.extensionInstalled"
+					v-if="
+						!isMobile &&
+							plsFinishLoading &&
+							!$store.state.extension.extensionInstalled
+					"
 					class="status"
 					v-tippy="{
 						content: $t('store.message.error')
 					}"
 				>
 					<i
-						@click="redirect('https://docs.premid.app/en/troubleshooting')"
+						@click="redirect('/downloads#ext-downloads')"
 						class="fa-exclamation fa-stack-1x fas"
 					></i>
 				</div>
@@ -68,29 +72,28 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Navigation",
 		data() {
 			return {
-				extVersion: undefined,
 				mobileMenuActive: false,
+				isMobile: false,
+				plsFinishLoading: false,
 				categories: [
 					{
 						logo: "cart-arrow-down",
 						route: "store",
-						title: "STORE"
+						title: this.$t("header.store")
 					},
 					{
 						logo: "download",
 						route: "downloads",
-						title: "DOWNLOADS"
+						title: this.$t("header.downloads")
 					},
 					{
 						logo: "hands-helping",
 						route: "contributors",
-						title: "CONTRIBUTORS"
+						title: this.$t("header.contributors")
 					}
 				]
 			};
@@ -100,14 +103,14 @@
 				window.location.href = location || window.location.href;
 			}
 		},
-		created() {
-			axios(`${process.env.apiBase}/versions`)
-				.then(res => {
-					this.$data.extVersion = res.data.extension;
-				})
-				.catch(err => {
-					console.error(err);
-				});
+		mounted() {
+			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+				navigator?.userAgent
+			);
+
+			setTimeout(() => {
+				this.$data.plsFinishLoading = true;
+			}, 500);
 		}
 	};
 </script>

@@ -985,6 +985,8 @@
 
 	.sponsor-cards {
 		display: inline-flex;
+		max-width: 1200px;
+		overflow-x: scroll;
 	}
 
 	.why {
@@ -1068,10 +1070,10 @@
 		height: 100%;
 		background: rgba(0, 0, 0, 0.5);
 		display: table;
-		transition: opacity 0.3s ease;
 	}
 
 	.modal-wrapper {
+		max-width: 90vw;
 		display: flex;
 		vertical-align: middle;
 		overflow: hidden;
@@ -1219,23 +1221,23 @@
 	.modal-default-button {
 		float: right;
 	}
-
-	.modal-enter {
-		opacity: 0;
-	}
-
-	.modal-leave-active {
-		opacity: 0;
-	}
-
-	.modal-enter .modal-container,
-	.modal-leave-active .modal-container {
-		-webkit-transform: scale(1.1);
-		transform: scale(1.1);
-	}
 }
 
 @media only screen and (max-width: 600px) {
+	.limage {
+		display: none !important;
+	}
+
+	.modal-container {
+		width: unset !important;
+		max-width: 90vw !important;
+	}
+
+	.sponsor-cards {
+		max-width: 100% !important;
+		margin: 0 !important;
+	}
+
 	#thankYou-container .card--feature__details p {
 		display: block;
 	}
@@ -1260,6 +1262,12 @@
 			padding: 0 1em;
 		}
 
+		.sponsor-info {
+			p {
+				padding: 0 !important;
+			}
+		}
+
 		.reasons {
 			margin-bottom: 2em;
 
@@ -1267,11 +1275,6 @@
 				max-width: 100%;
 				margin: 1.5em 0 !important;
 			}
-		}
-
-		.sponsor-cards {
-			max-width: 100%;
-			overflow-x: scroll;
 		}
 	}
 

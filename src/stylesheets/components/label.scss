@@ -26,6 +26,11 @@
 		vertical-align: middle;
 		padding: 4px 10px;
 		font-size: medium;
+
+		&.linux {
+			background: #f1c40f;
+			animation: pulseWarn 2s infinite;
+		}
 	}
 
 	&_role {
