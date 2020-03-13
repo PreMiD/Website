@@ -431,10 +431,10 @@
 		},
 
 		head() {
-			if (this.$data.presence.error) return;
+			if (this.$data?.presence?.error) return;
 			let description =
-				this.$data.presence.metadata.description["en"] ||
-				this.$data.presence.metadata.description;
+				this.$data?.presence?.metadata?.description["en"] ||
+				this.$data?.presence?.metadata?.description || "No description found.";
 
 			if (description.match(/\[([^\]]+)\]\(([^)]+)\)/g)) {
 				description = description.replace(
