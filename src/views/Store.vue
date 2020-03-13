@@ -307,6 +307,15 @@
 									.includes(this.presenceSearch.toLowerCase()) ||
 								presence.author.id.includes(this.presenceSearch)
 							);
+						else if (this.$data.filters.tag.enabled == true)
+							return Array.isArray(presence.tags)
+								? presence.tags.filter(
+										tag =>
+											tag
+												.toLowerCase()
+												.includes(this.presenceSearch.toLowerCase())
+								  ).length > 0
+								: false;
 						else
 							return (
 								presence.service
