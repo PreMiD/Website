@@ -28,7 +28,7 @@
 								class="fa-stack"
 							>
 								<i
-									style="color:white;font-size:16px;"
+									style="color:white;font-size:16px;margin-left:-4px;"
 									class="fa-gem fa-inverse fa-stack-1x fas"
 								></i>
 							</span>
