@@ -272,7 +272,7 @@
 			let data = {
 				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
 				partner:
-					partnersList.filter(p => p.storeName == params.presenceName).length > 0,
+					partnersList.filter(p => p.storeName == decodeURIComponent(params.presenceName)).length > 0,
 				hot:
 					(presenceRanking[decodeURIComponent(params.presenceName)] /
 						presenceUsage) *
