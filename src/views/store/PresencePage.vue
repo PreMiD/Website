@@ -383,10 +383,6 @@
 						.split(",")
 						.includes(this.$data?.presence?.metadata?.service)
 				) {
-					let position = likedPresences.indexOf(
-						this.$data?.presence?.metadata?.service
-					);
-
 					localStorage.setItem(
 						"likedPresences",
 						likedPresences

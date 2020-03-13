@@ -200,8 +200,6 @@
 					likedPresences &&
 					likedPresences.split(",").includes(this.presence.service)
 				) {
-					let position = likedPresences.indexOf(this.presence.service);
-
 					localStorage.setItem(
 						"likedPresences",
 						likedPresences
