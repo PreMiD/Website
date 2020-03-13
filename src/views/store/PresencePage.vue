@@ -10,10 +10,25 @@
 						<h1 class="presence-name">
 							{{ presence.metadata.service }}
 							<span
-								v-if="hot"
-								v-tippy
+								v-if="partner"
 								class="fa-stack"
-								:content="$t('store.cards.popular')"
+								v-tippy="{
+									content: $('store.cards.partner')
+								}"
+								style="font-size:1rem;text-align:center;cursor:pointer;"
+								@click="$router.push('/partners')"
+							>
+								<i
+									style="color:white;font-size:24px;vertical-align:sub;"
+									class="fa-gem fa-inverse fas"
+								></i>
+							</span>
+							<span
+								v-if="hot"
+								class="fa-stack"
+								v-tippy="{
+									content: $t('store.cards.popular')
+								}"
 								style="font-size:1rem;"
 							>
 								<i class="fa-circle fa-stack-2x fas"></i>
@@ -233,7 +248,8 @@
 			let presenceUsage = (await axios(`${process.env.apiBase}/usage`)).data
 					.users,
 				presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
-					.data;
+					.data,
+				partnersList = (await axios(`${process.env.apiBase}/partners`)).data;
 
 			let presenceData = await new Promise((resolve, reject) => {
 				axios(
@@ -255,6 +271,8 @@
 
 			let data = {
 				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
+				partner:
+					partnersList.filter(p => p.storeName == params.presenceName).length > 0,
 				hot:
 					(presenceRanking[decodeURIComponent(params.presenceName)] /
 						presenceUsage) *

@@ -188,6 +188,9 @@
 						:key="presence.service"
 						:presence="presence"
 						:hot="hotPresences.includes(presence.service)"
+						:partner="
+							partners.filter(p => p.storeName == presence.service).length > 0
+						"
 					/>
 				</div>
 			</div>
@@ -228,7 +231,8 @@
 			const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
 				presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
 					.data,
-				presencesList = (await axios(`${process.env.apiBase}/presences`)).data;
+				presencesList = (await axios(`${process.env.apiBase}/presences`)).data,
+				partnersList = (await axios(`${process.env.apiBase}/partners`)).data;
 
 			//! This code must be deleted after API will be updated
 			//! to have presence usage count inside the returned data already.
@@ -250,6 +254,7 @@
 			return {
 				presences: presencesList,
 				topPresences: presenceRanking,
+				partners: partnersList,
 				hotPresences: Object.keys(presenceRanking)
 					.map((k, i) => {
 						if ((presenceRanking[k] / usage) * 100 > 5) return k;

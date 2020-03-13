@@ -21,11 +21,25 @@
 						>
 							{{ presence.service }}
 							<span
+								v-if="partner"
+								v-tippy="{
+									content: $t('store.cards.partner')
+								}"
+								class="fa-stack"
+							>
+								<i
+									style="color:white;font-size:16px;"
+									class="fa-gem fa-inverse fa-stack-1x fas"
+								></i>
+							</span>
+
+							<span
 								v-if="hot"
 								v-tippy="{
 									content: $t('store.cards.popular')
 								}"
 								class="fa-stack"
+								:style="partner == true ? 'margin-left:-4px' : ''"
 							>
 								<i class="fa-circle fa-stack-2x fas"></i>
 								<i
@@ -43,7 +57,7 @@
 									content: $t('store.cards.extraStepsRequired')
 								}"
 								class="fa-stack"
-								:style="hot == true ? 'margin-left:-4px' : ''"
+								:style="hot == true || partner == true ? 'margin-left:-4px' : ''"
 							>
 								<i class="fa-circle fa-stack-2x fas"></i>
 								<i
@@ -105,9 +119,7 @@
 									</span>
 									{{ $t("store.card.presence.remove") }}
 								</button>
-								<a
-									class="button button--red button--like"
-									@click="like()"
+								<a class="button button--red button--like" @click="like()"
 									><i
 										:class="
 											$store.state.presences.likedPresences.includes(
@@ -150,7 +162,7 @@
 	export default {
 		name: "StoreCard",
 		mixins: [PresenceMixin],
-		props: ["presence", "submit", "nsfw", "hot"],
+		props: ["presence", "submit", "nsfw", "hot", "partner"],
 		data() {
 			return {
 				cardHovered: false,
