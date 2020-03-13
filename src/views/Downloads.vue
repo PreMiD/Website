@@ -95,6 +95,7 @@
 
 						<a
 							v-else
+							href="https://github.com/PreMiD/PreMiD/releases"
 							target="_blank"
 							class="label label_downloads-version"
 							v-text="appVersion"

@@ -7,9 +7,11 @@
 			@mouseleave="cardHovered = false"
 		>
 			<img class="store-card__background" :src="presence.thumbnail" />
+
 			<div class="store-card__service-logo">
 				<img :src="presence.logo" />
 			</div>
+
 			<div class="store-card__service-info">
 				<div class="store-card__service">
 					<h2>
@@ -41,7 +43,7 @@
 									content: $t('store.cards.extraStepsRequired')
 								}"
 								class="fa-stack"
-								:style="hot ? 'margin-left:-4px' : ''"
+								:style="hot == true ? 'margin-left:-4px' : ''"
 							>
 								<i class="fa-circle fa-stack-2x fas"></i>
 								<i
@@ -103,6 +105,18 @@
 									</span>
 									{{ $t("store.card.presence.remove") }}
 								</button>
+								<a
+									class="button button--red button--like"
+									@click="like()"
+									><i
+										:class="
+											$store.state.presences.likedPresences.includes(
+												presence.service
+											)
+												? 'fas' + ' fa-heart'
+												: 'far' + ' fa-heart'
+										"
+								/></a>
 							</div>
 							<div
 								v-if="
@@ -165,6 +179,34 @@
 			});
 		},
 		methods: {
+			like() {
+				const likedPresences = localStorage.getItem("likedPresences");
+
+				if (!likedPresences)
+					localStorage.setItem("likedPresences", this.presence.service);
+				else if (
+					likedPresences &&
+					likedPresences.split(",").includes(this.presence.service)
+				) {
+					let position = likedPresences.indexOf(this.presence.service);
+
+					localStorage.setItem(
+						"likedPresences",
+						likedPresences
+							.split(",")
+							.filter(i => i !== this.presence.service)
+							.join(",")
+					);
+				} else if (!likedPresences.split(",").includes(this.presence.service)) {
+					let newPresences = likedPresences.split(",");
+
+					newPresences.push(this.presence.service);
+
+					localStorage.setItem("likedPresences", newPresences.join(","));
+				}
+
+				this.$store.commit("presences/like", this.presence.service);
+			},
 			linkify(description) {
 				if (!description) return;
 				else if (

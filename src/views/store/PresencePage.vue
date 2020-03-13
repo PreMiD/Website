@@ -69,7 +69,18 @@
 							</span>
 							{{ !isMobile ? $t("presence.page.buttons.sourceCode") : "" }}
 						</a>
-						<!-- TODO: Implement like system. <a class="button button--lg button--red button--like"><i class="far fa-heart"/></a> -->
+						<a
+							class="button button--lg button--red button--like"
+							@click="like()"
+							><i
+								:class="
+									$store.state.presences.likedPresences.includes(
+										presence.metadata.service
+									)
+										? 'fas' + ' fa-heart'
+										: 'far' + ' fa-heart'
+								"
+						/></a>
 					</div>
 				</div>
 				<div class="fullpresence__content">
@@ -163,14 +174,15 @@
 									{{ $t("presence.sections.information.tags") }}:
 								</p>
 								<div class="presence-tags">
-									<a
+									<nuxt-link
 										v-for="tag of presence.metadata.tags"
 										:key="tag"
+										:to="`/store?q=${encodeURIComponent('tag:') + tag}`"
 										:style="
 											`background: ${presence.metadata.color}; color: ${presenceTextColor};`
 										"
 										class="label label_tag"
-										>{{ tag }}</a
+										>{{ tag }}</nuxt-link
 									>
 								</div>
 							</li>
@@ -340,6 +352,47 @@
 					return this.$data.presence.metadata.description;
 				}
 			},
+			like() {
+				const likedPresences = localStorage.getItem("likedPresences");
+				if (!likedPresences)
+					localStorage.setItem(
+						"likedPresences",
+						this.$data?.presence?.metadata?.service
+					);
+				else if (
+					likedPresences &&
+					likedPresences
+						.split(",")
+						.includes(this.$data?.presence?.metadata?.service)
+				) {
+					let position = likedPresences.indexOf(
+						this.$data?.presence?.metadata?.service
+					);
+
+					localStorage.setItem(
+						"likedPresences",
+						likedPresences
+							.split(",")
+							.filter(i => i !== this.$data?.presence?.metadata?.service)
+							.join(",")
+					);
+				} else if (
+					!likedPresences
+						.split(",")
+						.includes(this.$data?.presence?.metadata?.service)
+				) {
+					let newPresences = likedPresences.split(",");
+
+					newPresences.push(this.$data?.presence?.metadata?.service);
+
+					localStorage.setItem("likedPresences", newPresences.join(","));
+				}
+
+				this.$store.commit(
+					"presences/like",
+					this.$data?.presence?.metadata?.service
+				);
+			},
 			linkify(description) {
 				if (!description) return;
 				else if (
@@ -376,17 +429,50 @@
 				description = description.slice(0, 256) + "...";
 
 			return {
-				title: this.$data.presence.metadata.service,
+				title: this.$data?.presence?.metadata?.service,
 				meta: [
+					{
+						hid: "twitter:card",
+						property: "twitter:card",
+						content: "summary_large_image"
+					},
+					{
+						hid: "twitter:url",
+						property: "twitter:url",
+						content: "https://premid.app" + encodeURIComponent(this.$route.path)
+					},
+					{
+						hid: "twitter:description",
+						property: "twitter:description",
+						content: description
+					},
+					{
+						hid: "twitter:image",
+						property: "twitter:image",
+						content: this.$data?.presence?.metadata?.logo
+					},
 					{
 						hid: "theme-color",
 						property: "theme-color",
-						content: this.$data.presence.metadata.color
+						content: this.$data?.presence?.metadata?.color || "#000000"
+					},
+					{
+						hid: "title",
+						name: "title",
+						content:
+							this.$data?.presence?.metadata?.service || "Invalid Service"
+					},
+					{
+						hid: "description",
+						name: "description",
+						content: description
 					},
 					{
 						hid: "og:title",
 						property: "og:title",
-						content: this.$data.presence.metadata.service
+						content:
+							this.$data?.presence?.metadata?.service ||
+							"The service you're looking for wasn't found in any of our records. You might want to try to check if it's still available on the store."
 					},
 					{
 						hid: "og:description",
@@ -396,7 +482,9 @@
 					{
 						hid: "og:image",
 						property: "og:image",
-						content: this.$data.presence.metadata.logo
+						content:
+							this.$data?.presence?.metadata?.logo ||
+							"https://premid.app/assets/images/logo.png"
 					}
 				]
 			};
