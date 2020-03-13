@@ -13,7 +13,7 @@
 								v-if="partner"
 								class="fa-stack"
 								v-tippy="{
-									content: $('store.cards.partner')
+									content: $t('store.cards.partner')
 								}"
 								style="font-size:1rem;text-align:center;cursor:pointer;"
 								@click="$router.push('/partners')"
