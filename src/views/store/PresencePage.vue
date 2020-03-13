@@ -448,7 +448,7 @@
 					{
 						hid: "twitter:card",
 						property: "twitter:card",
-						content: "summary_large_image"
+						content: "summary"
 					},
 					{
 						hid: "twitter:url",
