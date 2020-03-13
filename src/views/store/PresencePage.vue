@@ -378,7 +378,6 @@
 						this.$data?.presence?.metadata?.service
 					);
 				else if (
-					likedPresences &&
 					likedPresences
 						.split(",")
 						.includes(this.$data?.presence?.metadata?.service)

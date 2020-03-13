@@ -197,7 +197,6 @@
 				if (!likedPresences)
 					localStorage.setItem("likedPresences", this.presence.service);
 				else if (
-					likedPresences &&
 					likedPresences.split(",").includes(this.presence.service)
 				) {
 					localStorage.setItem(

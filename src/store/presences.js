@@ -38,7 +38,9 @@ export const mutations = {
 	},
 	like(state, presence) {
 		state.likedPresences.includes(presence)
-			? state.likedPresences.pop(presence)
+			? (state.likedPresences = state.likedPresences.filter(
+					i => i !== presence
+			  ))
 			: state.likedPresences.push(presence);
 	}
 };
