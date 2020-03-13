@@ -24,6 +24,15 @@
 						>url:</span
 					>
 					<span
+						v-if="filters.tag.enabled"
+						v-tippy="{ content: $t('store.search.removeFilter') }"
+						@click="
+							removeFilter('tag');
+							$refs.search.focus();
+						"
+						>tag:</span
+					>
+					<span
 						v-if="filters.author.enabled"
 						v-tippy="{ content: $t('store.search.removeFilter') }"
 						@click="
@@ -51,6 +60,17 @@
 								class="filterBox"
 							>
 								<span>url</span>
+								<span>{{ $t("store.search.filters") }}</span>
+							</div>
+							<div
+								@click="
+									filters.tag.enabled = true;
+									$refs.search.focus();
+									setSearchStyle();
+								"
+								class="filterBox"
+							>
+								<span>tag</span>
 								<span>{{ $t("store.search.filters") }}</span>
 							</div>
 							<div
@@ -89,6 +109,14 @@
 						<input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<p>{{ $t("store.category.filters.allowAdult") }}</p>
+					</label>
+				</div>
+
+				<div class="checkbox-switcher">
+					<label>
+						<input type="checkbox" @change="filterLiked = !filterLiked" />
+						<span ref="checkbox" class="checkbox-container"></span>
+						<p>{{ $t("store.category.filters.likedOnly") }}</p>
 					</label>
 				</div>
 
@@ -160,6 +188,9 @@
 						:key="presence.service"
 						:presence="presence"
 						:hot="hotPresences.includes(presence.service)"
+						:partner="
+							partners.filter(p => p.storeName == presence.service).length > 0
+						"
 					/>
 				</div>
 			</div>
@@ -200,7 +231,8 @@
 			const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
 				presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
 					.data,
-				presencesList = (await axios(`${process.env.apiBase}/presences`)).data;
+				presencesList = (await axios(`${process.env.apiBase}/presences`)).data,
+				partnersList = (await axios(`${process.env.apiBase}/partners`)).data;
 
 			//! This code must be deleted after API will be updated
 			//! to have presence usage count inside the returned data already.
@@ -222,6 +254,7 @@
 			return {
 				presences: presencesList,
 				topPresences: presenceRanking,
+				partners: partnersList,
 				hotPresences: Object.keys(presenceRanking)
 					.map((k, i) => {
 						if ((presenceRanking[k] / usage) * 100 > 5) return k;
@@ -236,10 +269,12 @@
 				addedPresences: [],
 				nsfw: false,
 				mostUsed: true,
+				filterLiked: false,
 				presenceSearch: "",
 				presencesPerPage: 12,
 				filters: {
 					url: { enabled: false, padding: 45 },
+					tag: { enabled: false, padding: 50 },
 					author: { enabled: false, padding: 75 }
 				},
 				typing: false
@@ -287,6 +322,14 @@
 					})
 					.filter(presence =>
 						this.$data.nsfw ? true : !presence.tags.includes("nsfw")
+					)
+					.filter(presence =>
+						this.$data.filterLiked &&
+						this.$store.state.presences.likedPresences.includes(
+							presence.service
+						)
+							? true
+							: !this.$data.filterLiked
 					)
 					.filter(presence => {
 						if (this.currentCategory == "all") {
@@ -362,9 +405,10 @@
 				this.$data.presenceSearch = query
 					.replace("author:", "author ")
 					.replace("url:", "url ")
+					.replace("tag:", "tag ")
 					.replace(/\+/g, " ");
 
-				this.searchHandle();
+				this.searchHandle(null, false);
 			}
 
 			// For search suggestions removal
@@ -385,7 +429,7 @@
 				this.$refs.search.style.paddingLeft = `${padding}px`;
 				return true;
 			},
-			searchHandle(evt) {
+			searchHandle(evt, typing) {
 				if (!this.$data.presenceSearch) this.typing = false;
 
 				if (
@@ -397,7 +441,7 @@
 						this.$data.filters[key].enabled = false;
 					this.setSearchStyle();
 				} else if (!evt || evt.key.toLowerCase() != "backspace") {
-					this.typing = true;
+					this.typing = typing != "undefined" ? typing : true;
 					const handles = Object.keys(this.$data.filters);
 
 					if (handles.indexOf(this.$data.presenceSearch.split(" ")[0]) !== -1) {

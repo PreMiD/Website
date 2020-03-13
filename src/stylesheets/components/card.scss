@@ -201,12 +201,22 @@
 		.store-card__buttons {
 			margin-top: 10px;
 
-			display: inline-block;
+			display: inline-flex;
 
-			.button,
-			a {
+			.button {
+				width: 15em;
 				font-size: 12px;
-				width: 100%;
+				white-space: nowrap;
+				padding: 0.8rem 0;
+
+				i {
+					margin-right: unset;
+				}
+
+				&.button--like {
+					width: unset;
+					padding: 1em 1.5em;
+				}
 			}
 		}
 
@@ -273,7 +283,7 @@
 
 				&.linux {
 					color: #f1c40f;
-					text-shadow: 0 0 12px rgba(	241, 196, 15, 0.5);
+					text-shadow: 0 0 12px rgba(241, 196, 15, 0.5);
 				}
 			}
 		}

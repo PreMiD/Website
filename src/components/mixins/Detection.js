@@ -5,6 +5,9 @@ var DetectionMixin = {
 		};
 	},
 	async mounted() {
+		// Liked presences initialization:
+		this.$store.commit("presences/initializeLikedPresences", localStorage);
+
 		const Checker = new Promise(function(resolve, reject) {
 			setTimeout(function() {
 				resolve(

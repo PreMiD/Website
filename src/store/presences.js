@@ -1,5 +1,6 @@
 export const state = () => ({
-	addedPresences: []
+	addedPresences: [],
+	likedPresences: []
 });
 
 export const getters = {
@@ -27,5 +28,17 @@ export const mutations = {
 	},
 	remove(state, presence) {
 		state.addedPresences.pop(presence);
+	},
+	initializeLikedPresences(state, storage) {
+		const likedPresences = storage.getItem("likedPresences");
+
+		if (!likedPresences) return;
+		else if (likedPresences && likedPresences.split(",").length > 0)
+			state.likedPresences = likedPresences.split(",");
+	},
+	like(state, presence) {
+		state.likedPresences.includes(presence)
+			? state.likedPresences.pop(presence)
+			: state.likedPresences.push(presence);
 	}
 };

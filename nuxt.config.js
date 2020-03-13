@@ -88,6 +88,27 @@ module.exports = {
 				{ name: "viewport", content: "width=device-width, initial-scale=1" },
 				{ name: "PreMiD_Presence", content: "PreMiD" },
 				{
+					hid: "twitter:card",
+					property: "twitter:card",
+					content: "summary_large_image"
+				},
+				{
+					hid: "twitter:url",
+					property: "twitter:url",
+					content: "https://premid.app"
+				},
+				{
+					hid: "twitter:description",
+					property: "twitter:description",
+					content:
+						"PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status."
+				},
+				{
+					hid: "twitter:image",
+					property: "twitter:image",
+					content: "https://premid.app/assets/images/logo.png"
+				},
+				{
 					hid: "theme-color",
 					name: "theme-color",
 					content: "#7289DA"
