@@ -2,6 +2,7 @@ module.exports = {
 	rootDir: "./",
 	srcDir: "src",
 	buildModules: [
+		"@nuxt/typescript-build",
 		"@nuxtjs/router",
 		["@nuxtjs/google-analytics", { id: "UA-129058596-1" }]
 	],
@@ -9,10 +10,15 @@ module.exports = {
 		"~/router.js",
 		"~/components/plugins/I18n.js",
 		"~/components/plugins/Languages.js",
+		"~/plugins/vue-anime.js",
 		{ src: "~/components/plugins/Tippy.js", ssr: false },
 		{ src: "~/components/plugins/Noty.js", ssr: false },
 		{ src: "~/components/plugins/Pagination.js", ssr: false },
-		{ src: "~/components/plugins/Carousel.js", ssr: false }
+		{ src: "~/components/plugins/Carousel.js", ssr: false },
+		{
+			src: "~/plugins/vue-scrollmagic.js",
+			ssr: false
+		}
 	],
 	router: {
 		middleware: ["auth"]
@@ -149,7 +155,6 @@ module.exports = {
 		cache: true,
 		vendor: ["axios"],
 		ssr: true,
-		analyze: true,
 		friendlyErrors: true,
 		hotMiddleware: {
 			client: {
