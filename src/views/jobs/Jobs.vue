@@ -28,6 +28,7 @@
 				<div class="jobs">
 					<Job
 						v-for="job in jobs"
+						v-if="job.available"
 						:key="job.jobName"
 						:jobIcon="job.jobIcon"
 						:jobName="job.jobName"
@@ -50,30 +51,31 @@
 </template>
 
 <script>
-import axios from "axios";
-import Job from "~/components/Job";
-import Benefit from "~/components/Benefit";
+	import axios from "axios";
+	import Job from "~/components/Job";
+	import Benefit from "~/components/Benefit";
 
-export default {
-	name: "Jobs",
-	components: {
-		Job,
-		Benefit
-	},
-	auth: false,
-	async asyncData() {
-		const jobs = (await axios(`${process.env.apiBase}/jobs`)).data;
-		const benefits = (await axios(`${process.env.apiBase}/jobs/benefits`)).data;
+	export default {
+		name: "Jobs",
+		components: {
+			Job,
+			Benefit
+		},
+		auth: false,
+		async asyncData() {
+			const jobs = (await axios(`${process.env.apiBase}/jobs`)).data;
+			const benefits = (await axios(`${process.env.apiBase}/jobs/benefits`))
+				.data;
 
-		return {
-			jobs: jobs,
-			benefits: benefits
-		};
-	},
-	head() {
-		return {
-			title: "Jobs"
-		};
-	}
-};
+			return {
+				jobs: jobs,
+				benefits: benefits
+			};
+		},
+		head() {
+			return {
+				title: "Jobs"
+			};
+		}
+	};
 </script>

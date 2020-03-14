@@ -8,14 +8,20 @@
 					v-t="'partners.apply.button'"
 					type="button"
 					class="button"
-					@click="$auth.loggedIn ? (showModal = true) : $router.push('/login'); toggleScroll()"
+					@click="
+						$auth.loggedIn ? (showModal = true) : $router.push('/login');
+						toggleScroll();
+					"
 				></button>
 				<transition name="slide-down" mode="in-out">
 					<JobApply
 						v-if="showModal"
 						:jobName="jobName"
 						:jobQuestions="jobQuestions"
-						@close="showModal = false; toggleScroll()"
+						@close="
+							showModal = false;
+							toggleScroll();
+						"
 					/>
 				</transition>
 			</div>
@@ -24,29 +30,32 @@
 </template>
 
 <script>
-import JobApply from "~/components/JobApply";
+	import JobApply from "~/components/JobApply";
 
-export default {
-	name: "Job",
-	components: {
-		JobApply
-	},
-	props: {
-		jobIcon: String,
-		jobName: String,
-		jobQuestions: Array
-	},
-	data() {
-		return {
-			showModal: false
-		};
-	},
-	methods: {
-		toggleScroll() {
-			this.showModal
-				? document.body.classList.add("no-scroll")
-				: document.body.classList.remove("no-scroll");
+	export default {
+		name: "Job",
+		components: {
+			JobApply
+		},
+		props: {
+			jobIcon: String,
+			jobName: String,
+			jobQuestions: Array
+		},
+		data() {
+			return {
+				showModal: false
+			};
+		},
+		mounted() {
+			this.$auth.$storage.setUniversal("redirect", "/jobs");
+		},
+		methods: {
+			toggleScroll() {
+				this.showModal
+					? document.body.classList.add("no-scroll")
+					: document.body.classList.remove("no-scroll");
+			}
 		}
-	}
-};
+	};
 </script>
