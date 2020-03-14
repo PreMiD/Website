@@ -2,26 +2,24 @@
 	<div>
 		<div class="tasks">
 			<h1>Your tasks</h1>
-			<p>- handling tickets in our very own ticket system</p>
-			<p>- supporting users in our Discord Server</p>
+			<p v-for="task in job.tasks" :key="task" v-text="task"></p>
 		</div>
 		<div class="tasks">
 			<h1>What you should bring</h1>
-			<p>- at least 16 years of age</p>
-			<p>- Well English skills</p>
-			<p>- Discord account older than 3 months</p>
-			<p>- knowladge in JavaScript and GitHub</p>
+			<p v-for="requirement in job.requirements" :key="requirement" v-text="requirement"></p>
 		</div>
 		<div class="tasks">
 			<h1>Bonus points</h1>
-			<p>- experience with similar ticket systems</p>
-			<p>- user-to-user experience</p>
+			<p v-for="bonusPoint in job.bonusPoints" :key="bonusPoint" v-text="bonusPoint"></p>
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
-	name: "First"
+	name: "First",
+	props: {
+		job: Object
+	}
 };
 </script>

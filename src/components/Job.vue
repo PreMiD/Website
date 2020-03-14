@@ -1,7 +1,7 @@
 <template>
 	<div class="job">
-		<i v-bind:class="jobIcon"></i>
-		<h1 v-text="jobName"></h1>
+		<i v-bind:class="job.jobIcon"></i>
+		<h1 v-text="job.jobName"></h1>
 		<div class="button-container">
 			<div class="button-container">
 				<button
@@ -16,8 +16,7 @@
 				<transition name="slide-down" mode="in-out">
 					<JobApply
 						v-if="showModal"
-						:jobName="jobName"
-						:jobQuestions="jobQuestions"
+						:job="job"
 						@close="
 							showModal = false;
 							toggleScroll();
@@ -30,32 +29,30 @@
 </template>
 
 <script>
-	import JobApply from "~/components/JobApply";
+import JobApply from "~/components/JobApply";
 
-	export default {
-		name: "Job",
-		components: {
-			JobApply
-		},
-		props: {
-			jobIcon: String,
-			jobName: String,
-			jobQuestions: Array
-		},
-		data() {
-			return {
-				showModal: false
-			};
-		},
-		mounted() {
-			this.$auth.$storage.setUniversal("redirect", "/jobs");
-		},
-		methods: {
-			toggleScroll() {
-				this.showModal
-					? document.body.classList.add("no-scroll")
-					: document.body.classList.remove("no-scroll");
-			}
+export default {
+	name: "Job",
+	components: {
+		JobApply
+	},
+	props: {
+		job: Object
+	},
+	data() {
+		return {
+			showModal: false
+		};
+	},
+	mounted() {
+		this.$auth.$storage.setUniversal("redirect", "/jobs");
+	},
+	methods: {
+		toggleScroll() {
+			this.showModal
+				? document.body.classList.add("no-scroll")
+				: document.body.classList.remove("no-scroll");
 		}
-	};
+	}
+};
 </script>

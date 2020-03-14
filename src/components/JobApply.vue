@@ -17,13 +17,13 @@
 			</div>
 			<div class="modal-container" style="background-color: #23272a;">
 				<div class="modal-header" style="margin-bottom: 3em;">
-					<h1>Apply for {{ jobName }}</h1>
+					<h1>Apply for {{ job.jobName }}</h1>
 					<p v-text="error" style="color: red; font-size: 1em; margin: 0;"></p>
 				</div>
 
 				<div class="modal-body">
-					<First v-if="currentPage == 0" />
-					<Questions v-if="currentPage == 1" :jobQuestions="jobQuestions" />
+					<First v-if="currentPage == 0" :job="job" />
+					<Questions v-if="currentPage == 1" :job="job" />
 					<div v-if="currentPage == 1" class="jobCheckbox">
 						<!-- TODO: Fix the checkbox. -->
 						<div class="checkbox-switcher">
@@ -61,8 +61,7 @@ export default {
 		Questions
 	},
 	props: {
-		jobName: String,
-		jobQuestions: Array
+		job: Object
 	},
 	data() {
 		return {
@@ -79,7 +78,7 @@ export default {
 	methods: {
 		apply() {
 			this.errors = 0;
-			this.jobQuestions.map(question => {
+			this.job.questions.map(question => {
 				if (!question.response && question.required == true) this.errors++;
 			});
 
@@ -88,7 +87,7 @@ export default {
 			if (this.errors == 0 && this.check) {
 				axios
 					.post(`${process.env.apiBase}/jobs/apply`, {
-						questions: this.jobQuestions,
+						questions: this.job.questions,
 						discordUser: this.$auth.user
 					})
 					.then(data => console.log(data))

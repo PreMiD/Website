@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<p v-for="question in jobQuestions" :key="question.question" style="margin-bottom: 1em;">
+		<p v-for="question in job.questions" :key="question.question" style="margin-bottom: 1em;">
 			<label>{{ question.label }}</label>
 			<input v-model="question.response" />
 		</p>
@@ -11,7 +11,7 @@
 export default {
 	name: "Questions",
 	props: {
-		jobQuestions: Array
+		job: Object
 	},
 	data() {
 		return {
@@ -19,7 +19,7 @@ export default {
 		};
 	},
 	beforeMount() {
-		this.jobQuestions.map(question => {
+		this.job.questions.map(question => {
 			if (!question.required)
 				question.label = question.question + " (Optional)";
 			else question.label = question.question;
