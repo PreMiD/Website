@@ -415,7 +415,7 @@
 					targets: el,
 					opacity: [0, 1],
 					translateX: [i % 2 ? 100 : -100, 0],
-					duration: 1000,
+					duration: 800,
 					autoplay: false
 				});
 
@@ -431,26 +431,6 @@
 					featuresHeading.seek(event.progress * 100)
 				);
 			});
-
-			return;
-
-			const featureObserver = new IntersectionObserver(
-				(entries, observer) => {
-					entries.forEach(entry => {
-						console.log(entry.intersectionRatio);
-						return;
-						if (entry.isIntersecting) {
-							featuresHeading.play();
-							featureObserver.unobserve(entry.target);
-						}
-					});
-				},
-				{
-					rootMargin: "-200px"
-				}
-			);
-
-			featureObserver.observe(document.querySelector("#featuresHeading"));
 		},
 		methods: {
 			openInNewTab(url) {
