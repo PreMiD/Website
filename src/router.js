@@ -16,6 +16,7 @@ import loginPage from "~/views/auth/Login";
 import logoutPage from "~/views/auth/Logout";
 import callbackPage from "~/views/auth/AuthCallback";
 import Partners from "~/views/partners/Partners";
+import Jobs from "~/views/jobs/Jobs";
 
 Vue.use(Router);
 
@@ -65,6 +66,10 @@ export function createRouter() {
 				path: "/partners",
 				alias: "/partner",
 				component: Partners
+			},
+			{
+				path: "/jobs",
+				component: Jobs
 			},
 			{
 				path: "/store/presences/:presenceName",

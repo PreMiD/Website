@@ -1,11 +1,6 @@
 <template>
 	<label for="cbx" class="label-cbx">
-		<input
-			id="cbx"
-			type="checkbox"
-			:class="'invisible ' + selector"
-			@input="toggleInput"
-		/>
+		<input id="cbx" type="checkbox" :class="'invisible ' + selector" @input="toggleInput" />
 		<div class="checkbox">
 			<svg width="1.4rem" height="1.4rem" viewBox="0 0 20 20">
 				<path
@@ -19,88 +14,88 @@
 </template>
 
 <script>
-	export default {
-		name: "Checkbox",
-		props: ["selector", "text", "toggle"],
-		methods: {
-			toggleInput() {
-				this.$parent.toggleInput(this.$props.toggle);
-			}
+export default {
+	name: "Checkbox",
+	props: ["selector", "text", "toggle"],
+	methods: {
+		toggleInput() {
+			this.$parent.toggleInput(this.$props.toggle);
 		}
-	};
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import "./../stylesheets/variables.scss";
+@import "./../stylesheets/variables.scss";
 
-	.label-cbx {
-		user-select: none;
-		cursor: pointer;
-		margin-bottom: 0;
-	}
-	.label-cbx input:checked + .checkbox {
-		border-color: $color-btn-green;
-	}
-	.label-cbx input:checked + .checkbox svg path {
-		fill: $color-btn-green;
-	}
-	.label-cbx input:checked + .checkbox svg polyline {
-		stroke-dashoffset: 0;
-	}
-	.label-cbx:hover .checkbox svg path {
-		stroke-dashoffset: 0;
-	}
-	.label-cbx .checkbox {
-		position: relative;
-		top: 2px;
-		float: left;
-		margin-right: 8px;
-		width: 1.1rem;
-		height: 1.1rem;
-		border: 2px solid #c8ccd4;
-		border-radius: 3px;
-	}
-	.label-cbx .checkbox svg {
-		position: absolute;
-		top: -2px;
-		left: -2px;
-	}
-	.label-cbx .checkbox svg path {
-		fill: none;
-		stroke: $color-btn-green;
-		stroke-width: 2;
-		stroke-linecap: round;
-		stroke-linejoin: round;
-		stroke-dasharray: 71px;
-		stroke-dashoffset: 71px;
-		transition: all 0.6s ease;
-	}
-	.label-cbx .checkbox svg polyline {
-		fill: none;
-		stroke: #fff;
-		stroke-width: 2;
-		stroke-linecap: round;
-		stroke-linejoin: round;
-		stroke-dasharray: 18px;
-		stroke-dashoffset: 18px;
-		transition: all 0.3s ease;
-	}
-	.label-cbx > span {
-		pointer-events: none;
-		vertical-align: middle;
-	}
+.label-cbx {
+	user-select: none;
+	cursor: pointer;
+	margin-bottom: 0;
+}
+.label-cbx input:checked + .checkbox {
+	border-color: $color-btn-green;
+}
+.label-cbx input:checked + .checkbox svg path {
+	fill: $color-btn-green;
+}
+.label-cbx input:checked + .checkbox svg polyline {
+	stroke-dashoffset: 0;
+}
+.label-cbx:hover .checkbox svg path {
+	stroke-dashoffset: 0;
+}
+.label-cbx .checkbox {
+	position: relative;
+	top: 2px;
+	float: left;
+	margin-right: 8px;
+	width: 1.1rem;
+	height: 1.1rem;
+	border: 2px solid #c8ccd4;
+	border-radius: 3px;
+}
+.label-cbx .checkbox svg {
+	position: absolute;
+	top: -2px;
+	left: -2px;
+}
+.label-cbx .checkbox svg path {
+	fill: none;
+	stroke: $color-btn-green;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-dasharray: 71px;
+	stroke-dashoffset: 71px;
+	transition: all 0.6s ease;
+}
+.label-cbx .checkbox svg polyline {
+	fill: none;
+	stroke: #fff;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-dasharray: 18px;
+	stroke-dashoffset: 18px;
+	transition: all 0.3s ease;
+}
+.label-cbx > span {
+	pointer-events: none;
+	vertical-align: middle;
+}
 
-	.text {
-		margin-left: 1.9rem;
-		margin-top: 0.2rem;
-		color: #c8ccd4;
-	}
+.text {
+	margin-left: 1.9rem;
+	margin-top: 0.2rem;
+	color: #c8ccd4;
+}
 
-	.invisible {
-		position: absolute;
-		z-index: -1;
-		width: 0;
-		height: 0;
-		opacity: 0;
-	}
+.invisible {
+	position: absolute;
+	z-index: -1;
+	width: 0;
+	height: 0;
+	opacity: 0;
+}
 </style>

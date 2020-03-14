@@ -845,6 +845,269 @@
 	}
 }
 
+.jobs-container {
+	position: relative;
+	z-index: 1;
+	overflow: hidden;
+	padding: 25px 0 150px;
+	background-image: url("../assets/images/pattern.png");
+	background-size: 300px 240px;
+
+	.jobs-heading h1 {
+		margin-bottom: 0.25em;
+		text-transform: uppercase;
+	}
+}
+
+.jobs-heading {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	text-align: center;
+	align-items: center;
+
+	h1 {
+		font-size: 3.5em;
+		color: #7289da;
+		line-height: 0;
+	}
+
+	p {
+		font-size: 1.2em;
+		color: white;
+		margin-bottom: 2em;
+	}
+}
+
+.modal-mask {
+	position: fixed;
+	z-index: 9999;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: table;
+
+	.modal-wrapper {
+		max-width: 90vw;
+		display: flex;
+		vertical-align: middle;
+		overflow: hidden;
+		justify-content: center;
+		height: 100%;
+		align-items: center;
+	}
+
+	.limage {
+		display: flex;
+		flex-direction: column;
+		vertical-align: middle;
+		align-items: center;
+		align-self: center;
+		text-align: center;
+		justify-content: center;
+		background-color: #151518;
+		width: 300px;
+		height: 550px;
+		padding: 20px 30px;
+
+		img {
+			max-width: 100%;
+			align-self: center;
+			object-fit: contain;
+		}
+
+		h1 {
+			color: white;
+			font-size: 3em;
+			line-height: 0;
+		}
+
+		.text {
+			margin-top: auto;
+
+			p {
+				margin: 0;
+			}
+
+			.steps {
+				font-size: 1em;
+				margin-top: 1em;
+				color: gray;
+				text-transform: uppercase;
+			}
+		}
+	}
+
+	.modal-container {
+		width: 500px;
+		height: 550px;
+		padding: 20px 30px;
+		background-color: #fff;
+		border-radius: 2px;
+		box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+		transition: all 0.3s ease;
+		position: relative;
+
+		.error {
+			color: red;
+			line-height: 0;
+		}
+
+		.tasks {
+			text-align: left;
+			margin-top: 3.5em;
+			margin-bottom: 3em;
+			h1 {
+				color: gray !important;
+				text-transform: uppercase;
+			}
+
+			p {
+				color: gray !important;
+				margin: 0;
+				margin-left: 0.5em;
+			}
+		}
+
+		#particles-js {
+			background-size: cover;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		p label {
+			color: black;
+			font-size: 0.75em;
+			float: left;
+			text-align: left;
+			margin-bottom: 0.25em;
+			text-transform: uppercase;
+		}
+
+		input {
+			font-family: "Inter";
+			display: block;
+			border-radius: 4px;
+			width: 100%;
+			margin-bottom: 0.75em;
+			padding: 0.75em;
+			box-sizing: border-box;
+			border: 1px solid #cacbce;
+			transition: all 0.6s ease;
+		}
+
+		input:focus {
+			border: 1px solid #7289da;
+		}
+
+		select {
+			font-family: "Inter";
+			color: black;
+			display: block;
+			border-radius: 4px;
+			width: 60%;
+			margin-bottom: 1em;
+			padding: 0.5em;
+			border: 1px solid #cacbce;
+			transition: all 0.6s ease;
+		}
+
+		textarea {
+			font-family: "Inter";
+		}
+
+		.recaptcha {
+			margin-top: 1em;
+		}
+	}
+
+	.modal-header {
+		margin-bottom: 1em;
+		h1 {
+			color: black;
+			font-size: 2em;
+			font-weight: 500;
+		}
+		h3 {
+			margin-top: 0;
+			color: #42b983;
+		}
+	}
+
+	.modal-footer {
+		margin-top: 1em;
+		.buttons {
+			position: absolute;
+			right: 1em;
+			bottom: 1em;
+		}
+		.button {
+			font-family: inherit;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			border: none;
+			padding: 0.5rem 1.5rem;
+			border-radius: 55rem;
+			font-size: 0.85em;
+			font-weight: 700;
+			background: #7289da;
+			color: #fdfcff;
+			cursor: pointer;
+			display: block;
+			margin-right: 0.7rem;
+			transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			box-shadow: 0 3px 16px -7px rgba(17, 18, 24, 0.7);
+			text-align: center;
+			font-family: inherit;
+			float: right;
+		}
+	}
+
+	.modal-body {
+		margin: 20px 0;
+
+		.jobCheckbox {
+			display: flex;
+			text-align: left;
+			align-items: center;
+			padding: 0.5em;
+			font-size: 0.8em;
+			background-color: #151518;
+			border-radius: 5px;
+
+			.checkbox-switcher label {
+				span {
+					flex-shrink: 0;
+				}
+
+				p {
+					font-size: 0.9em;
+				}
+			}
+
+			input[type="checkbox"] {
+				margin: 1em;
+				width: auto;
+			}
+		}
+	}
+
+	.modal-default-button {
+		float: right;
+	}
+}
+
+.no-scroll {
+	overflow: hidden;
+}
+
 .partners {
 	.carousel-3d-container {
 		.carousel-3d-slide {
@@ -1060,166 +1323,90 @@
 		z-index: -1;
 		border-radius: 100%;
 	}
+}
 
-	.modal-mask {
-		position: fixed;
-		z-index: 9999;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: rgba(0, 0, 0, 0.5);
-		display: table;
+.openings {
+	margin-bottom: 2em;
+
+	h1 {
+		color: white;
+		font-size: 2.2em;
+		margin-bottom: 1em;
 	}
 
-	.modal-wrapper {
-		max-width: 90vw;
+	.jobs {
 		display: flex;
-		vertical-align: middle;
-		overflow: hidden;
-		justify-content: center;
-		height: 100%;
-		align-items: center;
-	}
+		justify-content: space-around;
 
-	.limage {
-		display: flex;
-		flex-direction: column;
-		vertical-align: middle;
-		align-items: center;
-		align-self: center;
-		text-align: center;
-		justify-content: center;
-		background-color: #151518;
-		width: 300px;
-		height: 550px;
-		padding: 20px 30px;
-		img {
-			max-width: 100%;
-			align-self: center;
-			object-fit: contain;
+		.job {
+			width: 350px;
+			height: 175px;
+			background: #23272a;
+			border-radius: 5px;
+			padding: 1em;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-around;
+			margin: 1em;
+
+			i {
+				font-size: 64px;
+				color: #7289da;
+				margin-bottom: 0.25em;
+			}
+
+			h1 {
+				color: white;
+				font-size: 1.75em;
+			}
+
+			.button {
+				font-size: 0.9em;
+				padding: 0.5rem 2.3rem;
+			}
 		}
+	}
+}
+
+.benefits {
+	display: block;
+	max-width: 900px;
+	text-align: center;
+	margin: 0 auto;
+
+	h1 {
+		color: white;
+		font-size: 2.2em;
+		margin-bottom: 1em;
+	}
+
+	.benefit {
+		width: 200px;
+		height: 150px;
+		display: inline-block;
+		vertical-align: top;
+		text-align: left;
+		justify-content: space-around;
+		margin: 2em;
+
+		i {
+			font-size: 64px;
+			color: #7289da;
+			margin-bottom: 0.25em;
+		}
+
 		h1 {
 			color: white;
-			font-size: 3em;
-			line-height: 0;
-		}
-	}
-
-	.modal-container {
-		width: 500px;
-		height: 550px;
-		padding: 20px 30px;
-		background-color: #fff;
-		border-radius: 2px;
-		box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
-		transition: all 0.3s ease;
-		position: relative;
-
-		.error {
-			color: red;
-			line-height: 0;
+			font-size: 1.6em;
+			line-height: 1;
+			margin: 0;
 		}
 
-		#particles-js {
-			background-size: cover;
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-		}
-
-		label {
-			color: black;
-			font-size: 0.75em;
-			float: left;
-			text-align: left;
-			margin-bottom: 0.25em;
-			text-transform: uppercase;
-		}
-
-		input {
-			font-family: "Inter";
-			display: block;
-			border-radius: 4px;
-			width: 100%;
-			margin-bottom: 0.75em;
-			padding: 0.75em;
-			box-sizing: border-box;
-			border: 1px solid #cacbce;
-			transition: all 0.6s ease;
-		}
-
-		input:focus {
-			border: 1px solid #7289da;
-		}
-
-		select {
-			font-family: "Inter";
-			color: black;
-			display: block;
-			border-radius: 4px;
-			width: 60%;
-			margin-bottom: 1em;
-			padding: 0.5em;
-			border: 1px solid #cacbce;
-			transition: all 0.6s ease;
-		}
-
-		textarea {
-			font-family: "Inter";
-		}
-
-		.recaptcha {
-			margin-top: 1em;
-		}
-	}
-
-	.modal-header {
-		margin-bottom: 1em;
-		h1 {
-			color: black;
-			font-size: 2em;
-		}
-		h3 {
-			margin-top: 0;
-			color: #42b983;
-		}
-	}
-
-	.modal-footer {
-		margin-top: 1em;
-		.button {
-			font-family: inherit;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-			border: none;
-			padding: 0.5rem 1.5rem;
-			border-radius: 55rem;
+		p {
+			color: white;
 			font-size: 0.85em;
-			font-weight: 700;
-			background: #7289da;
-			color: #fdfcff;
-			cursor: pointer;
-			display: block;
-			margin-right: 0.7rem;
-			transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-			box-shadow: 0 3px 16px -7px rgba(17, 18, 24, 0.7);
-			text-align: center;
-			font-family: inherit;
-			float: right;
 		}
-	}
-
-	.modal-body {
-		margin: 20px 0;
-	}
-
-	.modal-default-button {
-		float: right;
 	}
 }
 

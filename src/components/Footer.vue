@@ -5,12 +5,7 @@
 				<p class="section__title" v-text="$t(`footer.usercount.heading`)"></p>
 				<div class="section__promo">
 					<p v-text="$t(`footer.usercount.message`, [$data.installStats])"></p>
-					<nuxt-link
-						class="button"
-						replace
-						to="/downloads"
-						v-text="$t(`footer.usercount.button`)"
-					/>
+					<nuxt-link class="button" replace to="/downloads" v-text="$t(`footer.usercount.button`)" />
 				</div>
 			</div>
 			<div class="grid__section">
@@ -37,32 +32,17 @@
 			<div class="grid__section">
 				<p class="section__title" v-text="$t(`footer.supportus.heading`)"></p>
 				<div>
-					<a
-						href="https://patreon.com/timeraa/"
-						v-text="$t(`footer.supportus.donate`)"
-					></a>
-					<a
-						href="https://github.com/PreMiD/"
-						v-text="$t(`footer.supportus.contribute`)"
-					></a>
-					<a
-						href="https://translate.premid.app/"
-						v-text="$t(`footer.supportus.translate`)"
-					></a>
+					<a href="https://patreon.com/timeraa/" v-text="$t(`footer.supportus.donate`)"></a>
+					<a href="https://github.com/PreMiD/" v-text="$t(`footer.supportus.contribute`)"></a>
+					<a href="https://translate.premid.app/" v-text="$t(`footer.supportus.translate`)"></a>
 				</div>
 			</div>
 			<div class="grid__section">
 				<p class="section__title" v-text="$t(`footer.help.information`)"></p>
 				<div>
 					<a href="https://github.com/PreMiD/">GitHub</a>
-					<nuxt-link
-						to="/cookies"
-						v-text="$t(`footer.help.information.cookies`)"
-					/>
-					<nuxt-link
-						to="/privacy"
-						v-text="$t(`footer.help.information.privacy`)"
-					/>
+					<nuxt-link to="/cookies" v-text="$t(`footer.help.information.cookies`)" />
+					<nuxt-link to="/privacy" v-text="$t(`footer.help.information.privacy`)" />
 					<nuxt-link to="/tos" v-text="$t(`footer.help.information.terms`)" />
 				</div>
 			</div>
@@ -70,18 +50,9 @@
 				<p class="section__title" v-text="$t('footer.more.heading')"></p>
 				<div>
 					<a href="https://discord.premid.app">Discord</a>
-					<a
-						href="https://docs.premid.app/troubleshooting/"
-						v-text="$t(`footer.help.troubleshooting`)"
-					></a>
-					<a
-						href="https://docs.premid.app/"
-						v-text="$t(`footer.developers.documentation`)"
-					></a>
-					<a
-						href="https://status.premid.app/"
-						v-text="$t(`footer.more.status`)"
-					></a>
+					<a href="https://docs.premid.app/troubleshooting/" v-text="$t(`footer.help.troubleshooting`)"></a>
+					<a href="https://docs.premid.app/" v-text="$t(`footer.developers.documentation`)"></a>
+					<a href="https://status.premid.app/" v-text="$t(`footer.more.status`)"></a>
 				</div>
 			</div>
 		</div>
@@ -98,7 +69,8 @@
 				v-html="
 					$t('footer.copyright.line2', {
 						0: `<a class='hover-effect' href='https://iryzhenkov.ru/' target='_blank'>Voknehzyr</a> &
-				<a class='hover-effect' href='https://eggsy.codes/' target='_blank'>EGGSY</a>`
+				<a class='hover-effect' href='https://eggsy.codes/' target='_blank'>EGGSY</a> &
+				<a class='hover-effect' href='https://github.com/TheDropX/' target='_blank'>TheDrop.</a>`
 					})
 				"
 			></p>
@@ -107,22 +79,22 @@
 </template>
 
 <script>
-	import axios from "axios";
+import axios from "axios";
 
-	export default {
-		data() {
-			return {
-				installStats: 0
-			};
-		},
-		mounted() {
-			let self = this;
+export default {
+	data() {
+		return {
+			installStats: 0
+		};
+	},
+	mounted() {
+		let self = this;
 
-			axios(`${process.env.apiBase}/usage`).then(({ data }) => {
-				self.$data.installStats = data.users
-					.toString()
-					.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-			});
-		}
-	};
+		axios(`${process.env.apiBase}/usage`).then(({ data }) => {
+			self.$data.installStats = data.users
+				.toString()
+				.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+		});
+	}
+};
 </script>
