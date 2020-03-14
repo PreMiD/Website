@@ -3,7 +3,7 @@
 		<div class="modal-wrapper">
 			<div class="limage">
 				<img src="../assets/images/pmd_logo2.png" />
-				<div class="text">
+				<div class="bottomText">
 					<p>
 						{{
 						$t("partners.apply.loggedUser", {

@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<p v-for="question in jobQuestions" :key="question.question" style="margin-bottom: 1em;">
-			<label style="color: white">{{ question.label }}</label>
-			<input style="background-color: #23272a; color: white;" v-model="question.response" />
+			<label>{{ question.label }}</label>
+			<input v-model="question.response" />
 		</p>
 	</div>
 </template>

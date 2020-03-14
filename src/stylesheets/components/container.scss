@@ -890,7 +890,6 @@
 	display: table;
 
 	.modal-wrapper {
-		max-width: 90vw;
 		display: flex;
 		vertical-align: middle;
 		overflow: hidden;
@@ -916,24 +915,27 @@
 			max-width: 100%;
 			align-self: center;
 			object-fit: contain;
+			margin-top: auto;
 		}
 
 		h1 {
 			color: white;
-			font-size: 3em;
+			font-size: 3rem;
 			line-height: 0;
 		}
 
-		.text {
+		.bottomText {
 			margin-top: auto;
+			color: white;
 
 			p {
 				margin: 0;
+				font-size: 1rem;
 			}
 
 			.steps {
-				font-size: 1em;
-				margin-top: 1em;
+				font-size: 1rem;
+				margin-top: 1rem;
 				color: gray;
 				text-transform: uppercase;
 			}
@@ -944,7 +946,7 @@
 		width: 500px;
 		height: 550px;
 		padding: 20px 30px;
-		background-color: #fff;
+		background-color: #23272a;
 		border-radius: 2px;
 		box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
 		transition: all 0.3s ease;
@@ -960,12 +962,12 @@
 			margin-top: 3.5em;
 			margin-bottom: 3em;
 			h1 {
-				color: gray !important;
+				color: #888888 !important;
 				text-transform: uppercase;
 			}
 
 			p {
-				color: gray !important;
+				color: #888888 !important;
 				margin: 0;
 				margin-left: 0.5em;
 			}
@@ -981,8 +983,8 @@
 		}
 
 		p label {
-			color: black;
-			font-size: 0.75em;
+			color: white;
+			font-size: 0.75rem;
 			float: left;
 			text-align: left;
 			margin-bottom: 0.25em;
@@ -991,13 +993,15 @@
 
 		input {
 			font-family: "Inter";
+			color: white;
 			display: block;
 			border-radius: 4px;
 			width: 100%;
 			margin-bottom: 0.75em;
 			padding: 0.75em;
 			box-sizing: border-box;
-			border: 1px solid #cacbce;
+			border: 1px solid #7289da;
+			background-color: #151518;
 			transition: all 0.6s ease;
 		}
 
@@ -1005,16 +1009,25 @@
 			border: 1px solid #7289da;
 		}
 
+		input::placeholder {
+			color: #888888;
+		}
+
 		select {
 			font-family: "Inter";
-			color: black;
+			background-color: #151518;
+			color: white;
 			display: block;
 			border-radius: 4px;
 			width: 60%;
 			margin-bottom: 1em;
 			padding: 0.5em;
-			border: 1px solid #cacbce;
+			border: 1px solid #7289da;
 			transition: all 0.6s ease;
+		}
+
+		select option {
+			color: white;
 		}
 
 		textarea {
@@ -1029,13 +1042,9 @@
 	.modal-header {
 		margin-bottom: 1em;
 		h1 {
-			color: black;
+			color: white;
 			font-size: 2em;
 			font-weight: 500;
-		}
-		h3 {
-			margin-top: 0;
-			color: #42b983;
 		}
 	}
 
