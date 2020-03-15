@@ -860,40 +860,6 @@
 	}
 }
 
-.jobs-container {
-	position: relative;
-	z-index: 1;
-	overflow: hidden;
-	padding: 25px 0 150px;
-	background-image: url("../assets/images/pattern.png");
-	background-size: 300px 240px;
-
-	.jobs-heading h1 {
-		margin-bottom: 0.25em;
-		text-transform: uppercase;
-	}
-}
-
-.jobs-heading {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	text-align: center;
-	align-items: center;
-
-	h1 {
-		font-size: 3.5em;
-		color: #7289da;
-		line-height: 0;
-	}
-
-	p {
-		font-size: 1.2em;
-		color: white;
-		margin-bottom: 2em;
-	}
-}
-
 .modal-mask {
 	position: fixed;
 	z-index: 9999;
@@ -974,11 +940,11 @@
 
 		.tasks {
 			text-align: left;
-			margin-top: 3.5em;
-			margin-bottom: 3em;
+			margin: 0;
+
 			h1 {
-				color: #888888 !important;
 				text-transform: uppercase;
+				font-size: 1.75em;
 			}
 
 			p {
@@ -1007,6 +973,8 @@
 		}
 
 		input {
+			transition: all 0.15s ease-out;
+
 			font-family: "Inter";
 			color: white;
 			display: block;
@@ -1015,9 +983,8 @@
 			margin-bottom: 0.75em;
 			padding: 0.75em;
 			box-sizing: border-box;
-			border: 1px solid #7289da;
-			background-color: #151518;
-			transition: all 0.6s ease;
+			border: 1px solid transparent;
+			background-color: #1f1f20;
 		}
 
 		input:focus {
@@ -1060,6 +1027,8 @@
 			color: white;
 			font-size: 2em;
 			font-weight: 500;
+			margin: 0;
+			text-align: center;
 		}
 	}
 
@@ -1346,91 +1315,6 @@
 		opacity: 0.6;
 		z-index: -1;
 		border-radius: 100%;
-	}
-}
-
-.openings {
-	margin-bottom: 2em;
-
-	h1 {
-		color: white;
-		font-size: 2.2em;
-		margin-bottom: 1em;
-	}
-
-	.jobs {
-		display: flex;
-		justify-content: space-around;
-
-		.job {
-			width: 350px;
-			height: 175px;
-			background: #23272a;
-			border-radius: 5px;
-			padding: 1em;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: space-around;
-			margin: 1em;
-
-			i {
-				font-size: 64px;
-				color: #7289da;
-				margin-bottom: 0.25em;
-			}
-
-			h1 {
-				color: white;
-				font-size: 1.75em;
-			}
-
-			.button {
-				font-size: 0.9em;
-				padding: 0.5rem 2.3rem;
-			}
-		}
-	}
-}
-
-.benefits {
-	display: block;
-	max-width: 900px;
-	text-align: center;
-	margin: 0 auto;
-
-	h1 {
-		color: white;
-		font-size: 2.2em;
-		margin-bottom: 1em;
-	}
-
-	.benefit {
-		width: 200px;
-		height: 150px;
-		display: inline-block;
-		vertical-align: top;
-		text-align: left;
-		justify-content: space-around;
-		margin: 2em;
-
-		i {
-			font-size: 64px;
-			color: #7289da;
-			margin-bottom: 0.25em;
-		}
-
-		h1 {
-			color: white;
-			font-size: 1.6em;
-			line-height: 1;
-			margin: 0;
-		}
-
-		p {
-			color: white;
-			font-size: 0.85em;
-		}
 	}
 }
 
