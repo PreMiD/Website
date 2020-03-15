@@ -7,7 +7,7 @@
 		"build": "rimraf src/langs/* && node languageParser.js && nuxt build"
 	},
 	"dependencies": {
-		"@nuxtjs/auth": "4.8.5",
+		"@nuxtjs/auth": "4.9.0",
 		"@nuxtjs/axios": "5.9.5",
 		"animejs": "^3.1.0",
 		"axios": "0.19.2",
