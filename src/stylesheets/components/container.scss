@@ -556,6 +556,7 @@
 
 		.fullpresence__gradient {
 			background-size: cover !important;
+			filter: blur(.75px);
 			content: "";
 			position: absolute;
 			top: 0;
