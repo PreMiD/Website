@@ -223,6 +223,7 @@
 }
 
 .dl-container {
+	overflow-x: hidden;
 	color: white;
 	position: relative;
 
@@ -259,6 +260,10 @@
 		&_downloads {
 			padding-top: 1em;
 			padding-bottom: 2em;
+
+			.bounce {
+				animation: 1s bounce normal;
+			}
 		}
 
 		h1.section-header {
@@ -1314,6 +1319,13 @@
 }
 
 @media only screen and (max-width: 600px) {
+	.fullpresence-container .fullpresence__content {
+		.content__description,
+		.content__info {
+			max-width: 70vw;
+		}
+	}
+
 	.modal-mask {
 		overflow-y: scroll;
 
@@ -1358,18 +1370,34 @@
 		}
 	}
 
-	.openings {
-		h1 {
-			margin-top: 1em;
-			margin-bottom: 1.5em;
+	#jobsWrapper #jobsContainer {
+		#heading {
+			padding-bottom: 5em;
+
+			h1 {
+				font-size: 2em;
+				margin-bottom: 4px;
+			}
 		}
 
-		.jobs {
-			display: block;
+		#openings {
+			h1 {
+				margin-top: 1em;
+				margin-bottom: 1.5em;
+			}
 
-			.job {
-				height: 200px;
-				max-width: 85vw;
+			.jobs {
+				display: block;
+
+				.job {
+					h1 {
+						margin-top: 0;
+						margin-bottom: 0;
+					}
+
+					height: 200px;
+					max-width: 82.5vw;
+				}
 			}
 		}
 	}

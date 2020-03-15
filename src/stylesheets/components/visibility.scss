@@ -354,6 +354,15 @@
 	}
 }
 
+@media only screen and (max-width: 600px) {
+	.fullpresence-container .fullpresence__header .header__title h1 {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width: 39vw;
+	}
+}
+
 @media only screen and (min-width: 1300px) and (max-width: 1800px) {
 	.container_maintenance-page {
 		margin-top: 1em;
