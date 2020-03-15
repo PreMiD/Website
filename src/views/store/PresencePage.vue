@@ -2,10 +2,7 @@
 	<div v-if="!presence.error">
 		<transition name="fade" mode="in-out">
 			<div class="fullpresence-container">
-				<div
-					class="fullpresence__header"
-					:style="`background-image: url('${presence.metadata.thumbnail}')`"
-				>
+				<div class="fullpresence__header">
 					<div class="header__title">
 						<h1 class="presence-name">
 							{{ presence.metadata.service }}
@@ -38,12 +35,14 @@
 								></i>
 							</span>
 						</h1>
-						<div
-							class="fullpresence__gradient"
-							:style="
-								`background: linear-gradient(155deg, ${presence.metadata.color} 0%, ${presenceGradientColor} 100%);`
-							"
-						></div>
+						<div class="fullpresence__overlay">
+							<div
+								class="fullpresence__gradient"
+								:style="
+									`background: linear-gradient(155deg, ${presence.metadata.color}, transparent, ${presenceGradientColor}), url(${presence.metadata.thumbnail}) no-repeat center`
+								"
+							></div>
+						</div>
 					</div>
 					<div class="header__buttons">
 						<button
@@ -272,7 +271,9 @@
 			let data = {
 				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
 				partner:
-					partnersList.filter(p => p.storeName == decodeURIComponent(params.presenceName)).length > 0,
+					partnersList.filter(
+						p => p.storeName == decodeURIComponent(params.presenceName)
+					).length > 0,
 				hot:
 					(presenceRanking[decodeURIComponent(params.presenceName)] /
 						presenceUsage) *
@@ -429,7 +430,8 @@
 			if (this.$data?.presence?.error) return;
 			let description =
 				this.$data?.presence?.metadata?.description["en"] ||
-				this.$data?.presence?.metadata?.description || "No description found.";
+				this.$data?.presence?.metadata?.description ||
+				"No description found.";
 
 			if (description.match(/\[([^\]]+)\]\(([^)]+)\)/g)) {
 				description = description.replace(

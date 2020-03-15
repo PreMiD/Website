@@ -6,18 +6,20 @@
 				<div class="bottomText">
 					<p>
 						{{
-						$t("partners.apply.loggedUser", {
-						0: `${$auth.user.username}#${$auth.user.discriminator}`
-						})
+							$t("partners.apply.loggedUser", {
+								0: `${$auth.user.username}#${$auth.user.discriminator}`
+							})
 						}}
 					</p>
 					<a href="/logout">{{ $t("partners.apply.notYou") }}</a>
-					<p class="steps">STEP {{ currentPage + 1 }} OF 2</p>
+					<p class="steps">
+						{{ $t("jobs.modal.step", { 0: currentPage + 1 }) }}
+					</p>
 				</div>
 			</div>
 			<div class="modal-container" style="background-color: #23272a;">
 				<div class="modal-header" style="margin-bottom: 3em;">
-					<h1>Apply for {{ job.jobName }}</h1>
+					<h1>{{ $t("jobs.modal.title", { 0: job.jobName }) }}</h1>
 					<p v-text="error" style="color: red; font-size: 1em; margin: 0;"></p>
 				</div>
 
@@ -28,18 +30,37 @@
 						<!-- TODO: Fix the checkbox. -->
 						<div class="checkbox-switcher">
 							<label>
-								<input type="checkbox" :checked="check" @change="check = !check" />
+								<input
+									type="checkbox"
+									v-model="check"
+								/>
 								<span ref="checkbox" class="checkbox-container"></span>
-								<p>{{ text }}</p>
+								<p>{{ $t("jobs.modal.notice") }}</p>
 							</label>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<div class="buttons">
-						<button v-if="currentPage == 1" type="button" class="button" @click="apply()">Apply</button>
-						<button v-if="currentPage != 1" type="button" class="button" @click="currentPage++">Next</button>
-						<button type="button" class="button" @click="$emit('close')">Cancel</button>
+						<button
+							v-if="currentPage == 1"
+							type="button"
+							class="button"
+							@click="apply()"
+						>
+							{{ $t("partners.apply.form.button.apply") }}
+						</button>
+						<button
+							v-if="currentPage != 1"
+							type="button"
+							class="button"
+							@click="currentPage++"
+						>
+							{{ $t("jobs.modal.buttons.next") }}
+						</button>
+						<button type="button" class="button" @click="$emit('close')">
+							{{ $t("jobs.modal.buttons.cancel") }}
+						</button>
 					</div>
 				</div>
 			</div>
@@ -48,66 +69,64 @@
 </template>
 
 <script>
-import axios from "axios";
-import VueRecaptcha from "vue-recaptcha";
-import First from "~/components/steps/First";
-import Questions from "~/components/steps/Questions";
+	import axios from "axios";
+	import VueRecaptcha from "vue-recaptcha";
+	import First from "~/components/steps/First";
+	import Questions from "~/components/steps/Questions";
 
-export default {
-	name: "JobApply",
-	components: {
-		VueRecaptcha,
-		First,
-		Questions
-	},
-	props: {
-		job: Object
-	},
-	data() {
-		return {
-			showModal: false,
-			check: false,
-			errors: 0,
-			error: "",
-			sitekey: "6LcafeAUAAAAAOH9ukc2DVPpZJQLSWp9_cxKAQXC",
-			text:
-				"PreMiD is an open-source product, meaning we are a non-profit team, every donation or patreon money goes back into the product. By applying for a job position at PreMiD you acknowledge that you are volunteering in the team, you will not be payed for your work.",
-			currentPage: 0
-		};
-	},
-	methods: {
-		apply() {
-			this.errors = 0;
-			this.job.questions.map(question => {
-				if (!question.response && question.required == true) this.errors++;
-			});
+	export default {
+		name: "JobApply",
+		components: {
+			VueRecaptcha,
+			First,
+			Questions
+		},
+		props: {
+			job: Object
+		},
+		data() {
+			return {
+				showModal: false,
+				check: false,
+				errors: 0,
+				error: "",
+				sitekey: "6LcafeAUAAAAAOH9ukc2DVPpZJQLSWp9_cxKAQXC",
+				currentPage: 0
+			};
+		},
+		methods: {
+			apply() {
+				this.errors = 0;
+				this.job.questions.map(question => {
+					if (!question.response && question.required == true) this.errors++;
+				});
 
-			if (!this.check) this.errors++;
+				if (!this.check) this.errors++;
 
-			if (this.errors == 0 && this.check) {
-				axios
-					.post(`${process.env.apiBase}/jobs/apply`, {
-						questions: this.job.questions,
-						discordUser: this.$auth.user
-					})
-					.then(data => console.log(data))
-					.catch(err => console.error(err));
-			} else {
-				this.error = "Please complete all fields";
+				if (this.errors == 0 && this.check) {
+					axios
+						.post(`${process.env.apiBase}/jobs/apply`, {
+							questions: this.job.questions,
+							discordUser: this.$auth.user
+						})
+						.then(data => console.log(data))
+						.catch(err => console.error(err));
+				} else {
+					this.error = this.$t("jobs.modal.error");
+				}
+			},
+			onSubmit: function() {
+				this.$refs.invisibleRecaptcha.execute();
+			},
+			onVerify: function(response) {
+				this.response = response;
+			},
+			onExpired: function() {
+				console.log("Expired");
+			},
+			resetRecaptcha() {
+				this.$refs.recaptcha.reset();
 			}
-		},
-		onSubmit: function() {
-			this.$refs.invisibleRecaptcha.execute();
-		},
-		onVerify: function(response) {
-			this.response = response;
-		},
-		onExpired: function() {
-			console.log("Expired");
-		},
-		resetRecaptcha() {
-			this.$refs.recaptcha.reset();
 		}
-	}
-};
+	};
 </script>

@@ -96,8 +96,7 @@
 					<label>
 						<input
 							type="checkbox"
-							:checked="mostUsed"
-							@change="mostUsed = !mostUsed"
+							v-model="mostUsed"
 						/>
 						<span ref="checkbox" class="checkbox-container"></span>
 						<p>{{ $t("store.category.filters.mostUsed") }}</p>
@@ -106,7 +105,7 @@
 
 				<div class="checkbox-switcher">
 					<label>
-						<input type="checkbox" :checked="nsfw" @change="nsfw = !nsfw" />
+						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<p>{{ $t("store.category.filters.allowAdult") }}</p>
 					</label>
@@ -114,7 +113,7 @@
 
 				<div class="checkbox-switcher">
 					<label>
-						<input type="checkbox" @change="filterLiked = !filterLiked" />
+						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<p>{{ $t("store.category.filters.likedOnly") }}</p>
 					</label>

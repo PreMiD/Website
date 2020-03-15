@@ -104,7 +104,7 @@
 										:src="presence.serviceLogo"
 									/>
 									<img
-										v-if="presence.smallImage == true"
+										v-if="presence.smallImage == 'search'"
 										v-tippy="{ content: `PreMiD v${extVersion}` }"
 										class="game"
 										alt="@/assets/images/logo-big.svg"
@@ -112,7 +112,20 @@
 									/>
 									<img
 										v-if="presence.smallImage == true"
-										v-tippy="{ content: $t('home.examples.playback.playing') }"
+										v-tippy="{ content: `PreMiD v${extVersion}` }"
+										class="game"
+										alt="@/assets/images/logo-big.svg"
+										:src="presence.serviceLogo"
+									/>
+									<img
+										v-if="presence.smallImage == 'search'"
+										v-tippy="{ content: $t('home.examples.status.browsing') }"
+										class="status-icon"
+										:src="require('@/assets/images/search.png')"
+									/>
+									<img
+										v-if="presence.smallImage == true"
+										v-tippy="{ content: $t('home.examples.status.playing') }"
 										class="status-icon"
 										src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
 									/>
@@ -129,13 +142,13 @@
 									</div>
 									<div class="game__time text-row">
 										{{
-											presence.smallImage == true
-												? $t(`home.examples.timestamp`, [
-														presence.presence_time
-												  ])
-												: $t(`home.examples.timestamp2`, [
-														presence.presence_time
-												  ])
+											presence.smallImage != "search"
+												? $t(`home.examples.timestamp`, {
+														0: presence.presence_time
+												  })
+												: $t(`home.examples.timestamp2`, {
+														0: presence.presence_time
+												  })
 										}}
 									</div>
 								</div>
@@ -295,8 +308,8 @@
 						},
 						service_title: "PreMiD",
 						serviceLogo: premidLogo,
-						smallImage: false,
-						data: ["Viewing a Page", "Store"],
+						smallImage: "search",
+						data: ["Store"],
 						presence_time: "00:12"
 					},
 					{
@@ -450,10 +463,8 @@
 				})[0];
 			}
 		},
-		head() {
-			return {
-				title: "Home"
-			};
+		head: {
+			title: "Home"
 		}
 	};
 </script>

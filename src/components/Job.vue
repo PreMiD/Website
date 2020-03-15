@@ -29,30 +29,30 @@
 </template>
 
 <script>
-import JobApply from "~/components/JobApply";
+	import JobApply from "~/components/JobApply";
 
-export default {
-	name: "Job",
-	components: {
-		JobApply
-	},
-	props: {
-		job: Object
-	},
-	data() {
-		return {
-			showModal: false
-		};
-	},
-	mounted() {
-		this.$auth.$storage.setUniversal("redirect", "/jobs");
-	},
-	methods: {
-		toggleScroll() {
-			this.showModal
-				? document.body.classList.add("no-scroll")
-				: document.body.classList.remove("no-scroll");
+	export default {
+		name: "Job",
+		components: {
+			JobApply
+		},
+		props: {
+			job: Object
+		},
+		data() {
+			return {
+				showModal: false
+			};
+		},
+		mounted() {
+			this.$auth.$storage.setUniversal("redirect", "/jobs");
+		},
+		methods: {
+			toggleScroll() {
+				this.showModal
+					? document.body.classList.add("no-scroll")
+					: document.body.classList.remove("no-scroll");
+			}
 		}
-	}
-};
+	};
 </script>
