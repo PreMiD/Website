@@ -142,7 +142,6 @@
 									</div>
 									<div class="game__time text-row">
 										{{
-											presence.smallImage == true &&
 											presence.smallImage != "search"
 												? $t(`home.examples.timestamp`, {
 														0: presence.presence_time

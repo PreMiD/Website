@@ -10,7 +10,6 @@ module.exports = {
 		"~/router.js",
 		"~/components/plugins/I18n.js",
 		"~/components/plugins/Languages.js",
-		"~/plugins/vue-anime.js",
 		{ src: "~/components/plugins/Tippy.js", ssr: false },
 		{ src: "~/components/plugins/Noty.js", ssr: false },
 		{ src: "~/components/plugins/Pagination.js", ssr: false },
