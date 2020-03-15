@@ -13,7 +13,10 @@
 							<p>
 								{{ $t("downloads.instructions.step.1") }}
 								[
-								<a href="#app-downloads">
+								<a
+									href="#app-downloads"
+									@click="bounce('#app-downloads .section-header')"
+								>
 									<i class="fa-arrow-down fas"></i>
 								</a>
 								]
@@ -26,7 +29,10 @@
 							<p>
 								{{ $t("downloads.instructions.step.3") }}
 								[
-								<a href="#ext-downloads">
+								<a
+									href="#ext-downloads"
+									@click="bounce('#ext-downloads .section-header')"
+								>
 									<i class="fa-arrow-down fas"></i>
 								</a>
 								]
@@ -296,8 +302,30 @@
 			//* Centering the current platform in array. Only works if array has 3 items.
 			platform_order.splice(platform_order.indexOf(platform_temp), 1);
 			platform_order.splice(1, 0, platform_temp);
+
+			// TODO: This doesn't work. Fix it (make sure to get redirected from another page).
+			["#app-downloads", "#ext-downloads"].includes(window.location.hash)
+				? this.bounce(
+						`${
+							["#app-downloads", "#ext-downloads"].filter(i =>
+								i.includes(window.location.hash)
+							)[0]
+						} .section-header`
+				  )
+				: false;
 		},
 		methods: {
+			bounce(elementPath) {
+				const element = document.querySelector(elementPath);
+
+				if (!element) return false;
+
+				element.classList.add("bounce");
+
+				setTimeout(() => {
+					element.classList.remove("bounce");
+				}, 1000);
+			},
 			open(platform) {
 				if (platform == "linux")
 					this.openInNewTab(
@@ -310,11 +338,8 @@
 				let page = window.open(url, "_blank");
 			}
 		},
-
-		head() {
-			return {
-				title: "Downloads"
-			};
+		head: {
+			title: "Downloads"
 		}
 	};
 </script>

@@ -223,6 +223,7 @@
 }
 
 .dl-container {
+	overflow-x: hidden;
 	color: white;
 	position: relative;
 
@@ -259,6 +260,10 @@
 		&_downloads {
 			padding-top: 1em;
 			padding-bottom: 2em;
+
+			.bounce {
+				animation: 1s bounce normal;
+			}
 		}
 
 		h1.section-header {
@@ -556,7 +561,7 @@
 
 		.fullpresence__gradient {
 			background-size: cover !important;
-			filter: blur(.75px);
+			filter: blur(0.75px);
 			content: "";
 			position: absolute;
 			top: 0;
@@ -1430,6 +1435,13 @@
 }
 
 @media only screen and (max-width: 600px) {
+	.fullpresence-container .fullpresence__content {
+		.content__description,
+		.content__info {
+			max-width: 70vw;
+		}
+	}
+
 	.modal-mask {
 		overflow-y: scroll;
 
