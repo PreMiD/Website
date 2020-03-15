@@ -7,12 +7,12 @@
 </template>
 
 <script>
-export default {
-	name: "Benefit",
-	props: {
-		icon: String,
-		title: String,
-		description: String
-	}
-};
+	export default {
+		name: "Benefit",
+		props: {
+			icon: String,
+			title: String,
+			description: String
+		}
+	};
 </script>
