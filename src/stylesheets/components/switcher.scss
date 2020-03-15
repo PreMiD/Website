@@ -40,12 +40,8 @@
 			content: "\f00c";
 			font-family: "Font Awesome 5 Free";
 			color: $purplewhite;
-			top: 1.5px;
-		}
-
-		&:active {
-			&:after {
-			}
+			top: 4px;
+			left: 4px;
 		}
 	}
 
