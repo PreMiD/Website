@@ -6,6 +6,10 @@
 		justify-content: space-around;
 		align-items: center;
 
+		&--beta {
+			min-height: 500px !important;
+		}
+
 		&--reverse {
 			flex-flow: row-reverse;
 		}
@@ -166,7 +170,6 @@
 			display: -webkit-box;
 
 			.fa-stack {
-				margin-left: 4px;
 				font-size: 0.45em;
 			}
 		}
@@ -197,12 +200,22 @@
 		.store-card__buttons {
 			margin-top: 10px;
 
-			display: inline-block;
+			display: inline-flex;
 
-			.button,
-			a {
+			.button {
+				width: 15em;
 				font-size: 12px;
-				width: 100%;
+				white-space: nowrap;
+				padding: 0.8rem 0;
+
+				i {
+					margin-right: unset;
+				}
+
+				&.button--like {
+					width: unset;
+					padding: 1em 1.5em;
+				}
 			}
 		}
 
@@ -266,6 +279,11 @@
 				margin-left: 3px;
 				font-size: 17px;
 				transition: all 0.2s ease;
+
+				&.linux {
+					color: #f1c40f;
+					text-shadow: 0 0 12px rgba(241, 196, 15, 0.5);
+				}
 			}
 		}
 
@@ -296,6 +314,10 @@
 
 			.platform-warning {
 				color: white;
+
+				&.linux {
+					color: white;
+				}
 			}
 		}
 
@@ -384,12 +406,12 @@
 
 		.header__info {
 			flex: 1;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 
 			.info__nameTag {
 				vertical-align: middle;
-				text-overflow: ellipsis;
-				overflow: hidden;
-
 				padding-right: 20px;
 
 				line-height: 20px;
@@ -549,10 +571,6 @@
 						font-weight: 600;
 
 						span {
-							&:hover {
-								text-decoration: underline;
-							}
-
 							color: hsla(0, 0%, 100%, 0.8);
 						}
 					}
@@ -568,9 +586,6 @@
 
 					.game__nd-line {
 						color: hsla(0, 0%, 100%, 0.8);
-					}
-
-					.game__time {
 					}
 				}
 			}
@@ -615,6 +630,10 @@
 		}
 
 		h2 {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			width: calc(98%);
 			font-size: 14px;
 			color: rgba(255, 255, 255, 0.7);
 			font-weight: 700;
@@ -713,6 +732,72 @@
 			margin: 4px 0;
 			max-width: 330px;
 			font-size: 0.9em;
+		}
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.credit-card {
+		width: 85vw;
+	}
+
+	.card {
+		&--feature {
+			padding: 0 1em;
+			display: block;
+			margin-top: 48px;
+			min-height: 0;
+			justify-content: space-around;
+			align-items: center;
+
+			&--reverse {
+				flex-flow: row-reverse;
+			}
+
+			&--alt {
+				flex-flow: column;
+				flex-wrap: wrap;
+
+				justify-content: center;
+
+				.section-container__details {
+					width: 80%;
+				}
+			}
+
+			&__details {
+				color: #c4c4c4;
+
+				width: 100%;
+				margin: 0 1em;
+
+				h1 {
+					font-size: 2em;
+					color: white;
+				}
+
+				p {
+					display: none;
+				}
+
+				ul {
+					display: none;
+				}
+			}
+
+			&__promo {
+				text-align: center;
+
+				img,
+				video {
+					max-width: 100%;
+					border-radius: 0.5em;
+				}
+
+				&--image1 {
+					position: relative;
+				}
+			}
 		}
 	}
 }

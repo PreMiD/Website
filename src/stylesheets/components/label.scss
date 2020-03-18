@@ -1,44 +1,49 @@
 .label {
-    background: $background-primary;
-    color: rgba(255, 255, 255, 0.9);
-    padding: 6px 20px;
-    font-size: 12px;
-    display: inline-block;
-    user-select: none;
-    font-weight: normal;
-    border-radius: 50rem;
-  
-    &_language-switcher {
-      margin-bottom: 16px;
-  
-      a {
-        font-weight: bold;
-      }
-    }
+	background: $background-primary;
+	color: rgba(255, 255, 255, 0.9);
+	padding: 6px 20px;
+	font-size: 12px;
+	display: inline-block;
+	user-select: none;
+	font-weight: normal;
+	border-radius: 50rem;
 
-    &_pmd-version {
-      position: relative;
-      top: 2px;
-      font-weight: 600;
-      background: $accent-primary;
-      color: $purplewhite;
-      margin-left: 6px;
-      padding: 4px 10px;
-      font-size: 0.75em;
-    }
-  
-    &_role {
-      margin: 2px 0;
-      text-align: center;
-      padding: 4px 14px;
-      width: -webkit-fill-available;
-      font-size: 12px;
-    }
-  
-    &_tag {
-      padding: 4px 10px;
-      margin-right: 5px;
-      margin-bottom: 5px;
-    }
-  }
-  
+	&_language-switcher {
+		margin-bottom: 16px;
+
+		a {
+			font-weight: bold;
+		}
+	}
+
+	&_downloads-version {
+		position: relative;
+		font-weight: 600;
+		background: $accent-primary;
+		color: $purplewhite;
+		-webkit-text-fill-color: $purplewhite;
+		top: 0;
+		vertical-align: middle;
+		padding: 4px 10px;
+		font-size: medium;
+
+		&.linux {
+			background: #f1c40f;
+			animation: pulseWarn 2s infinite;
+		}
+	}
+
+	&_role {
+		margin: 2px 0;
+		text-align: center;
+		padding: 4px 14px;
+		width: -webkit-fill-available;
+		font-size: 12px;
+	}
+
+	&_tag {
+		padding: 4px 10px;
+		margin-right: 5px;
+		margin-bottom: 5px;
+	}
+}

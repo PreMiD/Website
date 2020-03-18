@@ -2,21 +2,37 @@ module.exports = {
 	rootDir: "./",
 	srcDir: "src",
 	buildModules: [
+		"@nuxt/typescript-build",
 		"@nuxtjs/router",
 		["@nuxtjs/google-analytics", { id: "UA-129058596-1" }]
 	],
 	plugins: [
 		"~/router.js",
 		"~/components/plugins/I18n.js",
-		"~/components//plugins/Languages.js",
-		{ src: "~/components//plugins/Tippy.js", ssr: false },
-		{ src: "~/components//plugins/Noty.js", ssr: false },
-		{ src: "~/components//plugins/Pagination.js", ssr: false }
+		"~/components/plugins/Languages.js",
+		{ src: "~/components/plugins/Tippy.js", ssr: false },
+		{ src: "~/components/plugins/Noty.js", ssr: false },
+		{ src: "~/components/plugins/Pagination.js", ssr: false },
+		{ src: "~/components/plugins/Carousel.js", ssr: false },
+		{ src: "~/components/plugins/Scrollmagic.js", ssr: false }
 	],
 	router: {
 		middleware: ["auth"]
 	},
-	modules: ["nuxt-lazy-load", "@nuxtjs/axios", "@nuxtjs/auth"],
+	modules: [
+		[
+			"nuxt-lazy-load",
+			{
+				observerConfig: {
+					rootMargin: "50px 0px 50px 0px",
+					threshold: 0
+					// See IntersectionObserver documentation
+				}
+			}
+		],
+		"@nuxtjs/axios",
+		"@nuxtjs/auth"
+	],
 	auth: {
 		redirect: {
 			login: "/login",
@@ -74,6 +90,27 @@ module.exports = {
 				{ name: "viewport", content: "width=device-width, initial-scale=1" },
 				{ name: "PreMiD_Presence", content: "PreMiD" },
 				{
+					hid: "twitter:card",
+					property: "twitter:card",
+					content: "summary"
+				},
+				{
+					hid: "twitter:url",
+					property: "twitter:url",
+					content: "https://premid.app"
+				},
+				{
+					hid: "twitter:description",
+					property: "twitter:description",
+					content:
+						"PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status."
+				},
+				{
+					hid: "twitter:image",
+					property: "twitter:image",
+					content: "https://premid.app/assets/images/logo.png"
+				},
+				{
 					hid: "theme-color",
 					name: "theme-color",
 					content: "#7289DA"
@@ -108,8 +145,19 @@ module.exports = {
 				}
 			]
 		};
-	} /*,
+	},
+	css: ["~stylesheets/root.scss"],
 	build: {
-		publicPath: "https://cdn.premid.app"
-	}*/
+		cache: true,
+		vendor: ["axios"],
+		ssr: true,
+		friendlyErrors: true,
+		hotMiddleware: {
+			client: {
+				// turn off client overlay when errors are present
+				overlay: false
+			}
+		}
+		//publicPath: "https://cdn.premid.app"
+	}
 };

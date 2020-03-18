@@ -13,6 +13,10 @@ jobs:
   DePloY:
     runs-on: "ubuntu-latest"
     steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Deploying...
         uses: appleboy/ssh-action@master
         with:
@@ -20,9 +24,9 @@ jobs:
           username: ${{ secrets.SSHUSERNAME }}
           password: ${{ secrets.SSHPASSWORD }}
           script: |
-            cd /home/PreMiD/Website/Stable
+            cd /home/PreMiD/Website/${{ steps.extract_branch.outputs.branch }}
             git reset --hard
             git pull
             yarn
             yarn build
-            pm2 restart PMD_WebStable
+            pm2 restart Website-${{ steps.extract_branch.outputs.branch }}

@@ -1,5 +1,4 @@
 .checkbox-switcher {
-
 	display: inline-block;
 
 	span {
@@ -20,7 +19,7 @@
 	cursor: pointer;
 	transition: all 200ms cubic-bezier(0.26, 0.08, 0, 0.97);
 
-	input[type=checkbox] {
+	input[type="checkbox"] {
 		opacity: 1;
 		width: 0;
 		height: 0;
@@ -33,25 +32,19 @@
 		pointer-events: none;
 	}
 
-	input[type="checkbox"]:checked+.checkbox-container {
+	input[type="checkbox"]:checked + .checkbox-container {
 		background-color: $accent-primary;
 		border: 1px solid $accent-primary;
 
 		&:after {
-				content: "\f00c";
-				font-family: "Font Awesome 5 Free";
-				color: $purplewhite;
-				top: 1.5px;
-		}
-
-		&:active {
-			&:after {
-
-				
-			}
+			content: "\f00c";
+			font-family: "Font Awesome 5 Free";
+			color: $purplewhite;
+			top: 4px;
+			left: 4px;
 		}
 	}
-	
+
 	.checkbox-container {
 		display: inline-block;
 		position: relative;
@@ -66,7 +59,6 @@
 
 		margin: 4px 0;
 		transition: all 200ms cubic-bezier(0.26, 0.08, 0, 0.97);
-
 
 		&:hover {
 			border: 1px solid $accent-primary;
