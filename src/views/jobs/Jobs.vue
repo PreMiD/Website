@@ -4,7 +4,13 @@
 			<div id="heading" class="pattern">
 				<h1 v-text="$t('jobs.header.title')" />
 				<p v-text="$t('jobs.header.description')" />
-				<img src="https://i.imgur.com/PwSpU7o.png" />
+				<video
+					class="job-video"
+					src="@/assets/videos/jobs-heading.mp4"
+					autoplay
+					loop
+					muted
+				/>
 				<div class="waves-divider waves-divider_bottom">
 					<svg
 						class="wave"
@@ -57,6 +63,13 @@
 </template>
 
 <style lang="scss">
+	.job-video {
+		width: 250px;
+		height: 250px;
+		border-radius: 5px;
+		box-shadow: 3px 5px 5px #202226;
+	}
+
 	#jobsWrapper {
 		#jobsContainer {
 			h1 {
