@@ -16,13 +16,11 @@
 			<div class="grid__section">
 				<p class="section__title">
 					{{ $t("footer.partners.heading") }}
-					<!-- TODO: Add it when everything is fine about partner page.
-						<i
+					<i
 						class="fas fa-external-link-square-alt partner-more"
 						@click="$router.push('/partners')"
 						v-tippy="{ content: $t('footer.partners.more') }"
 					></i>
-					-->
 				</p>
 				<div class="section__promo">
 					<a class="partner-logo" href="https://installbuilder.bitrock.com/">
@@ -51,6 +49,7 @@
 						href="https://translate.premid.app/"
 						v-text="$t(`footer.supportus.translate`)"
 					></a>
+					<a href="/jobs" v-text="$t(`footer.supportus.jobs`)"></a>
 				</div>
 			</div>
 			<div class="grid__section">
