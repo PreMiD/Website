@@ -107,25 +107,15 @@
 						.then(({ data }) => {
 							if (data.error === 3)
 								this.$noty.error(this.$t("jobs.error.alreadyApplied"));
-							if (!data.error)
+							if (!data.error) {
 								this.$noty.success(this.$t("jobs.success.applied"));
+								this.$emit("close");
+							}
 						})
 						.catch(err => console.error(err));
 				} else {
 					this.error = this.$t("jobs.modal.error");
 				}
-			},
-			onSubmit: function() {
-				this.$refs.invisibleRecaptcha.execute();
-			},
-			onVerify: function(response) {
-				this.response = response;
-			},
-			onExpired: function() {
-				console.log("Expired");
-			},
-			resetRecaptcha() {
-				this.$refs.recaptcha.reset();
 			}
 		}
 	};
