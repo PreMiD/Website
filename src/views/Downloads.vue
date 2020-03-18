@@ -31,7 +31,7 @@
 								[
 								<a
 									href="#ext-downloads"
-									@click="bounce('#ext-downloads .section-header')"
+									@click="highlight('#ext-downloads .section-header')"
 								>
 									<i class="fa-arrow-down fas"></i>
 								</a>
