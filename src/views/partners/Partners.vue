@@ -138,6 +138,11 @@
 
 	import anime from "animejs";
 
+	import aniflix_icon from "~/assets/images/partners/aniflix-icon.png";
+	import aok_icon from "~/assets/images/partners/aok-icon.png";
+	import iloot_icon from "~/assets/images/partners/iloot-icon.png";
+	import upbeat_icon from "~/assets/images/partners/upbeat-icon.png";
+
 	export default {
 		name: "Partners",
 		components: {
@@ -149,18 +154,7 @@
 			return {
 				partners: (await axios(`${process.env.apiBase}/partners`)).data,
 				sponsors: (await axios(`${process.env.apiBase}/sponsors`)).data,
-				randomImages: [
-					"https://i.imgur.com/NC2A7y8.png",
-					"https://i.imgur.com/XXZNBIa.png",
-					"https://i.imgur.com/7a8eQeG.png",
-					"https://i.imgur.com/clun1ID.png",
-					"https://i.imgur.com/6QKrzSk.png",
-					"https://media.giphy.com/media/Pn1oMgIy1tH45Wv16s/giphy.gif",
-					"https://i.imgur.com/o7BRcfM.png",
-					"https://i.imgur.com/5LJlH5W.png",
-					"https://i.imgur.com/m2D8rgd.png",
-					"https://i.imgur.com/DoO8SMp.png"
-				],
+				randomImages: [aniflix_icon, aok_icon, iloot_icon, upbeat_icon],
 				showModal: false
 			};
 		},
