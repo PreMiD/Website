@@ -4,7 +4,14 @@
 			<div id="heading" class="pattern">
 				<h1 v-text="$t('jobs.header.title')" />
 				<p v-text="$t('jobs.header.description')" />
-				<img src="https://i.imgur.com/PwSpU7o.png" />
+				<video
+					class="job-video"
+					src="@/assets/videos/jobs-heading.mp4"
+					controls
+					autoplay
+					loop
+					muted
+				/>
 				<div class="waves-divider waves-divider_bottom">
 					<svg
 						class="wave"
@@ -44,79 +51,127 @@
 			</div>
 		</div>
 		<transition name="slide-down" mode="in-out">
-			<JobApply v-if="showModal" :job="modalJob" @close="showModal = false;toggleScroll();" />
+			<JobApply
+				v-if="showModal"
+				:job="modalJob"
+				@close="
+					showModal = false;
+					toggleScroll();
+				"
+			/>
 		</transition>
 	</div>
 </template>
 
 <style lang="scss">
-#jobsWrapper {
-	#jobsContainer {
-		h1 {
-			text-align: center;
-			font-size: 2.2em;
+	.job-video {
+		width: 250px;
+		height: 250px;
+		border-radius: 5px;
+		box-shadow: 3px 5px 5px #202226;
+	}
 
-			color: white;
-
-			margin: 0;
-		}
-
-		#heading {
-			position: relative;
-			z-index: 1;
-			overflow: hidden;
-			padding: 25px 0 150px;
-
-			&.pattern {
-				background-image: url("../../assets/images/pattern.png");
-				background-size: 300px 240px;
-			}
-
-			display: flex;
-			flex-direction: column;
-			justify-content: space-around;
-			text-align: center;
-			align-items: center;
-
+	#jobsWrapper {
+		#jobsContainer {
 			h1 {
-				text-transform: uppercase;
-				font-size: 3.5em;
-				color: #7289da;
-				margin: 0;
-			}
+				text-align: center;
+				font-size: 2.2em;
 
-			p {
-				font-size: 1.2em;
 				color: white;
+
 				margin: 0;
-				margin-bottom: 2em;
 			}
-		}
 
-		#openings {
-			margin-bottom: 2em;
+			#heading {
+				position: relative;
+				z-index: 1;
+				overflow: hidden;
+				padding: 25px 0 150px;
 
-			.jobs {
+				&.pattern {
+					background-image: url("../../assets/images/pattern.png");
+					background-size: 300px 240px;
+				}
+
 				display: flex;
-				justify-content: center;
+				flex-direction: column;
+				justify-content: space-around;
+				text-align: center;
+				align-items: center;
 
-				.job {
-					transition: 0.15s transform ease-out;
+				h1 {
+					text-transform: uppercase;
+					font-size: 3.5em;
+					color: #7289da;
+					margin: 0;
+				}
 
-					width: 350px;
-					height: 175px;
-					background: #23272a;
-					border-radius: 5px;
-					padding: 1em;
+				p {
+					font-size: 1.2em;
+					color: white;
+					margin: 0;
+					margin-bottom: 2em;
+				}
+			}
+
+			#openings {
+				margin-bottom: 2em;
+
+				.jobs {
 					display: flex;
-					flex-direction: column;
-					align-items: center;
-					justify-content: space-around;
-					margin: 1em;
+					justify-content: center;
 
-					&:hover {
-						transform: translateY(-10px);
+					.job {
+						transition: 0.15s transform ease-out;
+
+						width: 350px;
+						height: 175px;
+						background: #23272a;
+						border-radius: 5px;
+						padding: 1em;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: space-around;
+						margin: 1em;
+
+						&:hover {
+							transform: translateY(-10px);
+						}
+
+						i {
+							font-size: 64px;
+							color: #7289da;
+							margin-bottom: 0.25em;
+						}
+
+						h1 {
+							color: white;
+							font-size: 1.75em;
+						}
+
+						.button {
+							font-size: 0.9em;
+							padding: 0.5rem 2.3rem;
+						}
 					}
+				}
+			}
+
+			.benefits {
+				display: block;
+				max-width: 900px;
+				text-align: center;
+				margin: 0 auto;
+
+				.benefit {
+					width: 200px;
+					height: 150px;
+					display: inline-block;
+					vertical-align: top;
+					text-align: left;
+					justify-content: space-around;
+					margin: 2em;
 
 					i {
 						font-size: 64px;
@@ -126,102 +181,68 @@
 
 					h1 {
 						color: white;
-						font-size: 1.75em;
+						font-size: 1.6em;
+						margin: 0;
+						text-align: left;
 					}
 
-					.button {
-						font-size: 0.9em;
-						padding: 0.5rem 2.3rem;
+					p {
+						color: white;
+						font-size: 0.85em;
 					}
-				}
-			}
-		}
-
-		.benefits {
-			display: block;
-			max-width: 900px;
-			text-align: center;
-			margin: 0 auto;
-
-			.benefit {
-				width: 200px;
-				height: 150px;
-				display: inline-block;
-				vertical-align: top;
-				text-align: left;
-				justify-content: space-around;
-				margin: 2em;
-
-				i {
-					font-size: 64px;
-					color: #7289da;
-					margin-bottom: 0.25em;
-				}
-
-				h1 {
-					color: white;
-					font-size: 1.6em;
-					margin: 0;
-					text-align: left;
-				}
-
-				p {
-					color: white;
-					font-size: 0.85em;
 				}
 			}
 		}
 	}
-}
 </style>
 
 <script>
-import axios from "axios";
-import Job from "~/components/Job";
-import Benefit from "~/components/Benefit";
-import JobApply from "~/components/JobApply";
+	import axios from "axios";
+	import Job from "~/components/Job";
+	import Benefit from "~/components/Benefit";
+	import JobApply from "~/components/JobApply";
 
-export default {
-	name: "Jobs",
-	components: {
-		Job,
-		Benefit,
-		JobApply
-	},
-	auth: false,
-	data() {
-		return {
-			showModal: false,
-			modalJob: null
-		};
-	},
-	async asyncData() {
-		const data = await Promise.all([
-			axios(`${process.env.apiBase}/jobs`),
-			axios(`${process.env.apiBase}/jobs/benefits`)
-		]);
-		const jobs = data[0].data,
-			benefits = data[1].data;
-
-		return {
-			jobs,
-			benefits
-		};
-	},
-	methods: {
-		applyModal(job) {
-			this.modalJob = job;
-			this.$auth.loggedIn ? (this.showModal = true) : $router.push("/login");
-			this.toggleScroll();
+	export default {
+		name: "Jobs",
+		components: {
+			Job,
+			Benefit,
+			JobApply
 		},
-		toggleScroll() {
-			this.showModal
-				? document.body.classList.add("no-scroll")
-				: document.body.classList.remove("no-scroll");
+		auth: false,
+		data() {
+			return {
+				showModal: false,
+				modalJob: null
+			};
+		},
+		async asyncData() {
+			const data = await Promise.all([
+				axios(`${process.env.apiBase}/jobs`),
+				axios(`${process.env.apiBase}/jobs/benefits`)
+			]);
+			const jobs = data[0].data,
+				benefits = data[1].data;
+
+			return {
+				jobs,
+				benefits
+			};
+		},
+		methods: {
+			applyModal(job) {
+				this.modalJob = job;
+				this.$auth.loggedIn ? (this.showModal = true) : $router.push("/login");
+				this.toggleScroll();
+			},
+			toggleScroll() {
+				this.showModal
+					? document.body.classList.add("no-scroll")
+					: document.body.classList.remove("no-scroll");
+			}
+		},
+		head: {
+			title: "Jobs"
 		}
-	},
-	head: {
-		title: "Jobs"
-	}
-};
+	};
 </script>
