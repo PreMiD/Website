@@ -77,7 +77,7 @@
 				</transition>
 			</div>
 
-			<p v-t="'partners.apply.jobs'" class="jobs"></p>
+			<p v-html="job($t('partners.apply.jobs'))" class="jobs"></p>
 
 			<p v-t="'partners.sponsors.title'" class="sponsor-title text-highlight"></p>
 
@@ -185,15 +185,15 @@ export default {
 		}
 	},
 	methods: {
-		markdown(pls) {
+		job(pls) {
 			if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
 			return pls.match(/(\*\*.*?\*\*)/g).map(ch => {
 				return pls.replace(
 					ch,
-					`<strong><span class="text-highlight">${ch.slice(
+					`<strong><a href="/jobs" class="text-highlight">${ch.slice(
 						2,
 						ch.length - 2
-					)}</span></strong>`
+					)}</a></strong>`
 				);
 			})[0];
 		},
