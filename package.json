@@ -35,7 +35,7 @@
 		"@nuxtjs/google-analytics": "^2.2.3",
 		"@nuxtjs/router": "1.5.0",
 		"node-emoji": "1.10.0",
-		"prettier": "^1.19.1",
+		"prettier": "^2.0.0",
 		"rimraf": "3.0.2"
 	}
 }
