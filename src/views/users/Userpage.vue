@@ -30,49 +30,91 @@
 								class="fas fa-tools"
 							></i>
 							<i
-								v-if="role == 'Community Manager'"
+								v-if="role == 'Executive Director'"
 								v-tippy="{
-									content: $t('contributors.roles.communityManager'),
+									content: $t('contributors.roles.executiveDirector'),
 									placement: 'bottom'
 								}"
 								class="fas fa-users"
 							></i>
 							<i
-								v-if="role == 'Asst. Community Manager'"
+								v-if="role == 'Operations Supervisior'"
 								v-tippy="{
-									content: $t('contributors.roles.asstCommunityManager'),
+									content: $t('contributors.roles.operationsSupervisior'),
 									placement: 'bottom'
 								}"
 								class="fas fa-users"
 							></i>
 							<i
-								v-if="role == 'Administrator'"
+								v-if="role == 'Global Community Representative'"
 								v-tippy="{
-									content: $t('contributors.roles.administrator'),
+									content: $t(
+										'contributors.roles.globalCommunityRepresentative'
+									),
 									placement: 'bottom'
 								}"
 								class="fas fa-database"
 							></i>
 							<i
-								v-if="role == 'Website Developer'"
+								v-if="role == 'Head Software Engineer'"
 								v-tippy="{
-									content: $t('contributors.roles.websiteDeveloper'),
+									content: $t('contributors.roles.headSoftwareEngineer'),
 									placement: 'bottom'
 								}"
 								class="fas fa-tools"
 							></i>
 							<i
-								v-if="role == 'Head Moderator'"
+								v-if="role == 'Web Developer'"
 								v-tippy="{
-									content: $t('contributors.roles.headModerator'),
+									content: $t('contributors.roles.webDeveloper'),
 									placement: 'bottom'
 								}"
 								class="fas fa-hat-cowboy"
 							></i>
 							<i
-								v-if="role == 'Asst. Head Moderator'"
+								v-if="role == 'Linux Maintainer'"
 								v-tippy="{
-									content: $t('contributors.roles.asstHeadModerator'),
+									content: $t('contributors.roles.linuxMaintainer'),
+									placement: 'bottom'
+								}"
+								class="fas fa-tools"
+							></i>
+							<i
+								v-if="role == 'Engineer'"
+								v-tippy="{
+									content: $t('contributors.roles.engineer'),
+									placement: 'bottom'
+								}"
+								class="fas fa-tools"
+							></i>
+							<i
+								v-if="role == 'Graphic Designer'"
+								v-tippy="{
+									content: $t('contributors.roles.graphicDesigner'),
+									placement: 'bottom'
+								}"
+								class="fas fa-tools"
+							></i>
+							<i
+								v-if="role == 'Senior Moderator'"
+								v-tippy="{
+									content: $t('contributors.roles.seniorModerator'),
+									placement: 'bottom'
+								}"
+								class="fas fa-hat-cowboy"
+							></i>
+							<i
+								v-if="role == 'Head of Presence Verifying'"
+								v-tippy="{
+									content: $t('contributors.roles.verificationHead'),
+									placement: 'bottom'
+								}"
+								class="fas fa-hat-cowboy"
+							></i>
+							<i
+								v-if="role == 'Community Representative'"
+								v-tippy="{
+									content: $t('contributors.roles.communityRepresentative'),
 									placement: 'bottom'
 								}"
 								class="fas fa-hat-cowboy"
@@ -86,6 +128,14 @@
 								class="fas fa-user-cog"
 							></i>
 							<i
+								v-if="role == 'Junior Moderator'"
+								v-tippy="{
+									content: $t('contributors.roles.juniorModerator'),
+									placement: 'bottom'
+								}"
+								class="fas fa-user-cog"
+							></i>
+							<i
 								v-if="role == 'Ticket Manager'"
 								v-tippy="{
 									content: $t('contributors.roles.ticketManager'),
@@ -94,20 +144,20 @@
 								class="fas fa-ticket-alt"
 							></i>
 							<i
-								v-if="role == 'Presence Developer'"
-								v-tippy="{
-									content: $t('user.roles.presenceDeveloper'),
-									placement: 'bottom'
-								}"
-								class="fas fa-user-astronaut"
-							></i>
-							<i
 								v-if="role == 'Presence Verifier'"
 								v-tippy="{
 									content: $t('user.roles.presenceVerifier'),
 									placement: 'bottom'
 								}"
 								class="fas fa-clipboard-check"
+							></i>
+							<i
+								v-if="role == 'Presence Developer'"
+								v-tippy="{
+									content: $t('user.roles.presenceDeveloper'),
+									placement: 'bottom'
+								}"
+								class="fas fa-user-astronaut"
 							></i>
 							<i
 								v-if="role == 'Patron'"

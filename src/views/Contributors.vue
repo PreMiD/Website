@@ -87,17 +87,21 @@
 			isStaffRole(roleName) {
 				const staffRoles = [
 					"Creator",
-					"Website Developer",
-					"Community Manager",
-					"Ticket Manager",
+					"Executive Director",
+					"Operations Supervisior",
+					"Global Community Representative",
+					"Head Software Engineer",
+					"Web Developer",
+					"Linux Maintainer",
+					"Engineer",
+					"Graphic Designer",
+					"Sr. Moderator",
+					"Head of Presence Verifying",
+					"Community Representative",
 					"Moderator",
 					"Jr. Moderator",
-					"Administrator",
-					"Asst. Head Moderator",
-					"Asst. Community Manager",
-					"Head Moderator",
-					"Senior Moderator",
-					"Head of Presence Verifying"
+					"Ticket Manager",
+					"Presence Verifier"
 				];
 
 				if (staffRoles.indexOf(roleName) !== -1) return true;

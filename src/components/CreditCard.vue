@@ -9,9 +9,7 @@
 	>
 		<div class="credit-card__user">
 			<h1 :title="user.name" v-text="user.name"></h1>
-			<h2>
-				{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}
-			</h2>
+			<h2>{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}</h2>
 		</div>
 		<div
 			class="credit-card__avatar"
@@ -25,73 +23,79 @@
 </template>
 
 <script>
-	import tinycolor from "tinycolor2";
+import tinycolor from "tinycolor2";
 
-	export default {
-		name: "Creditcard",
-		props: ["user"],
-		data() {
+export default {
+	name: "Creditcard",
+	props: ["user"],
+	data() {
+		return {
+			translationKeys: {
+				Creator: "contributors.roles.creator",
+				"Executive Director": "contributors.roles.executiveDirector",
+				"Operations Supervisior": "contributors.roles.operationsSupervisior",
+				"Global Community Representative":
+					"contributors.roles.globalCommunityRepresentative",
+				"Head Software Engineer": "contributors.roles.headSoftwareEngineer",
+				"Web Developer": "contributors.roles.webDeveloper",
+				"Linux Maintainer": "contributors.roles.linuxMaintainer",
+				Engineer: "contributors.roles.engineer",
+				"Graphic Designer": "contributors.roles.graphicDesigner",
+				"Senior Moderator": "contributors.roles.seniorModerator",
+				"Head of Presence Verifying": "contributors.roles.verificationHead",
+				"Community Representative":
+					"contributors.roles.communityRepresentative",
+				Moderator: "contributors.roles.moderator",
+				"Junior Moderator": "contributors.roles.juniorModerator",
+				"Ticket Manager": "contributors.roles.ticketManager",
+				"Presence Verifier": "user.roles.presenceVerifier",
+				Proofreader: "contributors.roles.proofreader",
+				Donator: "contributors.roles.donator",
+				Booster: "contributors.roles.booster",
+				Translator: "contributors.roles.translator"
+			},
+			hovered: false
+		};
+	},
+	computed: {
+		cardGradientColor() {
 			return {
-				translationKeys: {
-					Creator: "contributors.roles.creator",
-					"Community Manager": "contributors.roles.communityManager",
-					"Asst. Community Manager": "contributors.roles.asstCommunityManager",
-					Administrator: "contributors.roles.administrator",
-					"Website Developer": "contributors.roles.websiteDeveloper",
-					"Head Moderator": "contributors.roles.headModerator",
-					"Asst. Head Moderator": "contributors.roles.asstHeadModerator",
-					Moderator: "contributors.roles.moderator",
-					"Jr. Moderator": "contributors.roles.jrModerator",
-					"Head of Presence Verifying": "contributors.roles.verificationHead",
-					"Ticket Manager": "contributors.roles.ticketManager",
-					"Presence Verifier": "user.roles.presenceVerifier",
-					Proofreader: "contributors.roles.proofreader",
-					Donator: "contributors.roles.donator",
-					Booster: "contributors.roles.booster",
-					Translator: "contributors.roles.translator"
-				},
-				hovered: false
+				primary: tinycolor(this.$props.user.roleColor)
+					.setAlpha(1)
+					.darken(5)
+					.toRgbString(),
+				secondary: tinycolor(this.$props.user.roleColor)
+					.analogous()[2]
+					.setAlpha(0.5)
+					.saturate(20)
+					.toRgbString()
 			};
 		},
-		computed: {
-			cardGradientColor() {
-				return {
-					primary: tinycolor(this.$props.user.roleColor)
-						.setAlpha(1)
-						.darken(5)
-						.toRgbString(),
-					secondary: tinycolor(this.$props.user.roleColor)
-						.analogous()[2]
-						.setAlpha(0.5)
-						.saturate(20)
-						.toRgbString()
-				};
-			},
-			cardShadowColor() {
-				if (this.$data.hovered) {
-					return tinycolor(this.cardGradientColor.primary)
-						.setAlpha(0.3)
-						.saturate(20)
-						.toRgbString();
-				} else {
-					return "transparent";
-				}
-			}
-		},
-		methods: {
-			copyId(id) {
-				let el = document.createElement("textarea");
-
-				el.value = id;
-				document.body.appendChild(el);
-
-				el.select();
-
-				document.execCommand("copy");
-				document.body.removeChild(el);
-
-				this.$noty.success(this.$t("contributors.cards.userIdCopied"));
+		cardShadowColor() {
+			if (this.$data.hovered) {
+				return tinycolor(this.cardGradientColor.primary)
+					.setAlpha(0.3)
+					.saturate(20)
+					.toRgbString();
+			} else {
+				return "transparent";
 			}
 		}
-	};
+	},
+	methods: {
+		copyId(id) {
+			let el = document.createElement("textarea");
+
+			el.value = id;
+			document.body.appendChild(el);
+
+			el.select();
+
+			document.execCommand("copy");
+			document.body.removeChild(el);
+
+			this.$noty.success(this.$t("contributors.cards.userIdCopied"));
+		}
+	}
+};
 </script>
