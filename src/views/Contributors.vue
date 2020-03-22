@@ -95,12 +95,12 @@
 					"Linux Maintainer",
 					"Engineer",
 					"Graphic Designer",
-					"Sr. Moderator",
+					"Senior Moderator",
 					"Head of Presence Verifying",
 					"Community Representative",
 					"Moderator",
-					"Jr. Moderator",
-					"Ticket Manager",
+					"Junior Moderator",
+					"Support Agent",
 					"Presence Verifier"
 				];
 

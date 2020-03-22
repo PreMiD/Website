@@ -136,9 +136,9 @@
 								class="fas fa-user-cog"
 							></i>
 							<i
-								v-if="role == 'Ticket Manager'"
+								v-if="role == 'Support Agent'"
 								v-tippy="{
-									content: $t('contributors.roles.ticketManager'),
+									content: $t('contributors.roles.supportAgent'),
 									placement: 'bottom'
 								}"
 								class="fas fa-ticket-alt"
