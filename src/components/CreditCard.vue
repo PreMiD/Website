@@ -10,7 +10,16 @@
 		<div class="credit-card__user">
 			<h1 :title="user.name" v-text="user.name"></h1>
 			<h2>
-				{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}
+				{{
+					user.roleId == "515874214750715904"
+						? "Patron"
+						: $t(
+								`contributors.roles.${user.role
+									.replace(/\s/g, "")
+									.charAt(0)
+									.toLowerCase() + user.role.replace(/\s/g, "").substring(1)}`
+						  )
+				}}
 			</h2>
 		</div>
 		<div
@@ -32,30 +41,6 @@
 		props: ["user"],
 		data() {
 			return {
-				translationKeys: {
-					Creator: "contributors.roles.creator",
-					"Executive Director": "contributors.roles.executiveDirector",
-					"Operations Supervisior": "contributors.roles.operationsSupervisior",
-					"Global Community Representative":
-						"contributors.roles.globalCommunityRepresentative",
-					"Head Software Engineer": "contributors.roles.headSoftwareEngineer",
-					"Web Developer": "contributors.roles.webDeveloper",
-					"Linux Maintainer": "contributors.roles.linuxMaintainer",
-					Engineer: "contributors.roles.engineer",
-					"Graphic Designer": "contributors.roles.graphicDesigner",
-					"Senior Moderator": "contributors.roles.seniorModerator",
-					"Head of Presence Verifying": "contributors.roles.verificationHead",
-					"Community Representative":
-						"contributors.roles.communityRepresentative",
-					Moderator: "contributors.roles.moderator",
-					"Junior Moderator": "contributors.roles.juniorModerator",
-					"Support Agent": "contributors.roles.supportAgent",
-					"Presence Verifier": "user.roles.presenceVerifier",
-					Proofreader: "contributors.roles.proofreader",
-					Donator: "contributors.roles.donator",
-					Booster: "contributors.roles.booster",
-					Translator: "contributors.roles.translator"
-				},
 				hovered: false
 			};
 		},
