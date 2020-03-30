@@ -10,7 +10,7 @@
 	"dependencies": {
 		"@nuxt/typescript-build": "^0.6.1",
 		"@nuxtjs/auth": "4.9.0",
-		"@nuxtjs/axios": "5.9.6",
+		"@nuxtjs/axios": "5.9.7",
 		"animejs": "^3.1.0",
 		"axios": "0.19.2",
 		"intersection-observer": "^0.7.0",
