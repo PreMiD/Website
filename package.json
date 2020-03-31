@@ -15,7 +15,7 @@
 		"axios": "0.19.2",
 		"intersection-observer": "^0.7.0",
 		"marked": "0.8.2",
-		"motus": "^2.0.4",
+		"motus": "^2.0.5",
 		"node-sass": "4.13.1",
 		"nuxt": "2.12.2",
 		"nuxt-lazy-load": "^1.1.8",
