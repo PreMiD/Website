@@ -41,9 +41,11 @@
 						<li>
 							<p>
 								<i18n path="downloads.instructions.step.4">
-									<nuxt-link to="/store">{{
+									<nuxt-link to="/store">
+										{{
 										$t("downloads.instructions.step.4.store")
-									}}</nuxt-link>
+										}}
+									</nuxt-link>
 								</i18n>
 							</p>
 						</li>
@@ -72,9 +74,7 @@
 			<div
 				v-if="isMobile"
 				class="dl-container__section dl-container__mobile-warning waves-aligned"
-			>
-				{{ $t("downloads.mobile.errorMessage") }}
-			</div>
+			>{{ $t("downloads.mobile.errorMessage") }}</div>
 		</transition>
 
 		<transition name="card-animation" mode="out-in">
@@ -109,10 +109,7 @@
 					<div class="dl-container__cards">
 						<div v-for="(platform, index) of platform_order" :key="platform">
 							<div @click="open(platform)">
-								<div
-									:class="{ 'current-platform': index == 1 }"
-									class="cards__card clickable"
-								>
+								<div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
 									<div class="card__icon">
 										<i :class="`fab fa-${platform}`"></i>
 									</div>
@@ -156,10 +153,7 @@
 					</div>
 				</div>
 
-				<div
-					id="ext-downloads"
-					class="dl-container__section dl-container__section_downloads"
-				>
+				<div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
 					<h1 class="section-header">
 						{{ $t("downloads.extdownloading.header") }}
 						<a
@@ -208,9 +202,9 @@
 			<div v-if="isMobile" class="dl-container__showDownloads">
 				<span @click="showDownloads = !showDownloads">
 					{{
-						showDownloads
-							? $t("downloads.mobile.hideDownloads")
-							: $t("downloads.mobile.showDownloads")
+					showDownloads
+					? $t("downloads.mobile.hideDownloads")
+					: $t("downloads.mobile.showDownloads")
 					}}
 				</span>
 			</div>
@@ -219,13 +213,12 @@
 </template>
 
 <style lang="scss" scoped>
-	#ad {
-		position: relative;
-		width: 500px;
-		height: 150px;
-		left: 50%;
-		transform: translateX(-50%);
-	}
+#ad {
+	position: relative;
+	width: 500px;
+	left: 50%;
+	transform: translateX(-50%);
+}
 </style>
 
 <script>
@@ -358,9 +351,9 @@
 </script>
 
 <style lang="scss">
-	@import "../stylesheets/variables.scss";
+@import "../stylesheets/variables.scss";
 
-	.highlight::after {
-		opacity: 1 !important;
-	}
+.highlight::after {
+	opacity: 1 !important;
+}
 </style>
