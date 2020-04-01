@@ -191,7 +191,6 @@
 				</div>
 			</div>
 		</div>
-
 		<paginate
 			v-model="currentPageNumber"
 			container-class="pagination-container"
@@ -207,6 +206,8 @@
 		>
 			<span slot="breakViewContent"></span>
 		</paginate>
+
+		<adsbygoogle ad-slot="5201967746" style="text-align: center;" />
 	</section>
 </template>
 

@@ -29,9 +29,14 @@ module.exports = {
 				}
 			}
 		],
+		"@nuxtjs/google-adsense",
 		"@nuxtjs/axios",
 		"@nuxtjs/auth"
 	],
+	"google-adsense": {
+		id: "ca-pub-1575460061917202",
+		test: true
+	},
 	auth: {
 		redirect: {
 			login: "/login",
