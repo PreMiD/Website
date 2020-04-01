@@ -34,8 +34,7 @@ module.exports = {
 		"@nuxtjs/auth"
 	],
 	"google-adsense": {
-		id: "ca-pub-1575460061917202",
-		test: true
+		id: "ca-pub-1575460061917202"
 	},
 	auth: {
 		redirect: {
