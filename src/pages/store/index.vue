@@ -46,8 +46,8 @@
 						<div
 							v-if="
 								typing &&
-									filters.author.enabled == false &&
-									filters.url.enabled == false
+								filters.author.enabled == false &&
+								filters.url.enabled == false
 							"
 							class="searchSuggestions"
 						>
@@ -94,10 +94,7 @@
 
 				<div class="checkbox-switcher">
 					<label>
-						<input
-							type="checkbox"
-							v-model="mostUsed"
-						/>
+						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<p>{{ $t("store.category.filters.mostUsed") }}</p>
 					</label>
@@ -214,16 +211,15 @@
 </template>
 
 <script>
-	import StoreCard from "./../components/StoreCard.vue";
-	import Pagination from "./../components/Pagination.vue";
+	import StoreCard from "../../components/StoreCard.vue";
+	import Pagination from "../../components/Pagination.vue";
 
 	import axios from "axios";
 
 	export default {
 		name: "Store",
 		components: {
-			StoreCard,
-			Pagination
+			StoreCard
 		},
 		auth: false,
 		async asyncData() {
@@ -308,11 +304,10 @@
 							);
 						else if (this.$data.filters.tag.enabled == true)
 							return Array.isArray(presence.tags)
-								? presence.tags.filter(
-										tag =>
-											tag
-												.toLowerCase()
-												.includes(this.presenceSearch.toLowerCase())
+								? presence.tags.filter(tag =>
+										tag
+											.toLowerCase()
+											.includes(this.presenceSearch.toLowerCase())
 								  ).length > 0
 								: false;
 						else
@@ -492,7 +487,7 @@
 </script>
 
 <style lang="scss">
-	@import "./../stylesheets/variables.scss";
+	@import "../../stylesheets/variables.scss";
 
 	.store-menu__searchbar-container {
 		span {

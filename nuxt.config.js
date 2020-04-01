@@ -7,7 +7,6 @@ module.exports = {
 		["@nuxtjs/google-analytics", { id: "UA-129058596-1" }]
 	],
 	plugins: [
-		"~/router.js",
 		"~/components/plugins/I18n.js",
 		"~/components/plugins/Languages.js",
 		{ src: "~/components/plugins/Tippy.js", ssr: false },

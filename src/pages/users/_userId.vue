@@ -3,7 +3,7 @@
 		<div class="userpage-container">
 			<div v-if="error">
 				<span>{{ $t("user.notFound.heading") }}</span>
-				<ul style="max-width:50%">
+				<ul style="max-width: 50%;">
 					<li>{{ $t("user.notFound.message1") }}</li>
 					<li>{{ $t("user.notFound.message2") }}</li>
 					<li>{{ $t("user.notFound.message3") }}</li>
@@ -268,7 +268,7 @@
 		},
 		async asyncData({ params }) {
 			const user = (
-					await axios(`${process.env.apiBase}/credits/${params.userid}`)
+					await axios(`${process.env.apiBase}/credits/${params.userId}`)
 				).data,
 				presences = (await axios(`${process.env.apiBase}/presences`)).data;
 
