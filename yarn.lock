@@ -5357,15 +5357,16 @@ mkdirp@^0.5.3:
   dependencies:
     minimist "^1.2.5"
 
-motus@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/motus/-/motus-2.0.4.tgz#0832fea120a88c3e6f71e08367520e3a3ad78e62"
-  integrity sha512-KZew+JYUU9kf7onaFS3UQ2zSQISkhrs7MEVgEkCNb0tSBpTco4075kIq9H/VK78Cy+aVNn7ZPPKlNsfryG3zfA==
+motus@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/motus/-/motus-2.0.5.tgz#8bce574f795cfb1b8a6076e53864a2ab797ef31d"
+  integrity sha512-E5g9A5qEjBlKeEeoRr4/7MIS/P2RBjpmVOo+Fh9i5CnDv+ENUq12SMfQjTj+AreUyf/XSyIKOpezwVw4crpT8g==
   dependencies:
     color-string "^1.5.3"
     color-to-color "^1.0.0"
     css-func "^1.0.0"
     lodash.throttle "^4.1.1"
+    opencollective-postinstall "^2.0.2"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -5758,6 +5759,11 @@ onetime@^5.1.0:
   integrity sha512-5NcSkPHhwTVFIQN+TUqXoS5+dlElHXdpAWu9I0HP20YOtIi+aZ0Ct82jdlILDxjLEAWwvm+qj1m6aEtsDVmm6Q==
   dependencies:
     mimic-fn "^2.1.0"
+
+opencollective-postinstall@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.2.tgz#5657f1bede69b6e33a45939b061eb53d3c6c3a89"
+  integrity sha512-pVOEP16TrAO2/fjej1IdOyupJY8KDUM1CvsaScRbw6oddvpQoOfGk4ywha0HKKVAD6RkW4x6Q+tNBwhf3Bgpuw==
 
 opener@1.5.1, opener@^1.5.1:
   version "1.5.1"
