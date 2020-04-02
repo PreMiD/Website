@@ -108,7 +108,7 @@
 					</h1>
 					<div class="dl-container__cards">
 						<div v-for="(platform, index) of platform_order" :key="platform">
-							<div @click="open(platform)">
+							<div @click="open(platform, 'Application')">
 								<div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
 									<div class="card__icon">
 										<i :class="`fab fa-${platform}`"></i>
@@ -148,9 +148,6 @@
 							</div>
 						</div>
 					</div>
-					<div id="ad">
-						<adsbygoogle ad-slot="3704767833" />
-					</div>
 				</div>
 
 				<div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
@@ -168,7 +165,7 @@
 						<div
 							:class="{ 'current-platform': browser == 'chrome' }"
 							class="cards__card clickable"
-							@click="openInNewTab(chrome_url)"
+							@click="open('chrome', 'Extension')"
 						>
 							<div class="card__icon">
 								<i class="fa-chrome fab"></i>
@@ -179,9 +176,9 @@
 						</div>
 
 						<a
-							:href="firefox_url"
 							:class="{ 'current-platform': browser == 'firefox' }"
 							class="cards__card clickable"
+							@click="open('firefox', 'Extension')"
 						>
 							<div class="card__icon">
 								<i class="fa-firefox fab"></i>
@@ -190,9 +187,6 @@
 								<h3>Firefox</h3>
 							</div>
 						</a>
-					</div>
-					<div id="ad">
-						<adsbygoogle ad-slot="7668063570" />
 					</div>
 				</div>
 			</div>
@@ -212,15 +206,6 @@
 	</div>
 </template>
 
-<style lang="scss" scoped>
-#ad {
-	position: relative;
-	width: 500px;
-	left: 50%;
-	transform: translateX(-50%);
-}
-</style>
-
 <script>
 	import axios from "axios";
 
@@ -230,12 +215,12 @@
 		async asyncData() {
 			const { extension, app } = (
 					await axios(`${process.env.apiBase}/versions`)
-				).data,
-				{ version } = (
+				).data,version=null;
+				/* { version } = (
 					await axios(
 						"https://raw.githubusercontent.com/PreMiD/Linux/master/package.json"
 					)
-				).data;
+				).data; */
 
 			return {
 				extVersion: extension,
@@ -245,6 +230,7 @@
 		},
 		data() {
 			return {
+				adBreak:false,
 				extVersion: null,
 				appVersion: null,
 				linuxVersion: null,
@@ -332,13 +318,16 @@
 
 				setTimeout(() => element.classList.remove("highlight"), 1000);
 			},
-			open(platform) {
-				if (platform == "linux")
+			open(platform, type="") {
+				if (platform == "linux") {
 					this.openInNewTab(
 						"https://github.com/PreMiD/Linux/blob/master/README.md"
 					);
-				if (platform == "windows") this.openInNewTab(this.$data.windows_url);
-				if (platform == "apple") this.openInNewTab(this.$data.apple_url);
+					return
+				}
+
+					this.$store.commit('download/setDL', {platform, type})
+					this.$nuxt.setLayout("adBreak");
 			},
 			openInNewTab(url) {
 				window.open(url, "_blank");
