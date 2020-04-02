@@ -1607,8 +1607,8 @@
 			padding-bottom: 5em;
 
 			h1 {
-				font-size: 2em;
-				margin-bottom: 4px;
+				font-size: 2em !important;
+				margin-bottom: 4px !important;
 			}
 		}
 
@@ -1619,7 +1619,7 @@
 			}
 
 			.jobs {
-				display: block;
+				display: block !important;
 
 				.job {
 					h1 {
