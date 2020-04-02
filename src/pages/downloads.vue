@@ -42,9 +42,7 @@
 							<p>
 								<i18n path="downloads.instructions.step.4">
 									<nuxt-link to="/store">
-										{{
-										$t("downloads.instructions.step.4.store")
-										}}
+										{{ $t("downloads.instructions.step.4.store") }}
 									</nuxt-link>
 								</i18n>
 							</p>
@@ -74,7 +72,9 @@
 			<div
 				v-if="isMobile"
 				class="dl-container__section dl-container__mobile-warning waves-aligned"
-			>{{ $t("downloads.mobile.errorMessage") }}</div>
+			>
+				{{ $t("downloads.mobile.errorMessage") }}
+			</div>
 		</transition>
 
 		<transition name="card-animation" mode="out-in">
@@ -108,8 +108,11 @@
 					</h1>
 					<div class="dl-container__cards">
 						<div v-for="(platform, index) of platform_order" :key="platform">
-							<div @click="open(platform)">
-								<div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
+							<div @click="open(platform, 'Application')">
+								<div
+									:class="{ 'current-platform': index == 1 }"
+									class="cards__card clickable"
+								>
 									<div class="card__icon">
 										<i :class="`fab fa-${platform}`"></i>
 									</div>
@@ -148,12 +151,12 @@
 							</div>
 						</div>
 					</div>
-					<div id="ad">
-						<adsbygoogle ad-slot="3704767833" />
-					</div>
 				</div>
 
-				<div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
+				<div
+					id="ext-downloads"
+					class="dl-container__section dl-container__section_downloads"
+				>
 					<h1 class="section-header">
 						{{ $t("downloads.extdownloading.header") }}
 						<a
@@ -168,7 +171,7 @@
 						<div
 							:class="{ 'current-platform': browser == 'chrome' }"
 							class="cards__card clickable"
-							@click="openInNewTab(chrome_url)"
+							@click="open('chrome', 'Extension')"
 						>
 							<div class="card__icon">
 								<i class="fa-chrome fab"></i>
@@ -179,9 +182,9 @@
 						</div>
 
 						<a
-							:href="firefox_url"
 							:class="{ 'current-platform': browser == 'firefox' }"
 							class="cards__card clickable"
+							@click="open('firefox', 'Extension')"
 						>
 							<div class="card__icon">
 								<i class="fa-firefox fab"></i>
@@ -191,9 +194,6 @@
 							</div>
 						</a>
 					</div>
-					<div id="ad">
-						<adsbygoogle ad-slot="7668063570" />
-					</div>
 				</div>
 			</div>
 		</transition>
@@ -202,24 +202,15 @@
 			<div v-if="isMobile" class="dl-container__showDownloads">
 				<span @click="showDownloads = !showDownloads">
 					{{
-					showDownloads
-					? $t("downloads.mobile.hideDownloads")
-					: $t("downloads.mobile.showDownloads")
+						showDownloads
+							? $t("downloads.mobile.hideDownloads")
+							: $t("downloads.mobile.showDownloads")
 					}}
 				</span>
 			</div>
 		</transition>
 	</div>
 </template>
-
-<style lang="scss" scoped>
-#ad {
-	position: relative;
-	width: 500px;
-	left: 50%;
-	transform: translateX(-50%);
-}
-</style>
 
 <script>
 	import axios from "axios";
@@ -231,11 +222,11 @@
 			const { extension, app } = (
 					await axios(`${process.env.apiBase}/versions`)
 				).data,
-				{ version } = (
+				version = ({ version } = (
 					await axios(
 						"https://raw.githubusercontent.com/PreMiD/Linux/master/package.json"
 					)
-				).data;
+				).data);
 
 			return {
 				extVersion: extension,
@@ -245,6 +236,7 @@
 		},
 		data() {
 			return {
+				adBreak: false,
 				extVersion: null,
 				appVersion: null,
 				linuxVersion: null,
@@ -332,13 +324,16 @@
 
 				setTimeout(() => element.classList.remove("highlight"), 1000);
 			},
-			open(platform) {
-				if (platform == "linux")
+			open(platform, type = "") {
+				if (platform == "linux") {
 					this.openInNewTab(
 						"https://github.com/PreMiD/Linux/blob/master/README.md"
 					);
-				if (platform == "windows") this.openInNewTab(this.$data.windows_url);
-				if (platform == "apple") this.openInNewTab(this.$data.apple_url);
+					return;
+				}
+
+				this.$store.commit("download/setDL", { platform, type });
+				this.$nuxt.setLayout("adBreak");
 			},
 			openInNewTab(url) {
 				window.open(url, "_blank");
@@ -351,9 +346,9 @@
 </script>
 
 <style lang="scss">
-@import "../stylesheets/variables.scss";
+	@import "../stylesheets/variables.scss";
 
-.highlight::after {
-	opacity: 1 !important;
-}
+	.highlight::after {
+		opacity: 1 !important;
+	}
 </style>

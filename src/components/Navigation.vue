@@ -17,14 +17,11 @@
 						content: $t('store.message.error')
 					}"
 				>
-					<i
-						@click="redirect('/downloads#ext-downloads')"
-						class="fa-exclamation fa-stack-1x fas"
-					></i>
+					<i @click="redirect('/downloads#ext-downloads')" class="fa-exclamation fa-stack-1x fas"></i>
 				</div>
 			</div>
 
-			<div class="navbar__items on-desktop">
+			<div v-if="!noLinks" class="navbar__items on-desktop">
 				<nuxt-link
 					v-for="category of categories"
 					:key="category.route"
@@ -43,7 +40,15 @@
         <nuxt-link :to="'/users/' + this.$auth.user.id" class="navbar__item" v-if="this.$auth.loggedIn">
            <i class="fas fa-user-circle"></i>
           <span class="item__title">My profile</span>
-        </nuxt-link>-->
+				</nuxt-link>-->
+			</div>
+			<div v-if="countDownBtn" class="navbar__items on-desktop">
+				<a @click="countDownValue === 0 ? $nuxt.setLayout('dl')  : null" class="navbar__item">
+					<span class="round-icon">
+						<i :class="`fa-forward fa-stack-1x fas`"></i>
+					</span>
+					<p v-text="countDownValue === 0 ? 'Skip' : countDownValue" />
+				</a>
 			</div>
 			<div class="mobile-navbar__menu on-mobile">
 				<a ref="menuTrigger" @click="mobileMenuActive = !mobileMenuActive">
@@ -74,8 +79,12 @@
 <script>
 	export default {
 		name: "Navigation",
+		props: [
+			"noLinks",
+			"countDownBtn"		],
 		data() {
 			return {
+				countDownValue:5,
 				mobileMenuActive: false,
 				isMobile: false,
 				plsFinishLoading: false,
@@ -107,6 +116,14 @@
 			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator?.userAgent
 			);
+
+			if(this.countDownBtn) {
+				const interval = setInterval(() => {
+						this.countDownValue--;
+
+					if(this.countDownValue===0) clearInterval(interval);
+				},1*1000);
+			}
 
 			setTimeout(() => {
 				this.$data.plsFinishLoading = true;
