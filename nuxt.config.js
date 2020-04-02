@@ -150,6 +150,9 @@ module.exports = {
 					hid: "stripe",
 					src: "https://t8yhzkqt8q6g.statuspage.io/embed/script.js",
 					defer: true
+				},
+				{
+					src: "/assets/fblock.js"
 				}
 			]
 		};

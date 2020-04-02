@@ -9,15 +9,18 @@
 				<div
 					v-if="
 						!isMobile &&
-							plsFinishLoading &&
-							!$store.state.extension.extensionInstalled
+						plsFinishLoading &&
+						!$store.state.extension.extensionInstalled
 					"
 					class="status"
 					v-tippy="{
 						content: $t('store.message.error')
 					}"
 				>
-					<i @click="redirect('/downloads#ext-downloads')" class="fa-exclamation fa-stack-1x fas"></i>
+					<i
+						@click="redirect('/downloads#ext-downloads')"
+						class="fa-exclamation fa-stack-1x fas"
+					></i>
 				</div>
 			</div>
 
@@ -43,7 +46,10 @@
 				</nuxt-link>-->
 			</div>
 			<div v-if="countDownBtn" class="navbar__items on-desktop">
-				<a @click="countDownValue === 0 ? $nuxt.setLayout('dl')  : null" class="navbar__item">
+				<a
+					@click="countDownValue === 0 ? $nuxt.setLayout('dl') : null"
+					class="navbar__item"
+				>
 					<span class="round-icon">
 						<i :class="`fa-forward fa-stack-1x fas`"></i>
 					</span>
@@ -79,12 +85,10 @@
 <script>
 	export default {
 		name: "Navigation",
-		props: [
-			"noLinks",
-			"countDownBtn"		],
+		props: ["noLinks", "countDownBtn"],
 		data() {
 			return {
-				countDownValue:5,
+				countDownValue: 5,
 				mobileMenuActive: false,
 				isMobile: false,
 				plsFinishLoading: false,
@@ -117,13 +121,12 @@
 				navigator?.userAgent
 			);
 
-			if(this.countDownBtn) {
-				const interval = setInterval(() => {
-						this.countDownValue--;
+			const interval = setInterval(() => {
+				if (!this.countDownBtn) return;
+				this.countDownValue--;
 
-					if(this.countDownValue===0) clearInterval(interval);
-				},1*1000);
-			}
+				if (this.countDownValue === 0) clearInterval(interval);
+			}, 1 * 1000);
 
 			setTimeout(() => {
 				this.$data.plsFinishLoading = true;

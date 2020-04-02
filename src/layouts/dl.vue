@@ -6,7 +6,7 @@
 				<div id="ad" class="left">
 					<adsbygoogle ad-slot="1070101295" />
 				</div>
-				<div id="note">
+				<div v-if="!adBlock" id="note">
 					<h1 v-text="$store.state.download.type" />
 					<a
 						id="button"
@@ -27,6 +27,12 @@
 						<i :class="`fab fa-${$store.state.download.platform}`"></i>
 						<p>Download</p>
 					</a>
+				</div>
+				<div v-else id="note">
+					<img
+						src="https://cdn.discordapp.com/attachments/473603737135349792/695397570272559235/634432333226836020.png"
+					/>
+					<p>Please disable your adblock.</p>
 				</div>
 				<div id="ad" class="right">
 					<adsbygoogle ad-slot="7443937958" />
@@ -49,6 +55,29 @@
 		},
 		head: {
 			title: "Downloads"
+		},
+		data() {
+			return {
+				adBlock: true
+			};
+		},
+		mounted() {
+			const self = this;
+
+			//@ts-ignore
+			fuckAdBlock = new FuckAdBlock({
+				checkOnLoad: true
+			});
+			//@ts-ignore
+			fuckAdBlock.check();
+			//@ts-ignore
+			fuckAdBlock.onNotDetected(function () {
+				self.adBlock = false;
+			});
+			//@ts-ignore
+			fuckAdBlock.onDetected(function () {
+				self.adBlock = true;
+			});
 		}
 	});
 </script>
@@ -80,6 +109,12 @@
 				color: #7289da;
 				text-transform: uppercase;
 				margin-bottom: 15px;
+			}
+
+			img {
+				left: 50%;
+				position: relative;
+				transform: translateX(-50%);
 			}
 
 			#button {

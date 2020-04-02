@@ -1,23 +1,29 @@
 <template>
 	<div style="100% !important;">
-		<navigation noLinks="true" countDownBtn="true" />
-		<div id="adWrapper">
-			<div id="adBreakWrapper">
-				<div id="ad" class="left">
+		<navigation noLinks="true" :countDownBtn="!adBlock" />
+		<div id="Wrapper">
+			<div id="BreakWrapper">
+				<div id="space" class="left">
 					<adsbygoogle ad-slot="3276628083" />
 				</div>
-				<div id="note">
+				<div v-if="!adBlock" id="note">
 					<h1>Thank you!</h1>
 					<p>
 						We use ads to support our team and maintain our servers to offer you
 						the best user experience!
 					</p>
 				</div>
-				<div id="ad" class="right">
+				<div v-else id="note">
+					<img
+						src="https://cdn.discordapp.com/attachments/473603737135349792/695397570272559235/634432333226836020.png"
+					/>
+					<p>Please disable your adblock.</p>
+				</div>
+				<div id="space" class="right">
 					<adsbygoogle ad-slot="4398138065" />
 				</div>
 			</div>
-			<div id="ad" class="bottom">
+			<div id="space" class="bottom">
 				<adsbygoogle ad-slot="9757727213" />
 			</div>
 		</div>
@@ -34,16 +40,36 @@
 		},
 		head: {
 			title: "Downloads"
+		},
+		data() {
+			return {
+				adBlock: true
+			};
+		},
+		mounted() {
+			const self = this;
+			//@ts-ignore
+			fuckAdBlock = new FuckAdBlock();
+			//@ts-ignore
+			fuckAdBlock.check();
+			//@ts-ignore
+			fuckAdBlock.onNotDetected(function () {
+				self.adBlock = false;
+			});
+			//@ts-ignore
+			fuckAdBlock.onDetected(function () {
+				self.adBlock = true;
+			});
 		}
 	});
 </script>
 
 <style lang="scss" scoped>
-	#adWrapper {
+	#Wrapper {
 		height: 100% !important;
 	}
 
-	#adBreakWrapper {
+	#BreakWrapper {
 		display: grid;
 		justify-content: space-between;
 		align-items: center;
@@ -57,6 +83,12 @@
 			max-width: 350px;
 			padding: 15px;
 			border-radius: 10px;
+
+			img {
+				left: 50%;
+				position: relative;
+				transform: translateX(-50%);
+			}
 
 			h1,
 			p {
@@ -72,7 +104,7 @@
 		}
 	}
 
-	#ad {
+	#space {
 		width: 250px;
 		height: 600px;
 
