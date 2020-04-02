@@ -209,7 +209,7 @@
 		name: "Downloads",
 		auth: false,
 		async asyncData() {
-			const { extension, app,linux } = (
+			const { extension, app, linux } = (
 					await axios(`${process.env.apiBase}/versions`)
 				).data
 
