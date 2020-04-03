@@ -7,13 +7,14 @@ module.exports = {
 		["@nuxtjs/google-analytics", { id: "UA-129058596-1" }]
 	],
 	plugins: [
-		"~/components/plugins/I18n.js",
-		"~/components/plugins/Languages.js",
-		{ src: "~/components/plugins/Tippy.js", ssr: false },
-		{ src: "~/components/plugins/Noty.js", ssr: false },
-		{ src: "~/components/plugins/Pagination.js", ssr: false },
-		{ src: "~/components/plugins/Carousel.js", ssr: false },
-		{ src: "~/components/plugins/Scrollmagic.js", ssr: false }
+		"~/plugins/I18n.js",
+		"~/plugins/Languages.js",
+		{ src: "~/plugins/vue-anime.js", ssr: false },
+		{ src: "~/plugins/Tippy.js", ssr: false },
+		{ src: "~/plugins/Noty.js", ssr: false },
+		{ src: "~/plugins/Pagination.js", ssr: false },
+		{ src: "~/plugins/Carousel.js", ssr: false },
+		{ src: "~/plugins/Scrollmagic.js", ssr: false }
 	],
 	router: {
 		middleware: ["auth"]

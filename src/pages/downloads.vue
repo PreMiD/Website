@@ -1,6 +1,6 @@
 <template>
 	<div class="dl-container">
-		<div class="dl-container__section dl-container__section_header">
+		<div class="dl-container__section dl-container__section_header pattern">
 			<div class="dl-container__header">
 				<div class="header__content">
 					<h1>{{ $t("downloads.header.title") }}</h1>

@@ -406,7 +406,10 @@
 		&:hover {
 			border: 1px solid lighten($background-secondary, 10%);
 			color: lighten($background-secondary, 35%);
-			background-color: transparentize(lighten($background-secondary, 35%), 0.95);
+			background-color: transparentize(
+				lighten($background-secondary, 35%),
+				0.95
+			);
 		}
 
 		&.nuxt-link-exact-active,
@@ -473,7 +476,6 @@
 
 			padding-top: 6em;
 			padding-bottom: 12em;
-			background: $background-secondary;
 		}
 
 		&_downloads {

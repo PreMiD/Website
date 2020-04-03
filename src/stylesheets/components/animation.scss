@@ -127,6 +127,19 @@
 	opacity: 0;
 }
 
+//* Pop
+
+.pop-enter-active,
+.pop-leave-active {
+	transition: all 0.15s;
+	transform: scale(1);
+}
+
+.pop-enter,
+.pop-leave-to {
+	transform: scale(0);
+}
+
 @-webkit-keyframes waveAnimation {
 	0% {
 		d: path(
