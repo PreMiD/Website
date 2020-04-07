@@ -465,8 +465,6 @@
 		},
 		methods: {
 			appear() {
-				let targets = [];
-
 				this.$anime
 					.timeline({
 						duration: 1000,

@@ -1,79 +1,85 @@
 <template>
 	<transition appear v-on:after-appear="appear">
-		<div class="invisible navbar__container" ref="header">
-			<div class="navbar">
-				<div class="navbar__logotype" ref="headerLogo">
-					<nuxt-link to="/">
-						<img src="@/assets/images/logo_round.svg" data-not-lazy />
-					</nuxt-link>
+		<div>
+			<div id="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
+				<div id="logoWrapper" ref="headerLogo">
+					<nuxt-link
+						to="/"
+						tag="img"
+						:src="require('@/assets/images/logo_round.svg')"
+						data-not-lazy
+					/>
 
 					<transition name="pop">
 						<div
-							v-if="
-								!isMobile &&
-								plsFinishLoading &&
-								!$store.state.extension.extensionInstalled
-							"
-							class="status"
+							v-if="!isMobile && !$store.state.extension.extensionInstalled"
+							id="status"
 							v-tippy="{
 								content: $t('store.message.error')
 							}"
 						>
 							<i
 								@click="redirect('/downloads#ext-downloads')"
-								class="fa-exclamation fa-stack-1x fas"
-							></i>
+								class="fa-exclamation fas"
+							/>
 						</div>
 					</transition>
 				</div>
 
-				<div v-if="!noLinks" class="navbar__items on-desktop">
+				<div v-if="!noLinks" id="links">
 					<nuxt-link
 						v-for="category of categories"
 						:key="category.route"
 						:to="'/' + category.route"
-						class="navbar__item"
 						ref="headerLink"
 					>
 						<span class="round-icon">
-							<i :class="`fa-${category.logo} fa-stack-1x fas`"></i>
+							<i :class="`fa-${category.logo} fas`"></i>
 						</span>
-						<p>{{ category.title }}</p>
+						<p>{{ $t(category.string) }}</p>
 					</nuxt-link>
 				</div>
-				<div v-if="countDownBtn" class="navbar__items on-desktop">
+
+				<div v-if="countDownBtn" id="links">
 					<a
 						@click="countDownValue === 0 ? $nuxt.setLayout('dl') : null"
 						class="navbar__item"
 					>
 						<span class="round-icon">
-							<i :class="`fa-forward fa-stack-1x fas`"></i>
+							<i :class="`fa-forward fas`"></i>
 						</span>
 						<p v-text="countDownValue === 0 ? 'Skip' : countDownValue" />
 					</a>
 				</div>
-				<div class="mobile-navbar__menu on-mobile">
-					<a ref="menuTrigger" @click="mobileMenuActive = !mobileMenuActive">
-						<i class="fa-bars fas"></i>
-					</a>
+
+				<div
+					id="hamburger"
+					ref="hamburger"
+					@click="mobileMenuActive = !mobileMenuActive"
+				>
+					<i v-if="mobileMenuActive" class="fa-times fas" />
+					<i v-else class="fa-bars fas" />
 				</div>
 			</div>
-			<div
-				v-if="mobileMenuActive"
-				class="mobile-navbar__items on-mobile"
-				@click="mobileMenuActive = false"
-			>
-				<nuxt-link
-					v-for="category of categories"
-					:key="category.route"
-					:to="'/' + category.route"
-					class="navbar__item"
-					ref="headerLink"
+
+			<transition name="slide-down">
+				<div
+					id="mobileLinks"
+					v-if="mobileMenuActive"
+					@click="mobileMenuActive = !mobileMenuActive"
 				>
-					<i :class="'fas fa-' + category.logo"></i>
-					<span class="item__title">{{ $t(`header.${category.route}`) }}</span>
-				</nuxt-link>
-			</div>
+					<nuxt-link
+						v-for="category of categories"
+						:key="category.route"
+						:to="'/' + category.route"
+					>
+						<span>
+							<i :class="'fas fa-' + category.logo"></i>
+							{{ $t(`header.${category.route}`) }}
+						</span>
+					</nuxt-link>
+				</div>
+			</transition>
 		</div>
 	</transition>
 </template>
@@ -81,58 +87,29 @@
 <style lang="scss" scoped>
 	@import "~/stylesheets/variables.scss";
 
-	.navbar__container {
-		background: $background-primary;
+	#navbar {
+		background-color: $background-primary;
 		position: relative;
+		height: 75px;
+		margin: 0 15px;
 
-		.fa,
-		.fab,
-		.fal,
-		.far,
-		.fas {
-			bottom: -1px;
-			position: relative;
+		display: grid;
+		grid-template-columns: min-content min-content;
+		align-items: center;
+		justify-content: space-between;
 
-			padding: 1px 4px;
-			font-size: 0.9em;
-			vertical-align: middle;
-		}
+		#logoWrapper {
+			height: 40px;
 
-		.navbar {
-			max-width: 1600px;
-			margin: 0 auto;
-			padding-top: 1rem;
-			padding-bottom: 1rem;
-			padding-left: 1rem;
-			padding-right: 1rem;
-			color: $purplewhite;
-			display: flex;
+			display: grid;
+			grid-template-columns: min-content min-content;
 			align-items: center;
 
-			* {
-				user-select: none;
+			img {
+				height: 40px;
 			}
 
-			.navbar__logotype {
-				display: inline-flex;
-				align-items: center;
-
-				img {
-					height: 36px;
-					bottom: -3px;
-					position: relative;
-					display: inline-block;
-				}
-
-				h1 {
-					font-size: 1.5rem;
-					/* font-family: "Discord Font"; */
-					margin: 0 5px;
-					margin-top: 5px;
-				}
-			}
-
-			.status {
+			#status {
 				display: flex;
 				align-items: center;
 				font-size: small;
@@ -144,113 +121,111 @@
 				background-color: #ffff00;
 				color: black;
 				cursor: pointer;
+				justify-content: center;
 			}
+		}
 
-			.navbar__items {
-				vertical-align: top;
-				line-height: 2.5rem;
-				font-size: 1.1rem;
-				letter-spacing: 0.05rem;
-				font-weight: 800;
-				text-transform: uppercase;
-				display: flex;
-				margin-left: auto;
+		#links {
+			display: flex;
+			font-size: 1.1rem;
+			font-weight: 800;
+			text-transform: uppercase;
 
-				a.navbar__item {
-					display: flex;
-					align-items: center;
-					margin: 0 1.3em;
-					position: relative;
-					color: lighten($background-secondary, 40%);
-					transition: 0.1s ease-out;
+			a {
+				transition: 0.25s margin ease-out;
+
+				display: grid;
+				grid-template-columns: min-content min-content;
+				align-items: center;
+				margin: 0 1.3em;
+				color: lighten($background-secondary, 40%);
+
+				&:hover {
+					color: $accent-primary;
 
 					.round-icon {
-						transition: 0.1s ease-out;
-						align-items: center;
-						display: flex;
-						width: 30px;
-						height: 30px;
-						border-radius: 100em;
-						background-color: lighten($background-secondary, 12%);
-						margin-right: 0.5em;
+						background-color: $accent-primary;
 
 						i {
-							transition: 0.1s ease-out;
-							font-size: 0.8em;
-							color: lighten($background-secondary, 40%);
+							color: #fff;
 						}
-					}
-
-					p {
-						margin: 0;
-					}
-
-					.item__title {
-						vertical-align: middle;
-						// text-transform: uppercase;
-						font-size: 1.15rem;
-					}
-
-					&:hover {
-						.round-icon {
-							background-color: $accent-primary;
-							i {
-								color: white;
-							}
-						}
-					}
-
-					&:hover,
-					&.router-link-active {
-						color: lighten($accent-primary, 15%);
 					}
 				}
-			}
 
-			.mobile-navbar__menu {
-				margin-left: auto;
+				.round-icon {
+					transition: 0.15s background-color ease-out;
 
-				a {
-					font-size: 23px;
+					align-items: center;
+					display: flex;
+					width: 30px;
+					height: 30px;
+					border-radius: 100em;
+					background-color: lighten($background-secondary, 12%);
+					margin-right: 0.5em;
+					justify-content: center;
+
+					i {
+						transition: 0.15s color ease-out !important;
+
+						font-size: 0.8em;
+					}
 				}
 			}
 		}
 
-		.mobile-navbar__items {
-			background: $background-primary;
-			box-shadow: 0 4px 32px 0 $background-primary;
-
-			left: 0;
-			right: 0;
-			z-index: 1111;
-			position: absolute;
-
-			display: flex;
-			flex-flow: column;
+		#hamburger {
+			font-size: 1.5em;
+			display: none;
+			width: 25px;
+			height: 25px;
 			text-align: center;
+		}
+	}
 
-			.navbar__item {
-				.item__title {
-					vertical-align: middle;
-					text-transform: uppercase;
-				}
+	#mobileLinks {
+		position: absolute;
+		top: 75px;
+		z-index: 99999;
+		background: $background-primary;
+		display: grid;
+		grid-gap: 10px;
+		padding-bottom: 10px;
+
+		a {
+			display: grid;
+			grid-template-columns: auto min-content auto;
+			align-items: center;
+
+			width: 100vw;
+			height: 35px;
+
+			font-size: 20px;
+			font-weight: 800;
+			text-transform: uppercase;
+
+			span {
+				grid-area: 1/2;
+				width: max-content;
 			}
+		}
+	}
+	//* Responsive Design
 
+	@media only screen and (max-width: 900px) {
+		#links {
 			a {
-				padding: 5px 0;
-				line-height: 2.5rem;
-				font-size: 1.2rem;
-				font-weight: 800;
-
-				transition: all 0.2s ease;
-				box-shadow: inset 0px 0 0 0 $accent-primary;
-
-				&.nuxt-link-exact-active,
-				&.router-link-exact-active {
-					box-shadow: inset 4px 0 0 0 $accent-primary;
-					background: rgba(255, 255, 255, 0.01);
-				}
+				margin: 0 0.5em !important;
 			}
+		}
+	}
+
+	@media only screen and (max-width: 715px) {
+		#links {
+			display: none !important;
+		}
+
+		#hamburger {
+			display: block !important;
 		}
 	}
 </style>
@@ -261,25 +236,25 @@
 		props: ["noLinks", "countDownBtn"],
 		data() {
 			return {
+				pageLoad: false,
 				countDownValue: 5,
 				mobileMenuActive: false,
 				isMobile: false,
-				plsFinishLoading: false,
 				categories: [
 					{
 						logo: "cart-arrow-down",
 						route: "store",
-						title: this.$t("header.store")
+						string: "header.store"
 					},
 					{
 						logo: "download",
 						route: "downloads",
-						title: this.$t("header.downloads")
+						string: "header.downloads"
 					},
 					{
 						logo: "hands-helping",
 						route: "contributors",
-						title: this.$t("header.contributors")
+						string: "header.contributors"
 					}
 				]
 			};
@@ -289,20 +264,41 @@
 				window.location.href = location || window.location.href;
 			},
 			appear() {
-				let targets = [this.$refs.headerLogo];
+				this.pageLoad = true;
+				let targets = [];
 
 				if (this.$refs.headerLink)
 					targets.push(...this.$refs.headerLink.map(i => i.$el));
 
-				this.$anime({
-					targets: targets,
-					opacity: [0, 1],
-					translateY: [-200, 0],
-					easing: "easeOutExpo",
-					delay: this.$anime.stagger(100),
-					duration: 500,
-					begin: () => this.$refs.header.classList.remove("invisible")
-				});
+				this.$anime
+					.timeline({
+						duration: 500,
+						delay: this.$anime.stagger(100),
+						opacity: [0, 1],
+						easing: "easeOutExpo",
+						begin: () => this.$refs.header.classList.remove("invisible")
+					})
+					.add(
+						{
+							targets: targets,
+							translateY: [-200, 0]
+						},
+						0
+					)
+					.add(
+						{
+							targets: this.$refs.headerLogo,
+							translateX: [-400, 0]
+						},
+						0
+					)
+					.add(
+						{
+							targets: this.$refs.hamburger,
+							translateX: [100, 0]
+						},
+						0
+					);
 			}
 		},
 		mounted() {
@@ -316,10 +312,6 @@
 
 				if (this.countDownValue === 0) clearInterval(interval);
 			}, 1 * 1000);
-
-			setTimeout(() => {
-				this.$data.plsFinishLoading = true;
-			}, 500);
 		}
 	};
 </script>

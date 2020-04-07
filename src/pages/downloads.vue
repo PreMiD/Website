@@ -41,7 +41,9 @@
 						<li>
 							<p>
 								<i18n path="downloads.instructions.step.4">
-									<nuxt-link to="/store">{{ $t("downloads.instructions.step.4.store") }}</nuxt-link>
+									<nuxt-link to="/store">{{
+										$t("downloads.instructions.step.4.store")
+									}}</nuxt-link>
 								</i18n>
 							</p>
 						</li>
@@ -70,7 +72,9 @@
 			<div
 				v-if="isMobile"
 				class="dl-container__section dl-container__mobile-warning waves-aligned"
-			>{{ $t("downloads.mobile.errorMessage") }}</div>
+			>
+				{{ $t("downloads.mobile.errorMessage") }}
+			</div>
 		</transition>
 
 		<transition name="card-animation" mode="out-in">
@@ -105,7 +109,10 @@
 					<div class="dl-container__cards">
 						<div v-for="(platform, index) of platform_order" :key="platform">
 							<div @click="open(platform, 'Application')">
-								<div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
+								<div
+									:class="{ 'current-platform': index == 1 }"
+									class="cards__card clickable"
+								>
 									<div class="card__icon">
 										<i :class="`fab fa-${platform}`"></i>
 									</div>
@@ -146,7 +153,10 @@
 					</div>
 				</div>
 
-				<div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
+				<div
+					id="ext-downloads"
+					class="dl-container__section dl-container__section_downloads"
+				>
 					<h1 class="section-header">
 						{{ $t("downloads.extdownloading.header") }}
 						<a
@@ -192,9 +202,9 @@
 			<div v-if="isMobile" class="dl-container__showDownloads">
 				<span @click="showDownloads = !showDownloads">
 					{{
-					showDownloads
-					? $t("downloads.mobile.hideDownloads")
-					: $t("downloads.mobile.showDownloads")
+						showDownloads
+							? $t("downloads.mobile.hideDownloads")
+							: $t("downloads.mobile.showDownloads")
 					}}
 				</span>
 			</div>
@@ -210,8 +220,8 @@
 		auth: false,
 		async asyncData() {
 			const { extension, app, linux } = (
-					await axios(`${process.env.apiBase}/versions`)
-				).data
+				await axios(`${process.env.apiBase}/versions`)
+			).data;
 
 			return {
 				extVersion: extension,
@@ -331,9 +341,9 @@
 </script>
 
 <style lang="scss">
-@import "../stylesheets/variables.scss";
+	@import "../stylesheets/variables.scss";
 
-.highlight::after {
-	opacity: 1 !important;
-}
+	.highlight::after {
+		opacity: 1 !important;
+	}
 </style>
