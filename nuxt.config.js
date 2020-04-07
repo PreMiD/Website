@@ -16,9 +16,6 @@ module.exports = {
 		{ src: "~/plugins/Carousel.js", ssr: false },
 		{ src: "~/plugins/Scrollmagic.js", ssr: false }
 	],
-	router: {
-		middleware: ["auth"]
-	},
 	modules: [
 		[
 			"nuxt-lazy-load",
