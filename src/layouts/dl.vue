@@ -48,6 +48,7 @@
 <script lang="ts">
 	import Navigation from "../components/Navigation.vue";
 	import Vue from "vue";
+	import Axios from "axios";
 
 	export default Vue.extend({
 		components: {
@@ -62,22 +63,16 @@
 			};
 		},
 		mounted() {
-			const self = this;
+			let rads = 0;
+			while (rads === 0) {
+				rads = Math.floor(Math.random() * 10);
+			}
 
-			//@ts-ignore
-			fuckAdBlock = new FuckAdBlock({
-				checkOnLoad: true
-			});
-			//@ts-ignore
-			fuckAdBlock.check();
-			//@ts-ignore
-			fuckAdBlock.onNotDetected(function () {
-				self.adBlock = false;
-			});
-			//@ts-ignore
-			fuckAdBlock.onDetected(function () {
-				self.adBlock = true;
-			});
+			const checkA = Axios(`/ads/ads${rads}.js`);
+
+			checkA
+				.then(() => (this.adBlock = false))
+				.catch(() => (this.adBlock = true));
 		}
 	});
 </script>

@@ -2,12 +2,12 @@
 
 /**
  * How to use styles to build new pages
- * 
+ *
  * 1. Styles now have `__` and `--` that used for moduled development.
- * 
+ *
  * The `__` must be used when you need to define styles for block elements.
  * (For example: We have `store` container, all items inside it should be called starting from `store-navbar_...`).
- * 
+ *
  * The `--` must be used for modificators (styles that are based on default ones but have different color and etc.).
  * (For example: We have `button` element, if you want to change it's colors in CSS you need to create modificator `button--pink`).
  */
@@ -35,7 +35,6 @@
 @import "components/grid.scss";
 @import "components/input.scss";
 @import "components/label.scss";
-@import "components/navbar.scss";
 @import "components/section.scss";
 @import "components/spacing.scss";
 @import "components/switcher.scss";
@@ -45,3 +44,7 @@
 @import "plugins/vuejs-noty.scss";
 
 @import "components/visibility.scss";
+
+.invisible {
+	opacity: 0;
+}
