@@ -247,7 +247,13 @@
 							@click="openInNewTab(platform.link)"
 						>
 							<div class="card__icon">
-								<i class="fa-chrome fab"></i>
+								<i
+									:class="`fab fa-${
+										platform.platform.toString() == 'Chromium'
+											? 'chrome'
+											: platform.platform.toString().toLowerCase()
+									}`"
+								></i>
 							</div>
 							<div class="card__content">
 								<h3 v-t="platform.platform"></h3>
