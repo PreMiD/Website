@@ -41,7 +41,9 @@
 						<li>
 							<p>
 								<i18n path="downloads.instructions.step.4">
-									<nuxt-link to="/store">{{ $t("downloads.instructions.step.4.store") }}</nuxt-link>
+									<nuxt-link to="/store">{{
+										$t("downloads.instructions.step.4.store")
+									}}</nuxt-link>
 								</i18n>
 							</p>
 						</li>
@@ -70,7 +72,9 @@
 			<div
 				v-if="isMobile"
 				class="dl-container__section dl-container__mobile-warning waves-aligned"
-			>{{ $t("downloads.mobile.errorMessage") }}</div>
+			>
+				{{ $t("downloads.mobile.errorMessage") }}
+			</div>
 		</transition>
 
 		<transition name="card-animation" mode="out-in">
@@ -105,7 +109,10 @@
 					<div class="dl-container__cards">
 						<div v-for="(platform, index) of platform_order" :key="platform">
 							<div @click="open(platform, 'Application')">
-								<div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
+								<div
+									:class="{ 'current-platform': index == 1 }"
+									class="cards__card clickable"
+								>
 									<div class="card__icon">
 										<i :class="`fab fa-${platform}`"></i>
 									</div>
@@ -146,7 +153,10 @@
 					</div>
 				</div>
 
-				<div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
+				<div
+					id="ext-downloads"
+					class="dl-container__section dl-container__section_downloads"
+				>
 					<h1 class="section-header">
 						{{ $t("downloads.extdownloading.header") }}
 						<a
@@ -205,9 +215,15 @@
 			<div v-if="$auth.loggedIn">
 				<div v-if="beta.access == true">
 					<div class="dl-container__cards">
-						<div v-for="(platform, index) of cTab.app_links" :key="platform.platform.toString()">
+						<div
+							v-for="(platform, index) of cTab.app_links"
+							:key="platform.platform.toString()"
+						>
 							<div @click="openInNewTab(platform.link)">
-								<div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
+								<div
+									:class="{ 'current-platform': index == 1 }"
+									class="cards__card clickable"
+								>
 									<div class="card__icon">
 										<i :class="`fab fa-${platform.platform.toLowerCase()}`"></i>
 									</div>
@@ -253,12 +269,8 @@
 					<h1>Uh oh, it looks like you do not have alpha/beta access :(</h1>
 					<p>
 						You can join our beta program for free
-						<a
-							class="text-highlight"
-							@click="$router.push('/beta')"
-						>here</a>
-						.
-						Hurry up! We only have {{200 - betaUsers}} more slots available
+						<a class="text-highlight" @click="$router.push('/beta')">here</a>
+						. Hurry up! We only have {{ 200 - betaUsers }} more slots available
 						(out of 200)
 					</p>
 				</div>
@@ -266,7 +278,14 @@
 			<div class="dl-container__cards" v-else>
 				<div class="button-container">
 					<p>Please login in order to see the downloads.</p>
-					<button type="button" class="button" id="login" @click="$router.push('/login')">Login</button>
+					<button
+						type="button"
+						class="button"
+						id="login"
+						@click="$router.push('/login')"
+					>
+						Login
+					</button>
 				</div>
 			</div>
 		</div>
@@ -275,9 +294,9 @@
 			<div v-if="isMobile" class="dl-container__showDownloads">
 				<span @click="showDownloads = !showDownloads">
 					{{
-					showDownloads
-					? $t("downloads.mobile.hideDownloads")
-					: $t("downloads.mobile.showDownloads")
+						showDownloads
+							? $t("downloads.mobile.hideDownloads")
+							: $t("downloads.mobile.showDownloads")
 					}}
 				</span>
 			</div>
@@ -294,14 +313,16 @@
 		auth: false,
 		async asyncData() {
 			const { extension, app, linux } = (
-					await axios(`${process.env.apiBase}/versions`)
-				).data
+				await axios(`${process.env.apiBase}/versions`)
+			).data;
 
 			return {
 				extVersion: extension,
 				appVersion: app,
 				linuxVersion: linux,
-				betaUsers: (await axios(`${process.env.apiBase}/credits`)).data.filter(u => u.roles.includes("BETA")).length
+				betaUsers: (
+					await axios(`${process.env.apiBase}/credits`)
+				).data.filter(u => u.roles.includes("BETA")).length
 			};
 		},
 		data() {
@@ -352,42 +373,56 @@
 			};
 		},
 		beforeMount() {
-			if(this.$auth.loggedIn) {
-				axios(`${process.env.apiBase}/alphaAccess/${this.$auth.user.id}`).then(response => {
-					this.alpha.access = response.data.access;
+			if (this.$auth.loggedIn) {
+				axios(`${process.env.apiBase}/alphaAccess/${this.$auth.user.id}`).then(
+					response => {
+						this.alpha.access = response.data.access;
 
-					if(response.data.access) {
-						this.beta.access = true;
+						if (response.data.access) {
+							this.beta.access = true;
 
-						axios.post(`${process.env.apiBase}/downloads/${this.$auth.$storage._state["_token.discord"]}/alpha`).then(response => {
-							console.log(response.data)
-							this.alpha.app_links = response.data.app_links;
-							this.alpha.ext_links = response.data.ext_links;
+							axios
+								.post(
+									`${process.env.apiBase}/downloads/${this.$auth.$storage._state["_token.discord"]}/alpha`
+								)
+								.then(response => {
+									console.log(response.data);
+									this.alpha.app_links = response.data.app_links;
+									this.alpha.ext_links = response.data.ext_links;
 
-							this.cTab = this.alpha;
-							this.tab = 'alpha';
-						});
+									this.cTab = this.alpha;
+									this.tab = "alpha";
+								});
 
-						axios.post(`${process.env.apiBase}/downloads/${this.$auth.$storage._state["_token.discord"]}/beta`).then(response => {
-							this.beta.app_links = response.data.app_links;
-							this.beta.ext_links = response.data.ext_links;
-						});
+							axios
+								.post(
+									`${process.env.apiBase}/downloads/${this.$auth.$storage._state["_token.discord"]}/beta`
+								)
+								.then(response => {
+									this.beta.app_links = response.data.app_links;
+									this.beta.ext_links = response.data.ext_links;
+								});
+						} else
+							axios(
+								`${process.env.apiBase}/betaAccess/${this.$auth.user.id}`
+							).then(response => {
+								this.beta.access = response.data.access;
+								if (response.data.access) {
+									axios
+										.post(
+											`${process.env.apiBase}/downloads/${this.$auth.$storage._state["_token.discord"]}/beta`
+										)
+										.then(response => {
+											this.beta.app_links = response.data.app_links;
+											this.beta.ext_links = response.data.ext_links;
 
-					}
-					else axios(`${process.env.apiBase}/betaAccess/${this.$auth.user.id}`).then(response => {
-						this.beta.access = response.data.access;
-						if(response.data.access) {
-							axios.post(`${process.env.apiBase}/downloads/${this.$auth.$storage._state["_token.discord"]}/beta`).then(response => {
-								this.beta.app_links = response.data.app_links;
-								this.beta.ext_links = response.data.ext_links;
-
-								this.cTab = this.beta;
-								this.tab = 'beta';
+											this.cTab = this.beta;
+											this.tab = "beta";
+										});
+								}
 							});
-
-						}
-					});
-				});
+					}
+				);
 			}
 		},
 		mounted() {
@@ -426,7 +461,11 @@
 			platform_order.splice(platform_order.indexOf(platform_temp), 1);
 			platform_order.splice(1, 0, platform_temp);
 
-			if (["#app-downloads", "#ext-downloads", "#beta-downloads"].includes(window.location.hash)) {
+			if (
+				["#app-downloads", "#ext-downloads", "#beta-downloads"].includes(
+					window.location.hash
+				)
+			) {
 				this.highlight(
 					`${
 						["#app-downloads", "#ext-downloads", "#beta-downloads"].filter(i =>
@@ -447,12 +486,12 @@
 		},
 		methods: {
 			changeTab() {
-				if(this.alpha.access) {
-					if(this.tab == 'alpha') {
-						this.tab = 'beta';
+				if (this.alpha.access) {
+					if (this.tab == "alpha") {
+						this.tab = "beta";
 						this.cTab = this.beta;
 					} else {
-						this.tab = 'alpha';
+						this.tab = "alpha";
 						this.cTab = this.alpha;
 					}
 				} else return;
@@ -489,46 +528,46 @@
 </script>
 
 <style lang="scss">
-@import "../stylesheets/variables.scss";
+	@import "../stylesheets/variables.scss";
 
-.highlight::after {
-	opacity: 1 !important;
-}
-
-.button-container {
-	text-align: center;
-
-	p {
-		margin-top: 0;
+	.highlight::after {
+		opacity: 1 !important;
 	}
-}
 
-#login {
-	padding: 0.55em 3em;
-}
-
-#beta-downloads {
-	.nobeta {
-		flex-direction: column;
+	.button-container {
 		text-align: center;
-
-		h1 {
-			margin: 0;
-		}
-	}
-
-	.card__content {
-		h3 {
-			margin-bottom: 0;
-			text-transform: capitalize;
-		}
 
 		p {
 			margin-top: 0;
-			color: #c3c3c3;
-			text-transform: uppercase;
-			font-size: 0.75rem;
 		}
 	}
-}
+
+	#login {
+		padding: 0.55em 3em;
+	}
+
+	#beta-downloads {
+		.nobeta {
+			flex-direction: column;
+			text-align: center;
+
+			h1 {
+				margin: 0;
+			}
+		}
+
+		.card__content {
+			h3 {
+				margin-bottom: 0;
+				text-transform: capitalize;
+			}
+
+			p {
+				margin-top: 0;
+				color: #c3c3c3;
+				text-transform: uppercase;
+				font-size: 0.75rem;
+			}
+		}
+	}
 </style>
