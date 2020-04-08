@@ -203,7 +203,7 @@
 			class="dl-container__section dl-container__section_downloads waves-aligned"
 		>
 			<h1 class="section-header">
-				Latest releases
+				{{ $t("downloads.latest.header") }}
 				<a
 					v-if="$auth.loggedIn && beta.access"
 					class="label label_downloads-version bv"
@@ -237,47 +237,40 @@
 					</div>
 					<div class="dl-container__cards">
 						<div
-							:class="{ 'current-platform': browser == 'chrome' }"
+							v-for="platform of cTab.ext_links"
+							:key="platform.platform.toString()"
+							:class="{
+								'current-platform':
+									browser == platform.platform.toString().toLowerCase()
+							}"
 							class="cards__card clickable"
-							@click="open('chrome', 'Extension')"
+							@click="openInNewTab(platform.link)"
 						>
 							<div class="card__icon">
 								<i class="fa-chrome fab"></i>
 							</div>
 							<div class="card__content">
-								<h3>Chromium</h3>
+								<h3 v-t="platform.platform"></h3>
 								<p v-t="tab" />
 							</div>
 						</div>
-
-						<a
-							:class="{ 'current-platform': browser == 'firefox' }"
-							class="cards__card clickable"
-							@click="open('firefox', 'Extension')"
-						>
-							<div class="card__icon">
-								<i class="fa-firefox fab"></i>
-							</div>
-							<div class="card__content">
-								<h3>Firefox</h3>
-								<p v-t="tab" />
-							</div>
-						</a>
 					</div>
 				</div>
 				<div class="dl-container__cards nobeta" v-else>
-					<h1>Uh oh, it looks like you do not have alpha/beta access :(</h1>
-					<p>
-						You can join our beta program for free
-						<a class="text-highlight" @click="$router.push('/beta')">here</a>
-						. Hurry up! We only have {{ 200 - betaUsers }} more slots available
-						(out of 200)
-					</p>
+					<h1 v-t="'downloads.error.noaccess.title'" />
+					<p
+						v-html="
+							linkpls($t('downloads.error.noaccess.description')).replace(
+								'{0}',
+								200 - betaUsers
+							)
+						"
+					/>
 				</div>
 			</div>
 			<div class="dl-container__cards" v-else>
 				<div class="button-container">
-					<p>Please login in order to see the downloads.</p>
+					<p v-t="'downloads.error.login'" />
 					<button
 						type="button"
 						class="button"
@@ -305,7 +298,6 @@
 </template>
 
 <script>
-	import anime from "animejs";
 	import axios from "axios";
 
 	export default {
@@ -505,6 +497,18 @@
 				setTimeout(() => element.classList.add("highlight"));
 
 				setTimeout(() => element.classList.remove("highlight"), 1000);
+			},
+			linkpls(pls) {
+				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
+				return pls.match(/(\*\*.*?\*\*)/g).map(ch => {
+					return pls.replace(
+						ch,
+						`<a class="text-highlight" href="/beta">${ch.slice(
+							2,
+							ch.length - 2
+						)}</a>`
+					);
+				})[0];
 			},
 			open(platform, type = "") {
 				if (platform == "linux") {
