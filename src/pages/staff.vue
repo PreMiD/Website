@@ -51,7 +51,7 @@
 		data() {
 			return {
 				user: {},
-				page: "Applications",
+				page: "Staff",
 				application: null,
 				sortBy: false
 			};
@@ -60,6 +60,10 @@
 			axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(
 				response => {
 					this.user = response.data;
+					//! Temporary
+					this.user.roles = this.user.roles.filter(el => el !== "Staff Member");
+
+					if (!this.user.roles.includes("Staff Member")) this.$router.push("/");
 				}
 			);
 		},
