@@ -58,6 +58,13 @@
 					toggleScroll();
 				"
 			/>
+			<JoinGuild
+				v-if="showJoinModal"
+				@close="
+					showJoinModal = false;
+					toggleScroll();
+				"
+			/>
 		</transition>
 	</div>
 </template>
@@ -195,18 +202,21 @@
 	import Job from "~/components/Job";
 	import Benefit from "~/components/Benefit";
 	import JobApply from "~/components/JobApply";
+	import JoinGuild from "~/components/JoinGuild";
 
 	export default {
 		name: "Jobs",
 		components: {
 			Job,
 			Benefit,
-			JobApply
+			JobApply,
+			JoinGuild
 		},
 		auth: false,
 		data() {
 			return {
 				showModal: false,
+				showJoinModal: false,
 				modalJob: null
 			};
 		},
@@ -226,13 +236,20 @@
 		methods: {
 			applyModal(job) {
 				this.modalJob = job;
-				this.$auth.loggedIn
-					? (this.showModal = true)
-					: this.$router.push("/login");
-				this.toggleScroll();
+				this.$auth.loggedIn || this.$router.push("/login");
+				axios.get(`${process.env.apiBase}/credits/${this.$auth.user.id}`)
+					.then(({data}) => {
+						if(data.error) {
+							this.showJoinModal = true;
+						} else {
+							this.showModal = true;
+						}
+						this.toggleScroll();
+					})
+					.catch(err => console.error);
 			},
 			toggleScroll() {
-				this.showModal
+				this.showModal || this.showJoinModal
 					? document.body.classList.add("no-scroll")
 					: document.body.classList.remove("no-scroll");
 			}

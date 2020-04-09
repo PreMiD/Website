@@ -1157,6 +1157,10 @@
 		}
 	}
 
+	.limage.small {
+		max-height: 340px;
+	}
+
 	.modal-container {
 		width: 500px;
 		height: 550px;
@@ -1253,6 +1257,10 @@
 		.recaptcha {
 			margin-top: 1em;
 		}
+	}
+
+	.modal-container.small {
+		max-height: 340px;
 	}
 
 	.modal-header {
