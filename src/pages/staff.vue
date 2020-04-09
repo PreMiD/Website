@@ -61,9 +61,8 @@
 				response => {
 					this.user = response.data;
 					//! Temporary
-					this.user.roles = this.user.roles.filter(el => el !== "Staff Member");
-
 					if (!this.user.roles.includes("Staff Member")) this.$router.push("/");
+					
 				}
 			);
 		},
