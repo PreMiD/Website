@@ -207,7 +207,7 @@
 			text-transform: uppercase;
 
 			span {
-				grid-area: 1/2;
+				grid-area: 1/3;
 				width: max-content;
 			}
 		}
