@@ -134,6 +134,9 @@
 			a {
 				transition: 0.25s margin ease-out;
 
+				//* Fix for chinese etc languages
+				white-space: nowrap;
+
 				display: grid;
 				grid-template-columns: min-content min-content;
 				align-items: center;
