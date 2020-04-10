@@ -17,7 +17,9 @@
 				<h1 class="heading">Description (Include steps to repeat)</h1>
                 <textarea type="text" class="desc" maxlength="500" v-model="Report.bug_description" required/>
 			</div>
+			
                 <br>
+
             <div class="rab-container">
                 <button type="button" class="button" @click="addToDB">Report</button>
 			</div>
