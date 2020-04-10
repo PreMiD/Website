@@ -53,7 +53,7 @@ module.exports = {
 		}
 	},
 	env: {
-		apiBase: "https://api.premid.app/v2"
+		apiBase: "http://localhost:3003/v2"
 	},
 	loading: "~/components/Loader.vue",
 	head() {
