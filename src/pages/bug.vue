@@ -62,7 +62,7 @@
             
         },
         mounted(){
-            if(this.$auth.loggedIn) return this.$router.push("/login");
+            if(!this.$auth.loggedIn) return this.$router.push("/login");
         },
 		head() {
 			return {
