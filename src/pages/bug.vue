@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<title>PreMiD - Report A Bug</title>
 		<section class="rab">
 
             <div class="rab-container">
@@ -40,8 +39,6 @@
         },
         methods: {
             addToDB(){
-				if(!this.$auth.user) return this.$router.push("/login");
-				console.log(this.$auth.user)
                 if (!this.Report.bug_brief || !this.Report.bug_description || !this.Report.bug_userId || !this.Report.bug_date) return this.$noty.error('More info required');
                 let newReport = {
                     bug_brief: this.Report.bug_brief,
@@ -52,7 +49,6 @@
                     bug_userId: this.$auth.user.id,
                     token: this.$auth.$storage._state["_token.discord"]
                 };
-                console.log(newReport);
                 axios.post(`${process.env.apiBase}/bugPost`, newReport)
                 .then((response) => {
                     this.$noty.success('Bug Submitted');
@@ -66,7 +62,7 @@
             
         },
         mounted(){
-            if(!this.$auth) return this.$router.push("/login");
+            if(this.$auth.loggedIn) return this.$router.push("/login");
         },
 		head() {
 			return {
