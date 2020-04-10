@@ -1,7 +1,10 @@
 <template>
 	<div class="staff-container">
 		<div v-if="show == true">
-			<div v-for="application in applications" :key="application.userId">
+			<div
+				v-for="(application, i) in applications"
+				:key="application.userId + i"
+			>
 				<div class="application" v-if="application.position.name == 'Engineer'">
 					<div class="user" v-if="!application.error">
 						<img :src="application.avatar" />
@@ -12,7 +15,7 @@
 						</h1>
 					</div>
 					<div class="user" v-else>
-						<img src="https://i.imgur.com/N7yYuh3.jpg" />
+						<img src="https://i.imgur.com/zsd0gU4.png" />
 						<h1 class="username">
 							User not found.
 							<p>{{ application.userId }}</p>

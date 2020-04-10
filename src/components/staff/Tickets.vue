@@ -1,11 +1,11 @@
 <template>
 	<div class="staff-container">
 		<div v-if="show == true">
-			<div v-for="ticket in tickets" :key="ticket.ticketMessage">
+			<div v-for="(ticket, i) in tickets" :key="ticket.ticketMessage + i">
 				<div class="ticket" v-if="ticket.messages">
 					{{ ticket.ticketId }}
 					<div class="user" v-if="!ticket.userError">
-						<img :src="ticket.userAvatar" />
+						<img :src="ticket.userAvatar" @error="changeImage" />
 						<h1 class="username">
 							{{ ticket.userName }}
 							<span class="discriminator">#{{ ticket.userTag }}</span>
@@ -19,22 +19,11 @@
 							<p>{{ ticket.userId }}</p>
 						</h1>
 					</div>
-					<div class="votes">
-						<div class="vote up">
-							<i class="fas fa-thumbs-up"></i>
-							5
-						</div>
-						<div class="vote down">
-							<i class="fas fa-thumbs-down"></i>
-							0
-						</div>
-					</div>
 					<div class="read">
 						<div class="abutton" @click="openTicket(ticket)">
 							View Ticket
 						</div>
 					</div>
-					supporters: {{ ticket.supporters }}
 					<div class="created">Account Created: 2016-12-16 19:51:17 GMT</div>
 					<div class="buttons">
 						<div class="abutton accept">Accept</div>
@@ -111,6 +100,9 @@
 			}, 2500);
 		},
 		methods: {
+			changeImage(event) {
+				event.target.src = "https://i.imgur.com/zsd0gU4.png";
+			},
 			openTicket(ticket) {
 				this.$parent.page = "Ticket";
 				this.$parent.lastPage = "Tickets";

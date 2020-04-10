@@ -10,7 +10,7 @@
 		</div>
 		<div class="user" v-else>
 			<img
-				src="https://i.imgur.com/N7yYuh3.jpg"
+				src="https://i.imgur.com/zsd0gU4.png"
 				style="width: 125px; height: 125px;"
 			/>
 			<h1 class="username">

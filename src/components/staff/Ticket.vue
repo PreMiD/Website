@@ -2,7 +2,6 @@
 	<div class="staff-container">
 		<div class="messages" v-if="ready">
 			<div
-				class="message"
 				v-for="message in ticket.messages"
 				:key="message.content"
 				:class="{
@@ -11,34 +10,32 @@
 						supporters.find(s => s.userId == message.userId)
 				}"
 			>
-				<div class="userAvatar" v-if="message.userId == ticket.accepter">
-					<img :src="ticket.supporterAvatar" />
-					<span v-t="ticket.supporterName" />
-					<span class="role accepter">accepter</span>
-				</div>
+				<Message
+					v-if="message.userId == ticket.accepter"
+					:message="message"
+					:user="{ avatar: ticket.supporterAvatar, name: ticket.supporterName }"
+					:badge="{ type: 'accepter', color: '#6b0909' }"
+				/>
 
-				<div class="userAvatar" v-else-if="message.userId == ticket.userId">
-					<img :src="ticket.userAvatar" />
-					<p v-t="ticket.userName" />
-				</div>
+				<Message
+					v-else-if="message.userId == ticket.userId"
+					:message="message"
+					:user="{ avatar: ticket.userAvatar, name: ticket.userName }"
+				/>
 
-				<div
-					class="userAvatar"
+				<Message
 					v-else-if="
 						ticket.supporters &&
 						ticket.supporters.includes(message.userId) &&
 						ticket.accepter !== message.userId
 					"
-				>
-					<img :src="supporters.find(s => s.userId == message.userId).avatar" />
-					{{ supporters.find(s => s.userId == message.userId).name }}
-					<span class="role supporter">supporter</span>
-				</div>
-
-				<div class="text" v-t="message.content" />
-				<div class="time">
-					{{ moment(message.sent).format("DD MMM YYYY hh:mm") }}
-				</div>
+					:message="message"
+					:user="{
+						avatar: supporters.find(s => s.userId == message.userId).avatar,
+						name: supporters.find(s => s.userId == message.userId).name
+					}"
+					:badge="{ type: 'supporter', color: '#48d41e' }"
+				/>
 			</div>
 		</div>
 	</div>
@@ -46,10 +43,14 @@
 
 <script>
 	import axios from "axios";
+	import Message from "./ticket/Message";
 	import moment from "moment";
 
 	export default {
 		name: "Ticket",
+		components: {
+			Message
+		},
 		props: {
 			ticket: Object
 		},
