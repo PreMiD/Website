@@ -223,30 +223,30 @@
 		async asyncData() {
 			const data = await Promise.all([
 				axios(`${process.env.apiBase}/jobs`),
-				axios(`${process.env.apiBase}/jobs/benefits`)
+				axios(`${process.env.apiBase}/jobs/benefits`),
+				axios(`${process.env.apiBase}/discordUsers`)
 			]);
 			const jobs = data[0].data,
-				benefits = data[1].data;
+				benefits = data[1].data,
+				discordUsers = data[2].data.map(u => u.userId);
 
 			return {
 				jobs,
-				benefits
+				benefits,
+				discordUsers
 			};
 		},
 		methods: {
 			applyModal(job) {
+				console.log(this.discordUsers);
 				this.modalJob = job;
 				this.$auth.loggedIn || this.$router.push("/login");
-				axios.get(`${process.env.apiBase}/credits/${this.$auth.user.id}`)
-					.then(({data}) => {
-						if(data.error) {
-							this.showJoinModal = true;
-						} else {
-							this.showModal = true;
-						}
-						this.toggleScroll();
-					})
-					.catch(err => console.error);
+				if(this.discordUsers.indexOf(this.$auth.user.id) == -1) {
+					this.showJoinModal = true;
+				} else {
+					this.showModal = true;
+				}
+				this.toggleScroll();
 			},
 			toggleScroll() {
 				this.showModal || this.showJoinModal

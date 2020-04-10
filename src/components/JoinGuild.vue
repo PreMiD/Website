@@ -8,12 +8,12 @@
 			</div>
 			<div class="modal-container small" style="background-color: #23272a;">
 				<div class="modal-header">
-					<h1>{{ $t("jobs.guild.required") }}</h1>
+					<h1>{{ $t("jobs.modal.guild.required") }}</h1>
 				</div>
 
 				<div class="modal-body">
                     <p>
-                        {{ $t("jobs.guild.explanation") }}
+                        {{ $t("jobs.modal.guild.explanation") }}
                     </p>
 				</div>
 				<div class="modal-footer">
@@ -23,7 +23,7 @@
 							class="button"
 							@click="join()"
 						>
-							{{ $t("partners.apply.form.button.join") }}
+							{{ $t("jobs.modal.buttons.join") }}
 						</button>
 						<button type="button" class="button" @click="$emit('close')">
 							{{ $t("jobs.modal.buttons.cancel") }}
