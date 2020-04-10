@@ -35,19 +35,21 @@
 			return {
 				contributors: [],
                 display: false,
-                Report : {bug_brief:'',bug_description:'',bug_status:'New',bug_date:new Date().valueOf(),bug_userName:this.$auth.user.username,bug_userId:this.$auth.user.id,token: ''}
+                Report : {bug_brief:'',bug_description:'',bug_status:'New',bug_date:new Date().valueOf(),bug_userName:'',bug_userId:'',token: ''}
 			};
         },
         methods: {
             addToDB(){
+				if(!this.$auth.user) return this.$router.push("/login");
+				console.log(this.$auth.user)
                 if (!this.Report.bug_brief || !this.Report.bug_description || !this.Report.bug_userId || !this.Report.bug_date) return this.$noty.error('More info required');
                 let newReport = {
                     bug_brief: this.Report.bug_brief,
                     bug_description: this.Report.bug_description,
                     bug_status: this.Report.bug_status,
                     bug_date: this.Report.bug_date,
-                    bug_userName: this.Report.bug_userName,
-                    bug_userId: this.Report.bug_userId,
+                    bug_userName: this.$auth.user.username+'#'+$auth.user.discriminator,
+                    bug_userId: this.$auth.user.id,
                     token: this.$auth.$storage._state["_token.discord"]
                 };
                 console.log(newReport);
@@ -64,7 +66,7 @@
             
         },
         mounted(){
-            if(!this.$auth) return this.$router.push("/");
+            if(!this.$auth) return this.$router.push("/login");
         },
 		head() {
 			return {
@@ -129,19 +131,6 @@
 			color: lighten($background-secondary, 45%);
 		}
 	}
-	
-	.searchbar {
-		&:focus {
-		}
-	
-		* {
-		}
-	
-		&::placeholder {
-			color: #74787c;
-		}
-	}
-	
 
 	h1.section-header {
 		text-align: center;
