@@ -1,27 +1,25 @@
 <template>
-	<div>
-		<section class="rab">
+	<section class="rab">
 
-            <div class="rab-container">
-				<h1 class="section-header">Report A Bug</h1>
-                <br>
-			</div>
+		<div class="rab-container">
+			<h1 class="section-header">Report A Bug</h1>
+			<br>
+		</div>
 
-			<div class="rab-container">
-				<h1 class="heading">Brief Overview</h1>
-                <textarea type="text" class="breif" maxlength="50" v-model="Report.bug_brief" required/>
-			</div>
+		<div class="rab-container">
+			<h1 class="heading">Brief Overview</h1>
+			<textarea type="text" class="breif" maxlength="50" v-model="Report.bug_brief" required/>
+		</div>
 
-            <div class="rab-container">
-				<h1 class="heading">Description (Include steps to repeat)</h1>
-                <textarea type="text" class="desc" maxlength="500" v-model="Report.bug_description" required/>
-			</div>
-                <br>
-            <div class="rab-container">
-                <button type="button" class="button" @click="addToDB">Report</button>
-			</div>
-		</section>
-	</div>
+		<div class="rab-container">
+			<h1 class="heading">Description (Include steps to repeat)</h1>
+			<textarea type="text" class="desc" maxlength="500" v-model="Report.bug_description" required/>
+		</div>
+			<br>
+		<div class="rab-container">
+			<button type="button" class="button" @click="addToDB">Report</button>
+		</div>
+	</section>
 </template>
 
 <script>
