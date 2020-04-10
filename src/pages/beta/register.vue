@@ -47,7 +47,7 @@
 			};
 		},
 		mounted() {
-			if (this.$auth?.user?.id) {
+			if (this.$auth.loggedIn) {
 				axios
 					.post(
 						`${process.env.apiBase}/addBetaUser/${this.$auth.$storage._state["_token.discord"]}`
