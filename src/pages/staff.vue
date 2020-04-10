@@ -14,6 +14,12 @@
 				:page="page"
 			/>
 			<Tickets v-if="page === 'Tickets'" :page="page" />
+			<Ticket
+				v-on:updatePage="updatePage"
+				v-if="page === 'Ticket'"
+				:ticket="ticket"
+				:page="page"
+			/>
 			<PullRequests v-if="page === 'Pull Requests'" />
 			<StaffActivity v-if="page === 'Staff Activity'" />
 			<StaffHandbook v-if="page === 'Staff Handbook'" />
@@ -33,6 +39,7 @@
 	import StaffActivity from "../components/staff/StaffActivity";
 	import StaffHandbook from "../components/staff/StaffHandbook";
 	import Tickets from "../components/staff/Tickets";
+	import Ticket from "../components/staff/Ticket";
 
 	export default {
 		name: "Staff",
@@ -46,7 +53,8 @@
 			Sidebar,
 			StaffActivity,
 			StaffHandbook,
-			Tickets
+			Tickets,
+			Ticket
 		},
 		data() {
 			return {
@@ -62,11 +70,12 @@
 					this.user = response.data;
 					//! Temporary
 					if (!this.user.roles.includes("Staff Member")) this.$router.push("/");
-					
 				}
 			);
 		},
-		mounted() {},
+		mounted() {
+			this.page = "Tickets";
+		},
 		methods: {
 			updatePage(event) {
 				console.log("updatePage");

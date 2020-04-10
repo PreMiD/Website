@@ -30,10 +30,11 @@
 						</div>
 					</div>
 					<div class="read">
-						<div class="abutton" @click="readApp(application)">
-							Read Application
+						<div class="abutton" @click="openTicket(ticket)">
+							View Ticket
 						</div>
 					</div>
+					supporters: {{ ticket.supporters }}
 					<div class="created">Account Created: 2016-12-16 19:51:17 GMT</div>
 					<div class="buttons">
 						<div class="abutton accept">Accept</div>
@@ -110,10 +111,10 @@
 			}, 2500);
 		},
 		methods: {
-			readApp(application) {
-				this.$parent.page = "Application";
-				this.$parent.lastPage = "Applications";
-				this.$parent.userApplication = application;
+			openTicket(ticket) {
+				this.$parent.page = "Ticket";
+				this.$parent.lastPage = "Tickets";
+				this.$parent.ticket = ticket;
 			}
 		}
 	};
