@@ -12,10 +12,10 @@
 
 				<p
 					v-html="
-							markdown($t('beta.description.1')) +
-								'<br />' +
-								$t('beta.description.2')
-						"
+						markdown($t('beta.description.1')) +
+						'<br />' +
+						$t('beta.description.2')
+					"
 				></p>
 
 				<ul>
@@ -32,7 +32,10 @@
 			</div>
 			<div class="card--feature__promo">
 				<video autoplay loop>
-					<source src="./../../assets/images/cards/card2_video.mp4" type="video/mp4" />
+					<source
+						src="./../../assets/images/cards/card2_video.mp4"
+						type="video/mp4"
+					/>
 					<img class="card--feature__promo--image2" :src="cardThumbnail2" />
 				</video>
 			</div>
@@ -40,16 +43,14 @@
 		<div class="beta-join">
 			<p
 				v-html="
-						$t('beta.register.text').replace(
-							'{0}',
-							'<span class=\'text-highlight\'>' + betaUsers + '</span>'
-						)
-					"
+					$t('beta.register.text').replace(
+						'{0}',
+						'<span class=\'text-highlight\'>' + betaUsers + '</span>'
+					)
+				"
 			></p>
 			<a class="button text--uppercase" href="/beta/register">
-				{{
-				$t(`beta.register.button`)
-				}}
+				{{ $t(`beta.register.button`) }}
 			</a>
 		</div>
 		<div class="waves-divider waves-divider_bottom">
@@ -71,46 +72,45 @@
 </template>
 
 <script>
-import premidBeta from "@/assets/images/premid-beta.png";
-import cardThumbnail2 from "@/assets/images/cards/card2.png";
+	import premidBeta from "@/assets/images/premid-beta.png";
+	import cardThumbnail2 from "@/assets/images/cards/card2.png";
 
-import axios from "axios";
+	import axios from "axios";
 
-export default {
-	name: "Beta",
-	auth: false,
-	async asyncData() {
-		const credits = (await axios(`${process.env.apiBase}/credits`)).data;
-
-		return {
-			betaUsers: credits.filter(user => user.roles.includes("BETA")).length
-		};
-	},
-	data() {
-		return {
-			betaUsers: 0,
-			premidBeta,
-			cardThumbnail2
-		};
-	},
-	methods: {
-		markdown(pls) {
-			if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
-			return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
-				return pls.replace(
-					ch,
-					`<strong><span class="text-highlight">${ch.slice(
-						2,
-						ch.length - 2
-					)}</span></strong>`
-				);
-			})[0];
+	export default {
+		name: "Beta",
+		auth: false,
+		async asyncData() {
+			return {
+				betaUsers: (await axios(`${process.env.apiBase}/betaUsers`)).data
+					.betaUsers
+			};
+		},
+		data() {
+			return {
+				betaUsers: 0,
+				premidBeta,
+				cardThumbnail2
+			};
+		},
+		methods: {
+			markdown(pls) {
+				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
+				return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
+					return pls.replace(
+						ch,
+						`<strong><span class="text-highlight">${ch.slice(
+							2,
+							ch.length - 2
+						)}</span></strong>`
+					);
+				})[0];
+			}
+		},
+		head() {
+			return {
+				title: "Beta"
+			};
 		}
-	},
-	head() {
-		return {
-			title: "Beta"
-		};
-	}
-};
+	};
 </script>
