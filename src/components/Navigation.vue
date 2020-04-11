@@ -305,9 +305,6 @@
 </style>
 
 <script>
-	import axios from "axios";
-
-
 	export default {
 		name: "Navigation",
 		props: ["noLinks", "countDownBtn"],
