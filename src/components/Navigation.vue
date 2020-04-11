@@ -311,14 +311,6 @@
 	export default {
 		name: "Navigation",
 		props: ["noLinks", "countDownBtn"],
-		async asyncData() {
-			return {
-				contributors: (await axios(`${process.env.apiBase}/credits`)).data.sort(
-					(a, b) => b.rolePosition - a.rolePosition
-				)
-			};
-			
-		},
 		data() {
 			return {
 				pageLoad: false,
@@ -404,8 +396,6 @@
 
 				if (this.countDownValue === 0) clearInterval(interval);
 			}, 1 * 1000);
-
-			console.log(this.contributors);
 		}
 	};
 </script>

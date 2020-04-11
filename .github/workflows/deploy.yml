@@ -29,4 +29,4 @@ jobs:
             git pull
             yarn
             yarn build
-            pm2 reload Website-${{ steps.extract_branch.outputs.branch }}
+            pm2 reload /home/PreMiD/ecosystem.config.js --only Website-${{ steps.extract_branch.outputs.branch }}
