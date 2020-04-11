@@ -38,7 +38,45 @@
 						</span>
 						<p>{{ $t(category.string) }}</p>
 					</nuxt-link>
+
+
+					<nuxt-link id="userInfo" v-if="$auth.loggedIn"
+						:to="''" 
+						ref="userInfo"
+						>
+						<img class="round-icon" style="width: auto; height: 50px;display: inline;" :src="'https://cdn.discordapp.com/avatars/' + $auth.user.id + '/' + $auth.user.avatar ">
+						<span style="top: 5px;">
+						<span id="loggedin" v-t="'header.lia'">{{ $t("header.lia") }}</span>
+						<span id="username">{{ $auth.user.username }}
+							<span id="tag">#{{ $auth.user.discriminator }}</span>
+						</span>
+						</span>
+					</nuxt-link>
+
+					<nuxt-link v-if="$auth.loggedIn"
+						:to="''"
+						ref="userLinks">
+						<span id="user-link">
+							<a id="userLinks" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
+							<a id="userLinks" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
+						</span>
+					</nuxt-link>
+
+
+					<nuxt-link v-if="!this.$auth.loggedIn"
+						:key="login"
+						:to="'/login'"
+						ref="userLinks"
+					>
+						<span class="round-icon">
+							<i :class="`fa-user fas`"></i>
+						</span>
+						<p v-t="'header.login'">{{ $t("header.login") }}</p>
+					</nuxt-link>
+
+
 				</div>
+				
 
 				<div v-if="countDownBtn" id="links">
 					<a
@@ -152,7 +190,7 @@
 					}
 				}
 
-				.round-icon {
+				.round-icon, img {
 					transition: 0.15s background-color ease-out;
 
 					align-items: center;
@@ -170,6 +208,42 @@
 						font-size: 0.8em;
 					}
 				}
+
+				img {
+					height: 45px;
+				}
+			}
+			#user-link{
+				color: #646E90;
+				display:inline;
+				position: relative;
+				white-space: nowrap;
+			}
+			#loggedin{
+				display: inline-block;
+				white-space: nowrap;
+				font-size: 1.0rem;
+				background: -webkit-linear-gradient(#7289DA, #B3AEFF);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+			#userInfo{
+				width: auto;
+				display: flex;
+				justify-content: space-between;
+			}
+			#username{
+				display: flex;
+				color: #fff;
+				font-size: 1.1rem;
+				white-space: nowrap;
+				vertical-align: bottom; 
+			}
+			#tag{
+				display: flex;
+				font-size: 0.8rem;
+				color: #99AAB5;
+				align-self: flex-end;
 			}
 		}
 
@@ -231,15 +305,28 @@
 </style>
 
 <script>
+	import axios from "axios";
+
+
 	export default {
 		name: "Navigation",
 		props: ["noLinks", "countDownBtn"],
+		async asyncData() {
+			return {
+				contributors: (await axios(`${process.env.apiBase}/credits`)).data.sort(
+					(a, b) => b.rolePosition - a.rolePosition
+				)
+			};
+			
+		},
 		data() {
 			return {
 				pageLoad: false,
 				countDownValue: 5,
 				mobileMenuActive: false,
 				isMobile: false,
+				isStaff: false,
+				contributors: [],
 				categories: [
 					{
 						logo: "cart-arrow-down",
@@ -269,6 +356,11 @@
 
 				if (this.$refs.headerLink)
 					targets.push(...this.$refs.headerLink.map(i => i.$el));
+					if(this.$refs.userInfo){
+					targets.push(this.$refs.userInfo.$el);
+					}
+					targets.push(this.$refs.userLinks.$el);
+					
 
 				this.$anime
 					.timeline({
@@ -299,7 +391,7 @@
 						},
 						0
 					);
-			}
+			},
 		},
 		mounted() {
 			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -312,6 +404,8 @@
 
 				if (this.countDownValue === 0) clearInterval(interval);
 			}, 1 * 1000);
+
+			console.log(this.contributors);
 		}
 	};
 </script>
