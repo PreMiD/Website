@@ -38,7 +38,46 @@
 						</span>
 						<p>{{ $t(category.string) }}</p>
 					</nuxt-link>
+
+
+					<nuxt-link id="userInfo" v-if="$auth.loggedIn"
+						:to="''" 
+						ref="userInfo"
+						>
+						<img class="round-icon" style="width: auto; height: 50px;display: inline;" :src="'https://cdn.discordapp.com/avatars/' + $auth.user.id + '/' + $auth.user.avatar ">
+						<span style="top: 5px;">
+						<span id="loggedin" v-t="'header.lia'">{{ $t("header.lia") }}</span>
+						<span id="username">{{ $auth.user.username }}
+							<span id="tag">#{{ $auth.user.discriminator }}</span>
+						</span>
+						</span>
+					</nuxt-link>
+
+					<nuxt-link v-if="$auth.loggedIn"
+						:to="''"
+						ref="userLinks">
+						<span id="user-link">
+							<a id="userLinks" v-if="!$isStaff" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
+							<a id="userLinks" v-if="$isStaff" @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
+							<a id="userLinks" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
+						</span>
+					</nuxt-link>
+
+
+					<nuxt-link v-if="!this.$auth.loggedIn"
+						:key="login"
+						:to="'/login'"
+						ref="userLinks"
+					>
+						<span class="round-icon">
+							<i :class="`fa-user fas`"></i>
+						</span>
+						<p v-t="'header.login'">{{ $t("header.login") }}</p>
+					</nuxt-link>
+
+
 				</div>
+				
 
 				<div v-if="countDownBtn" id="links">
 					<a
@@ -134,9 +173,6 @@
 			a {
 				transition: 0.25s margin ease-out;
 
-				//* Fix for chinese etc languages
-				white-space: nowrap;
-
 				display: grid;
 				grid-template-columns: min-content min-content;
 				align-items: center;
@@ -155,7 +191,7 @@
 					}
 				}
 
-				.round-icon {
+				.round-icon, img {
 					transition: 0.15s background-color ease-out;
 
 					align-items: center;
@@ -173,6 +209,43 @@
 						font-size: 0.8em;
 					}
 				}
+
+				img {
+					height: 45px;
+				}
+			}
+			#user-link{
+				color: #646E90;
+				display:inline;
+				position: relative;
+				white-space: nowrap;
+			}
+			#loggedin{
+				display: inline-block;
+				white-space: nowrap;
+				font-size: 1.0rem;
+				background: -webkit-linear-gradient(#7289DA, #B3AEFF);
+				background-clip: text;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+			#userInfo{
+				width: auto;
+				display: flex;
+				justify-content: space-between;
+			}
+			#username{
+				display: flex;
+				color: #fff;
+				font-size: 1.1rem;
+				white-space: nowrap;
+				vertical-align: bottom; 
+			}
+			#tag{
+				display: flex;
+				font-size: 0.8rem;
+				color: #99AAB5;
+				align-self: flex-end;
 			}
 		}
 
@@ -207,7 +280,7 @@
 			text-transform: uppercase;
 
 			span {
-				grid-area: 1/3;
+				grid-area: 1/2;
 				width: max-content;
 			}
 		}
@@ -234,6 +307,8 @@
 </style>
 
 <script>
+	import axios from "axios";
+
 	export default {
 		name: "Navigation",
 		props: ["noLinks", "countDownBtn"],
@@ -243,6 +318,8 @@
 				countDownValue: 5,
 				mobileMenuActive: false,
 				isMobile: false,
+				isStaff: false,
+				contributors: [],
 				categories: [
 					{
 						logo: "cart-arrow-down",
@@ -258,7 +335,8 @@
 						logo: "hands-helping",
 						route: "contributors",
 						string: "header.contributors"
-					}
+					},
+					
 				]
 			};
 		},
@@ -272,6 +350,11 @@
 
 				if (this.$refs.headerLink)
 					targets.push(...this.$refs.headerLink.map(i => i.$el));
+					if(this.$refs.userInfo){
+					targets.push(this.$refs.userInfo.$el);
+					}
+					targets.push(this.$refs.userLinks.$el);
+					
 
 				this.$anime
 					.timeline({
@@ -302,7 +385,7 @@
 						},
 						0
 					);
-			}
+			},
 		},
 		mounted() {
 			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -315,6 +398,35 @@
 
 				if (this.countDownValue === 0) clearInterval(interval);
 			}, 1 * 1000);
+			
+			if(this.$auth.loggedIn){
+				axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(({ data }) => {
+					if(data.userId){
+						const staffRoles = [
+							"606270745299124235", //Creator
+							"493135149274365975", //Executive Director
+							"691382096878370837", //Operations Supervisior
+							"673681900476432387", //Global Community Representative
+							"673682511288598575", //Head Software Engineer
+							"616646805907832833", //Web Developer
+							"691393583189721088", //Linux Maintainer
+							"691396820236107837", //Engineer
+							"691386502566903850", //Graphic Designer
+							"548518356324581377", //Senior Moderator
+							"673683121971134505", //Head of Presence Verifying
+							"691384256672563332", //Community Representative
+							"514546359865442304", //Moderator
+							"526734093560315925", //Junior Moderator
+							"566417964820070421", //Support Agent
+							"630445337143935009" //Presence Verifier
+						];
+
+						if (staffRoles.indexOf(data.roleId) !== -1) return this.$isStaff = true;
+						else return this.$isStaff = false;
+					}
+				});
+			}
+
 		}
 	};
 </script>
