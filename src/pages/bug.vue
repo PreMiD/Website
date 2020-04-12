@@ -131,7 +131,8 @@
 		font-weight: 800;
 		font-size: 52px;
 		letter-spacing: -1px;
-		background: linear-gradient(30deg, $accent-primary, #b3aeff);
+        background: linear-gradient(30deg, $accent-primary, #b3aeff);
+        background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		text-shadow: none;
