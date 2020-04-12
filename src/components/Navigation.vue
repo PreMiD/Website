@@ -44,7 +44,7 @@
 						:to="''" 
 						ref="userInfo"
 						>
-						<img class="round-icon" style="width: auto; height: 50px;display: inline;" :src="'https://cdn.discordapp.com/avatars/' + $auth.user.id + '/' + $auth.user.avatar ">
+						<img class="round-icon" style="width: auto; height: 50px;display: inline; background-color: hsl(227, 18%, 8%);" :src="'https://cdn.discordapp.com/avatars/' + $auth.user.id + '/' + $auth.user.avatar ">
 						<span style="top: 5px;">
 						<span id="loggedin" v-t="'header.lia'">{{ $t("header.lia") }}</span>
 						<span id="username">{{ $auth.user.username }}
@@ -57,8 +57,8 @@
 						:to="''"
 						ref="userLinks">
 						<span id="user-link">
-							<a id="userLinks" v-if="!$isStaff" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
-							<a id="userLinks" v-if="$isStaff" @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
+							<a id="userLinks" v-if="$isStaff === false" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
+							<a id="userLinks" v-else @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
 							<a id="userLinks" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
 						</span>
 					</nuxt-link>
@@ -185,7 +185,6 @@
 
 					.round-icon {
 						background-color: $accent-primary;
-
 						i {
 							color: #fff;
 						}
@@ -225,7 +224,7 @@
 				display: inline-block;
 				white-space: nowrap;
 				font-size: 1.0rem;
-				background: -webkit-linear-gradient(#7289DA, #B3AEFF);
+				background: linear-gradient(30deg, #7289da, #b3aeff);
 				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
