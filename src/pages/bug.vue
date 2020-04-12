@@ -2,22 +2,22 @@
 	<section class="rab">
 
 		<div class="rab-container">
-			<h1 class="section-header">Report A Bug</h1>
+			<h1 class="section-header" v-t="'report.title'">{{ $t("report.title") }}</h1>
 			<br>
 		</div>
 
 		<div class="rab-container">
-			<h1 class="heading">Brief Overview</h1>
+			<h1 class="heading" v-t="'report.overview'">{{ $t("report.overview") }}"</h1>
 			<textarea type="text" class="breif" maxlength="50" v-model="Report.bug_brief" required/>
 		</div>
 
 		<div class="rab-container">
-			<h1 class="heading">Description (Include steps to repeat)</h1>
+			<h1 class="heading" v-t="'report.description'">{{ $t("report.description") }}</h1>
 			<textarea type="text" class="desc" maxlength="500" v-model="Report.bug_description" required/>
 		</div>
 			<br>
 		<div class="rab-container">
-			<button type="button" class="button" @click="addToDB">Report</button>
+			<button type="button" class="button" @click="addToDB" v-t="'report.button'">{{ $t("report.button") }}</button>
 		</div>
 	</section>
 </template>
