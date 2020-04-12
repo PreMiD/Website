@@ -4,4 +4,4 @@ static/assets
 dist
 .vscode/settings.json
 src/langs
-.nuxt
+nuxt.config.js
