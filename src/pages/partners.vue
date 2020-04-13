@@ -142,6 +142,7 @@
 	import aok_icon from "~/assets/images/partners/aok-icon.png";
 	import iloot_icon from "~/assets/images/partners/iloot-icon.png";
 	import upbeat_icon from "~/assets/images/partners/upbeat-icon.png";
+	import slr_icon from "~/assets/images/partners/slr-icon.png";
 
 	export default {
 		name: "Partners",
@@ -154,7 +155,13 @@
 			return {
 				partners: (await axios(`${process.env.apiBase}/partners`)).data,
 				sponsors: (await axios(`${process.env.apiBase}/sponsors`)).data,
-				randomImages: [aniflix_icon, aok_icon, iloot_icon, upbeat_icon],
+				randomImages: [
+					aniflix_icon,
+					aok_icon,
+					iloot_icon,
+					upbeat_icon,
+					slr_icon
+				],
 				showModal: false
 			};
 		},
