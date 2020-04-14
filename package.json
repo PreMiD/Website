@@ -1,6 +1,6 @@
 {
 	"name": "premid-website",
-	"version": "2.0.2",
+	"version": "2.0.3",
 	"scripts": {
 		"start": "nuxt start",
 		"dev": "node languageParser && nuxt",
@@ -34,7 +34,7 @@
 		"vuejs-paginate": "2.1.0"
 	},
 	"devDependencies": {
-		"@nuxt/typescript-build": "^0.6.1",
+		"@nuxt/typescript-build": "^0.6.5",
 		"@nuxtjs/google-analytics": "^2.2.3",
 		"@nuxtjs/router": "1.5.0",
 		"node-emoji": "1.10.0",
