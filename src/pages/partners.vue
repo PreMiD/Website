@@ -143,6 +143,7 @@
 	import iloot_icon from "~/assets/images/partners/iloot-icon.png";
 	import upbeat_icon from "~/assets/images/partners/upbeat-icon.png";
 	import slr_icon from "~/assets/images/partners/slr-icon.png";
+	import aniwatch_icon from "~/assets/images/partners/aniwatch-icon.png";
 
 	export default {
 		name: "Partners",
@@ -160,7 +161,8 @@
 					aok_icon,
 					iloot_icon,
 					upbeat_icon,
-					slr_icon
+					slr_icon,
+					aniwatch_icon
 				],
 				showModal: false
 			};
