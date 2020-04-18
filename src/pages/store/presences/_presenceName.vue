@@ -47,7 +47,7 @@
 					<div class="header__buttons">
 						<button
 							v-if="
-								!isInstalled && this.$store.state.extension.extensionInstalled
+								!isInstalled && this.$store.state.extension.extensionInstalled && presence.metadata.button !== false
 							"
 							class="button button--"
 							@click="sendPresence(presence.metadata.service)"
@@ -59,7 +59,7 @@
 						</button>
 						<button
 							v-if="
-								isInstalled && this.$store.state.extension.extensionInstalled
+								isInstalled && this.$store.state.extension.extensionInstalled && presence.metadata.button !== false
 							"
 							class="button button--black"
 							@click="removePresence(presence.metadata.service)"
@@ -143,8 +143,7 @@
 									<i class="fa-user-tie fas"></i>
 									{{ $t("presence.sections.information.contributors") }}:
 									<nuxt-link
-										v-for="(contributor, index) in presence.metadata
-											.contributors"
+										v-for="(contributor, index) in presence.metadata.contributors"
 										:key="contributor.id"
 										class="author-name"
 										:to="`/users/${contributor.id}`"
