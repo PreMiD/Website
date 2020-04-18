@@ -96,6 +96,15 @@
 								"
 						/></a>
 					</div>
+					<hr/>
+					<div
+						v-if="
+							presence.metadata.button === false
+						"
+						class="header__warning"
+					>
+						{{ $t("store.card.presence.included") }}
+					</div>
 				</div>
 				<div class="fullpresence__content">
 					<div class="content__description">

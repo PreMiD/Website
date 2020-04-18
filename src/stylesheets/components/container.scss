@@ -735,6 +735,7 @@
 		background-size: cover;
 
 		display: flex;
+		flex-wrap: wrap;
 		box-shadow: 0 4px 32px 0 rgba(9, 10, 10, 0.2);
 
 		align-items: center;
@@ -791,6 +792,27 @@
 					margin-right: 0;
 				}
 			}
+		}
+
+		hr {
+			flex-basis: 100%;
+			height: 0;
+			margin: 0;
+			border: 0;
+		}
+
+		.header__warning {
+			box-shadow: 0 3px 26px -5px rgba(0, 0, 0, 0.5);
+			background: rgba(0, 0, 0, 0.75);
+
+			margin: 10px 0;
+			border-radius: 4px;
+			padding: 10px;
+
+			position: relative;
+			color: rgba(255, 255, 255, 0.8);
+			z-index: 2;
+			font-weight: bold;
 		}
 
 		.fullpresence__gradient {
