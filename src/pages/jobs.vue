@@ -58,6 +58,13 @@
 					toggleScroll();
 				"
 			/>
+			<JoinGuild
+				v-if="showJoinModal"
+				@close="
+					showJoinModal = false;
+					toggleScroll();
+				"
+			/>
 		</transition>
 	</div>
 </template>
@@ -195,44 +202,54 @@
 	import Job from "~/components/Job";
 	import Benefit from "~/components/Benefit";
 	import JobApply from "~/components/JobApply";
+	import JoinGuild from "~/components/JoinGuild";
 
 	export default {
 		name: "Jobs",
 		components: {
 			Job,
 			Benefit,
-			JobApply
+			JobApply,
+			JoinGuild
 		},
 		auth: false,
 		data() {
 			return {
 				showModal: false,
+				showJoinModal: false,
 				modalJob: null
 			};
 		},
 		async asyncData() {
 			const data = await Promise.all([
 				axios(`${process.env.apiBase}/jobs`),
-				axios(`${process.env.apiBase}/jobs/benefits`)
+				axios(`${process.env.apiBase}/jobs/benefits`),
+				axios(`${process.env.apiBase}/discordUsers`)
 			]);
 			const jobs = data[0].data,
-				benefits = data[1].data;
+				benefits = data[1].data,
+				discordUsers = data[2].data.map(u => u.userId);
 
 			return {
 				jobs,
-				benefits
+				benefits,
+				discordUsers
 			};
 		},
 		methods: {
 			applyModal(job) {
+				console.log(this.discordUsers);
 				this.modalJob = job;
-				this.$auth.loggedIn
-					? (this.showModal = true)
-					: this.$router.push("/login");
+				this.$auth.loggedIn || this.$router.push("/login");
+				if(this.discordUsers.indexOf(this.$auth.user.id) == -1) {
+					this.showJoinModal = true;
+				} else {
+					this.showModal = true;
+				}
 				this.toggleScroll();
 			},
 			toggleScroll() {
-				this.showModal
+				this.showModal || this.showJoinModal
 					? document.body.classList.add("no-scroll")
 					: document.body.classList.remove("no-scroll");
 			}
