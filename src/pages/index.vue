@@ -8,18 +8,18 @@
 							<img src="@/assets/images/logo_round.svg" />
 						</div>
 						<div class="heading__text">
-							<p v-html="markdown($t('home.introduction.paragraph'))"></p>
+							<p v-html="markdown($t('home.introduction.paragraph'))" />
 						</div>
 						<div class="heading__button-group">
 							<a class="button text--uppercase" href="#features">
-								<i class="fa-stream fas"></i>
+								<i class="fa-stream fas" />
 								{{ $t("home.introduction.button.features") }}
 							</a>
 							<nuxt-link
 								class="button button--black text--uppercase"
 								to="/downloads"
 							>
-								<i class="fa-file-export fas"></i>
+								<i class="fa-file-export fas" />
 								{{ $t(`home.introduction.button.downloads`) }}
 							</nuxt-link>
 						</div>
@@ -29,65 +29,66 @@
 							v-for="presence of presences_display"
 							:key="presence.service"
 							class="discord-usercard"
-							:v-if="presence.profile.name !== ''"
 						>
 							<div class="usercard__header">
 								<div
 									class="header__avatar"
 									:style="
 										'background-image: url(' +
-										presence.profile.image +
+										presence.profile.avatar +
 										'?size=128' +
 										');'
 									"
-								></div>
+								/>
 								<div class="header__info">
 									<div class="info__nameTag">
 										<span class="username">{{ presence.profile.name }}</span>
 										<span class="discriminator"
-											>#{{ presence.profile.id }}</span
+											>#{{ presence.profile.tag }}</span
 										>
 									</div>
 									<div class="info__badges">
 										<div
-											v-for="badge of presence.profile.badges"
-											:key="badge"
+											v-for="flag of presence.profile.flags"
+											:key="flag"
 											class="badge-wrapper"
 										>
 											<div
 												v-if="
-													badge == 'brilliance' ||
-													badge == 'bravery' ||
-													badge == 'balance'
+													flag == 'HOUSE_BRILLIANCE' ||
+													flag == 'HOUSE_BRAVERY' ||
+													flag == 'HOUSE_BALANCE'
 												"
 												v-tippy="{
-													content:
-														'HypeSquad ' +
-														badge.charAt(0).toUpperCase() +
-														badge.slice(1)
+													content: `HypeSquad ${
+														flag === 'HOUSE_BRILLIANCE'
+															? 'Brilliance'
+															: flag === 'HOUSE_BRAVERY'
+															? 'Bravery'
+															: 'Balance'
+													}`
 												}"
-												:class="`badge badge_${badge}`"
-											></div>
+												:class="`badge badge_${flag
+													.toLowerCase()
+													.replace('house_', '')}`"
+											/>
 											<div
-												v-if="badge == 'early'"
+												v-if="flag == 'EARLY_SUPPORTER'"
 												v-tippy="{ content: 'Early Supporter' }"
-												:class="`badge badge_${badge}`"
-											></div>
+												:class="`badge badge_early`"
+											/>
 											<div
-												v-if="badge == 'hypesquad'"
+												v-if="flag == 'HYPESQUAD_EVENTS'"
 												v-tippy="{ content: 'HypeSquad Events' }"
-												:class="`badge badge_${badge}`"
-											></div>
-											<div
-												v-if="badge == 'nitro'"
-												v-tippy="{ content: 'Discord Nitro' }"
-												:class="`badge badge_${badge}`"
-											></div>
-											<div
-												v-if="badge == 'boost-lvl3'"
+												:class="`badge badge_hypesquad`"
+											/>
+											<!-- 				//TODO refactor to use .premium_since
+https://cdn.discordapp.com/attachments/448243386684538901/638866725013684225/multiboosting.png
+							<div
+												v-if="flag == 'boost-lvl3'"
 												v-tippy="{ content: 'Nitro Boosting' }"
 												:class="`badge badge_${badge}`"
-											></div>
+											/> -->
 										</div>
 									</div>
 								</div>
@@ -192,7 +193,7 @@
 						<div class="card--feature__details">
 							<h1
 								v-html="markdown($t('home.features.presencesystem.heading'))"
-							></h1>
+							/>
 							<p>{{ $t("home.features.presencesystem.description") }}</p>
 							<p>
 								<nuxt-link
@@ -318,10 +319,6 @@
 				presences_display: [],
 				presences: [
 					{
-						profile: {
-							DiscordID: "259407123782434816",
-							badges: ["hypesquad", "balance", "early", "nitro"]
-						},
 						service_title: "PreMiD",
 						serviceLogo: premidLogo,
 						smallImage: "search",
@@ -329,10 +326,6 @@
 						presence_time: "00:12"
 					},
 					{
-						profile: {
-							DiscordID: "223238938716798978",
-							badges: ["brilliance", "nitro"]
-						},
 						service_title: "YouTube",
 						serviceLogo: youtubeLogo,
 						smallImage: true,
@@ -343,10 +336,6 @@
 						presence_time: "1:36"
 					},
 					{
-						profile: {
-							DiscordID: "213305189657083905",
-							badges: ["bravery", "early"]
-						},
 						service_title: "SoundCloud",
 						serviceLogo: soundcloudLogo,
 						smallImage: true,
@@ -354,10 +343,6 @@
 						presence_time: "2:15"
 					},
 					{
-						profile: {
-							DiscordID: "162969778699501569",
-							badges: ["balance", "early"]
-						},
 						service_title: "Netflix",
 						serviceLogo: netflixLogo,
 						smallImage: true,
@@ -365,10 +350,6 @@
 						presence_time: "22:15"
 					},
 					{
-						profile: {
-							DiscordID: "515668127829458945",
-							badges: ["balance"]
-						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
 						smallImage: true,
@@ -379,10 +360,6 @@
 						presence_time: "00:26"
 					},
 					{
-						profile: {
-							DiscordID: "293828021134295040",
-							badges: ["brilliance"]
-						},
 						service_title: "Steam",
 						serviceLogo: steamLogo,
 						smallImage: false,
@@ -390,10 +367,6 @@
 						presence_time: "03:32"
 					},
 					{
-						profile: {
-							DiscordID: "163319338403627008",
-							badges: ["brilliance", "early", "nitro", "boost-lvl3"]
-						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
 						smallImage: true,
@@ -401,10 +374,6 @@
 						presence_time: "3:12"
 					},
 					{
-						profile: {
-							DiscordID: "241278257335500811",
-							badges: ["balance", "early", "nitro"]
-						},
 						service_title: "Twitch",
 						serviceLogo: twitchLogo,
 						smallImage: true,
@@ -428,14 +397,11 @@
 			this.$data.presences_display.forEach(function (presence_item, index) {
 				let presence = Vue.$data.presences_display[index];
 
-				presence.profile["image"] =
-					Vue.$data.users[index]?.avatar ||
-					"https://premid.app/assets/images/logo.png";
-				presence.profile["name"] = Vue.$data.users[index]?.name || "Unknown";
-				presence.profile["id"] = Vue.$data.users[index]?.tag || "0000";
+				presence.profile = Vue.$data.users[index];
 			});
 		},
 		mounted() {
+			console.log(this.$data.users);
 			[
 				document.querySelector("#featuresHeading"),
 				...document.querySelectorAll(".card--feature")
