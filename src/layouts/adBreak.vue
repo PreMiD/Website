@@ -44,10 +44,13 @@
 		},
 		data() {
 			return {
-				adBlock: true
+				adBlock: false
 			};
 		},
 		mounted() {
+			//* Users not seing the skip button
+			window.scrollTo(0, 0);
+
 			let rads = 0;
 			while (rads === 0) {
 				rads = Math.floor(Math.random() * 10);

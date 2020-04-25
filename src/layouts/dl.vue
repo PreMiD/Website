@@ -59,7 +59,7 @@
 		},
 		data() {
 			return {
-				adBlock: true
+				adBlock: false
 			};
 		},
 		mounted() {
