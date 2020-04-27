@@ -45,7 +45,6 @@
                     bug_date: this.Report.bug_date,
                     bug_userName: this.$auth.user.username+'#'+$auth.user.discriminator,
                     bug_userId: this.$auth.user.id,
-                    token: this.$auth.$storage._state["_token.discord"]
                 };
                 axios.post(`${process.env.apiBase}/bugPost`, newReport)
                 .then((response) => {
