@@ -36,7 +36,7 @@
 									class="header__avatar"
 									:style="
 										'background-image: url(' +
-										presence.profile.image +
+										presence.profile.avatar +
 										'?size=128' +
 										');'
 									"
@@ -45,46 +45,46 @@
 									<div class="info__nameTag">
 										<span class="username">{{ presence.profile.name }}</span>
 										<span class="discriminator"
-											>#{{ presence.profile.id }}</span
+											>#{{ presence.profile.discriminator }}</span
 										>
 									</div>
 									<div class="info__badges">
 										<div
-											v-for="badge of presence.profile.badges"
-											:key="badge"
+											v-for="flag of presence.profile.flags"
+											:key="flag"
 											class="badge-wrapper"
 										>
 											<div
 												v-if="
-													badge == 'HOUSE_BRILLIANCE' ||
-													badge == 'HOUSE_BRAVERY' ||
-													badge == 'HOUSE_BALANCE'
+													flag == 'HOUSE_BRILLIANCE' ||
+													flag == 'HOUSE_BRAVERY' ||
+													flag == 'HOUSE_BALANCE'
 												"
 												v-tippy="{
 													content:
 														'HypeSquad ' +
-														badge.replace('HOUSE_', '')[0] +
-														badge
+														flag.replace('HOUSE_', '')[0] +
+														flag
 															.replace('HOUSE_', '')
 															.slice(1, 10)
 															.toLowerCase()
 												}"
-												:class="`badge badge_${badge
+												:class="`badge badge_${flag
 													.replace('HOUSE_', '')
 													.toLowerCase()}`"
 											></div>
 											<div
-												v-if="badge == 'EARLY_SUPPORTER'"
+												v-if="flag == 'EARLY_SUPPORTER'"
 												v-tippy="{ content: 'Early Supporter' }"
 												:class="`badge badge_early`"
 											></div>
 											<div
-												v-if="badge == 'HYPESQUAD_EVENTS'"
+												v-if="flag == 'HYPESQUAD_EVENTS'"
 												v-tippy="{ content: 'HypeSquad Events' }"
 												:class="`badge badge_hypesquad`"
 											></div>
 											<div
-												v-if="badge == 'NITRO'"
+												v-if="flag == 'NITRO'"
 												v-tippy="{ content: 'Discord Nitro' }"
 												:class="`badge badge_nitro`"
 											></div>
@@ -419,16 +419,18 @@
 			this.presences_display.forEach((presence_item, index) => {
 				let presence = this.presences_display[index];
 
-				presence.profile["image"] =
-					this.users[index]?.avatar ||
-					"https://premid.app/assets/images/logo.png";
-				presence.profile["name"] = this.users[index]?.name || "Unknown";
-				presence.profile["id"] = this.users[index]?.tag || "0000";
-				presence.profile["badges"] = this.users[index]?.flags || [];
+				presence.profile = {
+					name: this.users[index]?.name || "Unknown",
+					discriminator: this.users[index]?.tag || "0000",
+					flags: this.users[index]?.flags || [],
+					avatar:
+						this.users[index]?.avatar ||
+						"https://premid.app/assets/images/logo.png"
+				};
 
 				// Temporary solution
-				presence.profile["image"].endsWith(".gif")
-					? presence.profile["badges"].push("NITRO")
+				presence.profile["avatar"].endsWith(".gif")
+					? presence.profile["flags"].push("NITRO")
 					: false;
 			});
 		},

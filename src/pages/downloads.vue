@@ -322,12 +322,15 @@
 			</div>
 			<div class="buttons">
 				<div>
-				<button class="button btn cancel" @click="$modal.hide('warning')">
-					{{ $t("downloads.button.cancel") }}
-				</button>
-				<button class="button btn accept" @click="open('chrome', 'Extension')">
-					{{ $t("downloads.button.okay") }}
-				</button>
+					<button class="button btn cancel" @click="$modal.hide('warning')">
+						{{ $t("downloads.button.cancel") }}
+					</button>
+					<button
+						class="button btn accept"
+						@click="open('chrome', 'Extension')"
+					>
+						{{ $t("downloads.button.okay") }}
+					</button>
 				</div>
 			</div>
 		</modal>
