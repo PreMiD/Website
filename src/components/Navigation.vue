@@ -40,7 +40,7 @@
 					</nuxt-link>
 				</div>
 
-				<div v-if="countDownBtn" class="links">
+				<div v-if="$props.countDownBtn" class="links">
 					<a
 						v-if="countDownValue === 0"
 						@click="$nuxt.setLayout('default')"
@@ -331,11 +331,11 @@
 			clearInterval(this.interval);
 		},
 		mounted() {
-			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator?.userAgent
 			);
 
-			if (this.countDownBtn)
+			if (this.$props.countDownBtn)
 				this.interval = setInterval(() => {
 					this.countDownValue--;
 
