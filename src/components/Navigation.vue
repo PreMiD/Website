@@ -1,8 +1,8 @@
 <template>
 	<transition appear v-on:after-appear="appear">
 		<div>
-			<div id="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
-				<div id="logoWrapper" ref="headerLogo">
+			<div class="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
+				<div class="logoWrapper" ref="headerLogo">
 					<nuxt-link
 						to="/"
 						tag="img"
@@ -13,7 +13,7 @@
 					<transition name="pop">
 						<div
 							v-if="!isMobile && !$store.state.extension.extensionInstalled"
-							id="status"
+							class="status"
 							v-tippy="{
 								content: $t('store.message.error')
 							}"
@@ -26,7 +26,7 @@
 					</transition>
 				</div>
 
-				<div v-if="!noLinks" id="links">
+				<div v-if="!noLinks" class="links">
 					<nuxt-link
 						v-for="category of categories"
 						:key="category.route"
@@ -40,20 +40,37 @@
 					</nuxt-link>
 				</div>
 
-				<div v-if="countDownBtn" id="links">
+				<div v-if="countDownBtn" class="links">
 					<a
-						@click="countDownValue === 0 ? $nuxt.setLayout('dl') : null"
+						v-if="countDownValue === 0"
+						@click="$nuxt.setLayout('default')"
+						class="navbar__item"
+					>
+						<span class="round-icon">
+							<i :class="`fa-backward fas`"></i>
+						</span>
+						<p>{{ $t("downloads.button.back") }}</p>
+					</a>
+
+					<a
+						@click="countDownValue === 0 ? redirect($props.href) : null"
 						class="navbar__item"
 					>
 						<span class="round-icon">
 							<i :class="`fa-forward fas`"></i>
 						</span>
-						<p v-text="countDownValue === 0 ? 'Skip' : countDownValue" />
+						<p
+							v-text="
+								countDownValue === 0
+									? $t('downloads.button.skip')
+									: countDownValue
+							"
+						/>
 					</a>
 				</div>
 
 				<div
-					id="hamburger"
+					class="hamburger"
 					ref="hamburger"
 					@click="mobileMenuActive = !mobileMenuActive"
 				>
@@ -64,7 +81,7 @@
 
 			<transition name="slide-down">
 				<div
-					id="mobileLinks"
+					class="mobileLinks"
 					v-if="mobileMenuActive"
 					@click="mobileMenuActive = !mobileMenuActive"
 				>
@@ -87,7 +104,7 @@
 <style lang="scss" scoped>
 	@import "~/stylesheets/variables.scss";
 
-	#navbar {
+	.navbar {
 		background-color: $background-primary;
 		position: relative;
 		height: 75px;
@@ -98,7 +115,7 @@
 		align-items: center;
 		justify-content: space-between;
 
-		#logoWrapper {
+		.logoWrapper {
 			height: 40px;
 
 			display: grid;
@@ -109,7 +126,7 @@
 				height: 40px;
 			}
 
-			#status {
+			.status {
 				display: flex;
 				align-items: center;
 				font-size: small;
@@ -125,7 +142,7 @@
 			}
 		}
 
-		#links {
+		.links {
 			display: flex;
 			font-size: 1.1rem;
 			font-weight: 800;
@@ -176,7 +193,7 @@
 			}
 		}
 
-		#hamburger {
+		.hamburger {
 			font-size: 1.5em;
 			display: none;
 			width: 25px;
@@ -185,7 +202,7 @@
 		}
 	}
 
-	#mobileLinks {
+	.mobileLinks {
 		position: absolute;
 		top: 75px;
 		z-index: 99999;
@@ -215,7 +232,7 @@
 	//* Responsive Design
 
 	@media only screen and (max-width: 900px) {
-		#links {
+		.links {
 			a {
 				margin: 0 0.5em !important;
 			}
@@ -223,11 +240,11 @@
 	}
 
 	@media only screen and (max-width: 715px) {
-		#links {
+		.links {
 			display: none !important;
 		}
 
-		#hamburger {
+		.hamburger {
 			display: block !important;
 		}
 	}
@@ -236,7 +253,7 @@
 <script>
 	export default {
 		name: "Navigation",
-		props: ["noLinks", "countDownBtn"],
+		props: ["noLinks", "countDownBtn", "href", "target"],
 		data() {
 			return {
 				pageLoad: false,
@@ -263,8 +280,14 @@
 			};
 		},
 		methods: {
-			redirect(location) {
-				window.location.href = location || window.location.href;
+			reload() {
+				location.reload();
+			},
+			redirect(url) {
+				if (this.$props.countDownBtn && this.$props.target) {
+					window.open(url, this.$props.target).focus();
+					this.$nuxt.setLayout("default");
+				} else window.location.href = url || window.location.href;
 			},
 			appear() {
 				this.pageLoad = true;
@@ -304,17 +327,20 @@
 					);
 			}
 		},
+		beforeDestroy() {
+			clearInterval(this.interval);
+		},
 		mounted() {
 			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator?.userAgent
 			);
 
-			const interval = setInterval(() => {
-				if (!this.countDownBtn) return;
-				this.countDownValue--;
+			if (this.countDownBtn)
+				this.interval = setInterval(() => {
+					this.countDownValue--;
 
-				if (this.countDownValue === 0) clearInterval(interval);
-			}, 1 * 1000);
+					if (this.countDownValue === 0) clearInterval(this.interval);
+				}, 1 * 1000);
 		}
 	};
 </script>

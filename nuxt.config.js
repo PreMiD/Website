@@ -3,7 +3,6 @@ module.exports = {
 	srcDir: "src",
 	buildModules: [
 		"@nuxt/typescript-build",
-		"@nuxtjs/router",
 		["@nuxtjs/google-analytics", { id: "UA-129058596-1" }]
 	],
 	plugins: [
@@ -14,7 +13,8 @@ module.exports = {
 		{ src: "~/plugins/Noty.js", ssr: false },
 		{ src: "~/plugins/Pagination.js", ssr: false },
 		{ src: "~/plugins/Carousel.js", ssr: false },
-		{ src: "~/plugins/Scrollmagic.js", ssr: false }
+		{ src: "~/plugins/Scrollmagic.js", ssr: false },
+		{ src: "~/plugins/Modal.js", ssr: false }
 	],
 	modules: [
 		[
@@ -78,7 +78,7 @@ module.exports = {
 				{
 					rel: "stylesheet",
 					type: "text/css",
-					href: "/assets/fonts/FontAwesome/all.min.css"
+					href: "/assets/fonts/FontAwesome/all.css"
 				},
 				{
 					rel: "stylesheet",

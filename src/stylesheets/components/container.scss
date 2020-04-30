@@ -498,6 +498,7 @@
 			text-shadow: none;
 
 			&::after {
+				top: 0;
 				transition: 0.15s opacity ease-out;
 				position: absolute;
 				content: "";

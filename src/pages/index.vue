@@ -56,37 +56,37 @@
 										>
 											<div
 												v-if="
-													badge == 'brilliance' ||
-													badge == 'bravery' ||
-													badge == 'balance'
+													badge == 'HOUSE_BRILLIANCE' ||
+													badge == 'HOUSE_BRAVERY' ||
+													badge == 'HOUSE_BALANCE'
 												"
 												v-tippy="{
 													content:
 														'HypeSquad ' +
-														badge.charAt(0).toUpperCase() +
-														badge.slice(1)
+														badge.replace('HOUSE_', '')[0] +
+														badge
+															.replace('HOUSE_', '')
+															.slice(1, 10)
+															.toLowerCase()
 												}"
-												:class="`badge badge_${badge}`"
+												:class="`badge badge_${badge
+													.replace('HOUSE_', '')
+													.toLowerCase()}`"
 											></div>
 											<div
-												v-if="badge == 'early'"
+												v-if="badge == 'EARLY_SUPPORTER'"
 												v-tippy="{ content: 'Early Supporter' }"
-												:class="`badge badge_${badge}`"
+												:class="`badge badge_early`"
 											></div>
 											<div
-												v-if="badge == 'hypesquad'"
+												v-if="badge == 'HYPESQUAD_EVENTS'"
 												v-tippy="{ content: 'HypeSquad Events' }"
-												:class="`badge badge_${badge}`"
+												:class="`badge badge_hypesquad`"
 											></div>
 											<div
-												v-if="badge == 'nitro'"
+												v-if="presence.profile.image.endsWith('.gif')"
 												v-tippy="{ content: 'Discord Nitro' }"
-												:class="`badge badge_${badge}`"
-											></div>
-											<div
-												v-if="badge == 'boost-lvl3'"
-												v-tippy="{ content: 'Nitro Boosting' }"
-												:class="`badge badge_${badge}`"
+												:class="`badge badge_nitro`"
 											></div>
 										</div>
 									</div>
@@ -320,7 +320,7 @@
 					{
 						profile: {
 							DiscordID: "259407123782434816",
-							badges: ["hypesquad", "balance", "early", "nitro"]
+							badges: []
 						},
 						service_title: "PreMiD",
 						serviceLogo: premidLogo,
@@ -331,7 +331,7 @@
 					{
 						profile: {
 							DiscordID: "223238938716798978",
-							badges: ["brilliance", "nitro"]
+							badges: []
 						},
 						service_title: "YouTube",
 						serviceLogo: youtubeLogo,
@@ -345,7 +345,7 @@
 					{
 						profile: {
 							DiscordID: "213305189657083905",
-							badges: ["bravery", "early"]
+							badges: []
 						},
 						service_title: "SoundCloud",
 						serviceLogo: soundcloudLogo,
@@ -356,7 +356,7 @@
 					{
 						profile: {
 							DiscordID: "162969778699501569",
-							badges: ["balance", "early"]
+							badges: []
 						},
 						service_title: "Netflix",
 						serviceLogo: netflixLogo,
@@ -367,7 +367,7 @@
 					{
 						profile: {
 							DiscordID: "515668127829458945",
-							badges: ["balance"]
+							badges: []
 						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
@@ -381,7 +381,7 @@
 					{
 						profile: {
 							DiscordID: "293828021134295040",
-							badges: ["brilliance"]
+							badges: []
 						},
 						service_title: "Steam",
 						serviceLogo: steamLogo,
@@ -392,7 +392,7 @@
 					{
 						profile: {
 							DiscordID: "163319338403627008",
-							badges: ["brilliance", "early", "nitro", "boost-lvl3"]
+							badges: []
 						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
@@ -403,7 +403,7 @@
 					{
 						profile: {
 							DiscordID: "241278257335500811",
-							badges: ["balance", "early", "nitro"]
+							badges: []
 						},
 						service_title: "Twitch",
 						serviceLogo: twitchLogo,
@@ -415,24 +415,24 @@
 			};
 		},
 		beforeMount() {
-			const Vue = this;
-			const length = this.$data.presences.length;
+			const length = this.presences.length;
 
 			// Randomly selects 2 presences to display.
-			this.$data.presences_display.push(
-				this.$data.presences.splice((Math.random() * length) | 0, 1)[0],
-				this.$data.presences.splice((Math.random() * (length - 1)) | 0, 1)[0]
+			this.presences_display.push(
+				this.presences.splice((Math.random() * length) | 0, 1)[0],
+				this.presences.splice((Math.random() * (length - 1)) | 0, 1)[0]
 			);
 
 			// Updating user information in presence examples.
-			this.$data.presences_display.forEach(function (presence_item, index) {
-				let presence = Vue.$data.presences_display[index];
+			this.presences_display.forEach((presence_item, index) => {
+				let presence = this.presences_display[index];
 
 				presence.profile["image"] =
-					Vue.$data.users[index]?.avatar ||
+					this.users[index]?.avatar ||
 					"https://premid.app/assets/images/logo.png";
-				presence.profile["name"] = Vue.$data.users[index]?.name || "Unknown";
-				presence.profile["id"] = Vue.$data.users[index]?.tag || "0000";
+				presence.profile["name"] = this.users[index]?.name || "Unknown";
+				presence.profile["id"] = this.users[index]?.tag || "0000";
+				presence.profile["badges"] = this.users[index]?.flags || [];
 			});
 		},
 		mounted() {
