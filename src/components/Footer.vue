@@ -36,16 +36,28 @@
 			</div>
 			<div class="grid__section">
 				<p class="section__title">
-					{{ $t("footer.socials.heading") }}
+					{{ $t("footer.followUs.heading") }}
 				</p>
 				<div class="section__promo">
-					<a href="https://twitter.com/PreMiDApp" target="_blank" class="socials">
+					<a
+						href="https://twitter.com/PreMiDApp"
+						target="_blank"
+						class="socials"
+					>
 						<i class="fab fa-twitter"></i> Twitter
 					</a>
-					<a href="https://facebook.com/PreMiDApp" target="_blank" class="socials">
+					<a
+						href="https://facebook.com/PreMiDApp"
+						target="_blank"
+						class="socials"
+					>
 						<i class="fab fa-facebook-square"></i> Facebook
 					</a>
-					<a href="https://instagram.com/PreMiDapp" target="_blank" class="socials">
+					<a
+						href="https://instagram.com/PreMiDapp"
+						target="_blank"
+						class="socials"
+					>
 						<i class="fab fa-instagram"></i> Instagram
 					</a>
 				</div>
@@ -114,7 +126,7 @@
 			<p
 				v-html="
 					$t('footer.copyright.line2', {
-						0: `<a class='hover-effect' href='https://iryzhenkov.ru/' target='_blank'>Voknehzyr</a> &
+						0: /*`<a class='hover-effect' href='https://iryzhenkov.ru/' target='_blank'>Voknehzyr</a> &`*/ `
 				<a class='hover-effect' href='https://eggsy.codes/' target='_blank'>EGGSY</a> &
 				<a class='hover-effect' href='https://github.com/TheDropX/' target='_blank'>TheDrop.</a>`
 					})
