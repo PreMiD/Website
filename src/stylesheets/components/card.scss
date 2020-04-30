@@ -82,8 +82,11 @@
 	}
 
 	.buttons {
-		display: flex;
 		float: right;
+
+		.container {
+			display: flex;
+		}
 
 		.btn {
 			padding: 0.3rem 1rem;

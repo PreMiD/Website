@@ -8,7 +8,7 @@
 		/>
 
 		<div class="breakwrapper">
-			<div class="space left">
+			<div v-if="!adblock" class="space left">
 				<adsbygoogle ad-slot="3276628083" />
 			</div>
 
@@ -19,7 +19,7 @@
 				</p>
 			</div>
 
-			<div v-else-if="!isMobile" class="note smol">
+			<div v-else-if="adblock" class="note smol">
 				<div class="disable">
 					<img
 						src="https://cdn.discordapp.com/attachments/473603737135349792/695397570272559235/634432333226836020.png"
@@ -34,16 +34,29 @@
 				</div>
 			</div>
 
-			<div v-if="isMobile" class="mobile">
-				<button class="button skip">Skip</button>
+			<div v-if="isMobile && !adblock" class="mobile">
+				<button
+					v-if="countDown <= 0"
+					class="button"
+					@click="$nuxt.setLayout('default')"
+				>
+					{{ $t("downloads.button.back") }}
+				</button>
+				<button
+					:disabled="countDown > 0"
+					:class="`button ${this.countDown > 0 ? 'disabled' : ''}`"
+					@click="countDown > 0 ? false : open(href)"
+				>
+					{{ countDown > 0 ? countDown : $t("downloads.button.skip") }}
+				</button>
 			</div>
 
-			<div class="space right">
+			<div v-if="!adblock" class="space right">
 				<adsbygoogle ad-slot="4398138065" />
 			</div>
 		</div>
 
-		<div class="space bottom">
+		<div v-if="!adblock" class="space bottom">
 			<adsbygoogle ad-slot="9757727213" />
 		</div>
 	</div>
@@ -64,6 +77,7 @@
 			return {
 				adblock: false,
 				target: null,
+				countDown: 5,
 				href: null,
 				isMobile: false,
 				urls: {
@@ -77,15 +91,24 @@
 		},
 		beforeMount() {
 			let platform = this.$store.state.download.platform;
+			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+				navigator?.userAgent
+			);
 
 			this.target = platform === "chrome" ? "_blank" : null;
 			this.href = this.urls[platform];
 		},
+		beforeDestroy() {
+			if (this.interval) clearInterval(this.interval);
+		},
 		mounted() {
-			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-				navigator?.userAgent
-			);
-			
+			if (this.isMobile)
+				this.interval = setInterval(() => {
+					this.countDown--;
+
+					if (this.countDown < 0) clearInterval(this.interval);
+				}, 1000);
+
 			// Users not seing the skip button
 			window.scrollTo(0, 0);
 			let rads = 0;
@@ -97,6 +120,14 @@
 			axios(`/ads/ads${rads}.js`)
 				.then(() => (this.adblock = false))
 				.catch(() => (this.adblock = true));
+		},
+		methods: {
+			open(url) {
+				if (this.isMobile && this.target) {
+					window.open(url, this.target).focus();
+					this.$nuxt.setLayout("default");
+				} else window.location.href = url || window.location.href;
+			}
 		}
 	};
 </script>
@@ -111,6 +142,7 @@
 		width: 100%;
 
 		.note {
+			box-shadow: 0 10px 20px -2px rgba(27, 33, 58, 0.4);
 			background-color: #191b24;
 			font-size: 25px;
 			max-width: 350px;
@@ -118,8 +150,22 @@
 			border-radius: 10px;
 
 			&.smol {
-				max-width: 225px;
+				width: 400px;
 				padding: 1em;
+				position: relative;
+
+				.controls {
+					position: absolute;
+					right: 0;
+					bottom: 0;
+					padding: 0.75em;
+
+					.button {
+						margin-right: unset;
+						padding: 0.5em 1em;
+						font-size: large;
+					}
+				}
 			}
 
 			.title {
@@ -133,18 +179,12 @@
 				display: flex;
 
 				p {
-					margin-left: 0.5em;
+					height: fit-content;
+					padding: 0;
+					margin: 0 0 0 4px;
 					font-size: large;
-				}
-			}
-
-			.controls {
-				text-align: center;
-
-				.button {
-					margin-top: 1em;
-					padding: 0.5em 1em;
-					font-size: large;
+					text-overflow: ellipsis;
+					overflow: hidden;
 				}
 			}
 
@@ -174,6 +214,16 @@
 				height: 250px;
 			}
 		}
+
+		.mobile {
+			text-align: center;
+			padding: 1em;
+
+			.disabled {
+				filter: grayscale(1);
+				transition: filter 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			}
+		}
 	}
 
 	@media only screen and (max-width: 600px) {
@@ -184,7 +234,8 @@
 				padding: 1em;
 
 				&.smol {
-					max-width: 100%;
+					margin-bottom: 1em;
+					width: unset;
 				}
 			}
 

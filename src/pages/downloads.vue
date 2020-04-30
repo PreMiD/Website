@@ -311,17 +311,17 @@
 		<modal :classes="'modal'" width="400px" height="auto" name="warning">
 			<div class="title">{{ $t("downloads.warning.title") }}</div>
 			<div class="message">
-				<p>
-					{{
+				<p
+					v-html="
 						linkify(
 							$t(warning.messageKey),
-							"https://addons.opera.com/en/extensions/details/install-chrome-extensions/"
+							'https://addons.opera.com/en/extensions/details/install-chrome-extensions/'
 						)
-					}}
-				</p>
+					"
+				></p>
 			</div>
 			<div class="buttons">
-				<div>
+				<div class="container">
 					<button class="button btn cancel" @click="$modal.hide('warning')">
 						{{ $t("downloads.button.cancel") }}
 					</button>
