@@ -1097,10 +1097,10 @@
     lodash "^4.17.15"
     nanoid "^2.1.11"
 
-"@nuxtjs/axios@5.10.2", "@nuxtjs/axios@^5.9.5":
-  version "5.10.2"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/axios/-/axios-5.10.2.tgz#4ed3d216ff152c9a1717850ca829cf1cd0b419a1"
-  integrity sha512-OIrA9gwWSxmHkUu5UNNfGkYtHu4l4c5MEhCsc9n+IgTT5u/oGgrvoVC1Kh+p0Cgqz+7IkRmyf0TKif7VoAnLLg==
+"@nuxtjs/axios@5.10.3", "@nuxtjs/axios@^5.9.5":
+  version "5.10.3"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/axios/-/axios-5.10.3.tgz#1d249cafab805787788b655b40cee8a3838ded79"
+  integrity sha512-cCPeix6S0yLftiTnD9cpZSDsCNYD5/5EB9Q9iB8WaNZsGMPcwM5XQQVFcenMIv9Dr+SvySdOUdDL9rvlfyhdkg==
   dependencies:
     "@nuxtjs/proxy" "^1.3.3"
     axios "^0.19.2"
