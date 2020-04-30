@@ -308,7 +308,7 @@
 			</div>
 		</transition>
 
-		<modal :classes="'modal'" width="400px" height="150px" name="warning">
+		<modal :classes="'modal'" width="400px" height="auto" name="warning">
 			<div class="title">{{ $t("downloads.warning.title") }}</div>
 			<div class="message">
 				<p>
@@ -321,12 +321,14 @@
 				</p>
 			</div>
 			<div class="buttons">
+				<div>
 				<button class="button btn cancel" @click="$modal.hide('warning')">
 					{{ $t("downloads.button.cancel") }}
 				</button>
 				<button class="button btn accept" @click="open('chrome', 'Extension')">
 					{{ $t("downloads.button.okay") }}
 				</button>
+				</div>
 			</div>
 		</modal>
 	</div>

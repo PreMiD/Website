@@ -84,7 +84,7 @@
 												:class="`badge badge_hypesquad`"
 											></div>
 											<div
-												v-if="presence.profile.image.endsWith('.gif')"
+												v-if="badge == 'NITRO'"
 												v-tippy="{ content: 'Discord Nitro' }"
 												:class="`badge badge_nitro`"
 											></div>
@@ -319,7 +319,6 @@
 				presences: [
 					{
 						profile: {
-							DiscordID: "259407123782434816",
 							badges: []
 						},
 						service_title: "PreMiD",
@@ -330,7 +329,6 @@
 					},
 					{
 						profile: {
-							DiscordID: "223238938716798978",
 							badges: []
 						},
 						service_title: "YouTube",
@@ -344,7 +342,6 @@
 					},
 					{
 						profile: {
-							DiscordID: "213305189657083905",
 							badges: []
 						},
 						service_title: "SoundCloud",
@@ -355,7 +352,6 @@
 					},
 					{
 						profile: {
-							DiscordID: "162969778699501569",
 							badges: []
 						},
 						service_title: "Netflix",
@@ -366,7 +362,6 @@
 					},
 					{
 						profile: {
-							DiscordID: "515668127829458945",
 							badges: []
 						},
 						service_title: "YouTube Music",
@@ -380,7 +375,6 @@
 					},
 					{
 						profile: {
-							DiscordID: "293828021134295040",
 							badges: []
 						},
 						service_title: "Steam",
@@ -391,7 +385,6 @@
 					},
 					{
 						profile: {
-							DiscordID: "163319338403627008",
 							badges: []
 						},
 						service_title: "YouTube Music",
@@ -402,7 +395,6 @@
 					},
 					{
 						profile: {
-							DiscordID: "241278257335500811",
 							badges: []
 						},
 						service_title: "Twitch",
@@ -433,6 +425,11 @@
 				presence.profile["name"] = this.users[index]?.name || "Unknown";
 				presence.profile["id"] = this.users[index]?.tag || "0000";
 				presence.profile["badges"] = this.users[index]?.flags || [];
+
+				// Temporary solution
+				presence.profile["image"].endsWith(".gif")
+					? presence.profile["badges"].push("NITRO")
+					: false;
 			});
 		},
 		mounted() {

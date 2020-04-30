@@ -238,7 +238,6 @@
 		},
 		methods: {
 			applyModal(job) {
-				console.log(this.discordUsers);
 				this.modalJob = job;
 				this.$auth.loggedIn || this.$router.push("/login");
 				if(this.discordUsers.indexOf(this.$auth.user.id) == -1) {
