@@ -35,6 +35,19 @@
 				</div>
 			</div>
 			<div class="grid__section">
+				<p class="section__title">
+					{{ $t("footer.socials.heading") }}
+				</p>
+				<div class="section__promo">
+					<a href="https://twitter.com/PreMiDApp" class="socials">
+						<i class="fab fa-twitter"></i> Twitter
+					</a>
+					<a href="https://facebook.com/PreMiDApp" class="socials">
+						<i class="fab fa-facebook-square"></i> Facebook
+					</a>
+				</div>
+			</div>
+			<div class="grid__section">
 				<p class="section__title" v-text="$t(`footer.supportus.heading`)"></p>
 				<div>
 					<a

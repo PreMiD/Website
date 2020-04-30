@@ -16,22 +16,29 @@
 			<p>{{ $props.error.message }}</p>
 		</div>
 		<div class="error-container--btns">
-			<router-link to="/" class="button button--sm" v-text="$t('error.page.button')"></router-link>
+			<router-link
+				to="/"
+				class="button button--sm"
+				v-text="$t('error.page.button')"
+			></router-link
+			><span class="button button--sm" @click="reload" v-text="'Reload'"></span>
 		</div>
 	</div>
 </template>
 
 <script>
-export default {
-	props: ["error"],
-	layout: "default",
-	mounted() {
-		console.log(this.$props.error);
-	},
-	head() {
-		return {
+	export default {
+		props: ["error"],
+		head: {
 			title: "Error"
-		};
-	}
-};
+		},
+		mounted() {
+			console.log(this.$props.error);
+		},
+		methods: {
+			reload() {
+				location.reload();
+			}
+		}
+	};
 </script>

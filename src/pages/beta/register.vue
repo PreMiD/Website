@@ -3,16 +3,16 @@
 		<div class="section section--features section--features--beta-register">
 			<div class="promo-container__heading">
 				<h1 class="heading__logo">
-					<img :src="require('@/assets/images/premid-beta.png')" />
+					<img :src="logo" />
 				</h1>
 			</div>
 			<div id="thankYou-container" class="card--feature card--feature--reverse">
 				<div class="card--feature__details">
 					<h1>{{ title }}</h1>
 					<p>{{ message }}</p>
-					<a href="/" class="button button--sm router-link-active">{{
+					<nuxt-link to="/" class="button button--sm router-link-active">{{
 						$t("error.page.button")
-					}}</a>
+					}}</nuxt-link>
 				</div>
 			</div>
 			<div class="waves-divider waves-divider_bottom">
@@ -36,38 +36,35 @@
 
 <script>
 	import axios from "axios";
+	import Logo from "@/assets/images/premid-beta.png";
 
 	export default {
 		name: "Register",
 		auth: true,
-		data() {
-			return {
-				title: "",
-				message: ""
-			};
-		},
-		mounted() {
-			if (this.$auth.loggedIn) {
-				axios
-					.post(
-						`${process.env.apiBase}/addBetaUser/${this.$auth.$storage._state["_token.discord"]}`
-					)
-					.then(response => {
-						if (!response.data.error) {
-							this.title = this.$t("thankyou.title");
-							this.message = this.$t("thankyou.description");
-						} else if (response.data.error) {
-							this.title = "Uh oh!";
-							if (response.data.error == 3) {
-								this.message =
-									"Our monkeys say that you are already a beta user.";
-							} else {
-								this.message = response.data.message;
-							}
-						}
-					});
+		async asyncData({ $auth, error, $t }) {
+			if ($auth.loggedIn) {
+				let { data } = await axios.post(
+					`${process.env.apiBase}/addBetaUser/${$auth.$storage._state["_token.discord"]}`
+				);
+
+				if (!data.error) {
+					return {
+						title: $t("thankyou.title"),
+						message: $t("thankyou.description"),
+						logo: Logo
+					};
+				} else {
+					return {
+						title: "Uh oh!",
+						message:
+							data.error == 3
+								? "Our monkeys say that you are already a beta user."
+								: data.message,
+						logo: Logo
+					};
+				}
 			} else {
-				this.$router.push("/");
+				$auth.loginWith("discord");
 			}
 		},
 		head: {

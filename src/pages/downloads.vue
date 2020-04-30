@@ -169,20 +169,24 @@
 
 					<div class="dl-container__cards">
 						<div
-							:class="{ 'current-platform': browser == 'chrome' }"
+							:class="{ 'current-platform': isChrome }"
 							class="cards__card clickable"
-							@click="open('chrome', 'Extension')"
+							@click="
+								browser.warning
+									? warn(browser.warning)
+									: open('chrome', 'Extension')
+							"
 						>
 							<div class="card__icon">
-								<i class="fa-chrome fab"></i>
+								<i :class="`fa-${isChrome ? browser.icon : 'chrome'} fab`"></i>
 							</div>
 							<div class="card__content">
-								<h3>Chromium</h3>
+								<h3>{{ isChrome ? browser.name : "Chrome" }}</h3>
 							</div>
 						</div>
 
 						<a
-							:class="{ 'current-platform': browser == 'firefox' }"
+							:class="{ 'current-platform': browser.key == 'firefox' }"
 							class="cards__card clickable"
 							@click="open('firefox', 'Extension')"
 						>
@@ -195,99 +199,102 @@
 						</a>
 					</div>
 				</div>
-			</div>
-		</transition>
 
-		<div
-			id="beta-downloads"
-			class="dl-container__section dl-container__section_downloads waves-aligned"
-		>
-			<h1 class="section-header">
-				{{ $t("downloads.latest.header") }}
-				<a
-					v-if="$auth.loggedIn && beta.access"
-					class="label label_downloads-version bv"
-					@click="changeTab"
-					v-text="tab"
-				></a>
-			</h1>
+				<div
+					id="beta-downloads"
+					class="dl-container__section dl-container__section_downloads waves-aligned"
+				>
+					<h1 class="section-header">
+						{{ $t("downloads.latest.header") }}
+						<a
+							v-if="$auth.loggedIn && beta.access"
+							class="label label_downloads-version bv"
+							@click="changeTab"
+							v-text="tab"
+						></a>
+					</h1>
 
-			<div v-if="$auth.loggedIn">
-				<div v-if="beta.access == true">
-					<div class="dl-container__cards">
-						<div
-							v-for="(platform, index) of cTab.app_links"
-							:key="platform.platform.toString()"
-						>
-							<div @click="openInNewTab(platform.link)">
+					<div v-if="$auth.loggedIn">
+						<div v-if="beta.access == true">
+							<div class="dl-container__cards">
 								<div
-									:class="{ 'current-platform': index == 1 }"
+									v-for="(platform, index) of cTab.app_links"
+									:key="platform.platform.toString()"
+								>
+									<div @click="openInNewTab(platform.link)">
+										<div
+											:class="{ 'current-platform': index == 1 }"
+											class="cards__card clickable"
+										>
+											<div class="card__icon">
+												<i
+													:class="`fab fa-${platform.platform.toLowerCase()}`"
+												></i>
+											</div>
+											<div class="card__content">
+												<h3 v-text="platform.platform" />
+												<p v-t="tab" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="dl-container__cards">
+								<div
+									v-for="platform of cTab.ext_links"
+									:key="platform.platform.toString()"
+									:class="{
+										'current-platform':
+											browser.key == platform.platform.toString().toLowerCase()
+									}"
 									class="cards__card clickable"
+									@click="openInNewTab(platform.link)"
 								>
 									<div class="card__icon">
-										<i :class="`fab fa-${platform.platform.toLowerCase()}`"></i>
+										<i
+											:class="`fab fa-${
+												platform.platform.toString() == 'Chromium'
+													? 'chrome'
+													: platform.platform.toString().toLowerCase()
+											}`"
+										></i>
 									</div>
 									<div class="card__content">
-										<h3>{{ platform.platform }}</h3>
+										<h3 v-t="platform.platform"></h3>
 										<p v-t="tab" />
 									</div>
 								</div>
 							</div>
 						</div>
+						<div class="dl-container__cards nobeta" v-else>
+							<h1 v-t="'downloads.error.noaccess.title'" />
+							<p
+								v-html="
+									linkify(
+										$t('downloads.error.noaccess.description', {
+											0: 200 - betaUsers
+										})
+									)
+								"
+							/>
+						</div>
 					</div>
-					<div class="dl-container__cards">
-						<div
-							v-for="platform of cTab.ext_links"
-							:key="platform.platform.toString()"
-							:class="{
-								'current-platform':
-									browser == platform.platform.toString().toLowerCase()
-							}"
-							class="cards__card clickable"
-							@click="openInNewTab(platform.link)"
-						>
-							<div class="card__icon">
-								<i
-									:class="`fab fa-${
-										platform.platform.toString() == 'Chromium'
-											? 'chrome'
-											: platform.platform.toString().toLowerCase()
-									}`"
-								></i>
-							</div>
-							<div class="card__content">
-								<h3 v-t="platform.platform"></h3>
-								<p v-t="tab" />
-							</div>
+					<div class="dl-container__cards" v-else>
+						<div class="button-container">
+							<p v-t="'downloads.error.login'" />
+							<button
+								type="button"
+								class="button"
+								id="login"
+								@click="$router.push('/login')"
+							>
+								{{ $t("downloads.button.login") }}
+							</button>
 						</div>
 					</div>
 				</div>
-				<div class="dl-container__cards nobeta" v-else>
-					<h1 v-t="'downloads.error.noaccess.title'" />
-					<p
-						v-html="
-							linkpls($t('downloads.error.noaccess.description')).replace(
-								'{0}',
-								200 - betaUsers
-							)
-						"
-					/>
-				</div>
 			</div>
-			<div class="dl-container__cards" v-else>
-				<div class="button-container">
-					<p v-t="'downloads.error.login'" />
-					<button
-						type="button"
-						class="button"
-						id="login"
-						@click="$router.push('/login')"
-					>
-						Login
-					</button>
-				</div>
-			</div>
-		</div>
+		</transition>
 
 		<transition name="card-animation" mode="out-in">
 			<div v-if="isMobile" class="dl-container__showDownloads">
@@ -300,6 +307,28 @@
 				</span>
 			</div>
 		</transition>
+
+		<modal :classes="'modal'" width="400px" height="150px" name="warning">
+			<div class="title">{{ $t("downloads.warning.title") }}</div>
+			<div class="message">
+				<p>
+					{{
+						linkify(
+							$t(warning.messageKey),
+							"https://addons.opera.com/en/extensions/details/install-chrome-extensions/"
+						)
+					}}
+				</p>
+			</div>
+			<div class="buttons">
+				<button class="button btn cancel" @click="$modal.hide('warning')">
+					{{ $t("downloads.button.cancel") }}
+				</button>
+				<button class="button btn accept" @click="open('chrome', 'Extension')">
+					{{ $t("downloads.button.okay") }}
+				</button>
+			</div>
+		</modal>
 	</div>
 </template>
 
@@ -309,7 +338,66 @@
 	export default {
 		name: "Downloads",
 		auth: false,
-		async asyncData() {
+		async asyncData({ $auth }) {
+			let tab = null,
+				alpha = {
+					access: false,
+					app_links: [],
+					ext_links: []
+				},
+				beta = {
+					access: false,
+					app_links: [],
+					ext_links: []
+				},
+				cTab = {};
+
+			if ($auth.loggedIn) {
+				let { access } = (
+					await axios(`${process.env.apiBase}/alphaAccess/${$auth.user.id}`)
+				).data;
+				alpha.access = access;
+
+				if (access) {
+					beta.access = true;
+
+					let { app_links, ext_links } = (
+						await axios.post(
+							`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/alpha`
+						)
+					).data;
+
+					alpha.app_links = app_links;
+					alpha.ext_links = ext_links;
+
+					cTab = alpha;
+					tab = "alpha";
+
+					let { data } = await axios.post(
+						`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/beta`
+					);
+					beta.app_links = data.app_links;
+					beta.ext_links = data.ext_links;
+				} else {
+					let { access } = (
+						await axios(`${process.env.apiBase}/betaAccess/${$auth.user.id}`)
+					).data;
+					beta.access = access;
+
+					if (access) {
+						let { data } = await axios.post(
+							`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/beta`
+						);
+
+						beta.app_links = data.app_links;
+						beta.ext_links = data.ext_links;
+
+						cTab = this.beta;
+						tab = "beta";
+					}
+				}
+			}
+
 			const { extension, app, linux } = (
 				await axios(`${process.env.apiBase}/versions`)
 			).data;
@@ -318,6 +406,10 @@
 				extVersion: extension,
 				appVersion: app,
 				linuxVersion: linux,
+				cTab,
+				tab,
+				alpha,
+				beta,
 				betaUsers: (
 					await axios(`${process.env.apiBase}/credits`)
 				).data.filter(u => u.roles.includes("BETA")).length
@@ -325,19 +417,30 @@
 		},
 		data() {
 			return {
-				adBreak: false,
+				skipAds: false,
 				extVersion: null,
 				appVersion: null,
 				linuxVersion: null,
 				cardHover: false,
 				platforms: [],
-				browser: null,
-				windows_url: "https://dl.premid.app/PreMiD-installer.exe",
-				apple_url: "https://dl.premid.app/PreMiD-installer.app.zip",
-				linux_url: "",
-				chrome_url:
-					"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
-				firefox_url: "https://dl.premid.app/PreMiD.xpi",
+				isChrome: true,
+				browser: {
+					name: null,
+					key: null,
+					warning: false
+				},
+				warning: {
+					number: null,
+					messageKey: null
+				},
+				urls: {
+					windows: "https://dl.premid.app/PreMiD-installer.exe",
+					apple: "https://dl.premid.app/PreMiD-installer.app.zip",
+					linux: null,
+					chrome:
+						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
+					firefox: "https://dl.premid.app/PreMiD.xpi"
+				},
 				platform_order: ["windows", "apple", "linux"],
 				builds: {
 					windows: {
@@ -355,73 +458,8 @@
 					}
 				},
 				isMobile: false,
-				showDownloads: true,
-				tab: null,
-				alpha: {
-					access: false,
-					app_links: [],
-					ext_links: []
-				},
-				beta: {
-					access: false,
-					app_links: [],
-					ext_links: []
-				},
-				cTab: {}
+				showDownloads: true
 			};
-		},
-		beforeMount() {
-			if (this.$auth.loggedIn) {
-				axios(`${process.env.apiBase}/alphaAccess/${this.$auth.user.id}`).then(
-					response => {
-						this.alpha.access = response.data.access;
-
-						if (response.data.access) {
-							this.beta.access = true;
-
-							axios
-								.post(
-									`${process.env.apiBase}/downloads/${this.$auth.$storage._state["_token.discord"]}/alpha`
-								)
-								.then(response => {
-									console.log(response.data);
-									this.alpha.app_links = response.data.app_links;
-									this.alpha.ext_links = response.data.ext_links;
-
-									this.cTab = this.alpha;
-									this.tab = "alpha";
-								});
-
-							axios
-								.post(
-									`${process.env.apiBase}/downloads/${this.$auth.$storage._state["_token.discord"]}/beta`
-								)
-								.then(response => {
-									this.beta.app_links = response.data.app_links;
-									this.beta.ext_links = response.data.ext_links;
-								});
-						} else
-							axios(
-								`${process.env.apiBase}/betaAccess/${this.$auth.user.id}`
-							).then(response => {
-								this.beta.access = response.data.access;
-								if (response.data.access) {
-									axios
-										.post(
-											`${process.env.apiBase}/downloads/${this.$auth.$storage._state["_token.discord"]}/beta`
-										)
-										.then(response => {
-											this.beta.app_links = response.data.app_links;
-											this.beta.ext_links = response.data.ext_links;
-
-											this.cTab = this.beta;
-											this.tab = "beta";
-										});
-								}
-							});
-					}
-				);
-			}
 		},
 		mounted() {
 			let ua = "";
@@ -432,13 +470,51 @@
 
 			//* Browser detection.
 			// Thanks to https://stackoverflow.com/a/9851769 for providing code.
-			if (
+			this.isChrome =
 				!!window.chrome &&
-				(!!window.chrome.webstore || !!window.chrome.runtime)
+				(!!window.chrome.webstore || !!window.chrome.runtime);
+
+			if (this.isChrome && ua.indexOf("Edg") != -1) {
+				this.browser = {
+					name: "Edge",
+					key: "chrome",
+					icon: "edge",
+					warning: 1
+				};
+			} else if (this.isChrome && ua.indexOf("Vivaldi") != -1) {
+				this.browser = {
+					name: "Vivaldi",
+					key: "chrome",
+					icon: "chrome", // No icons for Vivaldi in the FA pack.
+					warning: false
+				};
+			} else if (
+				(!!window.opr && !!opr.addons) ||
+				!!window.opera ||
+				ua.indexOf(" OPR/") >= 0
 			) {
-				this.$data.browser = "chrome";
+				this.browser = {
+					name: "Opera",
+					key: "chrome",
+					icon: "opera",
+					warning: 2
+				};
 			} else if (typeof InstallTrigger !== "undefined") {
-				this.$data.browser = "firefox";
+				this.isChrome = false;
+
+				this.browser = {
+					name: "Firefox",
+					key: "firefox",
+					icon: null,
+					warning: false
+				};
+			} else {
+				this.browser = {
+					name: "Chrome",
+					key: "chrome",
+					icon: "chrome",
+					warning: false
+				};
 			}
 
 			let platform_temp = "linux";
@@ -496,25 +572,36 @@
 			},
 			highlight(elementPath) {
 				const element = document.querySelector(elementPath);
-
-				if (!element) return false;
-				console.log("HIGHLIGHT");
-
-				setTimeout(() => element.classList.add("highlight"));
-
-				setTimeout(() => element.classList.remove("highlight"), 1000);
+				if (element) {
+					setTimeout(() => element.classList.add("highlight"));
+					setTimeout(() => element.classList.remove("highlight"), 1000);
+				}
 			},
-			linkpls(pls) {
+			linkify(pls, customUrl) {
 				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
 				return pls.match(/(\*\*.*?\*\*)/g).map(ch => {
 					return pls.replace(
 						ch,
-						`<a class="text-highlight" href="/beta">${ch.slice(
-							2,
-							ch.length - 2
-						)}</a>`
+						`<a class="text-highlight" href="${
+							customUrl || "/beta"
+						}">${ch.slice(2, ch.length - 2)}</a>`
 					);
 				})[0];
+			},
+			warn(number) {
+				switch (number) {
+					case 1:
+						this.warning.messageKey = "downloads.warning.message.edge";
+						break;
+					case 2:
+						this.warning.messageKey = "downloads.warning.message.opera";
+						break;
+					default:
+						this.warning.messageKey = "Unknown error.";
+						break;
+				}
+
+				this.$modal.show("warning");
 			},
 			open(platform, type = "") {
 				if (platform == "linux") {
@@ -525,7 +612,7 @@
 				}
 
 				this.$store.commit("download/setDL", { platform, type });
-				this.$nuxt.setLayout("adBreak");
+				this.$nuxt.setLayout("skipAds");
 			},
 			openInNewTab(url) {
 				window.open(url, "_blank");

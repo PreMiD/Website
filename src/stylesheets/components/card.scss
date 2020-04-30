@@ -67,6 +67,37 @@
 	}
 }
 
+/* Modal */
+.vm--overlay {
+	background-color: black !important;
+	opacity: 0.85 !important;
+}
+
+.modal {
+	background-color: #111218 !important;
+	padding: 1em;
+
+	.title {
+		text-transform: uppercase;
+	}
+
+	.buttons {
+		display: flex;
+		position: absolute;
+		right: 0;
+
+		.btn {
+			padding: 0.3rem 1rem;
+			border-radius: 0.5em;
+			font-size: 14px;
+
+			&.cancel {
+				background: #f39c12;
+			}
+		}
+	}
+}
+
 .store-card {
 	width: 380px;
 	height: 150px;
