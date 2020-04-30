@@ -49,7 +49,7 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script>
 	import Navigation from "../components/Navigation";
 	import axios from "axios";
 
