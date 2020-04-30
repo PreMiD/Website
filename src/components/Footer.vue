@@ -39,11 +39,14 @@
 					{{ $t("footer.socials.heading") }}
 				</p>
 				<div class="section__promo">
-					<a href="https://twitter.com/PreMiDApp" class="socials">
+					<a href="https://twitter.com/PreMiDApp" target="_blank" class="socials">
 						<i class="fab fa-twitter"></i> Twitter
 					</a>
-					<a href="https://facebook.com/PreMiDApp" class="socials">
+					<a href="https://facebook.com/PreMiDApp" target="_blank" class="socials">
 						<i class="fab fa-facebook-square"></i> Facebook
+					</a>
+					<a href="https://instagram.com/PreMiDapp" target="_blank" class="socials">
+						<i class="fab fa-instagram"></i> Instagram
 					</a>
 				</div>
 			</div>
