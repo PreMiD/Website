@@ -1,5 +1,5 @@
 <template>
-	<div id="footer">
+	<div class="footer">
 		<div class="footer-grid">
 			<div class="grid__section">
 				<p class="section__title" v-text="$t(`footer.usercount.heading`)"></p>
@@ -34,7 +34,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="grid__section">
+			<div class="grid__section friendly">
 				<p class="section__title">
 					{{ $t("footer.followUs.heading") }}
 				</p>
@@ -80,7 +80,7 @@
 					<a href="/jobs" v-text="$t(`footer.supportus.jobs`)"></a>
 				</div>
 			</div>
-			<div class="grid__section">
+			<div class="grid__section friendly">
 				<p class="section__title" v-text="$t(`footer.help.information`)"></p>
 				<div>
 					<a href="https://github.com/PreMiD/">GitHub</a>
@@ -135,6 +135,137 @@
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+	@import "@/stylesheets/variables.scss";
+
+	.footer {
+		flex: 0 0 auto;
+		background: transparent;
+		color: white;
+		padding: 20px;
+		padding-top: 3.5em;
+
+		.socials {
+			i {
+				width: 1em;
+			}
+		}
+
+		.partner-logo {
+			display: inline-block;
+
+			img {
+				width: 42px;
+				margin: 2px;
+
+				vertical-align: middle;
+
+				transition: all 0.2s ease;
+
+				filter: grayscale(100%);
+				opacity: 0.5;
+			}
+
+			&:hover {
+				img {
+					filter: grayscale(0%);
+					opacity: 1;
+				}
+			}
+		}
+
+		.partner-more {
+			font-size: small;
+			vertical-align: middle;
+			transition: all 0.2s ease;
+			opacity: 0.5;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
+
+	.footer-copyright {
+		p {
+			margin: 3px;
+		}
+
+		text-align: center;
+		font-size: 14px;
+		font-weight: bold;
+		color: lighten($background-secondary, 10%);
+
+		.footer__language-switcher {
+			color: #99aab5;
+			margin-top: 2em;
+		}
+	}
+
+	.footer-grid {
+		max-width: 1600px;
+		margin: 0 auto;
+
+		display: flex;
+		position: relative;
+		justify-content: space-between;
+		align-content: center;
+
+		.grid__section {
+			margin: 1em;
+			.section__title {
+				font-weight: bold;
+				margin: 7px auto;
+				font-size: 18px;
+				color: white;
+			}
+
+			div {
+				p {
+					color: lighten($background-secondary, 30%);
+					margin: 7px auto;
+					font-weight: 600;
+				}
+
+				a:not(.partner-logo) {
+					font-weight: 600;
+					display: block;
+					width: fit-content;
+					margin: 2px 0;
+
+					&:not(.button) {
+						color: lighten($background-secondary, 30%);
+						transition: color 0.2s ease;
+
+						&:hover {
+							color: lighten($background-primary, 40%);
+							transition: color 0s ease;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@media only screen and (max-width: 600px) {
+		#footer .grid__section:first-child {
+			margin: auto;
+		}
+
+		.footer-copyright {
+			margin-top: 24px;
+		}
+	}
+
+	@media only screen and (max-width: 600px) {
+		.friendly {
+			text-align: right;
+			text-align: -webkit-right;
+		}
+	}
+</style>
 
 <script>
 	import axios from "axios";

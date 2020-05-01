@@ -4,19 +4,21 @@
 			<div class="fullpresence-container">
 				<div class="fullpresence__header">
 					<div class="header__title">
-						<h1 class="presence-name">
-							{{ presence.metadata.service }}
+						<div class="section">
+							<h1 class="presence-name">
+								{{ presence.metadata.service }}
+							</h1>
+
 							<span
 								v-if="partner"
 								class="fa-stack"
 								v-tippy="{
 									content: $t('store.cards.partner')
 								}"
-								style="font-size:1rem;text-align:center;cursor:pointer;"
 								@click="$router.push('/partners')"
 							>
 								<i
-									style="color:white;font-size:24px;vertical-align:sub;"
+									style="color: white; font-size: 24px; vertical-align: sub;"
 									class="fa-gem fa-inverse fas"
 								></i>
 							</span>
@@ -26,7 +28,6 @@
 								v-tippy="{
 									content: $t('store.cards.popular')
 								}"
-								style="font-size:1rem;"
 							>
 								<i class="fa-circle fa-stack-2x fas"></i>
 								<i
@@ -34,20 +35,21 @@
 									class="fa-fire-alt fa-inverse fa-stack-1x fas"
 								></i>
 							</span>
-						</h1>
+						</div>
+
 						<div class="fullpresence__overlay">
 							<div
 								class="fullpresence__gradient"
-								:style="
-									`background: linear-gradient(155deg, ${presence.metadata.color}, transparent, ${presenceGradientColor}), url(${presence.metadata.thumbnail}) no-repeat center`
-								"
+								:style="`background: linear-gradient(155deg, ${presence.metadata.color}, transparent, ${presenceGradientColor}), url(${presence.metadata.thumbnail}) no-repeat center`"
 							></div>
 						</div>
 					</div>
 					<div class="header__buttons">
 						<button
 							v-if="
-								!isInstalled && this.$store.state.extension.extensionInstalled && presence.metadata.button !== false
+								!isInstalled &&
+								this.$store.state.extension.extensionInstalled &&
+								presence.metadata.button !== false
 							"
 							class="button button--"
 							@click="sendPresence(presence.metadata.service)"
@@ -59,7 +61,9 @@
 						</button>
 						<button
 							v-if="
-								isInstalled && this.$store.state.extension.extensionInstalled && presence.metadata.button !== false
+								isInstalled &&
+								this.$store.state.extension.extensionInstalled &&
+								presence.metadata.button !== false
 							"
 							class="button button--black"
 							@click="removePresence(presence.metadata.service)"
@@ -71,11 +75,9 @@
 						</button>
 						<a
 							class="button button--black"
-							:href="
-								`https://github.com/PreMiD/Presences/tree/master/${encodeURIComponent(
-									$route.params.presenceName
-								)}`
-							"
+							:href="`https://github.com/PreMiD/Presences/tree/master/${encodeURIComponent(
+								$route.params.presenceName
+							)}`"
 							target="_blank"
 						>
 							<span class="icon">
@@ -96,11 +98,9 @@
 								"
 						/></a>
 					</div>
-					<hr/>
+					<hr />
 					<div
-						v-if="
-							presence.metadata.button === false
-						"
+						v-if="presence.metadata.button === false"
 						class="header__warning"
 					>
 						{{ $t("store.card.presence.included") }}
@@ -145,14 +145,14 @@
 							<li
 								v-if="
 									presence.metadata.contributors &&
-										typeof presence.metadata.contributors === 'object'
+									typeof presence.metadata.contributors === 'object'
 								"
 							>
 								<p>
 									<i class="fa-user-tie fas"></i>
 									{{ $t("presence.sections.information.contributors") }}:
 									<nuxt-link
-										v-for="(contributor, index) in presence.metadata.contributors"
+										v-for="contributor in presence.metadata.contributors"
 										:key="contributor.id"
 										class="author-name"
 										:to="`/users/${contributor.id}`"
@@ -160,18 +160,18 @@
 									>
 										{{
 											contributor.name +
-												`${
-													presence.metadata.contributors.length === index + 1
-														? ""
-														: ", "
-												}`
+											`${
+												presence.metadata.contributors.length === index + 1
+													? ""
+													: ", "
+											}`
 										}}
 									</nuxt-link>
 								</p>
 							</li>
 							<li v-if="presence.metadata.version">
 								<p>
-									<i style="margin-right:2px;" class="fa-code-branch fas"></i>
+									<i style="margin-right: 2px;" class="fa-code-branch fas"></i>
 									{{ $t("presence.sections.information.version") }}:
 									<span class="presence-version">
 										<b>{{ presence.metadata.version }}</b>
@@ -182,7 +182,7 @@
 								<p>
 									<i
 										class="fa-cart-arrow-down fas"
-										style="margin-left:-4px;"
+										style="margin-left: -4px;"
 									></i>
 									{{ $t("presence.sections.information.users") }}:
 									<span class="presence-version">
@@ -200,9 +200,7 @@
 										v-for="tag of presence.metadata.tags"
 										:key="tag"
 										:to="`/store?q=${encodeURIComponent('tag:') + tag}`"
-										:style="
-											`background: ${presence.metadata.color}; color: ${presenceTextColor};`
-										"
+										:style="`background: ${presence.metadata.color}; color: ${presenceTextColor};`"
 										class="label label_tag"
 										>{{ tag }}</nuxt-link
 									>
@@ -344,16 +342,16 @@
 		created() {
 			if (!this.$data.presence.error) {
 				this.isPresenceInstalled(this.$data.presence.metadata.service).then(
-					responce => {
-						if (responce) this.$data.isInstalled = true;
+					response => {
+						if (response) this.$data.isInstalled = true;
 					}
 				);
 			}
 		},
 		updated() {
 			this.isPresenceInstalled(this.$data.presence.metadata.service).then(
-				responce => {
-					if (responce) this.$data.isInstalled = true;
+				response => {
+					if (response) this.$data.isInstalled = true;
 				}
 			);
 		},

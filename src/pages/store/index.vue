@@ -100,6 +100,17 @@
 					</label>
 				</div>
 
+				<div
+					class="checkbox-switcher"
+					v-if="$store.state.extension.extensionInstalled"
+				>
+					<label>
+						<input type="checkbox" v-model="showAdded" />
+						<span ref="checkbox" class="checkbox-container"></span>
+						<p>{{ $t("store.filters.added") }}</p>
+					</label>
+				</div>
+
 				<div class="checkbox-switcher">
 					<label>
 						<input type="checkbox" v-model="nsfw" />
@@ -207,7 +218,7 @@
 			<span slot="breakViewContent"></span>
 		</paginate>
 
-		<adsbygoogle ad-slot="5201967746" style="text-align: center;" />
+		<adsense ad-slot="5201967746" style="text-align: center;" />
 	</section>
 </template>
 
@@ -265,6 +276,7 @@
 				addedPresences: [],
 				nsfw: false,
 				mostUsed: true,
+				showAdded: true,
 				filterLiked: false,
 				presenceSearch: "",
 				presencesPerPage: 12,
@@ -281,9 +293,9 @@
 				return this.$route.query.category ? this.$route.query.category : "all";
 			},
 			filteredPresences() {
-				return this.$data.presences
+				return this.presences
 					.filter(presence => {
-						if (this.$data.filters.url.enabled == true)
+						if (this.filters.url.enabled == true)
 							return (
 								(Array.isArray(presence.url) &&
 									presence.url.filter(url =>
@@ -296,14 +308,14 @@
 										.toLowerCase()
 										.includes(this.presenceSearch.toLowerCase()))
 							);
-						else if (this.$data.filters.author.enabled == true)
+						else if (this.filters.author.enabled == true)
 							return (
 								presence.author.name
 									.toLowerCase()
 									.includes(this.presenceSearch.toLowerCase()) ||
 								presence.author.id.includes(this.presenceSearch)
 							);
-						else if (this.$data.filters.tag.enabled == true)
+						else if (this.filters.tag.enabled == true)
 							return Array.isArray(presence.tags)
 								? presence.tags.filter(tag =>
 										tag
@@ -311,6 +323,8 @@
 											.includes(this.presenceSearch.toLowerCase())
 								  ).length > 0
 								: false;
+						else if (!this.showAdded)
+							return !this.addedPresences.includes(presence.service);
 						else
 							return (
 								presence.service
@@ -416,9 +430,12 @@
 			}
 
 			// For search suggestions removal
-			this.$el.addEventListener("click", evt => {
+			this.listener = this.$el.addEventListener("click", evt => {
 				evt.target.className != "searchbar" ? (this.typing = false) : false;
 			});
+		},
+		beforeDestroy() {
+			this.$el.removeEventListener("click", this.listener);
 		},
 		methods: {
 			setSearchStyle() {
