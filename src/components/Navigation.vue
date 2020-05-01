@@ -123,6 +123,7 @@
 			align-items: center;
 
 			img {
+				cursor: pointer;
 				height: 40px;
 			}
 

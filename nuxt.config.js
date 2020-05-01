@@ -8,6 +8,7 @@ module.exports = {
 	plugins: [
 		"~/plugins/I18n.js",
 		"~/plugins/Languages.js",
+		{ src: "~/plugins/Adsense.js", ssr: false },
 		{ src: "~/plugins/Anime.js", ssr: false },
 		{ src: "~/plugins/Tippy.js", ssr: false },
 		{ src: "~/plugins/Noty.js", ssr: false },
@@ -28,14 +29,9 @@ module.exports = {
 			}
 		],
 		"nuxt-helmet",
-		"@nuxtjs/google-adsense",
 		"@nuxtjs/axios",
 		"@nuxtjs/auth"
 	],
-	"google-adsense": {
-		id: "ca-pub-1575460061917202",
-		tag: "adsense"
-	},
 	helmet: {
 		frameguard: false,
 		xssFilter: true,

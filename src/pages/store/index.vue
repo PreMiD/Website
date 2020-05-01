@@ -508,6 +508,8 @@
 	@import "../../stylesheets/variables.scss";
 
 	.store-menu__searchbar-container {
+		position: relative;
+
 		span {
 			position: absolute;
 			margin: 2px;
@@ -520,15 +522,14 @@
 		.searchSuggestions {
 			font-size: small;
 			z-index: 999;
-			min-height: 60px;
 			position: absolute;
-			margin: 2.5em 0;
 			background-color: #191b24;
-			max-width: 85%;
 			border-bottom-right-radius: 4px;
 			border-bottom-left-radius: 4px;
-			width: 100%;
 			box-shadow: 0px 1px teal;
+			width: -webkit-fill-available;
+			width: -moz-available;
+			margin-top: 2.5em;
 
 			span {
 				position: unset;
@@ -572,13 +573,5 @@
 		position: absolute;
 		margin-left: 0.6rem;
 		color: #74787c;
-	}
-
-	@media only screen and (max-width: 600px) {
-		.store-menu__searchbar-container {
-			.searchSuggestions {
-				max-width: 77vw;
-			}
-		}
 	}
 </style>
