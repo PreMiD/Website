@@ -493,6 +493,7 @@
 			font-size: 52px;
 			letter-spacing: -1px;
 			background: linear-gradient(30deg, $accent-primary, #b3aeff);
+			background-clip: text;
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 			text-shadow: none;
@@ -530,6 +531,7 @@
 				font-size: 3.8em;
 				letter-spacing: -3px;
 				background: linear-gradient(30deg, $accent-primary, #b3aeff);
+				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 				text-shadow: none;
@@ -596,6 +598,7 @@
 
 	color: #b3aeff;
 	background: linear-gradient(30deg, $accent-primary, #b3aeff);
+	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	text-transform: uppercase;
@@ -653,15 +656,15 @@
 	height: 100%;
 	position: fixed;
 	background: rgba(0, 0, 0, 0.85);
-	z-index: 100;
+	z-index: 999;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
 	a.languages-container__close {
 		position: absolute;
-		top: 10px;
-		right: 10px;
+		top: 0.5em;
+		right: 1em;
 		font-size: 2rem;
 		color: rgba(255, 255, 255, 0.5);
 		transition: all 0.2s ease;
@@ -676,11 +679,9 @@
 		max-height: 100%;
 		max-width: 100%;
 		position: relative;
-		z-index: 3;
-		text-align: center;
+		z-index: 999;
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
 		max-width: 800px;
 		margin: 0 auto;
 
@@ -1101,6 +1102,7 @@
 		font-size: 3.8em;
 		letter-spacing: -3px;
 		background: linear-gradient(30deg, $accent-primary, #b3aeff);
+		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		text-shadow: none;
@@ -1128,12 +1130,13 @@
 	display: table;
 
 	.modal-wrapper {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
 		display: flex;
-		vertical-align: middle;
 		overflow: hidden;
 		justify-content: center;
-		height: 100%;
-		align-items: center;
 	}
 
 	.limage {
@@ -1145,8 +1148,8 @@
 		text-align: center;
 		justify-content: center;
 		background-color: #151518;
-		width: 300px;
-		height: 550px;
+		width: 15vw;
+		height: 80vh;
 		padding: 20px 30px;
 
 		img {
@@ -1185,13 +1188,12 @@
 	}
 
 	.modal-container {
-		width: 500px;
-		height: 550px;
+		width: 35vw;
+		height: 80vh;
 		padding: 20px 30px;
 		background-color: #23272a;
 		border-radius: 2px;
 		box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
-		transition: all 0.3s ease;
 		position: relative;
 
 		.error {

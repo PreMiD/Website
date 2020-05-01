@@ -89,6 +89,11 @@
 			}
 
 			a:not(.partner-logo) {
+				font-weight: 600;
+				display: block;
+				width: fit-content;
+				margin: 2px 0;
+
 				&:not(.button) {
 					color: lighten($background-secondary, 30%);
 					transition: color 0.2s ease;
@@ -98,10 +103,6 @@
 						transition: color 0s ease;
 					}
 				}
-
-				font-weight: 600;
-				display: block;
-				margin: 2px 0;
 			}
 		}
 	}

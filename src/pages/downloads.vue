@@ -308,7 +308,13 @@
 			</div>
 		</transition>
 
-		<modal :classes="'modal'" width="400px" height="auto" name="warning">
+		<modal
+			v-if="modalAvailable"
+			:classes="'modal'"
+			width="400px"
+			height="auto"
+			name="warning"
+		>
 			<div class="title">{{ $t("downloads.warning.title") }}</div>
 			<div class="message">
 				<p
@@ -427,6 +433,7 @@
 				appVersion: null,
 				linuxVersion: null,
 				cardHover: false,
+				modalAvailable: false,
 				platforms: [],
 				isChrome: true,
 				browser: {
@@ -459,7 +466,7 @@
 					linux: {
 						os_name: "Linux",
 						warning: true,
-						has_installer: true // So no tippy warning.
+						has_installer: true
 					}
 				},
 				isMobile: false,
@@ -554,6 +561,8 @@
 				);
 			}
 
+			setTimeout(() => (this.modalAvailable = true));
+
 			this.$anime({
 				targets: "#bv",
 				scale: [1, 1.1],
@@ -577,6 +586,7 @@
 			},
 			highlight(elementPath) {
 				const element = document.querySelector(elementPath);
+
 				if (element) {
 					setTimeout(() => element.classList.add("highlight"));
 					setTimeout(() => element.classList.remove("highlight"), 1000);
