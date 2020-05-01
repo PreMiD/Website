@@ -339,6 +339,10 @@
 					);
 			}
 		},
+		beforeDestroy() {
+			clearInterval(this.interval);
+			if (this.listener) document.removeEventListener("click", this.listener);
+		},
 		mounted() {
 			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator?.userAgent
@@ -356,10 +360,6 @@
 
 					if (this.countDownValue === 0) clearInterval(this.interval);
 				}, 1 * 1000);
-		},
-		beforeDestroy() {
-			clearInterval(this.interval);
-			if (this.listener) document.removeEventListener("click", this.listener);
 		}
 	};
 </script>
