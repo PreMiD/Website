@@ -774,7 +774,7 @@
 					font-size: 1rem;
 					text-align: center;
 					cursor: pointer;
-					padding: 1em 0.5em;
+					margin: 1em 0.5em;
 				}
 			}
 
@@ -1261,6 +1261,8 @@
 			display: block;
 			border-radius: 4px;
 			width: 100%;
+			width: -webkit-fill-available;
+			width: -moz-available;
 			margin-bottom: 0.75em;
 			padding: 0.75em;
 			box-sizing: border-box;
