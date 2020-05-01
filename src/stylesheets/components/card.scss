@@ -94,7 +94,20 @@
 			font-size: 14px;
 
 			&.cancel {
-				background: #f39c12;
+				background: rgba(36, 39, 45, 0.85);
+
+				&:hover {
+					background: rgba(36, 39, 45, 1);
+				}
+			}
+
+			&.accept {
+				background: rgba(114, 137, 218, 0.85);
+				margin-right: 0;
+
+				&:hover {
+					background: rgba(114, 137, 218, 1);
+				}
 			}
 		}
 	}

@@ -8,7 +8,7 @@ module.exports = {
 	plugins: [
 		"~/plugins/I18n.js",
 		"~/plugins/Languages.js",
-		{ src: "~/plugins/vue-anime.js", ssr: false },
+		{ src: "~/plugins/Anime.js", ssr: false },
 		{ src: "~/plugins/Tippy.js", ssr: false },
 		{ src: "~/plugins/Noty.js", ssr: false },
 		{ src: "~/plugins/Pagination.js", ssr: false },
@@ -158,7 +158,6 @@ module.exports = {
 	css: ["~stylesheets/root.scss"],
 	build: {
 		cache: true,
-		vendor: ["axios"],
 		ssr: true,
 		friendlyErrors: true,
 		hotMiddleware: {

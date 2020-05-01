@@ -153,11 +153,11 @@
 											</div>
 											<div class="game__time text-row">
 												{{
-													presence.smallImage != "search"
-														? $t(`home.examples.timestamp`, {
+													presence.elapsed
+														? $t(`home.examples.timestamp2`, {
 																0: presence.presence_time
 														  })
-														: $t(`home.examples.timestamp2`, {
+														: $t(`home.examples.timestamp`, {
 																0: presence.presence_time
 														  })
 												}}
@@ -325,7 +325,8 @@
 						serviceLogo: premidLogo,
 						smallImage: "search",
 						data: ["Store"],
-						presence_time: "00:12"
+						presence_time: "00:12",
+						elapsed: true
 					},
 					{
 						profile: {

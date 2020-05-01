@@ -26,7 +26,7 @@
 					</transition>
 				</div>
 
-				<div v-if="!noLinks" class="links">
+				<div v-if="!$props.noLinks" class="links">
 					<nuxt-link
 						v-for="category of categories"
 						:key="category.route"
@@ -135,8 +135,8 @@
 				border-radius: 100%;
 				margin-left: 0.6em;
 				animation: pulseWarn 2s infinite;
-				background-color: #ffff00;
-				color: black;
+				background-color: #f1c40f;
+				color: rgba(255, 255, 255, 0.85);
 				cursor: pointer;
 				justify-content: center;
 			}

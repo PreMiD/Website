@@ -1,16 +1,13 @@
 <template>
 	<div>
-		<div class="languages-container">
+		<div class="languages-container" @click="closeSwitcher">
 			<div class="languages-list">
 				<button
 					v-for="(lang, i) in $root.$data.i18nLanguageList"
 					:key="`Lang${i}`"
 					:class="{ active: getCurrentLanguage() === lang }"
 					class="languages-list__item"
-					@click="
-						setLanguage(lang);
-						closeSwitcher();
-					"
+					@click="setLanguage(lang)"
 				>
 					{{ $t(`header.language`, lang) }}
 				</button>
@@ -29,6 +26,14 @@
 			closeSwitcher() {
 				this.$parent.$data.switcherVisible = false;
 			}
+		},
+		beforeDestroy() {
+			window.removeEventListener("keydown", this.listener);
+		},
+		mounted() {
+			this.listener = window.addEventListener("keydown", ev => {
+				if (ev.key.toLowerCase() == "escape") this.closeSwitcher();
+			});
 		}
 	};
 </script>

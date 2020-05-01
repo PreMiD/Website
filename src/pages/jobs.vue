@@ -1,9 +1,10 @@
 <template>
-	<div id="jobsWrapper">
-		<div id="jobsContainer">
-			<div id="heading" class="pattern">
+	<div class="jobsWrapper">
+		<div class="container">
+			<div class="heading pattern">
 				<h1 v-text="$t('jobs.header.title')" />
 				<p v-text="$t('jobs.header.description')" />
+
 				<video
 					class="job-video"
 					src="@/assets/videos/jobs-heading.mp4"
@@ -27,19 +28,32 @@
 					</svg>
 				</div>
 			</div>
-			<div id="openings">
+			<div class="openings">
 				<h1 v-text="$t('jobs.openings.title')" />
+
 				<div class="jobs">
-					<Job
+					<div
+						class="job"
 						v-for="job in jobs.filter(j => j.available)"
 						:key="job.jobName"
-						:job="job"
-						@click="applyModal(job)"
-					/>
+					>
+						<i :class="job.jobIcon" />
+						<h1 v-text="job.jobName" />
+						<div class="button-container">
+							<button
+								v-t="'partners.apply.button'"
+								type="button"
+								class="button"
+								@click="applyModal(job)"
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
+
 			<div class="benefits">
 				<h1 v-text="$t('jobs.benefits.title')" />
+
 				<Benefit
 					v-for="benefit in benefits"
 					:key="benefit.title"
@@ -49,6 +63,7 @@
 				/>
 			</div>
 		</div>
+
 		<transition name="slide-down" mode="in-out">
 			<JobApply
 				v-if="showModal"
@@ -77,23 +92,21 @@
 		box-shadow: 3px 5px 5px #202226;
 	}
 
-	#jobsWrapper {
-		#jobsContainer {
+	.jobsWrapper {
+		.container {
 			h1 {
 				text-align: center;
 				font-size: 2.2em;
-
+				padding-bottom: 0.25em;
 				color: white;
-
 				margin: 0;
 			}
 
-			#heading {
+			.heading {
 				position: relative;
 				z-index: 1;
 				overflow: hidden;
 				padding: 25px 0 150px;
-
 				display: flex;
 				flex-direction: column;
 				justify-content: space-around;
@@ -102,20 +115,18 @@
 
 				h1 {
 					text-transform: uppercase;
-					font-size: 3.5em;
 					color: #7289da;
 					margin: 0;
 				}
 
 				p {
-					font-size: 1.2em;
 					color: white;
 					margin: 0;
 					margin-bottom: 2em;
 				}
 			}
 
-			#openings {
+			.openings {
 				margin-bottom: 2em;
 
 				.jobs {
@@ -123,10 +134,9 @@
 					justify-content: center;
 
 					.job {
-						transition: 0.15s transform ease-out;
-
-						width: 350px;
-						height: 175px;
+						transition: all 0.15s ease-out;
+						width: 200px;
+						position: relative;
 						background: #23272a;
 						border-radius: 5px;
 						padding: 1em;
@@ -137,23 +147,31 @@
 						margin: 1em;
 
 						&:hover {
-							transform: translateY(-10px);
+							transform: translateY(-5px);
+							box-shadow: 0 2.5px 20px -10px rgba(122, 144, 220, 0.7);
 						}
 
 						i {
-							font-size: 64px;
+							position: absolute;
+							left: 0;
+							top: 0;
+							padding: 1.25em 1.5em;
 							color: #7289da;
-							margin-bottom: 0.25em;
 						}
 
 						h1 {
-							color: white;
-							font-size: 1.75em;
+							color: #ffffff;
+							font-size: large;
+							margin-left: 10px;
 						}
 
-						.button {
-							font-size: 0.9em;
-							padding: 0.5rem 2.3rem;
+						.button-container {
+							padding-top: 0.5em;
+
+							.button {
+								font-size: 1em;
+								padding: 0.5rem 1rem;
+							}
 						}
 					}
 				}
@@ -199,7 +217,6 @@
 
 <script>
 	import axios from "axios";
-	import Job from "~/components/Job";
 	import Benefit from "~/components/Benefit";
 	import JobApply from "~/components/JobApply";
 	import JoinGuild from "~/components/JoinGuild";
@@ -207,7 +224,6 @@
 	export default {
 		name: "Jobs",
 		components: {
-			Job,
 			Benefit,
 			JobApply,
 			JoinGuild
@@ -240,7 +256,7 @@
 			applyModal(job) {
 				this.modalJob = job;
 				this.$auth.loggedIn || this.$router.push("/login");
-				if(this.discordUsers.indexOf(this.$auth.user.id) == -1) {
+				if (this.discordUsers.indexOf(this.$auth.user.id) == -1) {
 					this.showJoinModal = true;
 				} else {
 					this.showModal = true;
