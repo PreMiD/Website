@@ -429,6 +429,8 @@
 				this.searchHandle(null, false);
 			}
 
+			this.addedPresences = this.$store.state.presences.addedPresences;
+
 			// For search suggestions removal
 			this.listener = this.$el.addEventListener("click", evt => {
 				evt.target.className != "searchbar" ? (this.typing = false) : false;
