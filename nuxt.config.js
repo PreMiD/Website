@@ -27,12 +27,19 @@ module.exports = {
 				}
 			}
 		],
+		"nuxt-helmet",
 		"@nuxtjs/google-adsense",
 		"@nuxtjs/axios",
 		"@nuxtjs/auth"
 	],
 	"google-adsense": {
-		id: "ca-pub-1575460061917202"
+		id: "ca-pub-1575460061917202",
+		tag: "adsense"
+	},
+	helmet: {
+		frameguard: false,
+		xssFilter: true,
+		hsts: true
 	},
 	auth: {
 		redirect: {
@@ -140,17 +147,9 @@ module.exports = {
 			],
 			script: [
 				{
-					"data-ad-client": "ca-pub-1575460061917202",
-					src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
-					async: true
-				},
-				{
 					hid: "stripe",
 					src: "https://t8yhzkqt8q6g.statuspage.io/embed/script.js",
 					defer: true
-				},
-				{
-					src: "/assets/fblock.js"
 				}
 			]
 		};
