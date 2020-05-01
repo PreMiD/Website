@@ -240,9 +240,8 @@
 
 <script>
 	import PresenceMixin from "~/components/mixins/Presence";
-	import axios from "axios";
-
 	import tinycolor from "tinycolor2";
+	import axios from "axios";
 
 	export default {
 		name: "PresencePage",
