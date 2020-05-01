@@ -152,11 +152,10 @@
 									<i class="fa-user-tie fas"></i>
 									{{ $t("presence.sections.information.contributors") }}:
 									<nuxt-link
-										v-for="contributor in presence.metadata.contributors"
+										v-for="(contributor, index) in presence.metadata.contributors"
 										:key="contributor.id"
 										class="author-name"
 										:to="`/users/${contributor.id}`"
-										:disabled="true"
 									>
 										{{
 											contributor.name +

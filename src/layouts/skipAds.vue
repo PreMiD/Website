@@ -9,23 +9,21 @@
 
 		<div class="breakwrapper" v-if="!isMobile">
 			<div v-if="!adblock" class="space left">
-				<Adsense
+				<adsense
 					root-class="ad"
-					data-ad-client="ca-pub-1575460061917202"
-					data-ad-slot="3276628083"
-					data-ad-format="vertical"
+					ad-slot="3276628083"
+					:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
 				>
-				</Adsense>
+				</adsense>
 			</div>
 
 			<div v-if="!adblock" class="space right">
-				<Adsense
+				<adsense
 					root-class="ad"
-					data-ad-client="ca-pub-1575460061917202"
-					data-ad-slot="4398138065"
-					data-ad-format="vertical"
+					ad-slot="4398138065"
+					:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
 				>
-				</Adsense>
+				</adsense>
 			</div>
 		</div>
 
@@ -69,13 +67,12 @@
 		</div>
 
 		<div v-if="!adblock" class="space bottom">
-			<Adsense
+			<adsense
 				root-class="ad"
-				data-ad-client="ca-pub-1575460061917202"
-				data-ad-slot="9757727213"
-				data-ad-format="horizontal"
+				ad-slot="9757727213"
+				:ad-style="{ display: 'block', width: '80vw', height: '250px' }"
 			>
-			</Adsense>
+			</adsense>
 		</div>
 	</div>
 </template>
@@ -161,23 +158,11 @@
 	.space {
 		.left,
 		.right {
-			.ad {
-				display: block;
-				height: 85vh;
-				min-width: 250px;
-			}
-			
 			width: 250px;
 			height: 85vh;
 		}
 
 		&.bottom {
-			.ad {
-				display: block;
-				width: 80vw;
-				height: 250px;
-			}
-
 			text-align: -webkit-center;
 			width: 100%;
 			height: 250px;
