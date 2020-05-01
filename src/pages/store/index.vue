@@ -102,7 +102,7 @@
 
 				<div
 					class="checkbox-switcher"
-					v-if="true || $store.state.extension.extensionInstalled"
+					v-if="$store.state.extension.extensionInstalled"
 				>
 					<label>
 						<input type="checkbox" v-model="showAdded" />
