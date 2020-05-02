@@ -7,7 +7,7 @@
 			:countDownBtn="!adblock"
 		/>
 
-		<div class="breakwrapper" v-if="!isMobile">
+		<div class="adswrapper" v-if="!isMobile">
 			<div v-if="!adblock" class="space left">
 				<adsense
 					root-class="ad"
@@ -148,7 +148,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.breakwrapper {
+	.adswrapper {
 		justify-content: space-between;
 		display: flex;
 		padding: 0 1em;
@@ -164,6 +164,7 @@
 
 		&.bottom {
 			text-align: -webkit-center;
+			text-align: -moz-center;
 			width: 100%;
 			height: 250px;
 		}
@@ -230,7 +231,7 @@
 	}
 
 	@media only screen and (max-width: 600px) {
-		.breakwrapper {
+		.adswrapper {
 			display: unset;
 		}
 
