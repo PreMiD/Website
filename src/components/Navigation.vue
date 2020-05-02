@@ -3,12 +3,11 @@
 		<div>
 			<div class="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
 				<div class="logoWrapper" ref="headerLogo">
-					<nuxt-link
-						to="/"
-						tag="img"
-						:src="require('@/assets/images/logo_round.svg')"
-						data-not-lazy
-					/>
+					<nuxt-link to="/"
+						><img
+							:src="require('@/assets/images/logo_round.svg')"
+							data-not-lazy
+					/></nuxt-link>
 
 					<transition name="pop">
 						<div

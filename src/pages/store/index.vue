@@ -96,13 +96,18 @@
 					<label>
 						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{ $t("store.category.filters.mostUsed") }}</span>
+						<span class="title">{{
+							$t("store.category.filters.mostUsed")
+						}}</span>
 					</label>
 				</div>
 
 				<div
 					class="checkbox-switcher"
-					v-if="$store.state.extension.extensionInstalled"
+					v-if="
+						$store.state.extension.extensionInstalled &&
+						addedPresences.length > 0
+					"
 				>
 					<label>
 						<input type="checkbox" v-model="showAdded" />
@@ -115,7 +120,9 @@
 					<label>
 						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{ $t("store.category.filters.allowAdult") }}</span>
+						<span class="title">{{
+							$t("store.category.filters.allowAdult")
+						}}</span>
 					</label>
 				</div>
 
@@ -123,7 +130,9 @@
 					<label>
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{ $t("store.category.filters.likedOnly") }}</span>
+						<span class="title">{{
+							$t("store.category.filters.likedOnly")
+						}}</span>
 					</label>
 				</div>
 
@@ -412,9 +421,9 @@
 				});
 			}
 
-			this.$store.dispatch("presences/getPresences").then(res => {
-				this.addedPresences = res;
-			});
+			this.interval = setInterval(() => {
+				this.addedPresences = this.$store.state.presences.addedPresences;
+			}, 100)
 		},
 		mounted() {
 			const query =
@@ -439,6 +448,7 @@
 		},
 		beforeDestroy() {
 			this.$el.removeEventListener("click", this.listener);
+			if (this.interval) clearInterval(this.interval);
 		},
 		methods: {
 			setSearchStyle() {
