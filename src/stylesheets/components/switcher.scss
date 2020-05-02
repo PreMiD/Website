@@ -3,6 +3,11 @@
 
 	span {
 		transition: all 200ms cubic-bezier(0.26, 0.08, 0, 0.97);
+
+		&.title {
+			font-size: 0.9em;
+			margin-left: 0.5em;
+		}
 	}
 
 	label {

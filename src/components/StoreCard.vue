@@ -176,7 +176,7 @@
 					.toHexString();
 			},
 			presenceShadowColor() {
-				if (this.$data.cardHovered) {
+				if (this.cardHovered) {
 					return tinycolor(this.presence.color)
 						.setAlpha(0.3)
 						.toRgbString();
@@ -186,8 +186,8 @@
 			}
 		},
 		mounted() {
-			this.isPresenceInstalled(this.presence.service).then(responce => {
-				if (responce) this.$data.isInstalled = true;
+			this.isPresenceInstalled(this.presence.service).then(response => {
+				if (response) this.isInstalled = true;
 			});
 		},
 		methods: {

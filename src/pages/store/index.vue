@@ -96,7 +96,7 @@
 					<label>
 						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.category.filters.mostUsed") }}</p>
+						<span class="title">{{ $t("store.category.filters.mostUsed") }}</span>
 					</label>
 				</div>
 
@@ -107,7 +107,7 @@
 					<label>
 						<input type="checkbox" v-model="showAdded" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.filters.added") }}</p>
+						<span class="title">{{ $t("store.filters.added") }}</span>
 					</label>
 				</div>
 
@@ -115,7 +115,7 @@
 					<label>
 						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.category.filters.allowAdult") }}</p>
+						<span class="title">{{ $t("store.category.filters.allowAdult") }}</span>
 					</label>
 				</div>
 
@@ -123,7 +123,7 @@
 					<label>
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.category.filters.likedOnly") }}</p>
+						<span class="title">{{ $t("store.category.filters.likedOnly") }}</span>
 					</label>
 				</div>
 
@@ -224,8 +224,6 @@
 
 <script>
 	import StoreCard from "../../components/StoreCard.vue";
-	import Pagination from "../../components/Pagination.vue";
-
 	import axios from "axios";
 
 	export default {
@@ -234,6 +232,9 @@
 			StoreCard
 		},
 		auth: false,
+		head: {
+			title: "Store"
+		},
 		async asyncData() {
 			const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
 				presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
@@ -392,9 +393,7 @@
 			}
 		},
 		created() {
-			let self = this;
 			// Requesting presences data from our API and adding it into our Vue data.
-
 			this.$data.presences = this.$data.presences.sort((a, b) =>
 				a.name.localeCompare(b.name)
 			);
@@ -412,6 +411,10 @@
 					message: "No presences available."
 				});
 			}
+
+			this.$store.dispatch("presences/getPresences").then(res => {
+				this.addedPresences = res;
+			});
 		},
 		mounted() {
 			const query =
@@ -428,8 +431,6 @@
 
 				this.searchHandle(null, false);
 			}
-			
-			this.addedPresences = this.$store.state.presences.addedPresences;
 
 			// For search suggestions removal
 			this.listener = this.$el.addEventListener("click", evt => {
@@ -497,11 +498,6 @@
 					}
 				});
 			}
-		},
-		head() {
-			return {
-				title: "Store"
-			};
 		}
 	};
 </script>

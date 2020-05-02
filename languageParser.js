@@ -16,9 +16,9 @@ axios
 	.then(function(response) {
 		console.log(chalk.green(`${successEmoji} Language list fetched.`));
 		response.data.forEach(function(lang) {
-			axios.get(apiURL + "/website/" + lang).then(function(responce) {
-				if (responce.data["header.language"] !== "English" || lang == "en") {
-					var langJSON = JSON.stringify(responce.data);
+			axios.get(apiURL + "/website/" + lang).then(function(response) {
+				if (response.data["header.language"] !== "English" || lang == "en") {
+					var langJSON = JSON.stringify(response.data);
 					var savePath = __dirname + `/src/langs/${lang}.json`;
 
 					fs.writeFile(savePath, langJSON, function(err) {
