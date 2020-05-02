@@ -273,7 +273,7 @@
 		data() {
 			return {
 				presences: [],
-				addedPresences: [],
+				addedPresences: this.$store?.state?.presences?.addedPresences || [],
 				nsfw: false,
 				mostUsed: true,
 				showAdded: true,
@@ -428,8 +428,6 @@
 
 				this.searchHandle(null, false);
 			}
-
-			this.addedPresences = this.$store.state.presences.addedPresences;
 
 			// For search suggestions removal
 			this.listener = this.$el.addEventListener("click", evt => {
