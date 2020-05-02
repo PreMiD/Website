@@ -747,6 +747,8 @@
 		}
 
 		.header__title {
+			max-width: 50%;
+
 			h1 {
 				position: relative;
 				color: white;
@@ -758,6 +760,22 @@
 				user-select: none;
 				-moz-user-select: none;
 				-webkit-user-select: none;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.section {
+				display: flex;
+				color: white;
+				z-index: 3;
+
+				span {
+					font-size: 1rem;
+					text-align: center;
+					cursor: pointer;
+					margin: 1em 0.5em;
+				}
 			}
 
 			// .fullpresence__verified {
@@ -941,7 +959,7 @@
 
 	display: flex;
 
-	z-index: 999;
+	z-index: 9999;
 	background: $background-secondary;
 
 	text-align: center;
@@ -1243,6 +1261,8 @@
 			display: block;
 			border-radius: 4px;
 			width: 100%;
+			width: -webkit-fill-available;
+			width: -moz-available;
 			margin-bottom: 0.75em;
 			padding: 0.75em;
 			box-sizing: border-box;
@@ -1593,10 +1613,16 @@
 }
 
 @media only screen and (max-width: 600px) {
-	.fullpresence-container .fullpresence__content {
-		.content__description,
-		.content__info {
-			max-width: 70vw;
+	.fullpresence-container {
+		.fullpresence__header .header__title .section span {
+			padding: unset;
+		}
+
+		.fullpresence__content {
+			.content__description,
+			.content__info {
+				max-width: 70vw;
+			}
 		}
 	}
 
@@ -1641,38 +1667,6 @@
 		}
 		.benefit p {
 			padding: unset;
-		}
-	}
-
-	#jobsWrapper #jobsContainer {
-		#heading {
-			padding-bottom: 5em;
-
-			h1 {
-				font-size: 2em !important;
-				margin-bottom: 4px !important;
-			}
-		}
-
-		#openings {
-			h1 {
-				margin-top: 1em;
-				margin-bottom: 1.5em;
-			}
-
-			.jobs {
-				display: block !important;
-
-				.job {
-					h1 {
-						margin-top: 0;
-						margin-bottom: 0;
-					}
-
-					height: 200px;
-					max-width: 82.5vw;
-				}
-			}
 		}
 	}
 

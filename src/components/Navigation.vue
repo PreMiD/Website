@@ -123,6 +123,7 @@
 			align-items: center;
 
 			img {
+				cursor: pointer;
 				height: 40px;
 			}
 
@@ -147,6 +148,18 @@
 			font-size: 1.1rem;
 			font-weight: 800;
 			text-transform: uppercase;
+
+			.nuxt-link-active {
+				color: #7289da;
+
+				span {
+					color: white;
+				}
+
+				.round-icon {
+					background: #7289da;
+				}
+			}
 
 			a {
 				transition: 0.25s margin ease-out;
@@ -327,13 +340,16 @@
 					);
 			}
 		},
-		beforeDestroy() {
-			clearInterval(this.interval);
-		},
 		mounted() {
 			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator?.userAgent
 			);
+
+			if (this.isMobile)
+				this.listener = document.addEventListener("click", e => {
+					if (!e.target.classList.contains("fas") && this.mobileMenuActive)
+						this.mobileMenuActive = false;
+				});
 
 			if (this.$props.countDownBtn)
 				this.interval = setInterval(() => {
@@ -341,6 +357,10 @@
 
 					if (this.countDownValue === 0) clearInterval(this.interval);
 				}, 1 * 1000);
+		},
+		beforeDestroy() {
+			clearInterval(this.interval);
+			if (this.listener) document.removeEventListener("click", this.listener);
 		}
 	};
 </script>

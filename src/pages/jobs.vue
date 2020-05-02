@@ -213,6 +213,37 @@
 			}
 		}
 	}
+
+	@media only screen and (max-width: 600px) {
+		.jobsWrapper .jobsContainer {
+			.heading {
+				padding-bottom: 5em;
+
+				h1 {
+					font-size: 2em !important;
+					margin-bottom: 4px !important;
+				}
+			}
+
+			.openings {
+				h1 {
+					margin-top: 1em;
+					margin-bottom: 1.5em;
+				}
+
+				.jobs {
+					display: block !important;
+
+					.job {
+						h1 {
+							margin-top: 0;
+							margin-bottom: 0;
+						}
+					}
+				}
+			}
+		}
+	}
 </style>
 
 <script>

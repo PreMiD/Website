@@ -7,32 +7,31 @@
 			:countDownBtn="!adblock"
 		/>
 
-		<div class="breakwrapper">
+		<div class="adswrapper" v-if="!isMobile">
 			<div v-if="!adblock" class="space left">
-				<adsbygoogle ad-slot="3276628083" />
+				<adsense
+					root-class="ad"
+					ad-slot="3276628083"
+					:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
+				>
+				</adsense>
 			</div>
 
-			<div v-if="!adblock" class="note">
-				<h1 class="title">{{ $t("downloads.adsbox.thankyou.title") }}</h1>
-				<p class="description">
-					{{ $t("downloads.adsbox.thankyou.message") }}
-				</p>
+			<div v-if="!adblock" class="space right">
+				<adsense
+					root-class="ad"
+					ad-slot="4398138065"
+					:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
+				>
+				</adsense>
 			</div>
+		</div>
 
-			<div v-else-if="adblock" class="note smol">
-				<div class="disable">
-					<img
-						src="https://cdn.discordapp.com/attachments/473603737135349792/695397570272559235/634432333226836020.png"
-					/>
-					<p>{{ $t("downloads.adsbox.disableAdblock") }}</p>
-				</div>
-
-				<div class="controls">
-					<button class="button" @click="$nuxt.setLayout('default')">
-						{{ $t("downloads.button.done") }}
-					</button>
-				</div>
-			</div>
+		<div v-if="!adblock" class="note">
+			<h1 class="title">{{ $t("downloads.adsbox.thankyou.title") }}</h1>
+			<p class="description">
+				{{ $t("downloads.adsbox.thankyou.message") }}
+			</p>
 
 			<div v-if="isMobile && !adblock" class="mobile">
 				<button
@@ -50,14 +49,30 @@
 					{{ countDown > 0 ? countDown : $t("downloads.button.skip") }}
 				</button>
 			</div>
+		</div>
 
-			<div v-if="!adblock" class="space right">
-				<adsbygoogle ad-slot="4398138065" />
+		<div v-else-if="adblock" class="note smol">
+			<div class="disable">
+				<img
+					src="https://cdn.discordapp.com/attachments/473603737135349792/695397570272559235/634432333226836020.png"
+				/>
+				<p>{{ $t("downloads.adsbox.disableAdblock") }}</p>
+			</div>
+
+			<div class="controls">
+				<button class="button" @click="$nuxt.setLayout('default')">
+					{{ $t("downloads.button.done") }}
+				</button>
 			</div>
 		</div>
 
 		<div v-if="!adblock" class="space bottom">
-			<adsbygoogle ad-slot="9757727213" />
+			<adsense
+				root-class="ad"
+				ad-slot="9757727213"
+				:ad-style="{ display: 'block', width: '80vw', height: '250px' }"
+			>
+			</adsense>
 		</div>
 	</div>
 </template>
@@ -98,9 +113,6 @@
 			this.target = platform === "chrome" ? "_blank" : null;
 			this.href = this.urls[platform];
 		},
-		beforeDestroy() {
-			if (this.interval) clearInterval(this.interval);
-		},
 		mounted() {
 			if (this.isMobile)
 				this.interval = setInterval(() => {
@@ -121,6 +133,9 @@
 				.then(() => (this.adblock = false))
 				.catch(() => (this.adblock = true));
 		},
+		beforeDestroy() {
+			if (this.interval) clearInterval(this.interval);
+		},
 		methods: {
 			open(url) {
 				if (this.isMobile && this.target) {
@@ -133,64 +148,113 @@
 </script>
 
 <style lang="scss" scoped>
-	.breakwrapper {
-		display: grid;
+	.adswrapper {
 		justify-content: space-between;
-		align-items: center;
-		grid-template-columns: min-content auto min-content;
-		height: 100vh;
-		width: 100%;
+		display: flex;
+		padding: 0 1em;
+		height: 85vh;
+	}
+
+	.space {
+		.left,
+		.right {
+			width: 250px;
+			height: 85vh;
+		}
+
+		&.bottom {
+			text-align: -webkit-center;
+			text-align: -moz-center;
+			width: 100%;
+			height: 250px;
+		}
+	}
+
+	.note {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		box-shadow: 0 10px 20px -2px rgba(27, 33, 58, 0.4);
+		background-color: #191b24;
+		font-size: 25px;
+		width: 350px;
+		padding: 15px;
+		border-radius: 10px;
+
+		&.smol {
+			width: 400px;
+			padding: 1em;
+
+			img {
+				height: 128px;
+			}
+
+			.controls {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				padding: 0.75em;
+
+				.button {
+					margin-right: unset;
+					padding: 0.5em 1em;
+					font-size: large;
+				}
+			}
+		}
+
+		.title {
+			margin: 0;
+			font-size: large;
+			color: #7289da;
+			text-transform: uppercase;
+		}
+
+		.disable {
+			display: flex;
+
+			p {
+				height: fit-content;
+				padding: 0;
+				margin: 0 0 0 4px;
+				font-size: large;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+
+		.description {
+			margin: 0;
+			font-size: large;
+		}
+	}
+
+	@media only screen and (max-width: 600px) {
+		.adswrapper {
+			display: unset;
+		}
 
 		.note {
-			box-shadow: 0 10px 20px -2px rgba(27, 33, 58, 0.4);
-			background-color: #191b24;
-			font-size: 25px;
-			max-width: 350px;
-			padding: 15px;
-			border-radius: 10px;
+			position: unset;
+			transform: unset;
+			margin-bottom: unset;
+			width: unset;
 
 			&.smol {
-				width: 400px;
-				padding: 1em;
-				position: relative;
+				margin-bottom: 1em;
+				width: unset;
+			}
 
-				.controls {
-					position: absolute;
-					right: 0;
-					bottom: 0;
-					padding: 0.75em;
+			.mobile {
+				font-size: medium;
+				text-align: center;
+				padding-top: 1em;
 
-					.button {
-						margin-right: unset;
-						padding: 0.5em 1em;
-						font-size: large;
-					}
+				.disabled {
+					filter: grayscale(1);
+					transition: filter 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 				}
-			}
-
-			.title {
-				margin: 0;
-				font-size: large;
-				color: #7289da;
-				text-transform: uppercase;
-			}
-
-			.disable {
-				display: flex;
-
-				p {
-					height: fit-content;
-					padding: 0;
-					margin: 0 0 0 4px;
-					font-size: large;
-					text-overflow: ellipsis;
-					overflow: hidden;
-				}
-			}
-
-			.description {
-				margin: 0;
-				font-size: large;
 			}
 		}
 
@@ -198,63 +262,9 @@
 			width: 250px;
 			height: 600px;
 
-			&.left {
-				margin-left: 50px;
-			}
-
-			&.right {
-				margin-right: 50px;
-			}
-
 			&.bottom {
-				margin: 1em auto;
-				text-align: center;
-				display: table;
-				width: 100%;
-				height: 250px;
-			}
-		}
-
-		.mobile {
-			text-align: center;
-			padding: 1em;
-
-			.disabled {
-				filter: grayscale(1);
-				transition: filter 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-			}
-		}
-	}
-
-	@media only screen and (max-width: 600px) {
-		.breakwrapper {
-			display: unset;
-
-			.note {
-				padding: 1em;
-
-				&.smol {
-					margin-bottom: 1em;
-					width: unset;
-				}
-			}
-
-			.space {
-				width: 250px;
-				height: 600px;
-
-				&.left {
-					display: none;
-				}
-
-				&.right {
-					display: none;
-				}
-
-				&.bottom {
-					position: absolute;
-					bottom: 0;
-				}
+				position: absolute;
+				bottom: 0;
 			}
 		}
 	}

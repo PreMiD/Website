@@ -169,7 +169,7 @@
 
 					<div class="dl-container__cards">
 						<div
-							:class="{ 'current-platform': isChrome }"
+							:class="{ 'current-platform': browser.key == 'chrome' }"
 							class="cards__card clickable"
 							@click="
 								browser.warning
@@ -437,8 +437,8 @@
 				platforms: [],
 				isChrome: true,
 				browser: {
-					name: null,
-					key: null,
+					name: "Chrome",
+					key: "chrome",
 					warning: false
 				},
 				warning: {

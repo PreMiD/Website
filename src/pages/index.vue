@@ -382,7 +382,8 @@
 						serviceLogo: steamLogo,
 						smallImage: false,
 						data: ["Steam Store", "F1 2019"],
-						presence_time: "03:32"
+						presence_time: "03:32",
+						elapsed: true
 					},
 					{
 						profile: {
