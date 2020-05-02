@@ -245,7 +245,7 @@
 									:key="platform.platform.toString()"
 									:class="{
 										'current-platform':
-											browser.key == platform.platform.toString().toLowerCase()
+											browser.key.replace('chrome', 'chromium') == platform.platform.toString().toLowerCase()
 									}"
 									class="cards__card clickable"
 									@click="openInNewTab(platform.link)"
