@@ -19,7 +19,7 @@
 		"chartjs": "^0.3.24",
 		"marked": "0.8.2",
 		"moment": "^2.25.1",
-		"node-sass": "4.13.1",
+		"node-sass": "4.14.0",
 		"nuxt": "2.12.2",
 		"nuxt-helmet": "^1.2.3",
 		"nuxt-lazy-load": "^1.1.9",
