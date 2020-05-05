@@ -1083,10 +1083,10 @@
     webpack-node-externals "^1.7.2"
     webpackbar "^4.0.0"
 
-"@nuxtjs/auth@4.9.0":
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/auth/-/auth-4.9.0.tgz#4090325c98f440b9085aafcf0b66108f439a43d6"
-  integrity sha512-UHgSVJxT5Uk4tYLPd+6ugfNFlDZrMEgSRGa58OnL3Dpibu4DyEecwnMVQGIIxsNKAWqFaCGHkrpVSnpg4YpLDg==
+"@nuxtjs/auth@4.9.1":
+  version "4.9.1"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/auth/-/auth-4.9.1.tgz#8827e4d23bf901711423434ad4a7073a8fc51603"
+  integrity sha512-h5VZanq2+P47jq3t0EnsZv800cg/ufOPC6JqvcyeDFJM99p58jHSODAjDuePo3PrZxd8hovMk7zusU5lOHgjvQ==
   dependencies:
     "@nuxtjs/axios" "^5.9.5"
     body-parser "^1.19.0"
