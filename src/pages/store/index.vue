@@ -286,7 +286,7 @@
 				addedPresences: [],
 				nsfw: false,
 				mostUsed: true,
-				showAdded: true,
+				showAdded: false,
 				filterLiked: false,
 				presenceSearch: "",
 				presencesPerPage: 12,
@@ -333,7 +333,12 @@
 											.includes(this.presenceSearch.toLowerCase())
 								  ).length > 0
 								: false;
-						else if (!this.showAdded)
+						else if (
+							!this.showAdded &&
+							presence.service
+								?.toLowerCase()
+								.includes(this.presenceSearch.toLowerCase())
+						)
 							return !this.addedPresences.includes(presence.service);
 						else
 							return (
@@ -423,7 +428,7 @@
 
 			this.interval = setInterval(() => {
 				this.addedPresences = this.$store.state.presences.addedPresences;
-			}, 100)
+			}, 100);
 		},
 		mounted() {
 			const query =

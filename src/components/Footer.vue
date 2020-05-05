@@ -40,7 +40,9 @@
 				</p>
 				<div class="section__promo">
 					<a
-						href="https://twitter.com/PreMiDApp"
+						:href="`https://twitter.com/${
+							twitterLocale[_i18n.locale] || 'PreMiDapp'
+						}`"
 						target="_blank"
 						class="socials"
 					>
@@ -273,14 +275,20 @@
 	export default {
 		data() {
 			return {
-				installStats: 0
+				installStats: 0,
+				twitterLocale: {
+					tr: "PreMiDapp_tr",
+					az: "PreMiDapp_tr",
+					de: "PreMiDapp_de",
+					nl: "PreMiDapp_nl",
+					pt: "PreMiDapp_pt",
+					pt_BR: "PreMiDapp_pt"
+				}
 			};
 		},
 		mounted() {
-			let self = this;
-
 			axios(`${process.env.apiBase}/usage`).then(({ data }) => {
-				self.$data.installStats = data.users
+				this.installStats = data.users
 					.toString()
 					.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 			});
