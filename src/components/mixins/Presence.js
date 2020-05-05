@@ -40,29 +40,15 @@ var PresenceMixin = {
 							);
 						}
 					})
-					.then(responce => {
-						if (!responce) return resolve(false);
-						if (responce.toLowerCase() == presenceName.toLowerCase())
+					.then(response => {
+						if (!response) return resolve(false);
+						if (response.toLowerCase() == presenceName.toLowerCase())
 							return resolve(true);
 					});
 			});
 		},
 		getInstalledPresences() {
 			return this.$root.presenceList;
-		},
-		getHotPresences() {
-			var hotPresencesArray = [
-				"YouTube",
-				"YouTube Music",
-				"Twitch",
-				"Twitter",
-				"SoundCloud",
-				"GitHub",
-				"Dream Animes"
-			];
-			return hotPresencesArray.map(item => {
-				return item.toLowerCase();
-			});
 		}
 	}
 };

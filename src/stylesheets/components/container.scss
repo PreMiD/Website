@@ -493,7 +493,6 @@
 			font-size: 52px;
 			letter-spacing: -1px;
 			background: linear-gradient(30deg, $accent-primary, #b3aeff);
-			background-clip: text;
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 			text-shadow: none;
@@ -531,7 +530,6 @@
 				font-size: 3.8em;
 				letter-spacing: -3px;
 				background: linear-gradient(30deg, $accent-primary, #b3aeff);
-				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 				text-shadow: none;
@@ -598,7 +596,6 @@
 
 	color: #b3aeff;
 	background: linear-gradient(30deg, $accent-primary, #b3aeff);
-	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	text-transform: uppercase;
@@ -656,7 +653,7 @@
 	height: 100%;
 	position: fixed;
 	background: rgba(0, 0, 0, 0.85);
-	z-index: 999;
+	z-index: 1000;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -1120,7 +1117,6 @@
 		font-size: 3.8em;
 		letter-spacing: -3px;
 		background: linear-gradient(30deg, $accent-primary, #b3aeff);
-		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		text-shadow: none;
@@ -1365,10 +1361,6 @@
 			.checkbox-switcher label {
 				span {
 					flex-shrink: 0;
-				}
-
-				p {
-					font-size: 0.9em;
 				}
 			}
 

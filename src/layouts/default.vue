@@ -2,14 +2,14 @@
 	<div id="app">
 		<LanguageSwitcher v-if="switcherVisible" />
 		<div class="floating-button">
-			<a
+			<span
 				v-tippy
 				:content="$t('home.languageSelector.tippy')"
 				class="button button--gray button--language-switch"
 				@click="toggleSwitcher"
 			>
 				<i class="fa-language fas"></i>
-			</a>
+			</span>
 		</div>
 		<!--
       ! Disabled for now as it somehow breaks the page in production

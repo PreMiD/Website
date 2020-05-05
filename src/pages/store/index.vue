@@ -96,18 +96,23 @@
 					<label>
 						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.category.filters.mostUsed") }}</p>
+						<span class="title">{{
+							$t("store.category.filters.mostUsed")
+						}}</span>
 					</label>
 				</div>
 
 				<div
 					class="checkbox-switcher"
-					v-if="$store.state.extension.extensionInstalled"
+					v-if="
+						$store.state.extension.extensionInstalled &&
+						addedPresences.length > 0
+					"
 				>
 					<label>
 						<input type="checkbox" v-model="showAdded" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.filters.added") }}</p>
+						<span class="title">{{ $t("store.filters.added") }}</span>
 					</label>
 				</div>
 
@@ -115,7 +120,9 @@
 					<label>
 						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.category.filters.allowAdult") }}</p>
+						<span class="title">{{
+							$t("store.category.filters.allowAdult")
+						}}</span>
 					</label>
 				</div>
 
@@ -123,7 +130,9 @@
 					<label>
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.category.filters.likedOnly") }}</p>
+						<span class="title">{{
+							$t("store.category.filters.likedOnly")
+						}}</span>
 					</label>
 				</div>
 
@@ -224,8 +233,6 @@
 
 <script>
 	import StoreCard from "../../components/StoreCard.vue";
-	import Pagination from "../../components/Pagination.vue";
-
 	import axios from "axios";
 
 	export default {
@@ -234,6 +241,9 @@
 			StoreCard
 		},
 		auth: false,
+		head: {
+			title: "Store"
+		},
 		async asyncData() {
 			const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
 				presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
@@ -276,7 +286,7 @@
 				addedPresences: [],
 				nsfw: false,
 				mostUsed: true,
-				showAdded: true,
+				showAdded: false,
 				filterLiked: false,
 				presenceSearch: "",
 				presencesPerPage: 12,
@@ -323,7 +333,12 @@
 											.includes(this.presenceSearch.toLowerCase())
 								  ).length > 0
 								: false;
-						else if (!this.showAdded)
+						else if (
+							!this.showAdded &&
+							presence.service
+								?.toLowerCase()
+								.includes(this.presenceSearch.toLowerCase())
+						)
 							return !this.addedPresences.includes(presence.service);
 						else
 							return (
@@ -392,9 +407,7 @@
 			}
 		},
 		created() {
-			let self = this;
 			// Requesting presences data from our API and adding it into our Vue data.
-
 			this.$data.presences = this.$data.presences.sort((a, b) =>
 				a.name.localeCompare(b.name)
 			);
@@ -412,6 +425,10 @@
 					message: "No presences available."
 				});
 			}
+
+			this.interval = setInterval(() => {
+				this.addedPresences = this.$store.state.presences.addedPresences;
+			}, 100);
 		},
 		mounted() {
 			const query =
@@ -428,8 +445,6 @@
 
 				this.searchHandle(null, false);
 			}
-			
-			this.addedPresences = this.$store.state.presences.addedPresences;
 
 			// For search suggestions removal
 			this.listener = this.$el.addEventListener("click", evt => {
@@ -438,6 +453,7 @@
 		},
 		beforeDestroy() {
 			this.$el.removeEventListener("click", this.listener);
+			if (this.interval) clearInterval(this.interval);
 		},
 		methods: {
 			setSearchStyle() {
@@ -497,11 +513,6 @@
 					}
 				});
 			}
-		},
-		head() {
-			return {
-				title: "Store"
-			};
 		}
 	};
 </script>
