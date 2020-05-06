@@ -54,13 +54,28 @@
 			<div class="benefits">
 				<h1 v-text="$t('jobs.benefits.title')" />
 
-				<Benefit
-					v-for="benefit in benefits"
-					:key="benefit.title"
-					:icon="benefit.icon"
-					:title="$t(benefit.title)"
-					:description="$t(benefit.description)"
-				/>
+				<table class="table">
+					<tbody>
+						<tr>
+							<td v-for="benefit in benefits.slice(0, 3)" :key="benefit.title">
+								<Benefit
+									:icon="benefit.icon"
+									:title="$t(benefit.title)"
+									:description="$t(benefit.description)"
+								/>
+							</td>
+						</tr>
+						<tr>
+							<td v-for="benefit in benefits.slice(3, 6)" :key="benefit.title">
+								<Benefit
+									:icon="benefit.icon"
+									:title="$t(benefit.title)"
+									:description="$t(benefit.description)"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 
@@ -183,14 +198,20 @@
 				text-align: center;
 				margin: 0 auto;
 
+				.table {
+					width: 100%;
+
+					td {
+						vertical-align: -webkit-baseline-middle;
+					}
+				}
+
 				.benefit {
 					width: 200px;
-					height: 150px;
 					display: inline-block;
-					vertical-align: top;
 					text-align: left;
 					justify-content: space-around;
-					margin: 2em;
+					padding: 2em;
 
 					i {
 						font-size: 64px;
@@ -282,6 +303,9 @@
 				benefits,
 				discordUsers
 			};
+		},
+		mounted() {
+			this.$auth.$storage.setUniversal("redirect", "/jobs");
 		},
 		methods: {
 			applyModal(job) {
