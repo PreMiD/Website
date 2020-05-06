@@ -31,7 +31,7 @@
 						<div class="checkbox-switcher">
 							<label>
 								<input type="checkbox" v-model="check" />
-								<span ref="checkbox" class="checkbox-container fa"></span>
+								<span ref="checkbox" class="checkbox-container fa jobs"></span>
 								<p>{{ $t("jobs.modal.notice") }}</p>
 							</label>
 						</div>
@@ -64,6 +64,14 @@
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+	.checkbox-container.jobs::after {
+		top: 75% !important;
+		left: 75% !important;
+		transform: translateX(-50%) translateY(-50%) !important;
+	}
+</style>
 
 <script>
 	import axios from "axios";
