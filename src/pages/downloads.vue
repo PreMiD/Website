@@ -245,7 +245,8 @@
 									:key="platform.platform.toString()"
 									:class="{
 										'current-platform':
-											browser.key.replace('chrome', 'chromium') == platform.platform.toString().toLowerCase()
+											browser.key.replace('chrome', 'chromium') ==
+											platform.platform.toString().toLowerCase()
 									}"
 									class="cards__card clickable"
 									@click="openInNewTab(platform.link)"
@@ -269,6 +270,7 @@
 						<div class="dl-container__cards nobeta" v-else>
 							<h1 v-t="'downloads.error.noaccess.title'" />
 							<p
+								v-if="betaUsers < 200"
 								v-html="
 									linkify(
 										$t('downloads.error.noaccess.description', {
@@ -277,6 +279,7 @@
 									)
 								"
 							/>
+							<p v-t="'error.noslots'" v-else></p>
 						</div>
 					</div>
 					<div class="dl-container__cards" v-else>
@@ -403,7 +406,7 @@
 						beta.app_links = data.app_links;
 						beta.ext_links = data.ext_links;
 
-						cTab = this.beta;
+						cTab = beta;
 						tab = "beta";
 					}
 				}
@@ -421,9 +424,8 @@
 				tab,
 				alpha,
 				beta,
-				betaUsers: (
-					await axios(`${process.env.apiBase}/credits`)
-				).data.filter(u => u.roles.includes("BETA")).length
+				betaUsers: (await axios(`${process.env.apiBase}/betaUsers`)).data
+					.betaUsers
 			};
 		},
 		data() {
