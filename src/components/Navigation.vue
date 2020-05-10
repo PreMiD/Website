@@ -420,8 +420,8 @@
 							"630445337143935009" //Presence Verifier
 						];
 
-						if (staffRoles.indexOf(data.roleId) !== -1) return this.$isStaff = true;
-						else return this.$isStaff = false;
+						if (staffRoles.indexOf(data.roleId) !== -1) this.$isStaff = true;
+						else this.$isStaff = false;
 					}
 				});
 			}
