@@ -1,23 +1,29 @@
 <template>
 	<section class="rab">
-
+		<h1 class="section-header" v-t="'report.title'">{{ $t("report.title") }}</h1>
 		<div class="rab-container">
-			<h1 class="section-header" v-t="'report.title'">{{ $t("report.title") }}</h1>
-			<br>
+			<h1 class="section-header" v-t="'report.bugcount'" style="font-size: 28px;" v-html="$t('report.bugcount').replace('{count}', (bugInfo.data.info.count))"></h1>
 		</div>
 
-		<div class="rab-container">
-			<h1 class="heading" v-t="'report.overview'">{{ $t("report.overview") }}"</h1>
-			<textarea type="text" class="breif" maxlength="50" v-model="Report.bug_brief" required/>
-		</div>
+		<div v-if="bugInfo.data.info.count > 0">
+			<p>
+				<div class="rab-container">
+					<h1 class="heading" v-t="'report.overview'">{{ $t("report.overview") }}"</h1>
+					<textarea type="text" class="breif" maxlength="50" v-model="Report.brief" required/>
+				</div>
 
-		<div class="rab-container">
-			<h1 class="heading" v-t="'report.description'">{{ $t("report.description") }}</h1>
-			<textarea type="text" class="desc" maxlength="500" v-model="Report.bug_description" required/>
+				<div class="rab-container">
+					<h1 class="heading" v-t="'report.description'">{{ $t("report.description") }}</h1>
+					<textarea type="text" class="desc" maxlength="1000" v-model="Report.description" required/>
+				</div>
+					<br>
+				<div class="rab-container">
+					<button type="button" class="button" @click="addToDB" v-t="'report.button'">{{ $t("report.button") }}</button>
+				</div>
+			</p>
 		</div>
-			<br>
-		<div class="rab-container">
-			<button type="button" class="button" @click="addToDB" v-t="'report.button'">{{ $t("report.button") }}</button>
+		<div v-if="bugInfo.data.info.count === 0" class="rab-container">
+			<h1 v-t="'report.toomany'">{{ $t('report.toomany') }}</h1>
 		</div>
 	</section>
 </template>
@@ -30,37 +36,42 @@
 		auth: true,
 		data() {
 			return {
-				contributors: [],
-                display: false,
-                Report : {bug_brief:'',bug_description:'',bug_status:'New',bug_date:new Date().valueOf(),bug_userName:'',bug_userId:'',token: ''}
+				display: false,
+				bugInfo: {data:{info:{count:-1}}},
+                Report : {brief:'',description:'',status:'New',date:new Date().valueOf(),userName:'',userId:''}
 			};
-        },
+		},
         methods: {
             addToDB(){
-                if (!this.Report.bug_brief || !this.Report.bug_description || !this.Report.bug_userId || !this.Report.bug_date) return this.$noty.error('More info required');
                 let newReport = {
-                    bug_brief: this.Report.bug_brief,
-                    bug_description: this.Report.bug_description,
-                    bug_status: this.Report.bug_status,
-                    bug_date: this.Report.bug_date,
-                    bug_userName: this.$auth.user.username+'#'+$auth.user.discriminator,
-                    bug_userId: this.$auth.user.id,
-                };
+                    brief: this.Report.brief,
+                    description: this.Report.description,
+                    status: this.Report.status,
+                    date: this.Report.date,
+                    userName: this.$auth.user.username+'#'+this.$auth.user.discriminator,
+                    userId: this.$auth.user.id
+				};
+				if (bugInfo.data.info.count === 0) return this.$noty.error(this.$t("report.toomany"))
+				if (!newReport.brief || !newReport.description || !newReport.userId || !newReport.date) return this.$noty.error(this.$t("report.error"));
+
                 axios.post(`${process.env.apiBase}/bugPost`, newReport)
                 .then((response) => {
-                    this.$noty.success('Bug Submitted');
-                    this.$router.push("/");
+                    this.$noty.success(this.$t("report.success"));
+					//this.$router.push("/");
                 })
                 .catch((error) => {
                     this.$noty.error(error);
-                    console.log(error);
                 })
             }
             
         },
-        mounted(){
-            if(!this.$auth.loggedIn) return this.$router.push("/login");
-        },
+        async beforeMount(){
+			if(!this.$auth.loggedIn) return this.$router.push("/login");
+			axios.get(`${process.env.apiBase}/bugInfo/${this.$auth.user.id}`).then((data => {
+				if(data.info === null) return this.bugInfo.data.info.count = 3;
+				this.bugInfo = data;
+			}));
+		},
 		head() {
 			return {
 				title: "Report A Bug"
