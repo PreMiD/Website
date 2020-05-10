@@ -1,9 +1,6 @@
 (async () => {
-	const child_process = require("child_process"),
-		{ readFileSync, writeFileSync } = require("fs"),
+	const { readFileSync, writeFileSync } = require("fs"),
 		fGlob = require("fast-glob"),
-		child = child_process.execFileSync("git rev-parse HEAD", { shell: true }),
-		rHash = child.toString().trim().replace(/\d/g, ""),
 		files = await fGlob(".nuxt/dist/*/**.js", { onlyFiles: true });
 
 	for (let i = 0; i < files.length; i++) {
@@ -13,20 +10,17 @@
 			content.indexOf("probsUsingAdBlock") ||
 			content.indexOf("countDownValue")
 		) {
-			content = content.replace(/checkBlock/g, rHash);
-			content = content.replace(
-				/probsUsingAdBlock/g,
-				rHash
-					.split("")
-					.slice(0, rHash.length - 1 - Math.random() * 20)
-					.reverse()
-					.join("")
-			);
-			content = content.replace(
-				/countDownValue/g,
-				rHash.split("").reverse().join("")
-			);
+			content = content.replace(/checkBlock/g, rString());
+			content = content.replace(/probsUsingAdBlock/g, rString());
+			content = content.replace(/countDownValue/g, rString());
 			writeFileSync(files[i], content);
 		}
 	}
 })();
+
+function rString() {
+	const chars = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"];
+	// and then just do:
+	return [...Array(10)].map(i => chars[(Math.random() * chars.length) | 0])
+		.join``;
+}
