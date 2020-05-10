@@ -96,7 +96,23 @@
 					<label>
 						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.category.filters.mostUsed") }}</p>
+						<span class="title">{{
+							$t("store.category.filters.mostUsed")
+						}}</span>
+					</label>
+				</div>
+
+				<div
+					class="checkbox-switcher"
+					v-if="
+						$store.state.extension.extensionInstalled &&
+						addedPresences.length > 0
+					"
+				>
+					<label>
+						<input type="checkbox" v-model="showAdded" />
+						<span ref="checkbox" class="checkbox-container"></span>
+						<span class="title">{{ $t("store.filters.added") }}</span>
 					</label>
 				</div>
 
@@ -104,7 +120,9 @@
 					<label>
 						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.category.filters.allowAdult") }}</p>
+						<span class="title">{{
+							$t("store.category.filters.allowAdult")
+						}}</span>
 					</label>
 				</div>
 
@@ -112,7 +130,9 @@
 					<label>
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<p>{{ $t("store.category.filters.likedOnly") }}</p>
+						<span class="title">{{
+							$t("store.category.filters.likedOnly")
+						}}</span>
 					</label>
 				</div>
 
@@ -207,14 +227,12 @@
 			<span slot="breakViewContent"></span>
 		</paginate>
 
-		<adsbygoogle ad-slot="5201967746" style="text-align: center;" />
+		<adsense ad-slot="5201967746" style="text-align: center;" />
 	</section>
 </template>
 
 <script>
 	import StoreCard from "../../components/StoreCard.vue";
-	import Pagination from "../../components/Pagination.vue";
-
 	import axios from "axios";
 
 	export default {
@@ -223,6 +241,9 @@
 			StoreCard
 		},
 		auth: false,
+		head: {
+			title: "Store"
+		},
 		async asyncData() {
 			const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
 				presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
@@ -265,6 +286,7 @@
 				addedPresences: [],
 				nsfw: false,
 				mostUsed: true,
+				showAdded: false,
 				filterLiked: false,
 				presenceSearch: "",
 				presencesPerPage: 12,
@@ -281,9 +303,9 @@
 				return this.$route.query.category ? this.$route.query.category : "all";
 			},
 			filteredPresences() {
-				return this.$data.presences
+				return this.presences
 					.filter(presence => {
-						if (this.$data.filters.url.enabled == true)
+						if (this.filters.url.enabled == true)
 							return (
 								(Array.isArray(presence.url) &&
 									presence.url.filter(url =>
@@ -296,14 +318,14 @@
 										.toLowerCase()
 										.includes(this.presenceSearch.toLowerCase()))
 							);
-						else if (this.$data.filters.author.enabled == true)
+						else if (this.filters.author.enabled == true)
 							return (
 								presence.author.name
 									.toLowerCase()
 									.includes(this.presenceSearch.toLowerCase()) ||
 								presence.author.id.includes(this.presenceSearch)
 							);
-						else if (this.$data.filters.tag.enabled == true)
+						else if (this.filters.tag.enabled == true)
 							return Array.isArray(presence.tags)
 								? presence.tags.filter(tag =>
 										tag
@@ -311,6 +333,13 @@
 											.includes(this.presenceSearch.toLowerCase())
 								  ).length > 0
 								: false;
+						else if (
+							!this.showAdded &&
+							presence.service
+								?.toLowerCase()
+								.includes(this.presenceSearch.toLowerCase())
+						)
+							return !this.addedPresences.includes(presence.service);
 						else
 							return (
 								presence.service
@@ -378,9 +407,7 @@
 			}
 		},
 		created() {
-			let self = this;
 			// Requesting presences data from our API and adding it into our Vue data.
-
 			this.$data.presences = this.$data.presences.sort((a, b) =>
 				a.name.localeCompare(b.name)
 			);
@@ -398,6 +425,10 @@
 					message: "No presences available."
 				});
 			}
+
+			this.interval = setInterval(() => {
+				this.addedPresences = this.$store.state.presences.addedPresences;
+			}, 100);
 		},
 		mounted() {
 			const query =
@@ -416,9 +447,13 @@
 			}
 
 			// For search suggestions removal
-			this.$el.addEventListener("click", evt => {
+			this.listener = this.$el.addEventListener("click", evt => {
 				evt.target.className != "searchbar" ? (this.typing = false) : false;
 			});
+		},
+		beforeDestroy() {
+			this.$el.removeEventListener("click", this.listener);
+			if (this.interval) clearInterval(this.interval);
 		},
 		methods: {
 			setSearchStyle() {
@@ -478,11 +513,6 @@
 					}
 				});
 			}
-		},
-		head() {
-			return {
-				title: "Store"
-			};
 		}
 	};
 </script>
@@ -491,6 +521,8 @@
 	@import "../../stylesheets/variables.scss";
 
 	.store-menu__searchbar-container {
+		position: relative;
+
 		span {
 			position: absolute;
 			margin: 2px;
@@ -503,15 +535,14 @@
 		.searchSuggestions {
 			font-size: small;
 			z-index: 999;
-			min-height: 60px;
 			position: absolute;
-			margin: 2.5em 0;
 			background-color: #191b24;
-			max-width: 85%;
 			border-bottom-right-radius: 4px;
 			border-bottom-left-radius: 4px;
-			width: 100%;
 			box-shadow: 0px 1px teal;
+			width: -webkit-fill-available;
+			width: -moz-available;
+			margin-top: 2.5em;
 
 			span {
 				position: unset;
@@ -555,13 +586,5 @@
 		position: absolute;
 		margin-left: 0.6rem;
 		color: #74787c;
-	}
-
-	@media only screen and (max-width: 600px) {
-		.store-menu__searchbar-container {
-			.searchSuggestions {
-				max-width: 77vw;
-			}
-		}
 	}
 </style>

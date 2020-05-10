@@ -40,7 +40,7 @@
 				</video>
 			</div>
 		</div>
-		<div class="beta-join">
+		<div class="beta-join" v-if="betaUsers < 200">
 			<p
 				v-html="
 					$t('beta.register.text').replace(
@@ -52,6 +52,9 @@
 			<a class="button text--uppercase" href="/beta/register">
 				{{ $t(`beta.register.button`) }}
 			</a>
+		</div>
+		<div class="beta-join" v-else>
+			<p v-t="'error.noslots'"></p>
 		</div>
 		<div class="waves-divider waves-divider_bottom">
 			<svg

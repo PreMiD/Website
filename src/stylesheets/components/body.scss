@@ -40,7 +40,6 @@ body {
 .text-highlight {
 	color: #b3aeff;
 	background: linear-gradient(30deg, #7289da, #b3aeff);
-	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
@@ -71,14 +70,6 @@ header {
 	min-height: calc(100vh - 150px);
 	flex: 1 0 auto;
 }
-
-// .text-highlight {
-//   color: #b3aeff;
-//   background: linear-gradient(30deg, $accent-primary, #b3aeff);
-//   background-clip: text;
-//   -webkit-background-clip: text;
-//   -webkit-text-fill-color: transparent;
-// }
 
 h3 {
 	font-weight: 600;

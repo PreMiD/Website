@@ -36,7 +36,7 @@
 									class="header__avatar"
 									:style="
 										'background-image: url(' +
-										presence.profile.image +
+										presence.profile.avatar +
 										'?size=128' +
 										');'
 									"
@@ -45,48 +45,48 @@
 									<div class="info__nameTag">
 										<span class="username">{{ presence.profile.name }}</span>
 										<span class="discriminator"
-											>#{{ presence.profile.id }}</span
+											>#{{ presence.profile.discriminator }}</span
 										>
 									</div>
 									<div class="info__badges">
 										<div
-											v-for="badge of presence.profile.badges"
-											:key="badge"
+											v-for="flag of presence.profile.flags"
+											:key="flag"
 											class="badge-wrapper"
 										>
 											<div
 												v-if="
-													badge == 'brilliance' ||
-													badge == 'bravery' ||
-													badge == 'balance'
+													flag == 'HOUSE_BRILLIANCE' ||
+													flag == 'HOUSE_BRAVERY' ||
+													flag == 'HOUSE_BALANCE'
 												"
 												v-tippy="{
 													content:
 														'HypeSquad ' +
-														badge.charAt(0).toUpperCase() +
-														badge.slice(1)
+														flag.replace('HOUSE_', '')[0] +
+														flag
+															.replace('HOUSE_', '')
+															.slice(1, 10)
+															.toLowerCase()
 												}"
-												:class="`badge badge_${badge}`"
+												:class="`badge badge_${flag
+													.replace('HOUSE_', '')
+													.toLowerCase()}`"
 											></div>
 											<div
-												v-if="badge == 'early'"
+												v-if="flag == 'EARLY_SUPPORTER'"
 												v-tippy="{ content: 'Early Supporter' }"
-												:class="`badge badge_${badge}`"
+												:class="`badge badge_early`"
 											></div>
 											<div
-												v-if="badge == 'hypesquad'"
+												v-if="flag == 'HYPESQUAD_EVENTS'"
 												v-tippy="{ content: 'HypeSquad Events' }"
-												:class="`badge badge_${badge}`"
+												:class="`badge badge_hypesquad`"
 											></div>
 											<div
-												v-if="badge == 'nitro'"
+												v-if="flag == 'NITRO'"
 												v-tippy="{ content: 'Discord Nitro' }"
-												:class="`badge badge_${badge}`"
-											></div>
-											<div
-												v-if="badge == 'boost-lvl3'"
-												v-tippy="{ content: 'Nitro Boosting' }"
-												:class="`badge badge_${badge}`"
+												:class="`badge badge_nitro`"
 											></div>
 										</div>
 									</div>
@@ -153,11 +153,11 @@
 											</div>
 											<div class="game__time text-row">
 												{{
-													presence.smallImage != "search"
-														? $t(`home.examples.timestamp`, {
+													presence.elapsed
+														? $t(`home.examples.timestamp2`, {
 																0: presence.presence_time
 														  })
-														: $t(`home.examples.timestamp2`, {
+														: $t(`home.examples.timestamp`, {
 																0: presence.presence_time
 														  })
 												}}
@@ -319,19 +319,18 @@
 				presences: [
 					{
 						profile: {
-							DiscordID: "259407123782434816",
-							badges: ["hypesquad", "balance", "early", "nitro"]
+							badges: []
 						},
 						service_title: "PreMiD",
 						serviceLogo: premidLogo,
 						smallImage: "search",
 						data: ["Store"],
-						presence_time: "00:12"
+						presence_time: "00:12",
+						elapsed: true
 					},
 					{
 						profile: {
-							DiscordID: "223238938716798978",
-							badges: ["brilliance", "nitro"]
+							badges: []
 						},
 						service_title: "YouTube",
 						serviceLogo: youtubeLogo,
@@ -344,8 +343,7 @@
 					},
 					{
 						profile: {
-							DiscordID: "213305189657083905",
-							badges: ["bravery", "early"]
+							badges: []
 						},
 						service_title: "SoundCloud",
 						serviceLogo: soundcloudLogo,
@@ -355,8 +353,7 @@
 					},
 					{
 						profile: {
-							DiscordID: "162969778699501569",
-							badges: ["balance", "early"]
+							badges: []
 						},
 						service_title: "Netflix",
 						serviceLogo: netflixLogo,
@@ -366,8 +363,7 @@
 					},
 					{
 						profile: {
-							DiscordID: "515668127829458945",
-							badges: ["balance"]
+							badges: []
 						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
@@ -380,19 +376,18 @@
 					},
 					{
 						profile: {
-							DiscordID: "293828021134295040",
-							badges: ["brilliance"]
+							badges: []
 						},
 						service_title: "Steam",
 						serviceLogo: steamLogo,
 						smallImage: false,
 						data: ["Steam Store", "F1 2019"],
-						presence_time: "03:32"
+						presence_time: "03:32",
+						elapsed: true
 					},
 					{
 						profile: {
-							DiscordID: "163319338403627008",
-							badges: ["brilliance", "early", "nitro", "boost-lvl3"]
+							badges: []
 						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
@@ -402,8 +397,7 @@
 					},
 					{
 						profile: {
-							DiscordID: "241278257335500811",
-							badges: ["balance", "early", "nitro"]
+							badges: []
 						},
 						service_title: "Twitch",
 						serviceLogo: twitchLogo,
@@ -415,24 +409,31 @@
 			};
 		},
 		beforeMount() {
-			const Vue = this;
-			const length = this.$data.presences.length;
+			const length = this.presences.length;
 
 			// Randomly selects 2 presences to display.
-			this.$data.presences_display.push(
-				this.$data.presences.splice((Math.random() * length) | 0, 1)[0],
-				this.$data.presences.splice((Math.random() * (length - 1)) | 0, 1)[0]
+			this.presences_display.push(
+				this.presences.splice((Math.random() * length) | 0, 1)[0],
+				this.presences.splice((Math.random() * (length - 1)) | 0, 1)[0]
 			);
 
 			// Updating user information in presence examples.
-			this.$data.presences_display.forEach(function (presence_item, index) {
-				let presence = Vue.$data.presences_display[index];
+			this.presences_display.forEach((presence_item, index) => {
+				let presence = this.presences_display[index];
 
-				presence.profile["image"] =
-					Vue.$data.users[index]?.avatar ||
-					"https://premid.app/assets/images/logo.png";
-				presence.profile["name"] = Vue.$data.users[index]?.name || "Unknown";
-				presence.profile["id"] = Vue.$data.users[index]?.tag || "0000";
+				presence.profile = {
+					name: this.users[index]?.name || "Unknown",
+					discriminator: this.users[index]?.tag || "0000",
+					flags: this.users[index]?.flags || [],
+					avatar:
+						this.users[index]?.avatar ||
+						"https://premid.app/assets/images/logo.png"
+				};
+
+				// Temporary solution
+				presence.profile["avatar"].endsWith(".gif")
+					? presence.profile["flags"].push("NITRO")
+					: false;
 			});
 		},
 		mounted() {
