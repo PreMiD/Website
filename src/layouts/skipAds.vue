@@ -4,11 +4,11 @@
 			noLinks="true"
 			:target="target"
 			:href="href"
-			:countDownBtn="!adblock"
+			:countDownBtn="!probsUsingAdBlock"
 		/>
 
 		<div class="adswrapper" v-if="!isMobile">
-			<div v-if="!adblock" class="space left">
+			<div v-if="!probsUsingAdBlock" class="space left">
 				<adsense
 					root-class="ad"
 					ad-slot="3276628083"
@@ -17,7 +17,7 @@
 				</adsense>
 			</div>
 
-			<div v-if="!adblock" class="space right">
+			<div v-if="!probsUsingAdBlock" class="space right">
 				<adsense
 					root-class="ad"
 					ad-slot="4398138065"
@@ -27,13 +27,13 @@
 			</div>
 		</div>
 
-		<div v-if="!adblock" class="note">
+		<div v-if="!probsUsingAdBlock" class="note">
 			<h1 class="title">{{ $t("downloads.adsbox.thankyou.title") }}</h1>
 			<p class="description">
 				{{ $t("downloads.adsbox.thankyou.message") }}
 			</p>
 
-			<div v-if="isMobile && !adblock" class="mobile">
+			<div v-if="isMobile && !probsUsingAdBlock" class="mobile">
 				<button
 					v-if="countDown <= 0"
 					class="button"
@@ -51,7 +51,7 @@
 			</div>
 		</div>
 
-		<div v-else-if="adblock" class="note smol">
+		<div v-else-if="probsUsingAdBlock" class="note smol">
 			<div class="disable">
 				<img
 					src="https://cdn.discordapp.com/attachments/473603737135349792/695397570272559235/634432333226836020.png"
@@ -66,7 +66,7 @@
 			</div>
 		</div>
 
-		<div v-if="!adblock" class="space bottom">
+		<div v-if="!probsUsingAdBlock" class="space bottom">
 			<adsense
 				root-class="ad"
 				ad-slot="9757727213"
@@ -90,7 +90,7 @@
 		},
 		data() {
 			return {
-				adblock: false,
+				probsUsingAdBlock: false,
 				target: null,
 				countDown: 5,
 				href: null,
@@ -112,6 +112,7 @@
 
 			this.target = platform === "chrome" ? "_blank" : null;
 			this.href = this.urls[platform];
+			this.checkBlock().then(res => (this.probsUsingAdBlock = res));
 		},
 		mounted() {
 			if (this.isMobile)
@@ -128,10 +129,6 @@
 			while (rads === 0) {
 				rads = Math.floor(Math.random() * 10);
 			}
-
-			axios(`/ads/ads${rads}.js`)
-				.then(() => (this.adblock = false))
-				.catch(() => (this.adblock = true));
 		},
 		beforeDestroy() {
 			if (this.interval) clearInterval(this.interval);
@@ -142,6 +139,22 @@
 					window.open(url, this.target).focus();
 					this.$nuxt.setLayout("default");
 				} else window.location.href = url || window.location.href;
+			},
+			checkBlock(callback) {
+				return new Promise(resolve => {
+					fetch(
+						new Request(
+							"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
+							{
+								method: "HEAD",
+								mode: "no-cors"
+							}
+						)
+					)
+						.then(res => res)
+						.then(() => resolve(false))
+						.catch(() => resolve(true));
+				});
 			}
 		}
 	};

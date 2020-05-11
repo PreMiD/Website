@@ -4,7 +4,7 @@
 	"scripts": {
 		"start": "nuxt start",
 		"dev": "node languageParser && nuxt",
-		"build": "rimraf src/langs/* && node languageParser.js && nuxt build",
+		"build": "rimraf src/langs/* && node languageParser.js && nuxt build && node cryptify",
 		"pretty": "prettier --write **/*.vue **/*.js **/*.json **/*.scss"
 	},
 	"dependencies": {
@@ -38,6 +38,7 @@
 	"devDependencies": {
 		"@nuxt/typescript-build": "^0.6.5",
 		"@nuxtjs/google-analytics": "^2.2.3",
+		"fast-glob": "^3.2.2",
 		"node-emoji": "1.10.0",
 		"prettier": "^2.0.4",
 		"rimraf": "3.0.2"
