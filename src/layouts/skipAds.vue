@@ -8,23 +8,19 @@
 		/>
 
 		<div class="adswrapper" v-if="!isMobile">
-			<div v-if="!probsUsingAdBlock" class="space left">
-				<adsense
-					root-class="ad"
-					ad-slot="3276628083"
-					:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
-				>
-				</adsense>
-			</div>
+			<adsense
+				root-class="ad"
+				ad-slot="3276628083"
+				:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
+			>
+			</adsense>
 
-			<div v-if="!probsUsingAdBlock" class="space right">
-				<adsense
-					root-class="ad"
-					ad-slot="4398138065"
-					:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
-				>
-				</adsense>
-			</div>
+			<adsense
+				root-class="ad"
+				ad-slot="4398138065"
+				:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
+			>
+			</adsense>
 		</div>
 
 		<div v-if="!probsUsingAdBlock" class="note">
@@ -66,14 +62,12 @@
 			</div>
 		</div>
 
-		<div v-if="!probsUsingAdBlock" class="space bottom">
-			<adsense
-				root-class="ad"
-				ad-slot="9757727213"
-				:ad-style="{ display: 'block', width: '80vw', height: '250px' }"
-			>
-			</adsense>
-		</div>
+		<adsense
+			root-class="ad"
+			ad-slot="9757727213"
+			:ad-style="{ display: 'block', width: '80vw', height: '250px' }"
+		>
+		</adsense>
 	</div>
 </template>
 
@@ -112,7 +106,7 @@
 
 			this.target = platform === "chrome" ? "_blank" : null;
 			this.href = this.urls[platform];
-			this.checkBlock().then(res => (this.probsUsingAdBlock = res));
+			this.checkBlock();
 		},
 		mounted() {
 			if (this.isMobile)
@@ -141,20 +135,15 @@
 				} else window.location.href = url || window.location.href;
 			},
 			checkBlock(callback) {
-				return new Promise(resolve => {
-					fetch(
-						new Request(
-							"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
-							{
-								method: "HEAD",
-								mode: "no-cors"
-							}
-						)
-					)
-						.then(res => res)
-						.then(() => resolve(false))
-						.catch(() => resolve(true));
-				});
+				// deepscan-disable-line
+				this.adBlockInterval = setInterval(() => {
+					this.probsUsingAdBlock =
+						Array.from(document.querySelectorAll(".adsbygoogle")).filter(
+							el => el.innerHTML !== ""
+						).length === 0;
+
+					if (this.probsUsingAdBlock) clearInterval(this.adBlockInterval);
+				}, 100);
 			}
 		}
 	};
