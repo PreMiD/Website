@@ -1,18 +1,19 @@
 <template>
 	<transition appear v-on:after-appear="appear">
 		<div>
-			<div class="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
-				<div class="logoWrapper" ref="headerLogo">
-					<nuxt-link to="/"
-						><img
-							:src="require('@/assets/images/logo_round.svg')"
-							data-not-lazy
-					/></nuxt-link>
+			<div id="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
+				<div id="logoWrapper" ref="headerLogo">
+					<nuxt-link
+						to="/"
+						tag="img"
+						:src="require('@/assets/images/logo_round.svg')"
+						data-not-lazy
+					/>
 
 					<transition name="pop">
 						<div
 							v-if="!isMobile && !$store.state.extension.extensionInstalled"
-							class="status"
+							id="status"
 							v-tippy="{
 								content: $t('store.message.error')
 							}"
@@ -25,7 +26,7 @@
 					</transition>
 				</div>
 
-				<div v-if="!$props.noLinks" class="links">
+				<div v-if="!noLinks" id="links">
 					<nuxt-link
 						v-for="category of categories"
 						:key="category.route"
@@ -78,37 +79,20 @@
 				</div>
 				
 
-				<div v-if="$props.countDownBtn" class="links">
+				<div v-if="countDownBtn" id="links">
 					<a
-						v-if="countDownValue === 0"
-						@click="$nuxt.setLayout('default')"
-						class="navbar__item"
-					>
-						<span class="round-icon">
-							<i :class="`fa-backward fas`"></i>
-						</span>
-						<p>{{ $t("downloads.button.back") }}</p>
-					</a>
-
-					<a
-						@click="countDownValue === 0 ? redirect($props.href) : null"
+						@click="countDownValue === 0 ? $nuxt.setLayout('dl') : null"
 						class="navbar__item"
 					>
 						<span class="round-icon">
 							<i :class="`fa-forward fas`"></i>
 						</span>
-						<p
-							v-text="
-								countDownValue === 0
-									? $t('downloads.button.skip')
-									: countDownValue
-							"
-						/>
+						<p v-text="countDownValue === 0 ? 'Skip' : countDownValue" />
 					</a>
 				</div>
 
 				<div
-					class="hamburger"
+					id="hamburger"
 					ref="hamburger"
 					@click="mobileMenuActive = !mobileMenuActive"
 				>
@@ -119,7 +103,7 @@
 
 			<transition name="slide-down">
 				<div
-					class="mobileLinks"
+					id="mobileLinks"
 					v-if="mobileMenuActive"
 					@click="mobileMenuActive = !mobileMenuActive"
 				>
@@ -142,7 +126,7 @@
 <style lang="scss" scoped>
 	@import "~/stylesheets/variables.scss";
 
-	.navbar {
+	#navbar {
 		background-color: $background-primary;
 		position: relative;
 		height: 75px;
@@ -153,7 +137,7 @@
 		align-items: center;
 		justify-content: space-between;
 
-		.logoWrapper {
+		#logoWrapper {
 			height: 40px;
 
 			display: grid;
@@ -161,11 +145,10 @@
 			align-items: center;
 
 			img {
-				cursor: pointer;
 				height: 40px;
 			}
 
-			.status {
+			#status {
 				display: flex;
 				align-items: center;
 				font-size: small;
@@ -174,30 +157,18 @@
 				border-radius: 100%;
 				margin-left: 0.6em;
 				animation: pulseWarn 2s infinite;
-				background-color: #f1c40f;
-				color: rgba(255, 255, 255, 0.85);
+				background-color: #ffff00;
+				color: black;
 				cursor: pointer;
 				justify-content: center;
 			}
 		}
 
-		.links {
+		#links {
 			display: flex;
 			font-size: 1.1rem;
 			font-weight: 800;
 			text-transform: uppercase;
-
-			.nuxt-link-active {
-				color: #7289da;
-
-				span {
-					color: white;
-				}
-
-				.round-icon {
-					background: #7289da;
-				}
-			}
 
 			a {
 				transition: 0.25s margin ease-out;
@@ -278,7 +249,7 @@
 			}
 		}
 
-		.hamburger {
+		#hamburger {
 			font-size: 1.5em;
 			display: none;
 			width: 25px;
@@ -287,7 +258,7 @@
 		}
 	}
 
-	.mobileLinks {
+	#mobileLinks {
 		position: absolute;
 		top: 75px;
 		z-index: 99999;
@@ -317,7 +288,7 @@
 	//* Responsive Design
 
 	@media only screen and (max-width: 900px) {
-		.links {
+		#links {
 			a {
 				margin: 0 0.5em !important;
 			}
@@ -325,11 +296,11 @@
 	}
 
 	@media only screen and (max-width: 715px) {
-		.links {
+		#links {
 			display: none !important;
 		}
 
-		.hamburger {
+		#hamburger {
 			display: block !important;
 		}
 	}
@@ -340,7 +311,7 @@
 
 	export default {
 		name: "Navigation",
-		props: ["noLinks", "countDownBtn", "href", "target"],
+		props: ["noLinks", "countDownBtn"],
 		data() {
 			return {
 				pageLoad: false,
@@ -369,14 +340,8 @@
 			};
 		},
 		methods: {
-			reload() {
-				location.reload();
-			},
-			redirect(url) {
-				if (this.$props.countDownBtn && this.$props.target) {
-					window.open(url, this.$props.target).focus();
-					this.$nuxt.setLayout("default");
-				} else window.location.href = url || window.location.href;
+			redirect(location) {
+				window.location.href = location || window.location.href;
 			},
 			appear() {
 				this.pageLoad = true;
@@ -422,19 +387,17 @@
 			}
 		},
 		mounted() {
-			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator?.userAgent
 			);
 
-			if (this.isMobile)
-				this.listener = document.addEventListener("click", e => {
-					if (!e.target.classList.contains("fas") && this.mobileMenuActive)
-						this.mobileMenuActive = false;
-				});
+			const interval = setInterval(() => {
+				if (!this.countDownBtn) return;
+				this.countDownValue--;
 
 				if (this.countDownValue === 0) clearInterval(interval);
-			}, 1 * 1000);
-	
+			}, (1 * 1000));
+			
 			if(this.$auth.loggedIn){
 				axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(({ data }) => {
 					if(data.userId){
@@ -462,16 +425,7 @@
 					}
 				});
 			}
-			if (this.$props.countDownBtn)
-				this.interval = setInterval(() => {
-					this.countDownValue--;
 
-					if (this.countDownValue === 0) clearInterval(this.interval);
-				}, 1 * 1000);
-		},
-		beforeDestroy() {
-			clearInterval(this.interval);
-			if (this.listener) document.removeEventListener("click", this.listener);
-      }
+		}
 	};
 </script>
