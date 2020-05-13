@@ -33,7 +33,7 @@
 				<button
 					v-if="countDown <= 0"
 					class="button"
-					@click="$nuxt.setLayout('default')"
+					@click="$router.go({ path: '/downloads' })"
 				>
 					{{ $t("downloads.button.back") }}
 				</button>
@@ -56,7 +56,7 @@
 			</div>
 
 			<div class="controls">
-				<button class="button" @click="$nuxt.setLayout('default')">
+				<button class="button" @click="$router.go({ path: '/downloads' })">
 					{{ $t("downloads.button.done") }}
 				</button>
 			</div>
@@ -73,7 +73,6 @@
 
 <script>
 	import Navigation from "../components/Navigation";
-	import axios from "axios";
 
 	export default {
 		components: {
