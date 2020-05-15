@@ -57,7 +57,7 @@
 						:to="''"
 						ref="userLinks">
 						<span id="user-link">
-							<a id="userLinks" v-if="$isStaff === false" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
+							<a id="userLinks" v-if="isStaff === false" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
 							<a id="userLinks" v-else @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
 							<a id="userLinks" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
 						</span>
@@ -65,7 +65,7 @@
 
 
 					<nuxt-link v-if="!this.$auth.loggedIn"
-						:key="login"
+						key="login"
 						:to="'/login'"
 						ref="userLinks"
 					>
@@ -420,8 +420,8 @@
 							"630445337143935009" //Presence Verifier
 						];
 
-						if (staffRoles.indexOf(data.roleId) !== -1) this.$isStaff = true;
-						else this.$isStaff = false;
+						if (staffRoles.indexOf(data.roleId) !== -1) this.isStaff = true;
+						else this.isStaff = false;
 					}
 				});
 			}
