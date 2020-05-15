@@ -1,8 +1,8 @@
 <template>
 	<section class="rab">
 		<h1 class="section-header" v-t="'report.title'">{{ $t("report.title") }}</h1>
-		<div v-if="bugInfo.data.info.count > 0"class="rab-container">
-			<h1 class="section-header" v-t="'report.bugcount'" style="font-size: 28px;" v-html="$t('report.bugcount').replace('{count}', (bugInfo.data.info.count))"></h1>
+		<div class="rab-container">
+			<h1 class="section-header" v-t="'report.bugcount'" style="font-size: 28px;" v-html="bugCount"></h1>
 		</div>
 
 		<div v-if="bugInfo.data.info.count > 0">
@@ -23,7 +23,7 @@
 			</p>
 		</div>
 		<div v-if="bugInfo.data.info.count === 0" class="rab-container">
-			<h1 v-t="'report.toomany'">{{ $t('report.toomany') }}</h1>
+			<h1 style="text-align: center;" class="heading" v-t="'report.toomany'">{{ $t('report.toomany') }}</h1>
 		</div>
 	</section>
 </template>
@@ -38,6 +38,7 @@
 			return {
 				display: false,
 				bugInfo: {data:{info:{count:-1}}},
+				bugCount: String,
                 Report : {brief:'',description:'',status:'New',date:new Date().valueOf(),userName:'',userId:''}
 			};
 		},
@@ -65,14 +66,18 @@
             }
             
         },
-        async beforeMount(){
+        mounted(){
 			if(!this.$auth.loggedIn) return this.$router.push("/login");
 			axios.get(`${process.env.apiBase}/bugInfo/${this.$auth.user.id}`).then((data => {
-				if(data.info === null) return this.bugInfo.data.info.count = 3;
+				if(data.info === null){
+					return this.bugInfo.data.info.count = 3;
+				}
 				this.bugInfo = data;
 			}));
 		},
 		head() {
+			if(this.bugInfo.data.info.count === 0) this.$noty.error(this.$t("report.toomany"));
+			else this.bugCount = this.$t('report.bugcount').replace('{count}', (this.bugInfo.data.info.count));
 			return {
 				title: "Report A Bug"
 			};
