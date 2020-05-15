@@ -38,7 +38,7 @@
 			return {
 				display: false,
 				bugInfo: {data:{info:{count:-1}}},
-				bugCount: String,
+				bugCount: "Loading...",
                 Report : {brief:'',description:'',status:'New',date:new Date().valueOf(),userName:'',userId:''}
 			};
 		},
