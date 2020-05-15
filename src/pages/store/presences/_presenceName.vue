@@ -75,9 +75,7 @@
 						</button>
 						<a
 							class="button button--black"
-							:href="`https://github.com/PreMiD/Presences/tree/master/${encodeURIComponent(
-								$route.params.presenceName
-							)}`"
+							:href="githubPresenceUrl($route.params.presenceName)"
 							target="_blank"
 						>
 							<span class="icon">
@@ -427,6 +425,21 @@
 						`<a target="_blank" href="${exec[2]}">${exec[1]}</a>`
 					);
 				}
+			},
+			githubPresenceUrl(presenceName) {
+				// first char with no diacritics
+				let firstChar = presenceName.charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").charAt(0).toLowerCase();
+				let type;
+
+				if (!isNaN(firstChar)) {
+					type = "0-9"
+				} else if ("a" <= firstChar && firstChar <= "z") {
+					type = firstChar.toUpperCase();
+				} else {
+					type = "#";
+				}
+
+				return `https://github.com/PreMiD/Presences/tree/master/websites/${type}/${encodeURIComponent(presenceName)}`;
 			}
 		},
 
