@@ -1,7 +1,7 @@
 <template>
 	<section class="rab">
 		<h1 class="section-header" v-t="'report.title'">{{ $t("report.title") }}</h1>
-		<div class="rab-container">
+		<div v-if="bugInfo.data.info.count > 0"class="rab-container">
 			<h1 class="section-header" v-t="'report.bugcount'" style="font-size: 28px;" v-html="$t('report.bugcount').replace('{count}', (bugInfo.data.info.count))"></h1>
 		</div>
 
