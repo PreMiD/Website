@@ -45,21 +45,16 @@
 						ref="userInfo"
 						>
 						<img class="round-icon" style="width: auto; height: 50px;display: inline; background-color: hsl(227, 18%, 8%);" :src="'https://cdn.discordapp.com/avatars/' + $auth.user.id + '/' + $auth.user.avatar ">
-						<span style="top: 5px;">
-						<span id="loggedin" v-t="'header.lia'">{{ $t("header.lia") }}</span>
-						<span id="username">{{ $auth.user.username }}
-							<span id="tag">#{{ $auth.user.discriminator }}</span>
-						</span>
-						</span>
-					</nuxt-link>
-
-					<nuxt-link v-if="$auth.loggedIn"
-						:to="''"
-						ref="userLinks">
-						<span id="user-link">
-							<a id="userLinks" v-if="isStaff === false" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
-							<a id="userLinks" v-else @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
-							<a id="userLinks" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
+						<span class="dropdown" style="top: 5px;">
+							<span id="loggedin" v-t="'header.lia'">{{ $t("header.lia") }}</span>
+							<span id="username">{{ $auth.user.username }}
+								<span id="tag">#{{ $auth.user.discriminator }}</span>
+							</span>
+							<div class="dropdown-content">
+								<a id="userLinks" v-if="isStaff === false" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
+								<a id="userLinks" v-else @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
+								<a id="userLinks" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
+							</div>
 						</span>
 					</nuxt-link>
 
@@ -124,7 +119,32 @@
 </template>
 
 <style lang="scss" scoped>
+
 	@import "~/stylesheets/variables.scss";
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: $background-secondary;
+	border-radius: 15px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 0px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {background-color: $background-primary;}
+
+.dropdown:hover .dropdown-content {display: block;}
 
 	#navbar {
 		background-color: $background-primary;
@@ -352,7 +372,6 @@
 					if(this.$refs.userInfo){
 					targets.push(this.$refs.userInfo.$el);
 					}
-					targets.push(this.$refs.userLinks.$el);
 					
 
 				this.$anime
