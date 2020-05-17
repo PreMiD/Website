@@ -40,22 +40,22 @@
 					</nuxt-link>
 
 
-					<nuxt-link id="userInfo" v-if="$auth.loggedIn"
+					<nuxt-link style="z-index: 2;" id="userInfo" v-if="$auth.loggedIn"
 						:to="''" 
 						ref="userInfo"
 						>
 						<img class="round-icon" style="width: auto; height: 50px;display: inline; background-color: hsl(227, 18%, 8%);" :src="'https://cdn.discordapp.com/avatars/' + $auth.user.id + '/' + $auth.user.avatar ">
-						<span class="dropdown" style="top: 5px;">
+						<div class="dropdown" style="float:right; top: 5px;">
 							<span id="loggedin" v-t="'header.lia'">{{ $t("header.lia") }}</span>
 							<span id="username">{{ $auth.user.username }}
 								<span id="tag">#{{ $auth.user.discriminator }}</span>
 							</span>
 							<div class="dropdown-content">
-								<a id="userLinks" v-if="isStaff === false" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
-								<a id="userLinks" v-else @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
-								<a id="userLinks" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
+								<a style="margin: 0px;border-top-left-radius: 10px;border-top-right-radius: 10px;" v-if="isStaff === false" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
+								<a style="margin: 0px;border-top-left-radius: 10px; border-top-right-radius: 10px;" v-else @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
+								<a style="margin: 0px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
 							</div>
-						</span>
+						</div>
 					</nuxt-link>
 
 
@@ -121,30 +121,6 @@
 <style lang="scss" scoped>
 
 	@import "~/stylesheets/variables.scss";
-
-.dropdown {
-	position: relative;
-	display: inline-block;
-}
-
-.dropdown-content {
-	display: none;
-	position: absolute;
-	background-color: $background-secondary;
-	border-radius: 15px;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-	color: black;
-	padding: 12px 0px;
-	text-decoration: none;
-	display: block;
-}
-
-.dropdown-content a:hover {background-color: $background-primary;}
-
-.dropdown:hover .dropdown-content {display: block;}
 
 	#navbar {
 		background-color: $background-primary;
@@ -276,7 +252,34 @@
 			height: 25px;
 			text-align: center;
 		}
+		.dropdown {
+			position: relative;
+			display: inline-block;
+
+		}
+
+		.dropdown-content {
+			display: none;
+			position:absolute;
+			background-color: $background-secondary;
+			border-radius: 10px;
+			width: inherit;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		}
+
+		.dropdown-content a {
+			color: black;
+			padding: 10px 1.3em;
+			margin: 0px;
+			text-decoration: none;
+			width: inherit;
+		}
+
+		.dropdown-content a:hover {background-color: $background-primary;}
+
+		.dropdown:hover .dropdown-content {display: inline-block;}
 	}
+
 
 	#mobileLinks {
 		position: absolute;
