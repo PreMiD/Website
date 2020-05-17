@@ -22,7 +22,7 @@
 		"node-sass": "4.14.1",
 		"nuxt": "2.12.2",
 		"nuxt-helmet": "^1.2.3",
-		"nuxt-lazy-load": "^1.1.9",
+		"nuxt-lazy-load": "^1.2.3",
 		"sass-loader": "8.0.2",
 		"tinycolor2": "1.4.1",
 		"vue-animejs": "^2.1.1",
