@@ -5,9 +5,7 @@
 				<div class="fullpresence__header">
 					<div class="header__title">
 						<div class="section">
-							<h1 class="presence-name">
-								{{ presence.metadata.service }}
-							</h1>
+							<h1 class="presence-name">{{ presence.metadata.service }}</h1>
 
 							<span
 								v-if="partner"
@@ -83,10 +81,8 @@
 							</span>
 							{{ !isMobile ? $t("presence.page.buttons.sourceCode") : "" }}
 						</a>
-						<a
-							class="button button--lg button--red button--like"
-							@click="like()"
-							><i
+						<a class="button button--lg button--red button--like" @click="like()">
+							<i
 								:class="
 									$store.state.presences.likedPresences.includes(
 										presence.metadata.service
@@ -94,30 +90,22 @@
 										? 'fas' + ' fa-heart'
 										: 'far' + ' fa-heart'
 								"
-						/></a>
+							/>
+						</a>
 					</div>
 					<hr />
 					<div
 						v-if="presence.metadata.button === false"
 						class="header__warning"
-					>
-						{{ $t("store.card.presence.included") }}
-					</div>
+					>{{ $t("store.card.presence.included") }}</div>
 				</div>
 				<div class="fullpresence__content">
 					<div class="content__description">
-						<h2 class="content__title">
-							{{ $t("presence.sections.description.title") }}
-						</h2>
-						<div
-							class="description-container"
-							v-html="linkify(getPresenceDescription())"
-						></div>
+						<h2 class="content__title">{{ $t("presence.sections.description.title") }}</h2>
+						<div class="description-container" v-html="linkify(getPresenceDescription())"></div>
 					</div>
 					<div class="content__info">
-						<h2 class="content__title">
-							{{ $t("presence.sections.information.title") }}
-						</h2>
+						<h2 class="content__title">{{ $t("presence.sections.information.title") }}</h2>
 						<ul class="info__sections">
 							<li v-if="presence.metadata.author">
 								<p>
@@ -156,12 +144,12 @@
 										:to="`/users/${contributor.id}`"
 									>
 										{{
-											contributor.name +
-											`${
-												presence.metadata.contributors.length === index + 1
-													? ""
-													: ", "
-											}`
+										contributor.name +
+										`${
+										presence.metadata.contributors.length === index + 1
+										? ""
+										: ", "
+										}`
 										}}
 									</nuxt-link>
 								</p>
@@ -177,10 +165,7 @@
 							</li>
 							<li v-if="presenceUsage && presenceUsage > 0">
 								<p>
-									<i
-										class="fa-cart-arrow-down fas"
-										style="margin-left: -4px;"
-									></i>
+									<i class="fa-cart-arrow-down fas" style="margin-left: -4px;"></i>
 									{{ $t("presence.sections.information.users") }}:
 									<span class="presence-version">
 										<b>{{ presenceUsage }}</b>
@@ -199,32 +184,26 @@
 										:to="`/store?q=${encodeURIComponent('tag:') + tag}`"
 										:style="`background: ${presence.metadata.color}; color: ${presenceTextColor};`"
 										class="label label_tag"
-										>{{ tag }}</nuxt-link
-									>
+									>{{ tag }}</nuxt-link>
 								</div>
 							</li>
 							<!-- <li>
                 <p><i class="fas fa-heart" /> Likes: <span :style="`background: ${presenceData.color};`"
                         class="label label_tag">36</span></p>
-              </li>-->
+							</li>-->
 							<li>
 								<p>
 									<i class="fa-link fas"></i>
 									{{ $t("presence.sections.information.supportedurls") }}:
 								</p>
-								<ul
-									v-if="Array.isArray(presence.metadata.url)"
-									class="presence-urls"
-								>
+								<ul v-if="Array.isArray(presence.metadata.url)" class="presence-urls">
 									<li v-for="url in presence.metadata.url" :key="url">
 										<a :href="`https://${url}`">{{ url }}</a>
 									</li>
 								</ul>
 								<ul v-else-if="presence.metadata.url" class="presence-urls">
 									<li>
-										<a :href="`https://${presence.metadata.url}`">
-											{{ presence.metadata.url }}
-										</a>
+										<a :href="`https://${presence.metadata.url}`">{{ presence.metadata.url }}</a>
 									</li>
 								</ul>
 							</li>
@@ -442,7 +421,6 @@
 				return `https://github.com/PreMiD/Presences/tree/master/websites/${type}/${encodeURIComponent(presenceName)}`;
 			}
 		},
-
 		head() {
 			if (this.$data?.presence?.error) return;
 			let description =
