@@ -20,7 +20,10 @@
 				<Message
 					v-else-if="message.userId == ticket.userId"
 					:message="message"
-					:user="{ avatar: ticket.userAvatar, name: ticket.userName }"
+					:user="{
+						avatar: ticket.userAvatar || 'https://i.imgur.com/zsd0gU4.png',
+						name: ticket.userName || 'User'
+					}"
 				/>
 
 				<Message

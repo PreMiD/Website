@@ -65,13 +65,16 @@
 			};
 		},
 		beforeMount() {
-			axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(
-				response => {
-					this.user = response.data;
-					//! Temporary
-					if (!this.user.roles.includes("Staff Member")) this.$router.push("/");
-				}
-			);
+			if (this.$auth.loggedIn) {
+				axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(
+					response => {
+						this.user = response.data;
+						//! Temporary
+						if (!this.user.roles.includes("Staff Member"))
+							this.$router.push("/");
+					}
+				);
+			} else this.$router.push("/login");
 		},
 		mounted() {
 			this.page = "Tickets";
