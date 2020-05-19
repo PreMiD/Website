@@ -11,7 +11,28 @@
 				<h1 class="heading" v-t="'report.overview'">{{ $t("report.overview") }}"</h1>
 				<textarea type="text" class="breif" maxlength="50" v-model="Report.brief" required/>
 			</div>
-
+				<br>
+			<div class="rab-container">
+				<h1 class="heading" v-t="'report.os'">{{ $t("report.os") }}</h1>
+				<select class="selection" required v-model="Report.os">
+					<option disabled value="">Please select one</option>
+					<option>OS X</option>
+					<option>Windows</option>
+					<option>Linux</option>
+				</select>
+				<textarea type="text" maxlength="4" style="width:50px;" class="breif" required v-model="Report.browserversion"/>
+			</div>
+				<br>
+			<div class="rab-container">
+				<h1 class="heading" v-t="'report.browser'">{{ $t("report.browser") }}</h1>
+				<select class="selection" required v-model="Report.browser">
+					<option disabled value="">Please select one</option>
+					<option>Chrome</option>
+					<option>Firefox</option>
+				</select>
+				<textarea type="text" maxlength="10" style="width:80px;" class="breif" required v-model="Report.osversion" />
+			</div>
+			<br>
 			<div class="rab-container">
 				<h1 class="heading" v-t="'report.description'">{{ $t("report.description") }}</h1>
 				<textarea style="white-space: pre-wrap;" type="text" class="desc" maxlength="2000" v-model="Report.description" required/>
@@ -70,14 +91,15 @@
 				display: false,
 				bugInfo: {data:{info:{count:-1}}},
 				bugCount: "Loading...",
-				Report : {brief:'',description:'',status:'New',date:new Date().valueOf(),userName:'',userId:''},
+				Report : {brief:'',description:'',os:'',browser:'',osversion:'',browserversion:'',status:'New',date:new Date().valueOf(),userName:'',userId:''},
 				activeBugs: []
 			};
 		},
         methods: {
             addToDB(){
                 let newReport = {
-                    brief: this.Report.brief,
+					brief: this.Report.brief,
+					system: this.Report.os + "-" + this.Report.osversion + ";" + this.Report.browser + "-" + this.Report.browserversion,
                     description: this.Report.description,
                     status: this.Report.status,
                     date: this.Report.date,
@@ -85,12 +107,12 @@
                     userId: this.$auth.user.id
 				};
 				if (this.bugInfo.data.info.count === 0) return this.$noty.error(this.$t("report.toomany"))
-				if (!newReport.brief || !newReport.description || !newReport.userId || !newReport.date) return this.$noty.error(this.$t("report.error"));
+				if (!newReport.brief || !newReport.description || !newReport.userId || !newReport.date || !newReport.system) return this.$noty.error(this.$t("report.error"));
 
                 axios.post(`${process.env.apiBase}/bugPost`, newReport)
                 .then((response) => {
                     this.$noty.success(this.$t("report.success"));
-					//this.$router.push("/");
+					this.$router.push("/");
                 })
                 .catch((error) => {
                     this.$noty.error(error);
@@ -151,6 +173,19 @@
 		width: 400px;
 		border-radius: 8px;
 		resize: none;
+
+		&:focus {
+			background: lighten($background-secondary, 7%);
+			outline: none;
+		}
+	
+		* {
+			margin-left: -17.5rem;
+		}
+	
+		&::placeholder {
+			color: lighten($background-secondary, 45%);
+		}
 	}
 
 	textarea[type="text"].desc {
@@ -168,6 +203,31 @@
 		resize: none;
 
 	
+		&:focus {
+			background: lighten($background-secondary, 7%);
+			outline: none;
+		}
+	
+		* {
+			margin-left: -17.5rem;
+		}
+	
+		&::placeholder {
+			color: lighten($background-secondary, 45%);
+		}
+	}
+
+	.selection {
+		height: 1.8rem;
+		font-size: 14px;
+		transition: all 300ms ease;
+		border: none;
+		background: lighten($background-secondary, 4%);
+		color: lighten($background-secondary, 40%);
+		line-height: 25px;
+		font-weight: bold;
+		border-radius: 8px;
+
 		&:focus {
 			background: lighten($background-secondary, 7%);
 			outline: none;
