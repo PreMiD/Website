@@ -72,7 +72,6 @@
 </template>
 
 <script>
-	import Navigation from "../components/Navigation";
 	export default {
 		head: {
 			title: "Downloads"
