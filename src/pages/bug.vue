@@ -20,7 +20,7 @@
 					<option>Windows</option>
 					<option>Linux</option>
 				</select>
-				<textarea type="text" maxlength="4" style="width:50px;" class="breif" required v-model="Report.browserversion"/>
+				<textarea type="text" maxlength="4" style="width:50px;" class="breif" required v-model="Report.browserversion"/> //Fix Styling
 			</div>
 				<br>
 			<div class="rab-container">
@@ -30,7 +30,7 @@
 					<option>Chrome</option>
 					<option>Firefox</option>
 				</select>
-				<textarea type="text" maxlength="10" style="width:80px;" class="breif" required v-model="Report.osversion" />
+				<textarea type="text" maxlength="10" style="width:80px;" class="breif" required v-model="Report.osversion" /> //Fix Styling
 			</div>
 			<br>
 			<div class="rab-container">
