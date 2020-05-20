@@ -6,7 +6,12 @@
 			:key="sU.userId"
 			:style="{ 'box-shadow': `${sU.roleColor} 0px 0px 7px;` }"
 		>
-			<div class="bg" :style="{ 'background-image': `url(${sU.avatar})` }"></div>
+			<div
+				class="bg"
+				:style="{
+					'background-image': `url(${sU.avatar.replace('gif', 'png')})`
+				}"
+			></div>
 			<div class="userInfo">
 				<img :src="sU.avatar" />
 				<h1>
@@ -15,7 +20,12 @@
 				</h1>
 			</div>
 			<div class="chart-container" v-if="loaded">
-				<LineChart v-if="sU.ready" :chartdata="sU.chartdata" :options="options" class="userChart" />
+				<LineChart
+					v-if="sU.ready"
+					:chartdata="sU.chartdata"
+					:options="options"
+					class="userChart"
+				/>
 			</div>
 		</div>
 	</div>
@@ -24,14 +34,10 @@
 <script>
 	import axios from "axios";
 	import { Line } from "vue-chartjs";
-	import LineChart from "../../components/LineChart";
 
 	export default {
 		name: "StaffActivity",
 		extends: Line,
-		components: {
-			LineChart
-		},
 		data() {
 			return {
 				staffMembers: [],
@@ -67,10 +73,7 @@
 		beforeMount() {
 			axios(`${process.env.apiBase}/credits`).then(response => {
 				response.data.map(user => {
-					if (
-						user.roles.includes("Staff Trainee") ||
-						user.roles.includes("Staff Member")
-					) {
+					if (user.roleIds.includes("566417964820070421")) {
 						this.staffMembers.push(user);
 					}
 				});
@@ -173,73 +176,73 @@
 </script>
 
 <style lang="scss">
-.staff-container {
-	display: flex;
-	flex-wrap: wrap;
-
-	.staffMember {
-		position: relative;
+	.staff-container {
 		display: flex;
-		flex-direction: column;
-		width: 620px;
-		height: 400px;
-		background: #121212;
-		margin-left: 0.5em;
-		margin-bottom: 0.5em;
-		text-align: center;
-		overflow: hidden;
-		border-radius: 3px;
+		flex-wrap: wrap;
 
-		.bg {
-			background-position: center;
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-size: contain;
-			background-repeat: no-repeat;
-			filter: blur(130px);
-		}
-
-		.userInfo {
+		.staffMember {
+			position: relative;
 			display: flex;
-			justify-content: center;
-			padding: 1em;
-			z-index: 99;
+			flex-direction: column;
+			width: 620px;
+			height: 400px;
+			background: #121212;
+			margin-left: 0.5em;
+			margin-bottom: 0.5em;
+			text-align: center;
+			overflow: hidden;
+			border-radius: 3px;
 
-			h1 {
-				text-align: left;
-				font-size: 1.25em;
-				color: white;
-				text-transform: uppercase;
+			.bg {
+				background-position: center;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-size: contain;
+				background-repeat: no-repeat;
+				filter: blur(130px);
+			}
 
-				p {
-					text-transform: none;
-					font-size: 0.75em;
-					margin: 0;
+			.userInfo {
+				display: flex;
+				justify-content: center;
+				padding: 1em;
+				z-index: 99;
+
+				h1 {
+					text-align: left;
+					font-size: 1.25em;
+					color: white;
+					text-transform: uppercase;
+
+					p {
+						text-transform: none;
+						font-size: 0.75em;
+						margin: 0;
+					}
+				}
+
+				img {
+					border-radius: 50%;
+					width: 69px;
+					height: 69px;
+					margin-right: 0.5em;
 				}
 			}
 
-			img {
-				border-radius: 50%;
-				width: 69px;
-				height: 69px;
-				margin-right: 0.5em;
-			}
-		}
-
-		.chart-container {
-			display: flex;
-			height: 300px;
-			width: 100%;
-			z-index: 99;
-
-			.userChart {
+			.chart-container {
+				display: flex;
 				height: 300px;
 				width: 100%;
+				z-index: 99;
+
+				.userChart {
+					height: 300px;
+					width: 100%;
+				}
 			}
 		}
 	}
-}
 </style>

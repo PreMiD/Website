@@ -269,17 +269,9 @@
 
 <script>
 	import axios from "axios";
-	import Benefit from "~/components/Benefit";
-	import JobApply from "~/components/JobApply";
-	import JoinGuild from "~/components/JoinGuild";
 
 	export default {
 		name: "Jobs",
-		components: {
-			Benefit,
-			JobApply,
-			JoinGuild
-		},
 		auth: false,
 		data() {
 			return {

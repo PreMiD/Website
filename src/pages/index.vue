@@ -5,7 +5,7 @@
 				<div class="promo-container">
 					<div class="promo-container__heading" ref="promoHeading">
 						<div class="heading__logo">
-							<img src="@/assets/images/logo_round.svg" />
+							<img data-not-lazy src="@/assets/images/logo_round.svg" />
 						</div>
 						<div class="heading__text">
 							<p v-html="markdown($t('home.introduction.paragraph'))"></p>

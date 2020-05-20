@@ -25,7 +25,7 @@
 		<div
 			class="credit-card__avatar"
 			@click="copyId(user.userId)"
-			v-tippy="{ content: $t('contributors.cards.copyUserId') }"
+			v-tippy="{ content: $t('contributors.cards.copyUserID') }"
 		>
 			<span :class="user.status"></span>
 			<img :src="user.avatar + '?size=64'" draggable="false" />
@@ -81,7 +81,7 @@
 				document.execCommand("copy");
 				document.body.removeChild(el);
 
-				this.$noty.success(this.$t("contributors.cards.userIdCopied"));
+				this.$noty.success(this.$t("contributors.cards.userIDCopied"));
 			}
 		}
 	};

@@ -880,6 +880,11 @@
     std-env "^2.2.1"
     wrap-ansi "^6.2.0"
 
+"@nuxt/components@0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@nuxt/components/-/components-0.2.4.tgz#d26ba245b05c309069e47a4f9f240f30b28d2420"
+  integrity sha512-U9I1e1rUmML1PMVeHbOiRELDwWJxoHbu4YNIyZhtPLIH4BQebbxSOQZ2IG0uYeGoVQW4xe1dN2ER+dBNEbpGRg==
+
 "@nuxt/config@2.12.2":
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/@nuxt/config/-/config-2.12.2.tgz#df0ac32db2c7b36b5bcafc985bff1219dfe5391c"
@@ -1003,7 +1008,7 @@
     "@types/webpack-dev-middleware" "^3.7.0"
     "@types/webpack-hot-middleware" "^2.25.1"
 
-"@nuxt/typescript-build@^0.6.5":
+"@nuxt/typescript-build@0.6.5":
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/@nuxt/typescript-build/-/typescript-build-0.6.5.tgz#eb1d208bf217e1d33f8606a78f69ab14743d6afd"
   integrity sha512-IkuMcPjJh1Vx/fvtA5msA25qqdTMVVoBplD90tGt2ULA8CQ8cCEh7bqe6UhPaWzSOXLEBBNvytqbUz71mpNkiA==
@@ -1129,7 +1134,7 @@
     consola "^2.11.3"
     defu "^1.0.0"
 
-"@nuxtjs/google-adsense@^1.1.3":
+"@nuxtjs/google-adsense@1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nuxtjs/google-adsense/-/google-adsense-1.1.3.tgz#cc8b83616e9cc19d9fb9ae77c7101137da532c16"
   integrity sha512-29gKidhkZWr+nAbAXumjEq/ETgUM6/WLMnTodI6dA0sWLVTD59F8OWjNoFj07mYxeW6TA1L3vSuJf/cXvGfdvA==
@@ -1217,7 +1222,7 @@
   resolved "https://registry.yarnpkg.com/@types/browserslist/-/browserslist-4.8.0.tgz#60489aefdf0fcb56c2d8eb65267ff08dad7a526d"
   integrity sha512-4PyO9OM08APvxxo1NmQyQKlJdowPCOQIy5D/NLO3aO0vGC57wsMptvGp3b8IbYnupFZr92l1dlVief1JvS6STQ==
 
-"@types/chart.js@^2.9.19":
+"@types/chart.js@2.9.19":
   version "2.9.19"
   resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.9.19.tgz#b112e2c2daad9f76afc32b4c099c56ccdf34040c"
   integrity sha512-sFxlMb+ElfJelXh0Z8spmiLRrnXCd7CaT6WGQtckhjETK1H5i1nYKN4TOExhqPeDZ6u+w4bJ20UYqELWOEfAKQ==
@@ -1737,7 +1742,7 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-animejs@^3.2.0, animejs@~3:
+animejs@3.2.0, animejs@~3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/animejs/-/animejs-3.2.0.tgz#2daea7365983249022cc454fa726acdb4a84345d"
   integrity sha512-zhtGl5cS0G2f5DfciMO8uwWpnx06nfFnHlXYYXHBazHep1Lyd6kEtBQP+9hpYKE0dBZjIigHp9VpMO95ZfXQJQ==
@@ -2448,7 +2453,7 @@ chalk@^3.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chart.js@^2.9.3:
+chart.js@2.9.3:
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.9.3.tgz#ae3884114dafd381bc600f5b35a189138aac1ef7"
   integrity sha512-+2jlOobSk52c1VU6fzkh3UwqHMdSlgH1xFv9FKMqHiNCpXsGPQa/+81AFa+i3jZ253Mq9aAycPwDjnn1XbRNNw==
@@ -2471,7 +2476,7 @@ chartjs-color@^2.1.0:
     chartjs-color-string "^0.6.0"
     color-convert "^1.9.3"
 
-chartjs@^0.3.24:
+chartjs@0.3.24:
   version "0.3.24"
   resolved "https://registry.yarnpkg.com/chartjs/-/chartjs-0.3.24.tgz#3addeb5ae3606b3e89e346c27d52ca158416e93d"
   integrity sha1-Ot3rWuNgaz6J40bCfVLKFYQW6T0=
@@ -5475,7 +5480,7 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "^1.2.5"
 
-moment@^2.10.2, moment@^2.24.0:
+moment@2.24.0, moment@^2.10.2:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
@@ -5752,7 +5757,7 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
-nuxt-helmet@^1.2.3:
+nuxt-helmet@1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/nuxt-helmet/-/nuxt-helmet-1.2.3.tgz#f5e8daa999ddcd275643f8b1034c30a4d18aa072"
   integrity sha512-SSynJVk4VdH1+uKmFa0GJ/c1QK3g1GKDrHi+nExZqSYDQC0JJEwYJlX0vWIJVV8SxmGdOkQxVQSNQ/avkQEfVQ==
@@ -5760,7 +5765,7 @@ nuxt-helmet@^1.2.3:
     consola "^2.11.3"
     helmet "^3.21.3"
 
-nuxt-lazy-load@^1.1.9:
+nuxt-lazy-load@1.1.9:
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/nuxt-lazy-load/-/nuxt-lazy-load-1.1.9.tgz#1d6b4235783469810c647e0fea736a80330d96f8"
   integrity sha512-LBMKbRCN07pg1H1rcevFZEziNW8I2GZZjgdN1QnBO3DjX1JjKjP/WQPadow8YYpfpht0/rL1sR6BkVkTkdn4lg==
@@ -7301,7 +7306,7 @@ rimraf@2, rimraf@^2.5.4, rimraf@^2.6.2, rimraf@^2.6.3, rimraf@^2.7.1:
   dependencies:
     glob "^7.1.3"
 
-rimraf@3.0.2:
+rimraf@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
   integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
@@ -8495,19 +8500,19 @@ vue-analytics@^5.22.1:
   resolved "https://registry.yarnpkg.com/vue-analytics/-/vue-analytics-5.22.1.tgz#9d6b32da56daee1b9dfb23a267b50349a03f710f"
   integrity sha512-HPKQMN7gfcUqS5SxoO0VxqLRRSPkG1H1FqglsHccz6BatBatNtm/Vyy8brApktZxNCfnAkrSVDpxg3/FNDeOgQ==
 
-vue-animejs@^2.1.1:
+vue-animejs@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/vue-animejs/-/vue-animejs-2.1.1.tgz#26057e59c9410283419c77526da5241d1d0fc465"
   integrity sha512-m+PTCXuCprvLVntQmpVo0StewYb0P0SKxaHBCOWm44ShjCN+IZMJrJfhZFSwaIRv34eG1boH3UqzH45speXirA==
   dependencies:
     animejs "~3"
 
-vue-carousel-3d@^0.2.0:
+vue-carousel-3d@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/vue-carousel-3d/-/vue-carousel-3d-0.2.0.tgz#5bd2afde5ad2f1c29a7387e1649ea796b6c1da37"
   integrity sha512-soZChzi9l81pvK0xgXlfEO+E2Oc1Uj9UPAC/KOBLJHr2VPDQwwybP3CVwlOlDRBeZF/KGn0oEtjQ6YjtjHW2ew==
 
-vue-chartjs@^3.5.0:
+vue-chartjs@3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/vue-chartjs/-/vue-chartjs-3.5.0.tgz#edd0c2be94c521bcbc5357c24afb9f3560855f84"
   integrity sha512-yWNhG3B6g6lvYqNInP0WaDWNZG/SNb6XnltkjR0wYC5pmLm6jvdiotj8er7Mui8qkJGfLZe6ULjrZdHWjegAUg==
@@ -8527,7 +8532,7 @@ vue-i18n@8.17.0:
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.17.0.tgz#0e9d80afe8a6706e3327fbc30537a5d450200096"
   integrity sha512-A6FlYeZtB9YOLNv+XRcu9xdVXDbIx1j6IprJC7mZ7nubLvXprRjQizauH8UrgGZI0KddoLJpA0UG3Dk87TIcnQ==
 
-vue-js-modal@^2.0.0-rc.3:
+vue-js-modal@2.0.0-rc.3:
   version "2.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/vue-js-modal/-/vue-js-modal-2.0.0-rc.3.tgz#c34b33305af10b4ccecdbb381dd58efbb19e2862"
   integrity sha512-Q9L9FsIUMuzCKSuB41D8LxV+Yc2q+zWHzzUdWaQ2KeHPS+78+X6AAnBztVoophbjt8UXHO7rQSRgER1MMw5qsw==
@@ -8562,7 +8567,7 @@ vue-router@^3.1.6:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.6.tgz#45f5a3a3843e31702c061dd829393554e4328f89"
   integrity sha512-GYhn2ynaZlysZMkFE5oCHRUTqE8BWs/a9YbKpNLi0i7xD6KG1EzDqpHQmv1F5gXjr8kL5iIVS8EOtRaVUEXTqA==
 
-vue-scrollmagic@^1.2.0:
+vue-scrollmagic@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/vue-scrollmagic/-/vue-scrollmagic-1.2.0.tgz#d29b0f0d01233d270f60d494d21d192da64c1787"
   integrity sha512-4n+c35mHzEJeNdPShhXFVE9CY0e0318deAQtIF09Dglj4NKcYJXThTKic3gMMLCtyPwEj3derHlGg2Nsquzaaw==

@@ -30,32 +30,9 @@
 <script>
 	import axios from "axios";
 
-	import Applications from "../components/staff/Applications";
-	import Application from "../components/staff/Application";
-	import Bar from "../components/staff/Bar";
-	import LoggedIn from "../components/staff/LoggedIn";
-	import PullRequests from "../components/staff/PullRequests";
-	import Sidebar from "../components/staff/Sidebar";
-	import StaffActivity from "../components/staff/StaffActivity";
-	import StaffHandbook from "../components/staff/StaffHandbook";
-	import Tickets from "../components/staff/Tickets";
-	import Ticket from "../components/staff/Ticket";
-
 	export default {
 		name: "Staff",
 		auth: true,
-		components: {
-			Applications,
-			Application,
-			Bar,
-			LoggedIn,
-			PullRequests,
-			Sidebar,
-			StaffActivity,
-			StaffHandbook,
-			Tickets,
-			Ticket
-		},
 		data() {
 			return {
 				user: {},
@@ -65,13 +42,16 @@
 			};
 		},
 		beforeMount() {
-			axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(
-				response => {
-					this.user = response.data;
-					//! Temporary
-					if (!this.user.roles.includes("Staff Member")) this.$router.push("/");
-				}
-			);
+			if (this.$auth.loggedIn) {
+				axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(
+					response => {
+						this.user = response.data;
+						//! Temporary
+						if (!this.user.roles.includes("Staff Member"))
+							this.$router.push("/");
+					}
+				);
+			} else this.$router.push("/login");
 		},
 		mounted() {
 			this.page = "Tickets";

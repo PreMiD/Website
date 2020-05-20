@@ -6,10 +6,10 @@
 			@mouseover="cardHovered = true"
 			@mouseleave="cardHovered = false"
 		>
-			<img class="store-card__background" :src="presence.thumbnail" />
+			<img class="store-card__background" @error="presence.thumbnail = ''" :src="presence.thumbnail" />
 
 			<div class="store-card__service-logo">
-				<img :src="presence.logo" />
+				<img @error="presence.logo = '/assets/images/logo.png'" :src="presence.logo" />
 			</div>
 
 			<div class="store-card__service-info">

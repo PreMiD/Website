@@ -133,8 +133,6 @@
 
 <script>
 	import axios from "axios";
-	import Sponsor from "~/components/Sponsor";
-	import Apply from "~/components/Apply";
 
 	import anime from "animejs";
 
@@ -147,10 +145,6 @@
 
 	export default {
 		name: "Partners",
-		components: {
-			Sponsor,
-			Apply
-		},
 		auth: false,
 		async asyncData() {
 			return {
