@@ -37,7 +37,7 @@
 	},
 	"devDependencies": {
 		"@nuxt/typescript-build": "^1.0.0",
-		"@nuxtjs/google-analytics": "^2.2.3",
+		"@nuxtjs/google-analytics": "^2.3.0",
 		"fast-glob": "^3.2.2",
 		"node-emoji": "1.10.0",
 		"prettier": "^2.0.4",
