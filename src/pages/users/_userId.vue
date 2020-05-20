@@ -258,14 +258,10 @@
 
 <script>
 	import axios from "axios";
-	import StoreCard from "../../components/StoreCard";
 
 	export default {
 		name: "Userpage",
 		auth: false,
-		components: {
-			StoreCard
-		},
 		async asyncData({ params }) {
 			const user = (
 					await axios(`${process.env.apiBase}/credits/${params.userId}`)

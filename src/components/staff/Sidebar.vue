@@ -87,11 +87,11 @@
 		h1 {
 			margin: 0;
 			margin-top: 0.25em;
-			margin-left: 0.5em;
 		}
 
 		ul {
 			margin-bottom: 2em;
+			padding: 0;
 
 			li {
 				list-style-type: none;
@@ -111,6 +111,7 @@
 </style>
 
 <script>
+	import anime from "animejs";
 	export default {
 		name: "LoggedIn",
 		props: {
@@ -118,6 +119,16 @@
 		},
 		mounted() {
 			console.log(this.user);
+			anime({
+				targets: ".sidebar h1",
+				translateX: 20,
+				delay: anime.stagger(40) // increase delay by 100ms for each elements.
+			});
+			anime({
+				targets: "li",
+				translateX: 50,
+				delay: anime.stagger(40) // increase delay by 100ms for each elements.
+			});
 		}
 	};
 </script>

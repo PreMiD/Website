@@ -13,9 +13,9 @@
 						</h1>
 					</div>
 					<div class="user" v-else>
-						<img src="https://i.imgur.com/N7yYuh3.jpg" />
+						<img src="https://i.imgur.com/zsd0gU4.png" />
 						<h1 class="username">
-							User yesn't found.
+							User not found.
 							<p>{{ ticket.userId }}</p>
 						</h1>
 					</div>
@@ -24,13 +24,18 @@
 							View Ticket
 						</div>
 					</div>
-					<div class="created">Account Created: 2016-12-16 19:51:17 GMT</div>
+					<div class="created">
+						Account Created: {{ ticket.createdAt || "no data" }}
+					</div>
 					<div class="buttons">
 						<div class="abutton accept">Accept</div>
 						<div class="abutton decline">Decline</div>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="loading" v-else>
+			Loading... (need premid loading animation)
 		</div>
 	</div>
 </template>
@@ -82,9 +87,19 @@
 						} else ticket.supporterError = "User not found.";
 
 						if (userInfo) {
-							ticket.userName = userInfo.name;
-							ticket.userTag = userInfo.tag;
+							ticket.userName = userInfo.username;
+							ticket.userTag = userInfo.discriminator;
 							ticket.userAvatar = userInfo.avatar;
+							ticket.createdAt = new Date(userInfo.created).toLocaleDateString(
+								"en-US",
+								{
+									day: "numeric",
+									month: "short",
+									year: "numeric",
+									hour: "numeric",
+									minute: "numeric"
+								}
+							);
 						} else ticket.userError = "User not found.";
 					} else {
 						const index = this.tickets.indexOf(ticket);
@@ -233,5 +248,13 @@
 				border: 2px solid #b70000;
 			}
 		}
+	}
+
+	.loading {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
