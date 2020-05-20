@@ -18,6 +18,7 @@ module.exports = {
 	],
 	modules: [
 		[
+			"@nuxt/components",
 			"nuxt-lazy-load",
 			{
 				observerConfig: {

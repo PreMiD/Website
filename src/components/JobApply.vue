@@ -75,15 +75,9 @@
 
 <script>
 	import axios from "axios";
-	import First from "~/components/steps/First";
-	import Questions from "~/components/steps/Questions";
 
 	export default {
 		name: "JobApply",
-		components: {
-			First,
-			Questions
-		},
 		props: {
 			job: Object
 		},

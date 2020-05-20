@@ -46,14 +46,10 @@
 
 <script>
 	import axios from "axios";
-	import Message from "./ticket/Message";
 	import moment from "moment";
 
 	export default {
 		name: "Ticket",
-		components: {
-			Message
-		},
 		props: {
 			ticket: Object
 		},

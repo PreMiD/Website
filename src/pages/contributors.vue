@@ -62,14 +62,9 @@
 <script>
 	import axios from "axios";
 
-	import CreditCard from "../components/CreditCard";
-
 	export default {
 		name: "Contributors",
 		auth: false,
-		components: {
-			CreditCard
-		},
 		async asyncData() {
 			return {
 				contributors: (await axios(`${process.env.apiBase}/credits`)).data.sort(

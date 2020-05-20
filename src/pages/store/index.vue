@@ -232,14 +232,10 @@
 </template>
 
 <script>
-	import StoreCard from "../../components/StoreCard.vue";
 	import axios from "axios";
 
 	export default {
 		name: "Store",
-		components: {
-			StoreCard
-		},
 		auth: false,
 		head: {
 			title: "Store"

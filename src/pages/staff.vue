@@ -30,32 +30,9 @@
 <script>
 	import axios from "axios";
 
-	import Applications from "../components/staff/Applications";
-	import Application from "../components/staff/Application";
-	import Bar from "../components/staff/Bar";
-	import LoggedIn from "../components/staff/LoggedIn";
-	import PullRequests from "../components/staff/PullRequests";
-	import Sidebar from "../components/staff/Sidebar";
-	import StaffActivity from "../components/staff/StaffActivity";
-	import StaffHandbook from "../components/staff/StaffHandbook";
-	import Tickets from "../components/staff/Tickets";
-	import Ticket from "../components/staff/Ticket";
-
 	export default {
 		name: "Staff",
 		auth: true,
-		components: {
-			Applications,
-			Application,
-			Bar,
-			LoggedIn,
-			PullRequests,
-			Sidebar,
-			StaffActivity,
-			StaffHandbook,
-			Tickets,
-			Ticket
-		},
 		data() {
 			return {
 				user: {},

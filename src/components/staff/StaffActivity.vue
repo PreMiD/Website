@@ -34,14 +34,10 @@
 <script>
 	import axios from "axios";
 	import { Line } from "vue-chartjs";
-	import LineChart from "../../components/LineChart";
 
 	export default {
 		name: "StaffActivity",
 		extends: Line,
-		components: {
-			LineChart
-		},
 		data() {
 			return {
 				staffMembers: [],
