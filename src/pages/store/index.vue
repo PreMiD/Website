@@ -271,7 +271,6 @@
 				hotPresences: Object.keys(presenceRanking)
 					.map((k, i) => {
 						if ((presenceRanking[k] / usage) * 100 > 5) return k;
-						else false;
 					})
 					.filter(p => p)
 			};

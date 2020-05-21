@@ -1,18 +1,19 @@
 <template>
 	<transition appear v-on:after-appear="appear">
 		<div>
-			<div class="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
-				<div class="logoWrapper" ref="headerLogo">
-					<nuxt-link to="/"
-						><img
-							:src="require('@/assets/images/logo_round.svg')"
-							data-not-lazy
-					/></nuxt-link>
+			<div id="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
+				<div id="logoWrapper" ref="headerLogo">
+					<nuxt-link
+						to="/"
+						tag="img"
+						:src="require('@/assets/images/logo_round.svg')"
+						data-not-lazy
+					/>
 
 					<transition name="pop">
 						<div
 							v-if="!isMobile && !$store.state.extension.extensionInstalled"
-							class="status"
+							id="status"
 							v-tippy="{
 								content: $t('store.message.error')
 							}"
@@ -25,7 +26,7 @@
 					</transition>
 				</div>
 
-				<div v-if="!$props.noLinks" class="links">
+				<div v-if="!noLinks" id="links">
 					<nuxt-link
 						v-for="category of categories"
 						:key="category.route"
@@ -37,39 +38,56 @@
 						</span>
 						<p>{{ $t(category.string) }}</p>
 					</nuxt-link>
-				</div>
 
-				<div v-if="$props.countDownBtn" class="links">
-					<a
-						v-if="countDownValue === 0"
-						@click="$nuxt.setLayout('default')"
-						class="navbar__item"
+
+					<nuxt-link style="z-index: 2;" id="userInfo" v-if="$auth.loggedIn"
+						:to="''" 
+						ref="userInfo"
+						>
+						<img class="round-icon" style="width: auto; height: 50px;display: inline; background-color: hsl(227, 18%, 8%);" :src="'https://cdn.discordapp.com/avatars/' + $auth.user.id + '/' + $auth.user.avatar ">
+						<div class="dropdown" style="float:right; top: 5px;">
+							<span id="loggedin" v-t="'header.lia'">{{ $t("header.lia") }}</span>
+							<span id="username">{{ $auth.user.username }}
+								<span id="tag">#{{ $auth.user.discriminator }}</span>
+							</span>
+							<div class="dropdown-content">
+								<a style="margin: 0px;border-top-left-radius: 10px;border-top-right-radius: 10px;" v-if="isStaff === false" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
+								<a style="margin: 0px;border-top-left-radius: 10px; border-top-right-radius: 10px;" v-else @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
+								<a style="margin: 0px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
+							</div>
+						</div>
+					</nuxt-link>
+
+
+					<nuxt-link v-if="!this.$auth.loggedIn"
+						key="login"
+						:to="'/login'"
+						ref="userLinks"
 					>
 						<span class="round-icon">
-							<i :class="`fa-backward fas`"></i>
+							<i :class="`fa-user fas`"></i>
 						</span>
-						<p>{{ $t("downloads.button.back") }}</p>
-					</a>
+						<p v-t="'header.login'">{{ $t("header.login") }}</p>
+					</nuxt-link>
 
+
+				</div>
+				
+
+				<div v-if="countDownBtn" id="links">
 					<a
-						@click="countDownValue === 0 ? redirect($props.href) : null"
+						@click="countDownValue === 0 ? $nuxt.setLayout('dl') : null"
 						class="navbar__item"
 					>
 						<span class="round-icon">
 							<i :class="`fa-forward fas`"></i>
 						</span>
-						<p
-							v-text="
-								countDownValue === 0
-									? $t('downloads.button.skip')
-									: countDownValue
-							"
-						/>
+						<p v-text="countDownValue === 0 ? 'Skip' : countDownValue" />
 					</a>
 				</div>
 
 				<div
-					class="hamburger"
+					id="hamburger"
 					ref="hamburger"
 					@click="mobileMenuActive = !mobileMenuActive"
 				>
@@ -80,7 +98,7 @@
 
 			<transition name="slide-down">
 				<div
-					class="mobileLinks"
+					id="mobileLinks"
 					v-if="mobileMenuActive"
 					@click="mobileMenuActive = !mobileMenuActive"
 				>
@@ -101,9 +119,10 @@
 </template>
 
 <style lang="scss" scoped>
+
 	@import "~/stylesheets/variables.scss";
 
-	.navbar {
+	#navbar {
 		background-color: $background-primary;
 		position: relative;
 		height: 75px;
@@ -114,7 +133,7 @@
 		align-items: center;
 		justify-content: space-between;
 
-		.logoWrapper {
+		#logoWrapper {
 			height: 40px;
 
 			display: grid;
@@ -122,11 +141,10 @@
 			align-items: center;
 
 			img {
-				cursor: pointer;
 				height: 40px;
 			}
 
-			.status {
+			#status {
 				display: flex;
 				align-items: center;
 				font-size: small;
@@ -135,37 +153,23 @@
 				border-radius: 100%;
 				margin-left: 0.6em;
 				animation: pulseWarn 2s infinite;
-				background-color: #f1c40f;
-				color: rgba(255, 255, 255, 0.85);
+				background-color: #ffff00;
+				color: black;
 				cursor: pointer;
 				justify-content: center;
 			}
 		}
 
-		.links {
+		#links {
 			display: flex;
 			font-size: 1.1rem;
 			font-weight: 800;
 			text-transform: uppercase;
 
-			.nuxt-link-active {
-				color: #7289da;
-
-				span {
-					color: white;
-				}
-
-				.round-icon {
-					background: #7289da;
-				}
-			}
-
 			a {
 				transition: 0.25s margin ease-out;
-
 				//* Fix for chinese etc languages
 				white-space: nowrap;
-
 				display: grid;
 				grid-template-columns: min-content min-content;
 				align-items: center;
@@ -177,14 +181,13 @@
 
 					.round-icon {
 						background-color: $accent-primary;
-
 						i {
 							color: #fff;
 						}
 					}
 				}
 
-				.round-icon {
+				.round-icon, img {
 					transition: 0.15s background-color ease-out;
 
 					align-items: center;
@@ -202,19 +205,83 @@
 						font-size: 0.8em;
 					}
 				}
+
+				img {
+					height: 45px;
+				}
+			}
+			#user-link{
+				color: #646E90;
+				display:inline;
+				position: relative;
+				white-space: nowrap;
+			}
+			#loggedin{
+				display: inline-block;
+				white-space: nowrap;
+				font-size: 1.0rem;
+				background: linear-gradient(30deg, #7289da, #b3aeff);
+				background-clip: text;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+			#userInfo{
+				width: auto;
+				display: flex;
+				justify-content: space-between;
+			}
+			#username{
+				display: flex;
+				color: #fff;
+				font-size: 1.1rem;
+				white-space: nowrap;
+				vertical-align: bottom; 
+			}
+			#tag{
+				display: flex;
+				font-size: 0.8rem;
+				color: #99AAB5;
+				align-self: flex-end;
 			}
 		}
 
-		.hamburger {
+		#hamburger {
 			font-size: 1.5em;
 			display: none;
 			width: 25px;
 			height: 25px;
 			text-align: center;
 		}
+		.dropdown {
+			position: relative;
+			display: inline-block;
+
+		}
+
+		.dropdown-content {
+			display: none;
+			position:absolute;
+			background-color: $background-secondary;
+			border-radius: 10px;
+			width: inherit;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		}
+
+		.dropdown-content a {
+			color: black;
+			padding: 10px 1.3em;
+			margin: 0px;
+			text-decoration: none;
+			width: inherit;
+		}
+
+		.dropdown-content a:hover {background-color: $background-primary;}
+
+		.dropdown:hover .dropdown-content {display: inline-block;}
 	}
 
-	.mobileLinks {
+
+	#mobileLinks {
 		position: absolute;
 		top: 75px;
 		z-index: 99999;
@@ -244,7 +311,7 @@
 	//* Responsive Design
 
 	@media only screen and (max-width: 900px) {
-		.links {
+		#links {
 			a {
 				margin: 0 0.5em !important;
 			}
@@ -252,26 +319,30 @@
 	}
 
 	@media only screen and (max-width: 715px) {
-		.links {
+		#links {
 			display: none !important;
 		}
 
-		.hamburger {
+		#hamburger {
 			display: block !important;
 		}
 	}
 </style>
 
 <script>
+	import axios from "axios";
+
 	export default {
 		name: "Navigation",
-		props: ["noLinks", "countDownBtn", "href", "target"],
+		props: ["noLinks", "countDownBtn"],
 		data() {
 			return {
 				pageLoad: false,
 				countDownValue: 5,
 				mobileMenuActive: false,
 				isMobile: false,
+				isStaff: false,
+				contributors: [],
 				categories: [
 					{
 						logo: "cart-arrow-down",
@@ -292,14 +363,8 @@
 			};
 		},
 		methods: {
-			reload() {
-				location.reload();
-			},
-			redirect(url) {
-				if (this.$props.countDownBtn && this.$props.target) {
-					window.open(url, this.$props.target).focus();
-					this.$nuxt.setLayout("default");
-				} else window.location.href = url || window.location.href;
+			redirect(location) {
+				window.location.href = location || window.location.href;
 			},
 			appear() {
 				this.pageLoad = true;
@@ -307,6 +372,10 @@
 
 				if (this.$refs.headerLink)
 					targets.push(...this.$refs.headerLink.map(i => i.$el));
+					if(this.$refs.userInfo){
+					targets.push(this.$refs.userInfo.$el);
+					}
+					
 
 				this.$anime
 					.timeline({
@@ -340,26 +409,45 @@
 			}
 		},
 		mounted() {
-			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator?.userAgent
 			);
 
-			if (this.isMobile)
-				this.listener = document.addEventListener("click", e => {
-					if (!e.target.classList.contains("fas") && this.mobileMenuActive)
-						this.mobileMenuActive = false;
+			const interval = setInterval(() => {
+				if (!this.countDownBtn) return;
+				this.countDownValue--;
+
+				if (this.countDownValue === 0) clearInterval(interval);
+			}, (1 * 1000));
+			
+			if(this.$auth.loggedIn){
+				axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(({ data }) => {
+					if(data.userId){
+						const staffRoles = [
+							"606270745299124235", //Creator
+							"493135149274365975", //Executive Director
+							"691382096878370837", //Operations Supervisior
+							"673681900476432387", //Global Community Representative
+							"673682511288598575", //Head Software Engineer
+							"616646805907832833", //Web Developer
+							"691393583189721088", //Linux Maintainer
+							"691396820236107837", //Engineer
+							"691386502566903850", //Graphic Designer
+							"548518356324581377", //Senior Moderator
+							"673683121971134505", //Head of Presence Verifying
+							"691384256672563332", //Community Representative
+							"514546359865442304", //Moderator
+							"526734093560315925", //Junior Moderator
+							"566417964820070421", //Support Agent
+							"630445337143935009" //Presence Verifier
+						];
+
+						if (staffRoles.indexOf(data.roleId) !== -1) this.isStaff = true;
+						else this.isStaff = false;
+					}
 				});
+			}
 
-			if (this.$props.countDownBtn)
-				this.interval = setInterval(() => {
-					this.countDownValue--;
-
-					if (this.countDownValue === 0) clearInterval(this.interval);
-				}, 1 * 1000);
-		},
-		beforeDestroy() {
-			clearInterval(this.interval);
-			if (this.listener) document.removeEventListener("click", this.listener);
 		}
 	};
 </script>
