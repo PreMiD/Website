@@ -105,7 +105,7 @@
 			this.$auth.$storage.setUniversal("redirect", "/bug");
 			if(!this.$auth.loggedIn) return this.$router.push("/login");
 			axios.get(`${process.env.apiBase}/bugUserInfo/${this.$auth.$storage._state["_token.discord"]}`).then((data => {
-				if(data.info === null){
+				if(data.data.info === null){
 					return this.bugInfo.data.info.count = 3;
 				}
 				this.bugInfo = data;
@@ -117,12 +117,10 @@
 						}
 						this.activeBugs = data;
 					}));
+				} else {
+					return;
 				}
 			}))
-			.catch(err => {
-				this.$router.push("/");
-				this.$noty.error(this.$t("report.error.unauth"));
-			});
 		},
 		head() {
 			if(this.bugInfo.data.info.count === 0) this.$noty.error(this.$t("report.toomany.alert"));
