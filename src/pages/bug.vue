@@ -20,6 +20,8 @@
 					<option>Windows</option>
 					<option>Linux</option>
 				</select>
+				<br>
+				<br>
 				<textarea type="text" maxlength="4" style="width:50px;" class="breif" required v-model="Report.browserversion"/>
 			</div>
 				<br>
@@ -30,6 +32,8 @@
 					<option>Chrome</option>
 					<option>Firefox</option>
 				</select>
+				<br>
+				<br>
 				<textarea type="text" maxlength="10" style="width:80px;" class="breif" required v-model="Report.osversion" />
 			</div>
 			<br>
@@ -38,33 +42,12 @@
 				<textarea style="white-space: pre-wrap;" type="text" class="desc" maxlength="2000" v-model="Report.description" required/>
 			</div>
 				<br>
-			<div class="rab-container">
+			<div class="rab-container" style="margin-bottom: 10px;">
 				<button type="button" class="button" @click="addToDB" v-t="'report.button'">{{ $t("report.button") }}</button>
 			</div>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
 		</div>
-		<div v-if="bugInfo.data.info.count === 0" class="rab-container">
+		<div v-if="bugInfo.data.info.count === 0" class="rab-container" style="margin-bottom: 300px;">
 			<h1 style="text-align: center;" class="heading" v-t="'report.toomany'">{{ $t('report.toomany') }}</h1>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
 		</div>
 		<div v-if="bugInfo.data.info.count < 3 && bugInfo.data.info.count !== -1" class="rab-container">
 			<h2 v-t="'report.activebugs'">{{ $t("report.activebugs") }}</h2>
@@ -91,7 +74,7 @@
 				display: false,
 				bugInfo: {data:{info:{count:-1}}},
 				bugCount: "Loading...",
-				Report : {brief:'',description:'',os:'',browser:'',osversion:'',browserversion:'',status:'New',date:new Date().valueOf(),userName:'',userId:''},
+				Report : {brief:'',description:'',os:'',browser:'',osversion:'',browserversion:'',status:'New',date:new Date().valueOf()},
 				activeBugs: []
 			};
 		},
@@ -102,14 +85,12 @@
 					system: this.Report.os + "-" + this.Report.osversion + ";" + this.Report.browser + "-" + this.Report.browserversion,
                     description: this.Report.description,
                     status: this.Report.status,
-                    date: this.Report.date,
-                    userName: this.$auth.user.username+'#'+this.$auth.user.discriminator,
-                    userId: this.$auth.user.id
+					date: this.Report.date
 				};
 				if (this.bugInfo.data.info.count === 0) return this.$noty.error(this.$t("report.toomany"))
-				if (!newReport.brief || !newReport.description || !newReport.userId || !newReport.date || !newReport.system) return this.$noty.error(this.$t("report.error"));
+				if (!newReport.brief || !newReport.description || !newReport.date || !newReport.system) return this.$noty.error(this.$t("report.error"));
 
-                axios.post(`${process.env.apiBase}/bugPost`, newReport)
+                axios.post(`${process.env.apiBase}/bugPost/${this.$auth.$storage._state["_token.discord"]}`, newReport)
                 .then((response) => {
                     this.$noty.success(this.$t("report.success"));
 					this.$router.push("/");
@@ -121,14 +102,15 @@
             
         },
         mounted(){
+			this.$auth.$storage.setUniversal("redirect", "/bug");
 			if(!this.$auth.loggedIn) return this.$router.push("/login");
-			axios.get(`${process.env.apiBase}/bugUserInfo/${this.$auth.user.id}`).then((data => {
+			axios.get(`${process.env.apiBase}/bugUserInfo/${this.$auth.$storage._state["_token.discord"]}`).then((data => {
 				if(data.info === null){
 					return this.bugInfo.data.info.count = 3;
 				}
 				this.bugInfo = data;
 				if(data.data.info.count < 3){
-					axios.get(`${process.env.apiBase}/bugInfo/${this.$auth.user.id}`).then((data => {
+					axios.get(`${process.env.apiBase}/bugInfo/${this.$auth.$storage._state["_token.discord"]}`).then((data => {
 						if(data.result === null){
 							this.activeBugs[0].brief = null;
 							return this.activeBugs[0].description = null;
@@ -136,7 +118,11 @@
 						this.activeBugs = data;
 					}));
 				}
-			}));
+			}))
+			.catch(err => {
+				this.$router.push("/");
+				this.$noty.error(this.$t("report.error.unauth"));
+			});
 		},
 		head() {
 			if(this.bugInfo.data.info.count === 0) this.$noty.error(this.$t("report.toomany.alert"));
