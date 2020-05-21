@@ -42,14 +42,14 @@
 				<textarea style="white-space: pre-wrap;" type="text" class="desc" maxlength="2000" v-model="Report.description" required/>
 			</div>
 				<br>
-			<div class="rab-container" style="margin-bottom: 10px;">
+			<div class="rab-container" style="margin-bottom: 80px;">
 				<button type="button" class="button" @click="addToDB" v-t="'report.button'">{{ $t("report.button") }}</button>
 			</div>
 		</div>
 		<div v-if="bugInfo.data.info.count === 0" class="rab-container" style="margin-bottom: 300px;">
 			<h1 style="text-align: center;" class="heading" v-t="'report.toomany'">{{ $t('report.toomany') }}</h1>
 		</div>
-		<div v-if="bugInfo.data.info.count < 3 && bugInfo.data.info.count !== -1" class="rab-container">
+		<div v-if="bugInfo.data.info.count < 3 && bugInfo.data.info.count !== -1" class="rab-container" style="margin-bottom: 80px;">
 			<h2 v-t="'report.activebugs'">{{ $t("report.activebugs") }}</h2>
 			<table style="width: 100%">
 				<tr v-for="bug of activeBugs.data"
@@ -60,6 +60,7 @@
 				</tr>
 			</table>
 		</div>
+		<adsense ad-slot="5201967746" style="text-align: center;" />
 	</section>
 </template>
 
