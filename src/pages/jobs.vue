@@ -279,58 +279,40 @@
 			};
 		},
 		async asyncData({ app }) {
-			const data = await Promise.all([
-				app.$graphql(
-					`
-						{
-							jobs {
-								available
-								bonusPoints
-								jobIcon
-								jobName
-								questions {
-									id
-									question
-									required
-								}
-								requirements
-								tasks
-							}
-						}`
-				),
-				app.$graphql(
-					`
-						{
-							benefits {
-								description
-								icon
-								title
-							}
+			const data = await app.$graphql(`
+				{
+					jobs {
+						available
+						bonusPoints
+						jobIcon
+						jobName
+						questions {
+							id
+							question
+							required
 						}
-				`
-				),
-				app.$graphql(
-					`
-						{
-							discordUsers {
-								avatar
-								created
-								userId
-								username
-								discriminator
-							}
-						}
-				`
-				)
-			]);
-			const jobs = data[0].jobs,
-				benefits = data[1].benefits,
-				discordUsers = data[2].discordUsers.map(u => u.userId);
+						requirements
+						tasks
+					}
+					benefits {
+						description
+						icon
+						title
+					}
+					discordUsers {
+						avatar
+						created
+						userId
+						username
+						discriminator
+					}
+				}
+			`);
 
 			return {
-				jobs,
-				benefits,
-				discordUsers
+				jobs: data.jobs,
+				benefits: data.benefits,
+				discordUsers: data.discordUsers.map(u => u.userId)
 			};
 		},
 		mounted() {
