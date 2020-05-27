@@ -52,67 +52,79 @@
 			};
 		},
 		beforeMount() {
-			axios
-				.post(
-					`${process.env.apiBase}/tickets/${this.$auth.$storage._state["_token.discord"]}`
-				)
-				.then(response => {
-					this.tickets = response.data;
-				});
-			axios(`${process.env.apiBase}/credits`).then(response => {
-				this.credits = response.data;
-			});
-			axios(`${process.env.apiBase}/discordUsers`).then(response => {
-				this.discordUsers = response.data;
+			this.$graphql(
+				`{
+					discordUsers {
+						avatar
+						created
+						userId
+						username
+						discriminator
+					}
+					credits {
+						user {
+							id
+							name
+							tag
+							avatar
+						}
+					}
+				}
+				`
+			).then(data => {
+				let discordUsers = data.discordUsers;
+				let credits = data.credits;
+
+				axios
+					.post(
+						`${process.env.apiBase}/tickets/${this.$auth.$storage._state["_token.discord"]}`
+					)
+					.then(response => {
+						this.tickets = response.data;
+						this.tickets.reverse().map(async ticket => {
+							//* Get only the tickets with messages.
+							if (ticket.messages !== undefined) {
+								const supporterInfo = credits.find(
+									user => user.userId == ticket.accepter
+								);
+								const userInfo = discordUsers.find(
+									user => user.userId == ticket.userId
+								);
+
+								if (supporterInfo) {
+									ticket.supporterName = supporterInfo.name;
+									ticket.supporterTag = supporterInfo.tag;
+									ticket.supporterAvatar = supporterInfo.avatar;
+								} else ticket.supporterError = "User not found.";
+
+								if (userInfo) {
+									ticket.userName = userInfo.username;
+									ticket.userTag = userInfo.discriminator;
+									ticket.userAvatar = userInfo.avatar;
+									ticket.createdAt = new Date(
+										userInfo.created
+									).toLocaleDateString("en-US", {
+										day: "numeric",
+										month: "short",
+										year: "numeric",
+										hour: "numeric",
+										minute: "numeric"
+									});
+								} else ticket.userError = "User not found.";
+							} else {
+								const index = this.tickets.indexOf(ticket);
+								if (index > -1) {
+									this.tickets.splice(index, 1);
+								}
+							}
+						});
+
+						this.show = true;
+					});
 			});
 		},
 		mounted() {
 			this.$parent.sortBy = false;
-			console.log(this.$parent.sortBy);
-			setTimeout(() => {
-				this.tickets.reverse().map(async ticket => {
-					//* Get only the tickets with messages.
-					if (ticket.messages !== undefined) {
-						const supporterInfo = this.credits.find(
-							user => user.userId == ticket.accepter
-						);
-						const userInfo = this.discordUsers.find(
-							user => user.userId == ticket.userId
-						);
-
-						if (supporterInfo) {
-							ticket.supporterName = supporterInfo.name;
-							ticket.supporterTag = supporterInfo.tag;
-							ticket.supporterAvatar = supporterInfo.avatar;
-						} else ticket.supporterError = "User not found.";
-
-						if (userInfo) {
-							ticket.userName = userInfo.username;
-							ticket.userTag = userInfo.discriminator;
-							ticket.userAvatar = userInfo.avatar;
-							ticket.createdAt = new Date(userInfo.created).toLocaleDateString(
-								"en-US",
-								{
-									day: "numeric",
-									month: "short",
-									year: "numeric",
-									hour: "numeric",
-									minute: "numeric"
-								}
-							);
-						} else ticket.userError = "User not found.";
-					} else {
-						const index = this.tickets.indexOf(ticket);
-						if (index > -1) {
-							this.tickets.splice(index, 1);
-						}
-					}
-				});
-
-				this.show = true;
-
-				console.log(this.tickets);
-			}, 2500);
 		},
 		methods: {
 			changeImage(event) {

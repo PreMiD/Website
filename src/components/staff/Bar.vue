@@ -42,6 +42,9 @@
 	}
 
 	.sort {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		width: 50px;
 		height: 10px;
 		padding: 1em;

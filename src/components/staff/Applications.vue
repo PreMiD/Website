@@ -5,12 +5,14 @@
 				v-for="(application, i) in applications"
 				:key="application.userId + i"
 			>
-				<div class="application" v-if="application.position.name == 'Engineer'">
+				<div class="application">
 					<div class="user" v-if="!application.error">
 						<img :src="application.avatar" />
 						<h1 class="username">
-							{{ application.name }}
-							<span class="discriminator">#{{ application.tag }}</span>
+							{{ cut(application.name) }}
+							<span class="discriminator" v-if="application.name.length < 10"
+								>#{{ application.tag }}</span
+							>
 							<p>{{ application.userId }}</p>
 						</h1>
 					</div>
@@ -36,8 +38,11 @@
 							Read Application
 						</div>
 					</div>
-					<div class="created">Account Created: 2016-12-16 19:51:17 GMT</div>
-					<div class="buttons">
+					<div class="created">
+						<p>Account Created: {{ application.createdAt || "No data" }}</p>
+						<p>Application for: {{ application.position.name }}</p>
+					</div>
+					<div class="buttons" v-if="application.reviewed == false">
 						<button type="button" class="button accept">
 							Accept
 						</button>
@@ -45,6 +50,7 @@
 							Decline
 						</button>
 					</div>
+					<div class="buttons" v-else>Application reviewed</div>
 				</div>
 			</div>
 		</div>
@@ -63,41 +69,63 @@
 			};
 		},
 		beforeMount() {
-			axios
-				.post(
-					`${process.env.apiBase}/applications/${this.$auth.$storage._state["_token.discord"]}`
-				)
-				.then(response => {
-					this.applications = response.data;
+			this.$graphql(
+				`{
+					discordUsers {
+						avatar
+						created
+						userId
+						username
+						discriminator
+					}
+				}`
+			).then(dUsers => {
+				axios
+					.post(
+						`${process.env.apiBase}/applications/${this.$auth.$storage._state["_token.discord"]}`
+					)
+					.then(response => {
+						this.applications = response.data.reverse();
 
-					this.applications.map(async app => {
-						const userInfo = this.credits.find(
-							user => user.userId == app.userId
-						);
+						this.applications.map(async app => {
+							const userInfo = dUsers.discordUsers.find(
+								user => user.userId == app.userId
+							);
 
-						if (userInfo) {
-							app.name = userInfo.name;
-							app.tag = userInfo.tag;
-							app.avatar = userInfo.avatar;
-						} else app.error = "User not found.";
+							if (userInfo) {
+								app.name = userInfo.username;
+								app.tag = userInfo.discriminator;
+								app.avatar = userInfo.avatar;
+								app.createdAt = new Date(userInfo.created).toLocaleDateString(
+									"en-US",
+									{
+										day: "numeric",
+										month: "short",
+										year: "numeric",
+										hour: "numeric",
+										minute: "numeric"
+									}
+								);
+							} else app.error = "User not found.";
 
-						this.show = true;
+							this.show = true;
+						});
 					});
-				});
-			axios(`${process.env.apiBase}/credits`).then(response => {
-				this.credits = response.data;
 			});
 		},
 		mounted() {
 			this.$parent.page = "Applications";
 			this.$parent.sortBy = true;
-			console.log(this.$parent.page);
 		},
 		methods: {
 			readApp(application) {
 				this.$parent.page = "Application";
 				this.$parent.lastPage = "Applications";
 				this.$parent.userApplication = application;
+			},
+			cut(string) {
+				if (string.length > 10) return string.substring(0, 10) + "...";
+				else return string;
 			}
 		}
 	};
@@ -106,6 +134,8 @@
 <style lang="scss">
 	.application {
 		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		background: #1c1c1e;
 		width: 1225px;
 		height: 75px;
@@ -116,6 +146,7 @@
 
 		.user {
 			display: flex;
+			width: 300px;
 
 			.username {
 				color: white;
@@ -150,10 +181,7 @@
 
 		.votes {
 			display: flex;
-			position: absolute;
-			left: 300px;
-			top: 32.5px;
-			margin-left: 2em;
+			width: 150px;
 
 			.vote {
 				margin: auto;
@@ -177,41 +205,33 @@
 		}
 
 		.read {
-			margin: auto;
-			margin-left: 2em;
-			margin-right: 0;
-			position: absolute;
-			left: 450px;
-			top: 32.5px;
-		}
+			width: 150px;
 
-		.abutton {
-			margin: auto;
-			margin-left: 0;
-			margin-right: 0;
-			color: white;
-			padding: 0.25em;
-			border: 2px solid #196cce;
-			border-radius: 5px;
-			cursor: pointer;
+			.abutton {
+				color: white;
+				padding: 0.25em;
+				border: 2px solid #196cce;
+				border-radius: 5px;
+				cursor: pointer;
+				display: flex;
+				justify-content: center;
+			}
 		}
 
 		.created {
+			width: 400px;
 			color: white;
-			margin-left: 2em;
-			margin-right: 0;
-			text-transform: uppercase;
-			position: absolute;
-			left: 630px;
-			top: 40.5px;
+			text-align: center;
+
+			p {
+				margin: 0;
+				text-transform: capitalize;
+			}
 		}
 
 		.buttons {
 			display: flex;
-			margin-left: 2em;
-			position: absolute;
-			right: 10px;
-			top: 32.5px;
+			width: 200px;
 
 			button {
 				padding: 0.7em 1.6em;

@@ -54,7 +54,7 @@
 			} else this.$router.push("/login");
 		},
 		mounted() {
-			this.page = "Tickets";
+			this.page = "Applications";
 		},
 		methods: {
 			updatePage(event) {

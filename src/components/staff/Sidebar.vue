@@ -122,12 +122,12 @@
 			anime({
 				targets: ".sidebar h1",
 				translateX: 20,
-				delay: anime.stagger(40) // increase delay by 100ms for each elements.
+				delay: anime.stagger(40)
 			});
 			anime({
 				targets: "li",
 				translateX: 50,
-				delay: anime.stagger(40) // increase delay by 100ms for each elements.
+				delay: anime.stagger(40)
 			});
 		}
 	};

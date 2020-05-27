@@ -316,6 +316,7 @@
 			};
 		},
 		mounted() {
+			console.log(this.$auth);
 			this.$auth.$storage.setUniversal("redirect", "/jobs");
 		},
 		methods: {

@@ -136,14 +136,11 @@
 							console.log(sU);
 						});
 						this.loaded = true;
-						console.log(this.staffMembers);
 					});
 			});
 		},
 		mounted() {
 			this.$parent.sortBy = false;
-			console.log(this.staffMembers);
-			//this.loaded = true;
 		},
 		methods: {
 			formatDate(date) {
