@@ -1,8 +1,8 @@
 <template>
 	<div class="application-page">
 		<div class="pattern"></div>
-		<div class="appinfo" v-if="!application.error">
-			<div class="user">
+		<div class="appinfo">
+			<div class="user" v-if="!application.error">
 				<img :src="application.avatar" />
 				<h1 class="username">
 					{{ application.name }}
@@ -10,28 +10,71 @@
 					<p>{{ application.userId }}</p>
 				</h1>
 			</div>
-			<div class="buttons" v-if="application.reviewed == false">
+			<div class="user" v-else>
+				<img src="https://i.imgur.com/zsd0gU4.png" />
+				<h1 class="username">
+					User not found.
+					<p>{{ application.userId }}</p>
+				</h1>
+			</div>
+			<div
+				class="buttons"
+				v-if="
+					application.reviewed == false &&
+					((application.reviewers &&
+						application.reviewers.find(r => r.userId == $auth.user.id).length ==
+							0) ||
+						application.reviewers == undefined) == true
+				"
+			>
 				<p>Your review:</p>
-				<button type="button" class="button accept">
+				<button
+					type="button"
+					class="button accept"
+					@click="review(true, application.userId)"
+				>
 					Accept
 				</button>
-				<button type="button" class="button decline">
+				<button
+					type="button"
+					class="button decline"
+					@click="review(false, application.userId)"
+				>
 					Decline
 				</button>
 			</div>
-			<div class="buttons" v-else>Application reviewed</div>
+			<div
+				class="buttons"
+				v-else-if="
+					application.reviewers !== undefined &&
+					application.reviewers.find(r => r.userId == $auth.user.id).length !==
+						0
+				"
+				style="margin-right: 2em;"
+			>
+				<p style="margin: 0;">Submitted review:</p>
+				<span
+					v-bind:style="{
+						color:
+							application.reviewers.find(r => r.userId == $auth.user.id)
+								.accepted == true
+								? 'green'
+								: 'red'
+					}"
+					>{{
+						application.reviewers.find(r => r.userId == $auth.user.id)
+							.accepted == true
+							? "Accept"
+							: "Reject"
+					}}</span
+				>
+			</div>
+			<div class="buttons" v-else-if="application.reviewed == true">
+				Application closed
+			</div>
 		</div>
-		<div class="user" v-else>
-			<img
-				src="https://i.imgur.com/zsd0gU4.png"
-				style="width: 125px; height: 125px;"
-			/>
-			<h1 class="username">
-				User not found.
-				<p>{{ application.userId }}</p>
-			</h1>
-		</div>
-		<div class="content">
+
+		<div class="acontent">
 			<div class="questions">
 				<h1>Application for: {{ application.position.name }}</h1>
 				<div
@@ -51,99 +94,87 @@
 						<img :src="sh.avatar" />
 					</div>
 				</div>
+				<h1 style="margin-top: 1em;">Reviews</h1>
+				<div class="reviews" v-if="application.reviewers">
+					<div
+						class="review"
+						v-for="reviewer in application.reviewers"
+						:key="reviewer.userId"
+					>
+						<img :src="reviewer.avatar" />
+						<p>
+							{{ reviewer.name }} -
+							<span
+								v-bind:style="{
+									color: reviewer.accepted == true ? 'green' : 'red'
+								}"
+								>{{ reviewer.accepted == true ? "Accept" : "Reject" }}</span
+							>
+						</p>
+					</div>
+				</div>
+				<div class="reviews" v-else>
+					<p>None.</p>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	import axios from "axios";
 	import anime from "animejs";
 
 	export default {
 		name: "Application",
 		data() {
 			return {
-				show: false,
-				sheads: []
+				show: false
 			};
 		},
 		props: {
-			application: Object
-		},
-		beforeMount() {
-			this.$graphql(
-				`{
-					discordUsers {
-						avatar
-						created
-						userId
-						username
-						discriminator
-					}
-					credits {
-						user {
-							id
-							avatar
-							status
-							name
-							role
-							roleId
-							roleColor
-							rolePosition
-						}
-						roles {
-							id
-						}
-					}
-				}`
-			).then(data => {
-				let dUsers = data.discordUsers;
-				let credits = data.credits;
-
-				axios
-					.post(
-						`${process.env.apiBase}/applications/${this.$auth.$storage._state["_token.discord"]}`
-					)
-					.then(response => {
-						this.applications = response.data.reverse();
-
-						this.applications.map(async app => {
-							const userInfo = dUsers.find(user => user.userId == app.userId);
-
-							if (userInfo) {
-								app.name = userInfo.username;
-								app.tag = userInfo.discriminator;
-								app.avatar = userInfo.avatar;
-								app.createdAt = new Date(userInfo.created).toLocaleDateString(
-									"en-US",
-									{
-										day: "numeric",
-										month: "short",
-										year: "numeric",
-										hour: "numeric",
-										minute: "numeric"
-									}
-								);
-							} else app.error = "User not found.";
-						});
-
-						credits.map(u => {
-							let sh = u.roles.find(r => r.id == "685969048399249459");
-							if (sh) this.sheads.push(u.user);
-						});
-					});
-				this.show = true;
-			});
+			application: Object,
+			sheads: Array
 		},
 		mounted() {
 			this.$parent.sortBy = false;
-
+			console.log(this.sheads);
 			anime({
 				targets: ".question",
 				translateX: 25,
 				delay: anime.stagger(40)
 			});
+			anime({
+				targets: ".review",
+				translateX: 15,
+				delay: anime.stagger(40)
+			});
+			anime({
+				targets: ".shead",
+				translateX: 5,
+				delay: anime.stagger(40)
+			});
+		},
+		methods: {
+			review(accepted, userId) {
+				this.$graphql(
+					`
+					mutation {
+						addReview(token: "${this.$auth.$storage._state["_token.discord"]}", accepted: ${accepted}, userId: "${userId}") {
+							userId
+							accepted
+						}
+					}`
+				)
+					.then(data => {
+						console.log(data);
+					})
+					.catch(err => {
+						console.log(err);
+					});
+
+				this.$parent.page = "Applications";
+				this.$parent.lastPage = "";
+			}
 		}
 	};
 </script>
@@ -234,13 +265,15 @@
 			}
 		}
 
-		.content {
+		.acontent {
 			display: flex;
 			justify-content: space-between;
 			padding: 1em;
 			margin-top: 1em;
 
 			.questions {
+				max-width: 800px;
+
 				.question {
 					margin-bottom: 2em;
 
@@ -264,23 +297,48 @@
 				padding: 1em;
 				border-radius: 5px;
 				background: #0c0c0c;
-				height: 100px;
 
 				h1 {
 					margin: 0;
 					margin-bottom: 0.5em;
+					font-size: 1.5em;
 				}
 
-				.users {
+				.users,
+				.reviews {
 					display: flex;
+					max-width: 325px;
+					flex-wrap: wrap;
 
-					.shead {
-						margin-left: 1em;
+					.shead,
+					.review {
+						display: flex;
+						align-items: center;
+						margin-right: 1em;
+
+						p {
+							margin: 0;
+							margin-left: 0.4em;
+						}
 
 						img {
 							width: 30px;
 							border-radius: 50%;
 						}
+					}
+				}
+
+				.reviews {
+					flex-direction: column;
+
+					p {
+						margin: 0;
+						margin-left: 1em;
+					}
+
+					.review {
+						margin-left: 0;
+						margin-bottom: 0.5em;
 					}
 				}
 			}

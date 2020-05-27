@@ -9,8 +9,9 @@
 			"
 		></i>
 		<h1>{{ this.$parent.page }}</h1>
+		<!--
 		<div class="sort" v-if="$parent.sortBy">Sort by</div>
-	</div>
+		--></div>
 </template>
 
 <style lang="scss">

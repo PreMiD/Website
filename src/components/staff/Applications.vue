@@ -25,32 +25,55 @@
 					</div>
 					<div class="votes">
 						<div class="vote up">
-							<i class="fas fa-thumbs-up"></i>
-							5
+							<i class="fas fa-caret-up"></i>
+							{{
+								application.reviewers !== undefined
+									? application.reviewers.filter(r => r.accepted == true).length
+									: "0"
+							}}
 						</div>
 						<div class="vote down">
-							<i class="fas fa-thumbs-down"></i>
-							0
+							<i class="fas fa-caret-down"></i>
+							{{
+								application.reviewers !== undefined
+									? application.reviewers.filter(r => r.accepted == false)
+											.length
+									: "0"
+							}}
 						</div>
 					</div>
-					<div class="read">
-						<div class="abutton" @click="readApp(application)">
-							Read Application
+					<div class="reviews" v-if="application.reviewers">
+						<p>Reviewed by:</p>
+						<div class="images">
+							<div
+								class="review"
+								v-for="reviewer in application.reviewers"
+								:key="reviewer.userId"
+							>
+								<img :src="reviewer.avatar" />
+							</div>
 						</div>
 					</div>
-					<div class="created">
-						<p>Account Created: {{ application.createdAt || "No data" }}</p>
+					<div class="reviews" v-else>
+						<p style="margin: 0;">Reviewed by:</p>
+						<p style="color: gray; font-size: 0.8em;">Nobody.</p>
+					</div>
+					<div class="info">
 						<p>Application for: {{ application.position.name }}</p>
+						<p>Account Created: {{ application.createdAt || "No data" }}</p>
 					</div>
 					<div class="buttons" v-if="application.reviewed == false">
-						<button type="button" class="button accept">
-							Accept
-						</button>
-						<button type="button" class="button decline">
-							Decline
+						<button
+							type="button"
+							class="button"
+							@click="readApp(application, sheads)"
+						>
+							Review application
 						</button>
 					</div>
-					<div class="buttons" v-else>Application reviewed</div>
+					<div class="buttons" v-else-if="application.reviewed == true">
+						Application closed
+					</div>
 				</div>
 			</div>
 		</div>
@@ -65,7 +88,8 @@
 		data() {
 			return {
 				show: false,
-				page: "Applications"
+				page: "Applications",
+				sheads: []
 			};
 		},
 		beforeMount() {
@@ -78,17 +102,40 @@
 						username
 						discriminator
 					}
+					credits {
+						user {
+							id
+							avatar
+							status
+							name
+							role
+							roleId
+							roleColor
+							rolePosition
+						}
+						roles {
+							id
+						}
+					}
 				}`
-			).then(dUsers => {
+			).then(async data => {
+				let discordUsers = data.discordUsers;
+				let credits = data.credits;
+
+				credits.map(u => {
+					let sh = u.roles.find(r => r.id == "685969048399249459");
+					if (sh) this.sheads.push(u.user);
+				});
+
 				axios
 					.post(
 						`${process.env.apiBase}/applications/${this.$auth.$storage._state["_token.discord"]}`
 					)
-					.then(response => {
+					.then(async response => {
 						this.applications = response.data.reverse();
 
 						this.applications.map(async app => {
-							const userInfo = dUsers.discordUsers.find(
+							const userInfo = discordUsers.find(
 								user => user.userId == app.userId
 							);
 
@@ -108,6 +155,15 @@
 								);
 							} else app.error = "User not found.";
 
+							if (app.reviewers) {
+								app.reviewers.map(r => {
+									const shInfo = credits.find(user => user.user.id == r.userId);
+									if (shInfo) {
+										Object.assign(r, shInfo.user);
+									}
+								});
+							}
+
 							this.show = true;
 						});
 					});
@@ -122,6 +178,7 @@
 				this.$parent.page = "Application";
 				this.$parent.lastPage = "Applications";
 				this.$parent.userApplication = application;
+				this.$parent.sheads = this.sheads;
 			},
 			cut(string) {
 				if (string.length > 10) return string.substring(0, 10) + "...";
@@ -190,7 +247,6 @@
 
 				i {
 					font-size: 24px;
-					cursor: pointer;
 					margin-right: 0.15em;
 				}
 			}
@@ -204,28 +260,37 @@
 			}
 		}
 
-		.read {
-			width: 150px;
+		.reviews {
+			width: 200px;
 
-			.abutton {
-				color: white;
-				padding: 0.25em;
-				border: 2px solid #196cce;
-				border-radius: 5px;
-				cursor: pointer;
+			.images {
 				display: flex;
-				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			p {
+				color: white;
+				margin: 0;
+				margin-bottom: 0.4em;
+			}
+
+			img {
+				width: 25px;
+				border-radius: 50%;
+				margin-right: 0.5em;
 			}
 		}
 
-		.created {
-			width: 400px;
+		.info {
+			width: 350px;
+			font-size: 0.95em;
 			color: white;
 			text-align: center;
 
 			p {
 				margin: 0;
-				text-transform: capitalize;
+				text-align: left;
+				margin-bottom: 0.2em;
 			}
 		}
 
@@ -234,24 +299,22 @@
 			width: 200px;
 
 			button {
-				padding: 0.7em 1.6em;
+				padding: 1em 1.6em;
 				font-size: 0.8em;
+				border-radius: 6px;
+			}
+		}
+
+		.rinfo {
+			width: 200px;
+
+			p {
+				color: white;
+				margin: 0;
 			}
 
-			.abutton {
-				margin-right: 1em;
-				background: #111218;
-				transition: all 0.2s ease-in-out;
-			}
-
-			.accept:hover {
-				background: #57a916;
-				box-shadow: 0 3px 16px -7px rgba(87, 169, 22, 0.7);
-			}
-
-			.decline:hover {
-				background: #b70000;
-				box-shadow: 0 3px 16px -7px rgba(183, 0, 0, 0.7);
+			span {
+				font-size: 0.9em;
 			}
 		}
 	}

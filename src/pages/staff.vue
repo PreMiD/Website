@@ -11,6 +11,7 @@
 				v-on:updatePage="updatePage"
 				v-if="page === 'Application'"
 				:application="userApplication"
+				:sheads="sheads"
 				:page="page"
 			/>
 			<Tickets v-if="page === 'Tickets'" :page="page" />
@@ -47,7 +48,7 @@
 					response => {
 						this.user = response.data;
 						//! Temporary
-						if (!this.user.roles.includes("Staff Member"))
+						if (!this.user.roleIds.includes("656913616100130816"))
 							this.$router.push("/");
 					}
 				);
@@ -58,7 +59,6 @@
 		},
 		methods: {
 			updatePage(event) {
-				console.log("updatePage");
 				const { value } = event.page;
 				this.page = value;
 			}
