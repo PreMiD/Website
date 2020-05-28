@@ -1,14 +1,15 @@
 <template>
 	<div class="staff-container">
 		<div v-if="show == true">
-			<div v-for="(ticket, i) in tickets" :key="ticket.ticketMessage + i">
-				<div class="ticket" v-if="ticket.messages">
-					{{ ticket.ticketId }}
-					<div class="user" v-if="!ticket.userError">
-						<img :src="ticket.userAvatar" @error="changeImage" />
+			<div v-for="(ticket, i) in tickets" :key="ticket.userId + i">
+				<div class="ticket" v-if="ticket.messages !== null">
+					<div class="user" v-if="!ticket.userError && ticket.userName">
+						<img :src="ticket.userAvatar" />
 						<h1 class="username">
-							{{ ticket.userName }}
-							<span class="discriminator">#{{ ticket.userTag }}</span>
+							{{ cut(ticket.userName) }}
+							<span class="discriminator" v-if="ticket.userName.length < 10"
+								>#{{ ticket.userTag }}</span
+							>
 							<p>{{ ticket.userId }}</p>
 						</h1>
 					</div>
@@ -19,30 +20,67 @@
 							<p>{{ ticket.userId }}</p>
 						</h1>
 					</div>
-					<div class="read">
-						<div class="abutton" @click="openTicket(ticket)">
-							View Ticket
+					<div
+						class="supporters"
+						v-if="ticket.supporters && ticket.supporters.length > 0"
+					>
+						<p>Supporters:</p>
+						<div class="images">
+							<div
+								class="review"
+								v-for="supporter in ticket.supportersInfo"
+								:key="supporter.id"
+							>
+								<img
+									:src="supporter.user.avatar"
+									v-tippy="{
+										placement: 'bottom',
+										content: supporter.user.name
+									}"
+								/>
+							</div>
 						</div>
 					</div>
-					<div class="created">
-						Account Created: {{ ticket.createdAt || "no data" }}
+					<div class="supporters" v-else>
+						<p style="margin: 0;">Supporters:</p>
+						<p style="color: gray; font-size: 0.8em;">None.</p>
+					</div>
+					<div class="info">
+						<p>ID: #{{ ticket.ticketId }}</p>
+						<p>
+							Ticket status:
+							{{
+								!ticket.status
+									? "Opened"
+									: ticket.status == 1
+									? "Pending"
+									: "Closed"
+							}}
+						</p>
+						<p>
+							Ticket created on:
+							{{
+								new Date(ticket.created).toLocaleDateString("en-US", {
+									day: "numeric",
+									month: "short",
+									year: "numeric",
+									hour: "numeric",
+									minute: "numeric"
+								})
+							}}
+						</p>
 					</div>
 					<div class="buttons">
-						<div class="abutton accept">Accept</div>
-						<div class="abutton decline">Decline</div>
+						<button type="button" class="button" @click="openTicket(ticket)">
+							View ticket
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="loading" v-else>
-			Loading... (need premid loading animation)
-		</div>
 	</div>
 </template>
-
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Tickets",
 		data() {
@@ -54,6 +92,21 @@
 		beforeMount() {
 			this.$graphql(
 				`{
+					tickets(token: "${this.$auth.$storage._state["_token.discord"]}") {
+						ticketId
+						userId
+						timestamp
+						created
+						accepter
+						status
+						supporters
+						lastUserMessage
+						messages {
+							userId
+							content
+							sent
+						}
+					}
 					discordUsers {
 						avatar
 						created
@@ -71,56 +124,66 @@
 					}
 				}
 				`
-			).then(data => {
+			).then(async data => {
+				let tickets = data.tickets.reverse();
 				let discordUsers = data.discordUsers;
 				let credits = data.credits;
 
-				axios
-					.post(
-						`${process.env.apiBase}/tickets/${this.$auth.$storage._state["_token.discord"]}`
-					)
-					.then(response => {
-						this.tickets = response.data;
-						this.tickets.reverse().map(async ticket => {
-							//* Get only the tickets with messages.
-							if (ticket.messages !== undefined) {
-								const supporterInfo = credits.find(
-									user => user.userId == ticket.accepter
-								);
-								const userInfo = discordUsers.find(
-									user => user.userId == ticket.userId
-								);
+				await tickets.map(async ticket => {
+					//* Get only the tickets with messages.
+					if (ticket.messages !== null) {
+						const supporterInfo = credits.find(
+							u => u.user.id == ticket.accepter
+						);
+						const userInfo = discordUsers.find(u => u.userId == ticket.userId);
 
-								if (supporterInfo) {
-									ticket.supporterName = supporterInfo.name;
-									ticket.supporterTag = supporterInfo.tag;
-									ticket.supporterAvatar = supporterInfo.avatar;
-								} else ticket.supporterError = "User not found.";
+						if (supporterInfo) {
+							ticket.supporterName = supporterInfo.user.name;
+							ticket.supporterTag = supporterInfo.user.tag;
+							ticket.supporterAvatar = supporterInfo.user.avatar;
+						} else ticket.supporterError = "User not found.";
 
-								if (userInfo) {
-									ticket.userName = userInfo.username;
-									ticket.userTag = userInfo.discriminator;
-									ticket.userAvatar = userInfo.avatar;
-									ticket.createdAt = new Date(
-										userInfo.created
-									).toLocaleDateString("en-US", {
-										day: "numeric",
-										month: "short",
-										year: "numeric",
-										hour: "numeric",
-										minute: "numeric"
-									});
-								} else ticket.userError = "User not found.";
-							} else {
-								const index = this.tickets.indexOf(ticket);
-								if (index > -1) {
-									this.tickets.splice(index, 1);
+						if (userInfo) {
+							ticket.userName = userInfo.username;
+							ticket.userTag = userInfo.discriminator;
+							ticket.userAvatar = userInfo.avatar;
+							ticket.createdAt = new Date(userInfo.created).toLocaleDateString(
+								"en-US",
+								{
+									day: "numeric",
+									month: "short",
+									year: "numeric",
+									hour: "numeric",
+									minute: "numeric"
 								}
-							}
-						});
+							);
+						} else ticket.userError = "User not found.";
 
-						this.show = true;
-					});
+						if (ticket.supporters) {
+							ticket.supporters.map(s => {
+								let sInfo = credits.find(u => u.user.id == s);
+
+								if (sInfo) {
+									ticket.supportersInfo = [];
+									ticket.supportersInfo.push(sInfo);
+								}
+							});
+
+							let accepterInfo = credits.find(
+								u => u.user.id == ticket.accepter
+							);
+							if (
+								accepterInfo &&
+								ticket.supportersInfo.find(
+									s => s.user.id == ticket.accepter
+								) === undefined
+							)
+								ticket.supportersInfo.push(accepterInfo);
+						}
+					}
+				});
+				this.tickets = tickets;
+				this.show = true;
 			});
 		},
 		mounted() {
@@ -134,6 +197,9 @@
 				this.$parent.page = "Ticket";
 				this.$parent.lastPage = "Tickets";
 				this.$parent.ticket = ticket;
+			},
+			cut(string) {
+				return string.length > 10 ? string.substring(0, 10) + "..." : string;
 			}
 		}
 	};
@@ -142,6 +208,8 @@
 <style lang="scss">
 	.ticket {
 		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		background: #1c1c1e;
 		width: 1225px;
 		height: 75px;
@@ -152,6 +220,7 @@
 
 		.user {
 			display: flex;
+			width: 300px;
 
 			.username {
 				color: white;
@@ -175,6 +244,7 @@
 			img {
 				display: block;
 				width: 75px;
+				height: 75px;
 				border-radius: 50%;
 				float: left;
 				margin: auto;
@@ -183,90 +253,62 @@
 			}
 		}
 
-		.votes {
-			display: flex;
-			position: absolute;
-			left: 300px;
-			top: 32.5px;
-			margin-left: 2em;
+		.supporters {
+			width: 200px;
 
-			.vote {
-				margin: auto;
-				margin-right: 0;
-				margin-left: 1em;
-
-				i {
-					font-size: 24px;
-					cursor: pointer;
-					margin-right: 0.15em;
-				}
+			.images {
+				display: flex;
+				flex-wrap: wrap;
 			}
 
-			.up {
-				color: green;
+			p {
+				color: white;
+				margin: 0;
+				margin-bottom: 0.4em;
 			}
 
-			.down {
-				color: red;
+			img {
+				width: 25px;
+				border-radius: 50%;
+				margin-right: 0.5em;
+				cursor: pointer;
 			}
 		}
 
-		.read {
-			margin: auto;
-			margin-left: 2em;
-			margin-right: 0;
-			position: absolute;
-			left: 450px;
-			top: 32.5px;
-		}
-
-		.abutton {
-			margin: auto;
-			margin-left: 0;
-			margin-right: 0;
+		.info {
+			width: 350px;
+			font-size: 0.95em;
 			color: white;
-			padding: 0.25em;
-			border: 2px solid #196cce;
-			border-radius: 5px;
-			cursor: pointer;
-		}
+			text-align: center;
 
-		.created {
-			color: white;
-			margin-left: 2em;
-			margin-right: 0;
-			text-transform: uppercase;
-			position: absolute;
-			left: 630px;
-			top: 40.5px;
+			p {
+				margin: 0;
+				text-align: left;
+				margin-bottom: 0.2em;
+			}
 		}
 
 		.buttons {
 			display: flex;
-			margin-left: 2em;
-			position: absolute;
-			right: 10px;
-			top: 32.5px;
 
-			.abutton {
-				margin-right: 1em;
-			}
-
-			.accept {
-				border: 2px solid #57a916;
-			}
-
-			.decline {
-				border: 2px solid #b70000;
+			button {
+				padding: 1em 1.6em;
+				font-size: 0.8em;
+				border-radius: 6px;
 			}
 		}
-	}
 
-	.loading {
-		display: flex;
-		width: 100%;
-		height: 100%;
-		justify-content: center;
-		align-items: center;
+		.rinfo {
+			width: 200px;
+
+			p {
+				color: white;
+				margin: 0;
+			}
+
+			span {
+				font-size: 0.9em;
+			}
+		}
 	}
 </style>

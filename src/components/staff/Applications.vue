@@ -27,7 +27,7 @@
 						<div class="vote up">
 							<i class="fas fa-caret-up"></i>
 							{{
-								application.reviewers !== undefined
+								application.reviewers !== null
 									? application.reviewers.filter(r => r.accepted == true).length
 									: "0"
 							}}
@@ -35,7 +35,7 @@
 						<div class="vote down">
 							<i class="fas fa-caret-down"></i>
 							{{
-								application.reviewers !== undefined
+								application.reviewers !== null
 									? application.reviewers.filter(r => r.accepted == false)
 											.length
 									: "0"
@@ -81,8 +81,6 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Applications",
 		data() {
@@ -95,6 +93,25 @@
 		beforeMount() {
 			this.$graphql(
 				`{
+					applications(token: "${this.$auth.$storage._state["_token.discord"]}") {
+						type
+						userId
+						reviewed
+						reviewers {
+							userId
+							accepted
+							reviewedAt
+						}
+						position {
+							name
+							questions {
+								question
+								required
+								label
+								response
+							}
+						}
+					}
 					discordUsers {
 						avatar
 						created
@@ -119,6 +136,7 @@
 					}
 				}`
 			).then(async data => {
+				let applications = data.applications.reverse();
 				let discordUsers = data.discordUsers;
 				let credits = data.credits;
 
@@ -127,46 +145,34 @@
 					if (sh) this.sheads.push(u.user);
 				});
 
-				axios
-					.post(
-						`${process.env.apiBase}/applications/${this.$auth.$storage._state["_token.discord"]}`
-					)
-					.then(async response => {
-						this.applications = response.data.reverse();
+				applications.map(async app => {
+					let userInfo = discordUsers.find(user => user.userId == app.userId);
 
-						this.applications.map(async app => {
-							const userInfo = discordUsers.find(
-								user => user.userId == app.userId
-							);
-
-							if (userInfo) {
-								app.name = userInfo.username;
-								app.tag = userInfo.discriminator;
-								app.avatar = userInfo.avatar;
-								app.createdAt = new Date(userInfo.created).toLocaleDateString(
-									"en-US",
-									{
-										day: "numeric",
-										month: "short",
-										year: "numeric",
-										hour: "numeric",
-										minute: "numeric"
-									}
-								);
-							} else app.error = "User not found.";
-
-							if (app.reviewers) {
-								app.reviewers.map(r => {
-									const shInfo = credits.find(user => user.user.id == r.userId);
-									if (shInfo) {
-										Object.assign(r, shInfo.user);
-									}
-								});
+					if (userInfo) {
+						app.name = userInfo.username;
+						app.tag = userInfo.discriminator;
+						app.avatar = userInfo.avatar;
+						app.createdAt = new Date(userInfo.created).toLocaleDateString(
+							"en-US",
+							{
+								day: "numeric",
+								month: "short",
+								year: "numeric",
+								hour: "numeric",
+								minute: "numeric"
 							}
+						);
+					} else app.error = "User not found.";
 
-							this.show = true;
+					if (app.reviewers) {
+						app.reviewers.map(r => {
+							let shInfo = credits.find(user => user.user.id == r.userId);
+							if (shInfo) Object.assign(r, shInfo.user);
 						});
-					});
+					}
+					this.applications = applications;
+					this.show = true;
+				});
 			});
 		},
 		mounted() {
@@ -181,8 +187,7 @@
 				this.$parent.sheads = this.sheads;
 			},
 			cut(string) {
-				if (string.length > 10) return string.substring(0, 10) + "...";
-				else return string;
+				return string.length > 10 ? string.substring(0, 10) + "..." : string;
 			}
 		}
 	};

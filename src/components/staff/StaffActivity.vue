@@ -3,20 +3,20 @@
 		<div
 			class="staffMember"
 			v-for="sU in staffMembers"
-			:key="sU.userId"
-			:style="{ 'box-shadow': `${sU.roleColor} 0px 0px 7px;` }"
+			:key="sU.user.id"
+			:style="{ 'box-shadow': `${sU.user.roleColor} 0px 0px 7px;` }"
 		>
 			<div
 				class="bg"
 				:style="{
-					'background-image': `url(${sU.avatar.replace('gif', 'png')})`
+					'background-image': `url(${sU.user.avatar.replace('gif', 'png')})`
 				}"
 			></div>
 			<div class="userInfo">
-				<img :src="sU.avatar" />
+				<img :src="sU.user.avatar" />
 				<h1>
-					{{ sU.name }}
-					<p :style="{ color: sU.roleColor }">{{ sU.role }}</p>
+					{{ sU.user.name }}
+					<p :style="{ color: sU.user.roleColor }">{{ sU.user.role }}</p>
 				</h1>
 			</div>
 			<div class="chart-container" v-if="loaded">
@@ -53,9 +53,9 @@
 							{
 								ticks: {
 									fontColor: "#eaeaea",
-									stepSize: 1,
+									stepSize: 2,
 									min: 0,
-									max: 9
+									max: 16
 								}
 							}
 						],
@@ -71,72 +71,103 @@
 			};
 		},
 		beforeMount() {
-			axios(`${process.env.apiBase}/credits`).then(response => {
-				response.data.map(user => {
-					if (user.roleIds.includes("566417964820070421")) {
+			this.$graphql(
+				`{
+					tickets(token: "${this.$auth.$storage._state["_token.discord"]}") {
+						ticketId
+						userId
+						timestamp
+						created
+						accepter
+						status
+						supporters
+						lastUserMessage
+						messages {
+							userId
+							content
+							sent
+						}
+					}
+					credits {
+						user {
+							id
+							name
+							tag
+							avatar
+							role
+							roleColor
+						}
+						roles {
+							id
+						}
+					}
+				}
+				`
+			).then(async data => {
+				let credits = data.credits;
+				let tickets = data.tickets;
+
+				credits.map(user => {
+					if (
+						user.roles.find(r => r.id === "566417964820070421") !== undefined
+					) {
 						this.staffMembers.push(user);
 					}
 				});
 
-				axios
-					.post(
-						`${process.env.apiBase}/tickets/${this.$auth.$storage._state["_token.discord"]}`
-					)
-					.then(response => {
-						this.tickets = response.data;
+				this.tickets = tickets;
 
-						this.staffMembers.map(sU => {
-							sU.tickets = this.tickets.filter(
-								ticket => ticket.accepter === sU.userId
-							);
+				this.staffMembers.map(sU => {
+					sU.tickets = this.tickets.filter(
+						ticket => ticket.accepter === sU.user.id
+					);
 
-							sU.allDates = [];
+					sU.allDates = [];
 
-							sU.tickets.map(ticket => {
-								let date = new Date(ticket.timestamp);
-								let fDate = this.formatDate(date);
+					sU.tickets.map(ticket => {
+						let date = new Date(ticket.timestamp);
+						let fDate = this.formatDate(date);
 
-								sU.allDates.push(fDate);
-							});
-
-							sU.counts = {};
-
-							sU.allDates.map(d => {
-								sU.counts[d] = (sU.counts[d] || 0) + 1;
-							});
-
-							let last14Days = this.last14Days(),
-								acceptedTickets = [];
-
-							sU.chartdata = {
-								labels: [],
-								datasets: [
-									{
-										label: "Accepted tickets",
-										backgroundColor: "rgba(114, 137, 218, 0.5)",
-										borderColor: "rgba(1, 116, 188, 0.50)",
-										pointBackgroundColor: "#b3aeff",
-										fontColor: "white",
-										data: []
-									}
-								]
-							};
-
-							sU.chartdata.labels = last14Days;
-
-							last14Days.forEach(d => {
-								if (sU.counts[d]) acceptedTickets.push(sU.counts[d]);
-								else acceptedTickets.push(0);
-							});
-
-							sU.chartdata.datasets[0].data = acceptedTickets;
-
-							sU.ready = true;
-
-							console.log(sU);
-						});
-						this.loaded = true;
+						sU.allDates.push(fDate);
 					});
+
+					sU.counts = {};
+
+					sU.allDates.map(d => {
+						sU.counts[d] = (sU.counts[d] || 0) + 1;
+					});
+
+					let last14Days = this.last14Days(),
+						acceptedTickets = [];
+
+					sU.chartdata = {
+						labels: [],
+						datasets: [
+							{
+								label: "Accepted tickets",
+								backgroundColor: "rgba(114, 137, 218, 0.5)",
+								borderColor: "rgba(1, 116, 188, 0.50)",
+								pointBackgroundColor: "#b3aeff",
+								fontColor: "white",
+								data: []
+							}
+						]
+					};
+
+					sU.chartdata.labels = last14Days;
+
+					last14Days.forEach(d => {
+						if (sU.counts[d]) acceptedTickets.push(sU.counts[d]);
+						else acceptedTickets.push(0);
+					});
+
+					sU.chartdata.datasets[0].data = acceptedTickets;
+
+					sU.ready = true;
+
+					console.log(sU);
+				});
+				this.loaded = true;
 			});
 		},
 		mounted() {

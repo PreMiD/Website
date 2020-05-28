@@ -24,7 +24,7 @@
 					((application.reviewers &&
 						application.reviewers.find(r => r.userId == $auth.user.id).length ==
 							0) ||
-						application.reviewers == undefined) == true
+						application.reviewers == null) == true
 				"
 			>
 				<p>Your review:</p>
@@ -46,7 +46,7 @@
 			<div
 				class="buttons"
 				v-else-if="
-					application.reviewers !== undefined &&
+					application.reviewers !== null &&
 					application.reviewers.find(r => r.userId == $auth.user.id).length !==
 						0
 				"
