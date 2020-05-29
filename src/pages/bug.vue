@@ -1,6 +1,6 @@
 <template>
 	<section class="rab">
-		<h1 class="section-header" v-t="'report.title'">
+		<h1 style="text-align: center;" class="section-header" v-t="'report.title'">
 			{{ $t("report.title") }}
 		</h1>
 		<div class="rab-container">
@@ -10,12 +10,12 @@
 			<h1
 				class="section-header"
 				v-t="'report.bugcount'"
-				style="font-size: 28px;"
+				style="font-size: 28px; text-align: center;"
 				v-html="bugCount"
 			></h1>
 		</div>
 
-		<div v-if="bugInfo.data.info.count > 0">
+		<div v-if="bugInfo.count > 0">
 			<div class="rab-container">
 				<h1 class="heading" v-t="'report.overview'">
 					{{ $t("report.overview") }}"
@@ -31,43 +31,25 @@
 			<br />
 			<div class="rab-container">
 				<h1 class="heading" v-t="'report.os'">{{ $t("report.os") }}</h1>
-				<select class="selection" required v-model="Report.os">
-					<option disabled value="">Please select one</option>
+				<select style="width: 85px;" class="selection" required v-model="Report.os">
 					<option>OS X</option>
 					<option>Windows</option>
 					<option>Linux</option>
 				</select>
-				<br />
-				<br />
-				<textarea
-					type="text"
-					maxlength="4"
-					style="width: 50px;"
-					class="breif"
-					required
-					v-model="Report.browserversion"
-				/>
+				<br>
+				<br>
+				<textarea type="text" maxlength="10" style="width: 81px;" class="breif" required v-model="Report.browserversion"/>
 			</div>
 			<br />
 			<div class="rab-container">
-				<h1 class="heading" v-t="'report.browser'">
-					{{ $t("report.browser") }}
-				</h1>
-				<select class="selection" required v-model="Report.browser">
-					<option disabled value="">Please select one</option>
+				<h1 class="heading" v-t="'report.browser'">{{ $t("report.browser") }}</h1>
+				<select style="width: 85px;" class="selection" required v-model="Report.browser">
 					<option>Chrome</option>
 					<option>Firefox</option>
 				</select>
-				<br />
-				<br />
-				<textarea
-					type="text"
-					maxlength="10"
-					style="width: 80px;"
-					class="breif"
-					required
-					v-model="Report.osversion"
-				/>
+				<br>
+				<br>
+				<textarea type="text" maxlength="10" style="width: 81px;" class="breif" required v-model="Report.osversion" />
 			</div>
 			<br />
 			<div class="rab-container">
@@ -89,28 +71,20 @@
 
 			</div>
 		</div>
-		<div
-			v-if="bugInfo.data.info.count === 0"
-			class="rab-container"
-			style="margin-bottom: 300px;"
-		>
-			<h1 style="text-align: center;" class="heading" v-t="'report.toomany'">
-				{{ $t("report.toomany") }}
-			</h1>
+		<div v-if="bugInfo.count === 0" class="rab-container" style="margin-bottom: 300px;">
+			<h1 style="text-align: center;" class="heading" v-t="'report.toomany'">{{ $t('report.toomany') }}</h1>
 		</div>
-		<div v-if="bugInfo.data.info.count < 3 && bugInfo.data.info.count !== -1" class="rab-container" style="margin-bottom: 80px;">
+		<div v-if="bugInfo.count < 3 && bugInfo.count !== -1" class="rab-container" style="margin-bottom: 80px;">
 			<h2 v-t="'report.activebugs'">{{ $t("report.activebugs") }}</h2>
 			<table style="width: 100%;">
-				<tr v-for="bug of activeBugs.data" :key="bug.breif">
-					<td style="vertical-align: top;">{{ bug.brief }}</td>
-					<td
-						style="padding-bottom: 20px; white-space: pre;"
-						v-html="bug.description"
-					></td>
+				<tr v-for="bug of activeBugs.data"
+				:key="bug.breif"
+				>
+					<td style="vertical-align:top;">{{bug.brief}}</td>
+					<td style="padding-left: 50px;padding-bottom:20px; white-space: pre-wrap;" v-html="bug.description"></td>
 				</tr>
 			</table>
 		</div>
-		<adsense ad-slot="5201967746" style="text-align: center;" />
 	</section>
 </template>
 
@@ -123,7 +97,7 @@
 		data() {
 			return {
 				display: false,
-				bugInfo: { data: { info: { count: -1 } } },
+				bugInfo: {count:-1},
 				bugCount: "Loading...",
 				Report: {
 					brief: "",
@@ -154,15 +128,8 @@
 					status: this.Report.status,
 					date: this.Report.date
 				};
-				if (this.bugInfo.data.info.count === 0)
-					return this.$noty.error(this.$t("report.toomany"));
-				if (
-					!newReport.brief ||
-					!newReport.description ||
-					!newReport.date ||
-					!newReport.system
-				)
-					return this.$noty.error(this.$t("report.error"));
+				if (this.bugInfo.count === 0) return this.$noty.error(this.$t("report.toomany"))
+				if (!newReport.brief || !newReport.description || !newReport.date || !newReport.system) return this.$noty.error(this.$t("report.error"));
 
 				axios
 					.post(
@@ -182,11 +149,12 @@
 			this.$auth.$storage.setUniversal("redirect", "/bug");
 			if(!this.$auth.loggedIn) return this.$router.push("/login");
 			axios.get(`${process.env.apiBase}/bugUserInfo/${this.$auth.$storage._state["_token.discord"]}`).then((data => {
-				if(data.data.info === null){
-					return this.bugInfo.data.info.count = 3;
+				if(data.data === null || data.data === undefined || data.data === ""){
+					return this.bugInfo.count = 3;
 				}
-				this.bugInfo = data;
-				if(data.data.info.count < 3){
+
+				this.bugInfo = data.data;
+				if(data.data.count < 3){
 					axios.get(`${process.env.apiBase}/bugInfo/${this.$auth.$storage._state["_token.discord"]}`).then((data => {
 						if(data.result === null){
 							this.activeBugs[0].brief = null;
@@ -200,13 +168,11 @@
 			}))
 		},
 		head() {
-			if (this.bugInfo.data.info.count === 0)
+			if(this.bugInfo.count === 0) {
 				this.$noty.error(this.$t("report.toomany.alert"));
-			else
-				this.bugCount = this.$t("report.bugcount").replace(
-					"{count}",
-					this.bugInfo.data.info.count
-				);
+				this.bugCount = this.$t('report.bugcount').replace('{count}', (0));
+			}
+			else this.bugCount = this.$t('report.bugcount').replace('{count}', (this.bugInfo.count));
 			return {
 				title: "Report A Bug"
 			};
@@ -217,13 +183,19 @@
 <style lang="scss" scoped>
 	@import "../stylesheets/variables.scss";
 
-	.rab {
+	.rab{
 		.rab-container {
 			padding-left: 25px;
 			padding-right: 25px;
 			padding-top: 25px;
 			max-width: 1400px;
 			margin: 0 auto;
+
+			.table{
+				white-space: nowrap;
+				width: auto;
+				height: auto;
+			}
 		}
 		textarea[type="text"].breif {
 			height: 1.8rem;
@@ -280,7 +252,6 @@
 				color: lighten($background-secondary, 45%);
 			}
 		}
-
 		.selection {
 			height: 1.8rem;
 			font-size: 14px;
@@ -291,16 +262,13 @@
 			line-height: 25px;
 			font-weight: bold;
 			border-radius: 8px;
-
 			&:focus {
 				background: lighten($background-secondary, 7%);
 				outline: none;
 			}
-
 			* {
 				margin-left: -17.5rem;
 			}
-
 			&::placeholder {
 				color: lighten($background-secondary, 45%);
 			}
