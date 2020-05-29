@@ -268,8 +268,6 @@
 </style>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Jobs",
 		auth: false,
@@ -280,23 +278,45 @@
 				modalJob: null
 			};
 		},
-		async asyncData() {
-			const data = await Promise.all([
-				axios(`${process.env.apiBase}/jobs`),
-				axios(`${process.env.apiBase}/jobs/benefits`),
-				axios(`${process.env.apiBase}/discordUsers`)
-			]);
-			const jobs = data[0].data,
-				benefits = data[1].data,
-				discordUsers = data[2].data.map(u => u.userId);
+		async asyncData({ app }) {
+			const data = await app.$graphql(`
+				{
+					jobs {
+						available
+						bonusPoints
+						jobIcon
+						jobName
+						questions {
+							id
+							question
+							required
+						}
+						requirements
+						tasks
+					}
+					benefits {
+						description
+						icon
+						title
+					}
+					discordUsers {
+						avatar
+						created
+						userId
+						username
+						discriminator
+					}
+				}
+			`);
 
 			return {
-				jobs,
-				benefits,
-				discordUsers
+				jobs: data.jobs,
+				benefits: data.benefits,
+				discordUsers: data.discordUsers.map(u => u.userId)
 			};
 		},
 		mounted() {
+			console.log(this.$auth);
 			this.$auth.$storage.setUniversal("redirect", "/jobs");
 		},
 		methods: {

@@ -6,6 +6,7 @@ module.exports = {
 		["@nuxtjs/google-analytics", { id: "UA-129058596-1" }]
 	],
 	plugins: [
+		"~/plugins/graphqlBase.js",
 		"~/plugins/I18n.js",
 		"~/plugins/Languages.js",
 		{ src: "~/plugins/Anime.js", ssr: false },
@@ -39,6 +40,14 @@ module.exports = {
 		"@nuxtjs/axios",
 		"@nuxtjs/auth"
 	],
+	axios: {
+		proxy: true,
+		retry: { retries: 3 }
+	},
+
+	proxy: {
+		"/v3": "https://api.premid.app/v3"
+	},
 	helmet: {
 		frameguard: false,
 		xssFilter: true,
@@ -63,7 +72,8 @@ module.exports = {
 		}
 	},
 	env: {
-		apiBase: "https://api.premid.app/v2"
+		apiBase: "https://api.premid.app/v2",
+		graphQLapiBase: "https://api.premid.app/v3"
 	},
 	loading: "~/components/Loader.vue",
 	head: {

@@ -270,8 +270,6 @@
 </style>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		data() {
 			return {
@@ -287,8 +285,15 @@
 			};
 		},
 		mounted() {
-			axios(`${process.env.apiBase}/usage`).then(({ data }) => {
-				this.installStats = data.users
+			this.$graphql(
+				`
+				{
+				science {
+					users
+				}
+			}`
+			).then(data => {
+				this.installStats = data.science.users
 					.toString()
 					.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 			});

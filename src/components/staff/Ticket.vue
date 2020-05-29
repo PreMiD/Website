@@ -1,6 +1,14 @@
 <template>
 	<div class="staff-container">
 		<div class="messages" v-if="ready">
+			<p class="action">wip</p>
+			<p
+				class="action"
+				v-if="supporters.find(s => s.userId == ticket.accepter)"
+			>
+				Ticket accepted by:
+				{{ supporters.find(s => s.userId == ticket.accepter).username }}
+			</p>
 			<div
 				v-for="message in ticket.messages"
 				:key="message.content"
@@ -33,13 +41,24 @@
 						ticket.accepter !== message.userId
 					"
 					:message="message"
+					:set="
+						(s = ticket.supportersInfo.find(s => s.user.id == message.userId)
+							.user)
+					"
 					:user="{
-						avatar: supporters.find(s => s.userId == message.userId).avatar,
-						name: supporters.find(s => s.userId == message.userId).name
+						avatar: s.avatar,
+						name: s.name
 					}"
 					:badge="{ type: 'supporter', color: '#48d41e' }"
 				/>
 			</div>
+			<p
+				class="action"
+				v-if="ticket.closer && supporters.find(s => s.userId == ticket.closer)"
+			>
+				Ticket closed by:
+				{{ supporters.find(s => s.userId == ticket.closer).username }}
+			</p>
 		</div>
 	</div>
 </template>
@@ -83,6 +102,10 @@
 <style lang="scss" scoped>
 	.staff-container {
 		justify-content: normal;
+
+		.action {
+			text-align: center;
+		}
 
 		.messages {
 			display: flex;

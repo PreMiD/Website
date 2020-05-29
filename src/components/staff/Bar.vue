@@ -9,8 +9,9 @@
 			"
 		></i>
 		<h1>{{ this.$parent.page }}</h1>
+		<!--
 		<div class="sort" v-if="$parent.sortBy">Sort by</div>
-	</div>
+		--></div>
 </template>
 
 <style lang="scss">
@@ -42,6 +43,9 @@
 	}
 
 	.sort {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		width: 50px;
 		height: 10px;
 		padding: 1em;

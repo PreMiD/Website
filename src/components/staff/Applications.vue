@@ -5,12 +5,14 @@
 				v-for="(application, i) in applications"
 				:key="application.userId + i"
 			>
-				<div class="application" v-if="application.position.name == 'Engineer'">
+				<div class="application">
 					<div class="user" v-if="!application.error">
 						<img :src="application.avatar" />
 						<h1 class="username">
-							{{ application.name }}
-							<span class="discriminator">#{{ application.tag }}</span>
+							{{ cut(application.name) }}
+							<span class="discriminator" v-if="application.name.length < 10"
+								>#{{ application.tag }}</span
+							>
 							<p>{{ application.userId }}</p>
 						</h1>
 					</div>
@@ -23,27 +25,54 @@
 					</div>
 					<div class="votes">
 						<div class="vote up">
-							<i class="fas fa-thumbs-up"></i>
-							5
+							<i class="fas fa-caret-up"></i>
+							{{
+								application.reviewers !== null
+									? application.reviewers.filter(r => r.accepted == true).length
+									: "0"
+							}}
 						</div>
 						<div class="vote down">
-							<i class="fas fa-thumbs-down"></i>
-							0
+							<i class="fas fa-caret-down"></i>
+							{{
+								application.reviewers !== null
+									? application.reviewers.filter(r => r.accepted == false)
+											.length
+									: "0"
+							}}
 						</div>
 					</div>
-					<div class="read">
-						<div class="abutton" @click="readApp(application)">
-							Read Application
+					<div class="reviews" v-if="application.reviewers">
+						<p>Reviewed by:</p>
+						<div class="images">
+							<div
+								class="review"
+								v-for="reviewer in application.reviewers"
+								:key="reviewer.userId"
+							>
+								<img :src="reviewer.avatar" />
+							</div>
 						</div>
 					</div>
-					<div class="created">Account Created: 2016-12-16 19:51:17 GMT</div>
-					<div class="buttons">
-						<button type="button" class="button accept">
-							Accept
+					<div class="reviews" v-else>
+						<p style="margin: 0;">Reviewed by:</p>
+						<p style="color: gray; font-size: 0.8em;">Nobody.</p>
+					</div>
+					<div class="info">
+						<p>Application for: {{ application.position.name }}</p>
+						<p>Account Created: {{ application.createdAt || "No data" }}</p>
+					</div>
+					<div class="buttons" v-if="application.reviewed == false">
+						<button
+							type="button"
+							class="button"
+							@click="readApp(application, sheads)"
+						>
+							Review application
 						</button>
-						<button type="button" class="button decline">
-							Decline
-						</button>
+					</div>
+					<div class="buttons" v-else-if="application.reviewed == true">
+						Application closed
 					</div>
 				</div>
 			</div>
@@ -52,52 +81,113 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Applications",
 		data() {
 			return {
 				show: false,
-				page: "Applications"
+				page: "Applications",
+				sheads: []
 			};
 		},
 		beforeMount() {
-			axios
-				.post(
-					`${process.env.apiBase}/applications/${this.$auth.$storage._state["_token.discord"]}`
-				)
-				.then(response => {
-					this.applications = response.data;
+			this.$graphql(
+				`{
+					applications(token: "${this.$auth.$storage._state["_token.discord"]}") {
+						type
+						userId
+						reviewed
+						reviewers {
+							userId
+							accepted
+							reviewedAt
+						}
+						position {
+							name
+							questions {
+								question
+								required
+								label
+								response
+							}
+						}
+					}
+					discordUsers {
+						avatar
+						created
+						userId
+						username
+						discriminator
+					}
+					credits {
+						user {
+							id
+							avatar
+							status
+							name
+							role
+							roleId
+							roleColor
+							rolePosition
+						}
+						roles {
+							id
+						}
+					}
+				}`
+			).then(async data => {
+				let applications = data.applications.reverse();
+				let discordUsers = data.discordUsers;
+				let credits = data.credits;
 
-					this.applications.map(async app => {
-						const userInfo = this.credits.find(
-							user => user.userId == app.userId
-						);
-
-						if (userInfo) {
-							app.name = userInfo.name;
-							app.tag = userInfo.tag;
-							app.avatar = userInfo.avatar;
-						} else app.error = "User not found.";
-
-						this.show = true;
-					});
+				credits.map(u => {
+					let sh = u.roles.find(r => r.id == "685969048399249459");
+					if (sh) this.sheads.push(u.user);
 				});
-			axios(`${process.env.apiBase}/credits`).then(response => {
-				this.credits = response.data;
+
+				applications.map(async app => {
+					let userInfo = discordUsers.find(user => user.userId == app.userId);
+
+					if (userInfo) {
+						app.name = userInfo.username;
+						app.tag = userInfo.discriminator;
+						app.avatar = userInfo.avatar;
+						app.createdAt = new Date(userInfo.created).toLocaleDateString(
+							"en-US",
+							{
+								day: "numeric",
+								month: "short",
+								year: "numeric",
+								hour: "numeric",
+								minute: "numeric"
+							}
+						);
+					} else app.error = "User not found.";
+
+					if (app.reviewers) {
+						app.reviewers.map(r => {
+							let shInfo = credits.find(user => user.user.id == r.userId);
+							if (shInfo) Object.assign(r, shInfo.user);
+						});
+					}
+					this.applications = applications;
+					this.show = true;
+				});
 			});
 		},
 		mounted() {
 			this.$parent.page = "Applications";
 			this.$parent.sortBy = true;
-			console.log(this.$parent.page);
 		},
 		methods: {
 			readApp(application) {
 				this.$parent.page = "Application";
 				this.$parent.lastPage = "Applications";
 				this.$parent.userApplication = application;
+				this.$parent.sheads = this.sheads;
+			},
+			cut(string) {
+				return string.length > 10 ? string.substring(0, 10) + "..." : string;
 			}
 		}
 	};
@@ -106,6 +196,8 @@
 <style lang="scss">
 	.application {
 		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		background: #1c1c1e;
 		width: 1225px;
 		height: 75px;
@@ -116,6 +208,7 @@
 
 		.user {
 			display: flex;
+			width: 300px;
 
 			.username {
 				color: white;
@@ -150,10 +243,7 @@
 
 		.votes {
 			display: flex;
-			position: absolute;
-			left: 300px;
-			top: 32.5px;
-			margin-left: 2em;
+			width: 150px;
 
 			.vote {
 				margin: auto;
@@ -162,7 +252,6 @@
 
 				i {
 					font-size: 24px;
-					cursor: pointer;
 					margin-right: 0.15em;
 				}
 			}
@@ -176,62 +265,61 @@
 			}
 		}
 
-		.read {
-			margin: auto;
-			margin-left: 2em;
-			margin-right: 0;
-			position: absolute;
-			left: 450px;
-			top: 32.5px;
+		.reviews {
+			width: 200px;
+
+			.images {
+				display: flex;
+				flex-wrap: wrap;
+			}
+
+			p {
+				color: white;
+				margin: 0;
+				margin-bottom: 0.4em;
+			}
+
+			img {
+				width: 25px;
+				border-radius: 50%;
+				margin-right: 0.5em;
+			}
 		}
 
-		.abutton {
-			margin: auto;
-			margin-left: 0;
-			margin-right: 0;
+		.info {
+			width: 350px;
+			font-size: 0.95em;
 			color: white;
-			padding: 0.25em;
-			border: 2px solid #196cce;
-			border-radius: 5px;
-			cursor: pointer;
-		}
+			text-align: center;
 
-		.created {
-			color: white;
-			margin-left: 2em;
-			margin-right: 0;
-			text-transform: uppercase;
-			position: absolute;
-			left: 630px;
-			top: 40.5px;
+			p {
+				margin: 0;
+				text-align: left;
+				margin-bottom: 0.2em;
+			}
 		}
 
 		.buttons {
 			display: flex;
-			margin-left: 2em;
-			position: absolute;
-			right: 10px;
-			top: 32.5px;
+			width: 200px;
 
 			button {
-				padding: 0.7em 1.6em;
+				padding: 1em 1.6em;
 				font-size: 0.8em;
+				border-radius: 6px;
+			}
+		}
+
+		.rinfo {
+			width: 200px;
+
+			p {
+				color: white;
+				margin: 0;
 			}
 
-			.abutton {
-				margin-right: 1em;
-				background: #111218;
-				transition: all 0.2s ease-in-out;
-			}
-
-			.accept:hover {
-				background: #57a916;
-				box-shadow: 0 3px 16px -7px rgba(87, 169, 22, 0.7);
-			}
-
-			.decline:hover {
-				background: #b70000;
-				box-shadow: 0 3px 16px -7px rgba(183, 0, 0, 0.7);
+			span {
+				font-size: 0.9em;
 			}
 		}
 	}

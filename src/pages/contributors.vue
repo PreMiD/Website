@@ -7,12 +7,12 @@
 				<div class="contributor-inner">
 					<div
 						v-for="contributor of contributors"
-						:key="contributor.id"
+						:key="contributor.user.id"
 						class="contributor-card"
 					>
 						<CreditCard
-							v-if="isStaffRole(contributor.roleId)"
-							:user="contributor"
+							v-if="isStaffRole(contributor.user.roleId)"
+							:user="contributor.user"
 						/>
 					</div>
 				</div>
@@ -26,12 +26,12 @@
 				<div class="contributor-inner">
 					<div
 						v-for="contributor of contributors"
-						:key="contributor.id"
+						:key="contributor.user.id"
 						class="contributor-card"
 					>
 						<CreditCard
-							v-if="isSupporterRole(contributor.roleId)"
-							:user="contributor"
+							v-if="isSupporterRole(contributor.user.roleId)"
+							:user="contributor.user"
 						/>
 					</div>
 				</div>
@@ -45,12 +45,12 @@
 				<div class="contributor-inner">
 					<div
 						v-for="contributor of contributors"
-						:key="contributor.id"
+						:key="contributor.user.id"
 						class="contributor-card"
 					>
 						<CreditCard
-							v-if="isTranslatorRole(contributor.roleId)"
-							:user="contributor"
+							v-if="isTranslatorRole(contributor.user.roleId)"
+							:user="contributor.user"
 						/>
 					</div>
 				</div>
@@ -60,15 +60,31 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Contributors",
 		auth: false,
-		async asyncData() {
+		async asyncData({ app }) {
+			const contributors = await app.$graphql(
+				`
+				{
+					credits {
+						user {
+							id
+							avatar
+							status
+							name
+							role
+							roleId
+							roleColor
+							rolePosition
+						}
+					}
+				}`
+			);
+
 			return {
-				contributors: (await axios(`${process.env.apiBase}/credits`)).data.sort(
-					(a, b) => b.rolePosition - a.rolePosition
+				contributors: contributors.credits.sort(
+					(a, b) => b.user.rolePosition - a.user.rolePosition
 				)
 			};
 		},
