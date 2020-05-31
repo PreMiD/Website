@@ -330,9 +330,18 @@
 								: false;
 						else if (
 							!this.showAdded &&
-							presence.service
-								?.toLowerCase()
-								.includes(this.presenceSearch.toLowerCase())
+							(
+								presence.service
+									?.toLowerCase()
+									.includes(this.presenceSearch.toLowerCase()) ||
+								(
+									Array.isArray(presence.altnames) &&
+									presence.altnames.filter(altname =>
+										altname.toLowerCase()
+										.includes(this.presenceSearch.toLowerCase())
+									).length > 0
+								)
+							)
 						)
 							return !this.addedPresences.includes(presence.service);
 						else
@@ -342,10 +351,15 @@
 									.includes(this.presenceSearch.toLowerCase()) ||
 								(Array.isArray(presence.tags) &&
 									presence.tags.filter(tag =>
-										tag
-											.toLowerCase()
-											.includes(this.presenceSearch.toLowerCase())
-									).length > 0)
+										tag.toLowerCase()
+										.includes(this.presenceSearch.toLowerCase())
+								).length > 0) ||
+								(Array.isArray(presence.altnames) &&
+									presence.altnames.filter(altname =>
+										altname.toLowerCase()
+										.includes(this.presenceSearch.toLowerCase())
+									).length > 0
+								)
 							);
 					})
 					.filter(presence =>
