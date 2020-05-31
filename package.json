@@ -8,7 +8,7 @@
 		"pretty": "prettier --write **/*.vue **/*.js **/*.json **/*.scss"
 	},
 	"dependencies": {
-		"@nuxt/components": "0.2.4",
+		"@nuxt/components": "^0.3.1",
 		"@nuxt/typescript-build": "0.6.5",
 		"@nuxtjs/auth": "4.9.0",
 		"@nuxtjs/axios": "5.9.7",

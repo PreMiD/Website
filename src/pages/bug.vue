@@ -32,7 +32,7 @@
 			<div class="rab-container">
 				<h1 class="heading" v-t="'report.os'">{{ $t("report.os") }}</h1>
 				<select class="selection" required v-model="Report.os">
-					<option disabled value="">Please select one</option>
+					<option disabled value>Please select one</option>
 					<option>OS X</option>
 					<option>Windows</option>
 					<option>Linux</option>
@@ -54,7 +54,7 @@
 					{{ $t("report.browser") }}
 				</h1>
 				<select class="selection" required v-model="Report.browser">
-					<option disabled value="">Please select one</option>
+					<option disabled value>Please select one</option>
 					<option>Chrome</option>
 					<option>Firefox</option>
 				</select>
@@ -123,8 +123,6 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "RAB",
 		auth: true,
@@ -172,7 +170,7 @@
 				)
 					return this.$noty.error(this.$t("report.error"));
 
-				axios
+				this.$axios
 					.post(
 						`${process.env.apiBase}/bugPost/${this.$auth.$storage._state["_token.discord"]}`,
 						newReport
@@ -188,18 +186,18 @@
 		},
 		mounted() {
 			this.$auth.$storage.setUniversal("redirect", "/bug");
-			if (!this.$auth.loggedIn) return this.$router.push("/login");
-			axios
+			if (!this.$auth.loggedIn) return this.$auth.loginWith("discord");
+
+			this.$axios
 				.get(
 					`${process.env.apiBase}/bugUserInfo/${this.$auth.$storage._state["_token.discord"]}`
 				)
 				.then(data => {
-					if (data.info === null) {
-						return (this.bugInfo.data.info.count = 3);
-					}
+					if (!data.info) return (this.bugInfo.data.info.count = 3);
+
 					this.bugInfo = data;
 					if (data.data.info.count < 3) {
-						axios
+						this.$axios
 							.get(
 								`${process.env.apiBase}/bugInfo/${this.$auth.$storage._state["_token.discord"]}`
 							)
@@ -208,26 +206,23 @@
 									this.activeBugs[0].brief = null;
 									return (this.activeBugs[0].description = null);
 								}
+
+								this.bugCount = this.$t("report.bugcount").replace(
+									"{count}",
+									this.data.data.info.count
+								);
+
 								this.activeBugs = data;
 							});
 					}
 				})
 				.catch(err => {
-					this.$router.push("/");
+					his.$router.push("/");
 					this.$noty.error(this.$t("report.error.unauth"));
 				});
 		},
-		head() {
-			if (this.bugInfo.data.info.count === 0)
-				this.$noty.error(this.$t("report.toomany.alert"));
-			else
-				this.bugCount = this.$t("report.bugcount").replace(
-					"{count}",
-					this.bugInfo.data.info.count
-				);
-			return {
-				title: "Report A Bug"
-			};
+		head: {
+			title: "Report A Bug"
 		}
 	};
 </script>

@@ -96,9 +96,9 @@
 					<label>
 						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{
-							$t("store.category.filters.mostUsed")
-						}}</span>
+						<span class="title">
+							{{ $t("store.category.filters.mostUsed") }}
+						</span>
 					</label>
 				</div>
 
@@ -120,9 +120,9 @@
 					<label>
 						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{
-							$t("store.category.filters.allowAdult")
-						}}</span>
+						<span class="title">
+							{{ $t("store.category.filters.allowAdult") }}
+						</span>
 					</label>
 				</div>
 
@@ -130,9 +130,9 @@
 					<label>
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{
-							$t("store.category.filters.likedOnly")
-						}}</span>
+						<span class="title">
+							{{ $t("store.category.filters.likedOnly") }}
+						</span>
 					</label>
 				</div>
 
@@ -194,7 +194,7 @@
 			</div>
 
 			<div class="store-grid__content">
-				<h1 v-if="filteredPresences.length <= 0" class="heading">
+				<h1 v-if="!filteredPresences.length" class="heading">
 					{{ $t("store.search.notFound") }}
 					<i class="fa-sad-tear fas"></i>
 				</h1>
@@ -205,12 +205,13 @@
 						:presence="presence"
 						:hot="hotPresences.includes(presence.service)"
 						:partner="
-							partners.filter(p => p.storeName == presence.service).length > 0
+							partners.filter(p => p.storeName == presence.service).length
 						"
 					/>
 				</div>
 			</div>
 		</div>
+
 		<paginate
 			v-model="currentPageNumber"
 			container-class="pagination-container"
@@ -227,53 +228,86 @@
 			<span slot="breakViewContent"></span>
 		</paginate>
 
-		<adsense ad-slot="5201967746" style="text-align: center;" />
+		<adsense
+			ad-slot="5201967746"
+			style="text-align: center; margin-top: 0.25em;"
+		/>
 	</section>
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Store",
 		auth: false,
 		head: {
 			title: "Store"
 		},
-		async asyncData() {
-			const usage = (await axios(`${process.env.apiBase}/usage`)).data.users,
-				presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
-					.data,
-				presencesList = (await axios(`${process.env.apiBase}/presences`)).data,
-				partnersList = (await axios(`${process.env.apiBase}/partners`)).data;
+		async asyncData({ app, error }) {
+			try {
+				const usage = (
+						await app.$axios(`${process.env.apiBase}/usage`, {
+							headers: { Authorization: false }
+						})
+					)?.data.users,
+					presenceRanking = (
+						await app.$axios(`${process.env.apiBase}/presenceUsage`, {
+							headers: { Authorization: false }
+						})
+					)?.data,
+					partnersList = (
+						await app.$axios(`${process.env.apiBase}/partners`, {
+							headers: { Authorization: false }
+						})
+					)?.data;
 
-			//! This code must be deleted after API will be updated
-			//! to have presence usage count inside the returned data already.
-			for (var presence in presenceRanking) {
-				let score = presenceRanking[presence];
-				presencesList.some((element, index) => {
-					// Setting zero score for all presences.
-					if (!element.metadata.usage) presencesList[index].metadata.usage = 0;
-					// Setting presence usage score based on the API's results.
-					if (
-						element.metadata.service.toLowerCase() == presence.toLowerCase()
-					) {
-						presencesList[index].metadata.usage = score;
-						return true;
-					} else return false;
-				});
+				const { presences } = await app.$graphql(
+					`
+					{
+						presences {
+							metadata {
+								author {
+									name
+									id
+								}
+								logo
+								thumbnail
+								service
+								color
+								url
+								warning
+								tags
+								description
+							}
+						}
+					}`
+				);
+
+				for (let key in presenceRanking) {
+					const score = presenceRanking[key] || 0,
+						index = presences.findIndex(
+							p => p?.metadata?.service?.toLowerCase() === key.toLowerCase()
+						);
+
+					if (index !== -1)
+						presences[index] = {
+							...presences[index]?.metadata,
+							usage: score
+						};
+				}
+
+				return {
+					presences: presences || [],
+					topPresences: presenceRanking || [],
+					partners: partnersList,
+					hotPresences: Object.keys(presenceRanking)
+						.map((k, i) => {
+							if ((presenceRanking[k] / usage) * 100 > 5) return k;
+						})
+						.filter(p => p)
+				};
+			} catch (err) {
+				return error({ message: "API returned an error." });
 			}
-
-			return {
-				presences: presencesList,
-				topPresences: presenceRanking,
-				partners: partnersList,
-				hotPresences: Object.keys(presenceRanking)
-					.map((k, i) => {
-						if ((presenceRanking[k] / usage) * 100 > 5) return k;
-					})
-					.filter(p => p)
-			};
 		},
 		data() {
 			return {
@@ -349,15 +383,15 @@
 							);
 					})
 					.filter(presence =>
-						this.$data.nsfw ? true : !presence.tags.includes("nsfw")
+						this.nsfw ? true : !presence.tags.includes("nsfw")
 					)
 					.filter(presence =>
-						this.$data.filterLiked &&
+						this.filterLiked &&
 						this.$store.state.presences.likedPresences.includes(
 							presence.service
 						)
 							? true
-							: !this.$data.filterLiked
+							: !this.filterLiked
 					)
 					.filter(presence => {
 						if (this.currentCategory == "all") {
@@ -368,7 +402,7 @@
 					})
 					.sort((a, b) => a.service.localeCompare(b.service))
 					.sort((a, b) => {
-						if (this.$data.mostUsed) {
+						if (this.mostUsed) {
 							return b.usage - a.usage;
 						}
 					});
@@ -391,26 +425,17 @@
 			},
 			pageCount() {
 				let length = this.filteredPresences.length,
-					size = this.$data.presencesPerPage;
+					size = this.presencesPerPage;
 
 				return Math.ceil(length / size);
 			},
 			paginatedData() {
-				let start = (this.currentPageNumber - 1) * this.$data.presencesPerPage,
-					end = start + this.$data.presencesPerPage;
+				let start = (this.currentPageNumber - 1) * this.presencesPerPage,
+					end = start + this.presencesPerPage;
 				return this.filteredPresences.slice(start, end);
 			}
 		},
 		created() {
-			// Requesting presences data from our API and adding it into our Vue data.
-			this.$data.presences = this.$data.presences.sort((a, b) =>
-				a.name.localeCompare(b.name)
-			);
-
-			this.$data.presences = this.$data.presences.map(
-				presence => presence.metadata
-			);
-
 			if (
 				this.pageCount < Number(this.$route.query.page) ||
 				this.$route.query.page <= -1
@@ -432,7 +457,7 @@
 				this.$route.query.search;
 
 			if (query) {
-				this.$data.presenceSearch = query
+				this.presenceSearch = query
 					.replace("author:", "author ")
 					.replace("url:", "url ")
 					.replace("tag:", "tag ")
@@ -454,9 +479,9 @@
 			setSearchStyle() {
 				let padding = 10;
 
-				for (let key in this.$data.filters) {
-					this.$data.filters[key].enabled === true
-						? (padding = this.$data.filters[key].padding)
+				for (let key in this.filters) {
+					this.filters[key].enabled === true
+						? (padding = this.filters[key].padding)
 						: false;
 				}
 
@@ -464,39 +489,38 @@
 				return true;
 			},
 			searchHandle(evt, typing) {
-				if (!this.$data.presenceSearch) this.typing = false;
+				if (!this.presenceSearch) this.typing = false;
 
 				if (
 					evt &&
-					this.$data.presenceSearch == "" &&
+					this.presenceSearch == "" &&
 					evt.key.toLowerCase() == "backspace"
 				) {
-					for (let key in this.$data.filters)
-						this.$data.filters[key].enabled = false;
+					for (let key in this.filters) this.filters[key].enabled = false;
 					this.setSearchStyle();
 				} else if (!evt || evt.key.toLowerCase() != "backspace") {
 					this.typing = typing != "undefined" ? typing : true;
-					const handles = Object.keys(this.$data.filters);
+					const handles = Object.keys(this.filters);
 
-					if (handles.indexOf(this.$data.presenceSearch.split(" ")[0]) !== -1) {
-						for (let key in this.$data.filters) {
-							key == this.$data.presenceSearch.split(" ")[0]
-								? (this.$data.filters[key].enabled = true)
-								: (this.$data.filters[key].enabled = false);
+					if (handles.indexOf(this.presenceSearch.split(" ")[0]) !== -1) {
+						for (let key in this.filters) {
+							key == this.presenceSearch.split(" ")[0]
+								? (this.filters[key].enabled = true)
+								: (this.filters[key].enabled = false);
 						}
 
-						this.$data.presenceSearch =
-							this.$data.presenceSearch
+						this.presenceSearch =
+							this.presenceSearch
 								.split(" ")[0]
-								.replace(this.$data.presenceSearch.split(" ")[0], "") +
-							this.$data.presenceSearch.split(" ").slice(1);
+								.replace(this.presenceSearch.split(" ")[0], "") +
+							this.presenceSearch.split(" ").slice(1);
 
 						this.setSearchStyle();
 					}
 				}
 			},
 			removeFilter(filter) {
-				this.$data.filters[filter].enabled = false;
+				this.filters[filter].enabled = false;
 				this.setSearchStyle();
 				return true;
 			},

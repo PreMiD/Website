@@ -19,7 +19,7 @@
 							}"
 						>
 							<i
-								@click="redirect('/downloads#ext-downloads')"
+								@click="$router.push('/downloads#ext-downloads')"
 								class="fa-exclamation fas"
 							/>
 						</div>
@@ -39,50 +39,73 @@
 						<p>{{ $t(category.string) }}</p>
 					</nuxt-link>
 
+					<div
+						class="user-info"
+						v-if="$auth.loggedIn"
+						@mouseenter="hovered = true"
+						@mouseleave="hovered = false"
+					>
+						<img class="round-icon" :src="avatarify()" />
+						<div class="dropdown">
+							<span id="loggedin">{{ $t("header.lia") }}</span>
 
-					<nuxt-link style="z-index: 2;" id="userInfo" v-if="$auth.loggedIn"
-						:to="''" 
-						ref="userInfo"
-						>
-						<img class="round-icon" style="width: auto; height: 50px;display: inline; background-color: hsl(227, 18%, 8%);" :src="'https://cdn.discordapp.com/avatars/' + $auth.user.id + '/' + $auth.user.avatar ">
-						<div class="dropdown" style="float:right; top: 5px;">
-							<span id="loggedin" v-t="'header.lia'">{{ $t("header.lia") }}</span>
-							<span id="username">{{ $auth.user.username }}
+							<span id="username">
+								{{ $auth.user.username }}
 								<span id="tag">#{{ $auth.user.discriminator }}</span>
 							</span>
-							<div class="dropdown-content">
-								<a style="margin: 0px;border-top-left-radius: 10px;border-top-right-radius: 10px;" v-if="isStaff === false" @click="redirect('/bug')" v-t="'header.rab'">{{ $t("header.rab") }}</a>
-								<a style="margin: 0px;border-top-left-radius: 10px; border-top-right-radius: 10px;" v-else @click="redirect('/staff')" v-t="'header.staff'">{{ $t("header.staff") }}</a>
-								<a style="margin: 0px;border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;" @click="redirect('/logout')" v-t="'header.logout'">{{ $t("header.logout") }}</a>
-							</div>
+
+							<transition name="slide-down" mode="in-out">
+								<div v-if="hovered" class="dropdown-container">
+									<div class="dropdown-content">
+										<nuxt-link v-if="isStaff === false" to="/bug">{{
+											$t("header.rab")
+										}}</nuxt-link>
+										<nuxt-link v-else to="/staff">{{
+											$t("header.staff")
+										}}</nuxt-link>
+										<nuxt-link to="/logout">{{
+											$t("header.logout")
+										}}</nuxt-link>
+									</div>
+								</div>
+							</transition>
 						</div>
-					</nuxt-link>
+					</div>
 
-
-					<nuxt-link v-if="!this.$auth.loggedIn"
-						key="login"
-						:to="'/login'"
-						ref="userLinks"
-					>
+					<nuxt-link v-if="!this.$auth.loggedIn" to="/login">
 						<span class="round-icon">
 							<i :class="`fa-user fas`"></i>
 						</span>
-						<p v-t="'header.login'">{{ $t("header.login") }}</p>
+						<p>{{ $t("header.login") }}</p>
 					</nuxt-link>
-
-
 				</div>
-				
 
 				<div v-if="countDownBtn" id="links">
 					<a
-						@click="countDownValue === 0 ? $nuxt.setLayout('dl') : null"
+						v-if="countDownValue === 0"
+						@click="$nuxt.setLayout('default')"
+						class="navbar__item"
+					>
+						<span class="round-icon">
+							<i :class="`fa-backward fas`"></i>
+						</span>
+						<p>{{ $t("downloads.button.back") }}</p>
+					</a>
+
+					<a
+						@click="countDownValue === 0 ? open($props.href) : null"
 						class="navbar__item"
 					>
 						<span class="round-icon">
 							<i :class="`fa-forward fas`"></i>
 						</span>
-						<p v-text="countDownValue === 0 ? 'Skip' : countDownValue" />
+						<p
+							v-text="
+								countDownValue === 0
+									? $t('downloads.button.skip')
+									: countDownValue
+							"
+						/>
 					</a>
 				</div>
 
@@ -119,7 +142,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 	@import "~/stylesheets/variables.scss";
 
 	#navbar {
@@ -187,7 +209,8 @@
 					}
 				}
 
-				.round-icon, img {
+				.round-icon,
+				img {
 					transition: 0.15s background-color ease-out;
 
 					align-items: center;
@@ -210,37 +233,51 @@
 					height: 45px;
 				}
 			}
-			#user-link{
-				color: #646E90;
-				display:inline;
+			#user-link {
+				color: #646e90;
+				display: inline;
 				position: relative;
 				white-space: nowrap;
 			}
-			#loggedin{
+			#loggedin {
 				display: inline-block;
 				white-space: nowrap;
-				font-size: 1.0rem;
+				font-size: 1rem;
 				background: linear-gradient(30deg, #7289da, #b3aeff);
 				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 			}
-			#userInfo{
+
+			.user-info {
+				z-index: 999;
 				width: auto;
 				display: flex;
 				justify-content: space-between;
+				user-select: none;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+
+				img {
+					place-self: center;
+					width: 50px;
+					height: 50px;
+					border-radius: 100%;
+					margin-right: 8px;
+				}
 			}
-			#username{
+
+			#username {
 				display: flex;
 				color: #fff;
 				font-size: 1.1rem;
 				white-space: nowrap;
-				vertical-align: bottom; 
+				vertical-align: bottom;
 			}
-			#tag{
+			#tag {
 				display: flex;
 				font-size: 0.8rem;
-				color: #99AAB5;
+				color: #99aab5;
 				align-self: flex-end;
 			}
 		}
@@ -252,34 +289,43 @@
 			height: 25px;
 			text-align: center;
 		}
+
+		.dropdown-container {
+			position: absolute;
+			right: 0;
+			padding-top: 0.75em;
+
+			.dropdown-content a {
+				margin: unset !important;
+			}
+		}
+
 		.dropdown {
 			position: relative;
 			display: inline-block;
-
+			place-self: center;
 		}
 
 		.dropdown-content {
-			display: none;
-			position:absolute;
+			position: absolute;
+			right: 0;
 			background-color: $background-secondary;
 			border-radius: 10px;
 			width: inherit;
-			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+
+			a {
+				color: black;
+				padding: 10px 1.3em;
+				text-decoration: none;
+				width: inherit;
+
+				&:hover {
+					background-color: $background-primary;
+				}
+			}
 		}
-
-		.dropdown-content a {
-			color: black;
-			padding: 10px 1.3em;
-			margin: 0px;
-			text-decoration: none;
-			width: inherit;
-		}
-
-		.dropdown-content a:hover {background-color: $background-primary;}
-
-		.dropdown:hover .dropdown-content {display: inline-block;}
 	}
-
 
 	#mobileLinks {
 		position: absolute;
@@ -308,8 +354,20 @@
 			}
 		}
 	}
-	//* Responsive Design
 
+	.nuxt-link-active {
+		color: #7289da !important;
+
+		span {
+			background-color: #7289da !important;
+
+			i {
+				color: #ffffff;
+			}
+		}
+	}
+
+	//* Responsive Design
 	@media only screen and (max-width: 900px) {
 		#links {
 			a {
@@ -330,13 +388,12 @@
 </style>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Navigation",
-		props: ["noLinks", "countDownBtn"],
+		props: ["noLinks", "countDownBtn", "href", "target"],
 		data() {
 			return {
+				hovered: false,
 				pageLoad: false,
 				countDownValue: 5,
 				mobileMenuActive: false,
@@ -363,19 +420,17 @@
 			};
 		},
 		methods: {
-			redirect(location) {
-				window.location.href = location || window.location.href;
+			open(url) {
+				window.open(url, this.$props.target).focus();
+				this.$nuxt.setLayout("default");
+			},
+			avatarify() {
+				if (!this.$auth.loggedIn) return "";
+				else if (this.$auth?.user?.avatar)
+					return `https://cdn.discordapp.com/avatars/${this.$auth.user.id}/${this.$auth.user.avatar}`;
 			},
 			appear() {
 				this.pageLoad = true;
-				let targets = [];
-
-				if (this.$refs.headerLink)
-					targets.push(...this.$refs.headerLink.map(i => i.$el));
-					if(this.$refs.userInfo){
-					targets.push(this.$refs.userInfo.$el);
-					}
-					
 
 				this.$anime
 					.timeline({
@@ -387,7 +442,7 @@
 					})
 					.add(
 						{
-							targets: targets,
+							targets: "#links a",
 							translateY: [-200, 0]
 						},
 						0
@@ -409,7 +464,7 @@
 			}
 		},
 		mounted() {
-			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator?.userAgent
 			);
 
@@ -418,36 +473,41 @@
 				this.countDownValue--;
 
 				if (this.countDownValue === 0) clearInterval(interval);
-			}, (1 * 1000));
-			
-			if(this.$auth.loggedIn){
-				axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(({ data }) => {
-					if(data.userId){
-						const staffRoles = [
-							"606270745299124235", //Creator
-							"493135149274365975", //Executive Director
-							"691382096878370837", //Operations Supervisior
-							"673681900476432387", //Global Community Representative
-							"673682511288598575", //Head Software Engineer
-							"616646805907832833", //Web Developer
-							"691393583189721088", //Linux Maintainer
-							"691396820236107837", //Engineer
-							"691386502566903850", //Graphic Designer
-							"548518356324581377", //Senior Moderator
-							"673683121971134505", //Head of Presence Verifying
-							"691384256672563332", //Community Representative
-							"514546359865442304", //Moderator
-							"526734093560315925", //Junior Moderator
-							"566417964820070421", //Support Agent
-							"630445337143935009" //Presence Verifier
-						];
+			}, 1 * 1000);
 
-						if (staffRoles.indexOf(data.roleId) !== -1) this.isStaff = true;
-						else this.isStaff = false;
-					}
-				});
+			if (this.$auth.loggedIn) {
+				this.$axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`, {
+					headers: { Authorization: false }
+				})
+					.then(({ data }) => {
+						if (data.userId) {
+							const staffRoles = [
+								"606270745299124235", //Creator
+								"493135149274365975", //Executive Director
+								"691382096878370837", //Operations Supervisior
+								"673681900476432387", //Global Community Representative
+								"673682511288598575", //Head Software Engineer
+								"616646805907832833", //Web Developer
+								"691393583189721088", //Linux Maintainer
+								"691396820236107837", //Engineer
+								"691386502566903850", //Graphic Designer
+								"548518356324581377", //Senior Moderator
+								"673683121971134505", //Head of Presence Verifying
+								"691384256672563332", //Community Representative
+								"514546359865442304", //Moderator
+								"526734093560315925", //Junior Moderator
+								"566417964820070421", //Support Agent
+								"630445337143935009" //Presence Verifier
+							];
+
+							if (staffRoles.indexOf(data.roleId) !== -1) this.isStaff = true;
+							else this.isStaff = false;
+						}
+					})
+					.catch(() => {
+						// this.$nuxt.error({ statusCode: 500 })
+					});
 			}
-
 		}
 	};
 </script>

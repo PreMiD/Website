@@ -82,8 +82,6 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Apply",
 		data() {
@@ -115,7 +113,7 @@
 				)
 					this.error = this.$t("partners.apply.error3");
 				else {
-					axios
+					this.$axios
 						.post(`${process.env.apiBase}/partners/apply`, {
 							type: this.type,
 							name: this.name,

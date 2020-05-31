@@ -157,7 +157,6 @@
 <script>
 	import PresenceMixin from "./mixins/Presence";
 	import tinycolor from "tinycolor2";
-	import axios from "axios";
 
 	export default {
 		name: "StoreCard",
