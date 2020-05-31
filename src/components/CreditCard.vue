@@ -59,7 +59,7 @@
 				};
 			},
 			cardShadowColor() {
-				if (this.$data.hovered) {
+				if (this.hovered) {
 					return tinycolor(this.cardGradientColor.primary)
 						.setAlpha(0.3)
 						.saturate(20)

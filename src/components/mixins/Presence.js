@@ -13,7 +13,7 @@ var PresenceMixin = {
 			window.dispatchEvent(event);
 
 			this.$store.commit("presences/add", name);
-			this.$data.isInstalled = true;
+			this.isInstalled = true;
 		},
 		removePresence(name) {
 			var event = new CustomEvent("PreMiD_RemovePresence", {
@@ -22,7 +22,7 @@ var PresenceMixin = {
 			window.dispatchEvent(event);
 
 			this.$store.commit("presences/remove", name);
-			this.$data.isInstalled = false;
+			this.isInstalled = false;
 		},
 		//TODO: Needs recoding due to big ammount of useless code.
 		// This function compares the array elements that we get from Extension with `presenceName` string.

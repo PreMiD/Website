@@ -35,15 +35,14 @@
 </template>
 
 <script>
-	import axios from "axios";
 	import Logo from "@/assets/images/premid-beta.png";
 
 	export default {
 		name: "Register",
 		auth: true,
-		async asyncData({ $auth, error, $t }) {
+		async asyncData({ $auth, error, $t, app }) {
 			if ($auth.loggedIn) {
-				let { data } = await axios.post(
+				let { data } = await app.$axios.post(
 					`${process.env.apiBase}/addBetaUser/${$auth.$storage._state["_token.discord"]}`
 				);
 

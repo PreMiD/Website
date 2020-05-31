@@ -119,7 +119,7 @@
 			}
 		},
 		beforeDestroy() {
-			if (this.interval) clearInterval(this.interval);
+			if (this.adBlockInterval) clearInterval(this.adBlockInterval);
 		},
 		methods: {
 			open(url) {

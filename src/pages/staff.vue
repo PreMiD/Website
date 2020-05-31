@@ -29,8 +29,6 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Staff",
 		auth: true,
@@ -44,7 +42,7 @@
 		},
 		beforeMount() {
 			if (this.$auth.loggedIn) {
-				axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(
+				this.$axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(
 					response => {
 						this.user = response.data;
 						//! Temporary

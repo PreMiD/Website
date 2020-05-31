@@ -16,7 +16,7 @@
     <LanguageNotification />
 		-->
 		<header>
-			<navigation />
+			<Navigation />
 		</header>
 		<div class="app-wrapper">
 			<div class="content">
@@ -54,7 +54,7 @@
 		},
 		methods: {
 			toggleSwitcher() {
-				this.$data.switcherVisible = !this.$data.switcherVisible;
+				this.switcherVisible = !this.switcherVisible;
 			}
 		}
 	};

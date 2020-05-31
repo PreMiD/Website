@@ -2,10 +2,7 @@
 	<div class="staff-container">
 		<div class="messages" v-if="ready">
 			<p class="action">wip</p>
-			<p
-				class="action"
-				v-if="supporters.find(s => s.userId == ticket.accepter)"
-			>
+			<p class="action" v-if="supporters.find(s => s.userId == ticket.accepter)">
 				Ticket accepted by:
 				{{ supporters.find(s => s.userId == ticket.accepter).username }}
 			</p>
@@ -52,10 +49,7 @@
 					:badge="{ type: 'supporter', color: '#48d41e' }"
 				/>
 			</div>
-			<p
-				class="action"
-				v-if="ticket.closer && supporters.find(s => s.userId == ticket.closer)"
-			>
+			<p class="action" v-if="ticket.closer && supporters.find(s => s.userId == ticket.closer)">
 				Ticket closed by:
 				{{ supporters.find(s => s.userId == ticket.closer).username }}
 			</p>
@@ -64,7 +58,6 @@
 </template>
 
 <script>
-	import axios from "axios";
 	import moment from "moment";
 
 	export default {
@@ -80,10 +73,8 @@
 				moment: moment
 			};
 		},
-		beforeMount() {},
 		mounted() {
-			console.log(this.ticket);
-			axios(`${process.env.apiBase}/discordUsers`).then(response => {
+			this.$axios(`${process.env.apiBase}/discordUsers`).then(response => {
 				this.discordUsers = response.data;
 
 				if (this.ticket.supporters)
@@ -93,78 +84,77 @@
 					});
 
 				this.ready = true;
-				console.log(this.supporters);
 			});
 		}
 	};
 </script>
 
 <style lang="scss" scoped>
-	.staff-container {
-		justify-content: normal;
+.staff-container {
+	justify-content: normal;
 
-		.action {
-			text-align: center;
+	.action {
+		text-align: center;
+	}
+
+	.messages {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		.message {
+			padding: 0.75em;
+			background: #313131;
+			width: 600px;
+			float: left;
+			margin-bottom: 1em;
+			border-radius: 3px;
+			color: white;
+
+			.userAvatar {
+				height: 100%;
+				img {
+					width: 50px;
+					height: 50px;
+					float: left;
+					border-radius: 50%;
+					margin-right: 1em;
+				}
+
+				.role {
+					color: black;
+					font-size: 0.7em;
+					margin-left: 0.5em;
+					border-radius: 2px;
+					padding: 0.2em;
+				}
+
+				.supporter {
+					background: #48d41e;
+				}
+
+				.accepter {
+					background: #6b0909;
+				}
+			}
+
+			.time {
+				color: #c3c3c3;
+				font-size: 0.7em;
+			}
 		}
 
-		.messages {
-			display: flex;
-			flex-direction: column;
+		.right {
+			margin-left: auto;
+		}
+
+		.input {
+			position: fixed;
+			bottom: 90px;
 			width: 100%;
-
-			.message {
-				padding: 0.75em;
-				background: #313131;
-				width: 600px;
-				float: left;
-				margin-bottom: 1em;
-				border-radius: 3px;
-				color: white;
-
-				.userAvatar {
-					height: 100%;
-					img {
-						width: 50px;
-						height: 50px;
-						float: left;
-						border-radius: 50%;
-						margin-right: 1em;
-					}
-
-					.role {
-						color: black;
-						font-size: 0.7em;
-						margin-left: 0.5em;
-						border-radius: 2px;
-						padding: 0.2em;
-					}
-
-					.supporter {
-						background: #48d41e;
-					}
-
-					.accepter {
-						background: #6b0909;
-					}
-				}
-
-				.time {
-					color: #c3c3c3;
-					font-size: 0.7em;
-				}
-			}
-
-			.right {
-				margin-left: auto;
-			}
-
-			.input {
-				position: fixed;
-				bottom: 90px;
-				width: 100%;
-				height: 75px;
-				background: #121212;
-			}
+			height: 75px;
+			background: #121212;
 		}
 	}
+}
 </style>
