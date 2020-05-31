@@ -299,7 +299,7 @@
 					presences: presences || [],
 					topPresences: presenceRanking || [],
 					partners: partnersList,
-					hotPresences: Object.keys(presenceRanking)
+					hotPresences: Object.keys(presenceRanking || {})
 						.map((k, i) => {
 							if ((presenceRanking[k] / usage) * 100 > 5) return k;
 						})

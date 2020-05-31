@@ -425,7 +425,7 @@
 				this.$nuxt.setLayout("default");
 			},
 			avatarify() {
-				if (!this.$auth.loggedIn) return "";
+				if (!this.$auth?.loggedIn) return "";
 				else if (this.$auth?.user?.avatar)
 					return `https://cdn.discordapp.com/avatars/${this.$auth.user.id}/${this.$auth.user.avatar}`;
 			},
