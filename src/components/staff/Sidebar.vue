@@ -113,12 +113,11 @@
 <script>
 	import anime from "animejs";
 	export default {
-		name: "LoggedIn",
+		name: "Sidebar",
 		props: {
 			user: Object
 		},
 		mounted() {
-			console.log(this.user);
 			anime({
 				targets: ".sidebar h1",
 				translateX: 20,

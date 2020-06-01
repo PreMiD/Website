@@ -42,14 +42,32 @@
 		},
 		beforeMount() {
 			if (this.$auth.loggedIn) {
-				this.$axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`).then(
-					response => {
-						this.user = response.data;
-						//! Temporary
-						if (!this.user.roleIds.includes("656913616100130816"))
-							this.$router.push("/");
+				this.$graphql(
+					`
+					{
+						credits(id: "${this.$auth.user.id}") {
+							user {
+								id
+								name
+								tag
+								avatar
+								role
+								roleColor
+							}
+							roles {
+								id
+							}
+						}
 					}
-				);
+				`
+				).then(data => {
+					let user = data.credits[0];
+
+					if (user.roles.find(r => r.id === "656913616100130816").length === 0)
+						this.$router.push("/");
+
+					this.user = user.user;
+				});
 			} else this.$router.push("/login");
 		},
 		mounted() {
