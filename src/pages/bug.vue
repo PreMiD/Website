@@ -151,8 +151,6 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "RAB",
 		auth: true,
@@ -200,7 +198,7 @@
 				)
 					return this.$noty.error(this.$t("report.error"));
 
-				axios
+				this.$axios
 					.post(
 						`${process.env.apiBase}/bugPost/${this.$auth.$storage._state["_token.discord"]}`,
 						newReport

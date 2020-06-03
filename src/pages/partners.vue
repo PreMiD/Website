@@ -1,10 +1,7 @@
 <template>
 	<div class="partners">
 		<div class="main">
-			<strong
-				v-t="'partners.header.title'"
-				class="text-highlight title"
-			></strong>
+			<strong v-t="'partners.header.title'" class="text-highlight title"></strong>
 			<p v-t="'partners.header.description'" class="description"></p>
 			<p v-t="'partners.slideshow.description'" class="slideshow-title"></p>
 
@@ -14,15 +11,9 @@
 				:width="548"
 				:height="298"
 			>
-				<slide
-					v-for="(partner, index) in partners"
-					:index="index"
-					:key="partner.name"
-				>
+				<slide v-for="(partner, index) in partners" :index="index" :key="partner.name">
 					<figure>
-						<img
-							:src="require(`@/static/assets/images/partners/${partner.image}`)"
-						/>
+						<img :src="require(`@/static/assets/images/partners/${partner.image}`)" />
 
 						<figcaption>
 							<div>
@@ -65,16 +56,10 @@
 				<div class="requirments--content">
 					<h1 v-t="'partners.requirements.title'" class="rTitle" />
 					<p v-t="'partners.requirements.first.title'" class="rText" />
-					<p
-						v-t="'partners.requirements.first.description'"
-						class="rDescription"
-					/>
+					<p v-t="'partners.requirements.first.description'" class="rDescription" />
 
 					<p v-t="'partners.requirements.second.title'" class="rText" />
-					<p
-						v-t="'partners.requirements.second.description'"
-						class="rDescription"
-					/>
+					<p v-t="'partners.requirements.second.description'" class="rDescription" />
 				</div>
 			</div>
 
@@ -92,22 +77,16 @@
 					"
 				/>
 				<transition name="slide-down" mode="in-out">
-					<Apply
-						v-if="showModal"
-						@close="
+					<Apply v-if="showModal" @close="
 							showModal = false;
 							toggleScroll();
-						"
-					/>
+						" />
 				</transition>
 			</div>
 
 			<p v-html="job($t('partners.apply.jobs'))" class="jobs"></p>
 
-			<p
-				v-t="'partners.sponsors.title'"
-				class="sponsor-title text-highlight"
-			></p>
+			<p v-t="'partners.sponsors.title'" class="sponsor-title text-highlight"></p>
 
 			<div class="sponsor-cards">
 				<Sponsor
@@ -123,17 +102,15 @@
 </template>
 
 <style lang="scss" scoped>
-	.disabled {
-		cursor: no-drop !important;
-		background-color: #23272a !important;
-		box-shadow: none !important;
-		color: darkgray !important;
-	}
+.disabled {
+	cursor: no-drop !important;
+	background-color: #23272a !important;
+	box-shadow: none !important;
+	color: darkgray !important;
+}
 </style>
 
 <script>
-	import axios from "axios";
-
 	import anime from "animejs";
 
 	import aniflix_icon from "~/assets/images/partners/aniflix-icon.png";
@@ -142,27 +119,30 @@
 	import upbeat_icon from "~/assets/images/partners/upbeat-icon.png";
 	import slr_icon from "~/assets/images/partners/slr-icon.png";
 	import aniwatch_icon from "~/assets/images/partners/aniwatch-icon.png";
+	import dtemplates_icon from "~/assets/images/partners/dtemplates-icon.png";
 
 	export default {
 		name: "Partners",
 		auth: false,
-		async asyncData() {
+		async asyncData({ app }) {
 			return {
-				partners: (await axios(`${process.env.apiBase}/partners`)).data,
-				sponsors: (await axios(`${process.env.apiBase}/sponsors`)).data,
+				partners: (await app.$axios(`${process.env.apiBase}/partners`)).data,
+				sponsors: (await app.$axios(`${process.env.apiBase}/sponsors`)).data,
 				randomImages: [
 					aniflix_icon,
 					aok_icon,
 					iloot_icon,
 					upbeat_icon,
 					slr_icon,
-					aniwatch_icon
+					aniwatch_icon,
+					dtemplates_icon
 				],
 				showModal: false
 			};
 		},
 		mounted() {
 			this.$auth.$storage.setUniversal("redirect", "/partners#req");
+
 			this.randomImages.forEach(img => {
 				let imgDestination = document.querySelector(".randomImages"),
 					newImg = document.createElement("img");
