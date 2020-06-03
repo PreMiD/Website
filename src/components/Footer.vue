@@ -102,7 +102,7 @@
 				<div>
 					<a href="https://discord.premid.app">Discord</a>
 					<a
-						href="https://docs.premid.app/troubleshooting/"
+						href="https://docs.premid.app/en/troubleshooting/"
 						v-text="$t(`footer.help.troubleshooting`)"
 					></a>
 					<a
