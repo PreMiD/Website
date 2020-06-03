@@ -119,6 +119,7 @@
 	import upbeat_icon from "~/assets/images/partners/upbeat-icon.png";
 	import slr_icon from "~/assets/images/partners/slr-icon.png";
 	import aniwatch_icon from "~/assets/images/partners/aniwatch-icon.png";
+	import dtemplates_icon from "~/assets/images/partners/dtemplates-icon.png";
 
 	export default {
 		name: "Partners",
@@ -133,7 +134,8 @@
 					iloot_icon,
 					upbeat_icon,
 					slr_icon,
-					aniwatch_icon
+					aniwatch_icon,
+					dtemplates_icon
 				],
 				showModal: false
 			};
