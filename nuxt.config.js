@@ -18,8 +18,8 @@ module.exports = {
 		{ src: "~/plugins/Modal.js", ssr: false }
 	],
 	modules: [
+		"@nuxt/components",
 		[
-			"@nuxt/components",
 			"nuxt-lazy-load",
 			{
 				observerConfig: {
@@ -40,11 +40,11 @@ module.exports = {
 		"@nuxtjs/axios",
 		"@nuxtjs/auth"
 	],
+	components: true,
 	axios: {
 		proxy: true,
 		retry: { retries: 3 }
 	},
-
 	proxy: {
 		"/v3": "https://api.premid.app/v3"
 	},
@@ -176,6 +176,6 @@ module.exports = {
 				overlay: false
 			}
 		}
-		//publicPath: "https://cdn.premid.app"
+		// publicPath: "https://cdn.premid.app"
 	}
 };

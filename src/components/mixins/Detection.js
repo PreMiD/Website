@@ -26,10 +26,10 @@ var DetectionMixin = {
 		});
 
 		if (this.$store.state.extension.extensionInstalled) {
-			this.$data.extensionInstalled = true;
+			this.extensionInstalled = true;
 			this.debugMessage("Extension installed, unlocking functions...");
 		} else {
-			this.$data.extensionInstalled = false;
+			this.extensionInstalled = false;
 			this.errorMessage("Extension not found, locking functions...");
 		}
 

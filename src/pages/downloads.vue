@@ -38,15 +38,6 @@
 								]
 							</p>
 						</li>
-						<li>
-							<p>
-								<i18n path="downloads.instructions.step.4">
-									<nuxt-link to="/store">{{
-										$t("downloads.instructions.step.4.store")
-									}}</nuxt-link>
-								</i18n>
-							</p>
-						</li>
 					</ol>
 				</div>
 			</div>
@@ -72,9 +63,7 @@
 			<div
 				v-if="isMobile"
 				class="dl-container__section dl-container__mobile-warning waves-aligned"
-			>
-				{{ $t("downloads.mobile.errorMessage") }}
-			</div>
+			>{{ $t("downloads.mobile.errorMessage") }}</div>
 		</transition>
 
 		<transition name="card-animation" mode="out-in">
@@ -109,10 +98,7 @@
 					<div class="dl-container__cards">
 						<div v-for="(platform, index) of platform_order" :key="platform">
 							<div @click="open(platform, 'Application')">
-								<div
-									:class="{ 'current-platform': index == 1 }"
-									class="cards__card clickable"
-								>
+								<div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
 									<div class="card__icon">
 										<i :class="`fab fa-${platform}`"></i>
 									</div>
@@ -153,10 +139,7 @@
 					</div>
 				</div>
 
-				<div
-					id="ext-downloads"
-					class="dl-container__section dl-container__section_downloads"
-				>
+				<div id="ext-downloads" class="dl-container__section dl-container__section_downloads">
 					<h1 class="section-header">
 						{{ $t("downloads.extdownloading.header") }}
 						<a
@@ -217,19 +200,11 @@
 					<div v-if="$auth.loggedIn">
 						<div v-if="beta.access == true">
 							<div class="dl-container__cards">
-								<div
-									v-for="(platform, index) of cTab.app_links"
-									:key="platform.platform.toString()"
-								>
+								<div v-for="(platform, index) of cTab.app_links" :key="platform.platform.toString()">
 									<div @click="openInNewTab(platform.link)">
-										<div
-											:class="{ 'current-platform': index == 1 }"
-											class="cards__card clickable"
-										>
+										<div :class="{ 'current-platform': index == 1 }" class="cards__card clickable">
 											<div class="card__icon">
-												<i
-													:class="`fab fa-${platform.platform.toLowerCase()}`"
-												></i>
+												<i :class="`fab fa-${platform.platform.toLowerCase()}`"></i>
 											</div>
 											<div class="card__content">
 												<h3 v-text="platform.platform" />
@@ -290,9 +265,7 @@
 								class="button"
 								id="login"
 								@click="$router.push('/login')"
-							>
-								{{ $t("downloads.button.login") }}
-							</button>
+							>{{ $t("downloads.button.login") }}</button>
 						</div>
 					</div>
 				</div>
@@ -303,21 +276,15 @@
 			<div v-if="isMobile" class="dl-container__showDownloads">
 				<span @click="showDownloads = !showDownloads">
 					{{
-						showDownloads
-							? $t("downloads.mobile.hideDownloads")
-							: $t("downloads.mobile.showDownloads")
+					showDownloads
+					? $t("downloads.mobile.hideDownloads")
+					: $t("downloads.mobile.showDownloads")
 					}}
 				</span>
 			</div>
 		</transition>
 
-		<modal
-			v-if="modalAvailable"
-			:classes="'modal'"
-			width="400px"
-			height="auto"
-			name="warning"
-		>
+		<modal v-if="modalAvailable" :classes="'modal'" width="400px" height="auto" name="warning">
 			<div class="title">{{ $t("downloads.warning.title") }}</div>
 			<div class="message">
 				<p
@@ -331,15 +298,14 @@
 			</div>
 			<div class="buttons">
 				<div class="container">
-					<button class="button btn cancel" @click="$modal.hide('warning')">
-						{{ $t("downloads.button.cancel") }}
-					</button>
+					<button
+						class="button btn cancel"
+						@click="$modal.hide('warning')"
+					>{{ $t("downloads.button.cancel") }}</button>
 					<button
 						class="button btn accept"
 						@click="open('chrome', 'Extension')"
-					>
-						{{ $t("downloads.button.okay") }}
-					</button>
+					>{{ $t("downloads.button.okay") }}</button>
 				</div>
 			</div>
 		</modal>
@@ -347,86 +313,80 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Downloads",
 		auth: false,
-		async asyncData({ $auth }) {
-			let tab = null,
-				alpha = {
-					access: false,
-					app_links: [],
-					ext_links: []
-				},
-				beta = {
-					access: false,
-					app_links: [],
-					ext_links: []
-				},
-				cTab = {};
+		async asyncData({ $auth, app, error }) {
+			try {
+				let tab = null,
+					alpha = {
+						access: false,
+						app_links: [],
+						ext_links: []
+					},
+					beta = {
+						access: false,
+						app_links: [],
+						ext_links: []
+					},
+					cTab = {};
 
-			if ($auth.loggedIn) {
-				let { access } = (
-					await axios(`${process.env.apiBase}/alphaAccess/${$auth.user.id}`)
-				).data;
-				alpha.access = access;
-
-				if (access) {
-					beta.access = true;
-
-					let { app_links, ext_links } = (
-						await axios.post(
-							`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/alpha`
+				if ($auth.loggedIn) {
+					let { access } = (
+						await app.$axios.get(
+							`${process.env.apiBase}/alphaAccess/${$auth.user.id}`
 						)
 					).data;
 
-					alpha.app_links = app_links;
-					alpha.ext_links = ext_links;
-
-					cTab = alpha;
-					tab = "alpha";
-
-					let { data } = await axios.post(
-						`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/beta`
-					);
-					beta.app_links = data.app_links;
-					beta.ext_links = data.ext_links;
-				} else {
-					let { access } = (
-						await axios(`${process.env.apiBase}/betaAccess/${$auth.user.id}`)
-					).data;
-					beta.access = access;
+					alpha.access = access;
 
 					if (access) {
-						let { data } = await axios.post(
+						beta.access = true;
+
+						let { app_links, ext_links } = (
+							await app.$axios.post(
+								`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/alpha`
+							)
+						).data;
+
+						alpha.app_links = app_links;
+						alpha.ext_links = ext_links;
+
+						cTab = alpha;
+						tab = "alpha";
+
+						let { data } = await app.$axios.post(
 							`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/beta`
 						);
-
 						beta.app_links = data.app_links;
 						beta.ext_links = data.ext_links;
-
-						cTab = beta;
-						tab = "beta";
+					} else {
+						let { access } = (
+							await app.$axios(
+								`${process.env.apiBase}/betaAccess/${$auth.user.id}`
+							)
+						).data;
+						beta.access = access;
 					}
 				}
+
+				const versions = (await app.$axios(`${process.env.apiBase}/versions`))
+					.data;
+
+				return {
+					extVersion: versions?.extension,
+					appVersion: versions?.app,
+					linuxVersion: versions?.linux,
+					cTab,
+					tab,
+					alpha,
+					beta,
+					betaUsers: (await app.$axios(`${process.env.apiBase}/betaUsers`)).data
+						.betaUsers
+				};
+			} catch (err) {
+				return error(err);
 			}
-
-			const { extension, app, linux } = (
-				await axios(`${process.env.apiBase}/versions`)
-			).data;
-
-			return {
-				extVersion: extension,
-				appVersion: app,
-				linuxVersion: linux,
-				cTab,
-				tab,
-				alpha,
-				beta,
-				betaUsers: (await axios(`${process.env.apiBase}/betaUsers`)).data
-					.betaUsers
-			};
 		},
 		data() {
 			return {
@@ -446,14 +406,6 @@
 				warning: {
 					number: null,
 					messageKey: null
-				},
-				urls: {
-					windows: "https://dl.premid.app/PreMiD-installer.exe",
-					apple: "https://dl.premid.app/PreMiD-installer.app.zip",
-					linux: null,
-					chrome:
-						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
-					firefox: "https://dl.premid.app/PreMiD.xpi"
 				},
 				platform_order: ["windows", "apple", "linux"],
 				builds: {
@@ -532,7 +484,7 @@
 			}
 
 			let platform_temp = "linux";
-			var platform_order = this.$data.platform_order;
+			var platform_order = this.platform_order;
 
 			if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
 			if (ua.includes("Windows")) platform_temp = "windows";
@@ -541,8 +493,8 @@
 					ua
 				)
 			) {
-				this.$data.isMobile = true;
-				this.$data.showDownloads = false;
+				this.isMobile = true;
+				this.showDownloads = false;
 			}
 
 			//* Centering the current platform in array. Only works if array has 3 items.
@@ -642,46 +594,46 @@
 </script>
 
 <style lang="scss">
-	@import "../stylesheets/variables.scss";
+@import "../stylesheets/variables.scss";
 
-	.highlight::after {
-		opacity: 1 !important;
+.highlight::after {
+	opacity: 1 !important;
+}
+
+.button-container {
+	text-align: center;
+
+	p {
+		margin-top: 0;
+	}
+}
+
+#login {
+	padding: 0.55em 3em;
+}
+
+#beta-downloads {
+	.nobeta {
+		flex-direction: column;
+		text-align: center;
+
+		h1 {
+			margin: 0;
+		}
 	}
 
-	.button-container {
-		text-align: center;
+	.card__content {
+		h3 {
+			margin-bottom: 0;
+			text-transform: capitalize;
+		}
 
 		p {
 			margin-top: 0;
+			color: #c3c3c3;
+			text-transform: uppercase;
+			font-size: 0.75rem;
 		}
 	}
-
-	#login {
-		padding: 0.55em 3em;
-	}
-
-	#beta-downloads {
-		.nobeta {
-			flex-direction: column;
-			text-align: center;
-
-			h1 {
-				margin: 0;
-			}
-		}
-
-		.card__content {
-			h3 {
-				margin-bottom: 0;
-				text-transform: capitalize;
-			}
-
-			p {
-				margin-top: 0;
-				color: #c3c3c3;
-				text-transform: uppercase;
-				font-size: 0.75rem;
-			}
-		}
-	}
+}
 </style>

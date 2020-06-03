@@ -74,8 +74,6 @@
 </style>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "JobApply",
 		props: {
@@ -100,7 +98,7 @@
 				if (!this.check) this.errors++;
 
 				if (this.errors == 0 && this.check) {
-					axios
+					this.$axios
 						.post(`${process.env.apiBase}/jobs/apply`, {
 							position: this.job.jobName,
 							questions: this.job.questions,
