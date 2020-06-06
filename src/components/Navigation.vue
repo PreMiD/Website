@@ -47,8 +47,6 @@
 					>
 						<img class="round-icon" :src="avatarify()" />
 						<div class="dropdown">
-							<span id="loggedin">{{ $t("header.lia") }}</span>
-
 							<span id="username">
 								{{ $auth.user.username }}
 								<span id="tag">#{{ $auth.user.discriminator }}</span>
@@ -156,6 +154,7 @@
 		justify-content: space-between;
 
 		#logoWrapper {
+			cursor: pointer;
 			height: 40px;
 
 			display: grid;
@@ -476,9 +475,7 @@
 			}, 1 * 1000);
 
 			if (this.$auth.loggedIn) {
-				this.$axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`, {
-					headers: { Authorization: false }
-				})
+				this.$axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`)
 					.then(({ data }) => {
 						if (data.userId) {
 							const staffRoles = [

@@ -42,10 +42,7 @@
 								:style="partner == true ? 'margin-left:-4px' : ''"
 							>
 								<i class="fa-circle fa-stack-2x fas"></i>
-								<i
-									:style="`color: ${presence.color};`"
-									class="fa-fire-alt fa-inverse fa-stack-1x fas"
-								></i>
+								<i :style="`color: ${presence.color};`" class="fa-fire-alt fa-inverse fa-stack-1x fas"></i>
 							</span>
 
 							<span
@@ -59,19 +56,18 @@
 								class="fa-stack"
 								:style="hot == true || partner == true ? 'margin-left:-4px' : ''"
 							>
-								<i class="fa-circle fa-stack-2x fas"></i>
-								<i
-									:style="`color: ${presence.color};`"
-									class="fa-exclamation fa-inverse fa-stack-1x fas"
-								></i>
+								<i :style="`color:${badgeColor()}`" class="fa-circle fa-stack-2x fas"></i>
+								<i :style="`color: ${presence.color};`" class="fa-exclamation fa-inverse fa-stack-1x fas"></i>
 							</span>
 						</nuxt-link>
 					</h2>
 					<p>
 						{{ $t("store.cards.creator") }}:
-						<nuxt-link :to="`/users/${presence.author.id}`">{{
+						<nuxt-link :to="`/users/${presence.author.id}`">
+							{{
 							presence.author.name
-						}}</nuxt-link>
+							}}
+						</nuxt-link>
 					</p>
 
 					<transition name="card-animation" mode="out-in">
@@ -81,10 +77,7 @@
 							"
 							:key="presence.service + '_desc'"
 						>
-							<p
-								class="store-card__desc"
-								v-html="linkify(this.getPresenceDescription())"
-							></p>
+							<p class="store-card__desc" v-html="linkify(this.getPresenceDescription())"></p>
 						</div>
 						<div
 							v-if="
@@ -99,11 +92,7 @@
 								"
 								class="on-desktop store-card__buttons"
 							>
-								<button
-									v-if="!isInstalled"
-									class="button button--"
-									@click="sendPresence(presence.service)"
-								>
+								<button v-if="!isInstalled" class="button button--" @click="sendPresence(presence.service)">
 									<span class="icon">
 										<i class="fa-plus fas"></i>
 									</span>
@@ -119,8 +108,8 @@
 									</span>
 									{{ $t("store.card.presence.remove") }}
 								</button>
-								<a class="button button--red button--like" @click="like()"
-									><i
+								<a class="button button--red button--like" @click="like()">
+									<i
 										:class="
 											$store.state.presences.likedPresences.includes(
 												presence.service
@@ -128,7 +117,8 @@
 												? 'fas' + ' fa-heart'
 												: 'far' + ' fa-heart'
 										"
-								/></a>
+									/>
+								</a>
 							</div>
 							<div
 								v-if="
@@ -136,9 +126,7 @@
 										presence.button == false
 								"
 							>
-								<p class="store-card__warning">
-									{{ $t("store.card.presence.included") }}
-								</p>
+								<p class="store-card__warning">{{ $t("store.card.presence.included") }}</p>
 							</div>
 						</div>
 					</transition>
@@ -214,6 +202,10 @@
 				}
 
 				this.$store.commit("presences/like", this.presence.service);
+			},
+			badgeColor() {
+				console.log("hello")
+				if (tinycolor(this.presence.color).isLight()) return "black";
 			},
 			linkify(description) {
 				if (!description) return;

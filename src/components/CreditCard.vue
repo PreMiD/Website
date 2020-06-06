@@ -11,21 +11,21 @@
 			<h1 :title="user.name" v-text="user.name"></h1>
 			<h2>
 				{{
-					user.roleId == "515874214750715904"
-						? "Patron"
-						: $t(
-								`contributors.roles.${user.role
-									.replace(/\s/g, "")
-									.charAt(0)
-									.toLowerCase() + user.role.replace(/\s/g, "").substring(1)}`
-						  )
+				user.roleId == "515874214750715904"
+				? "Patron"
+				: $t(
+				`contributors.roles.${user.role
+				.replace(/\s/g, "")
+				.charAt(0)
+				.toLowerCase() + user.role.replace(/\s/g, "").substring(1)}`
+				)
 				}}
 			</h2>
 		</div>
 		<div
 			class="credit-card__avatar"
 			@click="copyId(user.userId)"
-			v-tippy="{ content: $t('contributors.cards.copyUserID') }"
+			v-tippy="{ content: $t('contributors.cards.copyUserId') }"
 		>
 			<span :class="user.status"></span>
 			<img :src="user.avatar + '?size=64'" draggable="false" />

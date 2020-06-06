@@ -12,16 +12,13 @@
 				:height="298"
 			>
 				<slide v-for="(partner, index) in partners" :index="index" :key="partner.name">
-					<figure>
-						<img :src="require(`@/static/assets/images/partners/${partner.image}`)" />
-
-						<figcaption>
-							<div>
-								<h1 v-text="partner.name" />
-								<p v-text="$t(partner.tString)" />
-							</div>
-						</figcaption>
-					</figure>
+					<Partner
+						v-tippy="{
+							content: 'Click to visit their website',
+							placement: 'bottom'
+						}"
+						:partner="partner"
+					/>
 				</slide>
 			</carousel-3d>
 
@@ -30,23 +27,23 @@
 			<div class="randomImages"></div>
 
 			<div class="reasons">
-				<div class="reason">
+				<div>
 					<h1 v-t="'partners.why.benefit1.title'" />
 					<p v-t="'partners.why.benefit1.description'" />
 				</div>
-				<div class="reason">
+				<div>
 					<h1 v-t="'partners.why.benefit2.title'" />
 					<p v-t="'partners.why.benefit2.description'" />
 				</div>
-				<div class="reason">
+				<div>
 					<h1 v-t="'partners.why.benefit3.title'" />
 					<p v-t="'partners.why.benefit3.description'" />
 				</div>
-				<div class="reason">
+				<div>
 					<h1 v-t="'partners.why.benefit4.title'" />
 					<p v-t="'partners.why.benefit4.description'" />
 				</div>
-				<div class="reason">
+				<div>
 					<h1 v-t="'partners.why.benefit5.title'" />
 					<p v-t="'partners.why.benefit5.description'" />
 				</div>
@@ -108,11 +105,34 @@
 	box-shadow: none !important;
 	color: darkgray !important;
 }
+
+.reasons {
+	margin-bottom: 2em;
+	max-width: 1200px;
+	margin: 2em auto;
+	display: flex;
+	align-items: flex-start;
+	position: relative;
+	justify-content: center;
+	flex-wrap: wrap;
+
+	div {
+		background-color: rgba(22, 23, 29, 0.75);
+		border-radius: 1em;
+		padding: 0.5em 2em;
+		margin: 1em;
+		max-width: 350px;
+
+		h1 {
+			font-size: larger;
+			text-transform: uppercase;
+		}
+	}
+}
 </style>
 
 <script>
 	import anime from "animejs";
-
 	import aniflix_icon from "~/assets/images/partners/aniflix-icon.png";
 	import aok_icon from "~/assets/images/partners/aok-icon.png";
 	import iloot_icon from "~/assets/images/partners/iloot-icon.png";
@@ -124,21 +144,26 @@
 	export default {
 		name: "Partners",
 		auth: false,
-		async asyncData({ app }) {
-			return {
-				partners: (await app.$axios(`${process.env.apiBase}/partners`)).data,
-				sponsors: (await app.$axios(`${process.env.apiBase}/sponsors`)).data,
-				randomImages: [
-					aniflix_icon,
-					aok_icon,
-					iloot_icon,
-					upbeat_icon,
-					slr_icon,
-					aniwatch_icon,
-					dtemplates_icon
-				],
-				showModal: false
-			};
+		async asyncData({ app, error }) {
+			try {
+				return {
+					partners: (await app.$axios(`${process.env.apiBase}/partners`)).data,
+					sponsors: (await app.$axios(`${process.env.apiBase}/sponsors`)).data,
+					randomImages: [
+						aniflix_icon,
+						aok_icon,
+						iloot_icon,
+						upbeat_icon,
+						slr_icon,
+						aniwatch_icon,
+						dtemplates_icon
+					],
+					showModal: false,
+					hovered: {}
+				};
+			} catch (err) {
+				return error(err.message);
+			}
 		},
 		mounted() {
 			this.$auth.$storage.setUniversal("redirect", "/partners#req");
