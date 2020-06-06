@@ -9,13 +9,14 @@ module.exports = {
 		"~/plugins/graphqlBase.js",
 		"~/plugins/I18n.js",
 		"~/plugins/Languages.js",
-		{ src: "~/plugins/Anime.js", ssr: false },
-		{ src: "~/plugins/Tippy.js", ssr: false },
-		{ src: "~/plugins/Noty.js", ssr: false },
-		{ src: "~/plugins/Pagination.js", ssr: false },
-		{ src: "~/plugins/Carousel.js", ssr: false },
-		{ src: "~/plugins/Scrollmagic.js", ssr: false },
-		{ src: "~/plugins/Modal.js", ssr: false }
+		{ src: "~/plugins/Anime.js", mode: "client" },
+		{ src: "~/plugins/Axios.js", mode: "client" },
+		{ src: "~/plugins/Tippy.js", mode: "client" },
+		{ src: "~/plugins/Noty.js", mode: "client" },
+		{ src: "~/plugins/Pagination.js", mode: "client" },
+		{ src: "~/plugins/Carousel.js", mode: "client" },
+		{ src: "~/plugins/Scrollmagic.js", mode: "client" },
+		{ src: "~/plugins/Modal.js", mode: "client" }
 	],
 	modules: [
 		"@nuxt/components",
@@ -43,7 +44,8 @@ module.exports = {
 	components: true,
 	axios: {
 		proxy: true,
-		retry: { retries: 3 }
+		retry: { retries: 3 },
+		credentials: false
 	},
 	proxy: {
 		"/v3": "https://api.premid.app/v3"
