@@ -66,9 +66,8 @@
 				<button
 					v-t="'partners.apply.button'"
 					type="button"
-					class="button disabled"
+					class="button"
 					@click="
-						return;
 						$auth.loggedIn ? (showModal = true) : $router.push('/login');
 						toggleScroll();
 					"
