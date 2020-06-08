@@ -1,12 +1,12 @@
 <template>
 	<section class="rab">
-		<h1 style="text-align: center;" class="section-header" v-t="'report.title'">
-			{{ $t("report.title") }}
-		</h1>
+		<h1
+			style="text-align: center;"
+			class="section-header"
+			v-t="'report.title'"
+		>{{ $t("report.title") }}</h1>
 		<div class="rab-container">
-			<h1 style="text-align: center;" v-t="'report.info'">
-				{{ $t("report.info") }}
-			</h1>
+			<h1 style="text-align: center;" v-t="'report.info'">{{ $t("report.info") }}</h1>
 			<h1
 				class="section-header"
 				v-t="'report.bugcount'"
@@ -15,32 +15,15 @@
 			></h1>
 		</div>
 
-		<div
-			style="margin-top: -15px;"
-			class="rab-container"
-			v-if="bugInfo.count > 0"
-		>
+		<div style="margin-top: -15px;" class="rab-container" v-if="bugInfo.count > 0">
 			<div class="rab-container">
-				<h1 class="heading" v-t="'report.overview'">
-					{{ $t("report.overview") }}"
-				</h1>
-				<textarea
-					type="text"
-					class="breif"
-					maxlength="50"
-					v-model="Report.brief"
-					required
-				/>
+				<h1 class="heading" v-t="'report.overview'">{{ $t("report.overview") }}"</h1>
+				<textarea type="text" class="breif" maxlength="50" v-model="Report.brief" required />
 			</div>
 			<br />
 			<div class="rab-container">
 				<h1 class="heading" v-t="'report.os'">{{ $t("report.os") }}</h1>
-				<select
-					style="width: 120px;"
-					class="selection"
-					required
-					v-model="Report.os"
-				>
+				<select style="width: 120px;" class="selection" required v-model="Report.os">
 					<option>Mac OS</option>
 					<option>Windows</option>
 					<option>Linux</option>
@@ -59,15 +42,8 @@
 			</div>
 			<br />
 			<div class="rab-container">
-				<h1 class="heading" v-t="'report.browser'">
-					{{ $t("report.browser") }}
-				</h1>
-				<select
-					style="width: 120px;"
-					class="selection"
-					required
-					v-model="Report.browser"
-				>
+				<h1 class="heading" v-t="'report.browser'">{{ $t("report.browser") }}</h1>
+				<select style="width: 120px;" class="selection" required v-model="Report.browser">
 					<option selected>Chrome</option>
 					<option>Firefox</option>
 				</select>
@@ -85,9 +61,7 @@
 			</div>
 			<br />
 			<div class="rab-container">
-				<h1 class="heading" v-t="'report.description'">
-					{{ $t("report.description") }}
-				</h1>
+				<h1 class="heading" v-t="'report.description'">{{ $t("report.description") }}</h1>
 				<textarea
 					style="white-space: pre-wrap;"
 					type="text"
@@ -103,9 +77,7 @@
 					class="button"
 					@click="addToDB"
 					v-t="'report.button'"
-				>
-					{{ $t("report.button") }}
-				</button>
+				>{{ $t("report.button") }}</button>
 			</div>
 		</div>
 		<div
@@ -113,9 +85,7 @@
 			class="rab-container"
 			style="margin-bottom: 300px; margin-top: -15px;"
 		>
-			<h1 style="text-align: center;" class="heading" v-t="'report.toomany'">
-				{{ $t("report.toomany") }}
-			</h1>
+			<h1 style="text-align: center;" class="heading" v-t="'report.toomany'">{{ $t("report.toomany") }}</h1>
 		</div>
 		<div
 			v-if="bugInfo.count < 3 && bugInfo.count !== -1"
@@ -132,9 +102,7 @@
 							padding-bottom: 50px;
 							width: 25%;
 						"
-					>
-						{{ bug.brief }}
-					</td>
+					>{{ bug.brief }}</td>
 					<td
 						style="
 							padding-left: 50px;
@@ -215,7 +183,7 @@
 		mounted() {
 			this.$auth.$storage.setUniversal("redirect", "/bug");
 			if (!this.$auth.loggedIn) return this.$router.push("/login");
-			axios
+			this.$axios
 				.get(
 					`${process.env.apiBase}/bugUserInfo/${this.$auth.$storage._state["_token.discord"]}`
 				)
@@ -225,6 +193,7 @@
 						data.data === undefined ||
 						data.data === ""
 					) {
+						console.log("Data 1:" + data);
 						return (this.bugInfo.count = 3);
 					}
 					console.log(data.data);
@@ -252,135 +221,137 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../stylesheets/variables.scss";
+@import "../stylesheets/variables.scss";
 
-	.rab {
-		.rab-container {
-			padding-left: 25px;
-			padding-right: 25px;
-			padding-top: 25px;
-			padding-bottom: 25px;
-			max-width: 1400px;
-			margin: 0 auto;
-			background: #2f3136;
-			border-radius: 0.5rem;
-			color: white;
+.rab {
+	padding: 20px;
 
-			.table {
-				white-space: nowrap;
-				width: auto;
-				height: auto;
-			}
-			textarea::-webkit-scrollbar-thumb {
-				width: 10px;
-			}
-			textarea::-webkit-scrollbar-track {
-				border-radius: 10px;
-			}
+	.rab-container {
+		padding-left: 25px;
+		padding-right: 25px;
+		padding-top: 25px;
+		padding-bottom: 25px;
+		max-width: 1400px;
+		margin: 0 auto;
+		background: #2f3136;
+		border-radius: 0.5rem;
+		color: white;
+
+		.table {
+			white-space: nowrap;
+			width: auto;
+			height: auto;
 		}
-		textarea[type="text"].breif {
-			height: 1.8rem;
-			font-size: 14px;
-			transition: all 300ms ease;
-			border: none;
-			background: lighten($background-secondary, 4%);
-			color: lighten($background-secondary, 40%);
-			line-height: 25px;
-			font-weight: bold;
-			width: 400px;
-			border-radius: 8px;
-			resize: none;
-
-			&:focus {
-				background: lighten($background-secondary, 7%);
-				outline: none;
-			}
-
-			* {
-				margin-left: -17.5rem;
-			}
-
-			&::placeholder {
-				color: lighten($background-secondary, 45%);
-			}
+		textarea::-webkit-scrollbar-thumb {
+			width: 10px;
 		}
-
-		textarea[type="text"].desc {
-			height: 150px;
-			padding: 20 20;
-			font-size: 14px;
-			transition: all 300ms ease;
-			border: none;
-			background: lighten($background-secondary, 4%);
-			color: lighten($background-secondary, 40%);
-			line-height: 25px;
-			font-weight: bold;
-			width: 100%;
+		textarea::-webkit-scrollbar-track {
 			border-radius: 10px;
-			resize: none;
-
-			&:focus {
-				background: lighten($background-secondary, 7%);
-				outline: none;
-			}
-
-			* {
-				margin-left: -17.5rem;
-			}
-
-			&::placeholder {
-				color: lighten($background-secondary, 45%);
-			}
-		}
-		.selection {
-			height: 1.8rem;
-			font-size: 14px;
-			transition: all 300ms ease;
-			border: none;
-			background: lighten($background-secondary, 4%);
-			color: lighten($background-secondary, 40%);
-			line-height: 25px;
-			font-weight: bold;
-			border-radius: 8px;
-			&:focus {
-				background: lighten($background-secondary, 7%);
-				outline: none;
-			}
-			* {
-				margin-left: -17.5rem;
-			}
-			&::placeholder {
-				color: lighten($background-secondary, 45%);
-			}
-		}
-
-		h1.section-header {
-			text-align: center;
-			font-weight: 800;
-			font-size: 52px;
-			letter-spacing: -1px;
-			background: linear-gradient(30deg, $accent-primary, #b3aeff);
-			background-clip: text;
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			text-shadow: none;
-
-			&::after {
-				transition: 0.15s opacity ease-out;
-				position: absolute;
-				content: "";
-				background: rgba(114, 137, 218, 0.25) !important;
-				width: 100%;
-				height: 100%;
-				display: inline-block;
-				left: 0;
-				margin-top: -15px;
-				z-index: -1;
-				opacity: 0;
-			}
-		}
-		.button {
-			padding: 0 50;
 		}
 	}
+	textarea[type="text"].breif {
+		height: 1.8rem;
+		font-size: 14px;
+		transition: all 300ms ease;
+		border: none;
+		background: lighten($background-secondary, 4%);
+		color: lighten($background-secondary, 40%);
+		line-height: 25px;
+		font-weight: bold;
+		width: 400px;
+		border-radius: 8px;
+		resize: none;
+
+		&:focus {
+			background: lighten($background-secondary, 7%);
+			outline: none;
+		}
+
+		* {
+			margin-left: -17.5rem;
+		}
+
+		&::placeholder {
+			color: lighten($background-secondary, 45%);
+		}
+	}
+
+	textarea[type="text"].desc {
+		height: 150px;
+		padding: 20 20;
+		font-size: 14px;
+		transition: all 300ms ease;
+		border: none;
+		background: lighten($background-secondary, 4%);
+		color: lighten($background-secondary, 40%);
+		line-height: 25px;
+		font-weight: bold;
+		width: 100%;
+		border-radius: 10px;
+		resize: none;
+
+		&:focus {
+			background: lighten($background-secondary, 7%);
+			outline: none;
+		}
+
+		* {
+			margin-left: -17.5rem;
+		}
+
+		&::placeholder {
+			color: lighten($background-secondary, 45%);
+		}
+	}
+	.selection {
+		height: 1.8rem;
+		font-size: 14px;
+		transition: all 300ms ease;
+		border: none;
+		background: lighten($background-secondary, 4%);
+		color: lighten($background-secondary, 40%);
+		line-height: 25px;
+		font-weight: bold;
+		border-radius: 8px;
+		&:focus {
+			background: lighten($background-secondary, 7%);
+			outline: none;
+		}
+		* {
+			margin-left: -17.5rem;
+		}
+		&::placeholder {
+			color: lighten($background-secondary, 45%);
+		}
+	}
+
+	h1.section-header {
+		text-align: center;
+		font-weight: 800;
+		font-size: 52px;
+		letter-spacing: -1px;
+		background: linear-gradient(30deg, $accent-primary, #b3aeff);
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		text-shadow: none;
+
+		&::after {
+			transition: 0.15s opacity ease-out;
+			position: absolute;
+			content: "";
+			background: rgba(114, 137, 218, 0.25) !important;
+			width: 100%;
+			height: 100%;
+			display: inline-block;
+			left: 0;
+			margin-top: -15px;
+			z-index: -1;
+			opacity: 0;
+		}
+	}
+	.button {
+		padding: 0 50;
+	}
+}
 </style>

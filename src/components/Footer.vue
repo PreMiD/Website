@@ -243,7 +243,8 @@
 					pt: "PreMiDapp_pt",
 					pt_BR: "PreMiDapp_pt",
 					it: "PreMiDapp_it",
-					pl: "PreMiDapp_pl"
+					pl: "PreMiDapp_pl",
+					es: "PreMiDapp_es"
 				}
 			};
 		},
