@@ -22,8 +22,8 @@
 				v-if="
 					application.reviewed == false &&
 					((application.reviewers &&
-						application.reviewers.find(r => r.userId == $auth.user.id).length ==
-							0) ||
+						application.reviewers.find(r => r.userId == $auth.user.id) ===
+							undefined) ||
 						application.reviewers == null) == true
 				"
 			>
