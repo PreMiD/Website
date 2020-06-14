@@ -301,7 +301,7 @@
 					return pls.match(/(\[.*?\])/g).map(ch => {
 						return pls.replace(
 							ch,
-							`<a href="https://discord.gg/premid">${ch.slice(
+							`<a href="https://discord.premid.app">${ch.slice(
 								1,
 								ch.length - 1
 							)}</a>`
