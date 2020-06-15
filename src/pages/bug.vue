@@ -224,7 +224,6 @@
 					`${process.env.apiBase}/bugUserInfo/${this.$auth.$storage._state["_token.discord"]}`
 				)
 				.then(data => {
-					console.log(data);
 					if (
 						data.data === null ||
 						data.data === undefined ||
