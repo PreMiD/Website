@@ -1,6 +1,6 @@
 <template>
 	<section class="rab">
-		<h1 style="text-align: center;" class="section-header" v-t="'report.title'">
+		<h1 class="section-header" v-t="'report.title'">
 			{{ $t("report.title") }}
 		</h1>
 		<div class="rab-container">
