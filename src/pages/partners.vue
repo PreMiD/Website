@@ -1,7 +1,10 @@
 <template>
 	<div class="partners">
 		<div class="main">
-			<strong v-t="'partners.header.title'" class="text-highlight title"></strong>
+			<strong
+				v-t="'partners.header.title'"
+				class="text-highlight title"
+			></strong>
 			<p v-t="'partners.header.description'" class="description"></p>
 			<p v-t="'partners.slideshow.description'" class="slideshow-title"></p>
 
@@ -11,7 +14,11 @@
 				:width="548"
 				:height="298"
 			>
-				<slide v-for="(partner, index) in partners" :index="index" :key="partner.name">
+				<slide
+					v-for="(partner, index) in partners"
+					:index="index"
+					:key="partner.name"
+				>
 					<Partner
 						v-tippy="{
 							content: 'Click to visit their website',
@@ -53,10 +60,16 @@
 				<div class="requirments--content">
 					<h1 v-t="'partners.requirements.title'" class="rTitle" />
 					<p v-t="'partners.requirements.first.title'" class="rText" />
-					<p v-t="'partners.requirements.first.description'" class="rDescription" />
+					<p
+						v-t="'partners.requirements.first.description'"
+						class="rDescription"
+					/>
 
 					<p v-t="'partners.requirements.second.title'" class="rText" />
-					<p v-t="'partners.requirements.second.description'" class="rDescription" />
+					<p
+						v-t="'partners.requirements.second.description'"
+						class="rDescription"
+					/>
 				</div>
 			</div>
 
@@ -74,16 +87,22 @@
 					"
 				/>
 				<transition name="slide-down" mode="in-out">
-					<Apply v-if="showModal" @close="
+					<Apply
+						v-if="showModal"
+						@close="
 							showModal = false;
 							toggleScroll();
-						" />
+						"
+					/>
 				</transition>
 			</div>
 
 			<p v-html="job($t('partners.apply.jobs'))" class="jobs"></p>
 
-			<p v-t="'partners.sponsors.title'" class="sponsor-title text-highlight"></p>
+			<p
+				v-t="'partners.sponsors.title'"
+				class="sponsor-title text-highlight"
+			></p>
 
 			<div class="sponsor-cards">
 				<Sponsor
@@ -99,36 +118,36 @@
 </template>
 
 <style lang="scss" scoped>
-.disabled {
-	cursor: no-drop !important;
-	background-color: #23272a !important;
-	box-shadow: none !important;
-	color: darkgray !important;
-}
+	.disabled {
+		cursor: no-drop !important;
+		background-color: #23272a !important;
+		box-shadow: none !important;
+		color: darkgray !important;
+	}
 
-.reasons {
-	margin-bottom: 2em;
-	max-width: 1200px;
-	margin: 2em auto;
-	display: flex;
-	align-items: flex-start;
-	position: relative;
-	justify-content: center;
-	flex-wrap: wrap;
+	.reasons {
+		margin-bottom: 2em;
+		max-width: 1200px;
+		margin: 2em auto;
+		display: flex;
+		align-items: flex-start;
+		position: relative;
+		justify-content: center;
+		flex-wrap: wrap;
 
-	div {
-		background-color: rgba(22, 23, 29, 0.75);
-		border-radius: 1em;
-		padding: 0.5em 2em;
-		margin: 1em;
-		max-width: 350px;
+		div {
+			background-color: rgba(22, 23, 29, 0.75);
+			border-radius: 1em;
+			padding: 0.5em 2em;
+			margin: 1em;
+			max-width: 350px;
 
-		h1 {
-			font-size: larger;
-			text-transform: uppercase;
+			h1 {
+				font-size: larger;
+				text-transform: uppercase;
+			}
 		}
 	}
-}
 </style>
 
 <script>
@@ -140,6 +159,8 @@
 	import slr_icon from "~/assets/images/partners/slr-icon.png";
 	import aniwatch_icon from "~/assets/images/partners/aniwatch-icon.png";
 	import dtemplates_icon from "~/assets/images/partners/dtemplates-icon.png";
+	import taigabot_icon from "~/assets/images/partners/taigabot-icon.png";
+	import statusbot_icon from "~/assets/images/partners/statusbot-icon.png";
 
 	export default {
 		name: "Partners",
@@ -156,7 +177,9 @@
 						upbeat_icon,
 						slr_icon,
 						aniwatch_icon,
-						dtemplates_icon
+						dtemplates_icon,
+						taigabot_icon,
+						statusbot_icon
 					],
 					showModal: false,
 					hovered: {}
