@@ -10,12 +10,16 @@
 			<h1
 				class="section-header"
 				v-t="'report.bugcount'"
-				style="font-size: 28px;"
+				style="font-size: 28px; text-align: center;"
 				v-html="bugCount"
 			></h1>
 		</div>
 
-		<div v-if="bugInfo.data.info.count > 0">
+		<div
+			style="margin-top: -15px;"
+			class="rab-container"
+			v-if="bugInfo.count > 0"
+		>
 			<div class="rab-container">
 				<h1 class="heading" v-t="'report.overview'">
 					{{ $t("report.overview") }}"
@@ -31,9 +35,13 @@
 			<br />
 			<div class="rab-container">
 				<h1 class="heading" v-t="'report.os'">{{ $t("report.os") }}</h1>
-				<select class="selection" required v-model="Report.os">
-					<option disabled value>Please select one</option>
-					<option>OS X</option>
+				<select
+					style="width: 120px;"
+					class="selection"
+					required
+					v-model="Report.os"
+				>
+					<option>Mac OS</option>
 					<option>Windows</option>
 					<option>Linux</option>
 				</select>
@@ -41,10 +49,11 @@
 				<br />
 				<textarea
 					type="text"
-					maxlength="4"
-					style="width: 50px;"
+					maxlength="14"
+					style="width: 116px;"
 					class="breif"
 					required
+					placeholder="10.0.19041.264"
 					v-model="Report.browserversion"
 				/>
 			</div>
@@ -53,19 +62,24 @@
 				<h1 class="heading" v-t="'report.browser'">
 					{{ $t("report.browser") }}
 				</h1>
-				<select class="selection" required v-model="Report.browser">
-					<option disabled value>Please select one</option>
-					<option>Chrome</option>
+				<select
+					style="width: 120px;"
+					class="selection"
+					required
+					v-model="Report.browser"
+				>
+					<option selected>Chrome</option>
 					<option>Firefox</option>
 				</select>
 				<br />
 				<br />
 				<textarea
 					type="text"
-					maxlength="10"
-					style="width: 80px;"
+					maxlength="20"
+					style="width: 116px;"
 					class="breif"
 					required
+					placeholder="0.0.0.0"
 					v-model="Report.osversion"
 				/>
 			</div>
@@ -78,13 +92,12 @@
 					style="white-space: pre-wrap;"
 					type="text"
 					class="desc"
-					maxlength="2000"
 					v-model="Report.description"
 					required
 				/>
 			</div>
 			<br />
-			<div class="rab-container" style="margin-bottom: 10px;">
+			<div class="rab-container" style="margin-bottom: 80px;">
 				<button
 					type="button"
 					class="button"
@@ -96,24 +109,39 @@
 			</div>
 		</div>
 		<div
-			v-if="bugInfo.data.info.count === 0"
+			v-if="bugInfo.count === 0"
 			class="rab-container"
-			style="margin-bottom: 300px;"
+			style="margin-bottom: 300px; margin-top: -15px;"
 		>
 			<h1 style="text-align: center;" class="heading" v-t="'report.toomany'">
 				{{ $t("report.toomany") }}
 			</h1>
 		</div>
 		<div
-			v-if="bugInfo.data.info.count < 3 && bugInfo.data.info.count !== -1"
+			v-if="bugInfo.count < 3 && bugInfo.count !== -1"
 			class="rab-container"
+			style="margin-bottom: 80px; margin-top: 50px;"
 		>
 			<h2 v-t="'report.activebugs'">{{ $t("report.activebugs") }}</h2>
 			<table style="width: 100%;">
-				<tr v-for="bug of activeBugs.data" :key="bug.breif">
-					<td style="vertical-align: top;">{{ bug.brief }}</td>
+				<tr v-for="bug of activeBugs" :key="bug.breif">
 					<td
-						style="padding-bottom: 20px; white-space: pre;"
+						style="
+							vertical-align: top;
+							color: #c7cfd6;
+							padding-bottom: 50px;
+							width: 25%;
+						"
+					>
+						{{ bug.brief }}
+					</td>
+					<td
+						style="
+							padding-left: 50px;
+							padding-bottom: 50px;
+							white-space: pre-wrap;
+							color: #c7cfd6;
+						"
 						v-html="bug.description"
 					></td>
 				</tr>
@@ -129,7 +157,7 @@
 		data() {
 			return {
 				display: false,
-				bugInfo: { data: { info: { count: -1 } } },
+				bugInfo: { count: -1 },
 				bugCount: "Loading...",
 				Report: {
 					brief: "",
@@ -160,13 +188,17 @@
 					status: this.Report.status,
 					date: this.Report.date
 				};
-				if (this.bugInfo.data.info.count === 0)
+				if (this.bugInfo.count === 0)
 					return this.$noty.error(this.$t("report.toomany"));
 				if (
 					!newReport.brief ||
 					!newReport.description ||
 					!newReport.date ||
-					!newReport.system
+					!newReport.system ||
+					!this.Report.os ||
+					!this.Report.osversion ||
+					!this.Report.browser ||
+					!this.Report.browserversion
 				)
 					return this.$noty.error(this.$t("report.error"));
 
@@ -186,43 +218,43 @@
 		},
 		mounted() {
 			this.$auth.$storage.setUniversal("redirect", "/bug");
-			if (!this.$auth.loggedIn) return this.$auth.loginWith("discord");
-
+			if (!this.$auth.loggedIn) return this.$router.push("/login");
 			this.$axios
 				.get(
 					`${process.env.apiBase}/bugUserInfo/${this.$auth.$storage._state["_token.discord"]}`
 				)
 				.then(data => {
-					if (!data.info) return (this.bugInfo.data.info.count = 3);
-
-					this.bugInfo = data;
-					if (data.data.info.count < 3) {
-						this.$axios
-							.get(
-								`${process.env.apiBase}/bugInfo/${this.$auth.$storage._state["_token.discord"]}`
-							)
-							.then(data => {
-								if (data.result === null) {
-									this.activeBugs[0].brief = null;
-									return (this.activeBugs[0].description = null);
-								}
-
-								this.bugCount = this.$t("report.bugcount").replace(
-									"{count}",
-									this.data.data.info.count
-								);
-
-								this.activeBugs = data;
-							});
+					if (
+						data.data === null ||
+						data.data === undefined ||
+						data.data === ""
+					) {
+						return (this.bugInfo.count = 3);
+					}
+					this.bugInfo.count = data.data.count;
+					if (data.data.count < 3) {
+						this.activeBugs = data.data.bugs;
 					}
 				})
 				.catch(err => {
-					his.$router.push("/");
-					this.$noty.error(this.$t("report.error.unauth"));
+					if (err.response.status) {
+						this.$noty.error(this.$t("error.code.500"));
+						this.$router.push("/");
+					}
 				});
 		},
-		head: {
-			title: "Report A Bug"
+		head() {
+			if (this.bugInfo.count === 0) {
+				this.$noty.error(this.$t("report.toomany.alert"));
+				this.bugCount = this.$t("report.bugcount").replace("{count}", 0);
+			} else
+				this.bugCount = this.$t("report.bugcount").replace(
+					"{count}",
+					this.bugInfo.count
+				);
+			return {
+				title: "Report A Bug"
+			};
 		}
 	};
 </script>
@@ -231,16 +263,33 @@
 	@import "../stylesheets/variables.scss";
 
 	.rab {
+		padding: 20px;
+
 		.rab-container {
 			padding-left: 25px;
 			padding-right: 25px;
 			padding-top: 25px;
+			padding-bottom: 25px;
 			max-width: 1400px;
 			margin: 0 auto;
+			background: #2f3136;
+			border-radius: 0.5rem;
+			color: white;
+
+			.table {
+				white-space: nowrap;
+				width: auto;
+				height: auto;
+			}
+			textarea::-webkit-scrollbar-thumb {
+				width: 10px;
+			}
+			textarea::-webkit-scrollbar-track {
+				border-radius: 10px;
+			}
 		}
 		textarea[type="text"].breif {
 			height: 1.8rem;
-			padding: 20 20;
 			font-size: 14px;
 			transition: all 300ms ease;
 			border: none;
@@ -293,7 +342,6 @@
 				color: lighten($background-secondary, 45%);
 			}
 		}
-
 		.selection {
 			height: 1.8rem;
 			font-size: 14px;
@@ -304,16 +352,13 @@
 			line-height: 25px;
 			font-weight: bold;
 			border-radius: 8px;
-
 			&:focus {
 				background: lighten($background-secondary, 7%);
 				outline: none;
 			}
-
 			* {
 				margin-left: -17.5rem;
 			}
-
 			&::placeholder {
 				color: lighten($background-secondary, 45%);
 			}
