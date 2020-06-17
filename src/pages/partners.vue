@@ -82,8 +82,8 @@
 					class="button disabled"
 					@click="
 						return;
-						//$auth.loggedIn ? (showModal = true) : $router.push('/login');
-						//toggleScroll();
+						$auth.loggedIn ? (showModal = true) : $router.push('/login');
+						toggleScroll();
 					"
 				/>
 				<transition name="slide-down" mode="in-out">
