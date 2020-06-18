@@ -27,7 +27,7 @@ yarn
 yarn build
 
 # start website in production
-yarn 
+yarn start
 ```
 
 ## Development
