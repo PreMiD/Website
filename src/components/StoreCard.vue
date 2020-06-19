@@ -23,7 +23,7 @@
 				<div class="store-card__service">
 					<h2>
 						<nuxt-link
-							:style="`color: ${textColor()}`"
+							:style="`color: ${brightColorFix()}`"
 							:key="presenceLinkName"
 							:to="`/store/presences/${encodeURIComponent(presenceLinkName)}`"
 						>
@@ -36,7 +36,7 @@
 								class="fa-stack"
 							>
 								<i
-									:style="`color:${badgeColor()}`"
+									:style="`color:${brightColorFix()}`"
 									class="fa-circle fa-stack-2x fas"
 								></i>
 								<i
@@ -54,7 +54,7 @@
 								:style="partner == true ? 'margin-left:-4px' : ''"
 							>
 								<i
-									:style="`color:${badgeColor()}`"
+									:style="`color:${brightColorFix()}`"
 									class="fa-circle fa-stack-2x fas"
 								></i>
 								<i
@@ -77,7 +77,7 @@
 								"
 							>
 								<i
-									:style="`color:${badgeColor()}`"
+									:style="`color:${brightColorFix()}`"
 									class="fa-circle fa-stack-2x fas"
 								></i>
 								<i
@@ -87,10 +87,10 @@
 							</span>
 						</nuxt-link>
 					</h2>
-					<p :style="`color: ${textColor()}`">
+					<p :style="`color: ${brightColorFix()}`">
 						{{ $t("store.cards.creator") }}:
 						<nuxt-link
-							:style="`color: ${textColor()};font-weight:bold;`"
+							:style="`color: ${brightColorFix()};font-weight:bold;`"
 							:to="`/users/${presence.author.id}`"
 						>
 							{{ presence.author.name }}
@@ -105,7 +105,7 @@
 							:key="presence.service + '_desc'"
 						>
 							<p
-								:style="`color: ${textColor()}`"
+								:style="`color: ${brightColorFix()}`"
 								class="store-card__desc"
 								v-html="linkify(this.getPresenceDescription())"
 							></p>
@@ -232,10 +232,7 @@
 
 				this.$store.commit("presences/like", this.presence.service);
 			},
-			badgeColor() {
-				return tinycolor(this.presence.color).isLight() ? "black" : "white";
-			},
-			textColor() {
+			brightColorFix() {
 				return tinycolor(this.presence.color).getBrightness() >= 200
 					? "black"
 					: "white";
