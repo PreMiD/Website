@@ -3,8 +3,8 @@
 	"version": "2.0.3",
 	"scripts": {
 		"start": "nuxt start",
-		"dev": "node languageParser && nuxt",
-		"build": "rimraf src/langs/* && node languageParser.js && nuxt build && node cryptify",
+		"dev": "node languageUpdater && nuxt",
+		"build": "rimraf src/langs/* && node languageUpdater && nuxt build && node cryptify",
 		"pretty": "prettier --write **/*.vue **/*.js **/*.json **/*.scss"
 	},
 	"dependencies": {
@@ -15,7 +15,7 @@
 		"@nuxtjs/google-adsense": "1.1.3",
 		"@types/chart.js": "2.9.19",
 		"animejs": "3.2.0",
-		"axios": "0.19.2",
+		"axios": "^0.19.2",
 		"chart.js": "2.9.3",
 		"chartjs": "0.3.24",
 		"marked": "0.8.2",
@@ -39,8 +39,8 @@
 	"devDependencies": {
 		"@nuxt/typescript-build": "^0.6.5",
 		"@nuxtjs/google-analytics": "^2.2.3",
+		"@types/node": "^14.0.13",
 		"fast-glob": "^3.2.2",
-		"node-emoji": "1.10.0",
 		"prettier": "^2.0.4",
 		"rimraf": "^3.0.2"
 	}
