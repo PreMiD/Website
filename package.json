@@ -17,7 +17,6 @@
 		"animejs": "3.2.0",
 		"axios": "^0.19.2",
 		"chart.js": "2.9.3",
-		"chartjs": "0.3.24",
 		"marked": "0.8.2",
 		"moment": "2.24.0",
 		"node-sass": "^4.14.1",
