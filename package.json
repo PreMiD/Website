@@ -18,7 +18,7 @@
 		"chart.js": "^2.9.3",
 		"chartjs": "^0.3.24",
 		"marked": "1.1.0",
-		"moment": "^2.26.0",
+		"moment": "^2.27.0",
 		"node-sass": "4.14.1",
 		"nuxt": "2.13.0",
 		"nuxt-helmet": "^1.2.3",
