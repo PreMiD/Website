@@ -25,5 +25,5 @@ function rString() {
 	// and then just do:
 	return [...Array(10)]
 		.map(i => chars[(Math.random() * chars.length) | 0])
-		.join();
+		.join("");
 }
