@@ -70,7 +70,11 @@
 						</div>
 					</div>
 
-					<nuxt-link v-if="!this.$auth.loggedIn" to="/login">
+					<nuxt-link
+						v-if="!this.$auth.loggedIn"
+						valid-v-on="$auth.$storage.setUniversal('redirect', location.pathname)"
+						to="/login"
+					>
 						<span class="round-icon">
 							<i :class="`fa-user fas`"></i>
 						</span>
