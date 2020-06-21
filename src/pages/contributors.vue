@@ -98,10 +98,11 @@
 			isStaffRole(roleId) {
 				const staffRoles = [
 					"606270745299124235", //Creator
-					"493135149274365975", //Executive Director
+					"493135149274365975", //Project Manager
 					"691382096878370837", //Operations Supervisior
 					"673681900476432387", //Global Community Representative
-					"673682511288598575", //Head Software Engineer
+					"724371078113132654", //Store Manager
+					"673682511288598575", //System Administrator
 					"616646805907832833", //Web Developer
 					"691393583189721088", //Linux Maintainer
 					"691396820236107837", //Engineer
