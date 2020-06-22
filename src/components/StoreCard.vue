@@ -2,7 +2,6 @@
 	<div>
 		<div
 			:class="'store-card ' + (cardHovered ? 'hovered' : '')"
-			:style="`box-shadow: 0 2px 64px 0 ${presenceShadowColor};`"
 			@mouseover="cardHovered = true"
 			@mouseleave="cardHovered = false"
 		>
@@ -194,13 +193,6 @@
 		computed: {
 			presenceGradientColor() {
 				return tinycolor(this.presence.color).darken(45).toHexString();
-			},
-			presenceShadowColor() {
-				if (this.cardHovered) {
-					return tinycolor(this.presence.color).setAlpha(0.3).toRgbString();
-				} else {
-					return "transparent";
-				}
 			}
 		},
 		mounted() {

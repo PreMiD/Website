@@ -5,7 +5,13 @@
 				<div class="fullpresence__header">
 					<div class="header__title">
 						<div class="section">
-							<h1 class="presence-name">{{ presence.metadata.service }}</h1>
+							<img id="presenceLogo" :src="presence.metadata.logo" />
+
+							<h1
+								id="presenceName"
+								:style="`color: ${brightColorFix()}`"
+								v-text="presence.metadata.service"
+							/>
 
 							<span
 								v-if="partner"
@@ -198,10 +204,12 @@
 										v-for="tag of presence.metadata.tags"
 										:key="tag"
 										:to="`/store?q=${encodeURIComponent('tag:') + tag}`"
-										:style="`background: ${presence.metadata.color}; color: ${presenceTextColor};`"
+										:style="`background: ${
+											presence.metadata.color
+										}; color: ${brightColorFix()};`"
 										class="label label_tag"
-										>{{ tag }}</nuxt-link
-									>
+										v-text="tag"
+									/>
 								</div>
 							</li>
 							<!-- <li>
@@ -236,6 +244,20 @@
 		</transition>
 	</div>
 </template>
+
+<style lang="scss">
+	.section {
+		#presenceLogo {
+			max-height: 100px;
+			max-width: 100px;
+		}
+
+		#presenceName {
+			line-height: 100px;
+			margin-left: 25px;
+		}
+	}
+</style>
 
 <script>
 	import PresenceMixin from "~/components/mixins/Presence";
@@ -369,6 +391,11 @@
 			);
 		},
 		methods: {
+			brightColorFix() {
+				return tinycolor(this.presence.metadata.color).getBrightness() >= 200
+					? "black"
+					: "white";
+			},
 			/**
 			 * Returns description of the presence according to your language.
 			 * If presence has non-multilingual description then we just parsing the "description" data.
