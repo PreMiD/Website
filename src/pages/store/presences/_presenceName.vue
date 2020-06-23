@@ -1,5 +1,5 @@
 <template>
-	<div v-if="!presence.error">
+	<div v-if="presence">
 		<transition name="fade" mode="in-out">
 			<div class="fullpresence-container">
 				<div class="fullpresence__header">
@@ -82,10 +82,7 @@
 							:href="githubPresenceUrl($route.params.presenceName)"
 							target="_blank"
 						>
-							<span class="icon">
-								<i class="fa-github fab"></i>
-							</span>
-							{{ !isMobile ? $t("presence.page.buttons.sourceCode") : "" }}
+							<i class="fa-github fab" />
 						</a>
 						<a
 							class="button button--lg button--red button--like"
@@ -250,6 +247,7 @@
 		#presenceLogo {
 			max-height: 100px;
 			max-width: 100px;
+			border-radius: 10px;
 		}
 
 		#presenceName {
@@ -268,17 +266,16 @@
 		mixins: [PresenceMixin],
 		auth: false,
 		async asyncData({ params, app, error }) {
-			try {
-				let presenceUsage = (await app.$axios(`${process.env.apiBase}/usage`))
-						.data.users,
-					presenceRanking = (
-						await app.$axios(`${process.env.apiBase}/presenceUsage`)
-					).data,
-					partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
-						.data;
+			let presenceUsage = (await app.$axios(`${process.env.apiBase}/usage`))
+					.data.users,
+				presenceRanking = (
+					await app.$axios(`${process.env.apiBase}/presenceUsage`)
+				).data,
+				partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
+					.data;
 
-				let { presences } = await app.$graphql(
-						`
+			let { presences } = await app.$graphql(
+					`
 				{
 					presences(service: "${params.presenceName}") {
 						metadata {
@@ -303,55 +300,36 @@
 					}
 				}
 				`
-					),
-					presenceData = presences?.[0] || {};
+				),
+				presenceData = presences?.[0];
 
-				let data = {
-					presenceUsage:
-						presenceRanking[decodeURIComponent(params.presenceName)],
-					partner:
-						partnersList.filter(
-							p => p.storeName == decodeURIComponent(params.presenceName)
-						).length > 0,
-					hot:
-						(presenceRanking[decodeURIComponent(params.presenceName)] /
-							presenceUsage) *
-							100 >
-						30,
-					presence: presenceData
-				};
+			let data = {
+				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
+				partner:
+					partnersList.filter(
+						p => p.storeName == decodeURIComponent(params.presenceName)
+					).length > 0,
+				hot:
+					(presenceRanking[decodeURIComponent(params.presenceName)] /
+						presenceUsage) *
+						100 >
+					30,
+				presence: presenceData
+			};
 
-				if (!presenceData.error) {
-					let authorData = await new Promise((resolve, reject) => {
-						app
-							.$axios(
-								`${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
-							)
-							.then(res => {
-								if (res.data.error && res.data.message !== "User not found.")
-									reject({ error: true, message: res.data.message });
-								resolve(res.data);
-							})
-							.catch(err => {
-								console.log(err);
-								reject({
-									error: true,
-									code: 401
-								});
-							});
-					});
-
-					if (!authorData.error) {
-						data.presence.metadata.author = authorData;
-					}
-				}
-
-				data["isMobile"] = false;
-
-				return data;
-			} catch (err) {
-				return error(err.message);
+			if (presenceData) {
+				try {
+					data.presence.metadata.author = (
+						await app.$axios(
+							`${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
+						)
+					).data;
+				} catch (err) {}
 			}
+
+			data["isMobile"] = false;
+
+			return data;
 		},
 		computed: {
 			presenceTextColor() {
@@ -371,17 +349,19 @@
 				navigator.userAgent
 			);
 
-			if (this.presence.error)
-				return this.$nuxt.error({ statusCode: this.presence.error });
+			if (!this.presence)
+				return this.$nuxt.error({
+					statusCode: 404,
+					message: "Presence does not exist."
+				});
 		},
 		created() {
-			if (!this.presence.error) {
+			if (this.presence)
 				this.isPresenceInstalled(this.presence.metadata.service).then(
 					response => {
 						if (response) this.isInstalled = true;
 					}
 				);
-			}
 		},
 		updated() {
 			this.isPresenceInstalled(this.presence.metadata.service).then(
