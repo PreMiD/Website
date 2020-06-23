@@ -6,7 +6,7 @@
 					<nuxt-link
 						to="/"
 						tag="img"
-						:src="require('@/assets/images/logo_round.svg')"
+						:src="require('@/assets/images/icon-wordmark-white.svg')"
 						data-not-lazy
 					/>
 
@@ -162,7 +162,7 @@
 			align-items: center;
 
 			img {
-				height: 40px;
+				height: 30px;
 			}
 
 			#status {
