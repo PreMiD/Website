@@ -65,7 +65,12 @@
 		<adsense
 			root-class="ad"
 			ad-slot="9757727213"
-			:ad-style="{ display: 'block', width: '80vw', height: '250px' }"
+			:ad-style="{
+				display: 'block',
+				margin: '15px 10vw',
+				width: '80vw',
+				height: '250px'
+			}"
 		>
 		</adsense>
 	</div>
