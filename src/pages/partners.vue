@@ -3,7 +3,7 @@
 		<div class="main">
 			<strong
 				v-t="'partners.header.title'"
-				class="text-highlight title"
+				class="text-highlight title titleHeading"
 			></strong>
 			<p v-t="'partners.header.description'" class="description"></p>
 			<p v-t="'partners.slideshow.description'" class="slideshow-title"></p>
@@ -58,7 +58,7 @@
 
 			<div class="requirments" id="req">
 				<div class="requirments--content">
-					<h1 v-t="'partners.requirements.title'" class="rTitle" />
+					<h1 v-t="'partners.requirements.title'" class="rTitle titleHeading" />
 					<p v-t="'partners.requirements.first.title'" class="rText" />
 					<p
 						v-t="'partners.requirements.first.description'"
@@ -101,7 +101,7 @@
 
 			<p
 				v-t="'partners.sponsors.title'"
-				class="sponsor-title text-highlight"
+				class="sponsor-title text-highlight titleHeading"
 			></p>
 
 			<div class="sponsor-cards">
@@ -118,6 +118,11 @@
 </template>
 
 <style lang="scss" scoped>
+	.titleHeading {
+		font-family: "Discord Font";
+		text-transform: uppercase;
+	}
+
 	.disabled {
 		cursor: no-drop !important;
 		background-color: #23272a !important;
@@ -151,7 +156,6 @@
 </style>
 
 <script>
-	import anime from "animejs";
 	import aniflix_icon from "~/assets/images/partners/aniflix-icon.png";
 	import aok_icon from "~/assets/images/partners/aok-icon.png";
 	import iloot_icon from "~/assets/images/partners/iloot-icon.png";
@@ -227,16 +231,22 @@
 					`${navigator?.userAgent || true}`
 				)
 			) {
-				anime({
-					targets: ".random-img",
-					scale: [1, 1.1],
-					delay: 500,
-					direction: "alternate",
-					easing: "easeInBounce",
-					loop: true
-				});
+				this.$anime
+					.timeline({
+						targets: ".random-img",
+						loop: true,
+						easing: "easeInOutQuad",
+						delay: this.$anime.stagger(500, [0, 1000])
+					})
+					.add({
+						translateY: [0, -50]
+					})
+					.add({
+						targets: ".random-img",
+						translateY: [-50, 0]
+					});
 
-				anime({
+				this.$anime({
 					targets: ".reason",
 					scale: [1, 1.1],
 					delay: 500,
