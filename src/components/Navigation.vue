@@ -3,12 +3,7 @@
 		<div>
 			<div id="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
 				<div id="logoWrapper" ref="headerLogo">
-					<nuxt-link
-						to="/"
-						tag="img"
-						:src="require('@/assets/images/icon-wordmark-white.svg')"
-						data-not-lazy
-					/>
+					<nuxt-link to="/" tag="h1">PreMiD</nuxt-link>
 
 					<transition name="pop">
 						<div
@@ -38,7 +33,8 @@
 						</span>
 						<p>{{ $t(category.string) }}</p>
 					</nuxt-link>
-
+					<!--
+	Commented out because as of rn its not used/needed for normal users
 					<div
 						class="user-info"
 						v-if="$auth.loggedIn"
@@ -75,7 +71,7 @@
 							<i :class="`fa-user fas`"></i>
 						</span>
 						<p>{{ $t("header.login") }}</p>
-					</nuxt-link>
+					</nuxt-link> -->
 				</div>
 
 				<div v-if="countDownBtn" id="links">
@@ -161,8 +157,9 @@
 			grid-template-columns: min-content min-content;
 			align-items: center;
 
-			img {
-				height: 30px;
+			h1 {
+				margin: 0;
+				font-family: "Discord Font";
 			}
 
 			#status {
