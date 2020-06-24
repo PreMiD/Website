@@ -3,7 +3,10 @@
 		<title>PreMiD - Contributors</title>
 		<section class="contributors">
 			<div class="contributor-container">
-				<h1 class="heading" v-text="$t('contributors.headings.staff')"></h1>
+				<h1
+					class="titleHeading"
+					v-text="$t('contributors.headings.staff')"
+				></h1>
 				<div class="contributor-inner">
 					<div
 						v-for="contributor of contributors"
@@ -20,7 +23,7 @@
 
 			<div class="contributor-container">
 				<h1
-					class="heading"
+					class="titleHeading"
 					v-text="$t('contributors.headings.supporters')"
 				></h1>
 				<div class="contributor-inner">
@@ -39,7 +42,7 @@
 
 			<div class="contributor-container">
 				<h1
-					class="heading"
+					class="titleHeading"
 					v-text="$t('contributors.headings.translators')"
 				></h1>
 				<div class="contributor-inner">
@@ -58,6 +61,20 @@
 		</section>
 	</div>
 </template>
+
+<style lang="scss">
+	@import "../stylesheets/variables.scss";
+	.titleHeading {
+		margin: 0;
+		margin-bottom: 15px;
+
+		font-family: "Discord Font";
+		color: $accent-primary;
+		font-size: 2.5em;
+
+		text-align: center;
+	}
+</style>
 
 <script>
 	export default {
