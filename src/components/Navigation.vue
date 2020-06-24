@@ -1,31 +1,27 @@
 <template>
 	<transition appear v-on:after-appear="appear">
 		<div>
-			<div class="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
-				<div class="logoWrapper" ref="headerLogo">
-					<nuxt-link to="/"
-						><img
-							:src="require('@/assets/images/logo_round.svg')"
-							data-not-lazy
-					/></nuxt-link>
+			<div id="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
+				<div id="logoWrapper" ref="headerLogo">
+					<nuxt-link to="/" tag="h1">PreMiD</nuxt-link>
 
 					<transition name="pop">
 						<div
 							v-if="!isMobile && !$store.state.extension.extensionInstalled"
-							class="status"
+							id="status"
 							v-tippy="{
 								content: $t('store.message.error')
 							}"
 						>
 							<i
-								@click="redirect('/downloads#ext-downloads')"
+								@click="$router.push('/downloads#ext-downloads')"
 								class="fa-exclamation fas"
 							/>
 						</div>
 					</transition>
 				</div>
 
-				<div v-if="!$props.noLinks" class="links">
+				<div v-if="!noLinks" id="links">
 					<nuxt-link
 						v-for="category of categories"
 						:key="category.route"
@@ -37,9 +33,48 @@
 						</span>
 						<p>{{ $t(category.string) }}</p>
 					</nuxt-link>
+					<!--
+	Commented out because as of rn its not used/needed for normal users
+					<div
+						class="user-info"
+						v-if="$auth.loggedIn"
+						@mouseenter="hovered = true"
+						@mouseleave="hovered = false"
+					>
+						<img class="round-icon" :src="avatarify()" />
+						<div class="dropdown">
+							<span id="username">
+								{{ $auth.user.username }}
+								<span id="tag">#{{ $auth.user.discriminator }}</span>
+							</span>
+
+							<transition name="slide-down" mode="in-out">
+								<div v-if="hovered" class="dropdown-container">
+									<div class="dropdown-content">
+										<nuxt-link v-if="isStaff === false" to="/bug">{{
+											$t("header.rab")
+										}}</nuxt-link>
+										<nuxt-link v-else to="/staff">{{
+											$t("header.staff")
+										}}</nuxt-link>
+										<nuxt-link to="/logout">{{
+											$t("header.logout")
+										}}</nuxt-link>
+									</div>
+								</div>
+							</transition>
+						</div>
+					</div>
+
+					<nuxt-link v-if="!this.$auth.loggedIn" to="/login">
+						<span class="round-icon">
+							<i :class="`fa-user fas`"></i>
+						</span>
+						<p>{{ $t("header.login") }}</p>
+					</nuxt-link> -->
 				</div>
 
-				<div v-if="$props.countDownBtn" class="links">
+				<div v-if="countDownBtn" id="links">
 					<a
 						v-if="countDownValue === 0"
 						@click="$nuxt.setLayout('default')"
@@ -52,7 +87,7 @@
 					</a>
 
 					<a
-						@click="countDownValue === 0 ? redirect($props.href) : null"
+						@click="countDownValue === 0 ? open($props.href) : null"
 						class="navbar__item"
 					>
 						<span class="round-icon">
@@ -69,7 +104,7 @@
 				</div>
 
 				<div
-					class="hamburger"
+					id="hamburger"
 					ref="hamburger"
 					@click="mobileMenuActive = !mobileMenuActive"
 				>
@@ -80,7 +115,7 @@
 
 			<transition name="slide-down">
 				<div
-					class="mobileLinks"
+					id="mobileLinks"
 					v-if="mobileMenuActive"
 					@click="mobileMenuActive = !mobileMenuActive"
 				>
@@ -103,7 +138,7 @@
 <style lang="scss" scoped>
 	@import "~/stylesheets/variables.scss";
 
-	.navbar {
+	#navbar {
 		background-color: $background-primary;
 		position: relative;
 		height: 75px;
@@ -114,19 +149,20 @@
 		align-items: center;
 		justify-content: space-between;
 
-		.logoWrapper {
+		#logoWrapper {
+			cursor: pointer;
 			height: 40px;
 
 			display: grid;
 			grid-template-columns: min-content min-content;
 			align-items: center;
 
-			img {
-				cursor: pointer;
-				height: 40px;
+			h1 {
+				margin: 0;
+				font-family: "Discord Font";
 			}
 
-			.status {
+			#status {
 				display: flex;
 				align-items: center;
 				font-size: small;
@@ -135,37 +171,23 @@
 				border-radius: 100%;
 				margin-left: 0.6em;
 				animation: pulseWarn 2s infinite;
-				background-color: #f1c40f;
-				color: rgba(255, 255, 255, 0.85);
+				background-color: #ffff00;
+				color: black;
 				cursor: pointer;
 				justify-content: center;
 			}
 		}
 
-		.links {
+		#links {
 			display: flex;
 			font-size: 1.1rem;
 			font-weight: 800;
 			text-transform: uppercase;
 
-			.nuxt-link-active {
-				color: #7289da;
-
-				span {
-					color: white;
-				}
-
-				.round-icon {
-					background: #7289da;
-				}
-			}
-
 			a {
 				transition: 0.25s margin ease-out;
-
 				//* Fix for chinese etc languages
 				white-space: nowrap;
-
 				display: grid;
 				grid-template-columns: min-content min-content;
 				align-items: center;
@@ -177,14 +199,14 @@
 
 					.round-icon {
 						background-color: $accent-primary;
-
 						i {
 							color: #fff;
 						}
 					}
 				}
 
-				.round-icon {
+				.round-icon,
+				img {
 					transition: 0.15s background-color ease-out;
 
 					align-items: center;
@@ -202,19 +224,106 @@
 						font-size: 0.8em;
 					}
 				}
+
+				img {
+					height: 45px;
+				}
+			}
+			#user-link {
+				color: #646e90;
+				display: inline;
+				position: relative;
+				white-space: nowrap;
+			}
+			#loggedin {
+				display: inline-block;
+				white-space: nowrap;
+				font-size: 1rem;
+				background: linear-gradient(30deg, #7289da, #b3aeff);
+				background-clip: text;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+
+			.user-info {
+				z-index: 999;
+				width: auto;
+				display: flex;
+				justify-content: space-between;
+				user-select: none;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+
+				img {
+					place-self: center;
+					width: 50px;
+					height: 50px;
+					border-radius: 100%;
+					margin-right: 8px;
+				}
+			}
+
+			#username {
+				display: flex;
+				color: #fff;
+				font-size: 1.1rem;
+				white-space: nowrap;
+				vertical-align: bottom;
+			}
+			#tag {
+				display: flex;
+				font-size: 0.8rem;
+				color: #99aab5;
+				align-self: flex-end;
 			}
 		}
 
-		.hamburger {
+		#hamburger {
 			font-size: 1.5em;
 			display: none;
 			width: 25px;
 			height: 25px;
 			text-align: center;
 		}
+
+		.dropdown-container {
+			position: absolute;
+			right: 0;
+			padding-top: 0.75em;
+
+			.dropdown-content a {
+				margin: unset !important;
+			}
+		}
+
+		.dropdown {
+			position: relative;
+			display: inline-block;
+			place-self: center;
+		}
+
+		.dropdown-content {
+			position: absolute;
+			right: 0;
+			background-color: $background-secondary;
+			border-radius: 10px;
+			width: inherit;
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+
+			a {
+				color: black;
+				padding: 10px 1.3em;
+				text-decoration: none;
+				width: inherit;
+
+				&:hover {
+					background-color: $background-primary;
+				}
+			}
+		}
 	}
 
-	.mobileLinks {
+	#mobileLinks {
 		position: absolute;
 		top: 75px;
 		z-index: 99999;
@@ -241,10 +350,22 @@
 			}
 		}
 	}
-	//* Responsive Design
 
+	.nuxt-link-active {
+		color: #7289da !important;
+
+		span {
+			background-color: #7289da !important;
+
+			i {
+				color: #ffffff;
+			}
+		}
+	}
+
+	//* Responsive Design
 	@media only screen and (max-width: 900px) {
-		.links {
+		#links {
 			a {
 				margin: 0 0.5em !important;
 			}
@@ -252,11 +373,11 @@
 	}
 
 	@media only screen and (max-width: 715px) {
-		.links {
+		#links {
 			display: none !important;
 		}
 
-		.hamburger {
+		#hamburger {
 			display: block !important;
 		}
 	}
@@ -268,10 +389,13 @@
 		props: ["noLinks", "countDownBtn", "href", "target"],
 		data() {
 			return {
+				hovered: false,
 				pageLoad: false,
 				countDownValue: 5,
 				mobileMenuActive: false,
 				isMobile: false,
+				isStaff: false,
+				contributors: [],
 				categories: [
 					{
 						logo: "cart-arrow-down",
@@ -292,21 +416,17 @@
 			};
 		},
 		methods: {
-			reload() {
-				location.reload();
+			open(url) {
+				window.open(url, this.$props.target).focus();
+				this.$nuxt.setLayout("default");
 			},
-			redirect(url) {
-				if (this.$props.countDownBtn && this.$props.target) {
-					window.open(url, this.$props.target).focus();
-					this.$nuxt.setLayout("default");
-				} else window.location.href = url || window.location.href;
+			avatarify() {
+				if (!this.$auth?.loggedIn) return "";
+				else if (this.$auth?.user?.avatar)
+					return `https://cdn.discordapp.com/avatars/${this.$auth.user.id}/${this.$auth.user.avatar}`;
 			},
 			appear() {
 				this.pageLoad = true;
-				let targets = [];
-
-				if (this.$refs.headerLink)
-					targets.push(...this.$refs.headerLink.map(i => i.$el));
 
 				this.$anime
 					.timeline({
@@ -318,7 +438,7 @@
 					})
 					.add(
 						{
-							targets: targets,
+							targets: "#links a",
 							translateY: [-200, 0]
 						},
 						0
@@ -344,22 +464,44 @@
 				navigator?.userAgent
 			);
 
-			if (this.isMobile)
-				this.listener = document.addEventListener("click", e => {
-					if (!e.target.classList.contains("fas") && this.mobileMenuActive)
-						this.mobileMenuActive = false;
-				});
+			const interval = setInterval(() => {
+				if (!this.countDownBtn) return;
+				this.countDownValue--;
 
-			if (this.$props.countDownBtn)
-				this.interval = setInterval(() => {
-					this.countDownValue--;
+				if (this.countDownValue === 0) clearInterval(interval);
+			}, 1 * 1000);
 
-					if (this.countDownValue === 0) clearInterval(this.interval);
-				}, 1 * 1000);
-		},
-		beforeDestroy() {
-			clearInterval(this.interval);
-			if (this.listener) document.removeEventListener("click", this.listener);
+			if (this.$auth.loggedIn) {
+				this.$axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`)
+					.then(({ data }) => {
+						if (data.userId) {
+							const staffRoles = [
+								"606270745299124235", //Creator
+								"493135149274365975", //Executive Director
+								"691382096878370837", //Operations Supervisior
+								"673681900476432387", //Global Community Representative
+								"673682511288598575", //Head Software Engineer
+								"616646805907832833", //Web Developer
+								"691393583189721088", //Linux Maintainer
+								"691396820236107837", //Engineer
+								"691386502566903850", //Graphic Designer
+								"548518356324581377", //Senior Moderator
+								"673683121971134505", //Head of Presence Verifying
+								"691384256672563332", //Community Representative
+								"514546359865442304", //Moderator
+								"526734093560315925", //Junior Moderator
+								"566417964820070421", //Support Agent
+								"630445337143935009" //Presence Verifier
+							];
+
+							if (staffRoles.indexOf(data.roleId) !== -1) this.isStaff = true;
+							else this.isStaff = false;
+						}
+					})
+					.catch(() => {
+						// this.$nuxt.error({ statusCode: 500 })
+					});
+			}
 		}
 	};
 </script>

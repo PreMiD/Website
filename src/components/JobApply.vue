@@ -74,16 +74,8 @@
 </style>
 
 <script>
-	import axios from "axios";
-	import First from "~/components/steps/First";
-	import Questions from "~/components/steps/Questions";
-
 	export default {
 		name: "JobApply",
-		components: {
-			First,
-			Questions
-		},
 		props: {
 			job: Object
 		},
@@ -106,21 +98,25 @@
 				if (!this.check) this.errors++;
 
 				if (this.errors == 0 && this.check) {
-					axios
+					this.$axios
 						.post(`${process.env.apiBase}/jobs/apply`, {
 							position: this.job.jobName,
 							questions: this.job.questions,
 							token: this.$auth.$storage._state["_token.discord"]
 						})
 						.then(({ data }) => {
-							if (data.error === 3)
-								this.$noty.error(this.$t("jobs.error.alreadyApplied"));
 							if (!data.error) {
 								this.$noty.success(this.$t("jobs.success.applied"));
 								this.$emit("close");
 							}
 						})
-						.catch(err => console.error(err));
+						.catch(err => {
+							if (err.response.data.error === 3) {
+								this.$noty.error(this.$t("jobs.errors.alreadyApplied"));
+							} else {
+								console.error(err);
+							}
+						});
 				} else {
 					this.error = this.$t("jobs.modal.error");
 				}

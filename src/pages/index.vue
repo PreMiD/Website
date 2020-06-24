@@ -5,7 +5,7 @@
 				<div class="promo-container">
 					<div class="promo-container__heading" ref="promoHeading">
 						<div class="heading__logo">
-							<img src="@/assets/images/logo_round.svg" />
+							<img data-not-lazy src="@/assets/images/logo-wordmark-blue.png" />
 						</div>
 						<div class="heading__text">
 							<p v-html="markdown($t('home.introduction.paragraph'))"></p>
@@ -244,9 +244,11 @@
 							<h1>{{ $t("home.features.quickSupport.heading") }}</h1>
 							<p>{{ $t("home.features.quickSupport.description") }}</p>
 							<p>
-								<a class="button button--lg" href="https://discord.premid.app">
-									{{ $t("home.features.quickSupport.button") }}
-								</a>
+								<a
+									class="button button--lg"
+									href="https://discord.premid.app"
+									>{{ $t("home.features.quickSupport.button") }}</a
+								>
 							</p>
 						</div>
 						<div class="card--feature__promo">
@@ -288,24 +290,32 @@
 	import cardThumbnail3 from "@/assets/images/cards/card3.png";
 	import cardThumbnail4 from "@/assets/images/cards/card4.png";
 
-	import axios from "axios";
 	import anime from "animejs";
 
 	export default {
 		name: "Home",
 		auth: false,
-		async asyncData() {
-			const credits = (await axios(`${process.env.apiBase}/credits`)).data,
-				{ extension } = (await axios(`${process.env.apiBase}/versions`)).data;
-
-			let creditsLength = credits.length;
+		async asyncData({ app }) {
+			const res = await app.$graphql(
+				`
+				{
+					versions {
+						extension
+					}
+					credits(limit:2, random:true) {
+						user {
+							name
+							tag
+							avatar
+							flags
+						}
+					}
+				}`
+			);
 
 			return {
-				extVersion: extension,
-				users: [
-					credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))],
-					credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))]
-				]
+				extVersion: res.versions.extension,
+				users: res.credits
 			};
 		},
 		data() {
@@ -318,9 +328,6 @@
 				presences_display: [],
 				presences: [
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "PreMiD",
 						serviceLogo: premidLogo,
 						smallImage: "search",
@@ -329,9 +336,6 @@
 						elapsed: true
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "YouTube",
 						serviceLogo: youtubeLogo,
 						smallImage: true,
@@ -342,9 +346,6 @@
 						presence_time: "1:36"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "SoundCloud",
 						serviceLogo: soundcloudLogo,
 						smallImage: true,
@@ -352,9 +353,6 @@
 						presence_time: "2:15"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "Netflix",
 						serviceLogo: netflixLogo,
 						smallImage: true,
@@ -362,9 +360,6 @@
 						presence_time: "22:15"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
 						smallImage: true,
@@ -375,9 +370,6 @@
 						presence_time: "00:26"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "Steam",
 						serviceLogo: steamLogo,
 						smallImage: false,
@@ -386,9 +378,6 @@
 						elapsed: true
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
 						smallImage: true,
@@ -396,9 +385,6 @@
 						presence_time: "3:12"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "Twitch",
 						serviceLogo: twitchLogo,
 						smallImage: true,
@@ -422,12 +408,10 @@
 				let presence = this.presences_display[index];
 
 				presence.profile = {
-					name: this.users[index]?.name || "Unknown",
-					discriminator: this.users[index]?.tag || "0000",
-					flags: this.users[index]?.flags || [],
-					avatar:
-						this.users[index]?.avatar ||
-						"https://premid.app/assets/images/logo.png"
+					name: this.users[index].user.name,
+					discriminator: this.users[index].user.tag,
+					flags: this.users[index].user.flags || [],
+					avatar: this.users[index].user.avatar
 				};
 
 				// Temporary solution

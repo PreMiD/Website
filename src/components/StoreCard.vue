@@ -2,20 +2,27 @@
 	<div>
 		<div
 			:class="'store-card ' + (cardHovered ? 'hovered' : '')"
-			:style="`box-shadow: 0 2px 64px 0 ${presenceShadowColor};`"
 			@mouseover="cardHovered = true"
 			@mouseleave="cardHovered = false"
 		>
-			<img class="store-card__background" :src="presence.thumbnail" />
+			<img
+				class="store-card__background"
+				@error="presence.thumbnail = ''"
+				:src="presence.thumbnail"
+			/>
 
 			<div class="store-card__service-logo">
-				<img :src="presence.logo" />
+				<img
+					@error="presence.logo = '/assets/images/logo.png'"
+					:src="presence.logo"
+				/>
 			</div>
 
 			<div class="store-card__service-info">
 				<div class="store-card__service">
 					<h2>
 						<nuxt-link
+							:style="`color: ${brightColorFix()}`"
 							:key="presenceLinkName"
 							:to="`/store/presences/${encodeURIComponent(presenceLinkName)}`"
 						>
@@ -28,7 +35,11 @@
 								class="fa-stack"
 							>
 								<i
-									style="color:white;font-size:16px;margin-left:-4px;"
+									:style="`color:${brightColorFix()}`"
+									class="fa-circle fa-stack-2x fas"
+								></i>
+								<i
+									:style="`color: ${presence.color}; font-size: 10px; top:1px;`"
 									class="fa-gem fa-inverse fa-stack-1x fas"
 								></i>
 							</span>
@@ -41,7 +52,10 @@
 								class="fa-stack"
 								:style="partner == true ? 'margin-left:-4px' : ''"
 							>
-								<i class="fa-circle fa-stack-2x fas"></i>
+								<i
+									:style="`color:${brightColorFix()}`"
+									class="fa-circle fa-stack-2x fas"
+								></i>
 								<i
 									:style="`color: ${presence.color};`"
 									class="fa-fire-alt fa-inverse fa-stack-1x fas"
@@ -51,15 +65,20 @@
 							<span
 								v-if="
 									typeof presence.warning == 'boolean' &&
-										presence.warning === true
+									presence.warning === true
 								"
 								v-tippy="{
 									content: $t('store.cards.extraStepsRequired')
 								}"
 								class="fa-stack"
-								:style="hot == true || partner == true ? 'margin-left:-4px' : ''"
+								:style="
+									hot == true || partner == true ? 'margin-left:-4px' : ''
+								"
 							>
-								<i class="fa-circle fa-stack-2x fas"></i>
+								<i
+									:style="`color:${brightColorFix()}`"
+									class="fa-circle fa-stack-2x fas"
+								></i>
 								<i
 									:style="`color: ${presence.color};`"
 									class="fa-exclamation fa-inverse fa-stack-1x fas"
@@ -67,11 +86,14 @@
 							</span>
 						</nuxt-link>
 					</h2>
-					<p>
+					<p :style="`color: ${brightColorFix()}`">
 						{{ $t("store.cards.creator") }}:
-						<nuxt-link :to="`/users/${presence.author.id}`">{{
-							presence.author.name
-						}}</nuxt-link>
+						<nuxt-link
+							:style="`color: ${brightColorFix()};font-weight:bold;`"
+							:to="`/users/${presence.author.id}`"
+						>
+							{{ presence.author.name }}
+						</nuxt-link>
 					</p>
 
 					<transition name="card-animation" mode="out-in">
@@ -82,6 +104,7 @@
 							:key="presence.service + '_desc'"
 						>
 							<p
+								:style="`color: ${brightColorFix()}`"
 								class="store-card__desc"
 								v-html="linkify(this.getPresenceDescription())"
 							></p>
@@ -95,7 +118,7 @@
 							<div
 								v-if="
 									this.$store.state.extension.extensionInstalled &&
-										typeof presence.button == 'undefined'
+									typeof presence.button == 'undefined'
 								"
 								class="on-desktop store-card__buttons"
 							>
@@ -119,8 +142,8 @@
 									</span>
 									{{ $t("store.card.presence.remove") }}
 								</button>
-								<a class="button button--red button--like" @click="like()"
-									><i
+								<a class="button button--red button--like" @click="like()">
+									<i
 										:class="
 											$store.state.presences.likedPresences.includes(
 												presence.service
@@ -128,12 +151,13 @@
 												? 'fas' + ' fa-heart'
 												: 'far' + ' fa-heart'
 										"
-								/></a>
+									/>
+								</a>
 							</div>
 							<div
 								v-if="
 									this.$store.state.extension.extensionInstalled &&
-										presence.button == false
+									presence.button == false
 								"
 							>
 								<p class="store-card__warning">
@@ -146,9 +170,7 @@
 			</div>
 			<div
 				class="store-card__gradient"
-				:style="
-					`background: linear-gradient(135deg, ${presence.color} 0%, ${presenceGradientColor} 100%);`
-				"
+				:style="`background: linear-gradient(135deg, ${presence.color} 0%, ${presenceGradientColor} 100%);`"
 			></div>
 		</div>
 	</div>
@@ -157,7 +179,6 @@
 <script>
 	import PresenceMixin from "./mixins/Presence";
 	import tinycolor from "tinycolor2";
-	import axios from "axios";
 
 	export default {
 		name: "StoreCard",
@@ -171,18 +192,7 @@
 		},
 		computed: {
 			presenceGradientColor() {
-				return tinycolor(this.presence.color)
-					.darken(45)
-					.toHexString();
-			},
-			presenceShadowColor() {
-				if (this.cardHovered) {
-					return tinycolor(this.presence.color)
-						.setAlpha(0.3)
-						.toRgbString();
-				} else {
-					return "transparent";
-				}
+				return tinycolor(this.presence.color).darken(45).toHexString();
 			}
 		},
 		mounted() {
@@ -196,9 +206,7 @@
 
 				if (!likedPresences)
 					localStorage.setItem("likedPresences", this.presence.service);
-				else if (
-					likedPresences.split(",").includes(this.presence.service)
-				) {
+				else if (likedPresences.split(",").includes(this.presence.service)) {
 					localStorage.setItem(
 						"likedPresences",
 						likedPresences
@@ -215,6 +223,11 @@
 				}
 
 				this.$store.commit("presences/like", this.presence.service);
+			},
+			brightColorFix() {
+				return tinycolor(this.presence.color).getBrightness() >= 200
+					? "black"
+					: "white";
 			},
 			linkify(description) {
 				if (!description) return;

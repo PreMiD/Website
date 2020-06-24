@@ -1,8 +1,8 @@
-<template></template>
+<template>
+	<p>Please wait while we are processing your information...</p>
+</template>
 
 <script>
-// Do not remove <template> from the document, it will not work without them.
-
 export default {
 	head() {
 		return {

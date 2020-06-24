@@ -257,20 +257,14 @@
 </template>
 
 <script>
-	import axios from "axios";
-	import StoreCard from "../../components/StoreCard";
-
 	export default {
 		name: "Userpage",
 		auth: false,
-		components: {
-			StoreCard
-		},
-		async asyncData({ params }) {
+		async asyncData({ params, app }) {
 			const user = (
-					await axios(`${process.env.apiBase}/credits/${params.userId}`)
+					await app.$axios(`${process.env.apiBase}/credits/${params.userId}`)
 				).data,
-				presences = (await axios(`${process.env.apiBase}/presences`)).data;
+				presences = (await app.$axios(`${process.env.apiBase}/presences`)).data;
 
 			return {
 				error: user.error ? true : false,
@@ -301,7 +295,7 @@
 					return pls.match(/(\[.*?\])/g).map(ch => {
 						return pls.replace(
 							ch,
-							`<a href="https://discord.premid.app">${ch.slice(
+							`<a href="https://discord.gg/premid">${ch.slice(
 								1,
 								ch.length - 1
 							)}</a>`

@@ -35,9 +35,7 @@
 				</div>
 			</div>
 			<div class="grid__section friendly">
-				<p class="section__title">
-					{{ $t("footer.followUs.heading") }}
-				</p>
+				<p class="section__title">{{ $t("footer.followUs.heading") }}</p>
 				<div class="section__promo">
 					<a
 						:href="`https://twitter.com/${
@@ -121,7 +119,7 @@
 				v-html="
 					$t('footer.copyright.line1', {
 						0: `<i class=\'far fa-copyright\'></i> ${new Date().getFullYear()}  PreMiD`,
-						1: `<a class='hover-effect' href='https://github.com/Timeraa/' target='_blank'>Timeraa</a> & <a class='hover-effect' href='https://github.com/Fruxh/' target='_blank'>Fruxh</a>`
+						1: `<a class='hover-effect' href='https://github.com/Timeraa/' target='_blank'>Timeraa</a>`
 					})
 				"
 			></p>
@@ -270,8 +268,6 @@
 </style>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		data() {
 			return {
@@ -287,11 +283,20 @@
 			};
 		},
 		mounted() {
-			axios(`${process.env.apiBase}/usage`).then(({ data }) => {
-				this.installStats = data.users
-					.toString()
-					.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-			});
+			this.$graphql(
+				`
+				{
+				science {
+					users
+				}
+			}`
+			)
+				.then(data => {
+					this.installStats = data.science.users
+						.toString()
+						.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+				})
+				.catch(null);
 		}
 	};
 </script>

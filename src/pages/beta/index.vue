@@ -78,14 +78,12 @@
 	import premidBeta from "@/assets/images/premid-beta.png";
 	import cardThumbnail2 from "@/assets/images/cards/card2.png";
 
-	import axios from "axios";
-
 	export default {
 		name: "Beta",
 		auth: false,
-		async asyncData() {
+		async asyncData({ app }) {
 			return {
-				betaUsers: (await axios(`${process.env.apiBase}/betaUsers`)).data
+				betaUsers: (await app.$axios(`${process.env.apiBase}/betaUsers`)).data
 					.betaUsers
 			};
 		},

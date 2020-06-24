@@ -271,11 +271,7 @@
 	.why {
 		font-size: 28px;
 		color: white;
-		padding-top: 0.5em;
-		padding-bottom: 3em;
-	}
-	.reasons {
-		margin-bottom: 13em;
+		margin: 1.5em;
 	}
 	.reason {
 		padding: 1em;
@@ -311,7 +307,7 @@
 
 	.random-img {
 		position: absolute;
-		opacity: 0.6;
+		opacity: 0.25;
 		z-index: 0;
 		border-radius: 100%;
 	}
@@ -911,6 +907,7 @@
 					flex-wrap: wrap;
 
 					.label_tag {
+						font-weight: 500;
 						margin: 2px 2px;
 						padding: 3px 8px;
 						border-radius: 50px;
@@ -1525,61 +1522,6 @@
 		overflow-x: scroll;
 	}
 
-	.why {
-		font-size: 28px;
-		color: white;
-		padding-top: 0.5em;
-		padding-bottom: 3em;
-	}
-
-	.reasons {
-		margin-bottom: 13em;
-		max-width: 100%;
-
-		div:nth-child(1) {
-			margin-right: 50em;
-		}
-
-		div:nth-child(2) {
-			margin-left: 50em;
-		}
-
-		div:nth-child(3) {
-			margin-right: 40em;
-		}
-
-		div:nth-child(4) {
-			margin-left: 60em;
-		}
-
-		div:nth-child(5) {
-			margin-right: 30em;
-		}
-	}
-
-	.reason {
-		padding: 1em;
-		width: 300px;
-		background: #23272a;
-		border-radius: 5px;
-		text-align: center;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		margin-bottom: 2em;
-
-		h1 {
-			display: block;
-			font-size: 22px;
-			text-transform: uppercase;
-			color: #7289da;
-		}
-		p {
-			color: white;
-			font-size: 14px;
-		}
-	}
-
 	.applyText {
 		font-size: 20px;
 		color: white;
@@ -1692,6 +1634,7 @@
 
 	.partners {
 		.requirments {
+			height: auto;
 			max-width: 100%;
 			margin: 0;
 			padding: 0;
@@ -1702,10 +1645,6 @@
 			}
 		}
 
-		.why {
-			padding-bottom: 1em;
-		}
-
 		p {
 			padding: 0 1em;
 		}
@@ -1713,15 +1652,6 @@
 		.sponsor-info {
 			p {
 				padding: 0 !important;
-			}
-		}
-
-		.reasons {
-			margin-bottom: 2em;
-
-			.reason {
-				max-width: 100%;
-				margin: 1.5em 0 !important;
 			}
 		}
 	}

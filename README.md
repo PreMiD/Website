@@ -25,9 +25,6 @@ yarn
 
 # build website in /dist
 yarn build
-
-# start website in production
-yarn start
 ```
 
 ## Development

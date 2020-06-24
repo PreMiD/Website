@@ -1,13 +1,17 @@
 <template>
-	<div v-if="!presence.error">
+	<div v-if="presence">
 		<transition name="fade" mode="in-out">
 			<div class="fullpresence-container">
 				<div class="fullpresence__header">
 					<div class="header__title">
 						<div class="section">
-							<h1 class="presence-name">
-								{{ presence.metadata.service }}
-							</h1>
+							<img id="presenceLogo" :src="presence.metadata.logo" />
+
+							<h1
+								id="presenceName"
+								:style="`color: ${brightColorFix()}`"
+								v-text="presence.metadata.service"
+							/>
 
 							<span
 								v-if="partner"
@@ -78,15 +82,13 @@
 							:href="githubPresenceUrl($route.params.presenceName)"
 							target="_blank"
 						>
-							<span class="icon">
-								<i class="fa-github fab"></i>
-							</span>
-							{{ !isMobile ? $t("presence.page.buttons.sourceCode") : "" }}
+							<i class="fa-github fab" />
 						</a>
 						<a
 							class="button button--lg button--red button--like"
 							@click="like()"
-							><i
+						>
+							<i
 								:class="
 									$store.state.presences.likedPresences.includes(
 										presence.metadata.service
@@ -94,7 +96,8 @@
 										? 'fas' + ' fa-heart'
 										: 'far' + ' fa-heart'
 								"
-						/></a>
+							/>
+						</a>
 					</div>
 					<hr />
 					<div
@@ -150,7 +153,8 @@
 									<i class="fa-user-tie fas"></i>
 									{{ $t("presence.sections.information.contributors") }}:
 									<nuxt-link
-										v-for="(contributor, index) in presence.metadata.contributors"
+										v-for="(contributor, index) in presence.metadata
+											.contributors"
 										:key="contributor.id"
 										class="author-name"
 										:to="`/users/${contributor.id}`"
@@ -197,16 +201,18 @@
 										v-for="tag of presence.metadata.tags"
 										:key="tag"
 										:to="`/store?q=${encodeURIComponent('tag:') + tag}`"
-										:style="`background: ${presence.metadata.color}; color: ${presenceTextColor};`"
+										:style="`background: ${
+											presence.metadata.color
+										}; color: ${brightColorFix()};`"
 										class="label label_tag"
-										>{{ tag }}</nuxt-link
-									>
+										v-text="tag"
+									/>
 								</div>
 							</li>
 							<!-- <li>
                 <p><i class="fas fa-heart" /> Likes: <span :style="`background: ${presenceData.color};`"
                         class="label label_tag">36</span></p>
-              </li>-->
+							</li>-->
 							<li>
 								<p>
 									<i class="fa-link fas"></i>
@@ -222,9 +228,9 @@
 								</ul>
 								<ul v-else-if="presence.metadata.url" class="presence-urls">
 									<li>
-										<a :href="`https://${presence.metadata.url}`">
-											{{ presence.metadata.url }}
-										</a>
+										<a :href="`https://${presence.metadata.url}`">{{
+											presence.metadata.url
+										}}</a>
 									</li>
 								</ul>
 							</li>
@@ -236,39 +242,66 @@
 	</div>
 </template>
 
+<style lang="scss">
+	.section {
+		#presenceLogo {
+			max-height: 100px;
+			max-width: 100px;
+			border-radius: 10px;
+		}
+
+		#presenceName {
+			line-height: 100px;
+			margin-left: 25px;
+		}
+	}
+</style>
+
 <script>
 	import PresenceMixin from "~/components/mixins/Presence";
 	import tinycolor from "tinycolor2";
-	import axios from "axios";
 
 	export default {
 		name: "PresencePage",
 		mixins: [PresenceMixin],
 		auth: false,
-		async asyncData({ params }) {
-			let presenceUsage = (await axios(`${process.env.apiBase}/usage`)).data
-					.users,
-				presenceRanking = (await axios(`${process.env.apiBase}/presenceUsage`))
-					.data,
-				partnersList = (await axios(`${process.env.apiBase}/partners`)).data;
+		async asyncData({ params, app, error }) {
+			let presenceUsage = (await app.$axios(`${process.env.apiBase}/usage`))
+					.data.users,
+				presenceRanking = (
+					await app.$axios(`${process.env.apiBase}/presenceUsage`)
+				).data,
+				partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
+					.data;
 
-			let presenceData = await new Promise((resolve, reject) => {
-				axios(
-					`${process.env.apiBase}/presences/${encodeURIComponent(
-						params.presenceName
-					)}`
-				)
-					.then(res => {
-						resolve(res.data);
-					})
-					.catch(err => {
-						console.log(err);
-						reject({
-							error: true,
-							code: 401
-						});
-					});
-			});
+			let { presences } = await app.$graphql(
+					`
+				{
+					presences(service: "${params.presenceName}") {
+						metadata {
+							color
+							service
+							description
+							button
+							logo
+							url
+							thumbnail
+							author {
+								id
+								name
+							}
+							contributors {
+								id
+								name
+							}
+							version
+							tags
+						}
+					}
+				}
+				`
+				),
+				presenceData = presences?.[0];
 
 			let data = {
 				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
@@ -284,28 +317,14 @@
 				presence: presenceData
 			};
 
-			if (!presenceData.error) {
-				let authorData = await new Promise((resolve, reject) => {
-					axios(
-						`${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
-					)
-						.then(res => {
-							if (res.data.error && res.data.message !== "User not found.")
-								reject({ error: true, message: res.data.message });
-							resolve(res.data);
-						})
-						.catch(err => {
-							console.log(err);
-							reject({
-								error: true,
-								code: 401
-							});
-						});
-				});
-
-				if (!authorData.error) {
-					data.presence.metadata.author = authorData;
-				}
+			if (presenceData) {
+				try {
+					data.presence.metadata.author = (
+						await app.$axios(
+							`${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
+						)
+					).data;
+				} catch (err) {}
 			}
 
 			data["isMobile"] = false;
@@ -314,7 +333,7 @@
 		},
 		computed: {
 			presenceTextColor() {
-				var presenceColor = tinycolor(this.$data.presence.metadata.color);
+				var presenceColor = tinycolor(this.presence.metadata.color);
 				if (presenceColor.getLuminance() > 0.6) {
 					return "#202225";
 				} else {
@@ -322,55 +341,58 @@
 				}
 			},
 			presenceGradientColor() {
-				return tinycolor(this.$data.presence.metadata.color)
-					.darken(45)
-					.toHexString();
+				return tinycolor(this.presence.metadata.color).darken(45).toHexString();
 			}
 		},
 		mounted() {
-			this.$data.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 				navigator.userAgent
 			);
 
-			if (this.$data.presence.error)
-				return this.$nuxt.error({ statusCode: this.$data.presence.error });
+			if (!this.presence)
+				return this.$nuxt.error({
+					statusCode: 404,
+					message: "Presence does not exist."
+				});
 		},
 		created() {
-			if (!this.$data.presence.error) {
-				this.isPresenceInstalled(this.$data.presence.metadata.service).then(
+			if (this.presence)
+				this.isPresenceInstalled(this.presence.metadata.service).then(
 					response => {
-						if (response) this.$data.isInstalled = true;
+						if (response) this.isInstalled = true;
 					}
 				);
-			}
 		},
 		updated() {
-			this.isPresenceInstalled(this.$data.presence.metadata.service).then(
+			this.isPresenceInstalled(this.presence.metadata.service).then(
 				response => {
-					if (response) this.$data.isInstalled = true;
+					if (response) this.isInstalled = true;
 				}
 			);
 		},
 		methods: {
+			brightColorFix() {
+				return tinycolor(this.presence.metadata.color).getBrightness() >= 200
+					? "black"
+					: "white";
+			},
 			/**
 			 * Returns description of the presence according to your language.
 			 * If presence has non-multilingual description then we just parsing the "description" data.
 			 */
 			getPresenceDescription() {
-				if (this.$data.presence.error) return;
+				if (this.presence.error) return;
 
 				if (
-					this.$data.presence.metadata.description[
-						this.$root.getCurrentLanguage()
-					]
+					this.presence.metadata.description[this.$root.getCurrentLanguage()]
 				) {
-					return this.$data.presence.metadata.description[
+					return this.presence.metadata.description[
 						this.$root.getCurrentLanguage()
 					];
-				} else if (this.$data.presence.metadata.description["en"]) {
-					return this.$data.presence.metadata.description["en"];
+				} else if (this.presence.metadata.description["en"]) {
+					return this.presence.metadata.description["en"];
 				} else {
-					return this.$data.presence.metadata.description;
+					return this.presence.metadata.description;
 				}
 			},
 			like() {
@@ -428,21 +450,27 @@
 			},
 			githubPresenceUrl(presenceName) {
 				// first char with no diacritics
-				let firstChar = presenceName.charAt(0).normalize("NFD").replace(/[\u0300-\u036f]/g, "").charAt(0).toLowerCase();
+				let firstChar = presenceName
+					.charAt(0)
+					.normalize("NFD")
+					.replace(/[\u0300-\u036f]/g, "")
+					.charAt(0)
+					.toLowerCase();
 				let type;
 
 				if (!isNaN(firstChar)) {
-					type = "0-9"
+					type = "0-9";
 				} else if ("a" <= firstChar && firstChar <= "z") {
 					type = firstChar.toUpperCase();
 				} else {
 					type = "#";
 				}
 
-				return `https://github.com/PreMiD/Presences/tree/master/websites/${type}/${encodeURIComponent(presenceName)}`;
+				return `https://github.com/PreMiD/Presences/tree/master/websites/${type}/${encodeURIComponent(
+					presenceName
+				)}`;
 			}
 		},
-
 		head() {
 			if (this.$data?.presence?.error) return;
 			let description =
