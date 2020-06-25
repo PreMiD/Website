@@ -495,6 +495,8 @@
 				return true;
 			},
 			searchHandle(evt, typing) {
+				this.presenceSearch = this.presenceSearch.trim();
+
 				if (!this.presenceSearch) this.typing = false;
 
 				if (
