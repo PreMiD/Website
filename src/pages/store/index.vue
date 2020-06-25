@@ -270,6 +270,7 @@
 								warning
 								tags
 								description
+								button
 							}
 						}
 					}`

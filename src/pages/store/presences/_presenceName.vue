@@ -53,7 +53,8 @@
 							v-if="
 								!isInstalled &&
 								this.$store.state.extension.extensionInstalled &&
-								presence.metadata.button !== false
+								presence.metadata.button !== false &&
+								presence.metadata.button !== 'false'
 							"
 							class="button button--"
 							@click="sendPresence(presence.metadata.service)"
@@ -67,7 +68,8 @@
 							v-if="
 								isInstalled &&
 								this.$store.state.extension.extensionInstalled &&
-								presence.metadata.button !== false
+								presence.metadata.button !== false &&
+								presence.metadata.button !== 'false'
 							"
 							class="button button--black"
 							@click="removePresence(presence.metadata.service)"
@@ -101,7 +103,7 @@
 					</div>
 					<hr />
 					<div
-						v-if="presence.metadata.button === false"
+						v-if="presence.metadata.button === false || presence.metadata.button === 'false'"
 						class="header__warning"
 					>
 						{{ $t("store.card.presence.included") }}
