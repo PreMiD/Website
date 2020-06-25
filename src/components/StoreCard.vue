@@ -157,7 +157,7 @@
 							<div
 								v-if="
 									this.$store.state.extension.extensionInstalled &&
-									presence.button == false
+									(presence.button === false || presence.button === 'false')
 								"
 							>
 								<p class="store-card__warning">
