@@ -18,7 +18,7 @@
 		"axios": "^0.19.2",
 		"chart.js": "2.9.3",
 		"marked": "1.1.0",
-		"moment": "2.24.0",
+		"moment": "2.27.0",
 		"node-sass": "^4.14.1",
 		"nuxt": "2.13.2",
 		"nuxt-helmet": "1.2.3",
