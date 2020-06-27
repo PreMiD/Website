@@ -118,7 +118,7 @@
 							<div
 								v-if="
 									this.$store.state.extension.extensionInstalled &&
-									typeof presence.button == 'undefined'
+									presence.button === null
 								"
 								class="on-desktop store-card__buttons"
 							>
