@@ -247,6 +247,7 @@
 		#presenceLogo {
 			max-height: 100px;
 			max-width: 100px;
+			object-fit: contain;
 			border-radius: 10px;
 		}
 
