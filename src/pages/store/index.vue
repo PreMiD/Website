@@ -21,8 +21,7 @@
 							removeFilter('url');
 							$refs.search.focus();
 						"
-						>url:</span
-					>
+					>url:</span>
 					<span
 						v-if="filters.tag.enabled"
 						v-tippy="{ content: $t('store.search.removeFilter') }"
@@ -30,8 +29,7 @@
 							removeFilter('tag');
 							$refs.search.focus();
 						"
-						>tag:</span
-					>
+					>tag:</span>
 					<span
 						v-if="filters.author.enabled"
 						v-tippy="{ content: $t('store.search.removeFilter') }"
@@ -39,8 +37,7 @@
 							removeFilter('author');
 							$refs.search.focus();
 						"
-						>author:</span
-					>
+					>author:</span>
 
 					<transition name="card-animation" mode="out-in">
 						<div
@@ -88,17 +85,17 @@
 					</transition>
 				</div>
 
-				<p class="sidebar__subheader">
-					{{ $t("store.category.filters.heading") }}
-				</p>
+				<p class="sidebar__subheader">{{ $t("store.category.filters.heading") }}</p>
 
 				<div class="checkbox-switcher">
 					<label>
 						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{
+						<span class="title">
+							{{
 							$t("store.category.filters.mostUsed")
-						}}</span>
+							}}
+						</span>
 					</label>
 				</div>
 
@@ -120,9 +117,11 @@
 					<label>
 						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{
+						<span class="title">
+							{{
 							$t("store.category.filters.allowAdult")
-						}}</span>
+							}}
+						</span>
 					</label>
 				</div>
 
@@ -130,9 +129,11 @@
 					<label>
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{
+						<span class="title">
+							{{
 							$t("store.category.filters.likedOnly")
-						}}</span>
+							}}
+						</span>
 					</label>
 				</div>
 
@@ -228,10 +229,7 @@
 			<span slot="breakViewContent"></span>
 		</paginate>
 
-		<adsense
-			ad-slot="5201967746"
-			style="text-align: center; margin-top: 0.25em;"
-		/>
+		<adsense ad-slot="5201967746" style="text-align: center; margin-top: 0.25em;" />
 	</section>
 </template>
 
@@ -271,6 +269,7 @@
 								tags
 								description
 								button
+								category
 							}
 						}
 					}`
@@ -323,7 +322,7 @@
 		},
 		computed: {
 			currentCategory() {
-				return this.$route.query.category ? this.$route.query.category : "all";
+				return this.$route.query.category || "all";
 			},
 			filteredPresences() {
 				return this.presences
@@ -354,7 +353,7 @@
 										tag
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
-								  ).length > 0
+										).length > 0
 								: false;
 						else if (
 							!this.showAdded &&
@@ -400,7 +399,7 @@
 							: !this.filterLiked
 					)
 					.filter(presence => {
-						if (this.currentCategory == "all") {
+						if (this.currentCategory === "all") {
 							return presence;
 						} else {
 							return presence.category == this.currentCategory;
@@ -545,73 +544,73 @@
 </script>
 
 <style lang="scss">
-	@import "../../stylesheets/variables.scss";
+@import "../../stylesheets/variables.scss";
 
-	.store-menu__searchbar-container {
-		position: relative;
+.store-menu__searchbar-container {
+	position: relative;
+
+	span {
+		position: absolute;
+		margin: 2px;
+		background-color: #191b24;
+		padding: 2.5px 5px;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.searchSuggestions {
+		font-size: small;
+		z-index: 999;
+		position: absolute;
+		background-color: #191b24;
+		border-bottom-right-radius: 4px;
+		border-bottom-left-radius: 4px;
+		box-shadow: 0px 1px teal;
+		width: -webkit-fill-available;
+		width: -moz-available;
+		margin-top: 2.5em;
 
 		span {
-			position: absolute;
-			margin: 2px;
-			background-color: #191b24;
-			padding: 2.5px 5px;
-			border-radius: 4px;
-			cursor: pointer;
+			position: unset;
+			width: 100%;
 		}
 
-		.searchSuggestions {
-			font-size: small;
-			z-index: 999;
-			position: absolute;
-			background-color: #191b24;
-			border-bottom-right-radius: 4px;
-			border-bottom-left-radius: 4px;
-			box-shadow: 0px 1px teal;
-			width: -webkit-fill-available;
-			width: -moz-available;
-			margin-top: 2.5em;
+		.filterBox {
+			width: 100%;
+			display: inline-flex;
 
-			span {
-				position: unset;
-				width: 100%;
+			span:nth-child(1) {
+				float: left;
+				text-align: left;
 			}
 
-			.filterBox {
-				width: 100%;
-				display: inline-flex;
-
-				span:nth-child(1) {
-					float: left;
-					text-align: left;
-				}
-
-				span:nth-child(2) {
-					float: right;
-					text-align: right;
-				}
+			span:nth-child(2) {
+				float: right;
+				text-align: right;
 			}
-		}
-
-		display: flex;
-
-		button,
-		.button {
-			&:not(:last-child),
-			&:not(:first-child) {
-				border-radius: 0 0 0 0;
-			}
-
-			display: inline-block;
-			padding: 0.09rem 10px;
-			font-size: 14px;
-			line-height: 25px;
-			font-weight: bold;
 		}
 	}
 
-	.fa-search {
-		position: absolute;
-		margin-left: 0.6rem;
-		color: #74787c;
+	display: flex;
+
+	button,
+	.button {
+		&:not(:last-child),
+		&:not(:first-child) {
+			border-radius: 0 0 0 0;
+		}
+
+		display: inline-block;
+		padding: 0.09rem 10px;
+		font-size: 14px;
+		line-height: 25px;
+		font-weight: bold;
 	}
+}
+
+.fa-search {
+	position: absolute;
+	margin-left: 0.6rem;
+	color: #74787c;
+}
 </style>
