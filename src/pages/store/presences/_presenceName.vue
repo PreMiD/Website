@@ -5,17 +5,17 @@
 				<div class="fullpresence__header">
 					<div class="header__title">
 						<div class="section">
-							<img id="presenceLogo" :src="presence.metadata.logo" />
-
-							<h1
-								id="presenceName"
-								:style="`color: ${brightColorFix()}`"
-								v-text="presence.metadata.service"
+							<img
+								v-if="!isMobile"
+								@error="presence.metadata.logo = 'https://premid.app/assets/images/logo.png'"
+								:src="presence.metadata.logo"
 							/>
+
+							<h1 :style="`color: ${brightColorFix()}`" v-text="presence.metadata.service" />
 
 							<span
 								v-if="partner"
-								class="fa-stack"
+								class="fa-stack presence-badge"
 								v-tippy="{
 									content: $t('store.cards.partner')
 								}"
@@ -28,7 +28,7 @@
 							</span>
 							<span
 								v-if="hot"
-								class="fa-stack"
+								class="fa-stack presence-badge"
 								v-tippy="{
 									content: $t('store.cards.popular')
 								}"
@@ -86,10 +86,7 @@
 						>
 							<i class="fa-github fab" />
 						</a>
-						<a
-							class="button button--lg button--red button--like"
-							@click="like()"
-						>
+						<a class="button button--lg button--red button--like" @click="like()">
 							<i
 								:class="
 									$store.state.presences.likedPresences.includes(
@@ -105,24 +102,15 @@
 					<div
 						v-if="presence.metadata.button === false || presence.metadata.button === 'false'"
 						class="header__warning"
-					>
-						{{ $t("store.card.presence.included") }}
-					</div>
+					>{{ $t("store.card.presence.included") }}</div>
 				</div>
 				<div class="fullpresence__content">
 					<div class="content__description">
-						<h2 class="content__title">
-							{{ $t("presence.sections.description.title") }}
-						</h2>
-						<div
-							class="description-container"
-							v-html="linkify(getPresenceDescription())"
-						></div>
+						<h2 class="content__title">{{ $t("presence.sections.description.title") }}</h2>
+						<div class="description-container" v-html="linkify(getPresenceDescription())"></div>
 					</div>
 					<div class="content__info">
-						<h2 class="content__title">
-							{{ $t("presence.sections.information.title") }}
-						</h2>
+						<h2 class="content__title">{{ $t("presence.sections.information.title") }}</h2>
 						<ul class="info__sections">
 							<li v-if="presence.metadata.author">
 								<p>
@@ -162,12 +150,12 @@
 										:to="`/users/${contributor.id}`"
 									>
 										{{
-											contributor.name +
-											`${
-												presence.metadata.contributors.length === index + 1
-													? ""
-													: ", "
-											}`
+										contributor.name +
+										`${
+										presence.metadata.contributors.length === index + 1
+										? ""
+										: ", "
+										}`
 										}}
 									</nuxt-link>
 								</p>
@@ -183,10 +171,7 @@
 							</li>
 							<li v-if="presenceUsage && presenceUsage > 0">
 								<p>
-									<i
-										class="fa-cart-arrow-down fas"
-										style="margin-left: -4px;"
-									></i>
+									<i class="fa-cart-arrow-down fas" style="margin-left: -4px;"></i>
 									{{ $t("presence.sections.information.users") }}:
 									<span class="presence-version">
 										<b>{{ presenceUsage }}</b>
@@ -220,19 +205,18 @@
 									<i class="fa-link fas"></i>
 									{{ $t("presence.sections.information.supportedurls") }}:
 								</p>
-								<ul
-									v-if="Array.isArray(presence.metadata.url)"
-									class="presence-urls"
-								>
+								<ul v-if="Array.isArray(presence.metadata.url)" class="presence-urls">
 									<li v-for="url in presence.metadata.url" :key="url">
 										<a :href="`https://${url}`">{{ url }}</a>
 									</li>
 								</ul>
 								<ul v-else-if="presence.metadata.url" class="presence-urls">
 									<li>
-										<a :href="`https://${presence.metadata.url}`">{{
+										<a :href="`https://${presence.metadata.url}`">
+											{{
 											presence.metadata.url
-										}}</a>
+											}}
+										</a>
 									</li>
 								</ul>
 							</li>
@@ -244,19 +228,30 @@
 	</div>
 </template>
 
-<style lang="scss">
-	.section {
-		#presenceLogo {
-			max-height: 100px;
-			max-width: 100px;
-			border-radius: 10px;
-		}
+<style lang="scss" scoped>
+.section {
+	img {
+		height: 64px;
+		width: 64px;
+		border-radius: 100%;
+		margin-right: 8px;
+		place-self: center;
+		transition: opacity 0.2s ease-in-out;
 
-		#presenceName {
-			line-height: 100px;
-			margin-left: 25px;
+		&:hover {
+			opacity: 0.75;
 		}
 	}
+
+	h1 {
+		line-height: 100px;
+		margin-left: 25px;
+	}
+}
+
+.presence-badge {
+	place-self: center;
+}
 </style>
 
 <script>
@@ -375,8 +370,8 @@
 		methods: {
 			brightColorFix() {
 				return tinycolor(this.presence.metadata.color).getBrightness() >= 200
-					? "black"
-					: "white";
+					? "#111218"
+					: "#ffffff";
 			},
 			/**
 			 * Returns description of the presence according to your language.

@@ -183,7 +183,16 @@
 					</div>
 				</div>
 
+				<div class="show-beta" v-if="!showBeta">
+					<div>
+						<p>{{ $t("downloads.showbeta.message") }}</p>
+						<small>{{ $t("downloads.showbeta.small") }}</small>
+					</div>
+					<i @click="showBeta = true" class="fas fa-chevron-down"></i>
+				</div>
+
 				<div
+					v-else
 					id="beta-downloads"
 					class="dl-container__section dl-container__section_downloads waves-aligned"
 				>
@@ -262,8 +271,7 @@
 							<p v-t="'downloads.error.login'" />
 							<button
 								type="button"
-								class="button"
-								id="login"
+								class="button login"
 								@click="$router.push('/login')"
 							>{{ $t("downloads.button.login") }}</button>
 						</div>
@@ -391,6 +399,7 @@
 		data() {
 			return {
 				skipAds: false,
+				showBeta: false,
 				extVersion: null,
 				appVersion: null,
 				linuxVersion: null,
@@ -593,11 +602,30 @@
 	};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../stylesheets/variables.scss";
 
 .highlight::after {
 	opacity: 1 !important;
+}
+
+.show-beta {
+	text-align: center;
+
+	p {
+		line-height: 0;
+	}
+
+	i {
+		font-size: 2rem;
+		margin-top: 4px;
+		transition: opacity 0.2s ease-in-out;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 0.75;
+		}
+	}
 }
 
 .button-container {
@@ -608,7 +636,7 @@
 	}
 }
 
-#login {
+.login {
 	padding: 0.55em 3em;
 }
 

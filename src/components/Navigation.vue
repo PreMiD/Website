@@ -1,27 +1,24 @@
 <template>
 	<transition appear v-on:after-appear="appear">
 		<div>
-			<div id="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
-				<div id="logoWrapper" ref="headerLogo">
+			<div class="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
+				<div class="logoWrapper" ref="headerLogo">
 					<nuxt-link to="/" tag="h1">PreMiD</nuxt-link>
 
 					<transition name="pop">
 						<div
 							v-if="!isMobile && !$store.state.extension.extensionInstalled"
-							id="status"
+							class="status"
 							v-tippy="{
 								content: $t('store.message.error')
 							}"
 						>
-							<i
-								@click="$router.push('/downloads#ext-downloads')"
-								class="fa-exclamation fas"
-							/>
+							<i @click="$router.push('/downloads#ext-downloads')" class="fa-exclamation fas" />
 						</div>
 					</transition>
 				</div>
 
-				<div v-if="!noLinks" id="links">
+				<div v-if="!noLinks" class="links">
 					<nuxt-link
 						v-for="category of categories"
 						:key="category.route"
@@ -43,9 +40,9 @@
 					>
 						<img class="round-icon" :src="avatarify()" />
 						<div class="dropdown">
-							<span id="username">
+							<span class="username">
 								{{ $auth.user.username }}
-								<span id="tag">#{{ $auth.user.discriminator }}</span>
+								<span class="tag">#{{ $auth.user.discriminator }}</span>
 							</span>
 
 							<transition name="slide-down" mode="in-out">
@@ -71,25 +68,18 @@
 							<i :class="`fa-user fas`"></i>
 						</span>
 						<p>{{ $t("header.login") }}</p>
-					</nuxt-link> -->
+					</nuxt-link>-->
 				</div>
 
-				<div v-if="countDownBtn" id="links">
-					<a
-						v-if="countDownValue === 0"
-						@click="$nuxt.setLayout('default')"
-						class="navbar__item"
-					>
+				<div v-if="countDownBtn" class="links">
+					<a v-if="countDownValue === 0" @click="$nuxt.setLayout('default')" class="navbar__item">
 						<span class="round-icon">
 							<i :class="`fa-backward fas`"></i>
 						</span>
 						<p>{{ $t("downloads.button.back") }}</p>
 					</a>
 
-					<a
-						@click="countDownValue === 0 ? open($props.href) : null"
-						class="navbar__item"
-					>
+					<a @click="countDownValue === 0 ? open($props.href) : null" class="navbar__item">
 						<span class="round-icon">
 							<i :class="`fa-forward fas`"></i>
 						</span>
@@ -103,23 +93,16 @@
 					</a>
 				</div>
 
-				<div
-					id="hamburger"
-					ref="hamburger"
-					@click="mobileMenuActive = !mobileMenuActive"
-				>
+				<div class="hamburger" ref="hamburger" @click="mobileMenuActive = !mobileMenuActive">
 					<i v-if="mobileMenuActive" class="fa-times fas" />
 					<i v-else class="fa-bars fas" />
 				</div>
 			</div>
 
 			<transition name="slide-down">
-				<div
-					id="mobileLinks"
-					v-if="mobileMenuActive"
-					@click="mobileMenuActive = !mobileMenuActive"
-				>
+				<div class="mobileLinks" v-if="mobileMenuActive" @click="mobileMenuActive = !mobileMenuActive">
 					<nuxt-link
+						active-class="mobile-active"
 						v-for="category of categories"
 						:key="category.route"
 						:to="'/' + category.route"
@@ -136,251 +119,260 @@
 </template>
 
 <style lang="scss" scoped>
-	@import "~/stylesheets/variables.scss";
+@import "~/stylesheets/variables.scss";
 
-	#navbar {
-		background-color: $background-primary;
-		position: relative;
-		height: 75px;
-		margin: 0 15px;
+.navbar {
+	background-color: $background-primary;
+	position: relative;
+	height: 75px;
+	margin: 0 15px;
+
+	display: grid;
+	grid-template-columns: min-content min-content;
+	align-items: center;
+	justify-content: space-between;
+
+	.logoWrapper {
+		cursor: pointer;
+		height: 40px;
 
 		display: grid;
 		grid-template-columns: min-content min-content;
 		align-items: center;
-		justify-content: space-between;
 
-		#logoWrapper {
+		h1 {
+			margin: 0;
+			font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana,
+				sans-serif;
+		}
+
+		.status {
+			display: flex;
+			align-items: center;
+			font-size: small;
+			width: 25px;
+			height: 25px;
+			border-radius: 100%;
+			margin-left: 0.6em;
+			animation: pulseWarn 2s infinite;
+			background-color: #ffff00;
+			color: black;
 			cursor: pointer;
-			height: 40px;
+			justify-content: center;
+		}
+	}
 
+	.links {
+		display: flex;
+		font-size: 1.1rem;
+		font-weight: 800;
+		text-transform: uppercase;
+
+		a {
+			transition: 0.25s margin ease-out;
+			//* Fix for chinese etc languages
+			white-space: nowrap;
 			display: grid;
 			grid-template-columns: min-content min-content;
 			align-items: center;
+			margin: 0 1.3em;
+			color: lighten($background-secondary, 40%);
 
-			h1 {
-				margin: 0;
-				font-family: "Discord Font";
-			}
+			&:hover {
+				color: $accent-primary;
 
-			#status {
-				display: flex;
-				align-items: center;
-				font-size: small;
-				width: 25px;
-				height: 25px;
-				border-radius: 100%;
-				margin-left: 0.6em;
-				animation: pulseWarn 2s infinite;
-				background-color: #ffff00;
-				color: black;
-				cursor: pointer;
-				justify-content: center;
-			}
-		}
-
-		#links {
-			display: flex;
-			font-size: 1.1rem;
-			font-weight: 800;
-			text-transform: uppercase;
-
-			a {
-				transition: 0.25s margin ease-out;
-				//* Fix for chinese etc languages
-				white-space: nowrap;
-				display: grid;
-				grid-template-columns: min-content min-content;
-				align-items: center;
-				margin: 0 1.3em;
-				color: lighten($background-secondary, 40%);
-
-				&:hover {
-					color: $accent-primary;
-
-					.round-icon {
-						background-color: $accent-primary;
-						i {
-							color: #fff;
-						}
-					}
-				}
-
-				.round-icon,
-				img {
-					transition: 0.15s background-color ease-out;
-
-					align-items: center;
-					display: flex;
-					width: 30px;
-					height: 30px;
-					border-radius: 100em;
-					background-color: lighten($background-secondary, 12%);
-					margin-right: 0.5em;
-					justify-content: center;
-
+				.round-icon {
+					background-color: $accent-primary;
 					i {
-						transition: 0.15s color ease-out !important;
-
-						font-size: 0.8em;
+						color: #fff;
 					}
 				}
-
-				img {
-					height: 45px;
-				}
-			}
-			#user-link {
-				color: #646e90;
-				display: inline;
-				position: relative;
-				white-space: nowrap;
-			}
-			#loggedin {
-				display: inline-block;
-				white-space: nowrap;
-				font-size: 1rem;
-				background: linear-gradient(30deg, #7289da, #b3aeff);
-				background-clip: text;
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
 			}
 
-			.user-info {
-				z-index: 999;
-				width: auto;
+			.round-icon,
+			img {
+				transition: 0.15s background-color ease-out;
+
+				align-items: center;
 				display: flex;
-				justify-content: space-between;
-				user-select: none;
-				-webkit-user-select: none;
-				-moz-user-select: none;
+				width: 30px;
+				height: 30px;
+				border-radius: 100em;
+				background-color: lighten($background-secondary, 12%);
+				margin-right: 0.5em;
+				justify-content: center;
 
-				img {
-					place-self: center;
-					width: 50px;
-					height: 50px;
-					border-radius: 100%;
-					margin-right: 8px;
+				i {
+					transition: 0.15s color ease-out !important;
+
+					font-size: 0.8em;
 				}
 			}
 
-			#username {
-				display: flex;
-				color: #fff;
-				font-size: 1.1rem;
-				white-space: nowrap;
-				vertical-align: bottom;
-			}
-			#tag {
-				display: flex;
-				font-size: 0.8rem;
-				color: #99aab5;
-				align-self: flex-end;
+			img {
+				height: 45px;
 			}
 		}
 
-		#hamburger {
-			font-size: 1.5em;
-			display: none;
-			width: 25px;
-			height: 25px;
-			text-align: center;
-		}
-
-		.dropdown-container {
-			position: absolute;
-			right: 0;
-			padding-top: 0.75em;
-
-			.dropdown-content a {
-				margin: unset !important;
-			}
-		}
-
-		.dropdown {
+		.user-link {
+			color: #646e90;
+			display: inline;
 			position: relative;
-			display: inline-block;
-			place-self: center;
+			white-space: nowrap;
 		}
 
-		.dropdown-content {
-			position: absolute;
-			right: 0;
-			background-color: $background-secondary;
-			border-radius: 10px;
-			width: inherit;
-			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		.loggedin {
+			display: inline-block;
+			white-space: nowrap;
+			font-size: 1rem;
+			background: linear-gradient(30deg, #7289da, #b3aeff);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
 
-			a {
-				color: black;
-				padding: 10px 1.3em;
-				text-decoration: none;
-				width: inherit;
+		.user-info {
+			z-index: 999;
+			width: auto;
+			display: flex;
+			justify-content: space-between;
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
 
-				&:hover {
-					background-color: $background-primary;
-				}
+			img {
+				place-self: center;
+				width: 50px;
+				height: 50px;
+				border-radius: 100%;
+				margin-right: 8px;
 			}
+		}
+
+		.username {
+			display: flex;
+			color: #fff;
+			font-size: 1.1rem;
+			white-space: nowrap;
+			vertical-align: bottom;
+		}
+
+		.tag {
+			display: flex;
+			font-size: 0.8rem;
+			color: #99aab5;
+			align-self: flex-end;
 		}
 	}
 
-	#mobileLinks {
+	.hamburger {
+		font-size: 1.5em;
+		display: none;
+		width: 25px;
+		height: 25px;
+		text-align: center;
+	}
+
+	.dropdown-container {
 		position: absolute;
-		top: 75px;
-		z-index: 99999;
-		background: $background-primary;
-		display: grid;
-		grid-gap: 10px;
-		padding-bottom: 10px;
+		right: 0;
+		padding-top: 0.75em;
+
+		.dropdown-content a {
+			margin: unset !important;
+		}
+	}
+
+	.dropdown {
+		position: relative;
+		display: inline-block;
+		place-self: center;
+	}
+
+	.dropdown-content {
+		position: absolute;
+		right: 0;
+		background-color: $background-secondary;
+		border-radius: 10px;
+		width: inherit;
+		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 
 		a {
-			display: grid;
-			grid-template-columns: auto min-content auto;
-			align-items: center;
+			color: black;
+			padding: 10px 1.3em;
+			text-decoration: none;
+			width: inherit;
 
-			width: 100vw;
-			height: 35px;
-
-			font-size: 20px;
-			font-weight: 800;
-			text-transform: uppercase;
-
-			span {
-				grid-area: 1/3;
-				width: max-content;
+			&:hover {
+				background-color: $background-primary;
 			}
 		}
 	}
+}
 
-	.nuxt-link-active {
-		color: #7289da !important;
+.mobileLinks {
+	position: absolute;
+	top: 75px;
+	z-index: 99999;
+	background: $background-primary;
+	display: grid;
+	grid-gap: 10px;
+	padding-bottom: 10px;
+
+	.mobile-active {
+		background-color: #7289da;
+		color: #ffffff;
+	}
+
+	a {
+		display: grid;
+		grid-template-columns: auto min-content auto;
+		align-items: center;
+
+		width: 100vw;
+		height: 35px;
+
+		font-size: 20px;
+		font-weight: 800;
+		text-transform: uppercase;
 
 		span {
-			background-color: #7289da !important;
-
-			i {
-				color: #ffffff;
-			}
+			grid-area: 1/3;
+			width: max-content;
 		}
 	}
+}
 
-	//* Responsive Design
-	@media only screen and (max-width: 900px) {
-		#links {
-			a {
-				margin: 0 0.5em !important;
-			}
+.nuxt-link-active {
+	color: #7289da !important;
+
+	span {
+		background-color: #7289da !important;
+
+		i {
+			color: #ffffff;
 		}
 	}
+}
 
-	@media only screen and (max-width: 715px) {
-		#links {
-			display: none !important;
-		}
-
-		#hamburger {
-			display: block !important;
+//* Responsive Design
+@media only screen and (max-width: 900px) {
+	.links {
+		a {
+			margin: 0 0.5em !important;
 		}
 	}
+}
+
+@media only screen and (max-width: 715px) {
+	.links {
+		display: none !important;
+	}
+
+	.hamburger {
+		display: block !important;
+	}
+}
 </style>
 
 <script>
