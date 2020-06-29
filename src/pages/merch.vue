@@ -1,19 +1,13 @@
-<template>
-</template>
+<template> </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
 
 <script>
-
 	export default {
 		name: "Merch",
 		auth: false,
-		mounted() {
-
-		},
-		methods: {
-		},
+		mounted() {},
+		methods: {},
 		head: {
 			title: "Merch"
 		}
