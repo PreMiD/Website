@@ -3,58 +3,28 @@
 		<title>PreMiD - Contributors</title>
 		<section class="contributors">
 			<div class="contributor-container">
-				<h1
-					class="titleHeading"
-					v-text="$t('contributors.headings.staff')"
-				></h1>
+				<h1 class="titleHeading" v-text="$t('contributors.headings.staff')"></h1>
 				<div class="contributor-inner">
-					<div
-						v-for="contributor of contributors"
-						:key="contributor.user.id"
-						class="contributor-card"
-					>
-						<CreditCard
-							v-if="isStaffRole(contributor.user.roleId)"
-							:user="contributor.user"
-						/>
+					<div v-for="contributor of contributors" :key="contributor.user.id" class="contributor-card">
+						<CreditCard v-if="isStaffRole(contributor.user.roleId)" :user="contributor.user" />
 					</div>
 				</div>
 			</div>
 
 			<div class="contributor-container">
-				<h1
-					class="titleHeading"
-					v-text="$t('contributors.headings.supporters')"
-				></h1>
+				<h1 class="titleHeading" v-text="$t('contributors.headings.supporters')"></h1>
 				<div class="contributor-inner">
-					<div
-						v-for="contributor of contributors"
-						:key="contributor.user.id"
-						class="contributor-card"
-					>
-						<CreditCard
-							v-if="isSupporterRole(contributor.user.roleId)"
-							:user="contributor.user"
-						/>
+					<div v-for="contributor of contributors" :key="contributor.user.id" class="contributor-card">
+						<CreditCard v-if="isSupporterRole(contributor.user.roleId)" :user="contributor.user" />
 					</div>
 				</div>
 			</div>
 
 			<div class="contributor-container">
-				<h1
-					class="titleHeading"
-					v-text="$t('contributors.headings.translators')"
-				></h1>
+				<h1 class="titleHeading" v-text="$t('contributors.headings.translators')"></h1>
 				<div class="contributor-inner">
-					<div
-						v-for="contributor of contributors"
-						:key="contributor.user.id"
-						class="contributor-card"
-					>
-						<CreditCard
-							v-if="isTranslatorRole(contributor.user.roleId)"
-							:user="contributor.user"
-						/>
+					<div v-for="contributor of contributors" :key="contributor.user.id" class="contributor-card">
+						<CreditCard v-if="isTranslatorRole(contributor.user.roleId)" :user="contributor.user" />
 					</div>
 				</div>
 			</div>
@@ -63,17 +33,13 @@
 </template>
 
 <style lang="scss">
-	@import "../stylesheets/variables.scss";
-	.titleHeading {
-		margin: 0;
-		margin-bottom: 15px;
-
-		font-family: "Discord Font";
-		color: $accent-primary;
-		font-size: 2.5em;
-
-		text-align: center;
-	}
+@import "../stylesheets/variables.scss";
+.titleHeading {
+	margin: 0 5px;
+	font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	color: $accent-primary;
+	font-size: 2.5em;
+}
 </style>
 
 <script>

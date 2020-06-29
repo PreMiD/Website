@@ -1,10 +1,7 @@
 <template>
 	<div class="partners">
 		<div class="main">
-			<strong
-				v-t="'partners.header.title'"
-				class="text-highlight title titleHeading"
-			></strong>
+			<strong v-t="'partners.header.title'" class="text-highlight title titleHeading"></strong>
 			<p v-t="'partners.header.description'" class="description"></p>
 			<p v-t="'partners.slideshow.description'" class="slideshow-title"></p>
 
@@ -14,11 +11,7 @@
 				:width="548"
 				:height="298"
 			>
-				<slide
-					v-for="(partner, index) in partners"
-					:index="index"
-					:key="partner.name"
-				>
+				<slide v-for="(partner, index) in partners" :index="index" :key="partner.name">
 					<Partner
 						v-tippy="{
 							content: 'Click to visit their website',
@@ -60,16 +53,10 @@
 				<div class="requirments--content">
 					<h1 v-t="'partners.requirements.title'" class="rTitle titleHeading" />
 					<p v-t="'partners.requirements.first.title'" class="rText" />
-					<p
-						v-t="'partners.requirements.first.description'"
-						class="rDescription"
-					/>
+					<p v-t="'partners.requirements.first.description'" class="rDescription" />
 
 					<p v-t="'partners.requirements.second.title'" class="rText" />
-					<p
-						v-t="'partners.requirements.second.description'"
-						class="rDescription"
-					/>
+					<p v-t="'partners.requirements.second.description'" class="rDescription" />
 				</div>
 			</div>
 
@@ -87,22 +74,16 @@
 					"
 				/>
 				<transition name="slide-down" mode="in-out">
-					<Apply
-						v-if="showModal"
-						@close="
+					<Apply v-if="showModal" @close="
 							showModal = false;
 							toggleScroll();
-						"
-					/>
+						" />
 				</transition>
 			</div>
 
 			<p v-html="job($t('partners.apply.jobs'))" class="jobs"></p>
 
-			<p
-				v-t="'partners.sponsors.title'"
-				class="sponsor-title text-highlight titleHeading"
-			></p>
+			<p v-t="'partners.sponsors.title'" class="sponsor-title text-highlight titleHeading"></p>
 
 			<div class="sponsor-cards">
 				<Sponsor
@@ -118,41 +99,43 @@
 </template>
 
 <style lang="scss" scoped>
-	.titleHeading {
-		font-family: "Discord Font";
-		text-transform: uppercase;
-	}
+.titleHeading {
+	font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	text-transform: uppercase;
+}
 
-	.disabled {
-		cursor: no-drop !important;
-		background-color: #23272a !important;
-		box-shadow: none !important;
-		color: darkgray !important;
-	}
+.disabled {
+	cursor: no-drop !important;
+	background-color: #23272a !important;
+	box-shadow: none !important;
+	color: darkgray !important;
+}
 
-	.reasons {
-		margin-bottom: 2em;
-		max-width: 1200px;
-		margin: 2em auto;
-		display: flex;
-		align-items: flex-start;
-		position: relative;
-		justify-content: center;
-		flex-wrap: wrap;
+.reasons {
+	margin-bottom: 2em;
+	max-width: 1200px;
+	margin: 2em auto;
+	display: flex;
+	align-items: flex-start;
+	position: relative;
+	justify-content: center;
+	flex-wrap: wrap;
 
-		div {
-			background-color: rgba(22, 23, 29, 0.75);
-			border-radius: 1em;
-			padding: 0.5em 2em;
-			margin: 1em;
-			max-width: 350px;
-
-			h1 {
-				font-size: larger;
-				text-transform: uppercase;
-			}
+	div {
+		h1 {
+			font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana,
+				sans-serif;
+			color: #7289da;
+			font-size: 1.25rem;
 		}
+
+		background-color: rgba(22, 23, 29, 0.75);
+		border-radius: 1em;
+		padding: 0.5em 2em;
+		margin: 1em;
+		max-width: 350px;
 	}
+}
 </style>
 
 <script>
