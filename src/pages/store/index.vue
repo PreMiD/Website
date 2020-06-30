@@ -278,9 +278,12 @@
 				);
 
 				for (let key in presenceRanking) {
+					//! temporary ew fix, until it will be recoded using the v3 api
 					const score = presenceRanking[key] || 0,
-						index = presences.findIndex(
-							p => p.metadata.service.toLowerCase() === key.toLowerCase()
+						index = presences.findIndex(p =>
+							p.metadata && p.metadata.service
+								? p.metadata.service.toLowerCase()
+								: "error" === key.toLowerCase()
 						);
 
 					if (index !== -1)
