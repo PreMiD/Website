@@ -201,11 +201,16 @@
 				<div class="presence-container">
 					<StoreCard
 						v-for="presence in paginatedData"
-						:key="presence.service"
-						:presence="presence"
-						:hot="hotPresences.includes(presence.service)"
+						:key="presence.metadata.service"
+						:presence="presence.metadata"
+						:hot="
+							hotPresences.filter(
+								p => p.metadata.service === presence.metadata.service
+							).length > 0
+						"
 						:partner="
-							partners.filter(p => p.storeName == presence.service).length
+							partners.filter(p => p.storeName == presence.metadata.service)
+								.length
 						"
 					/>
 				</div>
@@ -244,15 +249,7 @@
 		},
 		async asyncData({ app, error }) {
 			try {
-				const usage = (await app.$axios(`${process.env.apiBase}/usage`)).data
-						.users,
-					presenceRanking = (
-						await app.$axios(`${process.env.apiBase}/presenceUsage`)
-					).data,
-					partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
-						.data;
-
-				const { presences } = await app.$graphql(
+				const { presences, partners, science } = await app.$graphql(
 					`
 					{
 						presences {
@@ -273,35 +270,26 @@
 								button
 								category
 							}
+							users
+						}
+						partners {
+							storeName
+						}
+						science {
+							users
 						}
 					}`
 				);
 
-				for (let key in presenceRanking) {
-					//! temporary ew fix, until it will be recoded using the v3 api
-					const score = presenceRanking[key] || 0,
-						index = presences.findIndex(p =>
-							p.metadata && p.metadata.service
-								? p.metadata.service.toLowerCase()
-								: "error" === key.toLowerCase()
-						);
-
-					if (index !== -1)
-						presences[index] = {
-							...presences[index].metadata,
-							usage: score
-						};
-				}
+				let usage = science.users;
 
 				return {
-					presences: presences || [],
-					topPresences: presenceRanking || [],
-					partners: partnersList,
-					hotPresences: Object.keys(presenceRanking || {})
-						.map((k, i) => {
-							if ((presenceRanking[k] / usage) * 100 > 5) return k;
-						})
-						.filter(p => p)
+					presences: presences,
+					topPresences: presences.sort((a, b) => b.users - a.users) || [],
+					partners: partners,
+					hotPresences: presences.filter(p => {
+						if ((p.users / usage) * 100 > 5) return p;
+					})
 				};
 			} catch (err) {
 				return error({ message: "API returned an error." });
@@ -334,27 +322,27 @@
 					.filter(presence => {
 						if (this.filters.url.enabled == true)
 							return (
-								(Array.isArray(presence.url) &&
-									presence.url.filter(url =>
+								(Array.isArray(presence.metadata.url) &&
+									presence.metadata.url.filter(url =>
 										url
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
 									).length > 0) ||
-								(typeof presence.url == "string" &&
-									presence.url
+								(typeof presence.metadata.url == "string" &&
+									presence.metadata.url
 										.toLowerCase()
 										.includes(this.presenceSearch.toLowerCase()))
 							);
 						else if (this.filters.author.enabled == true)
 							return (
-								presence.author.name
+								presence.metadata.author.name
 									.toLowerCase()
 									.includes(this.presenceSearch.toLowerCase()) ||
-								presence.author.id.includes(this.presenceSearch)
+								presence.metadata.author.id.includes(this.presenceSearch)
 							);
 						else if (this.filters.tag.enabled == true)
-							return Array.isArray(presence.tags)
-								? presence.tags.filter(tag =>
+							return Array.isArray(presence.metadata.tags)
+								? presence.metadata.tags.filter(tag =>
 										tag
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
@@ -362,30 +350,30 @@
 								: false;
 						else if (
 							!this.showAdded &&
-							(presence.service
+							(presence.metadata.service
 								.toLowerCase()
 								.includes(this.presenceSearch.toLowerCase()) ||
-								(Array.isArray(presence.altnames) &&
-									presence.altnames.filter(altname =>
+								(Array.isArray(presence.metadata.altnames) &&
+									presence.metadata.altnames.filter(altname =>
 										altname
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
 									).length > 0))
 						)
-							return !this.addedPresences.includes(presence.service);
+							return !this.addedPresences.includes(presence.metadata.service);
 						else
 							return (
-								presence.service
+								presence.metadata.service
 									.toLowerCase()
 									.includes(this.presenceSearch.toLowerCase()) ||
-								(Array.isArray(presence.tags) &&
-									presence.tags.filter(tag =>
+								(Array.isArray(presence.metadata.tags) &&
+									presence.metadata.tags.filter(tag =>
 										tag
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
 									).length > 0) ||
-								(Array.isArray(presence.altnames) &&
-									presence.altnames.filter(altname =>
+								(Array.isArray(presence.metadata.altnames) &&
+									presence.metadata.altnames.filter(altname =>
 										altname
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
@@ -393,27 +381,27 @@
 							);
 					})
 					.filter(presence =>
-						this.nsfw ? true : !presence.tags.includes("nsfw")
+						this.nsfw ? true : !presence.metadata.tags.includes("nsfw")
 					)
 					.filter(presence =>
 						this.filterLiked &&
 						this.$store.state.presences.likedPresences.includes(
-							presence.service
+							presence.metadata.service
 						)
 							? true
 							: !this.filterLiked
 					)
 					.filter(presence => {
 						if (this.currentCategory === "all") {
-							return presence;
+							return presence.metadata;
 						} else {
-							return presence.category == this.currentCategory;
+							return presence.metadata.category == this.currentCategory;
 						}
 					})
-					.sort((a, b) => a.service.localeCompare(b.service))
+					.sort((a, b) => a.metadata.service.localeCompare(b.metadata.service))
 					.sort((a, b) => {
 						if (this.mostUsed) {
-							return b.usage - a.usage;
+							return b.users - a.users;
 						}
 					});
 			},
