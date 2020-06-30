@@ -2,7 +2,6 @@
 	<div>
 		<div
 			:class="'store-card ' + (cardHovered ? 'hovered' : '')"
-			:style="`box-shadow: 0 2px 64px 0 ${presenceShadowColor};`"
 			@mouseover="cardHovered = true"
 			@mouseleave="cardHovered = false"
 		>
@@ -16,6 +15,7 @@
 				<div class="store-card__service">
 					<h2>
 						<nuxt-link
+							:style="`color: ${brightColorFix()}`"
 							:key="presenceLinkName"
 							:to="`/store/presences/${encodeURIComponent(presenceLinkName)}`"
 						>
@@ -27,8 +27,9 @@
 								}"
 								class="fa-stack"
 							>
+								<i :style="`color:${brightColorFix()}`" class="fa-circle fa-stack-2x fas"></i>
 								<i
-									style="color:white;font-size:16px;margin-left:-4px;"
+									:style="`color: ${presence.color}; font-size: 10px; top:1px;`"
 									class="fa-gem fa-inverse fa-stack-1x fas"
 								></i>
 							</span>
@@ -41,33 +42,34 @@
 								class="fa-stack"
 								:style="partner == true ? 'margin-left:-4px' : ''"
 							>
-								<i class="fa-circle fa-stack-2x fas"></i>
+								<i :style="`color:${brightColorFix()}`" class="fa-circle fa-stack-2x fas"></i>
 								<i :style="`color: ${presence.color};`" class="fa-fire-alt fa-inverse fa-stack-1x fas"></i>
 							</span>
 
 							<span
 								v-if="
 									typeof presence.warning == 'boolean' &&
-										presence.warning === true
+									presence.warning === true
 								"
 								v-tippy="{
 									content: $t('store.cards.extraStepsRequired')
 								}"
 								class="fa-stack"
-								:style="hot == true || partner == true ? 'margin-left:-4px' : ''"
+								:style="
+									hot == true || partner == true ? 'margin-left:-4px' : ''
+								"
 							>
-								<i :style="`color:${badgeColor()}`" class="fa-circle fa-stack-2x fas"></i>
+								<i :style="`color:${brightColorFix()}`" class="fa-circle fa-stack-2x fas"></i>
 								<i :style="`color: ${presence.color};`" class="fa-exclamation fa-inverse fa-stack-1x fas"></i>
 							</span>
 						</nuxt-link>
 					</h2>
-					<p>
+					<p :style="`color: ${brightColorFix()}`">
 						{{ $t("store.cards.creator") }}:
-						<nuxt-link :to="`/users/${presence.author.id}`">
-							{{
-							presence.author.name
-							}}
-						</nuxt-link>
+						<nuxt-link
+							:style="`color: ${brightColorFix()};font-weight:bold;`"
+							:to="`/users/${presence.author.id}`"
+						>{{ presence.author.name }}</nuxt-link>
 					</p>
 
 					<transition name="card-animation" mode="out-in">
@@ -77,7 +79,11 @@
 							"
 							:key="presence.service + '_desc'"
 						>
-							<p class="store-card__desc" v-html="linkify(this.getPresenceDescription())"></p>
+							<p
+								:style="`color: ${brightColorFix()}`"
+								class="store-card__desc"
+								v-html="linkify(this.getPresenceDescription())"
+							></p>
 						</div>
 						<div
 							v-if="
@@ -88,7 +94,7 @@
 							<div
 								v-if="
 									this.$store.state.extension.extensionInstalled &&
-										typeof presence.button == 'undefined'
+									presence.button === null
 								"
 								class="on-desktop store-card__buttons"
 							>
@@ -123,7 +129,7 @@
 							<div
 								v-if="
 									this.$store.state.extension.extensionInstalled &&
-										presence.button == false
+									(presence.button === false || presence.button === 'false')
 								"
 							>
 								<p class="store-card__warning">{{ $t("store.card.presence.included") }}</p>
@@ -134,9 +140,7 @@
 			</div>
 			<div
 				class="store-card__gradient"
-				:style="
-					`background: linear-gradient(135deg, ${presence.color} 0%, ${presenceGradientColor} 100%);`
-				"
+				:style="`background: linear-gradient(135deg, ${presence.color} 0%, ${presenceGradientColor} 100%);`"
 			></div>
 		</div>
 	</div>
@@ -158,18 +162,7 @@
 		},
 		computed: {
 			presenceGradientColor() {
-				return tinycolor(this.presence.color)
-					.darken(45)
-					.toHexString();
-			},
-			presenceShadowColor() {
-				if (this.cardHovered) {
-					return tinycolor(this.presence.color)
-						.setAlpha(0.3)
-						.toRgbString();
-				} else {
-					return "transparent";
-				}
+				return tinycolor(this.presence.color).darken(45).toHexString();
 			}
 		},
 		mounted() {
@@ -183,9 +176,7 @@
 
 				if (!likedPresences)
 					localStorage.setItem("likedPresences", this.presence.service);
-				else if (
-					likedPresences.split(",").includes(this.presence.service)
-				) {
+				else if (likedPresences.split(",").includes(this.presence.service)) {
 					localStorage.setItem(
 						"likedPresences",
 						likedPresences
@@ -203,9 +194,10 @@
 
 				this.$store.commit("presences/like", this.presence.service);
 			},
-			badgeColor() {
-				console.log("hello")
-				if (tinycolor(this.presence.color).isLight()) return "black";
+			brightColorFix() {
+				return tinycolor(this.presence.color).getBrightness() >= 200
+					? "#111218"
+					: "#ffffff";
 			},
 			linkify(description) {
 				if (!description) return;

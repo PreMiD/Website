@@ -91,7 +91,11 @@
 					<label>
 						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{ $t("store.category.filters.mostUsed") }}</span>
+						<span class="title">
+							{{
+							$t("store.category.filters.mostUsed")
+							}}
+						</span>
 					</label>
 				</div>
 
@@ -113,7 +117,11 @@
 					<label>
 						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{ $t("store.category.filters.allowAdult") }}</span>
+						<span class="title">
+							{{
+							$t("store.category.filters.allowAdult")
+							}}
+						</span>
 					</label>
 				</div>
 
@@ -121,7 +129,11 @@
 					<label>
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">{{ $t("store.category.filters.likedOnly") }}</span>
+						<span class="title">
+							{{
+							$t("store.category.filters.likedOnly")
+							}}
+						</span>
 					</label>
 				</div>
 
@@ -230,15 +242,13 @@
 		},
 		async asyncData({ app, error }) {
 			try {
-				const usage = (
-						await app.$axios(`${process.env.apiBase}/usage`)
-					)?.data.users,
+				const usage = (await app.$axios(`${process.env.apiBase}/usage`))?.data
+						.users,
 					presenceRanking = (
 						await app.$axios(`${process.env.apiBase}/presenceUsage`)
 					)?.data,
-					partnersList = (
-						await app.$axios(`${process.env.apiBase}/partners`)
-					)?.data;
+					partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
+						?.data;
 
 				const { presences } = await app.$graphql(
 					`
@@ -249,6 +259,7 @@
 									name
 									id
 								}
+								altnames
 								logo
 								thumbnail
 								service
@@ -257,6 +268,8 @@
 								warning
 								tags
 								description
+								button
+								category
 							}
 						}
 					}`
@@ -309,7 +322,7 @@
 		},
 		computed: {
 			currentCategory() {
-				return this.$route.query.category ? this.$route.query.category : "all";
+				return this.$route.query.category || "all";
 			},
 			filteredPresences() {
 				return this.presences
@@ -340,13 +353,19 @@
 										tag
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
-								  ).length > 0
+										).length > 0
 								: false;
 						else if (
 							!this.showAdded &&
-							presence.service
+							(presence.service
 								?.toLowerCase()
-								.includes(this.presenceSearch.toLowerCase())
+								.includes(this.presenceSearch.toLowerCase()) ||
+								(Array.isArray(presence.altnames) &&
+									presence.altnames.filter(altname =>
+										altname
+											.toLowerCase()
+											.includes(this.presenceSearch.toLowerCase())
+									).length > 0))
 						)
 							return !this.addedPresences.includes(presence.service);
 						else
@@ -357,6 +376,12 @@
 								(Array.isArray(presence.tags) &&
 									presence.tags.filter(tag =>
 										tag
+											.toLowerCase()
+											.includes(this.presenceSearch.toLowerCase())
+									).length > 0) ||
+								(Array.isArray(presence.altnames) &&
+									presence.altnames.filter(altname =>
+										altname
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
 									).length > 0)
@@ -374,7 +399,7 @@
 							: !this.filterLiked
 					)
 					.filter(presence => {
-						if (this.currentCategory == "all") {
+						if (this.currentCategory === "all") {
 							return presence;
 						} else {
 							return presence.category == this.currentCategory;
@@ -469,6 +494,8 @@
 				return true;
 			},
 			searchHandle(evt, typing) {
+				this.presenceSearch = this.presenceSearch.trim();
+
 				if (!this.presenceSearch) this.typing = false;
 
 				if (

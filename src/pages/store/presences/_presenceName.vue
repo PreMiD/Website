@@ -1,15 +1,21 @@
 <template>
-	<div v-if="!presence.error">
+	<div v-if="presence">
 		<transition name="fade" mode="in-out">
 			<div class="fullpresence-container">
 				<div class="fullpresence__header">
 					<div class="header__title">
 						<div class="section">
-							<h1 class="presence-name">{{ presence.metadata.service }}</h1>
+							<img
+								v-if="!isMobile"
+								@error="presence.metadata.logo = 'https://premid.app/assets/images/logo.png'"
+								:src="presence.metadata.logo"
+							/>
+
+							<h1 :style="`color: ${brightColorFix()}`" v-text="presence.metadata.service" />
 
 							<span
 								v-if="partner"
-								class="fa-stack"
+								class="fa-stack presence-badge"
 								v-tippy="{
 									content: $t('store.cards.partner')
 								}"
@@ -22,7 +28,7 @@
 							</span>
 							<span
 								v-if="hot"
-								class="fa-stack"
+								class="fa-stack presence-badge"
 								v-tippy="{
 									content: $t('store.cards.popular')
 								}"
@@ -47,7 +53,8 @@
 							v-if="
 								!isInstalled &&
 								this.$store.state.extension.extensionInstalled &&
-								presence.metadata.button !== false
+								presence.metadata.button !== false &&
+								presence.metadata.button !== 'false'
 							"
 							class="button button--"
 							@click="sendPresence(presence.metadata.service)"
@@ -61,7 +68,8 @@
 							v-if="
 								isInstalled &&
 								this.$store.state.extension.extensionInstalled &&
-								presence.metadata.button !== false
+								presence.metadata.button !== false &&
+								presence.metadata.button !== 'false'
 							"
 							class="button button--black"
 							@click="removePresence(presence.metadata.service)"
@@ -76,15 +84,9 @@
 							:href="githubPresenceUrl($route.params.presenceName)"
 							target="_blank"
 						>
-							<span class="icon">
-								<i class="fa-github fab"></i>
-							</span>
-							{{ !isMobile ? $t("presence.page.buttons.sourceCode") : "" }}
+							<i class="fa-github fab" />
 						</a>
-						<a
-							class="button button--lg button--red button--like"
-							@click="like()"
-						>
+						<a class="button button--lg button--red button--like" @click="like()">
 							<i
 								:class="
 									$store.state.presences.likedPresences.includes(
@@ -98,26 +100,17 @@
 					</div>
 					<hr />
 					<div
-						v-if="presence.metadata.button === false"
+						v-if="presence.metadata.button === false || presence.metadata.button === 'false'"
 						class="header__warning"
-					>
-						{{ $t("store.card.presence.included") }}
-					</div>
+					>{{ $t("store.card.presence.included") }}</div>
 				</div>
 				<div class="fullpresence__content">
 					<div class="content__description">
-						<h2 class="content__title">
-							{{ $t("presence.sections.description.title") }}
-						</h2>
-						<div
-							class="description-container"
-							v-html="linkify(getPresenceDescription())"
-						></div>
+						<h2 class="content__title">{{ $t("presence.sections.description.title") }}</h2>
+						<div class="description-container" v-html="linkify(getPresenceDescription())"></div>
 					</div>
 					<div class="content__info">
-						<h2 class="content__title">
-							{{ $t("presence.sections.information.title") }}
-						</h2>
+						<h2 class="content__title">{{ $t("presence.sections.information.title") }}</h2>
 						<ul class="info__sections">
 							<li v-if="presence.metadata.author">
 								<p>
@@ -157,12 +150,12 @@
 										:to="`/users/${contributor.id}`"
 									>
 										{{
-											contributor.name +
-											`${
-												presence.metadata.contributors.length === index + 1
-													? ""
-													: ", "
-											}`
+										contributor.name +
+										`${
+										presence.metadata.contributors.length === index + 1
+										? ""
+										: ", "
+										}`
 										}}
 									</nuxt-link>
 								</p>
@@ -178,10 +171,7 @@
 							</li>
 							<li v-if="presenceUsage && presenceUsage > 0">
 								<p>
-									<i
-										class="fa-cart-arrow-down fas"
-										style="margin-left: -4px;"
-									></i>
+									<i class="fa-cart-arrow-down fas" style="margin-left: -4px;"></i>
 									{{ $t("presence.sections.information.users") }}:
 									<span class="presence-version">
 										<b>{{ presenceUsage }}</b>
@@ -198,10 +188,12 @@
 										v-for="tag of presence.metadata.tags"
 										:key="tag"
 										:to="`/store?q=${encodeURIComponent('tag:') + tag}`"
-										:style="`background: ${presence.metadata.color}; color: ${presenceTextColor};`"
+										:style="`background: ${
+											presence.metadata.color
+										}; color: ${brightColorFix()};`"
 										class="label label_tag"
-										>{{ tag }}</nuxt-link
-									>
+										v-text="tag"
+									/>
 								</div>
 							</li>
 							<!-- <li>
@@ -213,19 +205,18 @@
 									<i class="fa-link fas"></i>
 									{{ $t("presence.sections.information.supportedurls") }}:
 								</p>
-								<ul
-									v-if="Array.isArray(presence.metadata.url)"
-									class="presence-urls"
-								>
+								<ul v-if="Array.isArray(presence.metadata.url)" class="presence-urls">
 									<li v-for="url in presence.metadata.url" :key="url">
 										<a :href="`https://${url}`">{{ url }}</a>
 									</li>
 								</ul>
 								<ul v-else-if="presence.metadata.url" class="presence-urls">
 									<li>
-										<a :href="`https://${presence.metadata.url}`">{{
+										<a :href="`https://${presence.metadata.url}`">
+											{{
 											presence.metadata.url
-										}}</a>
+											}}
+										</a>
 									</li>
 								</ul>
 							</li>
@@ -237,6 +228,32 @@
 	</div>
 </template>
 
+<style lang="scss" scoped>
+.section {
+	img {
+		height: 64px;
+		width: 64px;
+		border-radius: 100%;
+		margin-right: 8px;
+		place-self: center;
+		transition: opacity 0.2s ease-in-out;
+
+		&:hover {
+			opacity: 0.75;
+		}
+	}
+
+	h1 {
+		line-height: 100px;
+		margin-left: 25px;
+	}
+}
+
+.presence-badge {
+	place-self: center;
+}
+</style>
+
 <script>
 	import PresenceMixin from "~/components/mixins/Presence";
 	import tinycolor from "tinycolor2";
@@ -246,17 +263,16 @@
 		mixins: [PresenceMixin],
 		auth: false,
 		async asyncData({ params, app, error }) {
-			try {
-				let presenceUsage = (await app.$axios(`${process.env.apiBase}/usage`))
-						.data.users,
-					presenceRanking = (
-						await app.$axios(`${process.env.apiBase}/presenceUsage`)
-					).data,
-					partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
-						.data;
+			let presenceUsage = (await app.$axios(`${process.env.apiBase}/usage`))
+					.data.users,
+				presenceRanking = (
+					await app.$axios(`${process.env.apiBase}/presenceUsage`)
+				).data,
+				partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
+					.data;
 
-				let { presences } = await app.$graphql(
-						`
+			let { presences } = await app.$graphql(
+					`
 				{
 					presences(service: "${params.presenceName}") {
 						metadata {
@@ -281,55 +297,36 @@
 					}
 				}
 				`
-					),
-					presenceData = presences?.[0] || {};
+				),
+				presenceData = presences?.[0];
 
-				let data = {
-					presenceUsage:
-						presenceRanking[decodeURIComponent(params.presenceName)],
-					partner:
-						partnersList.filter(
-							p => p.storeName == decodeURIComponent(params.presenceName)
-						).length > 0,
-					hot:
-						(presenceRanking[decodeURIComponent(params.presenceName)] /
-							presenceUsage) *
-							100 >
-						30,
-					presence: presenceData
-				};
+			let data = {
+				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
+				partner:
+					partnersList.filter(
+						p => p.storeName == decodeURIComponent(params.presenceName)
+					).length > 0,
+				hot:
+					(presenceRanking[decodeURIComponent(params.presenceName)] /
+						presenceUsage) *
+						100 >
+					30,
+				presence: presenceData
+			};
 
-				if (!presenceData.error) {
-					let authorData = await new Promise((resolve, reject) => {
-						app
-							.$axios(
-								`${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
-							)
-							.then(res => {
-								if (res.data.error && res.data.message !== "User not found.")
-									reject({ error: true, message: res.data.message });
-								resolve(res.data);
-							})
-							.catch(err => {
-								console.log(err);
-								reject({
-									error: true,
-									code: 401
-								});
-							});
-					});
-
-					if (!authorData.error) {
-						data.presence.metadata.author = authorData;
-					}
-				}
-
-				data["isMobile"] = false;
-
-				return data;
-			} catch (err) {
-				return error(err.message);
+			if (presenceData) {
+				try {
+					data.presence.metadata.author = (
+						await app.$axios(
+							`${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
+						)
+					).data;
+				} catch (err) {}
 			}
+
+			data["isMobile"] = false;
+
+			return data;
 		},
 		computed: {
 			presenceTextColor() {
@@ -349,17 +346,19 @@
 				navigator.userAgent
 			);
 
-			if (this.presence.error)
-				return this.$nuxt.error({ statusCode: this.presence.error });
+			if (!this.presence)
+				return this.$nuxt.error({
+					statusCode: 404,
+					message: "Presence does not exist."
+				});
 		},
 		created() {
-			if (!this.presence.error) {
+			if (this.presence)
 				this.isPresenceInstalled(this.presence.metadata.service).then(
 					response => {
 						if (response) this.isInstalled = true;
 					}
 				);
-			}
 		},
 		updated() {
 			this.isPresenceInstalled(this.presence.metadata.service).then(
@@ -369,6 +368,11 @@
 			);
 		},
 		methods: {
+			brightColorFix() {
+				return tinycolor(this.presence.metadata.color).getBrightness() >= 200
+					? "#111218"
+					: "#ffffff";
+			},
 			/**
 			 * Returns description of the presence according to your language.
 			 * If presence has non-multilingual description then we just parsing the "description" data.

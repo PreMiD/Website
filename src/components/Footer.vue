@@ -4,7 +4,7 @@
 			<div class="grid__section">
 				<p class="section__title" v-text="$t(`footer.usercount.heading`)"></p>
 				<div class="section__promo">
-					<p v-text="$t(`footer.usercount.message`, [$data.installStats])"></p>
+					<p v-text="$t(`footer.usercount.message`, [installStats !== null ? installStats : '...'])"></p>
 					<nuxt-link class="button" replace to="/downloads" v-text="$t(`footer.usercount.button`)" />
 				</div>
 			</div>
@@ -82,7 +82,7 @@
 				v-html="
 					$t('footer.copyright.line1', {
 						0: `<i class=\'far fa-copyright\'></i> ${new Date().getFullYear()}  PreMiD`,
-						1: `<a class='hover-effect' href='https://github.com/Timeraa/' target='_blank'>Timeraa</a> & <a class='hover-effect' href='https://github.com/Fruxh/' target='_blank'>Fruxh</a>`
+						1: `<a class='hover-effect' href='https://github.com/Timeraa/' target='_blank'>Timeraa</a>`
 					})
 				"
 			></p>
@@ -234,7 +234,7 @@
 	export default {
 		data() {
 			return {
-				installStats: 0,
+				installStats: null,
 				twitterLocale: {
 					tr: "PreMiDapp_tr",
 					az: "PreMiDapp_tr",
@@ -253,11 +253,13 @@
 					users
 				}
 			}`
-			).then(data => {
-				this.installStats = data.science.users
-					.toString()
-					.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-			}).catch(null)
+			)
+				.then(data => {
+					this.installStats = data.science.users
+						.toString()
+						.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+				})
+				.catch(() => this.installStats = 0);
 		}
 	};
 </script>

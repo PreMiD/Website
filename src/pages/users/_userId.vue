@@ -69,7 +69,7 @@
 									content: $t('contributors.roles.webDeveloper'),
 									placement: 'bottom'
 								}"
-								class="fas fa-hat-cowboy"
+								class="fas fa-window-restore"
 							></i>
 							<i
 								v-if="role == 'Linux Maintainer'"
@@ -226,11 +226,7 @@
 						@click="showContributions = !showContributions"
 						v-html="tabbify($t('user.switch.contributed'))"
 					></div>
-					<div
-						v-else
-						class="noContributes"
-						v-html="tabbify($t('user.switch.contributed'))"
-					></div>
+					<div v-else class="noContributes" v-html="tabbify($t('user.switch.contributed'))"></div>
 				</h1>
 				<div v-if="!showContributions" class="presence-container">
 					<StoreCard
@@ -240,10 +236,7 @@
 						store-functions="true"
 					/>
 				</div>
-				<div
-					v-else-if="showContributions && userContributions.length > 0"
-					class="presence-container"
-				>
+				<div v-else-if="showContributions && userContributions.length > 0" class="presence-container">
 					<StoreCard
 						v-for="presence of userContributions"
 						:key="presence.service"
@@ -265,6 +258,8 @@
 					await app.$axios(`${process.env.apiBase}/credits/${params.userId}`)
 				).data,
 				presences = (await app.$axios(`${process.env.apiBase}/presences`)).data;
+
+			user.roles = user.roles.sort();
 
 			return {
 				error: user.error ? true : false,

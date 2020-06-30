@@ -228,8 +228,6 @@
 			font-size: 39px;
 			font-weight: 700;
 			color: #7289da;
-			line-height: 0;
-			margin-bottom: 1.5em;
 		}
 		.rText {
 			font-size: 23px;
@@ -907,6 +905,7 @@
 					flex-wrap: wrap;
 
 					.label_tag {
+						font-weight: 500;
 						margin: 2px 2px;
 						padding: 3px 8px;
 						border-radius: 50px;
@@ -996,6 +995,11 @@
 
 			i {
 				margin: 0 5px;
+				transition: opacity 0.2s ease-in-out;
+
+				&:hover {
+					opacity: 0.75;
+				}
 			}
 		}
 
@@ -1019,6 +1023,7 @@
 			.username {
 				font-size: 32px;
 				font-weight: bold;
+				margin-left: 4px;
 
 				.tag {
 					color: rgba(255, 255, 255, 0.3);
@@ -1457,34 +1462,6 @@
 		padding-bottom: 1em;
 	}
 
-	.requirments {
-		display: inline-block;
-		border-radius: 5px;
-		margin: 0 10em;
-		padding: 3em;
-		background-color: rgba(35, 39, 42, 0.25);
-
-		max-width: 1200px;
-
-		.rTitle {
-			font-size: 39px;
-			font-weight: 700;
-			color: #7289da;
-			line-height: 0;
-			margin-bottom: 1.5em;
-		}
-
-		.rText {
-			font-size: 23px;
-			color: #ffffff;
-		}
-
-		.rDescription {
-			font-size: 15px;
-			color: #808080;
-		}
-	}
-
 	.button-container {
 		padding-top: 30px;
 		padding-bottom: 50px;
@@ -1557,6 +1534,15 @@
 			.content__info {
 				max-width: 70vw;
 			}
+		}
+	}
+
+	.userpage__header {
+		display: block !important;
+		text-align: center;
+
+		.roles {
+			place-content: center;
 		}
 	}
 

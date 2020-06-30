@@ -105,14 +105,18 @@
 							token: this.$auth.$storage._state["_token.discord"]
 						})
 						.then(({ data }) => {
-							if (data.error === 3)
-								this.$noty.error(this.$t("jobs.error.alreadyApplied"));
 							if (!data.error) {
 								this.$noty.success(this.$t("jobs.success.applied"));
 								this.$emit("close");
 							}
 						})
-						.catch(err => console.error(err));
+						.catch(err => {
+							if (err.response.data.error === 3) {
+								this.$noty.error(this.$t("jobs.errors.alreadyApplied"));
+							} else {
+								console.error(err);
+							}
+						});
 				} else {
 					this.error = this.$t("jobs.modal.error");
 				}
