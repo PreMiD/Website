@@ -105,6 +105,11 @@ module.exports = {
 				rel: "stylesheet",
 				type: "text/css",
 				href: "https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css"
+			},
+			{
+				rel: "stylesheet",
+				type: "text/css",
+				href: "/assets/fonts/Discord/font.css"
 			}
 		],
 		meta: [
