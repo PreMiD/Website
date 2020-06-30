@@ -2,7 +2,7 @@
 	<div class="modal-mask">
 		<div class="modal-wrapper">
 			<div class="limage">
-				<img src="../assets/images/pmd_logo2.png" />
+				<img src="../assets/images/pmd_logo-transparent.png" />
 				<div class="bottomText">
 					<p>
 						{{
