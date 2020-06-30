@@ -226,7 +226,11 @@
 						@click="showContributions = !showContributions"
 						v-html="tabbify($t('user.switch.contributed'))"
 					></div>
-					<div v-else class="noContributes" v-html="tabbify($t('user.switch.contributed'))"></div>
+					<div
+						v-else
+						class="noContributes"
+						v-html="tabbify($t('user.switch.contributed'))"
+					></div>
 				</h1>
 				<div v-if="!showContributions" class="presence-container">
 					<StoreCard
@@ -236,7 +240,10 @@
 						store-functions="true"
 					/>
 				</div>
-				<div v-else-if="showContributions && userContributions.length > 0" class="presence-container">
+				<div
+					v-else-if="showContributions && userContributions.length > 0"
+					class="presence-container"
+				>
 					<StoreCard
 						v-for="presence of userContributions"
 						:key="presence.service"
@@ -270,7 +277,7 @@
 					.map(p => p.metadata),
 				userContributions: presences
 					.filter(p =>
-						p.metadata.contributors?.some(cont => cont.id == user.userId)
+						p.metadata.contributors.some(cont => cont.id == user.userId)
 					)
 					.map(p => p.metadata)
 			};

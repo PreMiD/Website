@@ -21,7 +21,8 @@
 							removeFilter('url');
 							$refs.search.focus();
 						"
-					>url:</span>
+						>url:</span
+					>
 					<span
 						v-if="filters.tag.enabled"
 						v-tippy="{ content: $t('store.search.removeFilter') }"
@@ -29,7 +30,8 @@
 							removeFilter('tag');
 							$refs.search.focus();
 						"
-					>tag:</span>
+						>tag:</span
+					>
 					<span
 						v-if="filters.author.enabled"
 						v-tippy="{ content: $t('store.search.removeFilter') }"
@@ -37,7 +39,8 @@
 							removeFilter('author');
 							$refs.search.focus();
 						"
-					>author:</span>
+						>author:</span
+					>
 
 					<transition name="card-animation" mode="out-in">
 						<div
@@ -85,16 +88,16 @@
 					</transition>
 				</div>
 
-				<p class="sidebar__subheader">{{ $t("store.category.filters.heading") }}</p>
+				<p class="sidebar__subheader">
+					{{ $t("store.category.filters.heading") }}
+				</p>
 
 				<div class="checkbox-switcher">
 					<label>
 						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<span class="title">
-							{{
-							$t("store.category.filters.mostUsed")
-							}}
+							{{ $t("store.category.filters.mostUsed") }}
 						</span>
 					</label>
 				</div>
@@ -118,9 +121,7 @@
 						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<span class="title">
-							{{
-							$t("store.category.filters.allowAdult")
-							}}
+							{{ $t("store.category.filters.allowAdult") }}
 						</span>
 					</label>
 				</div>
@@ -130,9 +131,7 @@
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<span class="title">
-							{{
-							$t("store.category.filters.likedOnly")
-							}}
+							{{ $t("store.category.filters.likedOnly") }}
 						</span>
 					</label>
 				</div>
@@ -229,7 +228,10 @@
 			<span slot="breakViewContent"></span>
 		</paginate>
 
-		<adsense ad-slot="5201967746" style="text-align: center; margin-top: 0.25em;" />
+		<adsense
+			ad-slot="5201967746"
+			style="text-align: center; margin-top: 0.25em;"
+		/>
 	</section>
 </template>
 
@@ -242,13 +244,13 @@
 		},
 		async asyncData({ app, error }) {
 			try {
-				const usage = (await app.$axios(`${process.env.apiBase}/usage`))?.data
+				const usage = (await app.$axios(`${process.env.apiBase}/usage`)).data
 						.users,
 					presenceRanking = (
 						await app.$axios(`${process.env.apiBase}/presenceUsage`)
-					)?.data,
+					).data,
 					partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
-						?.data;
+						.data;
 
 				const { presences } = await app.$graphql(
 					`
@@ -278,12 +280,12 @@
 				for (let key in presenceRanking) {
 					const score = presenceRanking[key] || 0,
 						index = presences.findIndex(
-							p => p?.metadata?.service?.toLowerCase() === key.toLowerCase()
+							p => p.metadata.service.toLowerCase() === key.toLowerCase()
 						);
 
 					if (index !== -1)
 						presences[index] = {
-							...presences[index]?.metadata,
+							...presences[index].metadata,
 							usage: score
 						};
 				}
@@ -353,12 +355,12 @@
 										tag
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
-										).length > 0
+								  ).length > 0
 								: false;
 						else if (
 							!this.showAdded &&
 							(presence.service
-								?.toLowerCase()
+								.toLowerCase()
 								.includes(this.presenceSearch.toLowerCase()) ||
 								(Array.isArray(presence.altnames) &&
 									presence.altnames.filter(altname =>
@@ -371,7 +373,7 @@
 						else
 							return (
 								presence.service
-									?.toLowerCase()
+									.toLowerCase()
 									.includes(this.presenceSearch.toLowerCase()) ||
 								(Array.isArray(presence.tags) &&
 									presence.tags.filter(tag =>
@@ -544,73 +546,73 @@
 </script>
 
 <style lang="scss">
-@import "../../stylesheets/variables.scss";
+	@import "../../stylesheets/variables.scss";
 
-.store-menu__searchbar-container {
-	position: relative;
-
-	span {
-		position: absolute;
-		margin: 2px;
-		background-color: #191b24;
-		padding: 2.5px 5px;
-		border-radius: 4px;
-		cursor: pointer;
-	}
-
-	.searchSuggestions {
-		font-size: small;
-		z-index: 999;
-		position: absolute;
-		background-color: #191b24;
-		border-bottom-right-radius: 4px;
-		border-bottom-left-radius: 4px;
-		box-shadow: 0px 1px teal;
-		width: -webkit-fill-available;
-		width: -moz-available;
-		margin-top: 2.5em;
+	.store-menu__searchbar-container {
+		position: relative;
 
 		span {
-			position: unset;
-			width: 100%;
+			position: absolute;
+			margin: 2px;
+			background-color: #191b24;
+			padding: 2.5px 5px;
+			border-radius: 4px;
+			cursor: pointer;
 		}
 
-		.filterBox {
-			width: 100%;
-			display: inline-flex;
+		.searchSuggestions {
+			font-size: small;
+			z-index: 999;
+			position: absolute;
+			background-color: #191b24;
+			border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			box-shadow: 0px 1px teal;
+			width: -webkit-fill-available;
+			width: -moz-available;
+			margin-top: 2.5em;
 
-			span:nth-child(1) {
-				float: left;
-				text-align: left;
+			span {
+				position: unset;
+				width: 100%;
 			}
 
-			span:nth-child(2) {
-				float: right;
-				text-align: right;
+			.filterBox {
+				width: 100%;
+				display: inline-flex;
+
+				span:nth-child(1) {
+					float: left;
+					text-align: left;
+				}
+
+				span:nth-child(2) {
+					float: right;
+					text-align: right;
+				}
 			}
+		}
+
+		display: flex;
+
+		button,
+		.button {
+			&:not(:last-child),
+			&:not(:first-child) {
+				border-radius: 0 0 0 0;
+			}
+
+			display: inline-block;
+			padding: 0.09rem 10px;
+			font-size: 14px;
+			line-height: 25px;
+			font-weight: bold;
 		}
 	}
 
-	display: flex;
-
-	button,
-	.button {
-		&:not(:last-child),
-		&:not(:first-child) {
-			border-radius: 0 0 0 0;
-		}
-
-		display: inline-block;
-		padding: 0.09rem 10px;
-		font-size: 14px;
-		line-height: 25px;
-		font-weight: bold;
+	.fa-search {
+		position: absolute;
+		margin-left: 0.6rem;
+		color: #74787c;
 	}
-}
-
-.fa-search {
-	position: absolute;
-	margin-left: 0.6rem;
-	color: #74787c;
-}
 </style>

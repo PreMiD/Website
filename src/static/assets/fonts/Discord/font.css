@@ -1,9 +1,0 @@
-@font-face {
-	font-family: "Discord Font";
-	src: url("DiscordFontSpaces.eot");
-	src: url("DiscordFontSpaces.eot#iefix") format("embedded-opentype"),
-		url("DiscordFontSpaces.woff") format("woff"),
-		url("DiscordFontSpaces.ttf") format("truetype");
-	font-style: normal;
-	font-weight: normal;
-}
