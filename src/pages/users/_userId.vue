@@ -277,7 +277,9 @@
 					.map(p => p.metadata),
 				userContributions: presences
 					.filter(p =>
-						p.metadata.contributors.some(cont => cont.id == user.userId)
+						p.metadata.contributors
+							? p.metadata.contributors.some(cont => cont.id == user.userId)
+							: null
 					)
 					.map(p => p.metadata)
 			};
