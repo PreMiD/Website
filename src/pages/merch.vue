@@ -7,15 +7,19 @@
 				</div>
 			</div>
 		</div>
+		<div v-for="(category, index) in products.Categories" :key="category.name">
+			<button>{{ index }}</button>
+		</div>
 	</div>
 </template>
 
 <script>
 	export default {
 		name: "Merch",
-		auth: false,
-		data() {
-			return {};
+		async asyncData({ app }) {
+			return app.$axios.get(`${process.env.apiBase}/products`).then(data => {
+				return { products: data.data };
+			});
 		},
 		methods: {
 			addProduct(id) {
@@ -27,7 +31,9 @@
 				localStorage.setItem("cartProducts", cartProducts.join(","));
 			}
 		},
-		mounted() {},
+		mounted() {
+			console.log(this.products);
+		},
 		head: {
 			title: "Merch"
 		}
