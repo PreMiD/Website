@@ -191,6 +191,8 @@
 					</div>
 				</div>
 
+				<!--
+
 				<div class="show-beta" v-if="!showBeta">
 					<div>
 						<p>{{ $t("downloads.showbeta.message") }}</p>
@@ -213,6 +215,7 @@
 							v-text="tab"
 						></a>
 					</h1>
+
 
 					<div v-if="$auth.loggedIn">
 						<div v-if="beta.access == true">
@@ -295,6 +298,7 @@
 						</div>
 					</div>
 				</div>
+				-->
 			</div>
 		</transition>
 
@@ -351,6 +355,8 @@
 		auth: false,
 		async asyncData({ $auth, app, error }) {
 			try {
+				//! Disabled alpha/beta downloads temporarily.
+				/*
 				let tab = null,
 					alpha = {
 						access: false,
@@ -402,20 +408,30 @@
 						beta.access = access;
 					}
 				}
+				*/
 
-				const versions = (await app.$axios(`${process.env.apiBase}/versions`))
-					.data;
+				const { versions } = await app.$graphql(
+					`{
+							versions {
+								app
+								extension
+								linux
+							}
+						}
+					`
+				);
 
 				return {
 					extVersion: versions.extension,
 					appVersion: versions.app,
-					linuxVersion: versions.linux,
+					linuxVersion: versions.linux
+					/*
 					cTab,
 					tab,
 					alpha,
-					beta,
+					beta
 					betaUsers: (await app.$axios(`${process.env.apiBase}/betaUsers`)).data
-						.betaUsers
+						.betaUsers*/
 				};
 			} catch (err) {
 				return error(err);
