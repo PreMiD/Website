@@ -1,6 +1,6 @@
 <template>
-	<div class="dl-container">
-		<div class="dl-container__section dl-container__section_header">
+	<div class="merch-container">
+		<div class="merch-container__section merch-container__section_header">
 			<div class="merch-container__header">
 				<div class="header__content">
 					<h1>{{ markdown($t("merch.title")) }}</h1>
@@ -99,62 +99,142 @@
 <style lang="scss" scoped>
 @import "../stylesheets/variables.scss";
 
-.highlight::after {
-	opacity: 1 !important;
-}
+.merch-container {
+	color: white;
+	position: relative;
 
-.show-beta {
-	text-align: center;
-
-	p {
-		line-height: 0;
+	&__mobile-warning {
+		margin-top: 2em;
+		background-color: red;
+		border-radius: 4px;
+		margin: 2em 2em 0;
+		padding: 1em !important;
 	}
 
-	i {
-		font-size: 2rem;
-		margin-top: 4px;
-		transition: opacity 0.2s ease-in-out;
-		cursor: pointer;
-
-		&:hover {
-			opacity: 0.75;
-		}
-	}
-}
-
-.button-container {
-	text-align: center;
-
-	p {
-		margin-top: 0;
-	}
-}
-
-.login {
-	padding: 0.55em 3em;
-}
-
-#beta-downloads {
-	.nobeta {
-		flex-direction: column;
+	&__showDownloads {
+		margin-top: 1em;
 		text-align: center;
+		user-select: none;
+		cursor: pointer;
+	}
 
-		h1 {
-			margin: 0;
+	.merch-container__section {
+		position: relative;
+		padding: 0 2rem;
+
+		&_header {
+			position: relative;
+
+			margin: 0 auto;
+
+			z-index: 1;
+
+			padding-top: 6em;
+			padding-bottom: 12em;
+		}
+
+		&_downloads {
+			padding-top: 1em;
+			padding-bottom: 2em;
+
+			.bounce {
+				animation: 1s bounce normal;
+			}
+		}
+
+		h1.section-header {
+			text-align: center;
+			font-weight: 800;
+			font-size: 52px;
+			letter-spacing: -1px;
+			text-shadow: none;
+
+			&::after {
+				top: 0;
+				transition: 0.15s opacity ease-out;
+				position: absolute;
+				content: "";
+				background: rgba(114, 137, 218, 0.25) !important;
+				width: 100%;
+				height: 100%;
+				display: inline-block;
+				left: 0;
+				margin-top: -15px;
+				z-index: -1;
+				opacity: 0;
+			}
 		}
 	}
 
-	.card__content {
-		h3 {
-			margin-bottom: 0;
-			text-transform: capitalize;
+	.merch-container__header {
+		display: flex;
+		max-width: 1600px;
+		margin: 0 auto;
+		justify-content: space-between;
+		align-items: flex-start;
+
+		.header__content {
+			width: 55%;
+
+			h1 {
+				font-weight: 800;
+				line-height: 1.1;
+				font-size: 3.8em;
+				letter-spacing: -3px;
+				text-shadow: none;
+				max-width: 600px;
+			}
+
+			p {
+				font-weight: 500;
+				line-height: 1.1;
+				font-size: 1.5em;
+				max-width: 800px;
+			}
 		}
 
-		p {
-			margin-top: 0;
-			color: #c3c3c3;
-			text-transform: uppercase;
-			font-size: 0.75rem;
+		.header__steps {
+			width: 35%;
+
+			h2 {
+				margin-block-start: 0.67em;
+				margin-block-end: 0.67em;
+				margin-inline-start: 0px;
+				margin-inline-end: 0px;
+			}
+
+			ol {
+				counter-reset: myCounter;
+				margin: 0;
+				padding: 0;
+
+				li {
+					display: flex;
+					list-style: none;
+					align-items: center;
+
+					p {
+						font-weight: 500;
+						margin: 12px 38px;
+					}
+				}
+
+				li:before {
+					counter-increment: myCounter;
+					content: counter(myCounter);
+					line-height: 1;
+					text-align: center;
+					width: 16px;
+					height: 16px;
+					padding: 5px;
+					margin-right: 12px;
+					font-weight: bold;
+					position: absolute;
+					display: inline-block;
+					border-radius: 50rem;
+					background: linear-gradient(30deg, $accent-primary, #b3aeff);
+				}
+			}
 		}
 	}
 }
