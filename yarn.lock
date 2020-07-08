@@ -9151,10 +9151,10 @@ vue-i18n@8.18.2:
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.18.2.tgz#cd7c12f2e178e6faa23b0e3cfd2f7bac9305f8fc"
   integrity sha512-0X5nBTCZAVjlwcrPaYJwNs3iipBBTv0AUHwQUOa8yP3XbQGWKbRHqBb3OhCYtum/IHDD21d/df5Xd2VgyxbxfA==
 
-vue-js-modal@2.0.0-rc.4:
-  version "2.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/vue-js-modal/-/vue-js-modal-2.0.0-rc.4.tgz#cc121f7e0c99941cd768a9b9614a5eb6727e5520"
-  integrity sha512-cUwZGbmZrb0rejn4rC93nXJeQsnptTv5jknXlxhjKDFdvlTNPqEOiGn6e108HTNMGJlWy2DIlnCNbL0VDCJHfA==
+vue-js-modal@2.0.0-rc.5:
+  version "2.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/vue-js-modal/-/vue-js-modal-2.0.0-rc.5.tgz#84fdf13784696f38c159940475f4b9c7fd453e9d"
+  integrity sha512-Jj5Ytcioe/FuD4cL587P/1j9H3M+espSHcp7oL8QSsHu1tIwXiueAfPLvwNcHQ/s1YDEj/eQHQnL9ZOUuh2ehA==
   dependencies:
     "@babel/plugin-proposal-optional-chaining" "^7.10.3"
     resize-observer-polyfill "^1.5.1"
