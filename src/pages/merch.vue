@@ -86,11 +86,9 @@
 								}"
 								:key="product.title"
 								@click="
-									log(selected_product[category].selected_id);
 									selected_product[category] = product;
 									selected_product[category].selected_id =
 										product.sizes[Object.keys(product.sizes)[0]];
-									log(selected_product[category].selected_id);
 								"
 							>
 								{{ $t("merch." + product.title) }}
@@ -193,7 +191,7 @@
 					}
 				);
 
-				if (localStorage.currency) console.log(formatter);
+				console.log(formatter);
 				return formatter.format((amount * 1.52) / 100);
 			},
 			markdown(pls) {
