@@ -89,6 +89,9 @@
 									selected_product[category] = product;
 									selected_product[category].selected_id =
 										product.sizes[Object.keys(product.sizes)[0]];
+									$refs.product_price[index].innerText = updatePrice(
+										selected_product[category].price
+									);
 								"
 							>
 								{{ $t("merch." + product.title) }}
@@ -98,7 +101,9 @@
 							<button class="button product-cart" @click="addProduct(category)">
 								{{ $t("merch.cart") }}
 							</button>
-							<h1>{{ showPrice(selected_product[category].price) }}</h1>
+							<h1 ref="product_price">
+								{{ selected_product[category].price }}
+							</h1>
 						</div>
 					</div>
 
@@ -180,19 +185,23 @@
 					)
 				);
 			},
-			showPrice(amount) {
+			updatePrice(amount) {
 				if (amount == null) return null;
+				var currency = localStorage.getItem("currency")
+					? localStorage.getItem("currency").toString()
+					: "EUR";
 				const formatter = new Intl.NumberFormat(
 					this.$root.getCurrentLanguage(),
 					{
 						style: "currency",
-						currency: "EUR",
+						currency: currency,
 						minimumFractionDigits: 2
 					}
 				);
 
-				console.log(formatter);
-				return formatter.format((amount * 1.52) / 100);
+				var rate = 1;
+
+				return formatter.format((amount * rate) / 100);
 			},
 			markdown(pls) {
 				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
@@ -207,7 +216,13 @@
 				})[0];
 			}
 		},
-		mounted() {},
+		mounted() {
+			for (var index in this.products.Categories) {
+				this.$refs.product_price[index].innerText = this.updatePrice(
+					this.$refs.product_price[index].innerText
+				);
+			}
+		},
 		head: {
 			title: "Merch"
 		}
