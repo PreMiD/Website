@@ -7,23 +7,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="section section--features">
+		<div class="section section--products">
 			<div
 				v-for="(category, index) in products.Categories"
-				:key="category.name"
-				:class="{ 'pattern' : index % 2 == 0}"
+				:key="category"
+				:class="{ pattern: index % 2 == 0 }"
 			>
 				<div class="category-container__content">
 					<div
 						v-if="index % 2 == 0"
-						class="waves-divider waves-divider_top pattern"
+						class="waves-divider waves-divider_top"
 						style="position: inherit;"
 					>
 						<svg
 							class="wave"
 							version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
-							style="width:100%;"
+							style="width: 100%;"
 							preserveAspectRatio="none"
 						>
 							<path
@@ -33,17 +33,87 @@
 							/>
 						</svg>
 					</div>
-					<h1>{{category}}</h1>
+					<h1
+						class="product-swag"
+						v-if="index === 0"
+						v-html="markdown($t('merch.swag'))"
+					></h1>
+					<div class="product-container" :class="{ left: index % 2 != 0 }">
+						<div class="product-images">
+							<img
+								:src="
+									require(`@/static/assets/images/merch/${selected_product[category].images.front}`)
+								"
+							/>
+							<img
+								:src="
+									require(`@/static/assets/images/merch/${selected_product[category].images.back}`)
+								"
+							/>
+						</div>
+						<div class="product-content">
+							<h1 v-html="markdown($t('merch.' + category))" />
+							<p>
+								{{
+									$t("merch.description." + selected_product[category].title)
+								}}
+							</p>
+
+							<h1 class="product-size" v-html="markdown($t('merch.fit'))">
+								<i :class="`fa-info fas`" />
+							</h1>
+							<div class="product-sizes">
+								<button
+									v-for="(size_id, size_name) in selected_product[category]
+										.sizes"
+									class="button product-size-button"
+									:class="{
+										selected: selected_product[category].selected_id == size_id
+									}"
+									:key="size_name"
+									@click="selected_product[category].selected_id = size_id"
+								>
+									{{ size_name.toUpperCase() }}
+								</button>
+							</div>
+						</div>
+						<div class="product-buttons">
+							<button
+								v-for="product in products.Products[category]"
+								class="button product-button"
+								:class="{
+									selected: selected_product[category].title == product.title
+								}"
+								:key="product.title"
+								@click="
+									log(selected_product[category].selected_id);
+									selected_product[category] = product;
+									selected_product[category].selected_id =
+										product.sizes[Object.keys(product.sizes)[0]];
+									log(selected_product[category].selected_id);
+								"
+							>
+								{{ $t("merch." + product.title) }}
+							</button>
+						</div>
+						<div class="product-info">
+							<button class="button product-cart" @click="addProduct(category)">
+								{{ $t("merch.cart") }}
+							</button>
+							<h1>{{ showPrice(selected_product[category].price) }}</h1>
+						</div>
+					</div>
+
 					<div
 						v-if="index % 2 == 0"
-						class="waves-divider waves-divider_bottom pattern"
+						class="waves-divider waves-divider_bottom"
 						style="position: inherit;"
 					>
 						<svg
 							class="wave"
 							version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
-							style="width:100%;"
+							style="width: 100%;"
 							preserveAspectRatio="none"
 						>
 							<path
@@ -55,6 +125,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="product-help">
+				<h2
+					class="text-help"
+					v-html="
+						$t('merch.help')
+							.replace('{0}', '<a href=`https://www.google.com`>')
+							.replace('{1}', '</a>')
+					"
+				></h2>
+			</div>
 		</div>
 	</div>
 </template>
@@ -64,17 +144,57 @@
 		name: "Merch",
 		async asyncData({ app }) {
 			return app.$axios.get(`${process.env.apiBase}/products`).then(data => {
-				return { products: data.data };
+				var selected_category_default_product = {};
+				for (var index in data.data.Categories) {
+					selected_category_default_product[data.data.Categories[index]] =
+						data.data.Products[data.data.Categories[index]][0];
+					selected_category_default_product[
+						data.data.Categories[index]
+					].selected_id =
+						data.data.Products[data.data.Categories[index]][0].sizes[
+							Object.keys(
+								data.data.Products[data.data.Categories[index]][0].sizes
+							)[0]
+						];
+				}
+				return {
+					products: data.data,
+					selected_product: selected_category_default_product
+				};
 			});
 		},
 		methods: {
-			addProduct(id) {
-				if (id == null) return;
+			addProduct(category) {
+				var itemIdToAdd = this.selected_product[category].selected_id;
+				if (itemIdToAdd === null)
+					return this.$noty.error(this.$t("merch.error.noitem"));
 				let cartProducts = localStorage.getItem("cartProducts");
-				if (!cartProducts) return localStorage.setItem("cartProducts", id);
-				cartProducts = cartProducts.split(",");
-				cartProducts.push(id);
-				localStorage.setItem("cartProducts", cartProducts.join(","));
+				if (!cartProducts) localStorage.setItem("cartProducts", itemIdToAdd);
+				else {
+					cartProducts = cartProducts.split(",");
+					cartProducts.push(itemIdToAdd);
+					localStorage.setItem("cartProducts", cartProducts.join(","));
+				}
+				this.$noty.success(
+					this.$t("merch.item.added").replace(
+						"{0}",
+						this.selected_product[category].title
+					)
+				);
+			},
+			showPrice(amount) {
+				if (amount == null) return null;
+				const formatter = new Intl.NumberFormat(
+					this.$root.getCurrentLanguage(),
+					{
+						style: "currency",
+						currency: "EUR",
+						minimumFractionDigits: 2
+					}
+				);
+
+				if (localStorage.currency) console.log(formatter);
+				return formatter.format((amount * 1.52) / 100);
 			},
 			markdown(pls) {
 				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
@@ -89,9 +209,7 @@
 				})[0];
 			}
 		},
-		mounted() {
-			console.log(this.products);
-		},
+		mounted() {},
 		head: {
 			title: "Merch"
 		}
@@ -99,99 +217,165 @@
 </script>
 
 <style lang="scss" scoped>
-@import "../stylesheets/variables.scss";
+	@import "../stylesheets/variables.scss";
 
-.merch-container {
-	color: white;
-	position: relative;
-
-	&__mobile-warning {
-		margin-top: 2em;
-		background-color: red;
-		border-radius: 4px;
-		margin: 2em 2em 0;
-		padding: 1em !important;
-	}
-
-	&__showDownloads {
-		margin-top: 1em;
-		text-align: center;
-		user-select: none;
-		cursor: pointer;
-	}
-
-	.merch-container__section {
+	.merch-container {
+		color: white;
 		position: relative;
-		padding: 0 2rem;
 
-		&_header {
+		.merch-container__section {
 			position: relative;
+			padding: 0 2rem;
 
-			margin: 0 auto;
-
-			z-index: 1;
-
-			padding-top: 6em;
-		}
-
-		&_downloads {
-			padding-top: 1em;
-			padding-bottom: 2em;
-
-			.bounce {
-				animation: 1s bounce normal;
+			.section--products {
+				position: relative;
+				z-index: 1;
+				overflow: hidden;
+				padding: 0px;
 			}
-		}
 
-		h1.section-header {
-			text-align: center;
-			font-weight: 800;
-			font-size: 52px;
-			letter-spacing: -1px;
-			text-shadow: none;
-
-			&::after {
-				top: 0;
-				transition: 0.15s opacity ease-out;
-				position: absolute;
-				content: "";
-				background: rgba(114, 137, 218, 0.25) !important;
-				width: 100%;
-				height: 100%;
-				display: inline-block;
-				left: 0;
-				margin-top: -15px;
-				z-index: -1;
-				opacity: 0;
-			}
-		}
-	}
-
-	.merch-container__header {
-		display: flex;
-		max-width: 1600px;
-		margin: 0 auto;
-		justify-content: space-between;
-		align-items: flex-start;
-
-		.header__content {
-			width: 100%;
-
-			h1 {
+			h1.section-header {
+				text-align: center;
 				font-weight: 800;
-				line-height: 1.1;
-				font-size: 3.8em;
-				letter-spacing: -3px;
+				font-size: 52px;
+				letter-spacing: -1px;
 				text-shadow: none;
-				width: 50%;
-				text-align: left;
+
+				&::after {
+					top: 0;
+					transition: 0.15s opacity ease-out;
+					position: absolute;
+					content: "";
+					background: rgba(114, 137, 218, 0.25) !important;
+					width: 100%;
+					height: 100%;
+					display: inline-block;
+					left: 0;
+					margin-top: -15px;
+					z-index: -1;
+					opacity: 0;
+				}
+			}
+		}
+
+		.merch-container__header {
+			display: flex;
+			max-width: 1600px;
+			margin: 0 auto;
+			justify-content: space-between;
+			align-items: flex-start;
+
+			.header__content {
+				width: 100%;
+
+				h1 {
+					font-weight: 800;
+					line-height: 1.1;
+					font-size: 3.8em;
+					letter-spacing: -3px;
+					text-shadow: none;
+					width: 50%;
+					text-align: left;
+				}
+			}
+		}
+
+		.category-container__content {
+			padding: 30px 0px;
+		}
+
+		.product-swag {
+			font-size: 2.5rem;
+			text-align: center;
+		}
+		.product-container {
+			display: grid;
+			width: 65%;
+			margin: 0 auto;
+			padding: 40px;
+			.product-images {
+				grid-row: 1;
+				grid-column: 1;
+				text-align: center;
+				word-spacing: 3rem;
+			}
+			.product-content {
+				grid-row: 1;
+				grid-column: 2;
+				.product-size {
+					margin-bottom: 0px;
+				}
+				.product-size-button {
+					padding: 8px;
+					width: 50px;
+					background: transparent;
+					color: #6f789b;
+				}
+				.selected {
+					background: #7289da;
+					color: #fff;
+				}
+			}
+			.product-buttons {
+				grid-row: 2;
+				grid-column: 1;
+				text-align: center;
+				margin-top: 20px;
+
+				.product-button {
+					background: transparent;
+					color: #6f789b;
+					border-radius: 0.5rem;
+					padding: 10px;
+				}
+				.selected {
+					background: #7289da;
+					color: #fff;
+				}
+			}
+			.product-info {
+				display: grid;
+
+				.product-cart {
+					grid-column: 1;
+					width: 75%;
+					margin: 20px auto;
+					padding: 0px;
+					border-radius: 0.5rem;
+				}
+				h1 {
+					grid-column: 2;
+				}
+			}
+		}
+
+		.left {
+			.product-images {
+				grid-row: 1;
+				grid-column: 2;
+			}
+			.product-content {
+				grid-row: 1;
+				grid-column: 1;
+			}
+			.product-buttons {
+				grid-row: 2;
+				grid-column: 2;
+			}
+			.product-cart {
+				grid-column: 1;
+			}
+		}
+
+		.product-help {
+			width: 90%;
+			margin-right: auto;
+			margin-left: auto;
+			.text-help {
+				font-weight: 600;
+				font-size: 2em;
+				max-width: 820px;
 			}
 		}
 	}
-
-	.category-container__content {
-		width: 90%;
-		display: grid;
-	}
-}
 </style>
