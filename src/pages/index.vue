@@ -15,10 +15,7 @@
 								<i class="fa-stream fas"></i>
 								{{ $t("home.introduction.button.features") }}
 							</a>
-							<nuxt-link
-								class="button button--black text--uppercase"
-								to="/downloads"
-							>
+							<nuxt-link class="button button--black text--uppercase" to="/downloads">
 								<i class="fa-file-export fas"></i>
 								{{ $t(`home.introduction.button.downloads`) }}
 							</nuxt-link>
@@ -44,16 +41,10 @@
 								<div class="header__info">
 									<div class="info__nameTag">
 										<span class="username">{{ presence.profile.name }}</span>
-										<span class="discriminator"
-											>#{{ presence.profile.discriminator }}</span
-										>
+										<span class="discriminator">#{{ presence.profile.discriminator }}</span>
 									</div>
 									<div class="info__badges">
-										<div
-											v-for="flag of presence.profile.flags"
-											:key="flag"
-											class="badge-wrapper"
-										>
+										<div v-for="flag of presence.profile.flags" :key="flag" class="badge-wrapper">
 											<div
 												v-if="
 													flag == 'HOUSE_BRILLIANCE' ||
@@ -94,9 +85,7 @@
 							</div>
 							<div class="usercard__activity">
 								<div class="activity__info">
-									<div class="info__header">
-										{{ $t(`home.examples.playingagame`) }}
-									</div>
+									<div class="info__header">{{ $t(`home.examples.playingagame`) }}</div>
 									<div class="info__game">
 										<div class="game__icon">
 											<img
@@ -142,24 +131,17 @@
 											<div class="game__title text-row">
 												<span>{{ presence.service_title }}</span>
 											</div>
-											<div class="game__st-line text-row">
-												{{ presence.data[0] }}
-											</div>
-											<div
-												v-if="presence.data[1]"
-												class="game__nd-line text-row"
-											>
-												{{ presence.data[1] }}
-											</div>
+											<div class="game__st-line text-row">{{ presence.data[0] }}</div>
+											<div v-if="presence.data[1]" class="game__nd-line text-row">{{ presence.data[1] }}</div>
 											<div class="game__time text-row">
 												{{
-													presence.elapsed
-														? $t(`home.examples.timestamp2`, {
-																0: presence.presence_time
-														  })
-														: $t(`home.examples.timestamp`, {
-																0: presence.presence_time
-														  })
+												presence.elapsed
+												? $t(`home.examples.timestamp2`, {
+												0: presence.presence_time
+												})
+												: $t(`home.examples.timestamp`, {
+												0: presence.presence_time
+												})
 												}}
 											</div>
 										</div>
@@ -190,9 +172,7 @@
 					</div>
 					<div class="card--feature">
 						<div class="card--feature__details">
-							<h1
-								v-html="markdown($t('home.features.presencesystem.heading'))"
-							></h1>
+							<h1 v-html="markdown($t('home.features.presencesystem.heading'))"></h1>
 							<p>{{ $t("home.features.presencesystem.description") }}</p>
 							<p>
 								<nuxt-link
@@ -203,11 +183,7 @@
 							</p>
 						</div>
 						<div class="card--feature__promo">
-							<img
-								class="card--feature__promo--image1"
-								style="max-width: 100%;"
-								:src="cardThumbnail1"
-							/>
+							<img class="card--feature__promo--image1" style="max-width: 100%;" :src="cardThumbnail1" />
 						</div>
 					</div>
 					<div class="card--feature card--feature--reverse">
@@ -228,14 +204,8 @@
 						</div>
 						<div class="card--feature__promo">
 							<video autoplay loop>
-								<source
-									src="./../assets/images/cards/card2_video.mp4"
-									type="video/mp4"
-								/>
-								<img
-									class="card--feature__promo--image2"
-									:src="cardThumbnail2"
-								/>
+								<source src="./../assets/images/cards/card2_video.mp4" type="video/mp4" />
+								<img class="card--feature__promo--image2" :src="cardThumbnail2" />
 							</video>
 						</div>
 					</div>
@@ -247,8 +217,7 @@
 								<a
 									class="button button--lg"
 									href="https://discord.premid.app"
-									>{{ $t("home.features.quickSupport.button") }}</a
-								>
+								>{{ $t("home.features.quickSupport.button") }}</a>
 							</p>
 						</div>
 						<div class="card--feature__promo">
