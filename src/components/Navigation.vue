@@ -2,7 +2,7 @@
 	<transition appear v-on:after-appear="appear">
 		<div>
 			<div id="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
-				<div id="logoWrapper" ref="headerLogo">
+				<div class="logoWrapper" ref="headerLogo">
 					<nuxt-link to="/" tag="h1">PreMiD</nuxt-link>
 
 					<transition name="pop">
@@ -43,9 +43,9 @@
 					>
 						<img class="round-icon" :src="avatarify()" />
 						<div class="dropdown">
-							<span id="username">
+							<span class="username">
 								{{ $auth.user.username }}
-								<span id="tag">#{{ $auth.user.discriminator }}</span>
+								<span class="tag">#{{ $auth.user.discriminator }}</span>
 							</span>
 
 							<transition name="slide-down" mode="in-out">
@@ -71,10 +71,10 @@
 							<i :class="`fa-user fas`"></i>
 						</span>
 						<p>{{ $t("header.login") }}</p>
-					</nuxt-link> -->
+					</nuxt-link>-->
 				</div>
 
-				<div v-if="countDownBtn" id="links">
+				<div v-if="countDownBtn" class="links">
 					<a
 						v-if="countDownValue === 0"
 						@click="$nuxt.setLayout('default')"
@@ -120,6 +120,7 @@
 					@click="mobileMenuActive = !mobileMenuActive"
 				>
 					<nuxt-link
+						active-class="mobile-active"
 						v-for="category of categories"
 						:key="category.route"
 						:to="'/' + category.route"
@@ -149,7 +150,7 @@
 		align-items: center;
 		justify-content: space-between;
 
-		#logoWrapper {
+		.logoWrapper {
 			cursor: pointer;
 			height: 40px;
 
@@ -159,7 +160,8 @@
 
 			h1 {
 				margin: 0;
-				font-family: "Discord Font";
+				font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana,
+					sans-serif;
 			}
 
 			#status {
@@ -229,13 +231,15 @@
 					height: 45px;
 				}
 			}
-			#user-link {
+
+			.user-link {
 				color: #646e90;
 				display: inline;
 				position: relative;
 				white-space: nowrap;
 			}
-			#loggedin {
+
+			.loggedin {
 				display: inline-block;
 				white-space: nowrap;
 				font-size: 1rem;
@@ -263,14 +267,15 @@
 				}
 			}
 
-			#username {
+			.username {
 				display: flex;
 				color: #fff;
 				font-size: 1.1rem;
 				white-space: nowrap;
 				vertical-align: bottom;
 			}
-			#tag {
+
+			.tag {
 				display: flex;
 				font-size: 0.8rem;
 				color: #99aab5;
@@ -331,6 +336,11 @@
 		display: grid;
 		grid-gap: 10px;
 		padding-bottom: 10px;
+
+		.mobile-active {
+			background-color: #7289da;
+			color: #ffffff;
+		}
 
 		a {
 			display: grid;
@@ -421,8 +431,8 @@
 				this.$nuxt.setLayout("default");
 			},
 			avatarify() {
-				if (!this.$auth?.loggedIn) return "";
-				else if (this.$auth?.user?.avatar)
+				if (!this.$auth || !this.$auth.loggedIn) return "";
+				else if (this.$auth && this.$auth.user.avatar)
 					return `https://cdn.discordapp.com/avatars/${this.$auth.user.id}/${this.$auth.user.avatar}`;
 			},
 			appear() {
@@ -461,7 +471,7 @@
 		},
 		mounted() {
 			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-				navigator?.userAgent
+				navigator.userAgent
 			);
 
 			const interval = setInterval(() => {

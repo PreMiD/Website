@@ -5,17 +5,23 @@
 				<div class="fullpresence__header">
 					<div class="header__title">
 						<div class="section">
-							<img id="presenceLogo" :src="presence.metadata.logo" />
+							<img
+								v-if="!isMobile"
+								@error="
+									presence.metadata.logo =
+										'https://premid.app/assets/images/logo.png'
+								"
+								:src="presence.metadata.logo"
+							/>
 
 							<h1
-								id="presenceName"
 								:style="`color: ${brightColorFix()}`"
 								v-text="presence.metadata.service"
 							/>
 
 							<span
 								v-if="partner"
-								class="fa-stack"
+								class="fa-stack presence-badge"
 								v-tippy="{
 									content: $t('store.cards.partner')
 								}"
@@ -28,7 +34,7 @@
 							</span>
 							<span
 								v-if="hot"
-								class="fa-stack"
+								class="fa-stack presence-badge"
 								v-tippy="{
 									content: $t('store.cards.popular')
 								}"
@@ -53,7 +59,8 @@
 							v-if="
 								!isInstalled &&
 								this.$store.state.extension.extensionInstalled &&
-								presence.metadata.button !== false
+								presence.metadata.button !== false &&
+								presence.metadata.button !== 'false'
 							"
 							class="button button--"
 							@click="sendPresence(presence.metadata.service)"
@@ -67,7 +74,8 @@
 							v-if="
 								isInstalled &&
 								this.$store.state.extension.extensionInstalled &&
-								presence.metadata.button !== false
+								presence.metadata.button !== false &&
+								presence.metadata.button !== 'false'
 							"
 							class="button button--black"
 							@click="removePresence(presence.metadata.service)"
@@ -101,7 +109,10 @@
 					</div>
 					<hr />
 					<div
-						v-if="presence.metadata.button === false"
+						v-if="
+							presence.metadata.button === false ||
+							presence.metadata.button === 'false'
+						"
 						class="header__warning"
 					>
 						{{ $t("store.card.presence.included") }}
@@ -242,19 +253,29 @@
 	</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.section {
-		#presenceLogo {
-			max-height: 100px;
-			max-width: 100px;
-			object-fit: contain;
-			border-radius: 10px;
+		img {
+			height: 64px;
+			width: 64px;
+			border-radius: 100%;
+			margin-right: 8px;
+			place-self: center;
+			transition: opacity 0.2s ease-in-out;
+
+			&:hover {
+				opacity: 0.75;
+			}
 		}
 
-		#presenceName {
+		h1 {
 			line-height: 100px;
 			margin-left: 25px;
 		}
+	}
+
+	.presence-badge {
+		place-self: center;
 	}
 </style>
 
@@ -302,7 +323,7 @@
 				}
 				`
 				),
-				presenceData = presences?.[0];
+				presenceData = presences[0];
 
 			let data = {
 				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
@@ -374,8 +395,8 @@
 		methods: {
 			brightColorFix() {
 				return tinycolor(this.presence.metadata.color).getBrightness() >= 200
-					? "black"
-					: "white";
+					? "#111218"
+					: "#ffffff";
 			},
 			/**
 			 * Returns description of the presence according to your language.
@@ -401,35 +422,35 @@
 				if (!likedPresences)
 					localStorage.setItem(
 						"likedPresences",
-						this.$data?.presence?.metadata?.service
+						this.$data.presence.metadata.service
 					);
 				else if (
 					likedPresences
 						.split(",")
-						.includes(this.$data?.presence?.metadata?.service)
+						.includes(this.$data.presence.metadata.service)
 				) {
 					localStorage.setItem(
 						"likedPresences",
 						likedPresences
 							.split(",")
-							.filter(i => i !== this.$data?.presence?.metadata?.service)
+							.filter(i => i !== this.$data.presence.metadata.service)
 							.join(",")
 					);
 				} else if (
 					!likedPresences
 						.split(",")
-						.includes(this.$data?.presence?.metadata?.service)
+						.includes(this.$data.presence.metadata.service)
 				) {
 					let newPresences = likedPresences.split(",");
 
-					newPresences.push(this.$data?.presence?.metadata?.service);
+					newPresences.push(this.$data.presence.metadata.service);
 
 					localStorage.setItem("likedPresences", newPresences.join(","));
 				}
 
 				this.$store.commit(
 					"presences/like",
-					this.$data?.presence?.metadata?.service
+					this.$data.presence.metadata.service
 				);
 			},
 			linkify(description) {
@@ -473,10 +494,10 @@
 			}
 		},
 		head() {
-			if (this.$data?.presence?.error) return;
+			if (this.$data.presence.error) return;
 			let description =
-				this.$data?.presence?.metadata?.description["en"] ||
-				this.$data?.presence?.metadata?.description ||
+				this.$data.presence.metadata.description["en"] ||
+				this.$data.presence.metadata.description ||
 				"No description found.";
 
 			if (description.match(/\[([^\]]+)\]\(([^)]+)\)/g)) {
@@ -490,7 +511,7 @@
 				description = description.slice(0, 256) + "...";
 
 			return {
-				title: this.$data?.presence?.metadata?.service,
+				title: this.$data.presence.metadata.service,
 				meta: [
 					{
 						hid: "twitter:card",
@@ -510,18 +531,17 @@
 					{
 						hid: "twitter:image",
 						property: "twitter:image",
-						content: this.$data?.presence?.metadata?.logo
+						content: this.$data.presence.metadata.logo
 					},
 					{
 						hid: "theme-color",
 						property: "theme-color",
-						content: this.$data?.presence?.metadata?.color || "#000000"
+						content: this.$data.presence.metadata.color || "#000000"
 					},
 					{
 						hid: "title",
 						name: "title",
-						content:
-							this.$data?.presence?.metadata?.service || "Invalid Service"
+						content: this.$data.presence.metadata.service || "Invalid Service"
 					},
 					{
 						hid: "description",
@@ -532,7 +552,7 @@
 						hid: "og:title",
 						property: "og:title",
 						content:
-							this.$data?.presence?.metadata?.service ||
+							this.$data.presence.metadata.service ||
 							"The service you're looking for wasn't found in any of our records. You might want to try to check if it's still available on the store."
 					},
 					{
@@ -544,7 +564,7 @@
 						hid: "og:image",
 						property: "og:image",
 						content:
-							this.$data?.presence?.metadata?.logo ||
+							this.$data.presence.metadata.logo ||
 							"https://premid.app/assets/images/logo.png"
 					}
 				]

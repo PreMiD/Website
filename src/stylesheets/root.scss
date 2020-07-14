@@ -14,18 +14,15 @@
 
 @import "variables.scss";
 
-// Due to problems with Cyrillic translations Discord Font are disabled from now.
-
-// @font-face {
-//   font-family: "Discord Font";
-//   font-weight: 900;
-//   src: url("../static/assets/fonts/DiscordFontBlack.woff2") format("woff2");
-//   font-style: normal;
-// }
+@font-face {
+	font-family: "Discord Font";
+	font-weight: 900;
+	src: url("../static/assets/fonts/DiscordFontBlack.woff2") format("woff2");
+	font-style: normal;
+}
 
 // Importing base styles
 @import "components/body.scss";
-
 @import "components/animation.scss";
 @import "components/button.scss";
 @import "components/card.scss";
@@ -41,7 +38,6 @@
 
 //* Plugins
 @import "plugins/vuejs-noty.scss";
-
 @import "components/visibility.scss";
 
 .invisible {

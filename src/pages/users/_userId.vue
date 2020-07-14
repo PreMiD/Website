@@ -69,7 +69,7 @@
 									content: $t('contributors.roles.webDeveloper'),
 									placement: 'bottom'
 								}"
-								class="fas fa-hat-cowboy"
+								class="fas fa-window-restore"
 							></i>
 							<i
 								v-if="role == 'Linux Maintainer'"
@@ -266,6 +266,8 @@
 				).data,
 				presences = (await app.$axios(`${process.env.apiBase}/presences`)).data;
 
+			user.roles = user.roles.sort();
+
 			return {
 				error: user.error ? true : false,
 				user: user,
@@ -275,7 +277,9 @@
 					.map(p => p.metadata),
 				userContributions: presences
 					.filter(p =>
-						p.metadata.contributors?.some(cont => cont.id == user.userId)
+						p.metadata.contributors
+							? p.metadata.contributors.some(cont => cont.id == user.userId)
+							: null
 					)
 					.map(p => p.metadata)
 			};

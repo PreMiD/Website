@@ -119,7 +119,7 @@
 
 <style lang="scss" scoped>
 	.titleHeading {
-		font-family: "Discord Font";
+		font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 		text-transform: uppercase;
 	}
 
@@ -141,16 +141,18 @@
 		flex-wrap: wrap;
 
 		div {
+			h1 {
+				font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana,
+					sans-serif;
+				color: #7289da;
+				font-size: 1.25rem;
+			}
+
 			background-color: rgba(22, 23, 29, 0.75);
 			border-radius: 1em;
 			padding: 0.5em 2em;
 			margin: 1em;
 			max-width: 350px;
-
-			h1 {
-				font-size: larger;
-				text-transform: uppercase;
-			}
 		}
 	}
 </style>
@@ -165,7 +167,6 @@
 	import dtemplates_icon from "~/assets/images/partners/dtemplates-icon.png";
 	import taigabot_icon from "~/assets/images/partners/taigabot-icon.png";
 	import statusbot_icon from "~/assets/images/partners/statusbot-icon.png";
-	import erisly_icon from "~/assets/images/partners/erisly-icon.png"
 
 	export default {
 		name: "Partners",
@@ -184,8 +185,7 @@
 						aniwatch_icon,
 						dtemplates_icon,
 						taigabot_icon,
-						statusbot_icon,
-						erisly_icon
+						statusbot_icon
 					],
 					showModal: false,
 					hovered: {}
@@ -210,16 +210,16 @@
 				function ImgRandomPosition(image) {
 					let left =
 							Math.floor(
-								Math.random() * (Math.random() - (window?.innerWidth - 150))
+								Math.random() * (Math.random() - (window.innerWidth - 150))
 							) +
-							(window?.innerWidth - 150) +
+							(window.innerWidth - 150) +
 							"px",
 						top =
 							Math.floor(
 								Math.random() *
-									(Math.random() - (document?.body?.scrollHeight - 1050))
+									(Math.random() - (document.body.scrollHeight - 1050))
 							) +
-							(document?.body?.scrollHeight - 1050) +
+							(document.body.scrollHeight - 1050) +
 							"px";
 
 					image.style.position = "absolute";
@@ -230,7 +230,7 @@
 
 			if (
 				!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-					`${navigator?.userAgent || true}`
+					`${navigator.userAgent || true}`
 				)
 			) {
 				this.$anime

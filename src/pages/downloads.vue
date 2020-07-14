@@ -183,7 +183,18 @@
 					</div>
 				</div>
 
+				<!--
+
+				<div class="show-beta" v-if="!showBeta">
+					<div>
+						<p>{{ $t("downloads.showbeta.message") }}</p>
+						<small>{{ $t("downloads.showbeta.small") }}</small>
+					</div>
+					<i @click="showBeta = true" class="fas fa-chevron-down"></i>
+				</div>
+
 				<div
+					v-else
 					id="beta-downloads"
 					class="dl-container__section dl-container__section_downloads waves-aligned"
 				>
@@ -196,6 +207,7 @@
 							v-text="tab"
 						></a>
 					</h1>
+
 
 					<div v-if="$auth.loggedIn">
 						<div v-if="beta.access == true">
@@ -262,13 +274,13 @@
 							<p v-t="'downloads.error.login'" />
 							<button
 								type="button"
-								class="button"
-								id="login"
+								class="button login"
 								@click="$router.push('/login')"
 							>{{ $t("downloads.button.login") }}</button>
 						</div>
 					</div>
 				</div>
+				-->
 			</div>
 		</transition>
 
@@ -318,6 +330,8 @@
 		auth: false,
 		async asyncData({ $auth, app, error }) {
 			try {
+				//! Disabled alpha/beta downloads temporarily.
+				/*
 				let tab = null,
 					alpha = {
 						access: false,
@@ -369,20 +383,30 @@
 						beta.access = access;
 					}
 				}
+				*/
 
-				const versions = (await app.$axios(`${process.env.apiBase}/versions`))
-					.data;
+				const { versions } = await app.$graphql(
+					`{
+							versions {
+								app
+								extension
+								linux
+							}
+						}
+					`
+				);
 
 				return {
-					extVersion: versions?.extension,
-					appVersion: versions?.app,
-					linuxVersion: versions?.linux,
+					extVersion: versions.extension,
+					appVersion: versions.app,
+					linuxVersion: versions.linux
+					/*
 					cTab,
 					tab,
 					alpha,
-					beta,
+					beta
 					betaUsers: (await app.$axios(`${process.env.apiBase}/betaUsers`)).data
-						.betaUsers
+						.betaUsers*/
 				};
 			} catch (err) {
 				return error(err);
@@ -391,6 +415,7 @@
 		data() {
 			return {
 				skipAds: false,
+				showBeta: false,
 				extVersion: null,
 				appVersion: null,
 				linuxVersion: null,
@@ -593,24 +618,43 @@
 	};
 </script>
 
-<style lang="scss">
-@import "../stylesheets/variables.scss";
+<style lang="scss" scoped>
+	@import "../stylesheets/variables.scss";
 
 .highlight::after {
 	opacity: 1 !important;
 }
 
-.button-container {
-	text-align: center;
+	.show-beta {
+		text-align: center;
+
+		p {
+			line-height: 0;
+		}
+
+		i {
+			font-size: 2rem;
+			margin-top: 4px;
+			transition: opacity 0.2s ease-in-out;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 0.75;
+			}
+		}
+	}
+
+	.button-container {
+		text-align: center;
 
 	p {
 		margin-top: 0;
 	}
 }
 
-#login {
-	padding: 0.55em 3em;
-}
+	.login {
+		padding: 0.55em 3em;
+	}
 
 #beta-downloads {
 	.nobeta {

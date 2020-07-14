@@ -28,7 +28,11 @@
 			v-tippy="{ content: $t('contributors.cards.copyUserId') }"
 		>
 			<span :class="user.status"></span>
-			<img :src="user.avatar + '?size=64'" draggable="false" />
+			<img
+				@error="user.avatar = 'https://premid.app/assets/images/logo.png'"
+				:src="user.avatar + '?size=64'"
+				draggable="false"
+			/>
 		</div>
 	</div>
 </template>
