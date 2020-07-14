@@ -102,7 +102,7 @@
 								{{ $t("merch.cart") }}
 							</button>
 							<h1 ref="product_price">
-								{{ selected_product[category].price }}
+								{{ $n(selected_product[category].price, "currency") }}
 							</h1>
 						</div>
 					</div>
@@ -187,17 +187,15 @@
 			},
 			updatePrice(amount) {
 				if (amount == null) return null;
+
 				var currency = localStorage.getItem("currency")
 					? localStorage.getItem("currency").toString()
 					: "EUR";
-				const formatter = new Intl.NumberFormat(
-					this.$root.getCurrentLanguage(),
-					{
-						style: "currency",
-						currency: currency,
-						minimumFractionDigits: 2
-					}
-				);
+				const formatter = new Intl.NumberFormat("en", {
+					style: "currency",
+					currency: currency,
+					minimumFractionDigits: 2
+				});
 
 				var rate = 1;
 
@@ -348,7 +346,7 @@
 			}
 			.product-info {
 				display: grid;
-
+				grid-template-columns: 50%;
 				.product-cart {
 					grid-column: 1;
 					width: 75%;
