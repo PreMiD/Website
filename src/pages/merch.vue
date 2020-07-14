@@ -89,9 +89,6 @@
 									selected_product[category] = product;
 									selected_product[category].selected_id =
 										product.sizes[Object.keys(product.sizes)[0]];
-									$refs.product_price[index].innerText = updatePrice(
-										selected_product[category].price
-									);
 								"
 							>
 								{{ $t("merch." + product.title) }}
@@ -102,7 +99,7 @@
 								{{ $t("merch.cart") }}
 							</button>
 							<h1 ref="product_price">
-								{{ $n(selected_product[category].price, "currency") }}
+								{{ getPrice(selected_product[category].price) }}
 							</h1>
 						</div>
 					</div>
@@ -143,28 +140,39 @@
 </template>
 
 <script>
+	import Vue from "vue";
+	import VueI18n from "vue-i18n";
+
+	Vue.use(VueI18n);
+
 	export default {
 		name: "Merch",
 		async asyncData({ app }) {
-			return app.$axios.get(`${process.env.apiBase}/products`).then(data => {
-				var selected_category_default_product = {};
-				for (var index in data.data.Categories) {
-					selected_category_default_product[data.data.Categories[index]] =
-						data.data.Products[data.data.Categories[index]][0];
-					selected_category_default_product[
-						data.data.Categories[index]
-					].selected_id =
-						data.data.Products[data.data.Categories[index]][0].sizes[
-							Object.keys(
-								data.data.Products[data.data.Categories[index]][0].sizes
-							)[0]
-						];
-				}
-				return {
-					products: data.data,
-					selected_product: selected_category_default_product
-				};
-			});
+			return app.$axios
+				.get(`${process.env.apiBase}/products`)
+				.then(async data => {
+					var selected_category_default_product = {};
+					for (var index in data.data.Categories) {
+						selected_category_default_product[data.data.Categories[index]] =
+							data.data.Products[data.data.Categories[index]][0];
+						selected_category_default_product[
+							data.data.Categories[index]
+						].selected_id =
+							data.data.Products[data.data.Categories[index]][0].sizes[
+								Object.keys(
+									data.data.Products[data.data.Categories[index]][0].sizes
+								)[0]
+							];
+					}
+					var ratedata = await app.$axios.get(
+						`${process.env.apiBase}/currencyRates`
+					);
+					return {
+						products: data.data,
+						selected_product: selected_category_default_product,
+						rates: ratedata.data[0].rates
+					};
+				});
 		},
 		methods: {
 			addProduct(category) {
@@ -181,25 +189,31 @@
 				this.$noty.success(
 					this.$t("merch.item.added").replace(
 						"{0}",
-						this.selected_product[category].title
+						$t("merch." + this.selected_product[category].title)
 					)
 				);
 			},
-			updatePrice(amount) {
+			async getPrice(amount) {
 				if (amount == null) return null;
 
-				var currency = localStorage.getItem("currency")
-					? localStorage.getItem("currency").toString()
-					: "EUR";
-				const formatter = new Intl.NumberFormat("en", {
-					style: "currency",
-					currency: currency,
-					minimumFractionDigits: 2
+				var locale = this.$root.navigatorLanguage;
+				console.log(locale);
+				var CurrencyCode = this.$root.$i18n.currency;
+				var rate = 1;
+				if (CurrencyCode !== "EUR") rate = this.rates[CurrencyCode];
+
+				var exchange = new VueI18n({
+					locale: {
+						style: "currency",
+						currency: CurrencyCode,
+						currencyDisplay: "symbol",
+						maximumFractionDigits: 2
+					}
 				});
 
-				var rate = 1;
+				var data = exchange.n((amount * rate) / 100);
 
-				return formatter.format((amount * rate) / 100);
+				return data;
 			},
 			markdown(pls) {
 				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
@@ -214,13 +228,7 @@
 				})[0];
 			}
 		},
-		mounted() {
-			for (var index in this.products.Categories) {
-				this.$refs.product_price[index].innerText = this.updatePrice(
-					this.$refs.product_price[index].innerText
-				);
-			}
-		},
+		async mounted() {},
 		head: {
 			title: "Merch"
 		}
