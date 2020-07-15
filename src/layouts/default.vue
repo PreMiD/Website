@@ -47,7 +47,13 @@
 				if (localStorage.language !== undefined) {
 					this.$root.$i18n.locale = localStorage.language;
 				}
-			} else this.$root.$i18n.locale = "en";
+				if (localStorage.currency !== undefined) {
+					this.$root.$i18n.currency = localStorage.currency;
+				}
+			} else {
+				this.$root.$i18n.locale = "en";
+				this.$root.$i18n.currency = "EUR";
+			}
 
 			this.$root.$data.navigatorLanguage = this.getBrowserLanguage();
 			this.$root.$data.i18nLanguage = this.getCurrentLanguage();
