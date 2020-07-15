@@ -99,7 +99,13 @@
 								{{ $t("merch.cart") }}
 							</button>
 							<h1 ref="product_price">
-								{{ getPrice(selected_product[category].price) }}
+								{{
+									$n(
+										selected_product[category].price,
+										"currency",
+										$root.$i18n.locale
+									)
+								}}
 							</h1>
 						</div>
 					</div>
@@ -197,23 +203,9 @@
 				if (amount == null) return null;
 
 				var locale = this.$root.navigatorLanguage;
-				console.log(locale);
 				var CurrencyCode = this.$root.$i18n.currency;
 				var rate = 1;
 				if (CurrencyCode !== "EUR") rate = this.rates[CurrencyCode];
-
-				var exchange = new VueI18n({
-					locale: {
-						style: "currency",
-						currency: CurrencyCode,
-						currencyDisplay: "symbol",
-						maximumFractionDigits: 2
-					}
-				});
-
-				var data = exchange.n((amount * rate) / 100);
-
-				return data;
 			},
 			markdown(pls) {
 				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
