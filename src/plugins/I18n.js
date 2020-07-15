@@ -12,7 +12,8 @@ export default ({ app, store }) => {
 				? window.navigator.language
 				: "en" || "en",
 		fallbackLocale: "en",
-		messages: loadLocaleMessages()
+		messages: loadLocaleMessages(),
+		numberFormats: loadLocaleCurrencies()
 	});
 
 	app.i18n.path = link => {
@@ -35,4 +36,17 @@ function loadLocaleMessages() {
 		}
 	});
 	return messages;
+}
+
+function loadLocaleCurrencies() {
+	const locales = require.context("~/langs", true, /[A-Za-z0-9-_,\s]+\.json$/i);
+	const numberFormats = {};
+	locales.keys().forEach(key => {
+		key = key.match(/([A-Za-z0-9-_]+)\./i);
+		numberFormats[key[1]] = {
+			currency: { style: "currency", currency: "EUR" }
+		};
+	});
+	console.log(numberFormats);
+	return numberFormats;
 }
