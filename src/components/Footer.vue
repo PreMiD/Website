@@ -89,8 +89,8 @@
 			<p
 				v-html="
 					$t('footer.copyright.line2', {
-						0: /*`<a class='hover-effect' href='https://iryzhenkov.ru/' target='_blank'>Voknehzyr</a> &`*/ `
-				<a class='hover-effect' href='https://eggsy.codes/' target='_blank'>EGGSY</a> &
+						0: `
+				<a class='hover-effect' href='https://eggsy.xyz/' target='_blank'>EGGSY</a> &
 				<a class='hover-effect' href='https://github.com/TheDropX/' target='_blank'>TheDrop.</a>`
 					})
 				"
