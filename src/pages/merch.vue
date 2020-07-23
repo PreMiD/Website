@@ -98,10 +98,11 @@
 							<button class="button product-cart" @click="addProduct(category)">
 								{{ $t("merch.cart") }}
 							</button>
+							//FIXME 'Incorrect locale information provided' error
 							<h1 ref="product_price">
 								{{
 									$n(
-										selected_product[category].price,
+										getPrice(selected_product[category].price),
 										"currency",
 										$root.$i18n.locale
 									)
@@ -132,6 +133,7 @@
 				</div>
 			</div>
 			<div class="product-help">
+				//FIXME Replace with support link
 				<h2
 					class="text-help"
 					v-html="
@@ -146,11 +148,6 @@
 </template>
 
 <script>
-	import Vue from "vue";
-	import VueI18n from "vue-i18n";
-
-	Vue.use(VueI18n);
-
 	export default {
 		name: "Merch",
 		async asyncData({ app }) {
@@ -199,13 +196,13 @@
 					)
 				);
 			},
-			async getPrice(amount) {
-				if (amount == null) return null;
+			getPrice(amount) {
+				/*if (amount == null) return NaN;
 
-				var locale = this.$root.navigatorLanguage;
 				var CurrencyCode = this.$root.$i18n.currency;
-				var rate = 1;
-				if (CurrencyCode !== "EUR") rate = this.rates[CurrencyCode];
+				return (amount * (this.rates[CurrencyCode] || 1)) / 100;*/
+				return amount / 100;
+				//TODO Create currency selector
 			},
 			markdown(pls) {
 				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
@@ -218,6 +215,18 @@
 						)}</span></strong>`
 					);
 				})[0];
+			},
+			cartProducts() {
+				const cart = localStorage.getItem("cartProducts");
+				if (cart == null) return;
+
+				let listOfItems = {};
+				for (let id of cart.split(",")) {
+					if (listOfItems[id]) return listOfItems[id].count++;
+					listOfItems[id] = [];
+					listOfItems[id].count = 1;
+				}
+				console.log(listOfItems);
 			}
 		},
 		async mounted() {},
