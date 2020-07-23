@@ -47,6 +47,5 @@ function loadLocaleCurrencies() {
 			currency: { style: "currency", currency: "EUR" }
 		};
 	});
-	console.log(numberFormats);
 	return numberFormats;
 }
