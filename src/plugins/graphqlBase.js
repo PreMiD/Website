@@ -5,7 +5,7 @@ export default ({ app }) => {
 		new Promise((resolve, reject) => {
 			app
 				.$axios({
-					url: "https://api.premid.app/v3",
+					url: "/v3",
 					method: "POST",
 					data: {
 						query: query
