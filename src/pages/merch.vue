@@ -58,10 +58,25 @@
 									$t("merch.description." + selected_product[category].title)
 								}}
 							</p>
-
-							<h1 class="product-size" v-html="markdown($t('merch.fit'))">
-								<i :class="`fa-info fas`" />
-							</h1>
+							<h1
+								class="product-colours"
+								v-html="markdown($t('merch.colours'))"
+							/>
+							<div class="product-colours">
+								<button
+									v-for="colour in selected_product[category].colours"
+									class="button product-colour-button"
+									:class="{
+										'colour-selected':
+											selected_product[category].selected_colour.name ==
+											colour.name
+									}"
+									:key="colour.name"
+									@click="selected_product[category].selected_colour = colour"
+									:style="'background-color:#' + colour.hex"
+								></button>
+							</div>
+							<h1 class="product-size" v-html="markdown($t('merch.fit'))" />
 							<div class="product-sizes">
 								<button
 									v-for="(size_id, size_name) in selected_product[category]
@@ -89,6 +104,8 @@
 									selected_product[category] = product;
 									selected_product[category].selected_id =
 										product.sizes[Object.keys(product.sizes)[0]];
+									selected_product[category].selected_colour =
+										product.colours[0];
 								"
 							>
 								{{ $t("merch." + product.title) }}
@@ -154,16 +171,17 @@
 			return app.$axios
 				.get(`${process.env.apiBase}/products`)
 				.then(async data => {
-					var selected_category_default_product = {};
-					for (var index in data.data.Categories) {
-						selected_category_default_product[data.data.Categories[index]] =
-							data.data.Products[data.data.Categories[index]][0];
-						selected_category_default_product[
-							data.data.Categories[index]
-						].selected_id =
-							data.data.Products[data.data.Categories[index]][0].sizes[
+					var Categories = data.data.Categories;
+					var default_product = {};
+					for (var i in Categories) {
+						default_product[Categories[i]] =
+							data.data.Products[Categories[i]][0];
+						default_product[Categories[i]].selected_colour =
+							data.data.Products[Categories[i]][0].colours[0];
+						default_product[Categories[i]].selected_id =
+							default_product[Categories[i]].selected_colour.sizes[
 								Object.keys(
-									data.data.Products[data.data.Categories[index]][0].sizes
+									default_product[Categories[i]].selected_colour.sizes
 								)[0]
 							];
 					}
@@ -172,7 +190,7 @@
 					);
 					return {
 						products: data.data,
-						selected_product: selected_category_default_product,
+						selected_product: default_product,
 						rates: ratedata.data[0].rates
 					};
 				});
@@ -192,7 +210,7 @@
 				this.$noty.success(
 					this.$t("merch.item.added").replace(
 						"{0}",
-						$t("merch." + this.selected_product[category].title)
+						this.$t("merch." + this.selected_product[category].title)
 					)
 				);
 			},
@@ -322,8 +340,18 @@
 			.product-content {
 				grid-row: 1;
 				grid-column: 2;
-				.product-size {
-					margin-bottom: 0px;
+				h1 {
+					margin-top: 0px;
+				}
+				.product-colour-button {
+					width: 40px;
+					height: 40px;
+					padding: 0px;
+				}
+				.colour-selected {
+					border: 2px solid #7289da;
+					width: 42px;
+					height: 42px;
 				}
 				.product-size-button {
 					padding: 8px;
@@ -365,6 +393,7 @@
 				}
 				h1 {
 					grid-column: 2;
+					grid-row: 1;
 				}
 			}
 		}
