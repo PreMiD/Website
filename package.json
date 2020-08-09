@@ -20,7 +20,7 @@
 		"moment": "2.27.0",
 		"node-sass": "4.14.1",
 		"nuxt": "2.14.1",
-		"nuxt-helmet": "1.2.3",
+		"nuxt-helmet": "2.0.0",
 		"nuxt-lazy-load": "1.2.4",
 		"sass-loader": "9.0.3",
 		"tinycolor2": "1.4.1",
