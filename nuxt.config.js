@@ -48,7 +48,7 @@ module.exports = {
 		credentials: false
 	},
 	proxy: {
-		"/v3": "https://api.premid.app/v3"
+		"/v3": "https://api.premid.app"
 	},
 	helmet: {
 		frameguard: false,
