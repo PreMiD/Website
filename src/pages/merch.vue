@@ -72,7 +72,11 @@
 											colour.name
 									}"
 									:key="colour.name"
-									@click="selected_product[category].selected_colour = colour"
+									@click="
+										selected_product[category].selected_colour = colour;
+										selected_product[category].selected_id =
+											colour.sizes[Object.keys(colour.sizes)[0]];
+									"
 									:style="'background-color:#' + colour.hex"
 								></button>
 							</div>
@@ -80,7 +84,7 @@
 							<div class="product-sizes">
 								<button
 									v-for="(size_id, size_name) in selected_product[category]
-										.sizes"
+										.selected_colour.sizes"
 									class="button product-size-button"
 									:class="{
 										selected: selected_product[category].selected_id == size_id
@@ -103,9 +107,7 @@
 								@click="
 									selected_product[category] = product;
 									selected_product[category].selected_id =
-										product.sizes[Object.keys(product.sizes)[0]];
-									selected_product[category].selected_colour =
-										product.colours[0];
+										product.sizes[Object.keys(product.colours.sizes)[0]];
 								"
 							>
 								{{ $t("merch." + product.title) }}
@@ -115,13 +117,11 @@
 							<button class="button product-cart" @click="addProduct(category)">
 								{{ $t("merch.cart") }}
 							</button>
-							//FIXME 'Incorrect locale information provided' error
 							<h1 ref="product_price">
 								{{
-									$n(
-										getPrice(selected_product[category].price),
-										"currency",
-										$root.$i18n.locale
+									$t("merch.price").replace(
+										"X",
+										selected_product[category].price / 100
 									)
 								}}
 							</h1>
@@ -335,11 +335,11 @@
 				grid-row: 1;
 				grid-column: 1;
 				text-align: center;
-				word-spacing: 3rem;
 			}
 			.product-content {
 				grid-row: 1;
 				grid-column: 2;
+				padding-left: 5rem;
 				h1 {
 					margin-top: 0px;
 				}
@@ -347,6 +347,7 @@
 					width: 40px;
 					height: 40px;
 					padding: 0px;
+					border: 2px solid transparent;
 				}
 				.colour-selected {
 					border: 2px solid #7289da;
@@ -384,10 +385,11 @@
 			.product-info {
 				display: grid;
 				grid-template-columns: 50%;
+				padding-left: 5rem;
 				.product-cart {
 					grid-column: 1;
 					width: 75%;
-					margin: 20px auto;
+					margin: 20px 0px;
 					padding: 0px;
 					border-radius: 0.5rem;
 				}
