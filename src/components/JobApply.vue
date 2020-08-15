@@ -99,7 +99,7 @@
 
 				if (this.errors == 0 && this.check) {
 					this.$axios
-						.post(`${process.env.apiBase}/jobs/apply`, {
+						.post(`/v2/jobs/apply`, {
 							position: this.job.jobName,
 							questions: this.job.questions,
 							token: this.$auth.$storage._state["_token.discord"]

@@ -48,6 +48,8 @@ module.exports = {
 		credentials: false
 	},
 	proxy: {
+		//!!! TEMPORARY UNTIL RECODE
+		"/v2": "https://api.premid.app",
 		"/v3": "https://api.premid.app"
 	},
 	helmet: {
