@@ -105,9 +105,15 @@
 								}"
 								:key="product.title"
 								@click="
+									log(selected_product[category]);
 									selected_product[category] = product;
+									selected_product[category].selected_colour =
+										product.colours[0];
 									selected_product[category].selected_id =
-										product.sizes[Object.keys(product.colours.sizes)[0]];
+										product.colours[0].sizes[
+											Object.keys(product.colours[0].sizes)[0]
+										];
+									log(product);
 								"
 							>
 								{{ $t("merch." + product.title) }}
@@ -245,9 +251,14 @@
 					listOfItems[id].count = 1;
 				}
 				console.log(listOfItems);
+			},
+			log(msg) {
+				console.log(msg);
 			}
 		},
-		async mounted() {},
+		async mounted() {
+			console.log(this.selected_product.Classic);
+		},
 		head: {
 			title: "Merch"
 		}
