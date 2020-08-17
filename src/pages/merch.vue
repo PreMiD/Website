@@ -105,7 +105,7 @@
 								}"
 								:key="product.title"
 								@click="
-									log(selected_product[category]);
+									log(selected_product[category].selected_colour);
 									selected_product[category] = product;
 									selected_product[category].selected_colour =
 										product.colours[0];
@@ -113,7 +113,7 @@
 										product.colours[0].sizes[
 											Object.keys(product.colours[0].sizes)[0]
 										];
-									log(product);
+									log(selected_product[category].selected_colour);
 								"
 							>
 								{{ $t("merch." + product.title) }}
@@ -219,14 +219,6 @@
 						this.$t("merch." + this.selected_product[category].title)
 					)
 				);
-			},
-			getPrice(amount) {
-				/*if (amount == null) return NaN;
-
-				var CurrencyCode = this.$root.$i18n.currency;
-				return (amount * (this.rates[CurrencyCode] || 1)) / 100;*/
-				return amount / 100;
-				//TODO Create currency selector
 			},
 			markdown(pls) {
 				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
