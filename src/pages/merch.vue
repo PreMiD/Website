@@ -73,6 +73,7 @@
 									}"
 									:key="colour.name"
 									@click="
+										log(colour);
 										selected_product[category].selected_colour = colour;
 										selected_product[category].selected_id =
 											colour.sizes[Object.keys(colour.sizes)[0]];
@@ -90,7 +91,11 @@
 										selected: selected_product[category].selected_id == size_id
 									}"
 									:key="size_name"
-									@click="selected_product[category].selected_id = size_id"
+									@click="
+										log(size_id);
+										selected_product[category].selected_id = size_id;
+										log(selected_product[category].selected_id);
+									"
 								>
 									{{ size_name.toUpperCase() }}
 								</button>
@@ -105,7 +110,7 @@
 								}"
 								:key="product.title"
 								@click="
-									log(selected_product[category].selected_colour);
+									log(product.colours);
 									selected_product[category] = product;
 									selected_product[category].selected_colour =
 										product.colours[0];
