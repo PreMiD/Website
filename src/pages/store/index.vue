@@ -21,7 +21,8 @@
 							removeFilter('url');
 							$refs.search.focus();
 						"
-					>url:</span>
+						>url:</span
+					>
 					<span
 						v-if="filters.tag.enabled"
 						v-tippy="{ content: $t('store.search.removeFilter') }"
@@ -29,7 +30,8 @@
 							removeFilter('tag');
 							$refs.search.focus();
 						"
-					>tag:</span>
+						>tag:</span
+					>
 					<span
 						v-if="filters.author.enabled"
 						v-tippy="{ content: $t('store.search.removeFilter') }"
@@ -37,7 +39,8 @@
 							removeFilter('author');
 							$refs.search.focus();
 						"
-					>author:</span>
+						>author:</span
+					>
 
 					<transition name="card-animation" mode="out-in">
 						<div
@@ -85,16 +88,16 @@
 					</transition>
 				</div>
 
-				<p class="sidebar__subheader">{{ $t("store.category.filters.heading") }}</p>
+				<p class="sidebar__subheader">
+					{{ $t("store.category.filters.heading") }}
+				</p>
 
 				<div class="checkbox-switcher">
 					<label>
 						<input type="checkbox" v-model="mostUsed" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<span class="title">
-							{{
-							$t("store.category.filters.mostUsed")
-							}}
+							{{ $t("store.category.filters.mostUsed") }}
 						</span>
 					</label>
 				</div>
@@ -118,9 +121,7 @@
 						<input type="checkbox" v-model="nsfw" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<span class="title">
-							{{
-							$t("store.category.filters.allowAdult")
-							}}
+							{{ $t("store.category.filters.allowAdult") }}
 						</span>
 					</label>
 				</div>
@@ -130,9 +131,7 @@
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<span class="title">
-							{{
-							$t("store.category.filters.likedOnly")
-							}}
+							{{ $t("store.category.filters.likedOnly") }}
 						</span>
 					</label>
 				</div>
@@ -202,11 +201,16 @@
 				<div class="presence-container">
 					<StoreCard
 						v-for="presence in paginatedData"
-						:key="presence.service"
-						:presence="presence"
-						:hot="hotPresences.includes(presence.service)"
+						:key="presence.metadata.service"
+						:presence="presence.metadata"
+						:hot="
+							hotPresences.filter(
+								p => p.metadata.service === presence.metadata.service
+							).length > 0
+						"
 						:partner="
-							partners.filter(p => p.storeName == presence.service).length
+							partners.filter(p => p.storeName == presence.metadata.service)
+								.length
 						"
 					/>
 				</div>
@@ -229,7 +233,10 @@
 			<span slot="breakViewContent"></span>
 		</paginate>
 
-		<adsense ad-slot="5201967746" style="text-align: center; margin-top: 0.25em;" />
+		<adsense
+			ad-slot="5201967746"
+			style="text-align: center; margin-top: 0.25em;"
+		/>
 	</section>
 </template>
 
@@ -242,15 +249,7 @@
 		},
 		async asyncData({ app, error }) {
 			try {
-				const usage = (await app.$axios(`${process.env.apiBase}/usage`))?.data
-						.users,
-					presenceRanking = (
-						await app.$axios(`${process.env.apiBase}/presenceUsage`)
-					)?.data,
-					partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
-						?.data;
-
-				const { presences } = await app.$graphql(
+				const { presences, partners, science } = await app.$graphql(
 					`
 					{
 						presences {
@@ -271,32 +270,26 @@
 								button
 								category
 							}
+							users
+						}
+						partners {
+							storeName
+						}
+						science {
+							users
 						}
 					}`
 				);
 
-				for (let key in presenceRanking) {
-					const score = presenceRanking[key] || 0,
-						index = presences.findIndex(
-							p => p?.metadata?.service?.toLowerCase() === key.toLowerCase()
-						);
-
-					if (index !== -1)
-						presences[index] = {
-							...presences[index]?.metadata,
-							usage: score
-						};
-				}
+				let usage = science.users;
 
 				return {
-					presences: presences || [],
-					topPresences: presenceRanking || [],
-					partners: partnersList,
-					hotPresences: Object.keys(presenceRanking || {})
-						.map((k, i) => {
-							if ((presenceRanking[k] / usage) * 100 > 5) return k;
-						})
-						.filter(p => p)
+					presences: presences,
+					topPresences: presences.sort((a, b) => b.users - a.users) || [],
+					partners: partners,
+					hotPresences: presences.filter(p => {
+						if ((p.users / usage) * 100 > 5) return p;
+					})
 				};
 			} catch (err) {
 				return error({ message: "API returned an error." });
@@ -329,58 +322,58 @@
 					.filter(presence => {
 						if (this.filters.url.enabled == true)
 							return (
-								(Array.isArray(presence.url) &&
-									presence.url.filter(url =>
+								(Array.isArray(presence.metadata.url) &&
+									presence.metadata.url.filter(url =>
 										url
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
 									).length > 0) ||
-								(typeof presence.url == "string" &&
-									presence.url
+								(typeof presence.metadata.url == "string" &&
+									presence.metadata.url
 										.toLowerCase()
 										.includes(this.presenceSearch.toLowerCase()))
 							);
 						else if (this.filters.author.enabled == true)
 							return (
-								presence.author.name
+								presence.metadata.author.name
 									.toLowerCase()
 									.includes(this.presenceSearch.toLowerCase()) ||
-								presence.author.id.includes(this.presenceSearch)
+								presence.metadata.author.id.includes(this.presenceSearch)
 							);
 						else if (this.filters.tag.enabled == true)
-							return Array.isArray(presence.tags)
-								? presence.tags.filter(tag =>
+							return Array.isArray(presence.metadata.tags)
+								? presence.metadata.tags.filter(tag =>
 										tag
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
-										).length > 0
+								  ).length > 0
 								: false;
 						else if (
 							!this.showAdded &&
-							(presence.service
-								?.toLowerCase()
+							(presence.metadata.service
+								.toLowerCase()
 								.includes(this.presenceSearch.toLowerCase()) ||
-								(Array.isArray(presence.altnames) &&
-									presence.altnames.filter(altname =>
+								(Array.isArray(presence.metadata.altnames) &&
+									presence.metadata.altnames.filter(altname =>
 										altname
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
 									).length > 0))
 						)
-							return !this.addedPresences.includes(presence.service);
+							return !this.addedPresences.includes(presence.metadata.service);
 						else
 							return (
-								presence.service
-									?.toLowerCase()
+								presence.metadata.service
+									.toLowerCase()
 									.includes(this.presenceSearch.toLowerCase()) ||
-								(Array.isArray(presence.tags) &&
-									presence.tags.filter(tag =>
+								(Array.isArray(presence.metadata.tags) &&
+									presence.metadata.tags.filter(tag =>
 										tag
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
 									).length > 0) ||
-								(Array.isArray(presence.altnames) &&
-									presence.altnames.filter(altname =>
+								(Array.isArray(presence.metadata.altnames) &&
+									presence.metadata.altnames.filter(altname =>
 										altname
 											.toLowerCase()
 											.includes(this.presenceSearch.toLowerCase())
@@ -388,27 +381,27 @@
 							);
 					})
 					.filter(presence =>
-						this.nsfw ? true : !presence.tags.includes("nsfw")
+						this.nsfw ? true : !presence.metadata.tags.includes("nsfw")
 					)
 					.filter(presence =>
 						this.filterLiked &&
 						this.$store.state.presences.likedPresences.includes(
-							presence.service
+							presence.metadata.service
 						)
 							? true
 							: !this.filterLiked
 					)
 					.filter(presence => {
 						if (this.currentCategory === "all") {
-							return presence;
+							return presence.metadata;
 						} else {
-							return presence.category == this.currentCategory;
+							return presence.metadata.category == this.currentCategory;
 						}
 					})
-					.sort((a, b) => a.service.localeCompare(b.service))
+					.sort((a, b) => a.metadata.service.localeCompare(b.metadata.service))
 					.sort((a, b) => {
 						if (this.mostUsed) {
-							return b.usage - a.usage;
+							return b.users - a.users;
 						}
 					});
 			},
@@ -544,73 +537,73 @@
 </script>
 
 <style lang="scss">
-@import "../../stylesheets/variables.scss";
+	@import "../../stylesheets/variables.scss";
 
-.store-menu__searchbar-container {
-	position: relative;
-
-	span {
-		position: absolute;
-		margin: 2px;
-		background-color: #191b24;
-		padding: 2.5px 5px;
-		border-radius: 4px;
-		cursor: pointer;
-	}
-
-	.searchSuggestions {
-		font-size: small;
-		z-index: 999;
-		position: absolute;
-		background-color: #191b24;
-		border-bottom-right-radius: 4px;
-		border-bottom-left-radius: 4px;
-		box-shadow: 0px 1px teal;
-		width: -webkit-fill-available;
-		width: -moz-available;
-		margin-top: 2.5em;
+	.store-menu__searchbar-container {
+		position: relative;
 
 		span {
-			position: unset;
-			width: 100%;
+			position: absolute;
+			margin: 2px;
+			background-color: #191b24;
+			padding: 2.5px 5px;
+			border-radius: 4px;
+			cursor: pointer;
 		}
 
-		.filterBox {
-			width: 100%;
-			display: inline-flex;
+		.searchSuggestions {
+			font-size: small;
+			z-index: 999;
+			position: absolute;
+			background-color: #191b24;
+			border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+			box-shadow: 0px 1px teal;
+			width: -webkit-fill-available;
+			width: -moz-available;
+			margin-top: 2.5em;
 
-			span:nth-child(1) {
-				float: left;
-				text-align: left;
+			span {
+				position: unset;
+				width: 100%;
 			}
 
-			span:nth-child(2) {
-				float: right;
-				text-align: right;
+			.filterBox {
+				width: 100%;
+				display: inline-flex;
+
+				span:nth-child(1) {
+					float: left;
+					text-align: left;
+				}
+
+				span:nth-child(2) {
+					float: right;
+					text-align: right;
+				}
 			}
+		}
+
+		display: flex;
+
+		button,
+		.button {
+			&:not(:last-child),
+			&:not(:first-child) {
+				border-radius: 0 0 0 0;
+			}
+
+			display: inline-block;
+			padding: 0.09rem 10px;
+			font-size: 14px;
+			line-height: 25px;
+			font-weight: bold;
 		}
 	}
 
-	display: flex;
-
-	button,
-	.button {
-		&:not(:last-child),
-		&:not(:first-child) {
-			border-radius: 0 0 0 0;
-		}
-
-		display: inline-block;
-		padding: 0.09rem 10px;
-		font-size: 14px;
-		line-height: 25px;
-		font-weight: bold;
+	.fa-search {
+		position: absolute;
+		margin-left: 0.6rem;
+		color: #74787c;
 	}
-}
-
-.fa-search {
-	position: absolute;
-	margin-left: 0.6rem;
-	color: #74787c;
-}
 </style>

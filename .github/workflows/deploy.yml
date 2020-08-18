@@ -13,7 +13,7 @@ jobs:
   DePloY:
     strategy:
       matrix:
-        host: [1.premid.app, 2.premid.app, 3.premid.app]
+        host: [1.premid.app]
     runs-on: "ubuntu-latest"
     steps:
       - name: Extract branch name

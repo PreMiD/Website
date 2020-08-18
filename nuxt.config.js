@@ -48,7 +48,9 @@ module.exports = {
 		credentials: false
 	},
 	proxy: {
-		"/v3": "https://api.premid.app/v3"
+		//!!! TEMPORARY UNTIL RECODE
+		"/v2": "https://api.premid.app",
+		"/v3": "http://localhost:3001"
 	},
 	helmet: {
 		frameguard: false,
@@ -105,6 +107,11 @@ module.exports = {
 				rel: "stylesheet",
 				type: "text/css",
 				href: "https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css"
+			},
+			{
+				rel: "stylesheet",
+				type: "text/css",
+				href: "/assets/fonts/Discord/font.css"
 			}
 		],
 		meta: [

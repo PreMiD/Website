@@ -2,7 +2,7 @@
 	<div class="modal-mask">
 		<div class="modal-wrapper">
 			<div class="limage">
-				<img src="../assets/images/pmd_logo2.png" />
+				<img src="../assets/images/pmd_logo-transparent.png" />
 				<div class="bottomText">
 					<p>
 						{{
@@ -99,7 +99,7 @@
 
 				if (this.errors == 0 && this.check) {
 					this.$axios
-						.post(`${process.env.apiBase}/jobs/apply`, {
+						.post(`/v2/jobs/apply`, {
 							position: this.job.jobName,
 							questions: this.job.questions,
 							token: this.$auth.$storage._state["_token.discord"]

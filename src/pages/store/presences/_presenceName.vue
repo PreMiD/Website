@@ -7,11 +7,17 @@
 						<div class="section">
 							<img
 								v-if="!isMobile"
-								@error="presence.metadata.logo = 'https://premid.app/assets/images/logo.png'"
+								@error="
+									presence.metadata.logo =
+										'https://premid.app/assets/images/logo.png'
+								"
 								:src="presence.metadata.logo"
 							/>
 
-							<h1 :style="`color: ${brightColorFix()}`" v-text="presence.metadata.service" />
+							<h1
+								:style="`color: ${brightColorFix()}`"
+								v-text="presence.metadata.service"
+							/>
 
 							<span
 								v-if="partner"
@@ -86,7 +92,10 @@
 						>
 							<i class="fa-github fab" />
 						</a>
-						<a class="button button--lg button--red button--like" @click="like()">
+						<a
+							class="button button--lg button--red button--like"
+							@click="like()"
+						>
 							<i
 								:class="
 									$store.state.presences.likedPresences.includes(
@@ -100,17 +109,29 @@
 					</div>
 					<hr />
 					<div
-						v-if="presence.metadata.button === false || presence.metadata.button === 'false'"
+						v-if="
+							presence.metadata.button === false ||
+							presence.metadata.button === 'false'
+						"
 						class="header__warning"
-					>{{ $t("store.card.presence.included") }}</div>
+					>
+						{{ $t("store.card.presence.included") }}
+					</div>
 				</div>
 				<div class="fullpresence__content">
 					<div class="content__description">
-						<h2 class="content__title">{{ $t("presence.sections.description.title") }}</h2>
-						<div class="description-container" v-html="linkify(getPresenceDescription())"></div>
+						<h2 class="content__title">
+							{{ $t("presence.sections.description.title") }}
+						</h2>
+						<div
+							class="description-container"
+							v-html="linkify(getPresenceDescription())"
+						></div>
 					</div>
 					<div class="content__info">
-						<h2 class="content__title">{{ $t("presence.sections.information.title") }}</h2>
+						<h2 class="content__title">
+							{{ $t("presence.sections.information.title") }}
+						</h2>
 						<ul class="info__sections">
 							<li v-if="presence.metadata.author">
 								<p>
@@ -150,12 +171,12 @@
 										:to="`/users/${contributor.id}`"
 									>
 										{{
-										contributor.name +
-										`${
-										presence.metadata.contributors.length === index + 1
-										? ""
-										: ", "
-										}`
+											contributor.name +
+											`${
+												presence.metadata.contributors.length === index + 1
+													? ""
+													: ", "
+											}`
 										}}
 									</nuxt-link>
 								</p>
@@ -171,7 +192,10 @@
 							</li>
 							<li v-if="presenceUsage && presenceUsage > 0">
 								<p>
-									<i class="fa-cart-arrow-down fas" style="margin-left: -4px;"></i>
+									<i
+										class="fa-cart-arrow-down fas"
+										style="margin-left: -4px;"
+									></i>
 									{{ $t("presence.sections.information.users") }}:
 									<span class="presence-version">
 										<b>{{ presenceUsage }}</b>
@@ -205,7 +229,10 @@
 									<i class="fa-link fas"></i>
 									{{ $t("presence.sections.information.supportedurls") }}:
 								</p>
-								<ul v-if="Array.isArray(presence.metadata.url)" class="presence-urls">
+								<ul
+									v-if="Array.isArray(presence.metadata.url)"
+									class="presence-urls"
+								>
 									<li v-for="url in presence.metadata.url" :key="url">
 										<a :href="`https://${url}`">{{ url }}</a>
 									</li>
@@ -213,9 +240,7 @@
 								<ul v-else-if="presence.metadata.url" class="presence-urls">
 									<li>
 										<a :href="`https://${presence.metadata.url}`">
-											{{
-											presence.metadata.url
-											}}
+											{{ presence.metadata.url }}
 										</a>
 									</li>
 								</ul>
@@ -229,29 +254,29 @@
 </template>
 
 <style lang="scss" scoped>
-.section {
-	img {
-		height: 64px;
-		width: 64px;
-		border-radius: 100%;
-		margin-right: 8px;
-		place-self: center;
-		transition: opacity 0.2s ease-in-out;
+	.section {
+		img {
+			height: 64px;
+			width: 64px;
+			border-radius: 100%;
+			margin-right: 8px;
+			place-self: center;
+			transition: opacity 0.2s ease-in-out;
 
-		&:hover {
-			opacity: 0.75;
+			&:hover {
+				opacity: 0.75;
+			}
+		}
+
+		h1 {
+			line-height: 100px;
+			margin-left: 25px;
 		}
 	}
 
-	h1 {
-		line-height: 100px;
-		margin-left: 25px;
+	.presence-badge {
+		place-self: center;
 	}
-}
-
-.presence-badge {
-	place-self: center;
-}
 </style>
 
 <script>
@@ -298,7 +323,7 @@
 				}
 				`
 				),
-				presenceData = presences?.[0];
+				presenceData = presences[0];
 
 			let data = {
 				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
@@ -397,35 +422,35 @@
 				if (!likedPresences)
 					localStorage.setItem(
 						"likedPresences",
-						this.$data?.presence?.metadata?.service
+						this.$data.presence.metadata.service
 					);
 				else if (
 					likedPresences
 						.split(",")
-						.includes(this.$data?.presence?.metadata?.service)
+						.includes(this.$data.presence.metadata.service)
 				) {
 					localStorage.setItem(
 						"likedPresences",
 						likedPresences
 							.split(",")
-							.filter(i => i !== this.$data?.presence?.metadata?.service)
+							.filter(i => i !== this.$data.presence.metadata.service)
 							.join(",")
 					);
 				} else if (
 					!likedPresences
 						.split(",")
-						.includes(this.$data?.presence?.metadata?.service)
+						.includes(this.$data.presence.metadata.service)
 				) {
 					let newPresences = likedPresences.split(",");
 
-					newPresences.push(this.$data?.presence?.metadata?.service);
+					newPresences.push(this.$data.presence.metadata.service);
 
 					localStorage.setItem("likedPresences", newPresences.join(","));
 				}
 
 				this.$store.commit(
 					"presences/like",
-					this.$data?.presence?.metadata?.service
+					this.$data.presence.metadata.service
 				);
 			},
 			linkify(description) {
@@ -469,10 +494,10 @@
 			}
 		},
 		head() {
-			if (this.$data?.presence?.error) return;
+			if (this.$data.presence.error) return;
 			let description =
-				this.$data?.presence?.metadata?.description["en"] ||
-				this.$data?.presence?.metadata?.description ||
+				this.$data.presence.metadata.description["en"] ||
+				this.$data.presence.metadata.description ||
 				"No description found.";
 
 			if (description.match(/\[([^\]]+)\]\(([^)]+)\)/g)) {
@@ -486,7 +511,7 @@
 				description = description.slice(0, 256) + "...";
 
 			return {
-				title: this.$data?.presence?.metadata?.service,
+				title: this.$data.presence.metadata.service,
 				meta: [
 					{
 						hid: "twitter:card",
@@ -506,18 +531,17 @@
 					{
 						hid: "twitter:image",
 						property: "twitter:image",
-						content: this.$data?.presence?.metadata?.logo
+						content: this.$data.presence.metadata.logo
 					},
 					{
 						hid: "theme-color",
 						property: "theme-color",
-						content: this.$data?.presence?.metadata?.color || "#000000"
+						content: this.$data.presence.metadata.color || "#000000"
 					},
 					{
 						hid: "title",
 						name: "title",
-						content:
-							this.$data?.presence?.metadata?.service || "Invalid Service"
+						content: this.$data.presence.metadata.service || "Invalid Service"
 					},
 					{
 						hid: "description",
@@ -528,7 +552,7 @@
 						hid: "og:title",
 						property: "og:title",
 						content:
-							this.$data?.presence?.metadata?.service ||
+							this.$data.presence.metadata.service ||
 							"The service you're looking for wasn't found in any of our records. You might want to try to check if it's still available on the store."
 					},
 					{
@@ -540,7 +564,7 @@
 						hid: "og:image",
 						property: "og:image",
 						content:
-							this.$data?.presence?.metadata?.logo ||
+							this.$data.presence.metadata.logo ||
 							"https://premid.app/assets/images/logo.png"
 					}
 				]

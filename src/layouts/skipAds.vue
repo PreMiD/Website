@@ -1,6 +1,11 @@
 <template>
 	<div>
-		<navigation noLinks="true" :target="target" :href="href" :countDownBtn="!probsUsingAdBlock" />
+		<navigation
+			noLinks="true"
+			:target="target"
+			:href="href"
+			:countDownBtn="!probsUsingAdBlock"
+		/>
 
 		<div class="adswrapper" v-if="!isMobile">
 			<adsense
@@ -25,12 +30,16 @@
 					v-if="countDown <= 0"
 					class="button"
 					@click="$router.go({ path: '/downloads' })"
-				>{{ $t("downloads.button.back") }}</button>
+				>
+					{{ $t("downloads.button.back") }}
+				</button>
 				<button
 					:disabled="countDown > 0"
 					:class="`button ${this.countDown > 0 ? 'disabled' : ''}`"
 					@click="countDown > 0 ? false : open(href)"
-				>{{ countDown > 0 ? countDown : $t("downloads.button.skip") }}</button>
+				>
+					{{ countDown > 0 ? countDown : $t("downloads.button.skip") }}
+				</button>
 			</div>
 		</div>
 
@@ -43,16 +52,13 @@
 			</div>
 
 			<div class="controls">
-				<button
-					class="button"
-					@click="$router.go({ path: '/downloads' })"
-				>{{ $t("downloads.button.done") }}</button>
+				<button class="button" @click="$router.go({ path: '/downloads' })">
+					{{ $t("downloads.button.done") }}
+				</button>
 			</div>
 
 			<a class="skip-anyway" @click="skipAnyway">
-				{{
-				texts[0]
-				}}
+				{{ texts[0] }}
 			</a>
 		</div>
 
@@ -101,7 +107,7 @@
 		beforeMount() {
 			let platform = this.$store.state.download.platform;
 			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-				navigator?.userAgent
+				navigator.userAgent
 			);
 
 			this.target = platform === "chrome" ? "_blank" : null;
@@ -157,138 +163,138 @@
 </script>
 
 <style lang="scss" scoped>
-.adswrapper {
-	justify-content: space-between;
-	display: flex;
-	padding: 0 1em;
-	height: 85vh;
-}
-
-.skip-anyway {
-	font-size: 1rem;
-	position: absolute;
-	bottom: -1.5em;
-	left: 0;
-	width: 100%;
-	transition: opacity 0.2s ease-in-out;
-
-	&:hover {
-		opacity: 0.75;
-	}
-}
-
-.space {
-	.left,
-	.right {
-		width: 250px;
+	.adswrapper {
+		justify-content: space-between;
+		display: flex;
+		padding: 0 1em;
 		height: 85vh;
 	}
 
-	&.bottom {
-		text-align: -webkit-center;
-		text-align: -moz-center;
-		width: 100%;
-		height: 250px;
-	}
-}
-
-.note {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translateX(-50%) translateY(-50%);
-	box-shadow: 0 10px 20px -2px rgba(27, 33, 58, 0.4);
-	background-color: #191b24;
-	font-size: 25px;
-	width: 350px;
-	padding: 15px;
-	border-radius: 10px;
-
-	&.smol {
-		width: 400px;
-		padding: 1em;
-
-		img {
-			height: 128px;
-		}
-
-		.controls {
-			position: absolute;
-			right: 0;
-			bottom: 0;
-			padding: 0.75em;
-
-			.button {
-				margin-right: unset;
-				padding: 0.5em 1em;
-				font-size: large;
-			}
-		}
-	}
-
-	.title {
-		margin: 0;
-		font-size: large;
-		color: #7289da;
-		text-transform: uppercase;
-	}
-
-	.disable {
-		display: flex;
-
-		p {
-			height: fit-content;
-			padding: 0;
-			margin: 0 0 0 4px;
-			font-size: large;
-			text-overflow: ellipsis;
-			overflow: hidden;
-		}
-	}
-
-	.description {
-		margin: 0;
-		font-size: large;
-	}
-}
-
-@media only screen and (max-width: 600px) {
-	.adswrapper {
-		display: unset;
-	}
-
-	.note {
-		position: relative;
+	.skip-anyway {
+		font-size: 1rem;
+		position: absolute;
+		bottom: -1.5em;
 		left: 0;
-		transform: unset;
-		margin-bottom: unset;
-		width: unset;
+		width: 100%;
+		transition: opacity 0.2s ease-in-out;
 
-		&.smol {
-			margin-bottom: 1em;
-			width: unset;
-		}
-
-		.mobile {
-			font-size: medium;
-			text-align: center;
-			padding-top: 1em;
-
-			.disabled {
-				filter: grayscale(1);
-				transition: filter 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-			}
+		&:hover {
+			opacity: 0.75;
 		}
 	}
 
 	.space {
-		width: 250px;
-		height: 600px;
+		.left,
+		.right {
+			width: 250px;
+			height: 85vh;
+		}
 
 		&.bottom {
-			position: absolute;
-			bottom: 0;
+			text-align: -webkit-center;
+			text-align: -moz-center;
+			width: 100%;
+			height: 250px;
 		}
 	}
-}
+
+	.note {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		box-shadow: 0 10px 20px -2px rgba(27, 33, 58, 0.4);
+		background-color: #191b24;
+		font-size: 25px;
+		width: 350px;
+		padding: 15px;
+		border-radius: 10px;
+
+		&.smol {
+			width: 400px;
+			padding: 1em;
+
+			img {
+				height: 128px;
+			}
+
+			.controls {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				padding: 0.75em;
+
+				.button {
+					margin-right: unset;
+					padding: 0.5em 1em;
+					font-size: large;
+				}
+			}
+		}
+
+		.title {
+			margin: 0;
+			font-size: large;
+			color: #7289da;
+			text-transform: uppercase;
+		}
+
+		.disable {
+			display: flex;
+
+			p {
+				height: fit-content;
+				padding: 0;
+				margin: 0 0 0 4px;
+				font-size: large;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+
+		.description {
+			margin: 0;
+			font-size: large;
+		}
+	}
+
+	@media only screen and (max-width: 600px) {
+		.adswrapper {
+			display: unset;
+		}
+
+		.note {
+			position: relative;
+			left: 0;
+			transform: unset;
+			margin-bottom: unset;
+			width: unset;
+
+			&.smol {
+				margin-bottom: 1em;
+				width: unset;
+			}
+
+			.mobile {
+				font-size: medium;
+				text-align: center;
+				padding-top: 1em;
+
+				.disabled {
+					filter: grayscale(1);
+					transition: filter 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+				}
+			}
+		}
+
+		.space {
+			width: 250px;
+			height: 600px;
+
+			&.bottom {
+				position: absolute;
+				bottom: 0;
+			}
+		}
+	}
 </style>

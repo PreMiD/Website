@@ -28,7 +28,7 @@
 		methods: {
 			open(ev, url) {
 				if (
-					ev.srcElement?.parentElement?.parentElement?.classList?.contains(
+					ev.srcElement.parentElement.parentElement.classList.contains(
 						"current"
 					) &&
 					url
