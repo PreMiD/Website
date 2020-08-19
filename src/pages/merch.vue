@@ -196,13 +196,9 @@
 								)[0]
 							];
 					}
-					var ratedata = await app.$axios.get(
-						`${process.env.apiBase}/currencyRates`
-					);
 					return {
 						products: data.data,
-						selected_product: default_product,
-						rates: ratedata.data[0].rates
+						selected_product: default_product
 					};
 				});
 		},
