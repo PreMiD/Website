@@ -36,7 +36,13 @@
 						<input class="address2" />
 						<div class="countrystatezip">
 							<h3 class="country">{{ $t("checkout.country") }}</h3>
-							<select class="country" />
+							<select class="country">
+								<option
+									value="uk
+								"
+									>United Kingdom</option
+								>
+							</select>
 							<h3 class="state">{{ $t("checkout.state") }}</h3>
 							<select class="state" />
 							<h3 class="zip">{{ $t("checkout.zip") }}</h3>
@@ -104,12 +110,10 @@
 <style lang="scss" scoped>
 	@import "../stylesheets/variables.scss";
 
-	#billingHeader {
-		text-align: left;
-	}
-
 	.main {
+		text-align: left;
 		display: grid;
+		margin: 0 5%;
 		.billingForm {
 			h3 {
 				color: white;
@@ -119,7 +123,7 @@
 			.formInfo {
 				.nameForm {
 					display: grid;
-					grid-column-gap: 5%;
+					grid-column-gap: 10%;
 					h3 {
 						grid-row: 1;
 					}
@@ -139,11 +143,17 @@
 					h3 {
 						grid-row: 1;
 					}
+					select {
+						grid-row: 2;
+					}
 					input {
 						grid-row: 2;
 					}
 				}
 				input {
+					background: transparent;
+					border: none;
+					border-bottom: 2px solid $accent-secondary;
 				}
 			}
 		}
