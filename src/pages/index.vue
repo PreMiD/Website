@@ -284,6 +284,7 @@
 	import ytmusicLogo from "@/assets/images/youtube-music.png";
 	import premidLogo from "@/assets/images/pmd_logo.png";
 	import steamLogo from "@/assets/images/steam.png";
+	import vliveLogo from "@/assets/images/vlive.png";
 
 	import cardThumbnail1 from "@/assets/images/cards/card1.png";
 	import cardThumbnail2 from "@/assets/images/cards/card2.png";
@@ -388,8 +389,15 @@
 						service_title: "Twitch",
 						serviceLogo: twitchLogo,
 						smallImage: true,
-						data: ["Just Chattin", "Bas950"],
+						data: ["Valorant", "Shroud"],
 						presence_time: "49:12"
+					},
+					{
+						service_title: "V LIVE",
+						serviceLogo: vliveLogo,
+						smallImage: true,
+						data: ["[LOONA] Orbit! Thank you ❤️", "이달의 소녀(LOONA)"],
+						presence_time: "9:50"
 					}
 				]
 			};
