@@ -48,9 +48,8 @@ module.exports = {
 		credentials: false
 	},
 	proxy: {
-		//!!! TEMPORARY UNTIL RECODE
-		"/v2": "https://api.premid.app",
-		"/v3": "http://localhost:3001"
+		"/v2": process.env.API_PROXY || "https://api.premid.app",
+		"/v3": process.env.API_PROXY || "http://api.premid.app"
 	},
 	helmet: {
 		frameguard: false,
@@ -76,8 +75,8 @@ module.exports = {
 		}
 	},
 	env: {
-		apiBase: "https://api.premid.app/v2",
-		graphQLapiBase: "https://api.premid.app/v3"
+		apiBase: process.env.API_BASE || "https://api.premid.app/v2",
+		graphQLapiBase: process.env.API_BASE_GRAPHQL || "https://api.premid.app/v3"
 	},
 	loading: "~/components/Loader.vue",
 	head: {
