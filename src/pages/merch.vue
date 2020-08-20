@@ -246,21 +246,6 @@
 						)}</span></strong>`
 					);
 				})[0];
-			},
-			cartProducts() {
-				const cart = localStorage.getItem("cartProducts");
-				if (cart == null) return;
-
-				let listOfItems = {};
-				for (let id of cart.split(",")) {
-					if (listOfItems[id]) return listOfItems[id].count++;
-					listOfItems[id] = [];
-					listOfItems[id].count = 1;
-				}
-				console.log(listOfItems);
-			},
-			log(msg) {
-				console.log(msg);
 			}
 		},
 		async mounted() {
