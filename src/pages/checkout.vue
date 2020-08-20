@@ -37,7 +37,8 @@
 						<div class="countrystatezip">
 							<h3 class="country">{{ $t("checkout.country") }}</h3>
 							<select class="country">
-								<option
+								<option value="" selected disabled hidden>Choose </option
+								><option
 									value="uk
 								"
 									>United Kingdom</option
@@ -114,6 +115,16 @@
 		text-align: left;
 		display: grid;
 		margin: 0 5%;
+		h1 {
+			color: white;
+		}
+		h2,
+		h4 {
+			color: $accent-primary;
+		}
+		h4 {
+			font-weight: 300;
+		}
 		.billingForm {
 			h3 {
 				color: white;
@@ -145,6 +156,10 @@
 					}
 					select {
 						grid-row: 2;
+						background: rgba(17, 18, 24, 10);
+						color: $accent-secondary;
+						border: 2px solid $accent-secondary;
+						border-radius: 5px;
 					}
 					input {
 						grid-row: 2;
@@ -154,6 +169,7 @@
 					background: transparent;
 					border: none;
 					border-bottom: 2px solid $accent-secondary;
+					width: 100%;
 				}
 			}
 		}
