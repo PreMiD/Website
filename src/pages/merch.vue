@@ -52,10 +52,13 @@
 							/>
 						</div>
 						<div class="product-content">
-							<h1 v-html="markdown($t('merch.' + category))" />
+							<h1 v-html="markdown($t('merch.' + category.toLowerCase()))" />
 							<p>
 								{{
-									$t("merch.description." + selected_product[category].title)
+									$t(
+										"merch.description." +
+											selected_product[category].title.toLowerCase()
+									)
 								}}
 							</p>
 							<h1
@@ -72,13 +75,16 @@
 											colour.name
 									}"
 									:key="colour.name"
+									v-tippy="{
+										content: $t('merch.' + colour.name.toLowerCase())
+									}"
 									@click="
 										log(colour);
 										selected_product[category].selected_colour = colour;
 										selected_product[category].selected_id =
 											colour.sizes[Object.keys(colour.sizes)[0]];
 									"
-									:style="'background-color:#' + colour.hex"
+									:style="'background-color: #' + colour.hex"
 								></button>
 							</div>
 							<h1 class="product-size" v-html="markdown($t('merch.fit'))" />
@@ -91,6 +97,14 @@
 										selected: selected_product[category].selected_id == size_id
 									}"
 									:key="size_name"
+									v-tippy="{
+										content: $t(
+											'merch.' +
+												selected_product[category].title.toLowerCase() +
+												'.' +
+												size_name.toLowerCase()
+										)
+									}"
 									@click="
 										log(size_id);
 										selected_product[category].selected_id = size_id;
@@ -118,10 +132,10 @@
 										product.colours[0].sizes[
 											Object.keys(product.colours[0].sizes)[0]
 										];
-									log(selected_product[category].selected_colour);
+									log(selected_product[category]);
 								"
 							>
-								{{ $t("merch." + product.title) }}
+								{{ $t("merch." + product.title.toLowerCase()) }}
 							</button>
 						</div>
 						<div class="product-info">
@@ -131,7 +145,7 @@
 							<h1 ref="product_price">
 								{{
 									$t("merch.price").replace(
-										"X",
+										"{0}",
 										selected_product[category].price / 100
 									)
 								}}
