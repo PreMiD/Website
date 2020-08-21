@@ -49,7 +49,7 @@ module.exports = {
 	},
 	proxy: {
 		//!!! TEMPORARY UNTIL RECODE
-		"/v2": "https://api.premid.app",
+		"/v2": "http://localhost:3001",
 		"/v3": "http://localhost:3001"
 	},
 	helmet: {
@@ -76,7 +76,7 @@ module.exports = {
 		}
 	},
 	env: {
-		apiBase: "https://api.premid.app/v2",
+		apiBase: "http://localhost:3001/v2",
 		graphQLapiBase: "https://api.premid.app/v3"
 	},
 	loading: "~/components/Loader.vue",

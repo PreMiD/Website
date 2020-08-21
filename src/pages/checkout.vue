@@ -17,41 +17,70 @@
 				</svg>
 			</div>
 			<div class="main">
-				<div class="billingForm">
+				<div class="shippingForm">
 					<h1 id="billingHeader">{{ $t("checkout.title") }}</h1>
-					<h2 id="billingHeader">{{ $t("checkout.billing") }}</h2>
+					<h2 id="billingHeader">{{ $t("checkout.shipping") }}</h2>
 					<h4 id="billingSubHeader">{{ $t("checkout.subtitle") }}</h4>
 					<div class="formInfo">
 						<div class="nameForm">
 							<h3 class="fname">{{ $t("checkout.fname") }}</h3>
 							<h3 class="lname">{{ $t("checkout.lname") }}</h3>
-							<input class="fname" />
-							<input class="lname" />
+							<input class="fname" autocomplete="given-name" />
+							<input class="lname" autocomplete="family-name" />
 						</div>
 						<h3 class="email">{{ $t("checkout.email") }}</h3>
-						<input class="email" />
+						<input class="email" autocomplete="email" />
 						<h3 class="address">{{ $t("checkout.address") }}</h3>
-						<input class="address" />
+						<input class="address" autocomplete="address-line1" />
 						<h3 class="address2">{{ $t("checkout.address2") }}</h3>
-						<input class="address2" />
+						<input class="address2" autocomplete="address-line2" />
+						<h3 class="city">{{ $t("checkout.city") }}</h3>
+						<input class="city" />
 						<div class="countrystatezip">
 							<h3 class="country">{{ $t("checkout.country") }}</h3>
-							<select class="country">
-								<option value="" selected disabled hidden>Choose </option
-								><option
-									value="uk
-								"
-									>United Kingdom</option
+							<select class="country" v-model="selectedCountry">
+								<option
+									v-for="country in countries"
+									:key="country.name"
+									:value="country"
+									>{{ $t("shipping." + country.code.toLowerCase()) }}</option
 								>
 							</select>
-							<h3 class="state">{{ $t("checkout.state") }}</h3>
-							<select class="state" />
+							<h3 v-if="selectedCountry.states" class="state">
+								{{ $t("checkout.state") }}
+							</h3>
+							<select class="state" autocomplete="address-level1">
+								<option
+									v-for="state in selectedCountry.states"
+									:key="state.name"
+									:value="state"
+									>{{
+										$t(
+											"shipping." +
+												selectedCountry.code.toLowerCase() +
+												"." +
+												state.code.toLowerCase()
+										)
+									}}</option
+								>
+							</select>
 							<h3 class="zip">{{ $t("checkout.zip") }}</h3>
-							<input class="zip" />
+							<input class="zip" autocomplete="postal-code" />
 						</div>
 					</div>
 				</div>
-				<div class="orderList"></div>
+				<div class="orderList">
+					<h2 class="cartTitle">{{ $t("checkout.cart") }}</h2>
+					<div class="cartProducts">
+						<div class="items">
+							<div v-for="(item, index) in usersItems" :key="index">
+								{{ item }}
+							</div>
+						</div>
+						<div class="promo"></div>
+						<div class="total"></div>
+					</div>
+				</div>
 				<div class="waves-divider waves-divider_bottom">
 					<svg
 						class="wave"
@@ -75,33 +104,30 @@
 <script>
 	export default {
 		name: "Checkout",
+		async asyncData({ app }) {
+			return app.$axios
+				.get(`${process.env.apiBase}/printfulCountries`)
+				.then(async data => {
+					return {
+						countries: data.data,
+						selectedCountry: data.data[0],
+						usersItems: []
+					};
+				});
+		},
 		methods: {
-			markdown(pls) {
-				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
-				return pls.match(/(\*\*.*?\*\*)/g).map((ch, i) => {
-					return pls.replace(
-						ch,
-						`<strong><span class="text-highlight">${ch.slice(
-							2,
-							ch.length - 2
-						)}</span></strong>`
-					);
-				})[0];
-			},
-			cartProducts() {
-				const cart = localStorage.getItem("cartProducts");
-				if (cart == null) return;
-
-				let listOfItems = {};
+			getProductInfo() {}
+		},
+		mounted() {
+			let cart = localStorage.getItem("cartProducts");
+			if (cart) {
+				let listOfItems = [];
 				for (let id of cart.split(",")) {
-					if (listOfItems[id]) return listOfItems[id].count++;
-					listOfItems[id] = [];
-					listOfItems[id].count = 1;
+					listOfItems.push(id);
 				}
-				console.log(listOfItems);
+				this.usersItems = listOfItems;
 			}
 		},
-		async mounted() {},
 		head: {
 			title: "Checkout"
 		}
@@ -114,6 +140,7 @@
 	.main {
 		text-align: left;
 		display: grid;
+		grid-column-gap: 5%;
 		margin: 0 5%;
 		h1 {
 			color: white;
@@ -125,7 +152,7 @@
 		h4 {
 			font-weight: 300;
 		}
-		.billingForm {
+		.shippingForm {
 			h3 {
 				color: white;
 			}
@@ -170,12 +197,20 @@
 					border: none;
 					border-bottom: 2px solid $accent-secondary;
 					width: 100%;
+					font-size: 20px;
 				}
 			}
 		}
 		.orderList {
 			grid-row: 1;
 			grid-column: 2;
+			background: $background-primary;
+			border-radius: 5px;
+			padding: 15px;
+			height: auto;
+			.cartProducts {
+				border: 1px $accent-secondary;
+			}
 		}
 	}
 </style>
