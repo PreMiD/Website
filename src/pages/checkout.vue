@@ -106,7 +106,7 @@
 		name: "Checkout",
 		async asyncData({ app }) {
 			return app.$axios
-				.get(`${process.env.apiBase}/printfulCountries`)
+				.get(`${process.env.apiBase}/printful/countries`)
 				.then(async data => {
 					return {
 						countries: data.data,
