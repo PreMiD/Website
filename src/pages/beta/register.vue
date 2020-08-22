@@ -43,7 +43,7 @@
 		async asyncData({ $auth, error, $t, app }) {
 			if ($auth.loggedIn) {
 				let { data } = await app.$axios.post(
-					`${process.env.apiBase}/addBetaUser/${$auth.$storage._state["_token.discord"]}`
+					`/v2/addBetaUser/${$auth.$storage._state["_token.discord"]}`
 				);
 
 				if (!data.error) {

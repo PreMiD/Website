@@ -1,3 +1,7 @@
+const baseURL = process.env.HOSTNAME
+	? `http://${process.env.HOSTNAME}`
+	: "http://localhost:3001";
+
 module.exports = {
 	rootDir: "./",
 	srcDir: "src",
@@ -43,17 +47,14 @@ module.exports = {
 	],
 	components: true,
 	axios: {
+		baseURL: baseURL,
 		proxy: true,
 		retry: { retries: 3 },
 		credentials: false
 	},
 	proxy: {
-		"/v2": process.env.HOSTNAME
-			? `http://${process.env.HOSTNAME}`
-			: false || "https://api.premid.app",
-		"/v3": process.env.HOSTNAME
-			? `http://${process.env.HOSTNAME}`
-			: false || "https://api.premid.app"
+		"/v2": baseURL,
+		"/v3": baseURL
 	},
 	helmet: {
 		frameguard: false,
