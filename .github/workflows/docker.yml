@@ -1,7 +1,7 @@
 name: Build Docker Image
 on:
   push:
-    branches: ["stable", "master"]
+    branches: [stable, master]
 jobs:
   build:
     runs-on: ubuntu-latest
