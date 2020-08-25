@@ -1,6 +1,6 @@
 const baseURL = process.env.HOSTNAME
 	? `http://${process.env.HOSTNAME}`
-	: "http://localhost:3001";
+	: "https://api.premid.app";
 
 module.exports = {
 	rootDir: "./",
@@ -41,7 +41,6 @@ module.exports = {
 				tag: "adsense"
 			}
 		],
-		"nuxt-helmet",
 		"@nuxtjs/axios",
 		"@nuxtjs/auth"
 	],
@@ -56,6 +55,7 @@ module.exports = {
 		"/v2": baseURL,
 		"/v3": baseURL
 	},
+	//! Helmet removed for now as it doesn't work...
 	helmet: {
 		frameguard: false,
 		xssFilter: true,
