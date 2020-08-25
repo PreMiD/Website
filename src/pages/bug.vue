@@ -204,7 +204,7 @@
 
 				this.$axios
 					.post(
-						`${process.env.apiBase}/bugPost/${this.$auth.$storage._state["_token.discord"]}`,
+						`/v2/bugPost/${this.$auth.$storage._state["_token.discord"]}`,
 						newReport
 					)
 					.then(response => {
@@ -220,9 +220,7 @@
 			this.$auth.$storage.setUniversal("redirect", "/bug");
 			if (!this.$auth.loggedIn) return this.$router.push("/login");
 			this.$axios
-				.get(
-					`${process.env.apiBase}/bugUserInfo/${this.$auth.$storage._state["_token.discord"]}`
-				)
+				.get(`/v2/bugUserInfo/${this.$auth.$storage._state["_token.discord"]}`)
 				.then(data => {
 					if (
 						data.data === null ||

@@ -261,10 +261,8 @@
 		name: "Userpage",
 		auth: false,
 		async asyncData({ params, app }) {
-			const user = (
-					await app.$axios(`${process.env.apiBase}/credits/${params.userId}`)
-				).data,
-				presences = (await app.$axios(`${process.env.apiBase}/presences`)).data;
+			const user = (await app.$axios(`/v2/credits/${params.userId}`)).data,
+				presences = (await app.$axios(`/v2/presences`)).data;
 
 			user.roles = user.roles.sort();
 

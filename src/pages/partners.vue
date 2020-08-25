@@ -174,8 +174,8 @@
 		async asyncData({ app, error }) {
 			try {
 				return {
-					partners: (await app.$axios(`${process.env.apiBase}/partners`)).data,
-					sponsors: (await app.$axios(`${process.env.apiBase}/sponsors`)).data,
+					partners: (await app.$axios(`/v2/partners`)).data,
+					sponsors: (await app.$axios(`/v2/sponsors`)).data,
 					randomImages: [
 						aniflix_icon,
 						aok_icon,

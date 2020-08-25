@@ -114,7 +114,7 @@
 					this.error = this.$t("partners.apply.error3");
 				else {
 					this.$axios
-						.post(`${process.env.apiBase}/partners/apply`, {
+						.post(`/v2/partners/apply`, {
 							type: this.type,
 							name: this.name,
 							link: this.link,

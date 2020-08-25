@@ -373,7 +373,7 @@
 				if ($auth.loggedIn) {
 					let { access } = (
 						await app.$axios.get(
-							`${process.env.apiBase}/alphaAccess/${$auth.user.id}`
+							`/v2/alphaAccess/${$auth.user.id}`
 						)
 					).data;
 
@@ -384,7 +384,7 @@
 
 						let { app_links, ext_links } = (
 							await app.$axios.post(
-								`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/alpha`
+								`/v2/downloads/${$auth.$storage._state["_token.discord"]}/alpha`
 							)
 						).data;
 
@@ -395,14 +395,14 @@
 						tab = "alpha";
 
 						let { data } = await app.$axios.post(
-							`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/beta`
+							`/v2/downloads/${$auth.$storage._state["_token.discord"]}/beta`
 						);
 						beta.app_links = data.app_links;
 						beta.ext_links = data.ext_links;
 					} else {
 						let { access } = (
 							await app.$axios(
-								`${process.env.apiBase}/betaAccess/${$auth.user.id}`
+								`/v2/betaAccess/${$auth.user.id}`
 							)
 						).data;
 						beta.access = access;
@@ -430,7 +430,7 @@
 					tab,
 					alpha,
 					beta
-					betaUsers: (await app.$axios(`${process.env.apiBase}/betaUsers`)).data
+					betaUsers: (await app.$axios(`/v2/betaUsers`)).data
 						.betaUsers*/
 				};
 			} catch (err) {
