@@ -79,7 +79,6 @@
 										content: $t('merch.' + colour.name.toLowerCase())
 									}"
 									@click="
-										log(colour);
 										selected_product[category].selected_colour = colour;
 										selected_product[category].selected_id =
 											colour.sizes[Object.keys(colour.sizes)[0]];
@@ -105,11 +104,7 @@
 												size_name.toLowerCase()
 										)
 									}"
-									@click="
-										log(size_id);
-										selected_product[category].selected_id = size_id;
-										log(selected_product[category].selected_id);
-									"
+									@click="selected_product[category].selected_id = size_id"
 								>
 									{{ size_name.toUpperCase() }}
 								</button>
@@ -124,7 +119,6 @@
 								}"
 								:key="product.title"
 								@click="
-									log(product.colours);
 									selected_product[category] = product;
 									selected_product[category].selected_colour =
 										product.colours[0];
@@ -132,7 +126,6 @@
 										product.colours[0].sizes[
 											Object.keys(product.colours[0].sizes)[0]
 										];
-									log(selected_product[category]);
 								"
 							>
 								{{ $t("merch." + product.title.toLowerCase()) }}
@@ -194,7 +187,7 @@
 		name: "Merch",
 		async asyncData({ app }) {
 			return app.$axios
-				.get(`${process.env.apiBase}/products`)
+				.get(`${process.env.apiBase}/printful/products`)
 				.then(async data => {
 					var Categories = data.data.Categories;
 					var default_product = {};
@@ -210,6 +203,7 @@
 								)[0]
 							];
 					}
+					console.log(data.data.Products);
 					return {
 						products: data.data,
 						selected_product: default_product
@@ -218,14 +212,17 @@
 		},
 		methods: {
 			addProduct(category) {
-				var itemIdToAdd = this.selected_product[category].selected_id;
-				if (itemIdToAdd === null)
+				var itemToAdd = this.selected_product[category].item_id;
+				itemToAdd += "-" + this.selected_product[category].selected_colour.name;
+				itemToAdd += "-" + this.selected_product[category].selected_id;
+
+				if (itemToAdd === "--")
 					return this.$noty.error(this.$t("merch.error.noitem"));
 				let cartProducts = localStorage.getItem("cartProducts");
-				if (!cartProducts) localStorage.setItem("cartProducts", itemIdToAdd);
+				if (!cartProducts) localStorage.setItem("cartProducts", itemToAdd);
 				else {
 					cartProducts = cartProducts.split(",");
-					cartProducts.push(itemIdToAdd);
+					cartProducts.push(itemToAdd);
 					localStorage.setItem("cartProducts", cartProducts.join(","));
 				}
 				this.$noty.success(
@@ -248,9 +245,7 @@
 				})[0];
 			}
 		},
-		async mounted() {
-			console.log(this.selected_product.Classic);
-		},
+		mounted() {},
 		head: {
 			title: "Merch"
 		}
