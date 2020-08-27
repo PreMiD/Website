@@ -70,11 +70,14 @@
 					</div>
 				</div>
 				<div class="orderList">
-					<h2 class="cartTitle">{{ $t("checkout.cart") }}</h2>
+					<div class="listTop">
+					<h2 id="title">{{ $t("checkout.cart") }}</h2>
+					<h2 id="count">{{usersItems.length}}</h2>
+					</div>
 					<div class="cartProducts">
 						<div class="items">
 							<div v-for="(item, index) in usersItems" :key="index">
-								{{ item }}
+								{{ usersItemsInfo[index] }}
 							</div>
 						</div>
 						<div class="promo"></div>
@@ -109,15 +112,14 @@
 				.get(`${process.env.apiBase}/printful/countries`)
 				.then(async data => {
 					return {
-						countries: data.data,
-						selectedCountry: data.data[0],
-						usersItems: []
+						countries: data.data.countries,
+						selectedCountry: data.data.countries[0],
+						usersItems: [],
+						usersItemsInfo: []
 					};
 				});
 		},
-		methods: {
-			getProductInfo() {}
-		},
+		methods: {},
 		mounted() {
 			let cart = localStorage.getItem("cartProducts");
 			if (cart) {
@@ -126,6 +128,15 @@
 					listOfItems.push(id);
 				}
 				this.usersItems = listOfItems;
+				for (let item of listOfItems) {
+					this.$axios
+						.get(`${process.env.apiBase}/printful/productInfo/${item}`)
+						.then(async data => {
+							this.usersItemsInfo.push(data.data.product);
+						});
+				}
+			} else {
+				return this.$router.push("/merch");
 			}
 		},
 		head: {
@@ -208,6 +219,18 @@
 			border-radius: 5px;
 			padding: 15px;
 			height: auto;
+			.listTop{
+				display:grid;
+				#title{
+					grid-column:1;
+					grid-row:1;
+				}
+				#count{
+					grid-column:2;
+					grid-row:1;
+					text-align:right;
+				}
+			}
 			.cartProducts {
 				border: 1px $accent-secondary;
 			}
