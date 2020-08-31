@@ -71,17 +71,39 @@
 				</div>
 				<div class="orderList">
 					<div class="listTop">
-					<h2 id="title">{{ $t("checkout.cart") }}</h2>
-					<h2 id="count">{{usersItems.length}}</h2>
+						<h2 id="title">{{ $t("checkout.cart") }}</h2>
+						<h2 id="count">{{ usersItems.length }}</h2>
 					</div>
 					<div class="cartProducts">
 						<div class="items">
-							<div v-for="(item, index) in usersItems" :key="index">
-								{{ usersItemsInfo[index] }}
+							<div v-for="(item, index) in usersItemsInfo" :key="index">
+								<h3>
+									{{
+										$t(
+											"merch." + usersItemsInfo[index].category.toLowerCase()
+										) +
+										" - " +
+										$t("merch." + usersItemsInfo[index].title.toLowerCase())
+									}}
+								</h3>
+								<h3>
+									{{
+										$t("merch.size") +
+										": " +
+										productSize(index) +
+										"  " +
+										$t("merch.colour") +
+										": " +
+										$t("merch." + usersItems[index].split("-")[1].toLowerCase())
+									}}
+								</h3>
 							</div>
 						</div>
 						<div class="promo"></div>
-						<div class="total"></div>
+						<div class="total">
+							<div class="pattern"></div>
+							<h2>{{ $t("checkout.total") }}</h2>
+						</div>
 					</div>
 				</div>
 				<div class="waves-divider waves-divider_bottom">
@@ -119,7 +141,22 @@
 					};
 				});
 		},
-		methods: {},
+		methods: {
+			productSize(index) {
+				let usersItems = this.usersItems[index];
+				let sizeString;
+				this.usersItemsInfo[index].colours.find(function (colour) {
+					if (colour.name == usersItems.split("-")[1]) {
+						Object.keys(colour.sizes).forEach(size => {
+							if (colour.sizes[size] == usersItems.split("-")[2]) {
+								sizeString = size.toUpperCase();
+							}
+						});
+					}
+				});
+				return sizeString;
+			}
+		},
 		mounted() {
 			let cart = localStorage.getItem("cartProducts");
 			if (cart) {
@@ -128,13 +165,15 @@
 					listOfItems.push(id);
 				}
 				this.usersItems = listOfItems;
-				for (let item of listOfItems) {
-					this.$axios
-						.get(`${process.env.apiBase}/printful/productInfo/${item}`)
-						.then(async data => {
-							this.usersItemsInfo.push(data.data.product);
-						});
-				}
+				this.$axios
+					.get(
+						`${process.env.apiBase}/printful/productInfo/${localStorage.getItem(
+							"cartProducts"
+						)}`
+					)
+					.then(async data => {
+						this.usersItemsInfo = data.data.items;
+					});
 			} else {
 				return this.$router.push("/merch");
 			}
@@ -218,21 +257,57 @@
 			background: $background-primary;
 			border-radius: 5px;
 			padding: 15px;
-			height: auto;
-			.listTop{
-				display:grid;
-				#title{
-					grid-column:1;
-					grid-row:1;
+			height: fit-content;
+			.listTop {
+				display: grid;
+				#title {
+					grid-column: 1;
+					grid-row: 1;
 				}
-				#count{
-					grid-column:2;
-					grid-row:1;
-					text-align:right;
+				#count {
+					grid-column: 2;
+					grid-row: 1;
+					text-align: right;
+					color: #fff;
+					background: #7289da;
+					border-radius: 50%;
+					width: 40px;
+					line-height: 40px;
+					text-align: center;
+					margin-left: calc(100% - 40px);
 				}
 			}
 			.cartProducts {
-				border: 1px $accent-secondary;
+				h3 {
+					color: #fff;
+				}
+				.items {
+					border: 1px solid $accent-secondary;
+					border-top-left-radius: 10px;
+					border-top-right-radius: 10px;
+					div {
+						border-bottom: 1px solid $accent-secondary;
+						padding: 10px;
+					}
+				}
+
+				.total {
+					border-bottom-left-radius: 10px;
+					border-bottom-right-radius: 10px;
+					background: rgba(70, 76, 96, 100%);
+					display: flex;
+					.pattern {
+						width: 100%;
+						padding: 10px;
+						opacity: 0.5;
+						border-bottom-left-radius: 10px;
+						border-bottom-right-radius: 10px;
+						background-size: cover;
+					}
+					h2 {
+						color: #fff;
+					}
+				}
 			}
 		}
 	}
