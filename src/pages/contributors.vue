@@ -80,16 +80,13 @@
 		methods: {
 			isStaffRole(roleId) {
 				const staffRoles = [
-					"673682085608816652", // -Management
 					"493135149274365975", // Project Leader
 					"691382096878370837", // Staff Coordinator
 					"673681900476432387", // Marketing Director
 					"685969048399249459", // Administrator
 					"630445337143935009", // Reviewer
-					"691382432246530150", // -Development
 					"691396820236107837", // Contributor
 					"691386502566903850", // Designer
-					"691382582083846164", // -Moderation
 					"514546359865442304", // Moderator
 					"566417964820070421", // Support Agent
 					"691384256672563332"  // Representative
