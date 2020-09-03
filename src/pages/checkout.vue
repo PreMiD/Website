@@ -101,8 +101,11 @@
 						</div>
 						<div class="promo"></div>
 						<div class="total">
+							<h2 id="text">{{ $t("checkout.total") }}</h2>
+							<h2 id="price">
+								{{ $t("checkout.price").replace("{0}", getPrice()) }}
+							</h2>
 							<div class="pattern"></div>
-							<h2>{{ $t("checkout.total") }}</h2>
 						</div>
 					</div>
 				</div>
@@ -155,6 +158,16 @@
 					}
 				});
 				return sizeString;
+			},
+			getPrice() {
+				let price = 0;
+				for (let item in this.usersItemsInfo) {
+					price += item.price;
+				}
+
+				price = price / 100;
+
+				return price;
 			}
 		},
 		mounted() {
@@ -295,8 +308,10 @@
 					border-bottom-left-radius: 10px;
 					border-bottom-right-radius: 10px;
 					background: rgba(70, 76, 96, 100%);
-					display: flex;
+					display: grid;
 					.pattern {
+						grid-column: 1/-1;
+						grid-row: 1;
 						width: 100%;
 						padding: 10px;
 						opacity: 0.5;
@@ -306,6 +321,14 @@
 					}
 					h2 {
 						color: #fff;
+					}
+					#text {
+						grid-row: 1;
+						grid-column: 1;
+					}
+					#price {
+						grid-column: 2;
+						grid-row: 1;
 					}
 				}
 			}
