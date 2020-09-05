@@ -24,7 +24,7 @@
 		</div>
 		<div
 			class="credit-card__avatar"
-			@click="copyId(user.userId)"
+			@click="copyId(user.id)"
 			v-tippy="{ content: $t('contributors.cards.copyUserId') }"
 		>
 			<span :class="user.status"></span>
@@ -38,55 +38,55 @@
 </template>
 
 <script>
-	import tinycolor from "tinycolor2";
+import tinycolor from "tinycolor2";
 
-	export default {
-		name: "Creditcard",
-		props: ["user"],
-		data() {
+export default {
+	name: "Creditcard",
+	props: ["user"],
+	data() {
+		return {
+			hovered: false
+		};
+	},
+	computed: {
+		cardGradientColor() {
 			return {
-				hovered: false
+				primary: tinycolor(this.$props.user.roleColor)
+					.setAlpha(1)
+					.darken(5)
+					.toRgbString(),
+				secondary: tinycolor(this.$props.user.roleColor)
+					.analogous()[2]
+					.setAlpha(0.5)
+					.saturate(20)
+					.toRgbString()
 			};
 		},
-		computed: {
-			cardGradientColor() {
-				return {
-					primary: tinycolor(this.$props.user.roleColor)
-						.setAlpha(1)
-						.darken(5)
-						.toRgbString(),
-					secondary: tinycolor(this.$props.user.roleColor)
-						.analogous()[2]
-						.setAlpha(0.5)
-						.saturate(20)
-						.toRgbString()
-				};
-			},
-			cardShadowColor() {
-				if (this.hovered) {
-					return tinycolor(this.cardGradientColor.primary)
-						.setAlpha(0.3)
-						.saturate(20)
-						.toRgbString();
-				} else {
-					return "transparent";
-				}
-			}
-		},
-		methods: {
-			copyId(id) {
-				let el = document.createElement("textarea");
-
-				el.value = id;
-				document.body.appendChild(el);
-
-				el.select();
-
-				document.execCommand("copy");
-				document.body.removeChild(el);
-
-				this.$noty.success(this.$t("contributors.cards.userIdCopied"));
+		cardShadowColor() {
+			if (this.hovered) {
+				return tinycolor(this.cardGradientColor.primary)
+					.setAlpha(0.3)
+					.saturate(20)
+					.toRgbString();
+			} else {
+				return "transparent";
 			}
 		}
-	};
+	},
+	methods: {
+		copyId(id) {
+			let el = document.createElement("textarea");
+
+			el.value = id;
+			document.body.appendChild(el);
+
+			el.select();
+
+			document.execCommand("copy");
+			document.body.removeChild(el);
+
+			this.$noty.success(this.$t("contributors.cards.userIdCopied"));
+		}
+	}
+};
 </script>
