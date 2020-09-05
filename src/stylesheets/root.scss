@@ -2,40 +2,35 @@
 
 /**
  * How to use styles to build new pages
- * 
+ *
  * 1. Styles now have `__` and `--` that used for moduled development.
- * 
+ *
  * The `__` must be used when you need to define styles for block elements.
  * (For example: We have `store` container, all items inside it should be called starting from `store-navbar_...`).
- * 
+ *
  * The `--` must be used for modificators (styles that are based on default ones but have different color and etc.).
  * (For example: We have `button` element, if you want to change it's colors in CSS you need to create modificator `button--pink`).
  */
 
 @import "variables.scss";
 
-// Due to problems with Cyrillic translations Discord Font are disabled from now.
-
-// @font-face {
-//   font-family: "Discord Font";
-//   font-weight: 900;
-//   src: url("../static/assets/fonts/DiscordFontBlack.woff2") format("woff2");
-//   font-style: normal;
-// }
+@font-face {
+	font-family: "Discord Font";
+	font-weight: 900;
+	src: url("../static/assets/fonts/DiscordFontBlack.woff2") format("woff2");
+	font-style: normal;
+}
 
 // Importing base styles
 @import "components/body.scss";
-
 @import "components/animation.scss";
 @import "components/button.scss";
 @import "components/card.scss";
 @import "components/container.scss";
 @import "components/figure.scss";
-@import "components/footer.scss";
 @import "components/grid.scss";
 @import "components/input.scss";
 @import "components/label.scss";
-@import "components/navbar.scss";
 @import "components/section.scss";
 @import "components/spacing.scss";
 @import "components/switcher.scss";
@@ -43,5 +38,8 @@
 
 //* Plugins
 @import "plugins/vuejs-noty.scss";
-
 @import "components/visibility.scss";
+
+.invisible {
+	opacity: 0;
+}

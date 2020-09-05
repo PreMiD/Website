@@ -1,7 +1,7 @@
 name: DePloY
 on:
   push:
-    branches: master
+    branches: ["stable", "master"]
     paths:
       - "public/**/*"
       - "src/**/*"
@@ -11,6 +11,9 @@ on:
       - "**/*.yml"
 jobs:
   DePloY:
+    strategy:
+      matrix:
+        host: [1.premid.app]
     runs-on: "ubuntu-latest"
     steps:
       - name: Extract branch name
@@ -20,7 +23,7 @@ jobs:
       - name: Deploying...
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSHHOST }}
+          host: ${{ matrix.host }}
           username: ${{ secrets.SSHUSERNAME }}
           password: ${{ secrets.SSHPASSWORD }}
           script: |
@@ -29,4 +32,4 @@ jobs:
             git pull
             yarn
             yarn build
-            pm2 restart Website-${{ steps.extract_branch.outputs.branch }}
+            pm2 reload /home/PreMiD/ecosystem.config.js --only Website-${{ steps.extract_branch.outputs.branch }}

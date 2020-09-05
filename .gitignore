@@ -1,8 +1,9 @@
 .env
 node_modules
 static/assets
-yarn.lock
 dist
 .vscode/settings.json
 src/langs
 .nuxt
+package-lock.json
+package-lock.json

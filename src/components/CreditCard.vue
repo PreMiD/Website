@@ -10,7 +10,16 @@
 		<div class="credit-card__user">
 			<h1 :title="user.name" v-text="user.name"></h1>
 			<h2>
-				{{ user.role == "Patron" ? "Patron" : $t(translationKeys[user.role]) }}
+				{{
+				user.roleId == "515874214750715904"
+				? "Patron"
+				: $t(
+				`contributors.roles.${user.role
+				.replace(/\s/g, "")
+				.charAt(0)
+				.toLowerCase() + user.role.replace(/\s/g, "").substring(1)}`
+				)
+				}}
 			</h2>
 		</div>
 		<div
@@ -19,7 +28,11 @@
 			v-tippy="{ content: $t('contributors.cards.copyUserId') }"
 		>
 			<span :class="user.status"></span>
-			<img :src="user.avatar + '?size=64'" draggable="false" />
+			<img
+				@error="user.avatar = 'https://premid.app/assets/images/logo.png'"
+				:src="user.avatar + '?size=64'"
+				draggable="false"
+			/>
 		</div>
 	</div>
 </template>
@@ -32,24 +45,6 @@
 		props: ["user"],
 		data() {
 			return {
-				translationKeys: {
-					Creator: "contributors.roles.creator",
-					"Community Manager": "contributors.roles.communityManager",
-					"Asst. Community Manager": "contributors.roles.asstCommunityManager",
-					Administrator: "contributors.roles.administrator",
-					"Website Developer": "contributors.roles.websiteDeveloper",
-					"Head Moderator": "contributors.roles.headModerator",
-					"Asst. Head Moderator": "contributors.roles.asstHeadModerator",
-					Moderator: "contributors.roles.moderator",
-					"Jr. Moderator": "contributors.roles.jrModerator",
-					"Head of Presence Verifying": "contributors.roles.verificationHead",
-					"Ticket Manager": "contributors.roles.ticketManager",
-					"Presence Verifier": "user.roles.presenceVerifier",
-					Proofreader: "contributors.roles.proofreader",
-					Donator: "contributors.roles.donator",
-					Booster: "contributors.roles.booster",
-					Translator: "contributors.roles.translator"
-				},
 				hovered: false
 			};
 		},
@@ -68,7 +63,7 @@
 				};
 			},
 			cardShadowColor() {
-				if (this.$data.hovered) {
+				if (this.hovered) {
 					return tinycolor(this.cardGradientColor.primary)
 						.setAlpha(0.3)
 						.saturate(20)

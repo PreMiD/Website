@@ -67,6 +67,52 @@
 	}
 }
 
+/* Modal */
+.vm--overlay {
+	background-color: black !important;
+	opacity: 0.85 !important;
+}
+
+.modal {
+	background-color: #111218 !important;
+	padding: 1em;
+
+	.title {
+		text-transform: uppercase;
+	}
+
+	.buttons {
+		float: right;
+
+		.container {
+			display: flex;
+		}
+
+		.btn {
+			padding: 0.3rem 1rem;
+			border-radius: 0.5em;
+			font-size: 14px;
+
+			&.cancel {
+				background: rgba(36, 39, 45, 0.85);
+
+				&:hover {
+					background: rgba(36, 39, 45, 1);
+				}
+			}
+
+			&.accept {
+				background: rgba(114, 137, 218, 0.85);
+				margin-right: 0;
+
+				&:hover {
+					background: rgba(114, 137, 218, 1);
+				}
+			}
+		}
+	}
+}
+
 .store-card {
 	width: 380px;
 	height: 150px;
@@ -170,7 +216,6 @@
 			display: -webkit-box;
 
 			.fa-stack {
-				margin-left: 4px;
 				font-size: 0.45em;
 			}
 		}
@@ -201,12 +246,22 @@
 		.store-card__buttons {
 			margin-top: 10px;
 
-			display: inline-block;
+			display: inline-flex;
 
-			.button,
-			a {
+			.button {
+				width: 15em;
 				font-size: 12px;
-				width: 100%;
+				white-space: nowrap;
+				padding: 0.8rem 0;
+
+				i {
+					margin-right: unset;
+				}
+
+				&.button--like {
+					width: unset;
+					padding: 1em 1.5em;
+				}
 			}
 		}
 
@@ -273,7 +328,7 @@
 
 				&.linux {
 					color: #f1c40f;
-					text-shadow: 0 0 12px rgba(	241, 196, 15, 0.5);
+					text-shadow: 0 0 12px rgba(241, 196, 15, 0.5);
 				}
 			}
 		}
@@ -674,7 +729,7 @@
 
 	&:hover {
 		transform: translateY(-6px);
-		z-index: 6px;
+		z-index: 6;
 		box-shadow: 0 2px 74px 0 rgba(0, 0, 0, 0.5);
 	}
 }

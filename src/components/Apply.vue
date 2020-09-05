@@ -3,14 +3,16 @@
 		<div class="modal-wrapper">
 			<div class="limage">
 				<img src="../assets/images/pmd_logo2.png" />
-				<p>
-					{{
-						$t("partners.apply.loggedUser", {
-							0: `${$auth.user.username}#${$auth.user.discriminator}`
-						})
-					}}
-				</p>
-				<a href="/logout">{{ $t("partners.apply.notYou") }}</a>
+				<div class="bottomText">
+					<p>
+						{{
+							$t("partners.apply.loggedUser", {
+								0: `${$auth.user.username}#${$auth.user.discriminator}`
+							})
+						}}
+					</p>
+					<a href="/logout">{{ $t("partners.apply.notYou") }}</a>
+				</div>
 			</div>
 			<div class="modal-container">
 				<div class="modal-header">
@@ -25,12 +27,16 @@
 							v-text="error"
 						/>
 						<select v-model="type" placeholder="Link">
-							<option disabled value>{{
-								$t("partners.apply.select.default")
+							<option disabled value>
+								{{ $t("partners.apply.select.default") }}
+							</option>
+							<option value="Website">{{
+								$t("partners.apply.select.website")
 							}}</option>
-							<option>{{ $t("partners.apply.select.website") }}</option>
 							<option>Twitch</option>
-							<option>{{ $t("partners.apply.select.other") }}</option>
+							<option value="Other">{{
+								$t("partners.apply.select.other")
+							}}</option>
 						</select>
 						<p>
 							<label>{{ $t("partners.apply.form.name") }}:</label>
@@ -60,13 +66,6 @@
 								:placeholder="$t('partners.apply.form.imageLink.placeholder')"
 							/>
 						</p>
-						<VueRecaptcha
-							@verify="onVerify"
-							@expired="onExpired"
-							:loadRecaptchaScript="true"
-							:sitekey="sitekey"
-							class="recaptcha"
-						></VueRecaptcha>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -83,14 +82,8 @@
 </template>
 
 <script>
-	import axios from "axios";
-	import VueRecaptcha from "vue-recaptcha";
-
 	export default {
 		name: "Apply",
-		components: {
-			VueRecaptcha
-		},
 		data() {
 			return {
 				showModal: false,
@@ -99,8 +92,7 @@
 				link: "",
 				description: "",
 				imageLink: "",
-				error: "",
-				sitekey: "6LcafeAUAAAAAOH9ukc2DVPpZJQLSWp9_cxKAQXC"
+				error: ""
 			};
 		},
 		methods: {
@@ -121,39 +113,25 @@
 				)
 					this.error = this.$t("partners.apply.error3");
 				else {
-					axios
-						.post(`${process.env.apiBase}/partners/apply`, {
+					this.$axios
+						.post(`/v2/partners/apply`, {
 							type: this.type,
 							name: this.name,
 							link: this.link,
 							description: this.description,
 							imageLink: this.imageLink,
-							discordUser: {
-								userTag: `${this.$auth.user.username}#${this.$auth.user.discriminator}`,
-								userId: this.$auth.user.id
-							},
-							gresponse: this.response
+							token: this.$auth.$storage._state["_token.discord"]
 						})
-						.then(data => {
-							this.$emit("close");
-							alert(
-								"Thank you! We will review your form as soon as possible! Stay safe."
-							); // temporary solution.
+						.then(({ data }) => {
+							if (data.error)
+								this.$noty.error(this.$t("partners.apply.error4"));
+							else {
+								this.$noty.success(this.$t("partners.apply.success"));
+								this.$emit("close");
+							}
 						})
 						.catch(err => console.error);
 				}
-			},
-			onSubmit: function() {
-				this.$refs.invisibleRecaptcha.execute();
-			},
-			onVerify: function(response) {
-				this.response = response;
-			},
-			onExpired: function() {
-				console.log("Expired");
-			},
-			resetRecaptcha() {
-				this.$refs.recaptcha.reset();
 			}
 		}
 	};

@@ -16,9 +16,8 @@
 			<p>{{ $props.error.message }}</p>
 		</div>
 		<div class="error-container--btns">
-			<router-link to="/" class="button button--sm">{{
-				$t("error.page.button")
-			}}</router-link>
+			<nuxt-link to="/" class="button button--sm" v-text="$t('error.page.button')"></nuxt-link>
+			<a class="button button--sm" @click="reload()"><i class="fas fa-redo"></i></a>
 		</div>
 	</div>
 </template>
@@ -26,14 +25,16 @@
 <script>
 	export default {
 		props: ["error"],
-		layout: "default",
+		head: {
+			title: "Error"
+		},
 		mounted() {
 			console.log(this.$props.error);
 		},
-		head() {
-			return {
-				title: "Error"
-			};
+		methods: {
+			reload() {
+				location.reload();
+			}
 		}
 	};
 </script>
