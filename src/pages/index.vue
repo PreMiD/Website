@@ -103,7 +103,7 @@
 												v-if="presence.smallImage == false"
 												v-tippy="{ content: `PreMiD v${extVersion}` }"
 												class="game"
-												style="-webkit-mask: none;"
+												style="-webkit-mask: none"
 												alt="@/assets/images/logo-big.svg"
 												:src="presence.serviceLogo"
 											/>
@@ -205,7 +205,7 @@
 						<div class="card--feature__promo">
 							<img
 								class="card--feature__promo--image1"
-								style="max-width: 100%;"
+								style="max-width: 100%"
 								:src="cardThumbnail1"
 							/>
 						</div>
@@ -389,7 +389,7 @@
 						service_title: "Twitch",
 						serviceLogo: twitchLogo,
 						smallImage: true,
-						data: ["Valorant", "Shroud"],
+						data: ["PreMiD coding stream!", "alexbcberio"],
 						presence_time: "49:12"
 					},
 					{
