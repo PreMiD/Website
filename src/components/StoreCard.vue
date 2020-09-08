@@ -20,7 +20,7 @@
 							:to="`/store/presences/${encodeURIComponent(presenceLinkName)}`"
 						>
 							{{
-								altnamesSearch && presence.altnames
+								altnamesSearch && !presence.service.toLowerCase().includes(altnamesSearch) && presence.altnames
 								? presence.altnames
 									.find(a =>
 										a.toLowerCase().includes(altnamesSearch)
