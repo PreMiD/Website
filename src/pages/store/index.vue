@@ -203,6 +203,7 @@
 						v-for="presence in paginatedData"
 						:key="presence.metadata.service"
 						:presence="presence.metadata"
+						:altnamesSearch="presenceSearch"
 						:hot="
 							hotPresences.filter(
 								p => p.metadata.service === presence.metadata.service
