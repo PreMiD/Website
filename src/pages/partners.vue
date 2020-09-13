@@ -167,6 +167,7 @@
 	import dtemplates_icon from "~/assets/images/partners/dtemplates-icon.png";
 	import taigabot_icon from "~/assets/images/partners/taigabot-icon.png";
 	import erisly_icon from "~/assets/images/partners/erisly-icon.png";
+	import onlyhit_icon from "~/assets/images/partners/onlyhit-icon.png";
 
 	export default {
 		name: "Partners",
@@ -185,7 +186,8 @@
 						aniwatch_icon,
 						dtemplates_icon,
 						taigabot_icon,
-						erisly_icon
+						erisly_icon,
+						onlyhit_icon
 					],
 					showModal: false,
 					hovered: {}
