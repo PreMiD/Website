@@ -49,7 +49,11 @@
 							<h3 v-if="selectedCountry.states" class="state">
 								{{ $t("checkout.state") }}
 							</h3>
-							<select class="state" autocomplete="address-level1">
+							<select
+								v-if="selectedCountry.states"
+								class="state"
+								autocomplete="address-level1"
+							>
 								<option
 									v-for="state in selectedCountry.states"
 									:key="state.name"
