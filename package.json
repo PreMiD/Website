@@ -17,7 +17,7 @@
 		"axios": "0.20.0",
 		"chart.js": "2.9.3",
 		"marked": "1.1.1",
-		"moment": "2.27.0",
+		"moment": "2.29.0",
 		"node-sass": "4.14.1",
 		"nuxt": "2.14.4",
 		"nuxt-lazy-load": "1.2.4",
