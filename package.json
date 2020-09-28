@@ -24,7 +24,7 @@
 		"sass-loader": "10.0.2",
 		"tinycolor2": "1.4.1",
 		"vue-animejs": "2.1.1",
-		"vue-carousel-3d": "0.2.0",
+		"vue-carousel-3d": "1.0.1",
 		"vue-chartjs": "3.5.1",
 		"vue-i18n": "8.21.0",
 		"vue-js-modal": "2.0.0-rc.6",
