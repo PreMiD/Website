@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="wrapper">
 		<navigation
 			noLinks="true"
 			:target="target"
@@ -67,9 +67,12 @@
 			ad-slot="9757727213"
 			:ad-style="{
 				display: 'block',
-				margin: '15px 10vw',
-				width: '80vw',
-				height: '250px'
+				margin: '15px auto',
+				'text-align': 'center',
+				height: '250px',
+				width: '100%',
+				position: 'absolute',
+				bottom: '0'
 			}"
 		></adsense>
 	</div>

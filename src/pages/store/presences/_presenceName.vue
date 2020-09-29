@@ -288,13 +288,9 @@
 		mixins: [PresenceMixin],
 		auth: false,
 		async asyncData({ params, app, error }) {
-			let presenceUsage = (await app.$axios(`${process.env.apiBase}/usage`))
-					.data.users,
-				presenceRanking = (
-					await app.$axios(`${process.env.apiBase}/presenceUsage`)
-				).data,
-				partnersList = (await app.$axios(`${process.env.apiBase}/partners`))
-					.data;
+			let presenceUsage = (await app.$axios(`/v2/usage`)).data.users,
+				presenceRanking = (await app.$axios(`/v2/presenceUsage`)).data,
+				partnersList = (await app.$axios(`/v2/partners`)).data;
 
 			let { presences } = await app.$graphql(
 					`
@@ -342,9 +338,7 @@
 			if (presenceData) {
 				try {
 					data.presence.metadata.author = (
-						await app.$axios(
-							`${process.env.apiBase}/credits/${data.presence.metadata.author.id}`
-						)
+						await app.$axios(`/v2/credits/${data.presence.metadata.author.id}`)
 					).data;
 				} catch (err) {}
 			}

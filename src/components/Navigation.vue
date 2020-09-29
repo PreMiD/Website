@@ -486,7 +486,7 @@
 			}, 1 * 1000);
 
 			if (this.$auth.loggedIn) {
-				this.$axios(`${process.env.apiBase}/credits/${this.$auth.user.id}`)
+				this.$axios(`/v2/credits/${this.$auth.user.id}`)
 					.then(({ data }) => {
 						if (data.userId) {
 							const staffRoles = [

@@ -167,6 +167,7 @@
 	import dtemplates_icon from "~/assets/images/partners/dtemplates-icon.png";
 	import taigabot_icon from "~/assets/images/partners/taigabot-icon.png";
 	import erisly_icon from "~/assets/images/partners/erisly-icon.png";
+	import onlyhit_icon from "~/assets/images/partners/onlyhit-icon.png";
 
 	export default {
 		name: "Partners",
@@ -174,8 +175,8 @@
 		async asyncData({ app, error }) {
 			try {
 				return {
-					partners: (await app.$axios(`${process.env.apiBase}/partners`)).data,
-					sponsors: (await app.$axios(`${process.env.apiBase}/sponsors`)).data,
+					partners: (await app.$axios(`/v2/partners`)).data,
+					sponsors: (await app.$axios(`/v2/sponsors`)).data,
 					randomImages: [
 						aniflix_icon,
 						aok_icon,
@@ -185,7 +186,8 @@
 						aniwatch_icon,
 						dtemplates_icon,
 						taigabot_icon,
-						erisly_icon
+						erisly_icon,
+						onlyhit_icon
 					],
 					showModal: false,
 					hovered: {}

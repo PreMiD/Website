@@ -19,7 +19,15 @@
 							:key="presenceLinkName"
 							:to="`/store/presences/${encodeURIComponent(presenceLinkName)}`"
 						>
-							{{ presence.service }}
+							{{
+								altnamesSearch && !presence.service.toLowerCase().includes(altnamesSearch) && presence.altnames
+								? presence.altnames
+									.find(a =>
+										a.toLowerCase().includes(altnamesSearch)
+									) || presence.service
+								:
+								presence.service
+							}}
 							<span
 								v-if="partner"
 								v-tippy="{
@@ -153,7 +161,7 @@
 	export default {
 		name: "StoreCard",
 		mixins: [PresenceMixin],
-		props: ["presence", "submit", "nsfw", "hot", "partner"],
+		props: ["presence", "submit", "nsfw", "hot", "partner", "altnamesSearch"],
 		data() {
 			return {
 				cardHovered: false,

@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - directory: "/"
+    package-ecosystem: "npm"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "Timeraa"
+      - "TheDropX"
+    commit-message:
+      prefix: "🔼"
+      prefix-development: "🔼"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 15

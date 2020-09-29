@@ -83,8 +83,7 @@
 		auth: false,
 		async asyncData({ app }) {
 			return {
-				betaUsers: (await app.$axios(`${process.env.apiBase}/betaUsers`)).data
-					.betaUsers
+				betaUsers: (await app.$axios(`/v2/betaUsers`)).data.betaUsers
 			};
 		},
 		data() {
