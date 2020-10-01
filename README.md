@@ -12,7 +12,7 @@ If you want to get more information or help us by **[contributing](#development)
 <img draggable="false" src="https://discordapp.com/api/guilds/493130730549805057/widget.png?style=banner2" height="76px" draggable="false" alt="Join our Discord!">
 </a>
 
-## Additional information
+## Additional information setup
 
 Our server automatically builds the latest website versions from **[master](https://beta.premid.app/)** and **[stable](https://premid.app/)** branches.
 The `master` branch includes all changes that was not tested yet and may have perfomance issues.
