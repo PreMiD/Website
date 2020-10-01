@@ -8,7 +8,7 @@
 This repository contains source code of **PreMiD**'s website that allows you to install presences from our presence store.
 If you want to get more information or help us by **[contributing](#development)** in this project, we would like to see you in our **Discord** server:
 
-  <a target="_blank" href="https://discord.gg/WvfVZ8T" title="Join our Discord!">
+  <a target="_blank" href="https://discord.premid.app/" title="Join our Discord!">
 <img draggable="false" src="https://discordapp.com/api/guilds/493130730549805057/widget.png?style=banner2" height="76px" draggable="false" alt="Join our Discord!">
 </a>
 
