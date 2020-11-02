@@ -8771,10 +8771,10 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-tippy@4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/vue-tippy/-/vue-tippy-4.7.0.tgz#d5f7f2d565f8c34819ac157bbf90797f8827105f"
-  integrity sha512-7VVO1TouQgQ7JpM1olCcZz1nrCF1KUpoevPZmDyHNMRwo35/nppD0hQMAlfHknfalMK/EMc5lpFRpdQ+DQevgw==
+vue-tippy@4.7.2:
+  version "4.7.2"
+  resolved "https://registry.yarnpkg.com/vue-tippy/-/vue-tippy-4.7.2.tgz#8f8782fd049bd27bdfc4e17ad8444a81e1164788"
+  integrity sha512-MyRoitAyLGdaj8O/vxBQS4dy4zEjOcLzDH6zklTTHVTXniODtgDpsvhLeJoLyfWdXqDCLPKsXjFP8yOukVhTKA==
   dependencies:
     humps "^2.0.1"
     tippy.js "^4.3.5"
