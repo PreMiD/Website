@@ -141,7 +141,7 @@
 													content: $t('home.examples.status.live')
 												}"
 												class="status-icon"
-												src="https://cdn.discordapp.com/app-assets/463097721130188830/546014666451845122.png"
+												:src="require('@/assets/images/live.png')"
 											/>
 											<img
 												v-if="presence.smallImage == true"
@@ -149,7 +149,7 @@
 													content: $t('home.examples.status.playing')
 												}"
 												class="status-icon"
-												src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
+												:src="require('@/assets/images/play.png')"
 											/>
 										</div>
 										<div class="game__content">
