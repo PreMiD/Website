@@ -358,7 +358,7 @@
 							"Noisestorm - Crab Rave [Monstercat Release]",
 							"Monstercat: Instinct"
 						],
-						presence_time: "1:36"
+						presence_time: "01:36"
 					},
 					{
 						service_title: "YouTube",
@@ -372,7 +372,7 @@
 						serviceLogo: soundcloudLogo,
 						smallImage: true,
 						data: ["Dion Timmer - Panic", "Dion Timmer"],
-						presence_time: "2:15"
+						presence_time: "02:15"
 					},
 					{
 						service_title: "Netflix",
@@ -404,7 +404,7 @@
 						serviceLogo: ytmusicLogo,
 						smallImage: true,
 						data: ["Dance Monkey", "Tones and I - The Kids Are Coming (2019)"],
-						presence_time: "3:12"
+						presence_time: "03:12"
 					},
 					{
 						service_title: "Twitch",
@@ -418,7 +418,7 @@
 						serviceLogo: vliveLogo,
 						smallImage: true,
 						data: ["[LOONA] Orbit! Thank you ❤️", "이달의 소녀(LOONA)"],
-						presence_time: "9:50"
+						presence_time: "09:50"
 					}
 				]
 			};
@@ -476,7 +476,7 @@
 					hasRun = true;
 				});
 			});
-			let timers = setInterval(() => {
+			let timers = setTimeout(() => {
 				let oneFinished = false;
 				this.presences_display.forEach((el, i) => {
 					if (el.presence_time === "00:00" || el.live) {
@@ -486,43 +486,44 @@
 						return (oneFinished = true);
 					}
 
-					let presence_time = el.presence_time.split(":");
+					let minutes = el.presence_time.split(":")[0];
+					let seconds = el.presence_time.split(":")[1];
 
 					if (el.elapsed) {
-						if (presence_time[1] === "59") {
+						if (seconds === "59") {
 							el.presence_time =
-								(parseInt(presence_time[0]) + 1 >= 10
-									? parseInt(presence_time[0]) + 1
-									: "0" + (parseInt(presence_time[0]) + 1)) + ":00";
+								(parseInt(minutes) + 1 >= 10
+									? parseInt(minutes) + 1
+									: "0" + (parseInt(minutes) + 1)) + ":00";
 						} else {
 							el.presence_time =
-								presence_time[0] +
+								minutes +
 								":" +
-								(parseInt(presence_time[1]) + 1 >= 10
-									? parseInt(presence_time[1]) + 1
-									: "0" + (parseInt(presence_time[1]) + 1));
+								(parseInt(seconds) + 1 >= 10
+									? parseInt(seconds) + 1
+									: "0" + (parseInt(seconds) + 1));
 						}
 					} else {
 						if (el.presence_time === "00:00") {
 							return;
-						} else if (presence_time[1] === "00") {
+						} else if (seconds === "00") {
 							el.presence_time =
-								(parseInt(presence_time[0]) - 1 >= 10
-									? parseInt(presence_time[0]) - 1
-									: "0" + (parseInt(presence_time[0]) - 1)) + ":59";
-						} else if (presence_time[1].split("")[1] === "0") {
+								(parseInt(minutes) - 1 >= 10
+									? parseInt(minutes) - 1
+									: "0" + (parseInt(minutes) - 1)) + ":59";
+						} else if (seconds.split("")[1] === "0") {
 							el.presence_time =
-								presence_time[0] +
+								minutes +
 								":" +
-								parseInt(presence_time[1].split("")[0] - 1) +
+								parseInt(seconds.split("")[0] - 1) +
 								"9";
 						} else {
 							el.presence_time =
-								presence_time[0] +
+								minutes +
 								":" +
-								(parseInt(presence_time[1]) - 1 >= 10
-									? parseInt(presence_time[1]) - 1
-									: "0" + (parseInt(presence_time[1]) - 1));
+								(parseInt(seconds) - 1 >= 10
+									? parseInt(seconds) - 1
+									: "0" + (parseInt(seconds) - 1));
 						}
 					}
 				});
