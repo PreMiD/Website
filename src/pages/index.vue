@@ -476,7 +476,7 @@
 					hasRun = true;
 				});
 			});
-			let timers = setTimeout(() => {
+			let timers = setInterval(() => {
 				let oneFinished = false;
 				this.presences_display.forEach((el, i) => {
 					if (el.presence_time === "00:00" || el.live) {
