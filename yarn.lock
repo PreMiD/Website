@@ -1274,10 +1274,10 @@
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
   integrity sha512-/+CRPXpBDpo2RK9C68N3b2cOvO0Cf5B9aPijHsoDQTHivnGSObdOF2BRQOYjojWTDy6nQvMjmqRXIxH55VjxxA==
 
-"@types/chart.js@2.9.24", "@types/chart.js@^2.7.55":
-  version "2.9.24"
-  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.9.24.tgz#f044fde90c928cb054e2ea582eb68d9945d84bc6"
-  integrity sha512-AQI7X+ow3SaONl44JrHoL/5B+lCsJyG31UHZ5RP98Uh15hI/zjEkDsAb4EIm4P9TGfNhZLXw/nMc5w0u10+/fQ==
+"@types/chart.js@2.9.28", "@types/chart.js@^2.7.55":
+  version "2.9.28"
+  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.9.28.tgz#75f1a456ee2eace136073c3264da271a27dcdc8a"
+  integrity sha512-9YYhsxRngRJb0dkuaU5BezkF+zvvVHnwdRw+rtlahtFb4zqNf9YSgWsOq+dLYeh0fqsWmHUYLR64eNigh02F+w==
   dependencies:
     moment "^2.10.2"
 
