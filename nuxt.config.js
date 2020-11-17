@@ -23,7 +23,6 @@ module.exports = {
 		{ src: "~/plugins/Modal.js", mode: "client" }
 	],
 	modules: [
-		"@nuxt/components",
 		[
 			"nuxt-lazy-load",
 			{
