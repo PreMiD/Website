@@ -464,7 +464,7 @@
 						has_installer: true
 					},
 					apple: {
-						os_name: "OS X",
+						os_name: "macOS",
 						has_installer: true
 					},
 					linux: {
