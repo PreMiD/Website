@@ -258,7 +258,7 @@
 		img {
 			height: 64px;
 			width: 64px;
-			border-radius: 100%;
+			border-radius: 10%;
 			margin-right: 8px;
 			place-self: center;
 			transition: opacity 0.2s ease-in-out;
