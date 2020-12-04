@@ -190,6 +190,9 @@
 						</a>
 					</div>
 				</div>
+
+				<!--
+
 				<div class="show-beta" v-if="!showBeta">
 					<div>
 						<p>{{ $t("downloads.showbeta.message") }}</p>
@@ -206,18 +209,19 @@
 					<h1 class="section-header">
 						{{ $t("downloads.latest.header") }}
 						<a
-							v-if="$auth.loggedIn && userAccess"
+							v-if="$auth.loggedIn && beta.access"
 							class="label label_downloads-version bv"
 							@click="changeTab"
-							v-text="currentTab.releaseType"
+							v-text="tab"
 						></a>
 					</h1>
 
+
 					<div v-if="$auth.loggedIn">
-						<div v-if="userAccess == true">
+						<div v-if="beta.access == true">
 							<div class="dl-container__cards">
 								<div
-									v-for="(platform, index) of currentTab.appLinks"
+									v-for="(platform, index) of cTab.app_links"
 									:key="platform.platform.toString()"
 								>
 									<div @click="openInNewTab(platform.link)">
@@ -232,7 +236,7 @@
 											</div>
 											<div class="card__content">
 												<h3 v-text="platform.platform" />
-												<p v-t="currentTab.releaseType" />
+												<p v-t="tab" />
 											</div>
 										</div>
 									</div>
@@ -240,7 +244,7 @@
 							</div>
 							<div class="dl-container__cards">
 								<div
-									v-for="platform of currentTab.extLinks"
+									v-for="platform of cTab.ext_links"
 									:key="platform.platform.toString()"
 									:class="{
 										'current-platform':
@@ -261,7 +265,7 @@
 									</div>
 									<div class="card__content">
 										<h3 v-t="platform.platform"></h3>
-										<p v-t="currentTab.releaseType" />
+										<p v-t="tab" />
 									</div>
 								</div>
 							</div>
@@ -269,11 +273,11 @@
 						<div class="dl-container__cards nobeta" v-else>
 							<h1 v-t="'downloads.error.noaccess.title'" />
 							<p
-								v-if="betaUsers < availableSlots"
+								v-if="betaUsers < 200"
 								v-html="
 									linkify(
 										$t('downloads.error.noaccess.description', {
-											0: availableSlots - betaUsers
+											0: 200 - betaUsers
 										})
 									)
 								"
@@ -294,6 +298,7 @@
 						</div>
 					</div>
 				</div>
+				-->
 			</div>
 		</transition>
 
@@ -350,19 +355,63 @@
 		auth: false,
 		async asyncData({ $auth, app, error }) {
 			try {
-				let userAccess = false,
-					tabs = {},
-					currentTab = {};
+				//! Disabled alpha/beta downloads temporarily.
+				/*
+				let tab = null,
+					alpha = {
+						access: false,
+						app_links: [],
+						ext_links: []
+					},
+					beta = {
+						access: false,
+						app_links: [],
+						ext_links: []
+					},
+					cTab = {};
 
-				const data = await app.$graphql(
-					`
-						query {
-							betaUsers {
-								number
-							}
-							discordUsers {
-								userId
-							}
+				if ($auth.loggedIn) {
+					let { access } = (
+						await app.$axios.get(
+							`/v2/alphaAccess/${$auth.user.id}`
+						)
+					).data;
+
+					alpha.access = access;
+
+					if (access) {
+						beta.access = true;
+
+						let { app_links, ext_links } = (
+							await app.$axios.post(
+								`/v2/downloads/${$auth.$storage._state["_token.discord"]}/alpha`
+							)
+						).data;
+
+						alpha.app_links = app_links;
+						alpha.ext_links = ext_links;
+
+						cTab = alpha;
+						tab = "alpha";
+
+						let { data } = await app.$axios.post(
+							`/v2/downloads/${$auth.$storage._state["_token.discord"]}/beta`
+						);
+						beta.app_links = data.app_links;
+						beta.ext_links = data.ext_links;
+					} else {
+						let { access } = (
+							await app.$axios(
+								`/v2/betaAccess/${$auth.user.id}`
+							)
+						).data;
+						beta.access = access;
+					}
+				}
+				*/
+
+				const { versions } = await app.$graphql(
+					`{
 							versions {
 								app
 								extension
@@ -372,41 +421,17 @@
 					`
 				);
 
-				if ($auth.loggedIn) {
-					const { downloads } = await app.$graphql(`
-						query {
-							downloads(token: "${$auth.$storage._state["_token.discord"]}") {
-								releaseType
-								appLinks
-								extLinks {
-									platform
-									link
-								}
-							}
-						}
-					`);
-
-					userAccess = downloads.length > 0;
-
-					if (userAccess)
-						downloads.forEach(d => {
-							tabs[d.releaseType] = d;
-						});
-
-					if (downloads.find(d => d.releaseType == "alpha"))
-						currentTab = downloads.find(d => d.releaseType == "alpha");
-					else currentTab = downloads.find(d => d.releaseType == "beta");
-				}
-
 				return {
-					extVersion: data.versions.extension,
-					appVersion: data.versions.app,
-					linuxVersion: data.versions.linux,
-					userAccess: userAccess,
-					extraDownloads: tabs,
-					currentTab: currentTab,
-					betaUsers: data.betaUsers.number,
-					availableSlots: (data.discordUsers.length * 0.1).toFixed()
+					extVersion: versions.extension,
+					appVersion: versions.app,
+					linuxVersion: versions.linux
+					/*
+					cTab,
+					tab,
+					alpha,
+					beta
+					betaUsers: (await app.$axios(`/v2/betaUsers`)).data
+						.betaUsers*/
 				};
 			} catch (err) {
 				return error(err);
@@ -553,14 +578,15 @@
 		},
 		methods: {
 			changeTab() {
-				if (this.userAccess) {
-					if (this.currentTab.releaseType == "beta") {
-						if (!Object.keys(this.extraDownloads).find(d => d == "alpha"))
-							return;
-
-						this.currentTab = this.extraDownloads["alpha"];
-					} else this.currentTab = this.extraDownloads["beta"];
-				}
+				if (this.alpha.access) {
+					if (this.tab == "alpha") {
+						this.tab = "beta";
+						this.cTab = this.beta;
+					} else {
+						this.tab = "alpha";
+						this.cTab = this.alpha;
+					}
+				} else return;
 			},
 			highlight(elementPath) {
 				const element = document.querySelector(elementPath);

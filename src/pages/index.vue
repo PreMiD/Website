@@ -113,12 +113,6 @@
 												class="game"
 												alt="@/assets/images/logo-big.svg"
 												:src="presence.serviceLogo"
-											/><img
-												v-if="presence.smallImage == 'live'"
-												v-tippy="{ content: `PreMiD v${extVersion}` }"
-												class="game"
-												alt="@/assets/images/logo-big.svg"
-												:src="presence.serviceLogo"
 											/>
 											<img
 												v-if="presence.smallImage == true"
@@ -136,20 +130,12 @@
 												:src="require('@/assets/images/search.png')"
 											/>
 											<img
-												v-if="presence.smallImage == 'live'"
-												v-tippy="{
-													content: $t('home.examples.status.live')
-												}"
-												class="status-icon"
-												:src="require('@/assets/images/live.png')"
-											/>
-											<img
 												v-if="presence.smallImage == true"
 												v-tippy="{
 													content: $t('home.examples.status.playing')
 												}"
 												class="status-icon"
-												:src="require('@/assets/images/play.png')"
+												src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
 											/>
 										</div>
 										<div class="game__content">
@@ -165,7 +151,7 @@
 											>
 												{{ presence.data[1] }}
 											</div>
-											<div class="game__time text-row" v-if="!presence.live">
+											<div class="game__time text-row">
 												{{
 													presence.elapsed
 														? $t(`home.examples.timestamp2`, {
@@ -361,13 +347,6 @@
 						presence_time: "1:36"
 					},
 					{
-						service_title: "YouTube",
-						serviceLogo: youtubeLogo,
-						smallImage: "live",
-						data: ["NASA Live: Official Stream of NASA TV", "NASA"],
-						live: true
-					},
-					{
 						service_title: "SoundCloud",
 						serviceLogo: soundcloudLogo,
 						smallImage: true,
@@ -476,57 +455,6 @@
 					hasRun = true;
 				});
 			});
-			let timers = setInterval(() => {
-				let oneFinished = false;
-				this.presences_display.forEach((el, i) => {
-					if (el.presence_time === "00:00" || el.live) {
-						if (oneFinished) {
-							return clearInterval(timers);
-						}
-						return (oneFinished = true);
-					}
-
-					let presence_time = el.presence_time.split(":");
-
-					if (el.elapsed) {
-						if (presence_time[1] === "59") {
-							el.presence_time =
-								(parseInt(presence_time[0]) + 1 >= 10
-									? parseInt(presence_time[0]) + 1
-									: "0" + (parseInt(presence_time[0]) + 1)) + ":00";
-						} else {
-							el.presence_time =
-								presence_time[0] +
-								":" +
-								(parseInt(presence_time[1]) + 1 >= 10
-									? parseInt(presence_time[1]) + 1
-									: "0" + (parseInt(presence_time[1]) + 1));
-						}
-					} else {
-						if (el.presence_time === "00:00") {
-							return;
-						} else if (presence_time[1] === "00") {
-							el.presence_time =
-								(parseInt(presence_time[0]) - 1 >= 10
-									? parseInt(presence_time[0]) - 1
-									: "0" + (parseInt(presence_time[0]) - 1)) + ":59";
-						} else if (presence_time[1].split("")[1] === "0") {
-							el.presence_time =
-								presence_time[0] +
-								":" +
-								parseInt(presence_time[1].split("")[0] - 1) +
-								"9";
-						} else {
-							el.presence_time =
-								presence_time[0] +
-								":" +
-								(parseInt(presence_time[1]) - 1 >= 10
-									? parseInt(presence_time[1]) - 1
-									: "0" + (parseInt(presence_time[1]) - 1));
-						}
-					}
-				});
-			}, 1000);
 		},
 		methods: {
 			appear() {
