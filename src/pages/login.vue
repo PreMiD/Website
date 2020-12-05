@@ -1,27 +1,21 @@
 <template>
-	<h1 class="text-highlight">Redirecting...</h1>
+	<p>Please wait for the redirection...</p>
 </template>
 
 <script>
-	export default {
-		mounted() {
-			if (this.$auth.loggedIn) {
-				this.$router.push("/");
-				return;
-			}
-			this.$auth.login("discord");
-		},
-		head() {
-			return {
-				title: "Authorization",
-				titleTemplate: ""
-			};
+export default {
+	mounted() {
+		if (this.$auth.loggedIn) {
+			this.$router.push("/");
+			return;
 		}
-	};
-</script>
-
-<style lang="scss" scoped>
-	h1 {
-		text-align: center;
+		this.$auth.login("discord");
+	},
+	head() {
+		return {
+			title: "Authorization",
+			titleTemplate: ""
+		};
 	}
-</style>
+};
+</script>
