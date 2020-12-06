@@ -34,7 +34,7 @@
 		"vuejs-paginate": "2.1.0"
 	},
 	"devDependencies": {
-		"@nuxt/typescript-build": "2.0.2",
+		"@nuxt/typescript-build": "2.0.3",
 		"@nuxtjs/google-analytics": "2.4.0",
 		"@types/chart.js": "2.9.24",
 		"@types/node": "14.6.0",
