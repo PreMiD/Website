@@ -2,13 +2,13 @@
 	<div class="promo-container beta">
 		<div class="promo-container__heading">
 			<h1 class="heading__logo">
-				<img :src="premidBeta" />
+				<img src="../../assets/images/premid-beta.png" />
 			</h1>
 		</div>
 
 		<div class="card--feature card--feature--reverse card--feature--beta">
 			<div class="card--feature__details">
-				<h1>{{ $t("beta.title") }}</h1>
+				<h1 v-t="'beta.title'" />
 
 				<p
 					v-html="
@@ -20,27 +20,30 @@
 
 				<ul>
 					<li>
-						<p>{{ $t("beta.features.1") }}</p>
+						<p v-t="'beta.features.1'" />
 					</li>
 					<li>
-						<p>{{ $t("beta.features.2") }}</p>
+						<p v-t="'beta.features.2'" />
 					</li>
 					<li>
-						<p>{{ $t("beta.features.3") }}</p>
+						<p v-t="'beta.features.3'" />
 					</li>
 				</ul>
 			</div>
 			<div class="card--feature__promo">
 				<video autoplay loop>
 					<source
-						src="./../../assets/images/cards/card2_video.mp4"
+						src="../../assets/images/cards/card2_video.mp4"
 						type="video/mp4"
 					/>
-					<img class="card--feature__promo--image2" :src="cardThumbnail2" />
+					<img
+						class="card--feature__promo--image2"
+						src="../../assets/images/cards/card2.png"
+					/>
 				</video>
 			</div>
 		</div>
-		<div class="beta-join" v-if="betaUsers < 200">
+		<div class="beta-join">
 			<p
 				v-html="
 					$t('beta.register.text').replace(
@@ -49,12 +52,11 @@
 					)
 				"
 			></p>
-			<a class="button text--uppercase" href="/beta/register">
-				{{ $t(`beta.register.button`) }}
-			</a>
-		</div>
-		<div class="beta-join" v-else>
-			<p v-t="'error.noslots'"></p>
+			<a
+				class="button text--uppercase"
+				href="/beta/register"
+				v-t="'beta.register.button'"
+			/>
 		</div>
 		<div class="waves-divider waves-divider_bottom">
 			<svg
@@ -75,22 +77,27 @@
 </template>
 
 <script>
-	import premidBeta from "@/assets/images/premid-beta.png";
-	import cardThumbnail2 from "@/assets/images/cards/card2.png";
-
 	export default {
 		name: "Beta",
 		auth: false,
-		async asyncData({ app }) {
+		async asyncData({ app, $auth }) {
 			return {
-				betaUsers: (await app.$axios(`/v2/betaUsers`)).data.betaUsers
+				betaUsers: (
+					await app.$graphql(
+						`
+						query {
+							betaUsers {
+								number
+							}
+						}
+					`
+					)
+				).betaUsers.number
 			};
 		},
 		data() {
 			return {
-				betaUsers: 0,
-				premidBeta,
-				cardThumbnail2
+				betaUsers: 0
 			};
 		},
 		methods: {
