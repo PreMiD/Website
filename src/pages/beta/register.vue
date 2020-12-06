@@ -3,18 +3,16 @@
 		<div class="section section--features section--features--beta-register">
 			<div class="promo-container__heading">
 				<h1 class="heading__logo">
-					<img src="../../assets/images/premid-beta.png" />
+					<img :src="logo" />
 				</h1>
 			</div>
 			<div id="thankYou-container" class="card--feature card--feature--reverse">
 				<div class="card--feature__details">
-					<h1 v-t="strings.title" />
-					<p v-t="strings.message" />
-					<nuxt-link
-						to="/"
-						class="button button--sm router-link-active"
-						v-t="'error.page.button'"
-					/>
+					<h1>{{ title }}</h1>
+					<p>{{ message }}</p>
+					<nuxt-link to="/" class="button button--sm router-link-active">{{
+						$t("error.page.button")
+					}}</nuxt-link>
 				</div>
 			</div>
 			<div class="waves-divider waves-divider_bottom">
@@ -37,46 +35,36 @@
 </template>
 
 <script>
+	import Logo from "@/assets/images/premid-beta.png";
+
 	export default {
 		name: "Register",
 		auth: true,
-		async asyncData({ app, $auth }) {
-			if (!$auth.$storage._state["_token.discord"]) $auth.loginWith("discord");
+		async asyncData({ $auth, error, $t, app }) {
+			if ($auth.loggedIn) {
+				let { data } = await app.$axios.post(
+					`/v2/addBetaUser/${$auth.$storage._state["_token.discord"]}`
+				);
 
-			return {
-				addBetaUser: (
-					await app.$graphql(
-						`
-							mutation {
-								addBetaUser(token: "${$auth.$storage._state["_token.discord"]}") {
-									success
-									message
-								}
-							}
-						`
-					)
-				).addBetaUser
-			};
-		},
-		data() {
-			return {
-				strings: {
-					title: "",
-					message: ""
+				if (!data.error) {
+					return {
+						title: $t("thankyou.title"),
+						message: $t("thankyou.description"),
+						logo: Logo
+					};
+				} else {
+					return {
+						title: "Uh oh!",
+						message:
+							data.error == 3
+								? "Our monkeys say that you are already a beta user."
+								: data.message,
+						logo: Logo
+					};
 				}
-			};
-		},
-		mounted() {
-			if (this.addBetaUser && this.addBetaUser.success)
-				this.strings = {
-					title: "thankyou.title",
-					message: "thankyou.description"
-				};
-			else if (this.addBetaUser && !this.addBetaUser.success)
-				this.strings = {
-					title: "Uh oh!",
-					message: this.addBetaUser.message
-				};
+			} else {
+				$auth.loginWith("discord");
+			}
 		},
 		head: {
 			title: "Register"
