@@ -142,7 +142,7 @@
 							white-space: pre-wrap;
 							color: #c7cfd6;
 						"
-						v-html="bug.description"
+						v-text="bug.description"
 					></td>
 				</tr>
 			</table>
