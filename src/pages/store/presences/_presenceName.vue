@@ -418,7 +418,7 @@ export default {
 	},
 	created() {
 		if (this.presence)
-			this.isPresenceInstalled(this.presence?.metadata?.service).then(
+			this.isPresenceInstalled(this.presence.metadata?.service).then(
 				response => {
 					if (response) this.isInstalled = true;
 				}
