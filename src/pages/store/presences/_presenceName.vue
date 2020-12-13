@@ -381,7 +381,7 @@ export default {
 				this.presence?.metadata?.description?.[this.getCurrentLanguage()] ||
 				this.presence?.metadata?.description?.["en"];
 
-			const replaced = description.replace(
+			const replaced = description?.replace(
 				/\[([^\]]+)\]\(([^\)]+)\)/gm,
 				`<a href="$2" target="_blank" rel="noreferrer">$1</a>`
 			);
@@ -425,34 +425,28 @@ export default {
 			if (!likedPresences)
 				localStorage.setItem(
 					"likedPresences",
-					this.$data.presence.metadata.service
+					this.presence?.metadata?.service
 				);
 			else if (
-				likedPresences.split(",").includes(this.$data.presence.metadata.service)
+				likedPresences.split(",").includes(this.presence?.metadata?.service)
 			) {
 				localStorage.setItem(
 					"likedPresences",
 					likedPresences
 						.split(",")
-						.filter(i => i !== this.$data.presence.metadata.service)
+						.filter(i => i !== this.presence?.metadata?.service)
 						.join(",")
 				);
 			} else if (
-				!likedPresences
-					.split(",")
-					.includes(this.$data.presence.metadata.service)
+				!likedPresences.split(",").includes(this.presence.metadata.service)
 			) {
 				let newPresences = likedPresences.split(",");
 
-				newPresences.push(this.$data.presence.metadata.service);
-
+				newPresences.push(this.presence?.metadata?.service);
 				localStorage.setItem("likedPresences", newPresences.join(","));
 			}
 
-			this.$store.commit(
-				"presences/like",
-				this.$data.presence.metadata.service
-			);
+			this.$store.commit("presences/like", this.presence?.metadata?.service);
 		}
 	},
 	head() {
@@ -498,7 +492,7 @@ export default {
 				{
 					hid: "og:title",
 					property: "og:title",
-					content: this.presence.metadata.service || "Unknown Service"
+					content: this.presence?.metadata?.service || "Unknown Service"
 				},
 				{
 					hid: "og:description",
@@ -509,7 +503,7 @@ export default {
 					hid: "og:image",
 					property: "og:image",
 					content:
-						this.$data.presence.metadata.logo ||
+						this.presence?.metadata?.logo ||
 						"https://premid.app/assets/images/logo.png"
 				},
 				/* General */

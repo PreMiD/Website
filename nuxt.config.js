@@ -1,6 +1,5 @@
 // Import base config
 import buildModules from "./config/buildModules"
-import loading from "./config/loading";
 import modules from "./config/modules";
 import plugins from "./config/plugins";
 import build from "./config/build";
