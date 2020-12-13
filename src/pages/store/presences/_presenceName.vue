@@ -346,12 +346,24 @@ export default {
 		return data;
 	},
 	computed: {
+		/**
+		 * Returns presence's metadata, if none, returns an empty object instead.
+		 * @returns {object} The {@link https://docs.premid.app/dev/presence/metadata|Presence metadata}.
+		 */
 		getPresenceMetadata() {
 			return this.presence?.metadata || {};
 		},
+		/**
+		 * Darkens the initial presence color and returns.
+		 * @returns {string} Color code in HEX format.
+		 */
 		getPresenceGradientColor() {
-			return tinycolor(this.presence.metadata.color).darken(45).toHexString();
+			return tinycolor(this.presence?.metadata?.color).darken(45).toHexString();
 		},
+		/**
+		 * Gets Presence's first character, does some checks and returns the link value to GitHub folder of the Presence.
+		 * @returns {string} The direct link to Presence's folder in PreMiD GitHub repository.
+		 */
 		getGithubLink() {
 			const serviceName = this.presence?.metadata?.service;
 			if (!serviceName) return "https://github.com/PreMiD/Presences";
@@ -376,6 +388,10 @@ export default {
 				serviceName
 			)}`;
 		},
+		/**
+		 * Replaces the markdown-like links in the presence description into HTML anchors and returns the value.
+		 * @returns {string} Replaced description value, in HTML format if any links found.
+		 */
 		getLinkifiedDescription() {
 			const description =
 				this.presence?.metadata?.description?.[this.getCurrentLanguage()] ||
@@ -402,23 +418,32 @@ export default {
 	},
 	created() {
 		if (this.presence)
-			this.isPresenceInstalled(this.presence.metadata.service).then(
+			this.isPresenceInstalled(this.presence?.metadata?.service).then(
 				response => {
 					if (response) this.isInstalled = true;
 				}
 			);
 	},
 	updated() {
-		this.isPresenceInstalled(this.presence.metadata.service).then(response => {
-			if (response) this.isInstalled = true;
-		});
+		this.isPresenceInstalled(this.presence?.metadata?.service).then(
+			response => {
+				if (response) this.isInstalled = true;
+			}
+		);
 	},
 	methods: {
+		/**
+		 * Checks if presence color is light and returns a dark/light color based on the presence color.
+		 * @returns {string} The color HEX code.
+		 */
 		brightColorFix() {
-			return tinycolor(this.presence.metadata.color).getBrightness() >= 200
+			return tinycolor(this.presence?.metadata?.color).getBrightness() >= 200
 				? "#111218"
 				: "#ffffff";
 		},
+		/**
+		 * Presence liking method, used to like presences. Stores them in the browser storage and doesn't sync anywhere else.
+		 */
 		like() {
 			const likedPresences = localStorage.getItem("likedPresences");
 
@@ -438,7 +463,7 @@ export default {
 						.join(",")
 				);
 			} else if (
-				!likedPresences.split(",").includes(this.presence.metadata.service)
+				!likedPresences.split(",").includes(this.presence?.metadata?.service)
 			) {
 				let newPresences = likedPresences.split(",");
 
