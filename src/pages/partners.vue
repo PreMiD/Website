@@ -168,7 +168,7 @@
 	import taigabot_icon from "~/assets/images/partners/taigabot-icon.png";
 	import erisly_icon from "~/assets/images/partners/erisly-icon.png";
 	import onlyhit_icon from "~/assets/images/partners/onlyhit-icon.png";
-	import reyfm_icon from "~/assets/images/partners/reyfm-icon.png";
+	import reyfm_icon from "~/assets/images/partners/reyfm-icon.jpg";
 
 	export default {
 		name: "Partners",
