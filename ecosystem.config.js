@@ -10,7 +10,7 @@ module.exports = {
 				NUXT_PORT: 3001,
 				NUXT_HOST: "0.0.0.0"
 			},
-			cwd: "/home/Website/master",
+			cwd: "/home/master",
 			exec_interpreter: "none"
 		},
 		{
@@ -23,7 +23,7 @@ module.exports = {
 				NUXT_PORT: 3000,
 				NUXT_HOST: "0.0.0.0"
 			},
-			cwd: "/home/Website/stable",
+			cwd: "/home/stable",
 			exec_interpreter: "none"
 		}
 	]
