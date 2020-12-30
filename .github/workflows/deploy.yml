@@ -11,23 +11,19 @@ on:
       - "**/*.yml"
 jobs:
   DePloY:
-    strategy:
-      matrix:
-        host: [1.premid.app]
     runs-on: "ubuntu-latest"
     steps:
-      - name: Extract branch name
+      - name: Get branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      - name: Deploying...
+      - name: Deploying Website-${{steps.extract_branch.outputs.branch}}...
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ matrix.host }}
-          username: ${{ secrets.SSHUSERNAME }}
-          password: ${{ secrets.SSHPASSWORD }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/PreMiD/Website/${{ steps.extract_branch.outputs.branch }}
+            cd /home/Website/${{ steps.extract_branch.outputs.branch }}
             git reset --hard
             git pull
             yarn
