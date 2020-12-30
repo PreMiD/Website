@@ -6,17 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v1
-      with:
-        username: Timeraa
-        password: ${{ secrets.GH_TOKEN }}
-        registry: docker.pkg.github.com
-        repository: premid/website/website
-        tags: ${{ steps.extract_branch.outputs.branch }}
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v2
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GH_TOKEN }}
+          registry: ghcr.io
+          tags: ${{ steps.extract_branch.outputs.branch }}
