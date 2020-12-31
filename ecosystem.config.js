@@ -18,6 +18,7 @@ module.exports = {
 			script: "npm",
 			args: "start",
 			exec_mode: "cluster",
+			cron_restart: "*/15 * * * *",
 			instances: 2,
 			env: {
 				NUXT_PORT: 3000,
