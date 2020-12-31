@@ -40,8 +40,9 @@
 	export default {
 		name: "Register",
 		auth: true,
-		async asyncData({ app, $auth }) {
-			if (!$auth.$storage._state["_token.discord"]) $auth.loginWith("discord");
+		async asyncData({ app, $auth, context }) {
+			if (!$auth.loggedIn || !$auth.$storage._state["_token.discord"])
+				app.context.redirect("/login");
 
 			return {
 				addBetaUser: (

@@ -165,7 +165,7 @@
 							@click="
 								browser.warning
 									? warn(browser.warning)
-									: open('chrome', 'Extension')
+									: open(browser.key, 'Extension')
 							"
 						>
 							<div class="card__icon">
@@ -356,7 +356,7 @@
 
 				const data = await app.$graphql(
 					`
-						query {
+						{
 							betaUsers {
 								number
 							}
@@ -374,7 +374,7 @@
 
 				if ($auth.loggedIn) {
 					const { downloads } = await app.$graphql(`
-						query {
+						{
 							downloads(token: "${$auth.$storage._state["_token.discord"]}") {
 								releaseType
 								appLinks
@@ -468,9 +468,9 @@
 			if (this.isChrome && ua.indexOf("Edg") != -1) {
 				this.browser = {
 					name: "Edge",
-					key: "chrome",
+					key: "edge",
 					icon: "edge",
-					warning: 1
+					warning: false
 				};
 			} else if (this.isChrome && ua.indexOf("Vivaldi") != -1) {
 				this.browser = {
@@ -583,9 +583,6 @@
 			},
 			warn(number) {
 				switch (number) {
-					case 1:
-						this.warning.messageKey = "downloads.warning.message.edge";
-						break;
 					case 2:
 						this.warning.messageKey = "downloads.warning.message.opera";
 						break;

@@ -85,7 +85,7 @@
 				betaUsers: (
 					await app.$graphql(
 						`
-						query {
+						{
 							betaUsers {
 								number
 							}
