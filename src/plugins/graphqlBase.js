@@ -6,7 +6,7 @@ export default ({ app }) => {
 			app
 				.$axios({
 					//! Temporary.
-					url: "https://api.premid.app/v3",
+					url: "/v3",
 					method: "POST",
 					data: {
 						query: query
