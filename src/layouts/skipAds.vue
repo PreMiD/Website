@@ -105,7 +105,8 @@
 						"https://microsoftedge.microsoft.com/addons/detail/hkchpjlnddoppadcbefbpgmgaeidkkkm",
 					chrome:
 						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
-					firefox: "https://dl.premid.app/PreMiD.xpi"
+					firefox: "https://dl.premid.app/PreMiD.xpi",
+					safari: "https://dl.premid.app/PreMiD-Extension.app"
 				}
 			};
 		},

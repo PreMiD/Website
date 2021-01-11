@@ -188,6 +188,19 @@
 								<h3>Firefox</h3>
 							</div>
 						</a>
+
+						<a
+							:class="{ 'current-platform': browser.key == 'safari' }"
+							class="cards__card clickable"
+							@click="open('safari', 'Extension')"
+						>
+							<div class="card__icon">
+								<i class="fa-safari fab"></i>
+							</div>
+							<div class="card__content">
+								<h3>Safari</h3>
+							</div>
+						</a>
 					</div>
 				</div>
 				<div class="show-beta" v-if="!showBeta">
@@ -489,6 +502,17 @@
 					key: "chrome",
 					icon: "opera",
 					warning: 2
+				};
+			} else if (
+				!this.isChrome &&
+				ua.indexOf("Safari") !== -1 &&
+				ua.indexOf("Chrome") === -1
+			) {
+				this.browser = {
+					name: "Safari",
+					key: "safari",
+					icon: "Safari",
+					warning: false
 				};
 			} else if (typeof InstallTrigger !== "undefined") {
 				this.isChrome = false;
