@@ -5,6 +5,7 @@
 				<p class="sidebar__subheader">{{ $t("store.header.search") }}</p>
 				<div class="store-menu__searchbar-container">
 					<input
+						vue-debounce
 						v-model="presenceSearch"
 						ref="search"
 						@keydown="searchHandle"
@@ -244,16 +245,18 @@
 </template>
 
 <script>
-	export default {
-		name: "Store",
-		auth: false,
-		head: {
-			title: "Store"
-		},
-		async asyncData({ app, error }) {
-			try {
-				const { presences, partners, science } = await app.$graphql(
-					`
+import debounce from "debounce";
+
+export default {
+	name: "Store",
+	auth: false,
+	head: {
+		title: "Store"
+	},
+	async asyncData({ app, error }) {
+		try {
+			const { presences, partners, science } = await app.$graphql(
+				`
 					{
 						presences {
 							metadata {
@@ -282,331 +285,325 @@
 							users
 						}
 					}`
-				);
+			);
 
-				let usage = science.users;
+			let usage = science.users;
 
-				return {
-					presences: presences,
-					topPresences: presences.sort((a, b) => b.users - a.users) || [],
-					partners: partners,
-					hotPresences: presences.filter(p => {
-						if ((p.users / usage) * 100 > 5) return p;
-					})
-				};
-			} catch (err) {
-				return error({ message: "API returned an error." });
-			}
-		},
-		data() {
 			return {
-				presences: [],
-				addedPresences: [],
-				nsfw: false,
-				mostUsed: true,
-				showAdded: false,
-				filterLiked: false,
-				presenceSearch: "",
-				presencesPerPage: 12,
-				filters: {
-					url: { enabled: false, padding: 45 },
-					tag: { enabled: false, padding: 50 },
-					author: { enabled: false, padding: 75 }
-				},
-				typing: false
+				presences: presences,
+				topPresences: presences.sort((a, b) => b.users - a.users) || [],
+				partners: partners,
+				hotPresences: presences.filter(p => {
+					if ((p.users / usage) * 100 > 5) return p;
+				})
 			};
-		},
-		computed: {
-			currentCategory() {
-				return this.$route.query.category || "all";
+		} catch (err) {
+			return error({ message: "API returned an error." });
+		}
+	},
+	data() {
+		return {
+			presences: [],
+			addedPresences: [],
+			nsfw: false,
+			mostUsed: true,
+			showAdded: false,
+			filterLiked: false,
+			presenceSearch: "",
+			presencesPerPage: 12,
+			filters: {
+				url: { enabled: false, padding: 45 },
+				tag: { enabled: false, padding: 50 },
+				author: { enabled: false, padding: 75 }
 			},
-			filteredPresences() {
-				return this.presences
-					.filter(presence => {
-						if (this.filters.url.enabled == true)
-							return (
-								(Array.isArray(presence.metadata.url) &&
-									presence.metadata.url.filter(url =>
-										url
-											.toLowerCase()
-											.includes(this.presenceSearch.toLowerCase())
-									).length > 0) ||
-								(typeof presence.metadata.url == "string" &&
-									presence.metadata.url
-										.toLowerCase()
-										.includes(this.presenceSearch.toLowerCase()))
-							);
-						else if (this.filters.author.enabled == true)
-							return (
-								presence.metadata.author.name
+			typing: false
+		};
+	},
+	computed: {
+		currentCategory() {
+			return this.$route.query.category || "all";
+		},
+		filteredPresences() {
+			return this.presences
+				.filter(presence => {
+					if (this.filters.url.enabled == true)
+						return (
+							(Array.isArray(presence.metadata.url) &&
+								presence.metadata.url.filter(url =>
+									url.toLowerCase().includes(this.presenceSearch.toLowerCase())
+								).length > 0) ||
+							(typeof presence.metadata.url == "string" &&
+								presence.metadata.url
 									.toLowerCase()
-									.includes(this.presenceSearch.toLowerCase()) ||
-								presence.metadata.author.id.includes(this.presenceSearch)
-							);
-						else if (this.filters.tag.enabled == true)
-							return Array.isArray(presence.metadata.tags)
-								? presence.metadata.tags.filter(tag =>
-										tag
-											.toLowerCase()
-											.includes(this.presenceSearch.toLowerCase())
-								  ).length > 0
-								: false;
-						else if (
-							!this.showAdded &&
-							(presence.metadata.service
+									.includes(this.presenceSearch.toLowerCase()))
+						);
+					else if (this.filters.author.enabled == true)
+						return (
+							presence.metadata.author.name
 								.toLowerCase()
 								.includes(this.presenceSearch.toLowerCase()) ||
-								(Array.isArray(presence.metadata.altnames) &&
-									presence.metadata.altnames.filter(altname =>
-										altname
-											.toLowerCase()
-											.includes(this.presenceSearch.toLowerCase())
-									).length > 0))
-						)
-							return !this.addedPresences.includes(presence.metadata.service);
-						else
-							return (
-								presence.metadata.service
-									.toLowerCase()
-									.includes(this.presenceSearch.toLowerCase()) ||
-								(Array.isArray(presence.metadata.tags) &&
-									presence.metadata.tags.filter(tag =>
-										tag
-											.toLowerCase()
-											.includes(this.presenceSearch.toLowerCase())
-									).length > 0) ||
-								(Array.isArray(presence.metadata.altnames) &&
-									presence.metadata.altnames.filter(altname =>
-										altname
-											.toLowerCase()
-											.includes(this.presenceSearch.toLowerCase())
-									).length > 0)
-							);
-					})
-					.filter(presence =>
-						this.nsfw ? true : !presence.metadata.tags.includes("nsfw")
+							presence.metadata.author.id.includes(this.presenceSearch)
+						);
+					else if (this.filters.tag.enabled == true)
+						return Array.isArray(presence.metadata.tags)
+							? presence.metadata.tags.filter(tag =>
+									tag.toLowerCase().includes(this.presenceSearch.toLowerCase())
+							  ).length > 0
+							: false;
+					else if (
+						!this.showAdded &&
+						(presence.metadata.service
+							.toLowerCase()
+							.includes(this.presenceSearch.toLowerCase()) ||
+							(Array.isArray(presence.metadata.altnames) &&
+								presence.metadata.altnames.filter(altname =>
+									altname
+										.toLowerCase()
+										.includes(this.presenceSearch.toLowerCase())
+								).length > 0))
 					)
-					.filter(presence =>
-						this.filterLiked &&
-						this.$store.state.presences.likedPresences.includes(
+						return !this.addedPresences.includes(presence.metadata.service);
+					else
+						return (
 							presence.metadata.service
-						)
-							? true
-							: !this.filterLiked
+								.toLowerCase()
+								.includes(this.presenceSearch.toLowerCase()) ||
+							(Array.isArray(presence.metadata.tags) &&
+								presence.metadata.tags.filter(tag =>
+									tag.toLowerCase().includes(this.presenceSearch.toLowerCase())
+								).length > 0) ||
+							(Array.isArray(presence.metadata.altnames) &&
+								presence.metadata.altnames.filter(altname =>
+									altname
+										.toLowerCase()
+										.includes(this.presenceSearch.toLowerCase())
+								).length > 0)
+						);
+				})
+				.filter(presence =>
+					this.nsfw ? true : !presence.metadata.tags.includes("nsfw")
+				)
+				.filter(presence =>
+					this.filterLiked &&
+					this.$store.state.presences.likedPresences.includes(
+						presence.metadata.service
 					)
-					.filter(presence => {
-						if (this.currentCategory === "all") {
-							return presence.metadata;
-						} else {
-							return presence.metadata.category == this.currentCategory;
-						}
-					})
-					.sort((a, b) => a.metadata.service.localeCompare(b.metadata.service))
-					.sort((a, b) => {
-						if (this.mostUsed) {
-							return b.users - a.users;
-						}
-					});
-			},
-			currentPageNumber: {
-				get() {
-					if (Number(this.$route.query.page)) {
-						if (this.pageCount < this.$route.query.page) {
-							return 1;
-						} else {
-							return Number(this.$route.query.page);
-						}
+						? true
+						: !this.filterLiked
+				)
+				.filter(presence => {
+					if (this.currentCategory === "all") {
+						return presence.metadata;
 					} else {
+						return presence.metadata.category == this.currentCategory;
+					}
+				})
+				.sort((a, b) => a.metadata.service.localeCompare(b.metadata.service))
+				.sort((a, b) => {
+					if (this.mostUsed) {
+						return b.users - a.users;
+					}
+				});
+		},
+		currentPageNumber: {
+			get() {
+				if (Number(this.$route.query.page)) {
+					if (this.pageCount < this.$route.query.page) {
 						return 1;
+					} else {
+						return Number(this.$route.query.page);
 					}
-				},
-				set(val) {
-					return val;
+				} else {
+					return 1;
 				}
 			},
-			pageCount() {
-				let length = this.filteredPresences.length,
-					size = this.presencesPerPage;
-
-				return Math.ceil(length / size);
-			},
-			paginatedData() {
-				let start = (this.currentPageNumber - 1) * this.presencesPerPage,
-					end = start + this.presencesPerPage;
-				return this.filteredPresences.slice(start, end);
+			set(val) {
+				return val;
 			}
 		},
-		created() {
-			if (
-				this.pageCount < Number(this.$route.query.page) ||
-				this.$route.query.page <= -1
-			) {
-				this.$nuxt.error({
-					statusCode: 404,
-					message: "No presences available."
-				});
-			}
+		pageCount() {
+			let length = this.filteredPresences.length,
+				size = this.presencesPerPage;
 
-			this.interval = setInterval(() => {
-				this.addedPresences = this.$store.state.presences.addedPresences;
-			}, 100);
+			return Math.ceil(length / size);
 		},
-		mounted() {
-			const query =
-				this.$route.query.q ||
-				this.$route.query.query ||
-				this.$route.query.search;
-
-			if (query) {
-				this.presenceSearch = query
-					.replace("author:", "author ")
-					.replace("url:", "url ")
-					.replace("tag:", "tag ")
-					.replace(/\+/g, " ");
-
-				this.searchHandle(null, false);
-			}
-
-			// For search suggestions removal
-			this.listener = this.$el.addEventListener("click", evt => {
-				evt.target.className != "searchbar" ? (this.typing = false) : false;
-			});
-		},
-		beforeDestroy() {
-			this.$el.removeEventListener("click", this.listener);
-			if (this.interval) clearInterval(this.interval);
-		},
-		methods: {
-			setSearchStyle() {
-				let padding = 10;
-
-				for (let key in this.filters) {
-					this.filters[key].enabled === true
-						? (padding = this.filters[key].padding)
-						: false;
-				}
-
-				this.$refs.search.style.paddingLeft = `${padding}px`;
-				return true;
-			},
-			searchHandle(evt, typing) {
-				this.presenceSearch = this.presenceSearch.trim();
-
-				if (!this.presenceSearch) this.typing = false;
-
-				if (
-					evt &&
-					this.presenceSearch == "" &&
-					evt.key.toLowerCase() == "backspace"
-				) {
-					for (let key in this.filters) this.filters[key].enabled = false;
-					this.setSearchStyle();
-				} else if (!evt || evt.key.toLowerCase() != "backspace") {
-					this.typing = typing != "undefined" ? typing : true;
-					const handles = Object.keys(this.filters);
-
-					if (handles.indexOf(this.presenceSearch.split(" ")[0]) !== -1) {
-						for (let key in this.filters) {
-							key == this.presenceSearch.split(" ")[0]
-								? (this.filters[key].enabled = true)
-								: (this.filters[key].enabled = false);
-						}
-
-						this.presenceSearch =
-							this.presenceSearch
-								.split(" ")[0]
-								.replace(this.presenceSearch.split(" ")[0], "") +
-							this.presenceSearch.split(" ").slice(1);
-
-						this.setSearchStyle();
-					}
-				}
-			},
-			removeFilter(filter) {
-				this.filters[filter].enabled = false;
-				this.setSearchStyle();
-				return true;
-			},
-			paginationEvent(pageNumber) {
-				this.$router.push({
-					query: {
-						page: pageNumber,
-						category: this.currentCategory
-					}
-				});
-			}
+		paginatedData() {
+			let start = (this.currentPageNumber - 1) * this.presencesPerPage,
+				end = start + this.presencesPerPage;
+			return this.filteredPresences.slice(start, end);
 		}
-	};
+	},
+	created() {
+		if (
+			this.pageCount < Number(this.$route.query.page) ||
+			this.$route.query.page <= -1
+		) {
+			this.$nuxt.error({
+				statusCode: 404,
+				message: "No presences available."
+			});
+		}
+
+		this.interval = setInterval(() => {
+			this.addedPresences = this.$store.state.presences.addedPresences;
+		}, 100);
+	},
+	mounted() {
+		const query =
+			this.$route.query.q ||
+			this.$route.query.query ||
+			this.$route.query.search;
+
+		if (query) {
+			this.presenceSearch = query
+				.replace("author:", "author ")
+				.replace("url:", "url ")
+				.replace("tag:", "tag ")
+				.replace(/\+/g, " ");
+
+			this.searchHandle(null, false);
+		}
+
+		// For search suggestions removal
+		this.listener = this.$el.addEventListener("click", evt => {
+			evt.target.className != "searchbar" ? (this.typing = false) : false;
+		});
+	},
+	beforeDestroy() {
+		this.$el.removeEventListener("click", this.listener);
+		if (this.interval) clearInterval(this.interval);
+	},
+	methods: {
+		setSearchStyle() {
+			let padding = 10;
+
+			for (let key in this.filters) {
+				this.filters[key].enabled === true
+					? (padding = this.filters[key].padding)
+					: false;
+			}
+
+			this.$refs.search.style.paddingLeft = `${padding}px`;
+			return true;
+		},
+		searchHandle(evt, typing) {
+			this.presenceSearch = this.presenceSearch.trim();
+
+			if (!this.presenceSearch) this.typing = false;
+
+			if (
+				evt &&
+				this.presenceSearch == "" &&
+				evt.key.toLowerCase() == "backspace"
+			) {
+				for (let key in this.filters) this.filters[key].enabled = false;
+				this.setSearchStyle();
+			} else if (!evt || evt.key.toLowerCase() != "backspace") {
+				this.typing = typing != "undefined" ? typing : true;
+				const handles = Object.keys(this.filters);
+
+				if (handles.indexOf(this.presenceSearch.split(" ")[0]) !== -1) {
+					for (let key in this.filters) {
+						key == this.presenceSearch.split(" ")[0]
+							? (this.filters[key].enabled = true)
+							: (this.filters[key].enabled = false);
+					}
+
+					this.presenceSearch =
+						this.presenceSearch
+							.split(" ")[0]
+							.replace(this.presenceSearch.split(" ")[0], "") +
+						this.presenceSearch.split(" ").slice(1);
+
+					this.setSearchStyle();
+				}
+			}
+		},
+		removeFilter(filter) {
+			this.filters[filter].enabled = false;
+			this.setSearchStyle();
+			return true;
+		},
+		paginationEvent(pageNumber) {
+			this.$router.push({
+				query: {
+					page: pageNumber,
+					category: this.currentCategory
+				}
+			});
+		}
+	}
+};
 </script>
 
 <style lang="scss">
-	@import "../../stylesheets/variables.scss";
+@import "../../stylesheets/variables.scss";
 
-	.store-menu__searchbar-container {
-		position: relative;
+.store-menu__searchbar-container {
+	position: relative;
+
+	span {
+		position: absolute;
+		margin: 2px;
+		background-color: #191b24;
+		padding: 2.5px 5px;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.searchSuggestions {
+		font-size: small;
+		z-index: 999;
+		position: absolute;
+		background-color: #191b24;
+		border-bottom-right-radius: 4px;
+		border-bottom-left-radius: 4px;
+		box-shadow: 0px 1px teal;
+		width: -webkit-fill-available;
+		width: -moz-available;
+		margin-top: 2.5em;
 
 		span {
-			position: absolute;
-			margin: 2px;
-			background-color: #191b24;
-			padding: 2.5px 5px;
-			border-radius: 4px;
-			cursor: pointer;
+			position: unset;
+			width: 100%;
 		}
 
-		.searchSuggestions {
-			font-size: small;
-			z-index: 999;
-			position: absolute;
-			background-color: #191b24;
-			border-bottom-right-radius: 4px;
-			border-bottom-left-radius: 4px;
-			box-shadow: 0px 1px teal;
-			width: -webkit-fill-available;
-			width: -moz-available;
-			margin-top: 2.5em;
+		.filterBox {
+			width: 100%;
+			display: inline-flex;
 
-			span {
-				position: unset;
-				width: 100%;
+			span:nth-child(1) {
+				float: left;
+				text-align: left;
 			}
 
-			.filterBox {
-				width: 100%;
-				display: inline-flex;
-
-				span:nth-child(1) {
-					float: left;
-					text-align: left;
-				}
-
-				span:nth-child(2) {
-					float: right;
-					text-align: right;
-				}
+			span:nth-child(2) {
+				float: right;
+				text-align: right;
 			}
-		}
-
-		display: flex;
-
-		button,
-		.button {
-			&:not(:last-child),
-			&:not(:first-child) {
-				border-radius: 0 0 0 0;
-			}
-
-			display: inline-block;
-			padding: 0.09rem 10px;
-			font-size: 14px;
-			line-height: 25px;
-			font-weight: bold;
 		}
 	}
 
-	.fa-search {
-		position: absolute;
-		margin-left: 0.6rem;
-		color: #74787c;
+	display: flex;
+
+	button,
+	.button {
+		&:not(:last-child),
+		&:not(:first-child) {
+			border-radius: 0 0 0 0;
+		}
+
+		display: inline-block;
+		padding: 0.09rem 10px;
+		font-size: 14px;
+		line-height: 25px;
+		font-weight: bold;
 	}
+}
+
+.fa-search {
+	position: absolute;
+	margin-left: 0.6rem;
+	color: #74787c;
+}
 </style>
