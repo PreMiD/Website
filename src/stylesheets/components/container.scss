@@ -378,6 +378,12 @@
 	position: relative;
 	justify-content: center;
 	flex-wrap: wrap;
+
+	&#error {
+		margin-top: 2.7em;
+		background-color: #191b24;
+		border-radius: 0.5rem;
+	}
 }
 
 .category-container {
