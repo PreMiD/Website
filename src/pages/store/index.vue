@@ -194,11 +194,7 @@
 			</div>
 
 			<div class="store-grid__content">
-				<h1 v-if="!filteredPresences.length" class="heading">
-					{{ $t("store.search.notFound") }}
-					<i class="fa-sad-tear fas"></i>
-				</h1>
-				<div class="presence-container">
+				<div class="presence-container" v-if="filteredPresences.length">
 					<StoreCard
 						v-for="presence in paginatedData"
 						:key="presence.metadata.service"
@@ -214,6 +210,12 @@
 								.length
 						"
 					/>
+				</div>
+				<div class="presence-container" id="error" v-else>
+					<h1 class="heading text-highlight">
+						{{ $t("store.search.notFound") }}
+						<i class="fa-sad-tear fas"></i>
+					</h1>
 				</div>
 			</div>
 		</div>
@@ -236,7 +238,7 @@
 
 		<adsense
 			ad-slot="5201967746"
-			style="text-align: center; margin-top: 0.25em;"
+			style="text-align: center; margin-top: 0.25em"
 		/>
 	</section>
 </template>

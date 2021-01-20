@@ -5,6 +5,7 @@ export default ({ app }) => {
 		new Promise((resolve, reject) => {
 			app
 				.$axios({
+					//! Temporary.
 					url: "/v3",
 					method: "POST",
 					data: {

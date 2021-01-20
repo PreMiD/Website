@@ -113,12 +113,6 @@
 												class="game"
 												alt="@/assets/images/logo-big.svg"
 												:src="presence.serviceLogo"
-											/><img
-												v-if="presence.smallImage == 'live'"
-												v-tippy="{ content: `PreMiD v${extVersion}` }"
-												class="game"
-												alt="@/assets/images/logo-big.svg"
-												:src="presence.serviceLogo"
 											/>
 											<img
 												v-if="presence.smallImage == true"
@@ -136,20 +130,12 @@
 												:src="require('@/assets/images/search.png')"
 											/>
 											<img
-												v-if="presence.smallImage == 'live'"
-												v-tippy="{
-													content: $t('home.examples.status.live')
-												}"
-												class="status-icon"
-												:src="require('@/assets/images/live.png')"
-											/>
-											<img
 												v-if="presence.smallImage == true"
 												v-tippy="{
 													content: $t('home.examples.status.playing')
 												}"
 												class="status-icon"
-												:src="require('@/assets/images/play.png')"
+												src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
 											/>
 										</div>
 										<div class="game__content">
@@ -165,7 +151,7 @@
 											>
 												{{ presence.data[1] }}
 											</div>
-											<div class="game__time text-row" v-if="!presence.live">
+											<div class="game__time text-row">
 												{{
 													presence.elapsed
 														? $t(`home.examples.timestamp2`, {
@@ -361,13 +347,6 @@
 						],
 						seconds: "300", //Suitable range for timer
 						presence_time: "01:36"
-					},
-					{
-						service_title: "YouTube",
-						serviceLogo: youtubeLogo,
-						smallImage: "live",
-						data: ["NASA Live: Official Stream of NASA TV", "NASA"],
-						live: true
 					},
 					{
 						service_title: "SoundCloud",
