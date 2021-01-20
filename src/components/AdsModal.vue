@@ -6,10 +6,7 @@
 					<adsense root-class="ad" ad-slot="3276628083"></adsense>
 				</div>
 
-				<div
-					v-if="probsUsingAdBlock"
-					:class="{ 'ads-container': true, 'grid-full': $device.isMobile }"
-				>
+				<div :class="{ 'ads-container': true, 'grid-full': $device.isMobile }">
 					<div class="text-center">
 						<div class="back-button" @click="$emit('input', false)">
 							{{ $t("downloads.button.back") }}
@@ -17,7 +14,7 @@
 					</div>
 
 					<div class="card">
-						<div class="image">
+						<div v-if="probsUsingAdBlock" class="image">
 							<img
 								alt="peepo cry emoji"
 								src="https://cdn.discordapp.com/attachments/473603737135349792/695397570272559235/634432333226836020.png"
@@ -25,37 +22,23 @@
 						</div>
 
 						<div class="title">
-							<h1>{{ $t("downloads.adsbox.disableAdblock") }}</h1>
-						</div>
-
-						<div class="mt-2">
-							<button class="button" @click="skipAnyway">Skip Anyway</button>
-						</div>
-					</div>
-
-					<div v-if="!$device.isMobile"></div>
-				</div>
-
-				<div
-					v-else-if="!probsUsingAdBlock"
-					:class="{ 'ads-container': true, 'grid-full': $device.isMobile }"
-				>
-					<div class="text-center">
-						<div class="back-button" @click="$emit('input', false)">
-							{{ $t("downloads.button.back") }}
-						</div>
-					</div>
-
-					<div class="card">
-						<div class="title">
 							<h1>{{ $t("downloads.adsbox.thankyou.title") }}</h1>
-							<p class="mx-auto">
+							<p v-if="!probsUsingAdBlock" class="mx-auto">
 								{{ $t("downloads.adsbox.thankyou.message") }}
 							</p>
 						</div>
 
-						<div>
+						<div :class="{ 'mt-2': probsUsingAdBlock }">
 							<button
+								v-if="probsUsingAdBlock"
+								class="button"
+								@click="skipAnyway"
+							>
+								{{ $t("downloads.button.skipanyway") }}
+							</button>
+
+							<button
+								v-else-if="!probsUsingAdBlock"
 								:class="{ 'button mr-0': true, disabled: countDown > 0 }"
 								@click="countDown > 0 ? false : open(getHref)"
 							>
@@ -67,6 +50,10 @@
 					<div>
 						<adsense root-class="ad" ad-slot="9757727213"></adsense>
 					</div>
+				</div>
+
+				<div v-if="!$device.isMobile">
+					<adsense root-class="ad" ad-slot="4398138065"></adsense>
 				</div>
 			</div>
 		</div>
