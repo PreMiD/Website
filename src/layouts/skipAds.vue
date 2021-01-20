@@ -57,7 +57,7 @@
 				</button>
 			</div>
 
-			<a class="skip-anyway" @click="skipAnyway">
+			<a class="skip-anyway" href="#" @click="skipAnyway">
 				{{ texts[0] }}
 			</a>
 		</div>
