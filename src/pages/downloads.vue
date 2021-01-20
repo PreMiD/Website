@@ -160,7 +160,10 @@
 
 					<div class="dl-container__cards">
 						<div
-							:class="{ 'current-platform': browser.key == 'chrome' }"
+							:class="{
+								'current-platform':
+									browser.key == 'chrome' || browser.key == 'edge'
+							}"
 							class="cards__card clickable"
 							@click="
 								browser.warning
@@ -186,6 +189,18 @@
 							</div>
 							<div class="card__content">
 								<h3>Firefox</h3>
+							</div>
+						</a>
+						<a
+							:class="{ 'current-platform': browser.key == 'safari' }"
+							class="cards__card clickable"
+							@click="open('safari', 'Extension')"
+						>
+							<div class="card__icon">
+								<i class="fa-safari fab"></i>
+							</div>
+							<div class="card__content">
+								<h3>Safari</h3>
 							</div>
 						</a>
 					</div>
@@ -465,14 +480,25 @@
 				!!window.chrome &&
 				(!!window.chrome.webstore || !!window.chrome.runtime);
 
-			if (this.isChrome && ua.indexOf("Edg") != -1) {
+			if (
+				!this.isChrome &&
+				ua.indexOf("Safari") !== -1 &&
+				ua.indexOf("Chrome") === -1
+			) {
+				this.browser = {
+					name: "Safari",
+					key: "safari",
+					icon: "safari",
+					warning: false
+				};
+			} else if (this.isChrome && ua.indexOf("Edg") !== -1) {
 				this.browser = {
 					name: "Edge",
 					key: "edge",
 					icon: "edge",
 					warning: false
 				};
-			} else if (this.isChrome && ua.indexOf("Vivaldi") != -1) {
+			} else if (this.isChrome && ua.indexOf("Vivaldi") !== -1) {
 				this.browser = {
 					name: "Vivaldi",
 					key: "chrome",
@@ -492,7 +518,6 @@
 				};
 			} else if (typeof InstallTrigger !== "undefined") {
 				this.isChrome = false;
-
 				this.browser = {
 					name: "Firefox",
 					key: "firefox",
