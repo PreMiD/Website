@@ -61,7 +61,7 @@
 
 		<transition name="card-animation" mode="out-in">
 			<div
-				v-if="isMobile"
+				v-if="$device.isMobile"
 				class="dl-container__section dl-container__mobile-warning waves-aligned"
 			>
 				{{ $t("downloads.mobile.errorMessage") }}
@@ -99,7 +99,7 @@
 					</h1>
 					<div class="dl-container__cards">
 						<div v-for="(platform, index) of platform_order" :key="platform">
-							<div @click="open(platform, 'Application')">
+							<div @click="showAdModal(platform)">
 								<div
 									:class="{ 'current-platform': index == 1 }"
 									class="cards__card clickable"
@@ -168,7 +168,7 @@
 							@click="
 								browser.warning
 									? warn(browser.warning)
-									: open(browser.key, 'Extension')
+									: showAdModal(browser.key)
 							"
 						>
 							<div class="card__icon">
@@ -182,7 +182,7 @@
 						<a
 							:class="{ 'current-platform': browser.key == 'firefox' }"
 							class="cards__card clickable"
-							@click="open('firefox', 'Extension')"
+							@click="showAdModal('firefox')"
 						>
 							<div class="card__icon">
 								<i class="fa-firefox fab"></i>
@@ -194,7 +194,7 @@
 						<a
 							:class="{ 'current-platform': browser.key == 'safari' }"
 							class="cards__card clickable"
-							@click="open('safari', 'Extension')"
+							@click="showAdModal('safari')"
 						>
 							<div class="card__icon">
 								<i class="fa-safari fab"></i>
@@ -224,8 +224,8 @@
 							v-if="$auth.loggedIn && userAccess"
 							class="label label_downloads-version bv"
 							@click="changeTab"
-							v-text="currentTab.releaseType"
-						></a>
+							>{{ currentTab.releaseType }}</a
+						>
 					</h1>
 
 					<div v-if="$auth.loggedIn">
@@ -313,7 +313,7 @@
 		</transition>
 
 		<transition name="card-animation" mode="out-in">
-			<div v-if="isMobile" class="dl-container__showDownloads">
+			<div v-if="$device.isMobile" class="dl-container__showDownloads">
 				<span @click="showDownloads = !showDownloads">
 					{{
 						showDownloads
@@ -323,6 +323,11 @@
 				</span>
 			</div>
 		</transition>
+
+		<AdsModal
+			v-model="skipAdsModal.enabled"
+			:platform="skipAdsModal.platform"
+		/>
 
 		<modal
 			v-if="modalAvailable"
@@ -347,10 +352,7 @@
 					<button class="button btn cancel" @click="$modal.hide('warning')">
 						{{ $t("downloads.button.cancel") }}
 					</button>
-					<button
-						class="button btn accept"
-						@click="open('chrome', 'Extension')"
-					>
+					<button class="button btn accept" @click="showAdModal('chrome')">
 						{{ $t("downloads.button.okay") }}
 					</button>
 				</div>
@@ -360,17 +362,17 @@
 </template>
 
 <script>
-	export default {
-		name: "Downloads",
-		auth: false,
-		async asyncData({ $auth, app, error }) {
-			try {
-				let userAccess = false,
-					tabs = {},
-					currentTab = {};
+export default {
+	name: "Downloads",
+	auth: false,
+	async asyncData({ $auth, app, error }) {
+		try {
+			let userAccess = false,
+				tabs = {},
+				currentTab = {};
 
-				const data = await app.$graphql(
-					`
+			const data = await app.$graphql(
+				`
 						{
 							betaUsers {
 								number
@@ -385,10 +387,10 @@
 							}
 						}
 					`
-				);
+			);
 
-				if ($auth.loggedIn) {
-					const { downloads } = await app.$graphql(`
+			if ($auth.loggedIn) {
+				const { downloads } = await app.$graphql(`
 						{
 							downloads(token: "${$auth.$storage._state["_token.discord"]}") {
 								releaseType
@@ -401,304 +403,300 @@
 						}
 					`);
 
-					userAccess = downloads.length > 0;
+				userAccess = downloads.length > 0;
 
-					if (userAccess)
-						downloads.forEach(d => {
-							tabs[d.releaseType] = d;
-						});
+				if (userAccess)
+					downloads.forEach(d => {
+						tabs[d.releaseType] = d;
+					});
 
-					if (downloads.find(d => d.releaseType == "alpha"))
-						currentTab = downloads.find(d => d.releaseType == "alpha");
-					else currentTab = downloads.find(d => d.releaseType == "beta");
-				}
-
-				return {
-					extVersion: data.versions.extension,
-					appVersion: data.versions.app,
-					linuxVersion: data.versions.linux,
-					userAccess: userAccess,
-					extraDownloads: tabs,
-					currentTab: currentTab,
-					betaUsers: data.betaUsers.number,
-					availableSlots: (data.discordUsers.length * 0.1).toFixed()
-				};
-			} catch (err) {
-				return error(err);
+				if (downloads.find(d => d.releaseType == "alpha"))
+					currentTab = downloads.find(d => d.releaseType == "alpha");
+				else currentTab = downloads.find(d => d.releaseType == "beta");
 			}
-		},
-		data() {
+
 			return {
-				skipAds: false,
-				showBeta: false,
-				extVersion: null,
-				appVersion: null,
-				linuxVersion: null,
-				cardHover: false,
-				modalAvailable: false,
-				platforms: [],
-				isChrome: true,
-				browser: {
-					name: "Chrome",
-					key: "chrome",
-					warning: false
-				},
-				warning: {
-					number: null,
-					messageKey: null
-				},
-				platform_order: ["windows", "apple", "linux"],
-				builds: {
-					windows: {
-						os_name: "Windows",
-						has_installer: true
-					},
-					apple: {
-						os_name: "macOS",
-						has_installer: true
-					},
-					linux: {
-						os_name: "Linux",
-						warning: true,
-						has_installer: true
-					}
-				},
-				isMobile: false,
-				showDownloads: true
+				extVersion: data.versions.extension,
+				appVersion: data.versions.app,
+				linuxVersion: data.versions.linux,
+				userAccess: userAccess,
+				extraDownloads: tabs,
+				currentTab: currentTab,
+				betaUsers: data.betaUsers.number,
+				availableSlots: (data.discordUsers.length * 0.1).toFixed()
 			};
-		},
-		mounted() {
-			let ua = "";
-
-			this.$auth.$storage.setUniversal("redirect", "/downloads#beta-downloads");
-
-			if (process.browser) ua = navigator.userAgent;
-
-			//* Browser detection.
-			// Thanks to https://stackoverflow.com/a/9851769 for providing code.
-			this.isChrome =
-				!!window.chrome &&
-				(!!window.chrome.webstore || !!window.chrome.runtime);
-
-			if (
-				!this.isChrome &&
-				ua.indexOf("Safari") !== -1 &&
-				ua.indexOf("Chrome") === -1
-			) {
-				this.browser = {
-					name: "Safari",
-					key: "safari",
-					icon: "safari",
-					warning: false
-				};
-			} else if (this.isChrome && ua.indexOf("Edg") !== -1) {
-				this.browser = {
-					name: "Edge",
-					key: "edge",
-					icon: "edge",
-					warning: false
-				};
-			} else if (this.isChrome && ua.indexOf("Vivaldi") !== -1) {
-				this.browser = {
-					name: "Vivaldi",
-					key: "chrome",
-					icon: "chrome", // No icons for Vivaldi in the FA pack.
-					warning: false
-				};
-			} else if (
-				(!!window.opr && !!opr.addons) ||
-				!!window.opera ||
-				ua.indexOf(" OPR/") >= 0
-			) {
-				this.browser = {
-					name: "Opera",
-					key: "chrome",
-					icon: "opera",
-					warning: 2
-				};
-			} else if (typeof InstallTrigger !== "undefined") {
-				this.isChrome = false;
-				this.browser = {
-					name: "Firefox",
-					key: "firefox",
-					icon: null,
-					warning: false
-				};
-			} else {
-				this.browser = {
-					name: "Chrome",
-					key: "chrome",
-					icon: "chrome",
-					warning: false
-				};
-			}
-
-			let platform_temp = "linux";
-			var platform_order = this.platform_order;
-
-			if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
-			if (ua.includes("Windows")) platform_temp = "windows";
-			if (
-				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-					ua
-				)
-			) {
-				this.isMobile = true;
-				this.showDownloads = false;
-			}
-
-			//* Centering the current platform in array. Only works if array has 3 items.
-			platform_order.splice(platform_order.indexOf(platform_temp), 1);
-			platform_order.splice(1, 0, platform_temp);
-
-			if (
-				["#app-downloads", "#ext-downloads", "#beta-downloads"].includes(
-					window.location.hash
-				)
-			) {
-				this.highlight(
-					`${
-						["#app-downloads", "#ext-downloads", "#beta-downloads"].filter(i =>
-							i.includes(window.location.hash)
-						)[0]
-					} .section-header`
-				);
-			}
-
-			setTimeout(() => (this.modalAvailable = true));
-
-			this.$anime({
-				targets: "#bv",
-				scale: [1, 1.1],
-				delay: 500,
-				direction: "alternate",
-				easing: "easeInBounce",
-				loop: true
-			});
-		},
-		methods: {
-			changeTab() {
-				if (this.userAccess) {
-					if (this.currentTab.releaseType == "beta") {
-						if (!Object.keys(this.extraDownloads).find(d => d == "alpha"))
-							return;
-
-						this.currentTab = this.extraDownloads["alpha"];
-					} else this.currentTab = this.extraDownloads["beta"];
-				}
-			},
-			highlight(elementPath) {
-				const element = document.querySelector(elementPath);
-
-				if (element) {
-					setTimeout(() => element.classList.add("highlight"));
-					setTimeout(() => element.classList.remove("highlight"), 1000);
-				}
-			},
-			linkify(pls, customUrl) {
-				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
-				return pls.match(/(\*\*.*?\*\*)/g).map(ch => {
-					return pls.replace(
-						ch,
-						`<a class="text-highlight" href="${
-							customUrl || "/beta"
-						}">${ch.slice(2, ch.length - 2)}</a>`
-					);
-				})[0];
-			},
-			warn(number) {
-				switch (number) {
-					case 2:
-						this.warning.messageKey = "downloads.warning.message.opera";
-						break;
-					default:
-						this.warning.messageKey = "Unknown error.";
-						break;
-				}
-
-				this.$modal.show("warning");
-			},
-			open(platform, type = "") {
-				if (platform == "linux") {
-					this.openInNewTab(
-						"https://github.com/PreMiD/Linux/blob/master/README.md"
-					);
-					return;
-				}
-
-				this.$store.commit("download/setDL", { platform, type });
-				this.$nuxt.setLayout("skipAds");
-			},
-			openInNewTab(url) {
-				window.open(url, "_blank");
-			}
-		},
-		head: {
-			title: "Downloads"
+		} catch (err) {
+			return error(err);
 		}
-	};
+	},
+	data() {
+		return {
+			skipAdsModal: {
+				enabled: false,
+				platform: ""
+			},
+			showBeta: false,
+			extVersion: null,
+			appVersion: null,
+			linuxVersion: null,
+			cardHover: false,
+			modalAvailable: false,
+			platforms: [],
+			isChrome: true,
+			browser: {
+				name: "Chrome",
+				key: "chrome",
+				warning: false
+			},
+			warning: {
+				number: null,
+				messageKey: null
+			},
+			platform_order: ["windows", "apple", "linux"],
+			builds: {
+				windows: {
+					os_name: "Windows",
+					has_installer: true
+				},
+				apple: {
+					os_name: "macOS",
+					has_installer: true
+				},
+				linux: {
+					os_name: "Linux",
+					warning: true,
+					has_installer: true
+				}
+			},
+			showDownloads: true
+		};
+	},
+	mounted() {
+		let ua = "";
+
+		this.$auth.$storage.setUniversal("redirect", "/downloads#beta-downloads");
+
+		if (process.browser) ua = navigator.userAgent;
+
+		//* Browser detection.
+		// Thanks to https://stackoverflow.com/a/9851769 for providing code.
+		this.isChrome =
+			!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+		if (
+			!this.isChrome &&
+			ua.indexOf("Safari") !== -1 &&
+			ua.indexOf("Chrome") === -1
+		) {
+			this.browser = {
+				name: "Safari",
+				key: "safari",
+				icon: "safari",
+				warning: false
+			};
+		} else if (this.isChrome && ua.indexOf("Edg") !== -1) {
+			this.browser = {
+				name: "Edge",
+				key: "edge",
+				icon: "edge",
+				warning: false
+			};
+		} else if (this.isChrome && ua.indexOf("Vivaldi") !== -1) {
+			this.browser = {
+				name: "Vivaldi",
+				key: "chrome",
+				icon: "chrome", // No icons for Vivaldi in the FA pack.
+				warning: false
+			};
+		} else if (
+			(!!window.opr && !!opr.addons) ||
+			!!window.opera ||
+			ua.indexOf(" OPR/") >= 0
+		) {
+			this.browser = {
+				name: "Opera",
+				key: "chrome",
+				icon: "opera",
+				warning: 2
+			};
+		} else if (typeof InstallTrigger !== "undefined") {
+			this.isChrome = false;
+			this.browser = {
+				name: "Firefox",
+				key: "firefox",
+				icon: null,
+				warning: false
+			};
+		} else {
+			this.browser = {
+				name: "Chrome",
+				key: "chrome",
+				icon: "chrome",
+				warning: false
+			};
+		}
+
+		let platform_temp = "linux";
+		var platform_order = this.platform_order;
+
+		if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
+		if (ua.includes("Windows")) platform_temp = "windows";
+		if (this.$device.isMobile) {
+			this.showDownloads = false;
+		}
+
+		//* Centering the current platform in array. Only works if array has 3 items.
+		platform_order.splice(platform_order.indexOf(platform_temp), 1);
+		platform_order.splice(1, 0, platform_temp);
+
+		if (
+			["#app-downloads", "#ext-downloads", "#beta-downloads"].includes(
+				window.location.hash
+			)
+		) {
+			this.highlight(
+				`${
+					["#app-downloads", "#ext-downloads", "#beta-downloads"].filter(i =>
+						i.includes(window.location.hash)
+					)[0]
+				} .section-header`
+			);
+		}
+
+		setTimeout(() => (this.modalAvailable = true));
+
+		this.$anime({
+			targets: "#bv",
+			scale: [1, 1.1],
+			delay: 500,
+			direction: "alternate",
+			easing: "easeInBounce",
+			loop: true
+		});
+	},
+	methods: {
+		changeTab() {
+			if (this.userAccess) {
+				if (this.currentTab.releaseType == "beta") {
+					if (!Object.keys(this.extraDownloads).find(d => d == "alpha")) return;
+
+					this.currentTab = this.extraDownloads["alpha"];
+				} else this.currentTab = this.extraDownloads["beta"];
+			}
+		},
+		highlight(elementPath) {
+			const element = document.querySelector(elementPath);
+
+			if (element) {
+				setTimeout(() => element.classList.add("highlight"));
+				setTimeout(() => element.classList.remove("highlight"), 1000);
+			}
+		},
+		linkify(pls, customUrl) {
+			if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
+			return pls.match(/(\*\*.*?\*\*)/g).map(ch => {
+				return pls.replace(
+					ch,
+					`<a class="text-highlight" href="${customUrl || "/beta"}">${ch.slice(
+						2,
+						ch.length - 2
+					)}</a>`
+				);
+			})[0];
+		},
+		warn(number) {
+			switch (number) {
+				case 2:
+					this.warning.messageKey = "downloads.warning.message.opera";
+					break;
+				default:
+					this.warning.messageKey = "Unknown error.";
+					break;
+			}
+
+			this.$modal.show("warning");
+		},
+		showAdModal(platform) {
+			if (platform == "linux") {
+				this.openInNewTab(
+					"https://github.com/PreMiD/Linux/blob/master/README.md"
+				);
+				return;
+			}
+
+			this.skipAdsModal.platform = platform;
+			this.skipAdsModal.enabled = true;
+		},
+		openInNewTab(url) {
+			window.open(url, "_blank");
+		}
+	},
+	head: {
+		title: "Downloads"
+	}
+};
 </script>
 
 <style lang="scss" scoped>
-	@import "../stylesheets/variables.scss";
+@import "../stylesheets/variables.scss";
 
-	.highlight::after {
-		opacity: 1 !important;
+.highlight::after {
+	opacity: 1 !important;
+}
+
+.show-beta {
+	text-align: center;
+
+	p {
+		line-height: 0;
 	}
 
-	.show-beta {
+	i {
+		font-size: 2rem;
+		margin-top: 4px;
+		transition: opacity 0.2s ease-in-out;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 0.75;
+		}
+	}
+}
+
+.button-container {
+	text-align: center;
+
+	p {
+		margin-top: 0;
+	}
+}
+
+.login {
+	padding: 0.55em 3em;
+}
+
+#beta-downloads {
+	.nobeta {
+		flex-direction: column;
 		text-align: center;
 
-		p {
-			line-height: 0;
-		}
-
-		i {
-			font-size: 2rem;
-			margin-top: 4px;
-			transition: opacity 0.2s ease-in-out;
-			cursor: pointer;
-
-			&:hover {
-				opacity: 0.75;
-			}
+		h1 {
+			margin: 0;
 		}
 	}
 
-	.button-container {
-		text-align: center;
+	.card__content {
+		h3 {
+			margin-bottom: 0;
+			text-transform: capitalize;
+		}
 
 		p {
 			margin-top: 0;
+			color: #c3c3c3;
+			text-transform: uppercase;
+			font-size: 0.75rem;
 		}
 	}
-
-	.login {
-		padding: 0.55em 3em;
-	}
-
-	#beta-downloads {
-		.nobeta {
-			flex-direction: column;
-			text-align: center;
-
-			h1 {
-				margin: 0;
-			}
-		}
-
-		.card__content {
-			h3 {
-				margin-bottom: 0;
-				text-transform: capitalize;
-			}
-
-			p {
-				margin-top: 0;
-				color: #c3c3c3;
-				text-transform: uppercase;
-				font-size: 0.75rem;
-			}
-		}
-	}
+}
 </style>

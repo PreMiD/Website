@@ -11,8 +11,10 @@ var DetectionMixin = {
 		const Checker = new Promise(function (resolve, reject) {
 			setTimeout(function () {
 				resolve(
-					document.getElementById("app").getAttribute("extension-ready") ==
-						"true"
+					document.getElementById("__nuxt").getAttribute("extension-ready") ==
+						"true" ||
+						document.getElementById("app").getAttribute("extension-ready") ==
+							"true"
 				);
 			}, 500);
 		});

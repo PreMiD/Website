@@ -5,7 +5,6 @@
 				<p class="sidebar__subheader">{{ $t("store.header.search") }}</p>
 				<div class="store-menu__searchbar-container">
 					<input
-						vue-debounce
 						v-model="presenceSearch"
 						ref="search"
 						@keydown="searchHandle"
@@ -245,8 +244,6 @@
 </template>
 
 <script>
-import debounce from "debounce";
-
 export default {
 	name: "Store",
 	auth: false,
