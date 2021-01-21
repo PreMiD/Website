@@ -9,14 +9,12 @@
 			content.indexOf("checkBlock") ||
 			content.indexOf("probsUsingAdBlock") ||
 			content.indexOf("countDownValue") ||
-			content.indexOf("adsbygoogle") ||
 			content.indexOf("adBlockInterval")
 		) {
 			content = content.replace(/checkBlock/g, rString());
 			content = content.replace(/probsUsingAdBlock/g, rString());
 			content = content.replace(/countDownValue/g, rString());
 			content = content.replace(/adBlockInterval/g, rString());
-			content = content.replace(/adsbygoogle/g, rString());
 			writeFileSync(files[i], content);
 		}
 	}
