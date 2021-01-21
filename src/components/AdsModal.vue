@@ -17,12 +17,19 @@
 						<div v-if="probsUsingAdBlock" class="image">
 							<img
 								alt="peepo cry emoji"
-								src="https://cdn.discordapp.com/attachments/473603737135349792/695397570272559235/634432333226836020.png"
+								src="https://i.imgur.com/c6YLW0H.png"
 							/>
 						</div>
 
 						<div class="title">
-							<h1>{{ $t("downloads.adsbox.thankyou.title") }}</h1>
+							<h1>
+								{{
+									probsUsingAdblock
+										? $t("downloads.adsbox.disableAdblock")
+										: $t("downloads.adsbox.thankyou.title")
+								}}
+							</h1>
+
 							<p v-if="!probsUsingAdBlock" class="mx-auto">
 								{{ $t("downloads.adsbox.thankyou.message") }}
 							</p>
@@ -47,7 +54,7 @@
 						</div>
 					</div>
 
-					<div>
+					<div class="mx-auto">
 						<adsense root-class="ad" ad-slot="9757727213"></adsense>
 					</div>
 				</div>
