@@ -57,7 +57,7 @@
 				</button>
 			</div>
 
-			<a class="skip-anyway" @click="skipAnyway">
+			<a class="skip-anyway" href="#" @click="skipAnyway">
 				{{ texts[0] }}
 			</a>
 		</div>
@@ -101,9 +101,12 @@
 				urls: {
 					windows: "https://dl.premid.app/PreMiD-installer.exe",
 					apple: "https://dl.premid.app/PreMiD-installer.app.zip",
+					edge:
+						"https://microsoftedge.microsoft.com/addons/detail/hkchpjlnddoppadcbefbpgmgaeidkkkm",
 					chrome:
 						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
-					firefox: "https://dl.premid.app/PreMiD.xpi"
+					firefox: "https://dl.premid.app/PreMiD.xpi",
+					safari: "https://github.com/PreMiD/Extension-Safari"
 				}
 			};
 		},

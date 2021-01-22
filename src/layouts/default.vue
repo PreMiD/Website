@@ -47,11 +47,10 @@
 				if (localStorage.language !== undefined) {
 					this.$root.$i18n.locale = localStorage.language;
 				}
-			} else {
-				this.$root.$i18n.locale = "en";
-			}
+			} else this.$root.$i18n.locale = "en";
 
 			this.$root.$data.navigatorLanguage = this.getBrowserLanguage();
+			this.$root.$data.i18nLanguage = this.getCurrentLanguage();
 		},
 		methods: {
 			toggleSwitcher() {

@@ -4,19 +4,19 @@
 			{{ $t("report.title") }}
 		</h1>
 		<div class="rab-container">
-			<h1 style="text-align: center;" v-t="'report.info'">
+			<h1 style="text-align: center" v-t="'report.info'">
 				{{ $t("report.info") }}
 			</h1>
 			<h1
 				class="section-header"
 				v-t="'report.bugcount'"
-				style="font-size: 28px; text-align: center;"
+				style="font-size: 28px; text-align: center"
 				v-html="bugCount"
 			></h1>
 		</div>
 
 		<div
-			style="margin-top: -15px;"
+			style="margin-top: -15px"
 			class="rab-container"
 			v-if="bugInfo.count > 0"
 		>
@@ -36,7 +36,7 @@
 			<div class="rab-container">
 				<h1 class="heading" v-t="'report.os'">{{ $t("report.os") }}</h1>
 				<select
-					style="width: 120px;"
+					style="width: 120px"
 					class="selection"
 					required
 					v-model="Report.os"
@@ -50,7 +50,7 @@
 				<textarea
 					type="text"
 					maxlength="14"
-					style="width: 116px;"
+					style="width: 116px"
 					class="breif"
 					required
 					placeholder="10.0.19041.264"
@@ -63,7 +63,7 @@
 					{{ $t("report.browser") }}
 				</h1>
 				<select
-					style="width: 120px;"
+					style="width: 120px"
 					class="selection"
 					required
 					v-model="Report.browser"
@@ -76,7 +76,7 @@
 				<textarea
 					type="text"
 					maxlength="20"
-					style="width: 116px;"
+					style="width: 116px"
 					class="breif"
 					required
 					placeholder="0.0.0.0"
@@ -89,7 +89,7 @@
 					{{ $t("report.description") }}
 				</h1>
 				<textarea
-					style="white-space: pre-wrap;"
+					style="white-space: pre-wrap"
 					type="text"
 					class="desc"
 					v-model="Report.description"
@@ -97,7 +97,7 @@
 				/>
 			</div>
 			<br />
-			<div class="rab-container" style="margin-bottom: 80px;">
+			<div class="rab-container" style="margin-bottom: 80px">
 				<button
 					type="button"
 					class="button"
@@ -111,19 +111,19 @@
 		<div
 			v-if="bugInfo.count === 0"
 			class="rab-container"
-			style="margin-bottom: 300px; margin-top: -15px;"
+			style="margin-bottom: 300px; margin-top: -15px"
 		>
-			<h1 style="text-align: center;" class="heading" v-t="'report.toomany'">
+			<h1 style="text-align: center" class="heading" v-t="'report.toomany'">
 				{{ $t("report.toomany") }}
 			</h1>
 		</div>
 		<div
 			v-if="bugInfo.count < 3 && bugInfo.count !== -1"
 			class="rab-container"
-			style="margin-bottom: 80px; margin-top: 50px;"
+			style="margin-bottom: 80px; margin-top: 50px"
 		>
 			<h2 v-t="'report.activebugs'">{{ $t("report.activebugs") }}</h2>
-			<table style="width: 100%;">
+			<table style="width: 100%">
 				<tr v-for="bug of activeBugs" :key="bug.breif">
 					<td
 						style="
@@ -142,7 +142,7 @@
 							white-space: pre-wrap;
 							color: #c7cfd6;
 						"
-						v-html="bug.description"
+						v-text="bug.description"
 					></td>
 				</tr>
 			</table>

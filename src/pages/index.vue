@@ -334,6 +334,7 @@
 						smallImage: "search",
 						data: ["Store"],
 						presence_time: "00:12",
+						seconds: "500", //Suitable range for timer
 						elapsed: true
 					},
 					{
@@ -344,20 +345,23 @@
 							"Noisestorm - Crab Rave [Monstercat Release]",
 							"Monstercat: Instinct"
 						],
-						presence_time: "1:36"
+						seconds: "300", //Suitable range for timer
+						presence_time: "01:36"
 					},
 					{
 						service_title: "SoundCloud",
 						serviceLogo: soundcloudLogo,
 						smallImage: true,
 						data: ["Dion Timmer - Panic", "Dion Timmer"],
-						presence_time: "2:15"
+						seconds: "300", //Suitable range for timer
+						presence_time: "02:15"
 					},
 					{
 						service_title: "Netflix",
 						serviceLogo: netflixLogo,
 						smallImage: true,
 						data: ["Daredevil", "S1:E1 Into the Ring"],
+						seconds: "1750", //Suitable range for timer
 						presence_time: "22:15"
 					},
 					{
@@ -368,6 +372,7 @@
 							"supercombo - Piloto Automático (Clipe Oficial)",
 							"supercombo"
 						],
+						seconds: "200", //Suitable range for timer
 						presence_time: "00:26"
 					},
 					{
@@ -376,6 +381,7 @@
 						smallImage: false,
 						data: ["Steam Store", "F1 2019"],
 						presence_time: "03:32",
+						seconds: "650", //Suitable range for timer
 						elapsed: true
 					},
 					{
@@ -383,13 +389,15 @@
 						serviceLogo: ytmusicLogo,
 						smallImage: true,
 						data: ["Dance Monkey", "Tones and I - The Kids Are Coming (2019)"],
-						presence_time: "3:12"
+						seconds: "210", //Suitable range for timer
+						presence_time: "03:12"
 					},
 					{
 						service_title: "Twitch",
 						serviceLogo: twitchLogo,
 						smallImage: true,
 						data: ["PreMiD coding stream!", "alexbcberio"],
+						seconds: "2750", //Suitable range for timer
 						presence_time: "49:12"
 					},
 					{
@@ -397,7 +405,8 @@
 						serviceLogo: vliveLogo,
 						smallImage: true,
 						data: ["[LOONA] Orbit! Thank you ❤️", "이달의 소녀(LOONA)"],
-						presence_time: "9:50"
+						seconds: "600", //Suitable range for timer
+						presence_time: "09:50"
 					}
 				]
 			};
@@ -426,6 +435,16 @@
 				presence.profile["avatar"].endsWith(".gif")
 					? presence.profile["flags"].push("NITRO")
 					: false;
+
+				presence.seconds = Math.floor(Math.random() * presence.seconds) + 1;
+
+				let minutes = Math.floor(presence.seconds / 60);
+				let seconds = presence.seconds - minutes * 60;
+
+				presence.presence_time =
+					minutes.toString().padStart(2, "0") +
+					":" +
+					seconds.toString().padStart(2, "0");
 			});
 		},
 		mounted() {
@@ -455,6 +474,49 @@
 					hasRun = true;
 				});
 			});
+		},
+		created() {
+			let timers = setInterval(() => {
+				let oneFinished = false;
+				this.presences_display.forEach((el, i) => {
+					if (el.presence_time === "00:00" || el.live) {
+						if (oneFinished) {
+							return clearInterval(timers);
+						}
+						return (oneFinished = true);
+					}
+
+					let minutes = el.presence_time.split(":")[0];
+					let seconds = el.presence_time.split(":")[1];
+
+					if (el.elapsed) {
+						if (seconds === "59") {
+							el.presence_time =
+								(parseInt(minutes) + 1).toString().padStart(2, "0") + ":00";
+						} else {
+							el.presence_time =
+								minutes +
+								":" +
+								(parseInt(seconds) + 1).toString().padStart(2, "0");
+						}
+					} else {
+						if (el.presence_time === "00:00") {
+							return;
+						} else if (seconds === "00") {
+							el.presence_time =
+								(parseInt(minutes) - 1).toString().padStart(2, "0") + ":59";
+						} else if (seconds.split("")[1] === "0") {
+							el.presence_time =
+								minutes + ":" + parseInt(seconds.split("")[0] - 1) + "9";
+						} else {
+							el.presence_time =
+								minutes +
+								":" +
+								(parseInt(seconds) - 1).toString().padStart(2, "0");
+						}
+					}
+				});
+			}, 1000);
 		},
 		methods: {
 			appear() {
