@@ -1,5 +1,5 @@
 <template>
-	<div class="staff-panel">
+	<div class="staff-panel" v-if="show">
 		<div class="flex">
 			<LoggedIn :user="user" />
 			<Bar :page="page" />
@@ -26,26 +26,23 @@
 			<StaffHandbook v-if="page === 'Staff Handbook'" />
 		</div>
 	</div>
+	<div class="staff-panel" v-else>
+		<h2 class="text-highlight" style="text-align: center">
+			Getting data from the API...
+		</h2>
+	</div>
 </template>
 
 <script>
 	export default {
 		name: "Staff",
 		auth: true,
-		data() {
-			return {
-				user: {},
-				page: "Staff",
-				application: null,
-				sortBy: false
-			};
-		},
-		beforeMount() {
-			if (this.$auth.loggedIn) {
-				this.$graphql(
-					`
+		async asyncData(context) {
+			if (context.$auth.loggedIn) {
+				let { credits } = await context.app.$graphql(
+						`
 					{
-						credits(id: "${this.$auth.user.id}") {
+						credits(id: "${context.$auth.user.id}") {
 							user {
 								id
 								name
@@ -60,18 +57,32 @@
 						}
 					}
 				`
-				).then(data => {
-					let user = data.credits[0];
+					),
+					user = credits[0];
 
-					if (user.roles.find(r => r.id === "656913616100130816").length === 0)
-						this.$router.push("/");
+				if (user.roles.find(r => r.id === "656913616100130816").length === 0)
+					context.redirect("/");
 
-					this.user = user.user;
-				});
-			} else this.$router.push("/login");
+				return {
+					user: user.user,
+					show: true
+				};
+			} else context.redirect("/login");
 		},
+		data() {
+			return {
+				user: {},
+				page: "Staff",
+				application: null,
+				sortBy: false,
+				show: false
+			};
+		},
+		beforeMount() {},
 		mounted() {
-			this.page = "Applications";
+			console.log(this.show);
+
+			this.page = "Staff Handbook";
 		},
 		methods: {
 			updatePage(event) {
