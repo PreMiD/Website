@@ -53,7 +53,8 @@
 								ticks: {
 									fontColor: "#eaeaea",
 									stepSize: 2,
-									min: 0
+									min: 0,
+									max: 20
 								}
 							}
 						],
@@ -188,18 +189,19 @@
 
 					sU.options = this.options;
 
-					let total = {
-						accepted: 0,
-						joined: 0
-					};
+					//! Find something that doesn't break.
+					// let total = {
+					// 	accepted: 0,
+					// 	joined: 0
+					// };
 
-					accepted.forEach(a => (total.accepted += a));
-					joined.forEach(j => (total.joined += j));
+					// accepted.forEach(a => (total.accepted += a));
+					// joined.forEach(j => (total.joined += j));
 
-					sU.options.scales.yAxes[0].ticks.max = Math.max.apply(
-						this,
-						total.accepted > total.joined ? accepted : joined
-					);
+					// sU.options.scales.yAxes[0].ticks.max = Math.max.apply(
+					// 	this,
+					// 	total.accepted > total.joined ? accepted : joined
+					// );
 
 					sU.ready = true;
 				});
