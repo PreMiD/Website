@@ -64,6 +64,14 @@
 								class="fas fa-clipboard-check"
 							></i>
 							<i
+								v-if="role == 'Localization Manager'"
+								v-tippy="{
+									content: $t('user.roles.localizationManager'),
+									placement: 'bottom'
+								}"
+								class="fas fa-language"
+							></i>
+							<i
 								v-if="role == 'Developer'"
 								v-tippy="{
 									content: $t('contributors.roles.developer'),
