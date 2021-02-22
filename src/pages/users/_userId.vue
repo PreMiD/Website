@@ -66,7 +66,7 @@
 							<i
 								v-if="role == 'Localization Manager'"
 								v-tippy="{
-									content: $t('user.roles.localizationManager'),
+									content: $t('contributors.roles.localizationManager'),
 									placement: 'bottom'
 								}"
 								class="fas fa-language"
