@@ -160,10 +160,8 @@
 <script>
 	import aniflix_icon from "~/assets/images/partners/aniflix-icon.png";
 	import aok_icon from "~/assets/images/partners/aok-icon.png";
-	import iloot_icon from "~/assets/images/partners/iloot-icon.png";
 	import upbeat_icon from "~/assets/images/partners/upbeat-icon.png";
 	import slr_icon from "~/assets/images/partners/slr-icon.png";
-	import aniwatch_icon from "~/assets/images/partners/aniwatch-icon.png";
 	import dtemplates_icon from "~/assets/images/partners/dtemplates-icon.png";
 	import taigabot_icon from "~/assets/images/partners/taigabot-icon.png";
 	import erisly_icon from "~/assets/images/partners/erisly-icon.png";
@@ -181,10 +179,8 @@
 					randomImages: [
 						aniflix_icon,
 						aok_icon,
-						iloot_icon,
 						upbeat_icon,
 						slr_icon,
-						aniwatch_icon,
 						dtemplates_icon,
 						taigabot_icon,
 						erisly_icon,
