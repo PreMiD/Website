@@ -167,6 +167,7 @@
 	import erisly_icon from "~/assets/images/partners/erisly-icon.png";
 	import onlyhit_icon from "~/assets/images/partners/onlyhit-icon.png";
 	import reyfm_icon from "~/assets/images/partners/reyfm-icon.jpg";
+	import atomicradio_icon from "~/assets/images/partners/attributed-icon.png";
 
 	export default {
 		name: "Partners",
@@ -185,7 +186,8 @@
 						taigabot_icon,
 						erisly_icon,
 						onlyhit_icon,
-						reyfm_icon
+						reyfm_icon,
+						atomicradio_icon
 					],
 					showModal: false,
 					hovered: {}
