@@ -115,6 +115,7 @@
 					"673681900476432387", // Marketing Director
 					"685969048399249459", // Administrator
 					"630445337143935009", // Reviewer
+					"811262682408943616", // Localization Manager
 					"691396820236107837", // Developer
 					"691386502566903850", // Designer
 					"514546359865442304", // Moderator

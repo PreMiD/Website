@@ -23,7 +23,7 @@
 				<LineChart
 					v-if="sU.ready"
 					:chartdata="sU.chartdata"
-					:options="options"
+					:options="sU.options"
 					class="userChart"
 				/>
 			</div>
@@ -54,7 +54,7 @@
 									fontColor: "#eaeaea",
 									stepSize: 2,
 									min: 0,
-									max: 16
+									max: 20
 								}
 							}
 						],
@@ -65,6 +65,12 @@
 								}
 							}
 						]
+					},
+					legend: {
+						display: true,
+						labels: {
+							fontColor: "#ffffff"
+						}
 					}
 				}
 			};
@@ -72,39 +78,39 @@
 		beforeMount() {
 			this.$graphql(
 				`{
-					tickets(token: "${this.$auth.$storage._state["_token.discord"]}") {
-						ticketId
-						userId
-						timestamp
-						created
-						accepter
-						status
-						supporters
-						lastUserMessage
-						messages {
+						tickets(token: "${this.$auth.$storage._state["_token.discord"]}") {
+							ticketId
 							userId
-							content
-							sent
+							timestamp
+							created
+							accepter
+							status
+							supporters
+							lastUserMessage
+							messages {
+								userId
+								content
+								sent
+							}
+						}
+						credits {
+							user {
+								id
+								name
+								tag
+								avatar
+								role
+								roleColor
+							}
+							roles {
+								id
+							}
 						}
 					}
-					credits {
-						user {
-							id
-							name
-							tag
-							avatar
-							role
-							roleColor
-						}
-						roles {
-							id
-						}
-					}
-				}
-				`
+					`
 			).then(async data => {
-				let credits = data.credits;
-				let tickets = data.tickets;
+				let credits = data.credits,
+					tickets = data.tickets;
 
 				credits.map(user => {
 					if (
@@ -114,58 +120,92 @@
 					}
 				});
 
-				this.tickets = tickets;
+				this.tickets = tickets.filter(
+					ticket =>
+						ticket.timestamp >
+						new Date(new Date().getTime() - 10 * 24 * 60 * 60 * 1000).valueOf()
+				);
 
 				this.staffMembers.map(sU => {
-					sU.tickets = this.tickets.filter(
-						ticket => ticket.accepter === sU.user.id
+					let userTickets = {
+							acceptedTickets: this.tickets.filter(
+								ticket => ticket.accepter === sU.user.id
+							),
+							joinedTickets: this.tickets.filter(
+								ticket =>
+									ticket.accepter !== sU.user.id &&
+									ticket.supporters &&
+									ticket.supporters.find(s => s === sU.user.id)
+							),
+							a: { allDates: [], counts: {} },
+							j: { allDates: [], counts: {} }
+						},
+						accepted = [],
+						joined = [];
+
+					userTickets.acceptedTickets.forEach(t =>
+						userTickets.a.allDates.push(this.formatDate(new Date(t.timestamp)))
 					);
 
-					sU.allDates = [];
+					userTickets.joinedTickets.forEach(t =>
+						userTickets.j.allDates.push(this.formatDate(new Date(t.timestamp)))
+					);
 
-					sU.tickets.map(ticket => {
-						let date = new Date(ticket.timestamp);
-						let fDate = this.formatDate(date);
+					userTickets.a.allDates.forEach(
+						d => (userTickets.a.counts[d] = (userTickets.a.counts[d] || 0) + 1)
+					);
+					userTickets.j.allDates.forEach(
+						d => (userTickets.j.counts[d] = (userTickets.j.counts[d] || 0) + 1)
+					);
 
-						sU.allDates.push(fDate);
+					this.last14Days().forEach(d => {
+						if (userTickets.a.counts[d]) accepted.push(userTickets.a.counts[d]);
+						else accepted.push(0);
+
+						if (userTickets.j.counts[d]) joined.push(userTickets.j.counts[d]);
+						else joined.push(0);
 					});
-
-					sU.counts = {};
-
-					sU.allDates.map(d => {
-						sU.counts[d] = (sU.counts[d] || 0) + 1;
-					});
-
-					let last14Days = this.last14Days(),
-						acceptedTickets = [];
 
 					sU.chartdata = {
-						labels: [],
+						labels: this.last14Days(),
 						datasets: [
 							{
 								label: "Accepted tickets",
-								backgroundColor: "rgba(114, 137, 218, 0.5)",
-								borderColor: "rgba(1, 116, 188, 0.50)",
-								pointBackgroundColor: "#b3aeff",
-								fontColor: "white",
-								data: []
+								borderColor: "#7289da",
+								pointBackgroundColor: "#7289da",
+								pointRadius: 3,
+								data: accepted
+							},
+							{
+								label: "Joined tickets",
+								borderColor: "rgba(126, 81, 194, 1)",
+								borderDash: [5, 5],
+								pointBackgroundColor: "#7E51C2",
+								pointRadius: 3,
+								data: joined
 							}
 						]
 					};
 
-					sU.chartdata.labels = last14Days;
+					sU.options = this.options;
 
-					last14Days.forEach(d => {
-						if (sU.counts[d]) acceptedTickets.push(sU.counts[d]);
-						else acceptedTickets.push(0);
-					});
+					//! Find something that doesn't break.
+					// let total = {
+					// 	accepted: 0,
+					// 	joined: 0
+					// };
 
-					sU.chartdata.datasets[0].data = acceptedTickets;
+					// accepted.forEach(a => (total.accepted += a));
+					// joined.forEach(j => (total.joined += j));
+
+					// sU.options.scales.yAxes[0].ticks.max = Math.max.apply(
+					// 	this,
+					// 	total.accepted > total.joined ? accepted : joined
+					// );
 
 					sU.ready = true;
-
-					console.log(sU);
 				});
+
 				this.loaded = true;
 			});
 		},
