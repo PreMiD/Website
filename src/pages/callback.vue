@@ -1,14 +1,22 @@
-<template></template>
+<template>
+	<h1 class="text-highlight">
+		Please wait while we are processing your information...
+	</h1>
+</template>
 
 <script>
-// Do not remove <template> from the document, it will not work without them.
-
-export default {
-	head() {
-		return {
-			title: "Authorization...",
-			titleTemplate: ""
-		};
-	}
-};
+	export default {
+		head() {
+			return {
+				title: "Authorization...",
+				titleTemplate: ""
+			};
+		}
+	};
 </script>
+
+<style lang="scss" scoped>
+	h1 {
+		text-align: center;
+	}
+</style>

@@ -39,13 +39,13 @@
 		created() {
 			if (process.server) return;
 			if (localStorage.declined !== "false")
-				this.$data.declined = localStorage.declined;
+				this.declined = localStorage.declined;
 		},
 		methods: {
 			declineNotify() {
 				if (process.server) return;
 				localStorage.declined = true;
-				this.$data.declined = localStorage.declined;
+				this.declined = localStorage.declined;
 			}
 		}
 	};

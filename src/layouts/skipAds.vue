@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="wrapper">
 		<navigation
 			noLinks="true"
 			:target="target"
@@ -12,22 +12,18 @@
 				root-class="ad"
 				ad-slot="3276628083"
 				:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
-			>
-			</adsense>
+			></adsense>
 
 			<adsense
 				root-class="ad"
 				ad-slot="4398138065"
 				:ad-style="{ display: 'block', height: '85vh', minWidth: '250px' }"
-			>
-			</adsense>
+			></adsense>
 		</div>
 
 		<div v-if="!probsUsingAdBlock" class="note">
 			<h1 class="title">{{ $t("downloads.adsbox.thankyou.title") }}</h1>
-			<p class="description">
-				{{ $t("downloads.adsbox.thankyou.message") }}
-			</p>
+			<p class="description">{{ $t("downloads.adsbox.thankyou.message") }}</p>
 
 			<div v-if="isMobile && !probsUsingAdBlock" class="mobile">
 				<button
@@ -60,29 +56,43 @@
 					{{ $t("downloads.button.done") }}
 				</button>
 			</div>
+
+			<a class="skip-anyway" href="#" @click="skipAnyway">
+				{{ texts[0] }}
+			</a>
 		</div>
 
 		<adsense
 			root-class="ad"
 			ad-slot="9757727213"
-			:ad-style="{ display: 'block', width: '80vw', height: '250px' }"
-		>
-		</adsense>
+			:ad-style="{
+				display: 'block',
+				margin: '15px auto',
+				'text-align': 'center',
+				height: '250px',
+				width: '100%',
+				position: 'absolute',
+				bottom: '0'
+			}"
+		></adsense>
 	</div>
 </template>
 
 <script>
-	import Navigation from "../components/Navigation";
-
 	export default {
-		components: {
-			Navigation
-		},
 		head: {
 			title: "Downloads"
 		},
 		data() {
 			return {
+				texts: [
+					this.$t("downloads.skipanyway.message1"),
+					this.$t("downloads.skipanyway.message2"),
+					this.$t("downloads.skipanyway.message3"),
+					this.$t("downloads.skipanyway.message4"),
+					this.$t("downloads.skipanyway.message5"),
+					this.$t("downloads.skipanyway.message6")
+				],
 				probsUsingAdBlock: false,
 				target: null,
 				countDown: 5,
@@ -91,16 +101,19 @@
 				urls: {
 					windows: "https://dl.premid.app/PreMiD-installer.exe",
 					apple: "https://dl.premid.app/PreMiD-installer.app.zip",
+					edge:
+						"https://microsoftedge.microsoft.com/addons/detail/hkchpjlnddoppadcbefbpgmgaeidkkkm",
 					chrome:
 						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
-					firefox: "https://dl.premid.app/PreMiD.xpi"
+					firefox: "https://dl.premid.app/PreMiD.xpi",
+					safari: "https://github.com/PreMiD/Extension-Safari"
 				}
 			};
 		},
 		beforeMount() {
 			let platform = this.$store.state.download.platform;
 			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-				navigator?.userAgent
+				navigator.userAgent
 			);
 
 			this.target = platform === "chrome" ? "_blank" : null;
@@ -124,9 +137,16 @@
 			}
 		},
 		beforeDestroy() {
-			if (this.interval) clearInterval(this.interval);
+			if (this.adBlockInterval) clearInterval(this.adBlockInterval);
 		},
 		methods: {
+			skipAnyway() {
+				this.texts = this.texts.slice(1);
+				if (!this.texts.length) {
+					this.open(this.href);
+					this.$nuxt.setLayout("default");
+				}
+			},
 			open(url) {
 				if (this.isMobile && this.target) {
 					window.open(url, this.target).focus();
@@ -154,6 +174,19 @@
 		display: flex;
 		padding: 0 1em;
 		height: 85vh;
+	}
+
+	.skip-anyway {
+		font-size: 1rem;
+		position: absolute;
+		bottom: -1.5em;
+		left: 0;
+		width: 100%;
+		transition: opacity 0.2s ease-in-out;
+
+		&:hover {
+			opacity: 0.75;
+		}
 	}
 
 	.space {
@@ -237,7 +270,8 @@
 		}
 
 		.note {
-			position: unset;
+			position: relative;
+			left: 0;
 			transform: unset;
 			margin-bottom: unset;
 			width: unset;

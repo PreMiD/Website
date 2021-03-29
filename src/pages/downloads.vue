@@ -38,15 +38,6 @@
 								]
 							</p>
 						</li>
-						<li>
-							<p>
-								<i18n path="downloads.instructions.step.4">
-									<nuxt-link to="/store">{{
-										$t("downloads.instructions.step.4.store")
-									}}</nuxt-link>
-								</i18n>
-							</p>
-						</li>
 					</ol>
 				</div>
 			</div>
@@ -169,12 +160,15 @@
 
 					<div class="dl-container__cards">
 						<div
-							:class="{ 'current-platform': browser.key == 'chrome' }"
+							:class="{
+								'current-platform':
+									browser.key == 'chrome' || browser.key == 'edge'
+							}"
 							class="cards__card clickable"
 							@click="
 								browser.warning
 									? warn(browser.warning)
-									: open('chrome', 'Extension')
+									: open(browser.key, 'Extension')
 							"
 						>
 							<div class="card__icon">
@@ -197,28 +191,48 @@
 								<h3>Firefox</h3>
 							</div>
 						</a>
+						<a
+							:class="{ 'current-platform': browser.key == 'safari' }"
+							class="cards__card clickable"
+							@click="open('safari', 'Extension')"
+						>
+							<div class="card__icon">
+								<i class="fa-safari fab"></i>
+							</div>
+							<div class="card__content">
+								<h3>Safari</h3>
+							</div>
+						</a>
 					</div>
+				</div>
+				<div class="show-beta" v-if="!showBeta">
+					<div>
+						<p>{{ $t("downloads.showbeta.message") }}</p>
+						<small>{{ $t("downloads.showbeta.small") }}</small>
+					</div>
+					<i @click="showBeta = true" class="fas fa-chevron-down"></i>
 				</div>
 
 				<div
+					v-else
 					id="beta-downloads"
 					class="dl-container__section dl-container__section_downloads waves-aligned"
 				>
 					<h1 class="section-header">
 						{{ $t("downloads.latest.header") }}
 						<a
-							v-if="$auth.loggedIn && beta.access"
+							v-if="$auth.loggedIn && userAccess"
 							class="label label_downloads-version bv"
 							@click="changeTab"
-							v-text="tab"
+							v-text="currentTab.releaseType"
 						></a>
 					</h1>
 
 					<div v-if="$auth.loggedIn">
-						<div v-if="beta.access == true">
+						<div v-if="userAccess == true">
 							<div class="dl-container__cards">
 								<div
-									v-for="(platform, index) of cTab.app_links"
+									v-for="(platform, index) of currentTab.appLinks"
 									:key="platform.platform.toString()"
 								>
 									<div @click="openInNewTab(platform.link)">
@@ -233,7 +247,7 @@
 											</div>
 											<div class="card__content">
 												<h3 v-text="platform.platform" />
-												<p v-t="tab" />
+												<p v-t="currentTab.releaseType" />
 											</div>
 										</div>
 									</div>
@@ -241,7 +255,7 @@
 							</div>
 							<div class="dl-container__cards">
 								<div
-									v-for="platform of cTab.ext_links"
+									v-for="platform of currentTab.extLinks"
 									:key="platform.platform.toString()"
 									:class="{
 										'current-platform':
@@ -262,7 +276,7 @@
 									</div>
 									<div class="card__content">
 										<h3 v-t="platform.platform"></h3>
-										<p v-t="tab" />
+										<p v-t="currentTab.releaseType" />
 									</div>
 								</div>
 							</div>
@@ -270,11 +284,11 @@
 						<div class="dl-container__cards nobeta" v-else>
 							<h1 v-t="'downloads.error.noaccess.title'" />
 							<p
-								v-if="betaUsers < 200"
+								v-if="betaUsers < availableSlots"
 								v-html="
 									linkify(
 										$t('downloads.error.noaccess.description', {
-											0: 200 - betaUsers
+											0: availableSlots - betaUsers
 										})
 									)
 								"
@@ -287,8 +301,7 @@
 							<p v-t="'downloads.error.login'" />
 							<button
 								type="button"
-								class="button"
-								id="login"
+								class="button login"
 								@click="$router.push('/login')"
 							>
 								{{ $t("downloads.button.login") }}
@@ -347,90 +360,77 @@
 </template>
 
 <script>
-	import axios from "axios";
-
 	export default {
 		name: "Downloads",
 		auth: false,
-		async asyncData({ $auth }) {
-			let tab = null,
-				alpha = {
-					access: false,
-					app_links: [],
-					ext_links: []
-				},
-				beta = {
-					access: false,
-					app_links: [],
-					ext_links: []
-				},
-				cTab = {};
+		async asyncData({ $auth, app, error }) {
+			try {
+				let userAccess = false,
+					tabs = {},
+					currentTab = {};
 
-			if ($auth.loggedIn) {
-				let { access } = (
-					await axios(`${process.env.apiBase}/alphaAccess/${$auth.user.id}`)
-				).data;
-				alpha.access = access;
+				const data = await app.$graphql(
+					`
+						{
+							betaUsers {
+								number
+							}
+							discordUsers {
+								userId
+							}
+							versions {
+								app
+								extension
+								linux
+							}
+						}
+					`
+				);
 
-				if (access) {
-					beta.access = true;
+				if ($auth.loggedIn) {
+					const { downloads } = await app.$graphql(`
+						{
+							downloads(token: "${$auth.$storage._state["_token.discord"]}") {
+								releaseType
+								appLinks
+								extLinks {
+									platform
+									link
+								}
+							}
+						}
+					`);
 
-					let { app_links, ext_links } = (
-						await axios.post(
-							`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/alpha`
-						)
-					).data;
+					userAccess = downloads.length > 0;
 
-					alpha.app_links = app_links;
-					alpha.ext_links = ext_links;
+					if (userAccess)
+						downloads.forEach(d => {
+							tabs[d.releaseType] = d;
+						});
 
-					cTab = alpha;
-					tab = "alpha";
-
-					let { data } = await axios.post(
-						`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/beta`
-					);
-					beta.app_links = data.app_links;
-					beta.ext_links = data.ext_links;
-				} else {
-					let { access } = (
-						await axios(`${process.env.apiBase}/betaAccess/${$auth.user.id}`)
-					).data;
-					beta.access = access;
-
-					if (access) {
-						let { data } = await axios.post(
-							`${process.env.apiBase}/downloads/${$auth.$storage._state["_token.discord"]}/beta`
-						);
-
-						beta.app_links = data.app_links;
-						beta.ext_links = data.ext_links;
-
-						cTab = beta;
-						tab = "beta";
-					}
+					if (downloads.find(d => d.releaseType == "alpha"))
+						currentTab = downloads.find(d => d.releaseType == "alpha");
+					else currentTab = downloads.find(d => d.releaseType == "beta");
 				}
+
+				return {
+					extVersion: data.versions.extension,
+					appVersion: data.versions.app,
+					linuxVersion: data.versions.linux,
+					userAccess: userAccess,
+					extraDownloads: tabs,
+					currentTab: currentTab,
+					betaUsers: data.betaUsers.number,
+					availableSlots: (data.discordUsers.length * 0.1).toFixed()
+				};
+			} catch (err) {
+				return error(err);
 			}
-
-			const { extension, app, linux } = (
-				await axios(`${process.env.apiBase}/versions`)
-			).data;
-
-			return {
-				extVersion: extension,
-				appVersion: app,
-				linuxVersion: linux,
-				cTab,
-				tab,
-				alpha,
-				beta,
-				betaUsers: (await axios(`${process.env.apiBase}/betaUsers`)).data
-					.betaUsers
-			};
 		},
 		data() {
 			return {
 				skipAds: false,
+				showBeta: false,
 				extVersion: null,
 				appVersion: null,
 				linuxVersion: null,
@@ -447,14 +447,6 @@
 					number: null,
 					messageKey: null
 				},
-				urls: {
-					windows: "https://dl.premid.app/PreMiD-installer.exe",
-					apple: "https://dl.premid.app/PreMiD-installer.app.zip",
-					linux: null,
-					chrome:
-						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
-					firefox: "https://dl.premid.app/PreMiD.xpi"
-				},
 				platform_order: ["windows", "apple", "linux"],
 				builds: {
 					windows: {
@@ -462,7 +454,7 @@
 						has_installer: true
 					},
 					apple: {
-						os_name: "OS X",
+						os_name: "macOS",
 						has_installer: true
 					},
 					linux: {
@@ -488,14 +480,25 @@
 				!!window.chrome &&
 				(!!window.chrome.webstore || !!window.chrome.runtime);
 
-			if (this.isChrome && ua.indexOf("Edg") != -1) {
+			if (
+				!this.isChrome &&
+				ua.indexOf("Safari") !== -1 &&
+				ua.indexOf("Chrome") === -1
+			) {
+				this.browser = {
+					name: "Safari",
+					key: "safari",
+					icon: "safari",
+					warning: false
+				};
+			} else if (this.isChrome && ua.indexOf("Edg") !== -1) {
 				this.browser = {
 					name: "Edge",
-					key: "chrome",
+					key: "edge",
 					icon: "edge",
-					warning: 1
+					warning: false
 				};
-			} else if (this.isChrome && ua.indexOf("Vivaldi") != -1) {
+			} else if (this.isChrome && ua.indexOf("Vivaldi") !== -1) {
 				this.browser = {
 					name: "Vivaldi",
 					key: "chrome",
@@ -515,7 +518,6 @@
 				};
 			} else if (typeof InstallTrigger !== "undefined") {
 				this.isChrome = false;
-
 				this.browser = {
 					name: "Firefox",
 					key: "firefox",
@@ -532,7 +534,7 @@
 			}
 
 			let platform_temp = "linux";
-			var platform_order = this.$data.platform_order;
+			var platform_order = this.platform_order;
 
 			if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
 			if (ua.includes("Windows")) platform_temp = "windows";
@@ -541,8 +543,8 @@
 					ua
 				)
 			) {
-				this.$data.isMobile = true;
-				this.$data.showDownloads = false;
+				this.isMobile = true;
+				this.showDownloads = false;
 			}
 
 			//* Centering the current platform in array. Only works if array has 3 items.
@@ -576,15 +578,14 @@
 		},
 		methods: {
 			changeTab() {
-				if (this.alpha.access) {
-					if (this.tab == "alpha") {
-						this.tab = "beta";
-						this.cTab = this.beta;
-					} else {
-						this.tab = "alpha";
-						this.cTab = this.alpha;
-					}
-				} else return;
+				if (this.userAccess) {
+					if (this.currentTab.releaseType == "beta") {
+						if (!Object.keys(this.extraDownloads).find(d => d == "alpha"))
+							return;
+
+						this.currentTab = this.extraDownloads["alpha"];
+					} else this.currentTab = this.extraDownloads["beta"];
+				}
 			},
 			highlight(elementPath) {
 				const element = document.querySelector(elementPath);
@@ -607,9 +608,6 @@
 			},
 			warn(number) {
 				switch (number) {
-					case 1:
-						this.warning.messageKey = "downloads.warning.message.edge";
-						break;
 					case 2:
 						this.warning.messageKey = "downloads.warning.message.opera";
 						break;
@@ -641,11 +639,30 @@
 	};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	@import "../stylesheets/variables.scss";
 
 	.highlight::after {
 		opacity: 1 !important;
+	}
+
+	.show-beta {
+		text-align: center;
+
+		p {
+			line-height: 0;
+		}
+
+		i {
+			font-size: 2rem;
+			margin-top: 4px;
+			transition: opacity 0.2s ease-in-out;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 0.75;
+			}
+		}
 	}
 
 	.button-container {
@@ -656,7 +673,7 @@
 		}
 	}
 
-	#login {
+	.login {
 		padding: 0.55em 3em;
 	}
 

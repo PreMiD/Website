@@ -46,6 +46,11 @@
 	}
 }
 
-@include margin(1) @include margin(2) @include margin(4) @include margin(5)
-	@include padding(1) @include padding(2) @include padding(4) @include
-	padding(5);
+@include margin(1);
+@include margin(2);
+@include margin(4);
+@include margin(5);
+@include padding(1);
+@include padding(2);
+@include padding(4);
+@include padding(5);

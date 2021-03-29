@@ -5,13 +5,7 @@
 				<h1 v-text="$t('jobs.header.title')" />
 				<p v-text="$t('jobs.header.description')" />
 
-				<video
-					class="job-video"
-					src="@/assets/videos/jobs-heading.mp4"
-					autoplay
-					loop
-					muted
-				/>
+				<video class="job-video" src="@/assets/videos/jobs-heading.mp4" autoplay loop muted />
 				<div class="waves-divider waves-divider_bottom">
 					<svg
 						class="wave"
@@ -32,20 +26,14 @@
 				<h1 v-text="$t('jobs.openings.title')" />
 
 				<div class="jobs">
-					<div
-						class="job"
-						v-for="job in jobs.filter(j => j.available)"
-						:key="job.jobName"
-					>
-						<i :class="job.jobIcon" />
-						<h1 v-text="job.jobName" />
+					<div class="job" v-for="job in jobs.filter(j => j.available)" :key="job.jobName">
+						<div class="job-header">
+							<i :class="job.jobIcon"></i>
+							<h1>{{ job.jobName}}</h1>
+						</div>
+
 						<div class="button-container">
-							<button
-								v-t="'partners.apply.button'"
-								type="button"
-								class="button"
-								@click="applyModal(job)"
-							/>
+							<button v-t="'partners.apply.button'" type="button" class="button" @click="applyModal(job)" />
 						</div>
 					</div>
 				</div>
@@ -88,198 +76,191 @@
 					toggleScroll();
 				"
 			/>
-			<JoinGuild
-				v-if="showJoinModal"
-				@close="
+			<JoinGuild v-if="showJoinModal" @close="
 					showJoinModal = false;
 					toggleScroll();
-				"
-			/>
+				" />
 		</transition>
 	</div>
 </template>
 
 <style lang="scss">
-	.job-video {
-		width: 250px;
-		height: 250px;
-		border-radius: 5px;
-		box-shadow: 3px 5px 5px #202226;
-	}
+.job-video {
+	width: 250px;
+	height: 250px;
+	border-radius: 5px;
+	box-shadow: 3px 5px 5px #202226;
+}
 
-	.jobsWrapper {
-		.container {
+.jobsWrapper {
+	.container {
+		h1 {
+			text-align: center;
+			font-size: 2.2em;
+			padding-bottom: 0.25em;
+			color: white;
+			margin: 0;
+		}
+
+		.heading {
+			position: relative;
+			z-index: 1;
+			overflow: hidden;
+			padding: 25px 0 150px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			text-align: center;
+			align-items: center;
+
 			h1 {
-				text-align: center;
-				font-size: 2.2em;
-				padding-bottom: 0.25em;
-				color: white;
+				text-transform: uppercase;
+				color: #7289da;
 				margin: 0;
 			}
 
-			.heading {
-				position: relative;
-				z-index: 1;
-				overflow: hidden;
-				padding: 25px 0 150px;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-around;
-				text-align: center;
-				align-items: center;
-
-				h1 {
-					text-transform: uppercase;
-					color: #7289da;
-					margin: 0;
-				}
-
-				p {
-					color: white;
-					margin: 0;
-					margin-bottom: 2em;
-				}
-			}
-
-			.openings {
+			p {
+				color: white;
+				margin: 0;
 				margin-bottom: 2em;
+			}
+		}
 
-				.jobs {
+		.openings {
+			margin-bottom: 2em;
+
+			.jobs {
+				display: flex;
+				justify-content: center;
+
+				.job {
+					transition: all 0.15s ease-out;
+					width: 200px;
+					position: relative;
+					background: #23272a;
+					border-radius: 5px;
+					padding: 1em;
 					display: flex;
-					justify-content: center;
+					flex-direction: column;
+					align-items: center;
+					justify-content: space-around;
+					margin: 1em;
 
-					.job {
-						transition: all 0.15s ease-out;
-						width: 200px;
-						position: relative;
-						background: #23272a;
-						border-radius: 5px;
-						padding: 1em;
-						display: flex;
-						flex-direction: column;
-						align-items: center;
-						justify-content: space-around;
-						margin: 1em;
+					&:hover {
+						transform: translateY(-5px);
+						box-shadow: 0 2.5px 20px -10px rgba(122, 144, 220, 0.7);
+					}
 
-						&:hover {
-							transform: translateY(-5px);
-							box-shadow: 0 2.5px 20px -10px rgba(122, 144, 220, 0.7);
-						}
-
-						i {
-							position: absolute;
-							left: 0;
-							top: 0;
-							padding: 1.25em 1.5em;
-							color: #7289da;
-						}
+					.job-header {
+						display: contents;
 
 						h1 {
 							color: #ffffff;
 							font-size: large;
-							margin-left: 10px;
 						}
 
-						.button-container {
-							padding-top: 0.5em;
+						i {
+							color: #7289da;
+							margin-bottom: 8px;
+						}
+					}
 
-							.button {
-								font-size: 1em;
-								padding: 0.5rem 1rem;
-							}
+					.button-container {
+						padding-top: 0.5em;
+
+						.button {
+							font-size: 1em;
+							padding: 0.5rem 1rem;
 						}
 					}
 				}
 			}
+		}
 
-			.benefits {
-				display: block;
-				max-width: 900px;
-				text-align: center;
-				margin: 0 auto;
+		.benefits {
+			display: block;
+			max-width: 900px;
+			text-align: center;
+			margin: 0 auto;
 
-				.table {
-					width: 100%;
+			.table {
+				width: 100%;
 
-					td {
-						vertical-align: -webkit-baseline-middle;
-					}
+				td {
+					vertical-align: -webkit-baseline-middle;
+				}
+			}
+
+			.benefit {
+				width: 200px;
+				display: inline-block;
+				text-align: left;
+				justify-content: space-around;
+				padding: 2em;
+
+				i {
+					font-size: 64px;
+					color: #7289da;
+					margin-bottom: 0.25em;
 				}
 
-				.benefit {
-					width: 200px;
-					display: inline-block;
+				h1 {
+					color: white;
+					font-size: 1.6em;
+					margin: 0;
 					text-align: left;
-					justify-content: space-around;
-					padding: 2em;
+				}
 
-					i {
-						font-size: 64px;
-						color: #7289da;
-						margin-bottom: 0.25em;
-					}
+				p {
+					color: white;
+					font-size: 0.85em;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.jobsWrapper {
+		.heading {
+			padding-bottom: 5em;
+
+			h1 {
+				font-size: 2em !important;
+				margin-bottom: 4px !important;
+			}
+		}
+
+		.openings {
+			h1 {
+				margin: 1em 0;
+			}
+
+			.jobs {
+				padding: 0 1.5em;
+				display: block !important;
+
+				.job {
+					width: unset !important;
 
 					h1 {
-						color: white;
-						font-size: 1.6em;
-						margin: 0;
-						text-align: left;
-					}
-
-					p {
-						color: white;
-						font-size: 0.85em;
+						margin-top: 0;
+						margin-bottom: 0;
 					}
 				}
 			}
 		}
-	}
 
-	@media only screen and (max-width: 600px) {
-		.jobsWrapper .jobsContainer {
-			.heading {
-				padding-bottom: 5em;
-
-				h1 {
-					font-size: 2em !important;
-					margin-bottom: 4px !important;
-				}
-			}
-
-			.openings {
-				h1 {
-					margin-top: 1em;
-					margin-bottom: 1.5em;
-				}
-
-				.jobs {
-					display: block !important;
-
-					.job {
-						h1 {
-							margin-top: 0;
-							margin-bottom: 0;
-						}
-					}
-				}
-			}
+		.benefits table tr {
+			display: grid;
 		}
 	}
+}
 </style>
 
 <script>
-	import axios from "axios";
-	import Benefit from "~/components/Benefit";
-	import JobApply from "~/components/JobApply";
-	import JoinGuild from "~/components/JoinGuild";
-
 	export default {
 		name: "Jobs",
-		components: {
-			Benefit,
-			JobApply,
-			JoinGuild
-		},
 		auth: false,
 		data() {
 			return {
@@ -288,23 +269,45 @@
 				modalJob: null
 			};
 		},
-		async asyncData() {
-			const data = await Promise.all([
-				axios(`${process.env.apiBase}/jobs`),
-				axios(`${process.env.apiBase}/jobs/benefits`),
-				axios(`${process.env.apiBase}/discordUsers`)
-			]);
-			const jobs = data[0].data,
-				benefits = data[1].data,
-				discordUsers = data[2].data.map(u => u.userId);
+		async asyncData({ app }) {
+			const data = await app.$graphql(`
+				{
+					jobs {
+						available
+						bonusPoints
+						jobIcon
+						jobName
+						questions {
+							id
+							question
+							required
+						}
+						requirements
+						tasks
+					}
+					benefits {
+						description
+						icon
+						title
+					}
+					discordUsers {
+						avatar
+						created
+						userId
+						username
+						discriminator
+					}
+				}
+			`);
 
 			return {
-				jobs,
-				benefits,
-				discordUsers
+				jobs: data.jobs,
+				benefits: data.benefits,
+				discordUsers: data.discordUsers.map(u => u.userId)
 			};
 		},
 		mounted() {
+			console.log(this.$auth);
 			this.$auth.$storage.setUniversal("redirect", "/jobs");
 		},
 		methods: {

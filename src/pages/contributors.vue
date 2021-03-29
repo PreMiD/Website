@@ -3,16 +3,19 @@
 		<title>PreMiD - Contributors</title>
 		<section class="contributors">
 			<div class="contributor-container">
-				<h1 class="heading" v-text="$t('contributors.headings.staff')"></h1>
+				<h1
+					class="titleHeading"
+					v-text="$t('contributors.headings.staff')"
+				></h1>
 				<div class="contributor-inner">
 					<div
 						v-for="contributor of contributors"
-						:key="contributor.id"
+						:key="contributor.user.id"
 						class="contributor-card"
 					>
 						<CreditCard
-							v-if="isStaffRole(contributor.roleId)"
-							:user="contributor"
+							v-if="isStaffRole(contributor.user.roleId)"
+							:user="contributor.user"
 						/>
 					</div>
 				</div>
@@ -20,18 +23,18 @@
 
 			<div class="contributor-container">
 				<h1
-					class="heading"
+					class="titleHeading"
 					v-text="$t('contributors.headings.supporters')"
 				></h1>
 				<div class="contributor-inner">
 					<div
 						v-for="contributor of contributors"
-						:key="contributor.id"
+						:key="contributor.user.id"
 						class="contributor-card"
 					>
 						<CreditCard
-							v-if="isSupporterRole(contributor.roleId)"
-							:user="contributor"
+							v-if="isSupporterRole(contributor.user.roleId)"
+							:user="contributor.user"
 						/>
 					</div>
 				</div>
@@ -39,18 +42,18 @@
 
 			<div class="contributor-container">
 				<h1
-					class="heading"
+					class="titleHeading"
 					v-text="$t('contributors.headings.translators')"
 				></h1>
 				<div class="contributor-inner">
 					<div
 						v-for="contributor of contributors"
-						:key="contributor.id"
+						:key="contributor.user.id"
 						class="contributor-card"
 					>
 						<CreditCard
-							v-if="isTranslatorRole(contributor.roleId)"
-							:user="contributor"
+							v-if="isTranslatorRole(contributor.user.roleId)"
+							:user="contributor.user"
 						/>
 					</div>
 				</div>
@@ -59,21 +62,42 @@
 	</div>
 </template>
 
+<style lang="scss">
+	@import "../stylesheets/variables.scss";
+	.titleHeading {
+		margin: 0 5px;
+		font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		color: $accent-primary;
+		font-size: 2.5em;
+	}
+</style>
+
 <script>
-	import axios from "axios";
-
-	import CreditCard from "../components/CreditCard";
-
 	export default {
 		name: "Contributors",
 		auth: false,
-		components: {
-			CreditCard
-		},
-		async asyncData() {
+		async asyncData({ app }) {
+			const contributors = await app.$graphql(
+				`
+				{
+					credits {
+						user {
+							id
+							avatar
+							status
+							name
+							role
+							roleId
+							roleColor
+							rolePosition
+						}
+					}
+				}`
+			);
+
 			return {
-				contributors: (await axios(`${process.env.apiBase}/credits`)).data.sort(
-					(a, b) => b.rolePosition - a.rolePosition
+				contributors: contributors.credits.sort(
+					(a, b) => b.user.rolePosition - a.user.rolePosition
 				)
 			};
 		},
@@ -86,22 +110,17 @@
 		methods: {
 			isStaffRole(roleId) {
 				const staffRoles = [
-					"606270745299124235", //Creator
-					"493135149274365975", //Executive Director
-					"691382096878370837", //Operations Supervisior
-					"673681900476432387", //Global Community Representative
-					"673682511288598575", //Head Software Engineer
-					"616646805907832833", //Web Developer
-					"691393583189721088", //Linux Maintainer
-					"691396820236107837", //Engineer
-					"691386502566903850", //Graphic Designer
-					"548518356324581377", //Senior Moderator
-					"673683121971134505", //Head of Presence Verifying
-					"691384256672563332", //Community Representative
-					"514546359865442304", //Moderator
-					"526734093560315925", //Junior Moderator
-					"566417964820070421", //Support Agent
-					"630445337143935009" //Presence Verifier
+					"493135149274365975", // Project Leader
+					"691382096878370837", // Staff Coordinator
+					"673681900476432387", // Marketing Director
+					"685969048399249459", // Administrator
+					"630445337143935009", // Reviewer
+					"811262682408943616", // Localization Manager
+					"691396820236107837", // Developer
+					"691386502566903850", // Designer
+					"514546359865442304", // Moderator
+					"566417964820070421", // Support Agent
+					"691384256672563332" // Representative
 				];
 
 				if (staffRoles.indexOf(roleId) !== -1) return true;

@@ -16,12 +16,8 @@
 			<p>{{ $props.error.message }}</p>
 		</div>
 		<div class="error-container--btns">
-			<router-link
-				to="/"
-				class="button button--sm"
-				v-text="$t('error.page.button')"
-			></router-link
-			><span class="button button--sm" @click="reload" v-text="'Reload'"></span>
+			<nuxt-link to="/" class="button button--sm" v-text="$t('error.page.button')"></nuxt-link>
+			<a class="button button--sm" @click="reload()"><i class="fas fa-redo"></i></a>
 		</div>
 	</div>
 </template>

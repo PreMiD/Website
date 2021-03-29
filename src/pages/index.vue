@@ -5,7 +5,7 @@
 				<div class="promo-container">
 					<div class="promo-container__heading" ref="promoHeading">
 						<div class="heading__logo">
-							<img src="@/assets/images/logo_round.svg" />
+							<img data-not-lazy src="@/assets/images/logo-wordmark-blue.png" />
 						</div>
 						<div class="heading__text">
 							<p v-html="markdown($t('home.introduction.paragraph'))"></p>
@@ -103,7 +103,7 @@
 												v-if="presence.smallImage == false"
 												v-tippy="{ content: `PreMiD v${extVersion}` }"
 												class="game"
-												style="-webkit-mask: none;"
+												style="-webkit-mask: none"
 												alt="@/assets/images/logo-big.svg"
 												:src="presence.serviceLogo"
 											/>
@@ -205,7 +205,7 @@
 						<div class="card--feature__promo">
 							<img
 								class="card--feature__promo--image1"
-								style="max-width: 100%;"
+								style="max-width: 100%"
 								:src="cardThumbnail1"
 							/>
 						</div>
@@ -244,9 +244,11 @@
 							<h1>{{ $t("home.features.quickSupport.heading") }}</h1>
 							<p>{{ $t("home.features.quickSupport.description") }}</p>
 							<p>
-								<a class="button button--lg" href="https://discord.premid.app">
-									{{ $t("home.features.quickSupport.button") }}
-								</a>
+								<a
+									class="button button--lg"
+									href="https://discord.premid.app"
+									>{{ $t("home.features.quickSupport.button") }}</a
+								>
 							</p>
 						</div>
 						<div class="card--feature__promo">
@@ -282,30 +284,39 @@
 	import ytmusicLogo from "@/assets/images/youtube-music.png";
 	import premidLogo from "@/assets/images/pmd_logo.png";
 	import steamLogo from "@/assets/images/steam.png";
+	import vliveLogo from "@/assets/images/vlive.png";
 
 	import cardThumbnail1 from "@/assets/images/cards/card1.png";
 	import cardThumbnail2 from "@/assets/images/cards/card2.png";
 	import cardThumbnail3 from "@/assets/images/cards/card3.png";
 	import cardThumbnail4 from "@/assets/images/cards/card4.png";
 
-	import axios from "axios";
 	import anime from "animejs";
 
 	export default {
 		name: "Home",
 		auth: false,
-		async asyncData() {
-			const credits = (await axios(`${process.env.apiBase}/credits`)).data,
-				{ extension } = (await axios(`${process.env.apiBase}/versions`)).data;
-
-			let creditsLength = credits.length;
+		async asyncData({ app }) {
+			const res = await app.$graphql(
+				`
+				{
+					versions {
+						extension
+					}
+					credits(limit:2, random:true) {
+						user {
+							name
+							tag
+							avatar
+							flags
+						}
+					}
+				}`
+			);
 
 			return {
-				extVersion: extension,
-				users: [
-					credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))],
-					credits[Math.floor(0 + Math.random() * (creditsLength + 1 - 0))]
-				]
+				extVersion: res.versions.extension,
+				users: res.credits
 			};
 		},
 		data() {
@@ -318,20 +329,15 @@
 				presences_display: [],
 				presences: [
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "PreMiD",
 						serviceLogo: premidLogo,
 						smallImage: "search",
 						data: ["Store"],
 						presence_time: "00:12",
+						seconds: "500", //Suitable range for timer
 						elapsed: true
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "YouTube",
 						serviceLogo: youtubeLogo,
 						smallImage: true,
@@ -339,32 +345,26 @@
 							"Noisestorm - Crab Rave [Monstercat Release]",
 							"Monstercat: Instinct"
 						],
-						presence_time: "1:36"
+						seconds: "300", //Suitable range for timer
+						presence_time: "01:36"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "SoundCloud",
 						serviceLogo: soundcloudLogo,
 						smallImage: true,
 						data: ["Dion Timmer - Panic", "Dion Timmer"],
-						presence_time: "2:15"
+						seconds: "300", //Suitable range for timer
+						presence_time: "02:15"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "Netflix",
 						serviceLogo: netflixLogo,
 						smallImage: true,
 						data: ["Daredevil", "S1:E1 Into the Ring"],
+						seconds: "1750", //Suitable range for timer
 						presence_time: "22:15"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
 						smallImage: true,
@@ -372,38 +372,41 @@
 							"supercombo - Piloto Automático (Clipe Oficial)",
 							"supercombo"
 						],
+						seconds: "200", //Suitable range for timer
 						presence_time: "00:26"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "Steam",
 						serviceLogo: steamLogo,
 						smallImage: false,
 						data: ["Steam Store", "F1 2019"],
 						presence_time: "03:32",
+						seconds: "650", //Suitable range for timer
 						elapsed: true
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "YouTube Music",
 						serviceLogo: ytmusicLogo,
 						smallImage: true,
 						data: ["Dance Monkey", "Tones and I - The Kids Are Coming (2019)"],
-						presence_time: "3:12"
+						seconds: "210", //Suitable range for timer
+						presence_time: "03:12"
 					},
 					{
-						profile: {
-							badges: []
-						},
 						service_title: "Twitch",
 						serviceLogo: twitchLogo,
 						smallImage: true,
-						data: ["Just Chattin", "Bas950"],
+						data: ["PreMiD coding stream!", "alexbcberio"],
+						seconds: "2750", //Suitable range for timer
 						presence_time: "49:12"
+					},
+					{
+						service_title: "V LIVE",
+						serviceLogo: vliveLogo,
+						smallImage: true,
+						data: ["[LOONA] Orbit! Thank you ❤️", "이달의 소녀(LOONA)"],
+						seconds: "600", //Suitable range for timer
+						presence_time: "09:50"
 					}
 				]
 			};
@@ -422,18 +425,26 @@
 				let presence = this.presences_display[index];
 
 				presence.profile = {
-					name: this.users[index]?.name || "Unknown",
-					discriminator: this.users[index]?.tag || "0000",
-					flags: this.users[index]?.flags || [],
-					avatar:
-						this.users[index]?.avatar ||
-						"https://premid.app/assets/images/logo.png"
+					name: this.users[index].user.name,
+					discriminator: this.users[index].user.tag,
+					flags: this.users[index].user.flags || [],
+					avatar: this.users[index].user.avatar
 				};
 
 				// Temporary solution
 				presence.profile["avatar"].endsWith(".gif")
 					? presence.profile["flags"].push("NITRO")
 					: false;
+
+				presence.seconds = Math.floor(Math.random() * presence.seconds) + 1;
+
+				let minutes = Math.floor(presence.seconds / 60);
+				let seconds = presence.seconds - minutes * 60;
+
+				presence.presence_time =
+					minutes.toString().padStart(2, "0") +
+					":" +
+					seconds.toString().padStart(2, "0");
 			});
 		},
 		mounted() {
@@ -463,6 +474,49 @@
 					hasRun = true;
 				});
 			});
+		},
+		created() {
+			let timers = setInterval(() => {
+				let oneFinished = false;
+				this.presences_display.forEach((el, i) => {
+					if (el.presence_time === "00:00" || el.live) {
+						if (oneFinished) {
+							return clearInterval(timers);
+						}
+						return (oneFinished = true);
+					}
+
+					let minutes = el.presence_time.split(":")[0];
+					let seconds = el.presence_time.split(":")[1];
+
+					if (el.elapsed) {
+						if (seconds === "59") {
+							el.presence_time =
+								(parseInt(minutes) + 1).toString().padStart(2, "0") + ":00";
+						} else {
+							el.presence_time =
+								minutes +
+								":" +
+								(parseInt(seconds) + 1).toString().padStart(2, "0");
+						}
+					} else {
+						if (el.presence_time === "00:00") {
+							return;
+						} else if (seconds === "00") {
+							el.presence_time =
+								(parseInt(minutes) - 1).toString().padStart(2, "0") + ":59";
+						} else if (seconds.split("")[1] === "0") {
+							el.presence_time =
+								minutes + ":" + parseInt(seconds.split("")[0] - 1) + "9";
+						} else {
+							el.presence_time =
+								minutes +
+								":" +
+								(parseInt(seconds) - 1).toString().padStart(2, "0");
+						}
+					}
+				});
+			}, 1000);
 		},
 		methods: {
 			appear() {

@@ -3,16 +3,18 @@
 		<div class="section section--features section--features--beta-register">
 			<div class="promo-container__heading">
 				<h1 class="heading__logo">
-					<img :src="logo" />
+					<img src="../../assets/images/premid-beta.png" />
 				</h1>
 			</div>
 			<div id="thankYou-container" class="card--feature card--feature--reverse">
 				<div class="card--feature__details">
-					<h1>{{ title }}</h1>
-					<p>{{ message }}</p>
-					<nuxt-link to="/" class="button button--sm router-link-active">{{
-						$t("error.page.button")
-					}}</nuxt-link>
+					<h1 v-t="strings.title" />
+					<p v-t="strings.message" />
+					<nuxt-link
+						to="/"
+						class="button button--sm router-link-active"
+						v-t="'error.page.button'"
+					/>
 				</div>
 			</div>
 			<div class="waves-divider waves-divider_bottom">
@@ -35,37 +37,47 @@
 </template>
 
 <script>
-	import axios from "axios";
-	import Logo from "@/assets/images/premid-beta.png";
-
 	export default {
 		name: "Register",
 		auth: true,
-		async asyncData({ $auth, error, $t }) {
-			if ($auth.loggedIn) {
-				let { data } = await axios.post(
-					`${process.env.apiBase}/addBetaUser/${$auth.$storage._state["_token.discord"]}`
-				);
+		async asyncData({ app, $auth, context }) {
+			if (!$auth.loggedIn || !$auth.$storage._state["_token.discord"])
+				app.context.redirect("/login");
 
-				if (!data.error) {
-					return {
-						title: $t("thankyou.title"),
-						message: $t("thankyou.description"),
-						logo: Logo
-					};
-				} else {
-					return {
-						title: "Uh oh!",
-						message:
-							data.error == 3
-								? "Our monkeys say that you are already a beta user."
-								: data.message,
-						logo: Logo
-					};
+			return {
+				addBetaUser: (
+					await app.$graphql(
+						`
+							mutation {
+								addBetaUser(token: "${$auth.$storage._state["_token.discord"]}") {
+									success
+									message
+								}
+							}
+						`
+					)
+				).addBetaUser
+			};
+		},
+		data() {
+			return {
+				strings: {
+					title: "",
+					message: ""
 				}
-			} else {
-				$auth.loginWith("discord");
-			}
+			};
+		},
+		mounted() {
+			if (this.addBetaUser && this.addBetaUser.success)
+				this.strings = {
+					title: "thankyou.title",
+					message: "thankyou.description"
+				};
+			else if (this.addBetaUser && !this.addBetaUser.success)
+				this.strings = {
+					title: "Uh oh!",
+					message: this.addBetaUser.message
+				};
 		},
 		head: {
 			title: "Register"
