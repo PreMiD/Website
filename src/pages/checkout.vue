@@ -43,8 +43,9 @@
 									v-for="country in countries"
 									:key="country.name"
 									:value="country"
-									>{{ $t("shipping." + country.code.toLowerCase()) }}</option
 								>
+									{{ $t("shipping." + country.code.toLowerCase()) }}
+								</option>
 							</select>
 							<h3 v-if="selectedCountry.states" class="state">
 								{{ $t("checkout.state") }}
@@ -58,15 +59,16 @@
 									v-for="state in selectedCountry.states"
 									:key="state.name"
 									:value="state"
-									>{{
+								>
+									{{
 										$t(
 											"shipping." +
 												selectedCountry.code.toLowerCase() +
 												"." +
 												state.code.toLowerCase()
 										)
-									}}</option
-								>
+									}}
+								</option>
 							</select>
 							<h3 class="zip">{{ $t("checkout.zip") }}</h3>
 							<input class="zip" autocomplete="postal-code" />

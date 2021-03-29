@@ -17,13 +17,13 @@
 					<div
 						v-if="index % 2 == 0"
 						class="waves-divider waves-divider_top"
-						style="position: inherit;"
+						style="position: inherit"
 					>
 						<svg
 							class="wave"
 							version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
-							style="width: 100%;"
+							style="width: 100%"
 							preserveAspectRatio="none"
 						>
 							<path
@@ -76,7 +76,7 @@
 									}"
 									:key="colour.name"
 									v-tippy="{
-										content: $t('merch.' + colour.name.toLowerCase())
+										content: $t('merch.colour.' + colour.name.toLowerCase())
 									}"
 									@click="
 										selected_product[category].selected_colour = colour;
@@ -97,12 +97,7 @@
 									}"
 									:key="size_name"
 									v-tippy="{
-										content: $t(
-											'merch.' +
-												selected_product[category].title.toLowerCase() +
-												'.' +
-												size_name.toLowerCase()
-										)
+										content: size_name.toUpperCase()
 									}"
 									@click="selected_product[category].selected_id = size_id"
 								>
@@ -137,7 +132,7 @@
 							</button>
 							<h1 ref="product_price">
 								{{
-									$t("merch.price").replace(
+									$t("merch.price{0}").replace(
 										"{0}",
 										selected_product[category].price / 100
 									)
@@ -149,13 +144,13 @@
 					<div
 						v-if="index % 2 == 0"
 						class="waves-divider waves-divider_bottom"
-						style="position: inherit;"
+						style="position: inherit"
 					>
 						<svg
 							class="wave"
 							version="1.1"
 							xmlns="http://www.w3.org/2000/svg"
-							style="width: 100%;"
+							style="width: 100%"
 							preserveAspectRatio="none"
 						>
 							<path
