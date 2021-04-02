@@ -17,7 +17,7 @@
 		"chart.js": "2.9.4",
 		"marked": "2.0.1",
 		"moment": "2.29.1",
-		"nuxt": "2.15.2",
+		"nuxt": "2.15.4",
 		"nuxt-lazy-load": "1.2.5",
 		"tinycolor2": "1.4.2",
 		"ts-loader": "^8.0.17",
