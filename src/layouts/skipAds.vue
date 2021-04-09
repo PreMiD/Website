@@ -122,7 +122,7 @@
 		},
 		mounted() {
 			if (this.isMobile)
-				this.interval = this.rInterval(() => {
+				this.interval = this.customInterval(() => {
 					this.countDown--;
 
 					if (this.countDown < 0) this.interval.clear();
@@ -155,7 +155,7 @@
 			},
 			checkBlock(callback) {
 				// deepscan-disable-line
-				this.adBlockInterval = this.rInterval(() => {
+				this.adBlockInterval = this.customInterval(() => {
 					this.probsUsingAdBlock =
 						Array.from(document.querySelectorAll(".adsbygoogle")).filter(
 							el => el.innerHTML !== ""
@@ -164,7 +164,7 @@
 					if (this.probsUsingAdBlock) this.adBlockInterval.clear();
 				}, 100);
 			},
-			rInterval(callback, delay) {
+			customInterval(callback, delay) {
 				const dateNow = Date.now,
 					requestAnimation = window.requestAnimationFrame;
 				let start = dateNow(),
