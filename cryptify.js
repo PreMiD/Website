@@ -11,14 +11,16 @@
 			content.indexOf("countDownValue") ||
 			content.indexOf("adBlockInterval") ||
 			content.indexOf("countDownBtn") ||
-			content.indexOf("rInterval")
+			content.indexOf("customInterval") ||
+			content.indexOf("intervalFunc")
 		) {
 			content = content.replace(/checkBlock/g, rString());
 			content = content.replace(/probsUsingAdBlock/g, rString());
 			content = content.replace(/countDownValue/g, rString());
 			content = content.replace(/adBlockInterval/g, rString());
 			content = content.replace(/countDownBtn/g, rString());
-			content = content.replace(/rInterval/g, rString());
+			content = content.replace(/customInterval/g, rString());
+			content = content.replace(/intervalFunc/g, rString());
 			writeFileSync(files[i], content);
 		}
 	}
