@@ -13,7 +13,8 @@ export default [
 		"@nuxtjs/google-adsense",
 		{
 			id: "ca-pub-1575460061917202",
-			tag: "adsense"
+			tag: "adsense",
+			onPageLoad: true
 		}
 	],
 	"@nuxtjs/device",

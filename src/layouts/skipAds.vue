@@ -122,10 +122,10 @@
 		},
 		mounted() {
 			if (this.isMobile)
-				this.interval = setInterval(() => {
+				this.interval = this.customInterval(() => {
 					this.countDown--;
 
-					if (this.countDown < 0) clearInterval(this.interval);
+					if (this.countDown < 0) this.interval.clear();
 				}, 1000);
 
 			// Users not seing the skip button
@@ -137,7 +137,7 @@
 			}
 		},
 		beforeDestroy() {
-			if (this.adBlockInterval) clearInterval(this.adBlockInterval);
+			if (this.adBlockInterval) this.adBlockInterval.clear();
 		},
 		methods: {
 			skipAnyway() {
@@ -155,14 +155,31 @@
 			},
 			checkBlock(callback) {
 				// deepscan-disable-line
-				this.adBlockInterval = setInterval(() => {
+				this.adBlockInterval = this.customInterval(() => {
 					this.probsUsingAdBlock =
 						Array.from(document.querySelectorAll(".adsbygoogle")).filter(
 							el => el.innerHTML !== ""
 						).length === 0;
 
-					if (this.probsUsingAdBlock) clearInterval(this.adBlockInterval);
+					if (this.probsUsingAdBlock) this.adBlockInterval.clear();
 				}, 100);
+			},
+			customInterval(callback, delay) {
+				const dateNow = Date.now,
+					requestAnimation = window.requestAnimationFrame;
+				let start = dateNow(),
+					stop = 0;
+
+				const intervalFunc = function () {
+					dateNow() - start < delay || ((start += delay), callback());
+					stop || requestAnimation(intervalFunc);
+				};
+				requestAnimation(intervalFunc);
+				return {
+					clear: function () {
+						stop = 1;
+					}
+				};
 			}
 		}
 	};
