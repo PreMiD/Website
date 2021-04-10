@@ -268,7 +268,7 @@
 			padding-right: 25px;
 			padding-top: 25px;
 			padding-bottom: 25px;
-			max-width: 1400px;
+			max-width: 1000px;
 			margin: 0 auto;
 			background: #2f3136;
 			border-radius: 0.5rem;
@@ -380,7 +380,7 @@
 				background: rgba(114, 137, 218, 0.25) !important;
 				width: 100%;
 				height: 100%;
-				display: inline-block;
+				display: block;
 				left: 0;
 				margin-top: -15px;
 				z-index: -1;
