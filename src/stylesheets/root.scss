@@ -40,6 +40,4 @@
 @import "plugins/vuejs-noty.scss";
 @import "components/visibility.scss";
 
-.invisible {
-	opacity: 0;
-}
+@import "util.scss";

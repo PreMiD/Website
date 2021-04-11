@@ -28,34 +28,34 @@
 </template>
 
 <script>
-	import Detection from "~/components/mixins/Detection";
-	import Debug from "~/components/mixins/Debug";
+import Detection from "~/components/mixins/Detection";
+import Debug from "~/components/mixins/Debug";
 
-	export default {
-		name: "PremidWeb",
-		mixins: [Debug, Detection],
-		data() {
-			return {
-				switcherVisible: false,
-				ua: process.server ? "" : navigator.userAgent
-			};
-		},
-		created() {
-			this.$root.$data.i18nLanguageList = this.$i18n.availableLocales;
+export default {
+	name: "PremidWeb",
+	mixins: [Debug, Detection],
+	data() {
+		return {
+			switcherVisible: false,
+			ua: process.server ? "" : navigator.userAgent
+		};
+	},
+	created() {
+		this.$root.$data.i18nLanguageList = this.$i18n.availableLocales;
 
-			if (process.browser) {
-				if (localStorage.language !== undefined) {
-					this.$root.$i18n.locale = localStorage.language;
-				}
-			} else this.$root.$i18n.locale = "en";
-
-			this.$root.$data.navigatorLanguage = this.getBrowserLanguage();
-			this.$root.$data.i18nLanguage = this.getCurrentLanguage();
-		},
-		methods: {
-			toggleSwitcher() {
-				this.switcherVisible = !this.switcherVisible;
+		if (process.browser) {
+			if (localStorage.language !== undefined) {
+				this.$root.$i18n.locale = localStorage.language;
 			}
+		} else this.$root.$i18n.locale = "en";
+
+		this.$root.$data.navigatorLanguage = this.getBrowserLanguage();
+		this.$root.$data.i18nLanguage = this.getCurrentLanguage();
+	},
+	methods: {
+		toggleSwitcher() {
+			this.switcherVisible = !this.switcherVisible;
 		}
-	};
+	}
+};
 </script>

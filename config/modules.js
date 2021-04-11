@@ -17,6 +17,7 @@ export default [
 			onPageLoad: true
 		}
 	],
+	"@nuxtjs/device",
 	"@nuxtjs/axios",
 	"@nuxtjs/auth"
 ];
