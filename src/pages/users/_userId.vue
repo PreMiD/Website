@@ -198,33 +198,81 @@ export default {
 	name: "Userpage",
 	auth: false,
 	async asyncData({ params, app }) {
-		const user = (await app.$axios(`/v2/credits/${params.userId}`)).data,
-			presences = (await app.$axios(`/v2/presences`)).data;
+		let res = await app.$graphql(
+			`{
+				credits(id: "${params.userId}") {
+					user {
+						name
+						tag
+						avatar
+					}
+					roles{
+						name
+					}
+				}
+				presences(author: "${params.userId}") {
+					metadata {
+						color
+						service
+						description
+						logo
+						thumbnail
+						author {
+							id
+							name
+						}
+					}
+				}
+			}`
+			),
+			contributionsRes = await app.$graphql(
+				`{
+				presences(contributor: "${params.userId}") {
+					metadata {
+						color
+						service
+						description
+						logo
+						thumbnail
+						author {
+							id
+							name
+						}
+						contributors{
+							id
+							name
+						}
+					}
+				}
+			}`
+			);
 
-		user.roles = user.roles.sort();
+		let user = res.credits[0]?.user || {},
+			userPresences = res.presences.map(p => p.metadata),
+			userContributions = contributionsRes.presences.map(p => p.metadata);
+
+		user.roles = res.credits[0]?.roles?.map(role => role.name).sort();
+
+		user.name =
+			user.name ||
+			userPresences[0]?.author?.name ||
+			userContributions[0]?.contributors.find(user => {
+				if (user.id === params.userId) return user;
+			})?.name ||
+			"";
+
+		user.tag = user.tag || "????";
+
+		let error = false;
+
+		if (!user.name) error = true;
 
 		return {
-			error: user.error ? true : false,
+			error: error,
 			user: user,
 			showContributions: false,
-			userPresences: presences
-				.filter(p => p.metadata.author.id === user.userId)
-				.map(p => p.metadata),
-			userContributions: presences
-				.filter(p =>
-					p.metadata.contributors
-						? p.metadata.contributors.some(cont => cont.id == user.userId)
-						: null
-				)
-				.map(p => p.metadata)
-		};
-	},
-	data() {
-		return {
-			user: [],
-			userPresences: [],
-			userContributions: [],
-			showContributions: false
+			userPresences: userPresences,
+			userContributions: userContributions
 		};
 	},
 	methods: {

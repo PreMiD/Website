@@ -139,10 +139,10 @@
 									<i class="fa-user fas"></i>
 									{{ $t("presence.sections.information.author") }}:
 									<nuxt-link
-										v-if="getPresenceMetadata.author.userId"
+										v-if="getPresenceMetadata.author.id"
 										class="author-name"
 										:style="`color: ${getPresenceMetadata.author.roleColor};`"
-										:to="`/users/${getPresenceMetadata.author.userId}`"
+										:to="`/users/${getPresenceMetadata.author.id}`"
 										:disabled="true"
 									>
 										<img
@@ -337,8 +337,19 @@ export default {
 		if (presenceData) {
 			try {
 				data.presence.metadata.author = (
-					await app.$axios(`/v2/credits/${data.presence.metadata.author.id}`)
-				).data;
+					await app.$graphql(
+						`{
+							credits(id: "${data.presence.metadata.author.id}") {
+								user {
+									name
+									id
+									avatar
+									roleColor
+								}
+							}
+						}`
+					)
+				).credits[0].user;
 			} catch (err) {}
 		}
 
