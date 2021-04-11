@@ -250,29 +250,29 @@
 </template>
 
 <style lang="scss" scoped>
-	.section {
-		img {
-			height: 64px;
-			width: 64px;
-			border-radius: 100%;
-			margin-right: 8px;
-			place-self: center;
-			transition: opacity 0.2s ease-in-out;
-
-			&:hover {
-				opacity: 0.75;
-			}
-		}
-
-		h1 {
-			line-height: 100px;
-			margin-left: 25px;
-		}
-	}
-
-	.presence-badge {
+.section {
+	img {
+		height: 64px;
+		width: 64px;
+		border-radius: 100%;
+		margin-right: 8px;
 		place-self: center;
+		transition: opacity 0.2s ease-in-out;
+
+		&:hover {
+			opacity: 0.75;
+		}
 	}
+
+	h1 {
+		line-height: 100px;
+		margin-left: 25px;
+	}
+}
+
+.presence-badge {
+	place-self: center;
+}
 </style>
 
 <script>
@@ -289,31 +289,29 @@ export default {
 		const partnersList = (await app.$axios(`/v2/partners`)).data;
 
 		let { presences } = await app.$graphql(
-				`
-	{
-		presences(service: "${params.presenceName}") {
-			metadata {
-				color
-				service
-				description
-				button
-				logo
-				url
-				thumbnail
-				author {
-					id
-					name
-				}
-				contributors {
-					id
-					name
-				}
-				version
-				tags
-			}
-		}
-	}
-	`
+				`{
+					presences(service: "${params.presenceName}") {
+						metadata {
+							color
+							service
+							description
+							button
+							logo
+							url
+							thumbnail
+							author {
+								id
+								name
+							}
+							contributors {
+								id
+								name
+							}
+							version
+							tags
+						}
+					}
+				}`
 			),
 			presenceData = presences[0];
 
@@ -336,15 +334,15 @@ export default {
 				data.presence.metadata.author = (
 					await app.$graphql(
 						`{
-				credits(id: "${data.presence.metadata.author.id}") {
-					user {
-						name
-						id
-						avatar
-						roleColor
-					}
-				}
-			}`
+							credits(id: "${data.presence.metadata.author.id}") {
+								user {
+									name
+									id
+									avatar
+									roleColor
+								}
+							}
+						}`
 					)
 				).credits[0].user;
 			} catch (err) {
