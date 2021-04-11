@@ -22,8 +22,9 @@
 					</svg>
 				</div>
 			</div>
-			<div class="openings">
-				<h1 v-text="$t('jobs.openings.title')" />
+			<div  class="openings">
+				<h1 v-if="jobs.filter(j => j.available).length > 0" v-text="$t('jobs.openings.title')" />
+				<h1 v-else v-text="$t('jobs.openings.none')" />
 
 				<div class="jobs">
 					<div class="job" v-for="job in jobs.filter(j => j.available)" :key="job.jobName">
