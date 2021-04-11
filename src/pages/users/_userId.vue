@@ -210,169 +210,167 @@
 </template>
 
 <script>
-	export default {
-		name: "Userpage",
-		auth: false,
-
-		async asyncData({ params, app }) {
-			let res = await app.$graphql(
-					`
-				{
-					credits(id: "${params.userId}") {
-						user {
+export default {
+	name: "Userpage",
+	auth: false,
+	async asyncData({ params, app }) {
+		let res = await app.$graphql(
+			`{
+				credits(id: "${params.userId}") {
+					user {
+						name
+						tag
+						avatar
+					}
+					roles{
+						name
+					}
+				}
+				presences(author: "${params.userId}") {
+					metadata {
+						color
+						service
+						description
+						logo
+						thumbnail
+						author {
+							id
 							name
-							tag
-							avatar
 						}
-						roles{
+					}
+				}
+			}`
+			),
+			contributionsRes = await app.$graphql(
+				`{
+				presences(contributor: "${params.userId}") {
+					metadata {
+						color
+						service
+						description
+						logo
+						thumbnail
+						author {
+							id
+							name
+						}
+						contributors{
+							id
 							name
 						}
 					}
-					presences(author: "${params.userId}") {
-						metadata {
-							color
-							service
-							description
-							logo
-							thumbnail
-							author {
-								id
-								name
-							}
-						}
-					}
-				}`
-				),
-				contributionsRes = await app.$graphql(
-					`{
-					presences(contributor: "${params.userId}") {
-						metadata {
-							color
-							service
-							description
-							logo
-							thumbnail
-							author {
-								id
-								name
-							}
-							contributors{
-								id
-								name
-							}
-						}
-					}
-				}`
-				);
+				}
+			}`
+			);
 
-			let user = res.credits[0]?.user || {},
-				userPresences = res.presences.map(p => p.metadata),
-				userContributions = contributionsRes.presences.map(p => p.metadata);
+		let user = res.credits[0]?.user || {},
+			userPresences = res.presences.map(p => p.metadata),
+			userContributions = contributionsRes.presences.map(p => p.metadata);
 
-			user.roles = res.credits[0]?.roles?.map(role => role.name).sort();
+		user.roles = res.credits[0]?.roles?.map(role => role.name).sort();
 
-			user.name =
-				user.name ||
-				userPresences[0]?.author?.name ||
-				userContributions[0]?.contributors.find(user => {
-					if (user.id === params.userId) return user;
-				})?.name ||
-				"";
+		user.name =
+			user.name ||
+			userPresences[0]?.author?.name ||
+			userContributions[0]?.contributors.find(user => {
+				if (user.id === params.userId) return user;
+			})?.name ||
+			"";
 
-			user.tag = user.tag || "????";
+		user.tag = user.tag || "????";
 
-			let error = false;
+		let error = false;
 
-			if (!user.name) error = true;
+		if (!user.name) error = true;
 
-			return {
-				error: error,
-				user: user,
-				showContributions: false,
-				userPresences: userPresences,
-				userContributions: userContributions
-			};
+		return {
+			error: error,
+			user: user,
+			showContributions: false,
+			userPresences: userPresences,
+			userContributions: userContributions
+		};
+	},
+	data() {
+		return {
+			user: [],
+			userPresences: [],
+			userContributions: [],
+			showContributions: false
+		};
+	},
+	methods: {
+		linkify(pls) {
+			if (!pls.match(/(\[.*?\])/g)) return pls;
+			else
+				return pls.match(/(\[.*?\])/g).map(ch => {
+					return pls.replace(
+						ch,
+						`<a href="http://discord.premid.app/">${ch.slice(
+							1,
+							ch.length - 1
+						)}</a>`
+					);
+				})[0];
 		},
-		data() {
-			return {
-				user: [],
-				userPresences: [],
-				userContributions: [],
-				showContributions: false
-			};
-		},
-		methods: {
-			linkify(pls) {
-				if (!pls.match(/(\[.*?\])/g)) return pls;
-				else
-					return pls.match(/(\[.*?\])/g).map(ch => {
-						return pls.replace(
-							ch,
-							`<a href="http://discord.premid.app/">${ch.slice(
-								1,
-								ch.length - 1
-							)}</a>`
-						);
-					})[0];
-			},
-			tabbify(pls) {
-				if (!pls.match(/(\[.*?\])/g)) return pls;
-				else if (!this.showContributions)
-					return pls.match(/(\[.*?\])/g).map(ch => {
-						return pls.replace(
-							ch,
-							`<span style="color:#7288da">${
-								ch.slice(1, ch.length - 1).split("/")[0]
-							}</span>`
-						);
-					})[0];
-				else if (this.showContributions)
-					return pls.match(/(\[.*?\])/g).map(ch => {
-						return pls.replace(
-							ch,
-							`<span style="color:#7288da">${
-								ch.slice(1, ch.length - 1).split("/")[1]
-							}</span>`
-						);
-					})[0];
-			}
-		},
-		head() {
-			return {
-				title: `${
-					!this.error && this.user.name ? this.user.name : "Unknown User"
-				}`,
-				meta: [
-					{
-						hid: "description",
-						name: "description",
-						content: `${
-							!this.error && this.user.name ? this.user.name : "Unknown user"
-						}'s profile.`
-					},
-					{
-						hid: "og:description",
-						property: "og:description",
-						content: `${
-							!this.error && this.user.name ? this.user.name : "Unknown user"
-						}'s profile.`
-					},
-					{
-						hid: "og:title",
-						property: "og:title",
-						content:
-							!this.error && this.user.name ? this.user.name : "Unknown User"
-					},
-					{
-						hid: "og:image",
-						property: "og:image",
-						content:
-							!this.error && this.user.avatar
-								? this.user.avatar
-								: "https://premid.app/assets/images/logo.png"
-					}
-				]
-			};
+		tabbify(pls) {
+			if (!pls.match(/(\[.*?\])/g)) return pls;
+			else if (!this.showContributions)
+				return pls.match(/(\[.*?\])/g).map(ch => {
+					return pls.replace(
+						ch,
+						`<span style="color:#7288da">${
+							ch.slice(1, ch.length - 1).split("/")[0]
+						}</span>`
+					);
+				})[0];
+			else if (this.showContributions)
+				return pls.match(/(\[.*?\])/g).map(ch => {
+					return pls.replace(
+						ch,
+						`<span style="color:#7288da">${
+							ch.slice(1, ch.length - 1).split("/")[1]
+						}</span>`
+					);
+				})[0];
 		}
-	};
+	},
+	head() {
+		return {
+			title: `${
+				!this.error && this.user.name ? this.user.name : "Unknown User"
+			}`,
+			meta: [
+				{
+					hid: "description",
+					name: "description",
+					content: `${
+						!this.error && this.user.name ? this.user.name : "Unknown user"
+					}'s profile.`
+				},
+				{
+					hid: "og:description",
+					property: "og:description",
+					content: `${
+						!this.error && this.user.name ? this.user.name : "Unknown user"
+					}'s profile.`
+				},
+				{
+					hid: "og:title",
+					property: "og:title",
+					content:
+						!this.error && this.user.name ? this.user.name : "Unknown User"
+				},
+				{
+					hid: "og:image",
+					property: "og:image",
+					content:
+						!this.error && this.user.avatar
+							? this.user.avatar
+							: "https://premid.app/assets/images/logo.png"
+				}
+			]
+		};
+	}
+};
 </script>
