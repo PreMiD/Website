@@ -1,5 +1,7 @@
 name: DePloY
 on:
+  schedule:
+    - cron: "0 5 * * *"
   push:
     branches: ["stable", "master"]
     paths:
