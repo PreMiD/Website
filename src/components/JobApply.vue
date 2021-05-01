@@ -17,13 +17,13 @@
 					</p>
 				</div>
 			</div>
-			<div class="modal-container" style="background-color: #23272a;">
+			<div class="modal-container" style="background-color: #23272a">
 				<div class="modal-header">
 					<h1>{{ $t("jobs.modal.title", { 0: job.jobName }) }}</h1>
 				</div>
 
 				<div class="modal-body">
-					<p v-text="error" style="color: red; font-size: 1em; margin: 0;"></p>
+					<p v-text="error" style="color: red; font-size: 1em; margin: 0"></p>
 
 					<First v-if="currentPage == 0" :job="job" />
 					<Questions v-if="currentPage == 1" :job="job" />
@@ -74,11 +74,15 @@
 </style>
 
 <script>
+	import First from "./steps/First";
+	import Questions from "./steps/Questions";
+
 	export default {
 		name: "JobApply",
 		props: {
 			job: Object
 		},
+		components: { First, Questions },
 		data() {
 			return {
 				showModal: false,
