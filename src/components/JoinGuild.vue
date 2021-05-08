@@ -7,12 +7,12 @@
 			</div>
 			<div class="modal-container small" style="background-color: #23272a;">
 				<div class="modal-header">
-					<h1>{{ $t("jobs.modal.guild.required") }}</h1>
+					<h1>{{ $t("jobs.guild.required") }}</h1>
 				</div>
 
 				<div class="modal-body">
 					<p>
-						{{ $t("jobs.modal.guild.explanation") }}
+						{{ $t("jobs.guild.explanation") }}
 					</p>
 				</div>
 				<div class="modal-footer">
