@@ -135,7 +135,7 @@
 													content: $t('home.examples.status.playing')
 												}"
 												class="status-icon"
-												src="https://cdn.discordapp.com/app-assets/501021996336021504/501023626984816650.png"
+												:src="require('@/assets/images/play.png')"
 											/>
 										</div>
 										<div class="game__content">
