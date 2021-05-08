@@ -260,13 +260,17 @@
 				userContributions[0]?.contributors.find(user => {
 					if (user.id === params.userId) return user;
 				})?.name ||
-				"";
+				"Unknown user";
 
 			user.tag = user.tag || "????";
 
+			if (!user.roles || user.roles.length == 0) {
+				if (userPresences.length > 0) user.roles = ["Presence Developer"];
+			}
+
 			let error = false;
 
-			if (!user.name) error = true;
+			if (user.name === "Unknown user") error = true;
 
 			return {
 				error: error,
@@ -283,7 +287,7 @@
 					return pls.match(/(\[.*?\])/g).map(ch => {
 						return pls.replace(
 							ch,
-							`<a href="https://discord.gg/premid">${ch.slice(
+							`<a href="http://discord.premid.app/">${ch.slice(
 								1,
 								ch.length - 1
 							)}</a>`
