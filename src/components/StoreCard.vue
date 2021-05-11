@@ -5,7 +5,7 @@
 			@mouseover="cardHovered = true"
 			@mouseleave="cardHovered = false"
 		>
-			<img class="store-card__background" @error="presence.thumbnail = ''" :src="presence.thumbnail" />
+			<img class="store-card__background" @error="presence.thumbnail = ''" :src="loadImage(presence.thumbnail, 'l')" />
 
 			<div class="store-card__service-logo">
 				<img @error="presence.logo = '/assets/images/logo.png'" :src="presence.logo" />
@@ -240,6 +240,23 @@
 				} else {
 					return this.presence.description;
 				}
+			},
+			loadImage(imageUrl, size) {
+				// Supports Imgur imges
+				// Imgur sizes: s, b, t, m, l, h
+				if (imageUrl.includes("imgur.com")) {
+					let newUrl = imageUrl.split(
+						"https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/"
+					);
+
+					newUrl = newUrl.join("").split(".");
+					newUrl[0] = newUrl[0] + size;
+					newUrl =
+						"https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/" +
+						newUrl.join(".");
+					return newUrl;
+				}
+				return imageUrl;
 			}
 		}
 	};
