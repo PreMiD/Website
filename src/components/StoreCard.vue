@@ -250,11 +250,13 @@
 					);
 
 					newUrl = newUrl.join("").split(".");
-					newUrl[0] = newUrl[0] + size;
-					newUrl =
-						"https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/" +
-						newUrl.join(".");
-					return newUrl;
+					if (newUrl[0] == 7) {
+						newUrl[0] = newUrl[0] + size;
+						newUrl =
+							"https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/" +
+							newUrl.join(".");
+						return newUrl;
+					}
 				}
 				return imageUrl;
 			}
