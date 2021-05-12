@@ -199,6 +199,8 @@
 </template>
 
 <script>
+	import premidLogo from "~/assets/images/pmd_logo.png";
+
 	export default {
 		name: "Userpage",
 		auth: false,
@@ -270,10 +272,13 @@
 
 			let error = false;
 
+			if (!user.avatar || user.avatar.endsWith("null"))
+				user.avatar = premidLogo;
 			if (user.name === "Unknown user") error = true;
 
 			return {
 				error: error,
+				premidLogo: premidLogo,
 				user: user,
 				showContributions: false,
 				userPresences: userPresences,
