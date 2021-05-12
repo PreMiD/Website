@@ -3,7 +3,7 @@
 		<div class="userpage-container">
 			<div v-if="error">
 				<span>{{ $t("user.notFound.heading") }}</span>
-				<ul style="max-width: 50%;">
+				<ul style="max-width: 50%">
 					<li>{{ $t("user.notFound.message1") }}</li>
 					<li>{{ $t("user.notFound.message2") }}</li>
 					<li>{{ $t("user.notFound.message3") }}</li>
@@ -48,9 +48,7 @@
 							<i
 								v-if="role == 'Administrator'"
 								v-tippy="{
-									content: $t(
-										'contributors.roles.administrator'
-									),
+									content: $t('contributors.roles.administrator'),
 									placement: 'bottom'
 								}"
 								class="fas fa-user-shield"
@@ -62,14 +60,6 @@
 									placement: 'bottom'
 								}"
 								class="fas fa-clipboard-check"
-							></i>
-							<i
-								v-if="role == 'Localization Manager'"
-								v-tippy="{
-									content: $t('contributors.roles.localizationManager'),
-									placement: 'bottom'
-								}"
-								class="fas fa-language"
 							></i>
 							<i
 								v-if="role == 'Developer'"
@@ -178,7 +168,11 @@
 						@click="showContributions = !showContributions"
 						v-html="tabbify($t('user.switch.contributed'))"
 					></div>
-					<div v-else class="noContributes" v-html="tabbify($t('user.switch.contributed'))"></div>
+					<div
+						v-else
+						class="noContributes"
+						v-html="tabbify($t('user.switch.contributed'))"
+					></div>
 				</h1>
 				<div v-if="!showContributions" class="presence-container">
 					<StoreCard
@@ -188,7 +182,10 @@
 						store-functions="true"
 					/>
 				</div>
-				<div v-else-if="showContributions && userContributions.length > 0" class="presence-container">
+				<div
+					v-else-if="showContributions && userContributions.length > 0"
+					class="presence-container"
+				>
 					<StoreCard
 						v-for="presence of userContributions"
 						:key="presence.service"
@@ -202,111 +199,159 @@
 </template>
 
 <script>
-export default {
-	name: "Userpage",
-	auth: false,
-	async asyncData({ params, app }) {
-		const user = (await app.$axios(`/v2/credits/${params.userId}`)).data,
-			presences = (await app.$axios(`/v2/presences`)).data;
-
-		user.roles = user.roles.sort();
-
-		return {
-			error: user.error ? true : false,
-			user: user,
-			showContributions: false,
-			userPresences: presences
-				.filter(p => p.metadata.author.id === user.userId)
-				.map(p => p.metadata),
-			userContributions: presences
-				.filter(p =>
-					p.metadata.contributors
-						? p.metadata.contributors.some(cont => cont.id == user.userId)
-						: null
-				)
-				.map(p => p.metadata)
-		};
-	},
-	data() {
-		return {
-			user: [],
-			userPresences: [],
-			userContributions: [],
-			showContributions: false
-		};
-	},
-	methods: {
-		linkify(pls) {
-			if (!pls.match(/(\[.*?\])/g)) return pls;
-			else
-				return pls.match(/(\[.*?\])/g).map(ch => {
-					return pls.replace(
-						ch,
-						`<a href="https://discord.gg/premid">${ch.slice(
-							1,
-							ch.length - 1
-						)}</a>`
-					);
-				})[0];
-		},
-		tabbify(pls) {
-			if (!pls.match(/(\[.*?\])/g)) return pls;
-			else if (!this.showContributions)
-				return pls.match(/(\[.*?\])/g).map(ch => {
-					return pls.replace(
-						ch,
-						`<span style="color:#7288da">${
-							ch.slice(1, ch.length - 1).split("/")[0]
-						}</span>`
-					);
-				})[0];
-			else if (this.showContributions)
-				return pls.match(/(\[.*?\])/g).map(ch => {
-					return pls.replace(
-						ch,
-						`<span style="color:#7288da">${
-							ch.slice(1, ch.length - 1).split("/")[1]
-						}</span>`
-					);
-				})[0];
-		}
-	},
-	head() {
-		return {
-			title: `${
-				!this.error && this.user.name ? this.user.name : "Unknown User"
-			}`,
-			meta: [
-				{
-					hid: "description",
-					name: "description",
-					content: `${
-						!this.error && this.user.name ? this.user.name : "Unknown user"
-					}'s profile.`
-				},
-				{
-					hid: "og:description",
-					property: "og:description",
-					content: `${
-						!this.error && this.user.name ? this.user.name : "Unknown user"
-					}'s profile.`
-				},
-				{
-					hid: "og:title",
-					property: "og:title",
-					content:
-						!this.error && this.user.name ? this.user.name : "Unknown User"
-				},
-				{
-					hid: "og:image",
-					property: "og:image",
-					content:
-						!this.error && this.user.avatar
-							? this.user.avatar
-							: "https://premid.app/assets/images/logo.png"
+	export default {
+		name: "Userpage",
+		auth: false,
+		async asyncData({ params, app }) {
+			let res = await app.$graphql(
+				`{
+				credits(id: "${params.userId}") {
+					user {
+						name
+						tag
+						avatar
+					}
+					roles{
+						name
+					}
 				}
-			]
-		};
-	}
-};
+				authorPresences: presences(author: "${params.userId}") {
+					metadata {
+						color
+						service
+						description
+						logo
+						thumbnail
+						author {
+							id
+							name
+						}
+					}
+				}
+				contributionsPresences: presences(contributor: "${params.userId}") {
+					metadata {
+						color
+						service
+						description
+						logo
+						thumbnail
+						author {
+							id
+							name
+						}
+						contributors {
+							id
+							name
+						}
+					}
+				}
+			}`
+			);
+
+			let user = res.credits[0]?.user || {},
+				userPresences = res.authorPresences.map(p => p.metadata),
+				userContributions = res.contributionsPresences.map(p => p.metadata);
+
+			user.roles = res.credits[0]?.roles?.map(role => role.name).sort();
+
+			user.name =
+				user.name ||
+				userPresences[0]?.author?.name ||
+				userContributions[0]?.contributors.find(user => {
+					if (user.id === params.userId) return user;
+				})?.name ||
+				"Unknown user";
+
+			user.tag = user.tag || "????";
+
+			if (!user.roles || user.roles.length == 0) {
+				if (userPresences.length > 0) user.roles = ["Presence Developer"];
+			}
+
+			let error = false;
+
+			if (user.name === "Unknown user") error = true;
+
+			return {
+				error: error,
+				user: user,
+				showContributions: false,
+				userPresences: userPresences,
+				userContributions: userContributions
+			};
+		},
+		methods: {
+			linkify(pls) {
+				if (!pls.match(/(\[.*?\])/g)) return pls;
+				else
+					return pls.match(/(\[.*?\])/g).map(ch => {
+						return pls.replace(
+							ch,
+							`<a href="http://discord.premid.app/">${ch.slice(
+								1,
+								ch.length - 1
+							)}</a>`
+						);
+					})[0];
+			},
+			tabbify(pls) {
+				if (!pls.match(/(\[.*?\])/g)) return pls;
+				else if (!this.showContributions)
+					return pls.match(/(\[.*?\])/g).map(ch => {
+						return pls.replace(
+							ch,
+							`<span style="color:#7288da">${
+								ch.slice(1, ch.length - 1).split("/")[0]
+							}</span>`
+						);
+					})[0];
+				else if (this.showContributions)
+					return pls.match(/(\[.*?\])/g).map(ch => {
+						return pls.replace(
+							ch,
+							`<span style="color:#7288da">${
+								ch.slice(1, ch.length - 1).split("/")[1]
+							}</span>`
+						);
+					})[0];
+			}
+		},
+		head() {
+			return {
+				title: `${
+					!this.error && this.user.name ? this.user.name : "Unknown User"
+				}`,
+				meta: [
+					{
+						hid: "description",
+						name: "description",
+						content: `${
+							!this.error && this.user.name ? this.user.name : "Unknown user"
+						}'s profile.`
+					},
+					{
+						hid: "og:description",
+						property: "og:description",
+						content: `${
+							!this.error && this.user.name ? this.user.name : "Unknown user"
+						}'s profile.`
+					},
+					{
+						hid: "og:title",
+						property: "og:title",
+						content:
+							!this.error && this.user.name ? this.user.name : "Unknown User"
+					},
+					{
+						hid: "og:image",
+						property: "og:image",
+						content:
+							!this.error && this.user.avatar
+								? this.user.avatar
+								: "https://premid.app/assets/images/logo.png"
+					}
+				]
+			};
+		}
+	};
 </script>
