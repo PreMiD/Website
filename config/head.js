@@ -25,29 +25,24 @@ export default {
 			rel: "stylesheet",
 			type: "text/css",
 			href: "https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css"
-		},
-		{
-			rel: "stylesheet",
-			type: "text/css",
-			href: "/assets/fonts/Discord/font.css"
 		}
 	],
 	meta: [
 		{ charset: "utf-8" },
 		{ name: "viewport", content: "width=device-width, initial-scale=1" },
-    { name: "PreMiD_Presence", content: "PreMiD" },
-    {
+		{ name: "PreMiD_Presence", content: "PreMiD" },
+		{
 			hid: "theme-color",
 			name: "theme-color",
 			content: "#7289DA"
-    },
-    {
+		},
+		{
 			hid: "description",
 			property: "description",
 			content:
 				"PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status."
 		},
-    /* Twitter */
+		/* Twitter */
 		{
 			hid: "twitter:card",
 			property: "twitter:card",
@@ -69,7 +64,7 @@ export default {
 			property: "twitter:image",
 			content: "https://premid.app/assets/images/logo.png"
 		},
-    /* Open-Graph */
+		/* Open-Graph */
 		{
 			hid: "og:site_name",
 			property: "og:site_name",
