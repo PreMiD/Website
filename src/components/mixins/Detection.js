@@ -41,11 +41,13 @@ var DetectionMixin = {
 			this.debugMessage("Recieved information from Extension!");
 
 			//* Changing the DOM doesn't always work. If we will get this data - it means that Extension is installed.
-			this.$store.commit("extension/setInstalled", true);
-			this.extensionInstalled = true;
-			this.debugMessage(
-				"Extension installed, unlocking functions... [2th try]"
-			);
+			if (!this.$store.state.extension.extensionInstalled) {
+				this.$store.commit("extension/setInstalled", true);
+				this.extensionInstalled = true;
+				this.debugMessage(
+					"Extension installed, unlocking functions... [2nd try]"
+				);
+			}
 		});
 		// Firing event to get response from Extension with installed presences data.
 		window.dispatchEvent(new CustomEvent("PreMiD_GetPresenceList", {}));
