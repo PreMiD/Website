@@ -102,7 +102,7 @@
 					windows: "https://dl.premid.app/PreMiD-installer.exe",
 					apple: "https://dl.premid.app/PreMiD-installer.app.zip",
 					edge:
-						"https://microsoftedge.microsoft.com/addons/detail/hkchpjlnddoppadcbefbpgmgaeidkkkm",
+						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
 					chrome:
 						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
 					firefox: "https://dl.premid.app/PreMiD.xpi",
