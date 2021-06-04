@@ -50,7 +50,9 @@
 						<div class="fullpresence__overlay">
 							<div
 								class="fullpresence__gradient"
-								:style="`background: linear-gradient(155deg, ${getPresenceMetadata.color}, transparent, ${getPresenceGradientColor}), url(${getPresenceMetadata.thumbnail}) no-repeat center`"
+								:style="
+									`background: linear-gradient(155deg, ${getPresenceMetadata.color}, transparent, ${getPresenceGradientColor}), url(${getPresenceMetadata.thumbnail}) no-repeat center`
+								"
 							></div>
 						</div>
 					</div>
@@ -58,9 +60,9 @@
 						<button
 							v-if="
 								!isInstalled &&
-								this.$store.state.extension.extensionInstalled &&
-								getPresenceMetadata.button !== false &&
-								getPresenceMetadata.button !== 'false'
+									this.$store.state.extension.extensionInstalled &&
+									getPresenceMetadata.button !== false &&
+									getPresenceMetadata.button !== 'false'
 							"
 							class="button button--"
 							@click="sendPresence(getPresenceMetadata.service)"
@@ -73,9 +75,9 @@
 						<button
 							v-if="
 								isInstalled &&
-								this.$store.state.extension.extensionInstalled &&
-								getPresenceMetadata.button !== false &&
-								getPresenceMetadata.button !== 'false'
+									this.$store.state.extension.extensionInstalled &&
+									getPresenceMetadata.button !== false &&
+									getPresenceMetadata.button !== 'false'
 							"
 							class="button button--black"
 							@click="removePresence(getPresenceMetadata.service)"
@@ -112,7 +114,7 @@
 					<div
 						v-if="
 							getPresenceMetadata.button === false ||
-							getPresenceMetadata.button === 'false'
+								getPresenceMetadata.button === 'false'
 						"
 						class="header__warning"
 					>
@@ -158,27 +160,26 @@
 							<li
 								v-if="
 									getPresenceMetadata.contributors &&
-									typeof getPresenceMetadata.contributors === 'object'
+										typeof getPresenceMetadata.contributors === 'object'
 								"
 							>
 								<p>
 									<i class="fa-user-tie fas"></i>
 									{{ $t("presence.sections.information.contributors") }}:
 									<nuxt-link
-										v-for="(
-											contributor, index
-										) in getPresenceMetadata.contributors"
+										v-for="(contributor,
+										index) in getPresenceMetadata.contributors"
 										:key="contributor.id"
 										class="author-name"
 										:to="`/users/${contributor.id}`"
 									>
 										{{
 											contributor.name +
-											`${
-												getPresenceMetadata.contributors.length === index + 1
-													? ""
-													: ", "
-											}`
+												`${
+													getPresenceMetadata.contributors.length === index + 1
+														? ""
+														: ", "
+												}`
 										}}
 									</nuxt-link>
 								</p>
@@ -214,9 +215,11 @@
 										v-for="tag of getPresenceMetadata.tags"
 										:key="tag"
 										:to="`/store?q=${encodeURIComponent('tag:') + tag}`"
-										:style="`background: ${
-											getPresenceMetadata.color
-										}; color: ${brightColorFix()};`"
+										:style="
+											`background: ${
+												getPresenceMetadata.color
+											}; color: ${brightColorFix()};`
+										"
 										class="label label_tag"
 										v-text="tag"
 									/>
@@ -253,47 +256,47 @@
 </template>
 
 <style lang="scss" scoped>
-	.section {
-		img {
-			height: 64px;
-			width: 64px;
-			border-radius: 100%;
-			margin-right: 8px;
-			place-self: center;
-			transition: opacity 0.2s ease-in-out;
-
-			&:hover {
-				opacity: 0.75;
-			}
-		}
-
-		h1 {
-			line-height: 100px;
-			margin-left: 25px;
-		}
-	}
-
-	.presence-badge {
+.section {
+	img {
+		height: 64px;
+		width: 64px;
+		border-radius: 100%;
+		margin-right: 8px;
 		place-self: center;
+		transition: opacity 0.2s ease-in-out;
+
+		&:hover {
+			opacity: 0.75;
+		}
 	}
+
+	h1 {
+		line-height: 100px;
+		margin-left: 25px;
+	}
+}
+
+.presence-badge {
+	place-self: center;
+}
 </style>
 
 <script>
-	import premidLogo from "~/assets/images/pmd_logo.png";
-	import PresenceMixin from "~/components/mixins/Presence";
-	import tinycolor from "tinycolor2";
+import premidLogo from "~/assets/images/pmd_logo.png";
+import PresenceMixin from "~/components/mixins/Presence";
+import tinycolor from "tinycolor2";
 
-	export default {
-		name: "PresencePage",
-		mixins: [PresenceMixin],
-		auth: false,
-		async asyncData({ params, app, error }) {
-			const presenceUsage = (await app.$axios(`/v2/usage`)).data.users;
-			const presenceRanking = (await app.$axios(`/v2/presenceUsage`)).data;
-			const partnersList = (await app.$axios(`/v2/partners`)).data;
+export default {
+	name: "PresencePage",
+	mixins: [PresenceMixin],
+	auth: false,
+	async asyncData({ params, app, error }) {
+		const presenceUsage = (await app.$axios(`/v2/usage`)).data.users;
+		const presenceRanking = (await app.$axios(`/v2/presenceUsage`)).data;
+		const partnersList = (await app.$axios(`/v2/partners`)).data;
 
-			let { presences } = await app.$graphql(
-					`
+		let { presences } = await app.$graphql(
+				`
 				{
 					presences(service: "${params.presenceName}") {
 						metadata {
@@ -318,28 +321,28 @@
 					}
 				}
 				`
-				),
-				presenceData = presences[0];
+			),
+			presenceData = presences[0];
 
-			let data = {
-				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
-				partner:
-					partnersList.filter(
-						p => p.storeName == decodeURIComponent(params.presenceName)
-					).length > 0,
-				hot:
-					(presenceRanking[decodeURIComponent(params.presenceName)] /
-						presenceUsage) *
-						100 >
-					30,
-				presence: presenceData
-			};
+		let data = {
+			presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
+			partner:
+				partnersList.filter(
+					p => p.storeName == decodeURIComponent(params.presenceName)
+				).length > 0,
+			hot:
+				(presenceRanking[decodeURIComponent(params.presenceName)] /
+					presenceUsage) *
+					100 >
+				30,
+			presence: presenceData
+		};
 
-			if (presenceData) {
-				try {
-					data.presence.metadata.author = (
-						await app.$graphql(
-							`{
+		if (presenceData) {
+			try {
+				data.presence.metadata.author = (
+					await app.$graphql(
+						`{
 							credits(id: "${data.presence.metadata.author.id}") {
 								user {
 									name
@@ -349,221 +352,221 @@
 								}
 							}
 						}`
-						)
-					).credits[0].user;
-				} catch (err) {}
+					)
+				).credits[0].user;
+			} catch (err) {}
 
-				if (
-					!data.presence.metadata.author.avatar ||
-					data.presence.metadata.author.avatar.endsWith("/null")
-				)
-					data.presence.metadata.author.avatar = premidLogo;
+			if (
+				!data.presence.metadata.author.avatar ||
+				data.presence.metadata.author.avatar.endsWith("/null")
+			)
+				data.presence.metadata.author.avatar = premidLogo;
+		}
+
+		data["isMobile"] = false;
+		return data;
+	},
+	computed: {
+		/**
+		 * Returns presence's metadata, if none, returns an empty object instead.
+		 * @returns {object} The {@link https://docs.premid.app/dev/presence/metadata|Presence metadata}.
+		 */
+		getPresenceMetadata() {
+			return this.presence?.metadata || {};
+		},
+		/**
+		 * Darkens the initial presence color and returns.
+		 * @returns {string} Color code in HEX format.
+		 */
+		getPresenceGradientColor() {
+			return tinycolor(this.presence?.metadata?.color)
+				.darken(45)
+				.toHexString();
+		},
+		/**
+		 * Gets Presence's first character, does some checks and returns the link value to GitHub folder of the Presence.
+		 * @returns {string} The direct link to Presence's folder in PreMiD GitHub repository.
+		 */
+		getGithubLink() {
+			const serviceName = this.presence?.metadata?.service;
+			if (!serviceName) return "https://github.com/PreMiD/Presences";
+
+			const firstChar = serviceName
+				.charAt(0)
+				.normalize("NFD")
+				.replace(/[\u0300-\u036f]/g, "")
+				.charAt(0)
+				.toLowerCase();
+
+			let type;
+			if (!isNaN(firstChar)) {
+				type = "0-9";
+			} else if ("a" <= firstChar && firstChar <= "z") {
+				type = firstChar.toUpperCase();
+			} else {
+				type = "#";
 			}
 
-			data["isMobile"] = false;
-			return data;
+			return `https://github.com/PreMiD/Presences/tree/master/websites/${type}/${encodeURIComponent(
+				serviceName
+			)}`;
 		},
-		computed: {
-			/**
-			 * Returns presence's metadata, if none, returns an empty object instead.
-			 * @returns {object} The {@link https://docs.premid.app/dev/presence/metadata|Presence metadata}.
-			 */
-			getPresenceMetadata() {
-				return this.presence?.metadata || {};
-			},
-			/**
-			 * Darkens the initial presence color and returns.
-			 * @returns {string} Color code in HEX format.
-			 */
-			getPresenceGradientColor() {
-				return tinycolor(this.presence?.metadata?.color)
-					.darken(45)
-					.toHexString();
-			},
-			/**
-			 * Gets Presence's first character, does some checks and returns the link value to GitHub folder of the Presence.
-			 * @returns {string} The direct link to Presence's folder in PreMiD GitHub repository.
-			 */
-			getGithubLink() {
-				const serviceName = this.presence?.metadata?.service;
-				if (!serviceName) return "https://github.com/PreMiD/Presences";
+		/**
+		 * Replaces the markdown-like links in the presence description into HTML anchors and returns the value.
+		 * @returns {string} Replaced description value, in HTML format if any links found.
+		 */
+		getLinkifiedDescription() {
+			const description =
+				this.presence?.metadata?.description?.[this.getCurrentLanguage()] ||
+				this.presence?.metadata?.description?.["en"];
 
-				const firstChar = serviceName
-					.charAt(0)
-					.normalize("NFD")
-					.replace(/[\u0300-\u036f]/g, "")
-					.charAt(0)
-					.toLowerCase();
-
-				let type;
-				if (!isNaN(firstChar)) {
-					type = "0-9";
-				} else if ("a" <= firstChar && firstChar <= "z") {
-					type = firstChar.toUpperCase();
-				} else {
-					type = "#";
-				}
-
-				return `https://github.com/PreMiD/Presences/tree/master/websites/${type}/${encodeURIComponent(
-					serviceName
-				)}`;
-			},
-			/**
-			 * Replaces the markdown-like links in the presence description into HTML anchors and returns the value.
-			 * @returns {string} Replaced description value, in HTML format if any links found.
-			 */
-			getLinkifiedDescription() {
-				const description =
-					this.presence?.metadata?.description?.[this.getCurrentLanguage()] ||
-					this.presence?.metadata?.description?.["en"];
-
-				const replaced = description?.replace(
-					/\[([^\]]+)\]\(([^\)]+)\)/gm,
-					`<a href="$2" target="_blank" rel="noreferrer">$1</a>`
-				);
-
-				return replaced;
-			}
-		},
-		mounted() {
-			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-				navigator.userAgent
+			const replaced = description?.replace(
+				/\[([^\]]+)\]\(([^\)]+)\)/gm,
+				`<a href="$2" target="_blank" rel="noreferrer">$1</a>`
 			);
 
-			if (!this.presence)
-				return this.$nuxt.error({
-					statusCode: 404,
-					message: "Presence does not exist."
-				});
-		},
-		created() {
-			if (this.presence)
-				this.isPresenceInstalled(this.presence.metadata?.service).then(
-					response => {
-						if (response) this.isInstalled = true;
-					}
-				);
-		},
-		updated() {
-			this.isPresenceInstalled(this.presence?.metadata?.service).then(
+			return replaced;
+		}
+	},
+	mounted() {
+		this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+			navigator.userAgent
+		);
+
+		if (!this.presence)
+			return this.$nuxt.error({
+				statusCode: 404,
+				message: "Presence does not exist."
+			});
+	},
+	created() {
+		if (this.presence)
+			this.isPresenceInstalled(this.presence.metadata?.service).then(
 				response => {
 					if (response) this.isInstalled = true;
 				}
 			);
-		},
-		methods: {
-			/**
-			 * Checks if presence color is light and returns a dark/light color based on the presence color.
-			 * @returns {string} The color HEX code.
-			 */
-			brightColorFix() {
-				return tinycolor(this.presence?.metadata?.color).getBrightness() >= 200
-					? "#111218"
-					: "#ffffff";
-			},
-			/**
-			 * Presence liking method, used to like presences. Stores them in the browser storage and doesn't sync anywhere else.
-			 */
-			like() {
-				const likedPresences = localStorage.getItem("likedPresences");
-
-				if (!likedPresences)
-					localStorage.setItem(
-						"likedPresences",
-						this.presence?.metadata?.service
-					);
-				else if (
-					likedPresences.split(",").includes(this.presence?.metadata?.service)
-				) {
-					localStorage.setItem(
-						"likedPresences",
-						likedPresences
-							.split(",")
-							.filter(i => i !== this.presence?.metadata?.service)
-							.join(",")
-					);
-				} else if (
-					!likedPresences.split(",").includes(this.presence?.metadata?.service)
-				) {
-					let newPresences = likedPresences.split(",");
-
-					newPresences.push(this.presence?.metadata?.service);
-					localStorage.setItem("likedPresences", newPresences.join(","));
-				}
-
-				this.$store.commit("presences/like", this.presence?.metadata?.service);
+	},
+	updated() {
+		this.isPresenceInstalled(this.presence?.metadata?.service).then(
+			response => {
+				if (response) this.isInstalled = true;
 			}
+		);
+	},
+	methods: {
+		/**
+		 * Checks if presence color is light and returns a dark/light color based on the presence color.
+		 * @returns {string} The color HEX code.
+		 */
+		brightColorFix() {
+			return tinycolor(this.presence?.metadata?.color).getBrightness() >= 200
+				? "#111218"
+				: "#ffffff";
 		},
-		head() {
-			if (this.presence?.error) return;
-			let description =
-				this.presence?.metadata?.description?.["en"] ||
-				this.presence?.metadata?.description ||
-				"No description found for this presence. Maybe it's a secret one?";
+		/**
+		 * Presence liking method, used to like presences. Stores them in the browser storage and doesn't sync anywhere else.
+		 */
+		like() {
+			const likedPresences = localStorage.getItem("likedPresences");
 
-			/**
-			 * Replace the markdown-like links in description
-			 */
-			description = description.replace(/\[([^\]]+)\]\(([^\)]+)\)/gm, "$1");
+			if (!likedPresences)
+				localStorage.setItem(
+					"likedPresences",
+					this.presence?.metadata?.service
+				);
+			else if (
+				likedPresences.split(",").includes(this.presence?.metadata?.service)
+			) {
+				localStorage.setItem(
+					"likedPresences",
+					likedPresences
+						.split(",")
+						.filter(i => i !== this.presence?.metadata?.service)
+						.join(",")
+				);
+			} else if (
+				!likedPresences.split(",").includes(this.presence?.metadata?.service)
+			) {
+				let newPresences = likedPresences.split(",");
 
-			if (description.length >= 256)
-				description = description.slice(0, 256) + "...";
+				newPresences.push(this.presence?.metadata?.service);
+				localStorage.setItem("likedPresences", newPresences.join(","));
+			}
 
-			return {
-				title: this.presence?.metadata?.service || "Unknown Service",
-				meta: [
-					/* Twitter */
-					{
-						hid: "twitter:card",
-						property: "twitter:card",
-						content: "summary"
-					},
-					{
-						hid: "twitter:url",
-						property: "twitter:url",
-						content: `https://premid.app${encodeURIComponent(this.$route.path)}`
-					},
-					{
-						hid: "twitter:description",
-						property: "twitter:description",
-						content: description
-					},
-					{
-						hid: "twitter:image",
-						property: "twitter:image",
-						content: this.presence?.metadata?.logo
-					},
-					/* Open-Graph */
-					{
-						hid: "og:title",
-						property: "og:title",
-						content: this.presence?.metadata?.service || "Unknown Service"
-					},
-					{
-						hid: "og:description",
-						property: "og:description",
-						content: description
-					},
-					{
-						hid: "og:image",
-						property: "og:image",
-						content:
-							this.presence?.metadata?.logo ||
-							"https://premid.app/assets/images/logo.png"
-					},
-					/* General */
-					{
-						hid: "description",
-						name: "description",
-						content: description
-					},
-					{
-						hid: "theme-color",
-						property: "theme-color",
-						content: this.presence?.metadata?.color || "#000000"
-					}
-				]
-			};
+			this.$store.commit("presences/like", this.presence?.metadata?.service);
 		}
-	};
+	},
+	head() {
+		if (this.presence?.error) return;
+		let description =
+			this.presence?.metadata?.description?.["en"] ||
+			this.presence?.metadata?.description ||
+			"No description found for this presence. Maybe it's a secret one?";
+
+		/**
+		 * Replace the markdown-like links in description
+		 */
+		description = description.replace(/\[([^\]]+)\]\(([^\)]+)\)/gm, "$1");
+
+		if (description.length >= 256)
+			description = description.slice(0, 256) + "...";
+
+		return {
+			title: this.presence?.metadata?.service || "Unknown Service",
+			meta: [
+				/* Twitter */
+				{
+					hid: "twitter:card",
+					property: "twitter:card",
+					content: "summary"
+				},
+				{
+					hid: "twitter:url",
+					property: "twitter:url",
+					content: `https://premid.app${encodeURIComponent(this.$route.path)}`
+				},
+				{
+					hid: "twitter:description",
+					property: "twitter:description",
+					content: description
+				},
+				{
+					hid: "twitter:image",
+					property: "twitter:image",
+					content: this.presence?.metadata?.logo
+				},
+				/* Open-Graph */
+				{
+					hid: "og:title",
+					property: "og:title",
+					content: this.presence?.metadata?.service || "Unknown Service"
+				},
+				{
+					hid: "og:description",
+					property: "og:description",
+					content: description
+				},
+				{
+					hid: "og:image",
+					property: "og:image",
+					content:
+						this.presence?.metadata?.logo ||
+						"https://premid.app/assets/images/logo.png"
+				},
+				/* General */
+				{
+					hid: "description",
+					name: "description",
+					content: description
+				},
+				{
+					hid: "theme-color",
+					property: "theme-color",
+					content: this.presence?.metadata?.color || "#000000"
+				}
+			]
+		};
+	}
+};
 </script>
