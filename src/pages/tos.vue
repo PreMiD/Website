@@ -191,7 +191,7 @@
 		<p>
 			This Terms and conditions page was created with the help at
 			<a
-				style="color:inherit;text-decoration:none;cursor:text;"
+				style="color: inherit; text-decoration: none; cursor: text"
 				href="https://termsandconditionstemplate.com"
 				>termsandconditionstemplate.com</a
 			>

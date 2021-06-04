@@ -30,13 +30,13 @@
 							<option disabled value>
 								{{ $t("partners.apply.select.default") }}
 							</option>
-							<option value="Website">{{
-								$t("partners.apply.select.website")
-							}}</option>
+							<option value="Website">
+								{{ $t("partners.apply.select.website") }}
+							</option>
 							<option>Twitch</option>
-							<option value="Other">{{
-								$t("partners.apply.select.other")
-							}}</option>
+							<option value="Other">
+								{{ $t("partners.apply.select.other") }}
+							</option>
 						</select>
 						<p>
 							<label>{{ $t("partners.apply.form.name") }}:</label>

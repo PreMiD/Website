@@ -199,14 +199,14 @@
 </template>
 
 <script>
-import premidLogo from "~/assets/images/pmd_logo.png";
+	import premidLogo from "~/assets/images/pmd_logo.png";
 
-export default {
-	name: "Userpage",
-	auth: false,
-	async asyncData({ params, app }) {
-		let res = await app.$graphql(
-			`{
+	export default {
+		name: "Userpage",
+		auth: false,
+		async asyncData({ params, app }) {
+			let res = await app.$graphql(
+				`{
 				credits(id: "${params.userId}") {
 					user {
 						name
@@ -248,112 +248,113 @@ export default {
 					}
 				}
 			}`
-		);
+			);
 
-		let user = res.credits[0]?.user || {},
-			userPresences = res.authorPresences.map(p => p.metadata),
-			userContributions = res.contributionsPresences.map(p => p.metadata);
+			let user = res.credits[0]?.user || {},
+				userPresences = res.authorPresences.map(p => p.metadata),
+				userContributions = res.contributionsPresences.map(p => p.metadata);
 
-		user.roles = res.credits[0]?.roles?.map(role => role.name).sort();
+			user.roles = res.credits[0]?.roles?.map(role => role.name).sort();
 
-		user.name =
-			user.name ||
-			userPresences[0]?.author?.name ||
-			userContributions[0]?.contributors.find(user => {
-				if (user.id === params.userId) return user;
-			})?.name ||
-			"Unknown user";
+			user.name =
+				user.name ||
+				userPresences[0]?.author?.name ||
+				userContributions[0]?.contributors.find(user => {
+					if (user.id === params.userId) return user;
+				})?.name ||
+				"Unknown user";
 
-		if (!user.roles || user.roles.length == 0) {
-			if (userPresences.length > 0) user.roles = ["Presence Developer"];
-		}
+			if (!user.roles || user.roles.length == 0) {
+				if (userPresences.length > 0) user.roles = ["Presence Developer"];
+			}
 
-		let error = false;
+			let error = false;
 
-		if (!user.avatar || user.avatar.endsWith("null")) user.avatar = premidLogo;
-		if (user.name === "Unknown user") error = true;
+			if (!user.avatar || user.avatar.endsWith("null"))
+				user.avatar = premidLogo;
+			if (user.name === "Unknown user") error = true;
 
-		return {
-			error: error,
-			premidLogo: premidLogo,
-			user: user,
-			showContributions: false,
-			userPresences: userPresences,
-			userContributions: userContributions
-		};
-	},
-	methods: {
-		linkify(pls) {
-			if (!pls.match(/(\[.*?\])/g)) return pls;
-			else
-				return pls.match(/(\[.*?\])/g).map(ch => {
-					return pls.replace(
-						ch,
-						`<a href="http://discord.premid.app/">${ch.slice(
-							1,
-							ch.length - 1
-						)}</a>`
-					);
-				})[0];
+			return {
+				error: error,
+				premidLogo: premidLogo,
+				user: user,
+				showContributions: false,
+				userPresences: userPresences,
+				userContributions: userContributions
+			};
 		},
-		tabbify(pls) {
-			if (!pls.match(/(\[.*?\])/g)) return pls;
-			else if (!this.showContributions)
-				return pls.match(/(\[.*?\])/g).map(ch => {
-					return pls.replace(
-						ch,
-						`<span style="color:#7288da">${
-							ch.slice(1, ch.length - 1).split("/")[0]
-						}</span>`
-					);
-				})[0];
-			else if (this.showContributions)
-				return pls.match(/(\[.*?\])/g).map(ch => {
-					return pls.replace(
-						ch,
-						`<span style="color:#7288da">${
-							ch.slice(1, ch.length - 1).split("/")[1]
-						}</span>`
-					);
-				})[0];
+		methods: {
+			linkify(pls) {
+				if (!pls.match(/(\[.*?\])/g)) return pls;
+				else
+					return pls.match(/(\[.*?\])/g).map(ch => {
+						return pls.replace(
+							ch,
+							`<a href="http://discord.premid.app/">${ch.slice(
+								1,
+								ch.length - 1
+							)}</a>`
+						);
+					})[0];
+			},
+			tabbify(pls) {
+				if (!pls.match(/(\[.*?\])/g)) return pls;
+				else if (!this.showContributions)
+					return pls.match(/(\[.*?\])/g).map(ch => {
+						return pls.replace(
+							ch,
+							`<span style="color:#7288da">${
+								ch.slice(1, ch.length - 1).split("/")[0]
+							}</span>`
+						);
+					})[0];
+				else if (this.showContributions)
+					return pls.match(/(\[.*?\])/g).map(ch => {
+						return pls.replace(
+							ch,
+							`<span style="color:#7288da">${
+								ch.slice(1, ch.length - 1).split("/")[1]
+							}</span>`
+						);
+					})[0];
+			}
+		},
+		head() {
+			return {
+				title: `${
+					!this.error && this.user.name ? this.user.name : "Unknown User"
+				}`,
+				meta: [
+					{
+						hid: "description",
+						name: "description",
+						content: `${
+							!this.error && this.user.name ? this.user.name : "Unknown user"
+						}'s profile.`
+					},
+					{
+						hid: "og:description",
+						property: "og:description",
+						content: `${
+							!this.error && this.user.name ? this.user.name : "Unknown user"
+						}'s profile.`
+					},
+					{
+						hid: "og:title",
+						property: "og:title",
+						content:
+							!this.error && this.user.name ? this.user.name : "Unknown User"
+					},
+					{
+						hid: "og:image",
+						property: "og:image",
+						content:
+							!this.error && this.user.avatar
+								? this.user.avatar
+								: "https://premid.app/assets/images/logo.png"
+					}
+				]
+			};
 		}
-	},
-	head() {
-		return {
-			title: `${
-				!this.error && this.user.name ? this.user.name : "Unknown User"
-			}`,
-			meta: [
-				{
-					hid: "description",
-					name: "description",
-					content: `${
-						!this.error && this.user.name ? this.user.name : "Unknown user"
-					}'s profile.`
-				},
-				{
-					hid: "og:description",
-					property: "og:description",
-					content: `${
-						!this.error && this.user.name ? this.user.name : "Unknown user"
-					}'s profile.`
-				},
-				{
-					hid: "og:title",
-					property: "og:title",
-					content:
-						!this.error && this.user.name ? this.user.name : "Unknown User"
-				},
-				{
-					hid: "og:image",
-					property: "og:image",
-					content:
-						!this.error && this.user.avatar
-							? this.user.avatar
-							: "https://premid.app/assets/images/logo.png"
-				}
-			]
-		};
-	}
-};
+	};
 </script>
