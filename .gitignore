@@ -5,5 +5,5 @@ dist
 .vscode/settings.json
 src/langs
 .nuxt
-yarn.lock
+package-lock.json
 languageUpdater.js
