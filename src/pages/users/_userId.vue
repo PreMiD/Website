@@ -17,7 +17,7 @@
 				<div class="user-data">
 					<p class="username">
 						{{ user.name }}
-						<span class="tag">#{{ user.tag }}</span>
+						<span class="tag">#{{ user.tag || "0000" }}</span>
 					</p>
 					<div class="roles">
 						<div v-for="role in user.roles" :key="role" :role="role">
@@ -263,8 +263,6 @@
 					if (user.id === params.userId) return user;
 				})?.name ||
 				"Unknown user";
-
-			user.tag = user.tag || "????";
 
 			if (!user.roles || user.roles.length == 0) {
 				if (userPresences.length > 0) user.roles = ["Presence Developer"];
