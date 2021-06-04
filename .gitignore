@@ -5,5 +5,3 @@ dist
 .vscode/settings.json
 src/langs
 .nuxt
-package-lock.json
-package-lock.json
