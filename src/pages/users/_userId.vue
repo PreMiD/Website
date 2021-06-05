@@ -256,13 +256,15 @@
 
 			user.roles = res.credits[0]?.roles?.map(role => role.name).sort();
 
-			user.name =
-				user.name ||
-				userPresences[0]?.author?.name ||
-				userContributions[0]?.contributors.find(user => {
-					if (user.id === params.userId) return user;
-				})?.name ||
-				"Unknown user";
+			user.name = !user.name.includes("Deleted User")
+				? user.name
+				: userPresences[0]?.author?.name ||
+				  userContributions[0]?.contributors.find(user => {
+						if (user.id === params.userId) return user;
+				  })?.name ||
+				  "Unknown user";
+
+			console.log(userPresences[0]?.author?.name);
 
 			if (!user.roles || user.roles.length == 0) {
 				if (userPresences.length > 0) user.roles = ["Presence Developer"];
