@@ -264,7 +264,6 @@
 				  })?.name ||
 				  "Unknown user";
 
-			console.log(userPresences[0]?.author?.name);
 
 			if (!user.roles || user.roles.length == 0) {
 				if (userPresences.length > 0) user.roles = ["Presence Developer"];
