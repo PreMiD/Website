@@ -1,0 +1,5 @@
+User-Agent: *
+# disallow user pages, probably shouldn't be indexing this?
+Disallow: /user/*
+# disallow individual store pages
+Disallow: /store?page=*
