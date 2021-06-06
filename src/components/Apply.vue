@@ -30,13 +30,13 @@
 							<option disabled value>
 								{{ $t("partners.apply.select.default") }}
 							</option>
-							<option value="Website">{{
-								$t("partners.apply.select.website")
-							}}</option>
+							<option value="Website">
+								{{ $t("partners.apply.select.website") }}
+							</option>
 							<option>Twitch</option>
-							<option value="Other">{{
-								$t("partners.apply.select.other")
-							}}</option>
+							<option value="Other">
+								{{ $t("partners.apply.select.other") }}
+							</option>
 						</select>
 						<p>
 							<label>{{ $t("partners.apply.form.name") }}:</label>
@@ -113,17 +113,35 @@
 				)
 					this.error = this.$t("partners.apply.error3");
 				else {
-					this.$axios
-						.post(`/v2/partners/apply`, {
-							type: this.type,
-							name: this.name,
-							link: this.link,
-							description: this.description,
-							imageLink: this.imageLink,
-							token: this.$auth.$storage._state["_token.discord"]
-						})
-						.then(({ data }) => {
-							if (data.error)
+					new Promise(async resolve => {
+						console.log(
+							this.type,
+							this.name,
+							this.link,
+							this.description,
+							this.imageLink
+						);
+						let { partnerApply } = await this.$graphql(
+							`
+							mutation {
+								partnerApply(
+									partnerType: "${this.type}",
+									partnerName: "${this.name}",
+									link: "${this.link}",
+									description: "${this.description}",
+									imageLink: "${this.imageLink}",
+									token: "${this.$auth.$storage._state["_token.discord"]}"
+								) {
+									error
+									message
+								}
+							}
+						`
+						);
+						return resolve(partnerApply);
+					})
+						.then(partnerApply => {
+							if (partnerApply.error)
 								this.$noty.error(this.$t("partners.apply.error4"));
 							else {
 								this.$noty.success(this.$t("partners.apply.success"));
