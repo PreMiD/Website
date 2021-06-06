@@ -199,8 +199,6 @@
 </template>
 
 <script>
-	import premidLogo from "~/assets/images/pmd_logo.png";
-
 	export default {
 		name: "Userpage",
 		auth: false,
@@ -256,14 +254,15 @@
 
 			user.roles = res.credits[0]?.roles?.map(role => role.name).sort();
 
-			user.name = !user.name.includes("Deleted User")
-				? user.name
-				: userPresences[0]?.author?.name ||
-				  userContributions[0]?.contributors.find(user => {
-						if (user.id === params.userId) return user;
-				  })?.name ||
-				  "Unknown user";
+			if (user.name?.includes("Deleted User")) user.name = null;
 
+			user.name =
+				user.name ||
+				userPresences[0]?.author?.name ||
+				userContributions[0]?.contributors.find(user => {
+					if (user.id === params.userId) return user;
+				})?.name ||
+				"Unknown user";
 
 			if (!user.roles || user.roles.length == 0) {
 				if (userPresences.length > 0) user.roles = ["Presence Developer"];
@@ -272,12 +271,12 @@
 			let error = false;
 
 			if (!user.avatar || user.avatar.endsWith("null"))
-				user.avatar = premidLogo;
+				user.avatar = "https://cdn.discordapp.com/embed/avatars/0.png";
+
 			if (user.name === "Unknown user") error = true;
 
 			return {
 				error: error,
-				premidLogo: premidLogo,
 				user: user,
 				showContributions: false,
 				userPresences: userPresences,
