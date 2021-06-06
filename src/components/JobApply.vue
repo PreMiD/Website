@@ -102,27 +102,37 @@
 				if (!this.check) this.errors++;
 
 				if (this.errors == 0 && this.check) {
-					this.$axios
-						.post(`/v2/jobs/apply`, {
-							position: this.job.jobName,
-							questions: this.job.questions,
-							token: this.$auth.$storage._state["_token.discord"]
-						})
-						.then(({ data }) => {
-							if (!data.error) {
+					new Promise(async resolve => {
+						let questions = this.job.questions;
+						//Un-stringify properties
+						questions = JSON.stringify(questions).replace(/"([^"]+)":/g, "$1:");
+
+						let { jobApply } = await this.$graphql(
+							`
+							mutation {
+								jobApply(position: "${this.job.jobName}", input: ${questions}, token: "${this.$auth.$storage._state["_token.discord"]}") {
+									error
+									message
+								}
+							}
+						`
+						);
+						return resolve(jobApply);
+					})
+						.then(jobApply => {
+							if (!jobApply.error) {
 								this.$noty.success(this.$t("jobs.success.applied"));
 								this.$emit("close");
 							}
-						})
-						.catch(err => {
-							if (err.response.data.error === 3) {
+							if (jobApply.error === 3) {
 								this.$noty.error(this.$t("jobs.errors.alreadyApplied"));
 							} else {
-								console.error(err);
+								console.error(jobApply);
 							}
+						})
+						.catch(error => {
+							console.log(error);
 						});
-				} else {
-					this.error = this.$t("jobs.modal.error");
 				}
 			}
 		}
