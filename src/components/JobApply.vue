@@ -133,6 +133,8 @@
 						.catch(error => {
 							console.log(error);
 						});
+				} else {
+					this.error = this.$t("jobs.modal.error");
 				}
 			}
 		}
