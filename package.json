@@ -19,7 +19,7 @@
 		"nuxt": "2.15.4",
 		"nuxt-lazy-load": "1.2.6",
 		"tinycolor2": "1.4.2",
-		"ts-loader": "^8.1.0",
+		"ts-loader": "^9.2.3",
 		"vue-animejs": "2.1.1",
 		"vue-carousel-3d": "1.0.1",
 		"vue-i18n": "8.24.3",
