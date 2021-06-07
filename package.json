@@ -4,7 +4,7 @@
 	"scripts": {
 		"start": "nuxt start",
 		"dev": "tsc languageUpdater.ts && node languageUpdater && nuxt",
-		"build": "rimraf src/langs/* && tsc languageUpdater.ts&& node languageUpdater && nuxt build && node cryptify",
+		"build": "rimraf src/langs/* && tsc languageUpdater.ts && node languageUpdater && nuxt build && node cryptify",
 		"pretty": "prettier --write **/*.vue **/*.js **/*.json **/*.scss"
 	},
 	"dependencies": {
