@@ -174,9 +174,24 @@
 		auth: false,
 		async asyncData({ app, error }) {
 			try {
+				let { partners, sponsors } = await await app.$graphql(
+					`{
+						partners {
+							name
+							image
+							tString
+							url
+						},
+						sponsors {
+							name
+							image
+							tString
+						}
+					}`
+				);
 				return {
-					partners: (await app.$axios(`/v2/partners`)).data,
-					sponsors: (await app.$axios(`/v2/sponsors`)).data,
+					partners: partners,
+					sponsors: sponsors,
 					randomImages: [
 						aniflix_icon,
 						aok_icon,

@@ -279,7 +279,6 @@
 </style>
 
 <script>
-	import premidLogo from "~/assets/images/pmd_logo.png";
 	import PresenceMixin from "~/components/mixins/Presence";
 	import tinycolor from "tinycolor2";
 
@@ -288,11 +287,7 @@
 		mixins: [PresenceMixin],
 		auth: false,
 		async asyncData({ params, app, error }) {
-			const presenceUsage = (await app.$axios(`/v2/usage`)).data.users;
-			const presenceRanking = (await app.$axios(`/v2/presenceUsage`)).data;
-			const partnersList = (await app.$axios(`/v2/partners`)).data;
-
-			let { presences } = await app.$graphql(
+			let { presences, partners, usage } = await app.$graphql(
 					`
 				{
 					presences(service: "${params.presenceName}") {
@@ -314,7 +309,14 @@
 							}
 							version
 							tags
-						}
+						},
+						users
+					},
+					partners(name: "${params.presenceName}"){
+						name
+					},
+					usage{
+						count
 					}
 				}
 				`
@@ -322,24 +324,16 @@
 				presenceData = presences[0];
 
 			let data = {
-				presenceUsage: presenceRanking[decodeURIComponent(params.presenceName)],
-				partner:
-					partnersList.filter(
-						p => p.storeName == decodeURIComponent(params.presenceName)
-					).length > 0,
-				hot:
-					(presenceRanking[decodeURIComponent(params.presenceName)] /
-						presenceUsage) *
-						100 >
-					30,
+				presenceUsage: presenceData.users,
+				partner: partners[0] ?? false,
+				hot: (presenceData.users / usage.count) * 100 > 30,
 				presence: presenceData
 			};
 
-			if (presenceData) {
-				try {
-					data.presence.metadata.author = (
-						await app.$graphql(
-							`{
+			try {
+				data.presence.metadata.author = (
+					await app.$graphql(
+						`{
 							credits(id: "${data.presence.metadata.author.id}") {
 								user {
 									name
@@ -349,16 +343,9 @@
 								}
 							}
 						}`
-						)
-					).credits[0].user;
-				} catch (err) {}
-
-				if (
-					!data.presence.metadata.author.avatar ||
-					data.presence.metadata.author.avatar.endsWith("/null")
-				)
-					data.presence.metadata.author.avatar = premidLogo;
-			}
+					)
+				).credits[0].user;
+			} catch (err) {}
 
 			data["isMobile"] = false;
 			return data;
