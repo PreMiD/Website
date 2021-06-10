@@ -2,9 +2,7 @@
 	<nuxt-link :to="`/store/${this.$props.category.id}`">
 		<div
 			class="category-card"
-			:style="
-				`background: linear-gradient(165deg, ${category.color} -20%, ${categoryGradientColor} 100%);`
-			"
+			:style="`background: linear-gradient(165deg, ${category.color} -20%, ${categoryGradientColor} 100%);`"
 		>
 			<div class="category__icon">
 				<span class="fa-stack">

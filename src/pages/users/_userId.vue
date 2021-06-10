@@ -17,7 +17,7 @@
 				<div class="user-data">
 					<p class="username">
 						{{ user.name }}
-						<span class="tag">#{{ user.tag }}</span>
+						<span class="tag">#{{ user.tag || "0000" }}</span>
 					</p>
 					<div class="roles">
 						<div v-for="role in user.roles" :key="role" :role="role">
@@ -254,6 +254,8 @@
 
 			user.roles = res.credits[0]?.roles?.map(role => role.name).sort();
 
+			if (user.name?.includes("Deleted User")) user.name = null;
+
 			user.name =
 				user.name ||
 				userPresences[0]?.author?.name ||
@@ -262,13 +264,14 @@
 				})?.name ||
 				"Unknown user";
 
-			user.tag = user.tag || "????";
-
 			if (!user.roles || user.roles.length == 0) {
 				if (userPresences.length > 0) user.roles = ["Presence Developer"];
 			}
 
 			let error = false;
+
+			if (!user.avatar || user.avatar.endsWith("null"))
+				user.avatar = "https://cdn.discordapp.com/embed/avatars/0.png";
 
 			if (user.name === "Unknown user") error = true;
 

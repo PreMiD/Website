@@ -5,7 +5,13 @@
 				<h1 v-text="$t('jobs.header.title')" />
 				<p v-text="$t('jobs.header.description')" />
 
-				<video class="job-video" src="@/assets/videos/jobs-heading.mp4" autoplay loop muted />
+				<video
+					class="job-video"
+					src="@/assets/videos/jobs-heading.mp4"
+					autoplay
+					loop
+					muted
+				/>
 				<div class="waves-divider waves-divider_bottom">
 					<svg
 						class="wave"
@@ -26,14 +32,23 @@
 				<h1 v-text="$t('jobs.openings.title')" />
 
 				<div class="jobs">
-					<div class="job" v-for="job in jobs.filter(j => j.available)" :key="job.jobName">
+					<div
+						class="job"
+						v-for="job in jobs.filter(j => j.available)"
+						:key="job.jobName"
+					>
 						<div class="job-header">
 							<i :class="job.jobIcon"></i>
-							<h1>{{ job.jobName}}</h1>
+							<h1>{{ job.jobName }}</h1>
 						</div>
 
 						<div class="button-container">
-							<button v-t="'partners.apply.button'" type="button" class="button" @click="applyModal(job)" />
+							<button
+								v-t="'partners.apply.button'"
+								type="button"
+								class="button"
+								@click="applyModal(job)"
+							/>
 						</div>
 					</div>
 				</div>
@@ -76,186 +91,189 @@
 					toggleScroll();
 				"
 			/>
-			<JoinGuild v-if="showJoinModal" @close="
+			<JoinGuild
+				v-if="showJoinModal"
+				@close="
 					showJoinModal = false;
 					toggleScroll();
-				" />
+				"
+			/>
 		</transition>
 	</div>
 </template>
 
 <style lang="scss">
-.job-video {
-	width: 250px;
-	height: 250px;
-	border-radius: 5px;
-	box-shadow: 3px 5px 5px #202226;
-}
+	.job-video {
+		width: 250px;
+		height: 250px;
+		border-radius: 5px;
+		box-shadow: 3px 5px 5px #202226;
+	}
 
-.jobsWrapper {
-	.container {
-		h1 {
-			text-align: center;
-			font-size: 2.2em;
-			padding-bottom: 0.25em;
-			color: white;
-			margin: 0;
-		}
-
-		.heading {
-			position: relative;
-			z-index: 1;
-			overflow: hidden;
-			padding: 25px 0 150px;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-around;
-			text-align: center;
-			align-items: center;
-
+	.jobsWrapper {
+		.container {
 			h1 {
-				text-transform: uppercase;
-				color: #7289da;
-				margin: 0;
-			}
-
-			p {
+				text-align: center;
+				font-size: 2.2em;
+				padding-bottom: 0.25em;
 				color: white;
 				margin: 0;
-				margin-bottom: 2em;
 			}
-		}
 
-		.openings {
-			margin-bottom: 2em;
-
-			.jobs {
+			.heading {
+				position: relative;
+				z-index: 1;
+				overflow: hidden;
+				padding: 25px 0 150px;
 				display: flex;
-				justify-content: center;
-
-				.job {
-					transition: all 0.15s ease-out;
-					width: 200px;
-					position: relative;
-					background: #23272a;
-					border-radius: 5px;
-					padding: 1em;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					justify-content: space-around;
-					margin: 1em;
-
-					&:hover {
-						transform: translateY(-5px);
-						box-shadow: 0 2.5px 20px -10px rgba(122, 144, 220, 0.7);
-					}
-
-					.job-header {
-						display: contents;
-
-						h1 {
-							color: #ffffff;
-							font-size: large;
-						}
-
-						i {
-							color: #7289da;
-							margin-bottom: 8px;
-						}
-					}
-
-					.button-container {
-						padding-top: 0.5em;
-
-						.button {
-							font-size: 1em;
-							padding: 0.5rem 1rem;
-						}
-					}
-				}
-			}
-		}
-
-		.benefits {
-			display: block;
-			max-width: 900px;
-			text-align: center;
-			margin: 0 auto;
-
-			.table {
-				width: 100%;
-
-				td {
-					vertical-align: -webkit-baseline-middle;
-				}
-			}
-
-			.benefit {
-				width: 200px;
-				display: inline-block;
-				text-align: left;
+				flex-direction: column;
 				justify-content: space-around;
-				padding: 2em;
-
-				i {
-					font-size: 64px;
-					color: #7289da;
-					margin-bottom: 0.25em;
-				}
+				text-align: center;
+				align-items: center;
 
 				h1 {
-					color: white;
-					font-size: 1.6em;
+					text-transform: uppercase;
+					color: #7289da;
 					margin: 0;
-					text-align: left;
 				}
 
 				p {
 					color: white;
-					font-size: 0.85em;
+					margin: 0;
+					margin-bottom: 2em;
 				}
 			}
-		}
-	}
-}
 
-@media only screen and (max-width: 600px) {
-	.jobsWrapper {
-		.heading {
-			padding-bottom: 5em;
+			.openings {
+				margin-bottom: 2em;
 
-			h1 {
-				font-size: 2em !important;
-				margin-bottom: 4px !important;
+				.jobs {
+					display: flex;
+					justify-content: center;
+
+					.job {
+						transition: all 0.15s ease-out;
+						width: 200px;
+						position: relative;
+						background: #23272a;
+						border-radius: 5px;
+						padding: 1em;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: space-around;
+						margin: 1em;
+
+						&:hover {
+							transform: translateY(-5px);
+							box-shadow: 0 2.5px 20px -10px rgba(122, 144, 220, 0.7);
+						}
+
+						.job-header {
+							display: contents;
+
+							h1 {
+								color: #ffffff;
+								font-size: large;
+							}
+
+							i {
+								color: #7289da;
+								margin-bottom: 8px;
+							}
+						}
+
+						.button-container {
+							padding-top: 0.5em;
+
+							.button {
+								font-size: 1em;
+								padding: 0.5rem 1rem;
+							}
+						}
+					}
+				}
 			}
-		}
 
-		.openings {
-			h1 {
-				margin: 1em 0;
-			}
+			.benefits {
+				display: block;
+				max-width: 900px;
+				text-align: center;
+				margin: 0 auto;
 
-			.jobs {
-				padding: 0 1.5em;
-				display: block !important;
+				.table {
+					width: 100%;
 
-				.job {
-					width: unset !important;
+					td {
+						vertical-align: -webkit-baseline-middle;
+					}
+				}
+
+				.benefit {
+					width: 200px;
+					display: inline-block;
+					text-align: left;
+					justify-content: space-around;
+					padding: 2em;
+
+					i {
+						font-size: 64px;
+						color: #7289da;
+						margin-bottom: 0.25em;
+					}
 
 					h1 {
-						margin-top: 0;
-						margin-bottom: 0;
+						color: white;
+						font-size: 1.6em;
+						margin: 0;
+						text-align: left;
+					}
+
+					p {
+						color: white;
+						font-size: 0.85em;
 					}
 				}
 			}
 		}
+	}
 
-		.benefits table tr {
-			display: grid;
+	@media only screen and (max-width: 600px) {
+		.jobsWrapper {
+			.heading {
+				padding-bottom: 5em;
+
+				h1 {
+					font-size: 2em !important;
+					margin-bottom: 4px !important;
+				}
+			}
+
+			.openings {
+				h1 {
+					margin: 1em 0;
+				}
+
+				.jobs {
+					padding: 0 1.5em;
+					display: block !important;
+
+					.job {
+						width: unset !important;
+
+						h1 {
+							margin-top: 0;
+							margin-bottom: 0;
+						}
+					}
+				}
+			}
+
+			.benefits table tr {
+				display: grid;
+			}
 		}
 	}
-}
 </style>
 
 <script>

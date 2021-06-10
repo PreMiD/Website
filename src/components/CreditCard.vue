@@ -1,9 +1,7 @@
 <template>
 	<div
 		class="credit-card"
-		:style="
-			`background: linear-gradient(-35deg, ${cardGradientColor.secondary} 20%, ${cardGradientColor.primary} 130%); box-shadow: 0 2px 52px 0 ${cardShadowColor}`
-		"
+		:style="`background: linear-gradient(-35deg, ${cardGradientColor.secondary} 20%, ${cardGradientColor.primary} 130%); box-shadow: 0 2px 52px 0 ${cardShadowColor}`"
 		@mouseover="hovered = true"
 		@mouseleave="hovered = false"
 	>
@@ -11,14 +9,14 @@
 			<h1 :title="user.name" v-text="user.name"></h1>
 			<h2>
 				{{
-				user.roleId == "515874214750715904"
-				? "Patron"
-				: $t(
-				`contributors.roles.${user.role
-				.replace(/\s/g, "")
-				.charAt(0)
-				.toLowerCase() + user.role.replace(/\s/g, "").substring(1)}`
-				)
+					user.roleId == "515874214750715904"
+						? "Patron"
+						: $t(
+								`contributors.roles.${
+									user.role.replace(/\s/g, "").charAt(0).toLowerCase() +
+									user.role.replace(/\s/g, "").substring(1)
+								}`
+						  )
 				}}
 			</h2>
 		</div>
@@ -38,55 +36,55 @@
 </template>
 
 <script>
-import tinycolor from "tinycolor2";
+	import tinycolor from "tinycolor2";
 
-export default {
-	name: "Creditcard",
-	props: ["user"],
-	data() {
-		return {
-			hovered: false
-		};
-	},
-	computed: {
-		cardGradientColor() {
+	export default {
+		name: "Creditcard",
+		props: ["user"],
+		data() {
 			return {
-				primary: tinycolor(this.$props.user.roleColor)
-					.setAlpha(1)
-					.darken(5)
-					.toRgbString(),
-				secondary: tinycolor(this.$props.user.roleColor)
-					.analogous()[2]
-					.setAlpha(0.5)
-					.saturate(20)
-					.toRgbString()
+				hovered: false
 			};
 		},
-		cardShadowColor() {
-			if (this.hovered) {
-				return tinycolor(this.cardGradientColor.primary)
-					.setAlpha(0.3)
-					.saturate(20)
-					.toRgbString();
-			} else {
-				return "transparent";
+		computed: {
+			cardGradientColor() {
+				return {
+					primary: tinycolor(this.$props.user.roleColor)
+						.setAlpha(1)
+						.darken(5)
+						.toRgbString(),
+					secondary: tinycolor(this.$props.user.roleColor)
+						.analogous()[2]
+						.setAlpha(0.5)
+						.saturate(20)
+						.toRgbString()
+				};
+			},
+			cardShadowColor() {
+				if (this.hovered) {
+					return tinycolor(this.cardGradientColor.primary)
+						.setAlpha(0.3)
+						.saturate(20)
+						.toRgbString();
+				} else {
+					return "transparent";
+				}
+			}
+		},
+		methods: {
+			copyId(id) {
+				let el = document.createElement("textarea");
+
+				el.value = id;
+				document.body.appendChild(el);
+
+				el.select();
+
+				document.execCommand("copy");
+				document.body.removeChild(el);
+
+				this.$noty.success(this.$t("contributors.cards.userIdCopied"));
 			}
 		}
-	},
-	methods: {
-		copyId(id) {
-			let el = document.createElement("textarea");
-
-			el.value = id;
-			document.body.appendChild(el);
-
-			el.select();
-
-			document.execCommand("copy");
-			document.body.removeChild(el);
-
-			this.$noty.success(this.$t("contributors.cards.userIdCopied"));
-		}
-	}
-};
+	};
 </script>
