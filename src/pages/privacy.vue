@@ -278,7 +278,7 @@
 		</p>
 
 		<h4>6. Rights of the data subject</h4>
-		<ul style="list-style: none;">
+		<ul style="list-style: none">
 			<li>
 				<h4>a) Right of confirmation</h4>
 				<p>
@@ -300,7 +300,7 @@
 					subject access to the following information:
 				</p>
 
-				<ul style="list-style: none;">
+				<ul style="list-style: none">
 					<li>the purposes of the processing;</li>
 					<li>the categories of personal data concerned;</li>
 					<li>
@@ -375,7 +375,7 @@
 					necessary:
 				</p>
 
-				<ul style="list-style: none;">
+				<ul style="list-style: none">
 					<li>
 						The personal data are no longer necessary in relation to the
 						purposes for which they were collected or otherwise processed.
@@ -432,7 +432,7 @@
 					where one of the following applies:
 				</p>
 
-				<ul style="list-style: none;">
+				<ul style="list-style: none">
 					<li>
 						The accuracy of the personal data is contested by the data subject,
 						for a period enabling the controller to verify the accuracy of the

@@ -5,7 +5,7 @@
 				<img src="../assets/images/pmd_logo2.png" />
 				<div class="bottomText"></div>
 			</div>
-			<div class="modal-container small" style="background-color: #23272a;">
+			<div class="modal-container small" style="background-color: #23272a">
 				<div class="modal-header">
 					<h1>{{ $t("jobs.guild.required") }}</h1>
 				</div>
