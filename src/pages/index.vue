@@ -291,33 +291,47 @@
 	import cardThumbnail3 from "@/assets/images/cards/card3.png";
 	import cardThumbnail4 from "@/assets/images/cards/card4.png";
 
+	import {
+		uniqueNamesGenerator,
+		adjectives,
+		colors,
+		animals
+	} from "unique-names-generator";
+
 	import anime from "animejs";
 
 	export default {
 		name: "Home",
 		auth: false,
 		async asyncData({ app }) {
-			const res = await app.$graphql(
-				`
-				{
-					versions {
-						extension
-					}
-					credits(limit:2, random:true) {
-						user {
-							name
-							tag
-							avatar
-							flags
+			try {
+				const res = await app.$graphql(
+					`
+					{
+						versions {
+							extension
 						}
-					}
-				}`
-			);
+						credits(limit:2, random:true) {
+							user {
+								name
+								tag
+								avatar
+								flags
+							}
+						}
+					}`
+				);
 
-			return {
-				extVersion: res.versions.extension,
-				users: res.credits
-			};
+				return {
+					extVersion: res.versions.extension,
+					users: res.credits
+				};
+			} catch (err) {
+				return {
+					extVersion: "2.2.3",
+					users: [generateTemplateUser(), generateTemplateUser()]
+				};
+			}
 		},
 		data() {
 			return {
@@ -584,4 +598,30 @@
 			title: "Home"
 		}
 	};
+
+	function generateTemplateUser() {
+		const username = uniqueNamesGenerator({
+			dictionaries: [adjectives, colors, animals],
+			separator: " ",
+			length: 2,
+			style: "capital"
+		});
+
+		return {
+			user: {
+				name: username,
+				tag: Math.floor(1000 + Math.random() * 9000),
+				avatar: encodeURI(
+					`https://cdn.discordapp.com/embed/avatars/${getRandomInt(0, 5)}.png`
+				),
+				flags: null
+			}
+		};
+	}
+
+	function getRandomInt(min, max) {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 </script>

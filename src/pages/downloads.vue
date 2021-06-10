@@ -90,7 +90,7 @@
 						></a>
 
 						<a
-							v-else
+							v-else-if="appVersion"
 							href="https://github.com/PreMiD/PreMiD/releases"
 							target="_blank"
 							class="label label_downloads-version"
@@ -151,6 +151,7 @@
 					<h1 class="section-header">
 						{{ $t("downloads.extdownloading.header") }}
 						<a
+							v-if="extVersion"
 							href="https://github.com/PreMiD/Extension"
 							target="_blank"
 							class="label label_downloads-version"
@@ -369,26 +370,27 @@
 					tabs = {},
 					currentTab = {};
 
-				const data = await app.$graphql(
-					`
-						{
-							betaUsers {
-								number
-							}
-							discordUsers {
-								userId
-							}
-							versions {
-								app
-								extension
-								linux
-							}
-						}
-					`
-				);
+				try {
+					const data = await app.$graphql(
+						`
+			{
+				betaUsers {
+					number
+				}
+				discordUsers {
+					userId
+				}
+				versions {
+					app
+					extension
+					linux
+				}
+			}
+		`
+					);
 
-				if ($auth.loggedIn) {
-					const { downloads } = await app.$graphql(`
+					if ($auth.loggedIn) {
+						const { downloads } = await app.$graphql(`
 						{
 							downloads(token: "${$auth.$storage._state["_token.discord"]}") {
 								releaseType
@@ -401,28 +403,40 @@
 						}
 					`);
 
-					userAccess = downloads.length > 0;
+						userAccess = downloads.length > 0;
 
-					if (userAccess)
-						downloads.forEach(d => {
-							tabs[d.releaseType] = d;
-						});
+						if (userAccess)
+							downloads.forEach(d => {
+								tabs[d.releaseType] = d;
+							});
 
-					if (downloads.find(d => d.releaseType == "alpha"))
-						currentTab = downloads.find(d => d.releaseType == "alpha");
-					else currentTab = downloads.find(d => d.releaseType == "beta");
+						if (downloads.find(d => d.releaseType == "alpha"))
+							currentTab = downloads.find(d => d.releaseType == "alpha");
+						else currentTab = downloads.find(d => d.releaseType == "beta");
+					}
+
+					return {
+						extVersion: data.versions.extension,
+						appVersion: data.versions.app,
+						linuxVersion: data.versions.linux,
+						userAccess: userAccess,
+						extraDownloads: tabs,
+						currentTab: currentTab,
+						betaUsers: data.betaUsers.number,
+						availableSlots: (data.discordUsers.length * 0.1).toFixed()
+					};
+				} catch (err) {
+					return {
+						extVersion: null,
+						appVersion: null,
+						linuxVersion: null,
+						userAccess: false,
+						extraDownloads: [],
+						currentTab: null,
+						betaUsers: null,
+						availableSlots: null
+					};
 				}
-
-				return {
-					extVersion: data.versions.extension,
-					appVersion: data.versions.app,
-					linuxVersion: data.versions.linux,
-					userAccess: userAccess,
-					extraDownloads: tabs,
-					currentTab: currentTab,
-					betaUsers: data.betaUsers.number,
-					availableSlots: (data.discordUsers.length * 0.1).toFixed()
-				};
 			} catch (err) {
 				return error(err);
 			}

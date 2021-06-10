@@ -5,11 +5,8 @@
 				<p class="section__title" v-text="$t(`footer.usercount.heading`)"></p>
 				<div class="section__promo">
 					<p
-						v-text="
-							$t(`footer.usercount.message`, [
-								installStats !== null ? installStats : '...'
-							])
-						"
+						v-if="installStats"
+						v-text="$t(`footer.usercount.message`, [installStats])"
 					></p>
 					<nuxt-link
 						class="button"
@@ -302,7 +299,7 @@
 						.toString()
 						.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 				})
-				.catch(() => (this.installStats = 0));
+				.catch(() => (this.installStats = null));
 		}
 	};
 </script>
