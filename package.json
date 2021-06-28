@@ -33,7 +33,7 @@
 	"devDependencies": {
 		"@nuxt/typescript-build": "2.1.0",
 		"@nuxtjs/google-analytics": "2.4.0",
-		"@types/node": "15.12.2",
+		"@types/node": "15.12.5",
 		"fast-glob": "3.2.5",
 		"fibers": "^5.0.0",
 		"prettier": "2.3.1",
