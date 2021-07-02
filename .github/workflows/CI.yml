@@ -28,4 +28,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ github.repository_owner }}/${{ github.repository }}:${BRANCH_NAME}
+            ${{ github.repository }}:${{ BRANCH_NAME }}
