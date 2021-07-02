@@ -38,4 +38,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{ env.IMAGE_REPOSITORY }}:${{ steps.extract_branch.outputs.branch }}
+            ghcr.io/${{ env.IMAGE_REPOSITORY }}:${{ steps.extract_branch.outputs.branch }}
