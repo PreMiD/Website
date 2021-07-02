@@ -1,5 +1,4 @@
 FROM node:current-alpine
-RUN apk add g++ make python
 
 ENV NUXT_PORT=80
 ENV NUXT_HOST=0.0.0.0
