@@ -8,7 +8,10 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: nelonoel/branch-name@v1.0.1
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up QEMU
@@ -28,4 +31,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ github.repository }}:${{ BRANCH_NAME }}
+            ${{ github.repository }}:${{ steps.extract_branch.outputs.branch }}
