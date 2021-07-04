@@ -35,7 +35,7 @@
 		"@nuxtjs/google-analytics": "2.4.0",
 		"@types/node": "15.14.0",
 		"fast-glob": "3.2.5",
-		"prettier": "2.3.1",
+		"prettier": "2.3.2",
 		"rimraf": "3.0.2",
 		"sass": "^1.34.1",
 		"sass-loader": "^10.2.0"
