@@ -208,3 +208,9 @@
 		}
 	};
 </script>
+
+<style>
+	body {
+		color: rgb(200, 200, 200);
+	}
+</style>
