@@ -3825,11 +3825,6 @@ globby@^11.0.3:
     merge2 "^1.3.0"
     slash "^3.0.0"
 
-googlebot-verify@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/googlebot-verify/-/googlebot-verify-0.1.2.tgz#bb7787d2a53eaf318e24c9cfd560525417c5c7c9"
-  integrity sha512-DsqWTq/s1KQ/fTa1i1ftOjo8CDoqMLCr7D9N3yuJH5yboVxnWgHXlaj9B1f/p/ocGgATU2yalH6Jb1yM3EeZUw==
-
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"

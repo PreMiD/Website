@@ -1,16 +1,15 @@
 // Import base config
-
-import auth from "./config/modules/auth";
-import axios from "./config/modules/axios";
-import build from "./config/build";
 import buildModules from "./config/buildModules";
-import env from "./config/env";
-import head from "./config/head";
 import modules from "./config/modules";
 import plugins from "./config/plugins";
+import build from "./config/build";
 import proxy from "./config/proxy";
+import head from "./config/head";
+import env from "./config/env";
 
 // Import module specific configs
+import axios from "./config/modules/axios";
+import auth from "./config/modules/auth";
 
 // Constant variables
 const loading = "~/components/Loader.vue";
@@ -20,7 +19,6 @@ const rootDir = "./";
 const srcDir = "src";
 
 export default {
-	serverMiddleware: ["~/middleware/crawlerCheck.js"],
 	rootDir,
 	srcDir,
 	head,
