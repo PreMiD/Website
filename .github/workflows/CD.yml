@@ -1,0 +1,18 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: 
+      - completed
+jobs:
+  deploy:
+    name: CD
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to cluster
+      uses: steebchen/kubectl@v2.0.0
+      with:
+        config: ${{ secrets.KUBE_CONFIG_DATA }}
+        command: rollout restart -n premid deployment/website
