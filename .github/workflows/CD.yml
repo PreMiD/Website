@@ -1,10 +1,7 @@
 name: CD
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types: 
-      - completed
+  push
 jobs:
   deploy:
     name: CD
@@ -15,6 +12,8 @@ jobs:
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
     - name: Deploy to cluster
       uses: steebchen/kubectl@v2.0.0
+      env:
+        BRANCH: ${{ steps.extract_branch.outputs.branch }}
       with:
         config: ${{ secrets.KUBE_CONFIG_DATA }}
-        command: rollout restart -n premid deployment/website-${{ steps.extract_branch.outputs.branch }}
+        command: rollout restart -n premid deployment/website-${{ env.BRANCH }}
