@@ -1,7 +1,13 @@
 name: CD
 
 on:
-  push
+  workflow_run:
+    workflows: ["CI"]
+    branches:
+      - stable
+      - main
+    types: 
+      - completed
 jobs:
   deploy:
     name: CD
