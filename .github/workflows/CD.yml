@@ -16,4 +16,4 @@ jobs:
         BRANCH: ${{ steps.extract_branch.outputs.branch }}
       with:
         config: ${{ secrets.KUBE_CONFIG_DATA }}
-        command: rollout restart -n premid deployment/website-${{ env.BRANCH }}
+        command: rollout restart -n premid deployment/website-${ env.BRANCH }
