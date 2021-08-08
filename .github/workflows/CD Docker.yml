@@ -1,9 +1,12 @@
-name: CI
+name: CD Docker
 on:
-  push:
+  workflow_run:
+    workflows: ["CI Dependencies"]
     branches:
-      - "stable"
-      - "master"
+      - stable
+      - main
+    types: 
+      - completed
 jobs:
   docker:
     runs-on: ubuntu-latest
