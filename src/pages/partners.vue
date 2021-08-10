@@ -168,6 +168,7 @@
 	import onlyhit_icon from "~/assets/images/partners/onlyhit-icon.png";
 	import reyfm_icon from "~/assets/images/partners/reyfm-icon.jpg";
 	import atomicradio_icon from "~/assets/images/partners/atomicradio-icon.png";
+	import rnetflix_icon from "~/assets/images/partners/rnetflix-icon.png";
 
 	export default {
 		name: "Partners",
@@ -202,7 +203,8 @@
 						erisly_icon,
 						onlyhit_icon,
 						reyfm_icon,
-						atomicradio_icon
+						atomicradio_icon,
+						rnetflix_icon
 					],
 					showModal: false,
 					hovered: {}
