@@ -393,10 +393,12 @@
 <script>
 	export default {
 		name: "Navigation",
-		props: ["noLinks", "countDownBtn", "href", "target"],
+		props: ["noLinks", "href", "target"],
 		data() {
 			return {
+				btnCheckInterva: null,
 				hovered: false,
+				countDownBtn: false,
 				pageLoad: false,
 				countDownValue: 5,
 				mobileMenuActive: false,
@@ -463,9 +465,15 @@
 						},
 						0
 					);
+			},
+			updateBtn(value) {
+				this.countDownBtn = value;
 			}
 		},
 		mounted() {
+			this.btnCheckInterval = setInterval(() => {
+				this.updateBtn(!(localStorage.getItem("showBtn") == "true"));
+			}, 100);
 			this.isMobile =
 				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 					navigator.userAgent
@@ -477,6 +485,9 @@
 
 				if (this.countDownValue === 0) clearInterval(interval);
 			}, 1 * 1000);
+		},
+		beforeDestroy() {
+			clearInterval(this.btnCheckInterva);
 		}
 	};
 </script>

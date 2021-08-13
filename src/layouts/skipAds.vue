@@ -1,11 +1,6 @@
 <template>
 	<div id="wrapper">
-		<navigation
-			noLinks="true"
-			:target="target"
-			:href="href"
-			:countDownBtn="!probsUsingAdBlock"
-		/>
+		<navigation noLinks="true" :target="target" :href="href" />
 
 		<div class="adswrapper" v-if="!isMobile">
 			<adsense
@@ -160,6 +155,13 @@
 						Array.from(document.querySelectorAll(".adsbygoogle")).filter(
 							el => el.innerHTML !== ""
 						).length === 0;
+
+					localStorage.setItem(
+						"showBtn",
+						Array.from(document.querySelectorAll(".adsbygoogle")).filter(
+							el => el.innerHTML !== ""
+						).length === 0
+					);
 
 					if (this.probsUsingAdBlock) this.adBlockInterval.clear();
 				}, 100);
