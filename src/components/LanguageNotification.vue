@@ -4,8 +4,8 @@
 			<div
 				v-if="
 					!declined &&
-						getBrowserLanguage() === lang &&
-						getCurrentLanguage() !== lang
+					getBrowserLanguage() === lang &&
+					getCurrentLanguage() !== lang
 				"
 				class="language-notify__wrapper"
 			>

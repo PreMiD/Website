@@ -6,4 +6,4 @@ dist
 src/langs
 .nuxt
 package-lock.json
-package-lock.json
+languageUpdater.js

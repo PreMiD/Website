@@ -193,7 +193,7 @@
 				</div>
 			</div>
 
-			<div class="store-grid__content">
+			<div class="store-grid__content" v-if="presences">
 				<div class="presence-container" v-if="filteredPresences.length">
 					<StoreCard
 						v-for="presence in paginatedData"
@@ -216,6 +216,19 @@
 						{{ $t("store.search.notFound") }}
 						<i class="fa-sad-tear fas"></i>
 					</h1>
+				</div>
+			</div>
+			<div v-else class="store-grid__content">
+				<div
+					class="presence-container"
+					style="display: block !important; padding: 2rem 0"
+					id="error"
+				>
+					<h1 class="errorHeading">Well, that's unfortunate...</h1>
+					<h2 class="errorText">
+						We were unable to load the Presence Store data... Please try again
+						later
+					</h2>
 				</div>
 			</div>
 		</div>
@@ -295,7 +308,12 @@
 					})
 				};
 			} catch (err) {
-				return error({ message: "API returned an error." });
+				return {
+					presences: null,
+					topPresences: null,
+					partners: null,
+					hotPresences: null
+				};
 			}
 		},
 		data() {
@@ -321,6 +339,7 @@
 				return this.$route.query.category || "all";
 			},
 			filteredPresences() {
+				if (!this.presences) return [];
 				return this.presences
 					.filter(presence => {
 						if (this.filters.url.enabled == true)

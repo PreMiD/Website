@@ -2,60 +2,71 @@
 	<div>
 		<title>PreMiD - Contributors</title>
 		<section class="contributors">
-			<div class="contributor-container">
-				<h1
-					class="titleHeading"
-					v-text="$t('contributors.headings.staff')"
-				></h1>
-				<div class="contributor-inner">
-					<div
-						v-for="contributor of contributors"
-						:key="contributor.user.id"
-						class="contributor-card"
-					>
-						<CreditCard
-							v-if="isStaffRole(contributor.user.roleId)"
-							:user="contributor.user"
-						/>
+			<div v-if="contributors">
+				<div class="contributor-container">
+					<h1
+						class="titleHeading"
+						v-text="$t('contributors.headings.staff')"
+					></h1>
+					<div class="contributor-inner">
+						<div
+							v-for="contributor of contributors"
+							:key="contributor.user.id"
+							class="contributor-card"
+						>
+							<CreditCard
+								v-if="isStaffRole(contributor.user.roleId)"
+								:user="contributor.user"
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div class="contributor-container">
+					<h1
+						class="titleHeading"
+						v-text="$t('contributors.headings.supporters')"
+					></h1>
+					<div class="contributor-inner">
+						<div
+							v-for="contributor of contributors"
+							:key="contributor.user.id"
+							class="contributor-card"
+						>
+							<CreditCard
+								v-if="isSupporterRole(contributor.user.roleId)"
+								:user="contributor.user"
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div class="contributor-container">
+					<h1
+						class="titleHeading"
+						v-text="$t('contributors.headings.translators')"
+					></h1>
+					<div class="contributor-inner">
+						<div
+							v-for="contributor of contributors"
+							:key="contributor.user.id"
+							class="contributor-card"
+						>
+							<CreditCard
+								v-if="isTranslatorRole(contributor.user.roleId)"
+								:user="contributor.user"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="contributor-container">
-				<h1
-					class="titleHeading"
-					v-text="$t('contributors.headings.supporters')"
-				></h1>
-				<div class="contributor-inner">
-					<div
-						v-for="contributor of contributors"
-						:key="contributor.user.id"
-						class="contributor-card"
-					>
-						<CreditCard
-							v-if="isSupporterRole(contributor.user.roleId)"
-							:user="contributor.user"
-						/>
-					</div>
-				</div>
-			</div>
-
-			<div class="contributor-container">
-				<h1
-					class="titleHeading"
-					v-text="$t('contributors.headings.translators')"
-				></h1>
-				<div class="contributor-inner">
-					<div
-						v-for="contributor of contributors"
-						:key="contributor.user.id"
-						class="contributor-card"
-					>
-						<CreditCard
-							v-if="isTranslatorRole(contributor.user.roleId)"
-							:user="contributor.user"
-						/>
-					</div>
+			<div v-else>
+				<div class="contributor-container">
+					<h1 class="errorHeading">Well, that's unfortunate...</h1>
+					<h2 class="errorText">
+						We were unable to load the contributors list... Please try again
+						later
+					</h2>
 				</div>
 			</div>
 		</section>
@@ -64,6 +75,21 @@
 
 <style lang="scss">
 	@import "../stylesheets/variables.scss";
+
+	.errorHeading {
+		text-align: center;
+		font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		font-size: 2em;
+		color: $accent-primary;
+		margin: 0;
+	}
+
+	.errorText {
+		text-align: center;
+		margin: 0;
+		font-size: 1em;
+	}
+
 	.titleHeading {
 		margin: 0 5px;
 		font-family: "Discord Font", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -77,29 +103,35 @@
 		name: "Contributors",
 		auth: false,
 		async asyncData({ app }) {
-			const contributors = await app.$graphql(
-				`
-				{
-					credits {
-						user {
-							id
-							avatar
-							status
-							name
-							role
-							roleId
-							roleColor
-							rolePosition
+			try {
+				const contributors = await app.$graphql(
+					`
+					{
+						credits {
+							user {
+								id
+								avatar
+								status
+								name
+								role
+								roleId
+								roleColor
+								rolePosition
+							}
 						}
-					}
-				}`
-			);
+					}`
+				);
 
-			return {
-				contributors: contributors.credits.sort(
-					(a, b) => b.user.rolePosition - a.user.rolePosition
-				)
-			};
+				return {
+					contributors: contributors.credits.sort(
+						(a, b) => b.user.rolePosition - a.user.rolePosition
+					)
+				};
+			} catch (err) {
+				return {
+					contributors: null
+				};
+			}
 		},
 		data() {
 			return {

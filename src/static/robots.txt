@@ -1,0 +1,3 @@
+User-Agent: *
+# disallow user pages, probably shouldn't be indexing this?
+Disallow: /user/*

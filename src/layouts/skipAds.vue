@@ -1,11 +1,6 @@
 <template>
 	<div id="wrapper">
-		<navigation
-			noLinks="true"
-			:target="target"
-			:href="href"
-			:countDownBtn="!probsUsingAdBlock"
-		/>
+		<navigation noLinks="true" :target="target" :href="href" />
 
 		<div class="adswrapper" v-if="!isMobile">
 			<adsense
@@ -101,8 +96,7 @@
 				urls: {
 					windows: "https://dl.premid.app/PreMiD-installer.exe",
 					apple: "https://dl.premid.app/PreMiD-installer.app.zip",
-					edge:
-						"https://microsoftedge.microsoft.com/addons/detail/hkchpjlnddoppadcbefbpgmgaeidkkkm",
+					edge: "https://microsoftedge.microsoft.com/addons/detail/hkchpjlnddoppadcbefbpgmgaeidkkkm",
 					chrome:
 						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
 					firefox: "https://dl.premid.app/PreMiD.xpi",
@@ -112,9 +106,10 @@
 		},
 		beforeMount() {
 			let platform = this.$store.state.download.platform;
-			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-				navigator.userAgent
-			);
+			this.isMobile =
+				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+					navigator.userAgent
+				);
 
 			this.target = platform === "chrome" ? "_blank" : null;
 			this.href = this.urls[platform];
@@ -160,6 +155,13 @@
 						Array.from(document.querySelectorAll(".adsbygoogle")).filter(
 							el => el.innerHTML !== ""
 						).length === 0;
+
+					localStorage.setItem(
+						"showBtn",
+						Array.from(document.querySelectorAll(".adsbygoogle")).filter(
+							el => el.innerHTML !== ""
+						).length === 0
+					);
 
 					if (this.probsUsingAdBlock) this.adBlockInterval.clear();
 				}, 100);
