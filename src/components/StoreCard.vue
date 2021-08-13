@@ -5,10 +5,17 @@
 			@mouseover="cardHovered = true"
 			@mouseleave="cardHovered = false"
 		>
-			<img class="store-card__background" @error="presence.thumbnail = ''" :src="loadImage(presence.thumbnail, 'l')" />
+			<img
+				class="store-card__background"
+				@error="presence.thumbnail = ''"
+				:src="loadImage(presence.thumbnail, 'l')"
+			/>
 
 			<div class="store-card__service-logo">
-				<img @error="presence.logo = '/assets/images/logo.png'" :src="presence.logo" />
+				<img
+					@error="presence.logo = '/assets/images/logo.png'"
+					:src="presence.logo"
+				/>
 			</div>
 
 			<div class="store-card__service-info">
@@ -20,13 +27,13 @@
 							:to="`/store/presences/${encodeURIComponent(presenceLinkName)}`"
 						>
 							{{
-								altnamesSearch && !presence.service.toLowerCase().includes(altnamesSearch) && presence.altnames
-								? presence.altnames
-									.find(a =>
-										a.toLowerCase().includes(altnamesSearch)
-									) || presence.service
-								:
-								presence.service
+								altnamesSearch &&
+								!presence.service.toLowerCase().includes(altnamesSearch) &&
+								presence.altnames
+									? presence.altnames.find(a =>
+											a.toLowerCase().includes(altnamesSearch)
+									  ) || presence.service
+									: presence.service
 							}}
 							<span
 								v-if="partner"
@@ -35,7 +42,10 @@
 								}"
 								class="fa-stack"
 							>
-								<i :style="`color:${brightColorFix()}`" class="fa-circle fa-stack-2x fas"></i>
+								<i
+									:style="`color:${brightColorFix()}`"
+									class="fa-circle fa-stack-2x fas"
+								></i>
 								<i
 									:style="`color: ${presence.color}; font-size: 10px; top:1px;`"
 									class="fa-gem fa-inverse fa-stack-1x fas"
@@ -50,8 +60,14 @@
 								class="fa-stack"
 								:style="partner == true ? 'margin-left:-4px' : ''"
 							>
-								<i :style="`color:${brightColorFix()}`" class="fa-circle fa-stack-2x fas"></i>
-								<i :style="`color: ${presence.color};`" class="fa-fire-alt fa-inverse fa-stack-1x fas"></i>
+								<i
+									:style="`color:${brightColorFix()}`"
+									class="fa-circle fa-stack-2x fas"
+								></i>
+								<i
+									:style="`color: ${presence.color};`"
+									class="fa-fire-alt fa-inverse fa-stack-1x fas"
+								></i>
 							</span>
 
 							<span
@@ -67,8 +83,14 @@
 									hot == true || partner == true ? 'margin-left:-4px' : ''
 								"
 							>
-								<i :style="`color:${brightColorFix()}`" class="fa-circle fa-stack-2x fas"></i>
-								<i :style="`color: ${presence.color};`" class="fa-exclamation fa-inverse fa-stack-1x fas"></i>
+								<i
+									:style="`color:${brightColorFix()}`"
+									class="fa-circle fa-stack-2x fas"
+								></i>
+								<i
+									:style="`color: ${presence.color};`"
+									class="fa-exclamation fa-inverse fa-stack-1x fas"
+								></i>
 							</span>
 						</nuxt-link>
 					</h2>
@@ -77,7 +99,8 @@
 						<nuxt-link
 							:style="`color: ${brightColorFix()};font-weight:bold;`"
 							:to="`/users/${presence.author.id}`"
-						>{{ presence.author.name }}</nuxt-link>
+							>{{ presence.author.name }}</nuxt-link
+						>
 					</p>
 
 					<transition name="card-animation" mode="out-in">
@@ -106,7 +129,11 @@
 								"
 								class="on-desktop store-card__buttons"
 							>
-								<button v-if="!isInstalled" class="button button--" @click="sendPresence(presence.service)">
+								<button
+									v-if="!isInstalled"
+									class="button button--"
+									@click="sendPresence(presence.service)"
+								>
 									<span class="icon">
 										<i class="fa-plus fas"></i>
 									</span>
@@ -140,7 +167,9 @@
 									(presence.button === false || presence.button === 'false')
 								"
 							>
-								<p class="store-card__warning">{{ $t("store.card.presence.included") }}</p>
+								<p class="store-card__warning">
+									{{ $t("store.card.presence.included") }}
+								</p>
 							</div>
 						</div>
 					</transition>
@@ -225,8 +254,8 @@
 				}
 			},
 			openInNewTab(url) {
-				let page = window.open(url, "_blank");
-				win.focus();
+				page = window.open(url, "_blank");
+				page.focus();
 			},
 			/**
 			 * Returns description of the presence according to your language.
