@@ -71,7 +71,7 @@
 					</nuxt-link>-->
 				</div>
 
-				<div v-if="countDownBtn" class="links">
+				<div v-if="countDownBtn && noLinks" class="links">
 					<a
 						v-if="countDownValue === 0"
 						@click="$nuxt.setLayout('default')"
