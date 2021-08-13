@@ -114,13 +114,6 @@
 					this.error = this.$t("partners.apply.error3");
 				else {
 					new Promise(async resolve => {
-						console.log(
-							this.type,
-							this.name,
-							this.link,
-							this.description,
-							this.imageLink
-						);
 						let { partnerApply } = await this.$graphql(
 							`
 							mutation {

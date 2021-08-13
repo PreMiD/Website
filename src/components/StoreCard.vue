@@ -254,8 +254,8 @@
 				}
 			},
 			openInNewTab(url) {
-				let page = window.open(url, "_blank");
-				win.focus();
+				page = window.open(url, "_blank");
+				page.focus();
 			},
 			/**
 			 * Returns description of the presence according to your language.
