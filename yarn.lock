@@ -1010,24 +1010,10 @@
     upath "^2.0.1"
     wrap-ansi "^7.0.0"
 
-"@nuxt/components@2.1.8":
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/@nuxt/components/-/components-2.1.8.tgz#2d07fe077768d0a3041a5685c08ad8825ea2f2cd"
-  integrity sha512-gdVzBiM9V28svAKWlGg+IrvRXF9sHlWaVNKDNNYpYg0zh7f9xNxYAk6DtQeBBJshbAsPaXC9J2ZFxfrREX3H8w==
-  dependencies:
-    chalk "^4.1.1"
-    chokidar "^3.5.1"
-    glob "^7.1.6"
-    globby "^11.0.3"
-    scule "^0.2.1"
-    semver "^7.3.5"
-    upath "^2.0.1"
-    vue-template-compiler "^2.6.12"
-
-"@nuxt/components@^2.1.8":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@nuxt/components/-/components-2.2.0.tgz#8e97f01db71665d10ac94614df76c662a9b9f63e"
-  integrity sha512-D7kxuboGDCd8lFU7zYH9iVUT7IL6nMHLCp0ajvRS26Y5gZRggkXMnGGNp7oCv0FY7UVySmJ7wzy0Ctl46eKqdw==
+"@nuxt/components@2.2.1", "@nuxt/components@^2.1.8":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@nuxt/components/-/components-2.2.1.tgz#49c4442ac5a0ef49f49ef7d9960f4376fc3e7c78"
+  integrity sha512-r1LHUzifvheTnJtYrMuA+apgsrEJbxcgFKIimeXKb+jl8TnPWdV3egmrxBCaDJchrtY/wmHyP47tunsft7AWwg==
   dependencies:
     chalk "^4.1.2"
     chokidar "^3.5.2"
