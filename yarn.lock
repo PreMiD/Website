@@ -8062,10 +8062,10 @@ vue@^2.6.10, vue@^2.6.11, vue@^2.6.12:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
   integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
-vuejs-noty@0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/vuejs-noty/-/vuejs-noty-0.1.3.tgz#c665b70c9cfdf7c32f0107a734ecd2b86674af78"
-  integrity sha512-qHdEpq3IQMg3Upf6UAQrcEtRGNZfH3gQd1KLJYQE52rmYaNp79ZAj8F7kP2xDKpSBGBERvCUAy7txNiodRxAYg==
+vuejs-noty@0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/vuejs-noty/-/vuejs-noty-0.1.4.tgz#3136d61cb9610c3c8ef3d62d253206a2cfba979e"
+  integrity sha512-WWh06HNtVozQrBKCr5dlZH/x6ii3Ca4zYamzPVEuW3DT5BHN1r7IGRPTHt2I+p4NfRrweOq/Nh4lTlT96qRcGA==
   dependencies:
     noty "^3.1.0"
 
