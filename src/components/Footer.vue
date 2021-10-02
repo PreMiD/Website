@@ -121,7 +121,7 @@
 			<p
 				v-html="
 					$t('footer.copyright.line1', {
-						0: `<i class=\'far fa-copyright\'></i> ${new Date().getFullYear()}  PreMiD`,
+						0: `<i class=\'far fa-copyright\'></i> 2018 - ${new Date().getFullYear()}  PreMiD`,
 						1: `<a class='hover-effect' href='https://github.com/Timeraa/' target='_blank'>Timeraa</a>`
 					})
 				"
