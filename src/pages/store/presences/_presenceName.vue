@@ -232,13 +232,13 @@
 									class="presence-urls"
 								>
 									<li v-for="url in getPresenceMetadata.url" :key="url">
-										<a :href="`https://${url}`">{{ url }}</a>
+										<a :href="`https://${url}`" target="_blank">{{ url }}</a>
 									</li>
 								</ul>
 
 								<ul v-else-if="getPresenceMetadata.url" class="presence-urls">
 									<li>
-										<a :href="`https://${getPresenceMetadata.url}`">
+										<a :href="`https://${getPresenceMetadata.url}`" target="_blank">
 											{{ getPresenceMetadata.url }}
 										</a>
 									</li>
