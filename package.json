@@ -14,7 +14,7 @@
 		"@nuxtjs/google-adsense": "1.4.0",
 		"animejs": "3.2.1",
 		"axios": "0.23.0",
-		"marked": "3.0.7",
+		"marked": "3.0.8",
 		"moment": "2.29.1",
 		"nuxt": "2.15.8",
 		"nuxt-lazy-load": "1.2.7",
