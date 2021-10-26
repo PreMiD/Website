@@ -1,11 +1,11 @@
 name: CD Docker
 on:
   workflow_run:
-    workflows: ["CI Dependencies"]
+    workflows: ["CI"]
     branches:
       - stable
       - main
-    types: 
+    types:
       - completed
 jobs:
   docker:
