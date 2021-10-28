@@ -13,5 +13,7 @@ updates:
     labels:
       - "dependencies"
     open-pull-requests-limit: 15
+    #Should be removed/updated when nuxt + vue support webpack 5
     ignore:
-      - dependency-name: "sassloader"
+      - dependency-name: "sass-loader"
+        version: "^11"
