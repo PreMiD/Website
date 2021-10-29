@@ -17,7 +17,7 @@
 		"marked": "3.0.8",
 		"moment": "2.29.1",
 		"nuxt": "2.15.8",
-		"nuxt-lazy-load": "1.2.8",
+		"nuxt-lazy-load": "1.2.9",
 		"tinycolor2": "1.4.2",
 		"ts-loader": "^9.2.6",
 		"unique-names-generator": "^4.6.0",
