@@ -440,7 +440,7 @@
 
 				presence.profile = {
 					name: this.users[index].user.name,
-					discriminator: this.users[index].user.tag,
+					discriminator: [,,,,].fill().map(() => Math.floor(Math.random() * 10)).join(""),
 					flags: this.users[index].user.flags || [],
 					avatar: this.users[index].user.avatar
 				};
