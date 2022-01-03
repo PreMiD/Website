@@ -10,6 +10,7 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    if: github.repository_owner == 'PreMiD'
     permissions:
       contents: read
       packages: write
