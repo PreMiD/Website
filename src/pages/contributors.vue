@@ -123,9 +123,11 @@
 				);
 
 				return {
-					contributors: contributors.credits.sort(
-						(a, b) => b.user.rolePosition - a.user.rolePosition
-					)
+					contributors: contributors.credits
+						.sort((a, b) =>
+							a.user.name.toLowerCase().localeCompare(b.user.name.toLowerCase())
+						)
+						.sort((a, b) => b.user.rolePosition - a.user.rolePosition)
 				};
 			} catch (err) {
 				return {
