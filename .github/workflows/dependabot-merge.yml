@@ -1,9 +1,17 @@
-name: CI Dependencies
-on: [push, pull_request]
+name: Merge dependabot PRs
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches:
+      - stable
+      - main
+    types:
+      - completed
 
 jobs:
   automerge:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     permissions:
       pull-requests: write
     steps:
