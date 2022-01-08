@@ -206,7 +206,14 @@
 						</a>
 					</div>
 				</div>
-				<div class="show-beta" v-if="!showBeta">
+				<div v-if="noBetas" class="show-beta">
+					<p>No Betas!</p>
+					<small
+						>It seems like we don't have any betas to test with you at this
+						time... Stay tuned!</small
+					>
+				</div>
+				<div class="show-beta" v-else-if="!showBeta">
 					<div>
 						<p>{{ $t("downloads.showbeta.message") }}</p>
 						<small>{{ $t("downloads.showbeta.small") }}</small>
@@ -389,12 +396,15 @@
 		`
 					);
 
+					let noBetas = false;
+
 					if ($auth.loggedIn) {
 						const { downloads } = await app.$graphql(`
 						{
 							downloads(token: "${$auth.$storage._state["_token.discord"]}") {
 								releaseType
 								appLinks
+								enabled
 								extLinks {
 									platform
 									link
@@ -402,6 +412,9 @@
 							}
 						}
 					`);
+
+						noBetas =
+							downloads.length !== downloads.filter(d => d.enabled).length;
 
 						userAccess = downloads.length > 0;
 
@@ -416,6 +429,7 @@
 					}
 
 					return {
+						noBetas,
 						extVersion: data.versions.extension,
 						appVersion: data.versions.app,
 						linuxVersion: data.versions.linux,
@@ -427,6 +441,7 @@
 					};
 				} catch (err) {
 					return {
+						noBetas: false,
 						extVersion: null,
 						appVersion: null,
 						linuxVersion: null,
