@@ -227,7 +227,13 @@
 									<i class="fa-link fas"></i>
 									{{ $t("presence.sections.information.supportedurls") }}:
 								</p>
-								<span v-if="getPresenceMetadata.regExp" class="presence-note">
+								<span
+									v-if="getPresenceMetadata.regExp"
+									v-tippy="{
+										content: getPresenceMetadata.regExp
+									}"
+									class="presence-note"
+								>
 									{{ $t("presence.sections.information.moreurls") }}
 								</span>
 								<ul
