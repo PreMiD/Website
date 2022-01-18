@@ -227,6 +227,9 @@
 									<i class="fa-link fas"></i>
 									{{ $t("presence.sections.information.supportedurls") }}:
 								</p>
+								<span v-if="getPresenceMetadata.regExp" class="presence-note">
+									{{ $t("presence.sections.information.moreurls") }}
+								</span>
 								<ul
 									v-if="Array.isArray(getPresenceMetadata.url)"
 									class="presence-urls"
@@ -238,7 +241,10 @@
 
 								<ul v-else-if="getPresenceMetadata.url" class="presence-urls">
 									<li>
-										<a :href="`https://${getPresenceMetadata.url}`" target="_blank">
+										<a
+											:href="`https://${getPresenceMetadata.url}`"
+											target="_blank"
+										>
 											{{ getPresenceMetadata.url }}
 										</a>
 									</li>
@@ -276,6 +282,12 @@
 	.presence-badge {
 		place-self: center;
 	}
+
+	.presence-note {
+		color: #999;
+		font-size: 12px;
+		margin-top: 5px;
+	}
 </style>
 
 <script>
@@ -309,6 +321,7 @@
 							}
 							version
 							tags
+							regExp
 						},
 						users
 					},
@@ -413,9 +426,10 @@
 			}
 		},
 		mounted() {
-			this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-				navigator.userAgent
-			);
+			this.isMobile =
+				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+					navigator.userAgent
+				);
 
 			if (!this.presence)
 				return this.$nuxt.error({
