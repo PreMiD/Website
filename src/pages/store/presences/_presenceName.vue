@@ -290,6 +290,7 @@
 	}
 
 	.presence-note {
+		display: block;
 		color: #999;
 		font-size: 12px;
 		margin-top: 5px;
