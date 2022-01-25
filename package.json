@@ -13,7 +13,7 @@
 		"@nuxtjs/axios": "5.13.6",
 		"@nuxtjs/google-adsense": "2.0.0",
 		"animejs": "3.2.1",
-		"axios": "0.24.0",
+		"axios": "0.25.0",
 		"marked": "4.0.8",
 		"moment": "2.29.1",
 		"nuxt": "2.15.8",
