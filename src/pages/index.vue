@@ -47,12 +47,6 @@
 											v-for="flag of presence.profile.flags"
 											:key="flag"
 											class="badge-wrapper"
-											:v-if="
-												flag === 'EARLY_SUPPORTER' ||
-												flag === 'NITRO' ||
-												flag === 'HYPESQUAD_EVENTS' ||
-												flag.startsWith('HOUSE_')
-											"
 										>
 											<div
 												v-if="
@@ -327,6 +321,10 @@
 						}
 					}`
 				);
+
+				res.credits.forEach((credit, i) => {
+					res.credits[i].user.flags = credit.user.flags.filter(e => e);
+				});
 
 				return {
 					extVersion: res.versions.extension,
