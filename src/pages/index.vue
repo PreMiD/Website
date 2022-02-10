@@ -32,22 +32,16 @@
 							:v-if="presence.profile.name !== ''"
 						>
 							<div class="usercard__header">
-								<div
-									class="header__avatar"
-									:style="
-										'background-image: url(' +
-										presence.profile.avatar +
-										'?size=128' +
-										');'
-									"
-								></div>
 								<div class="header__info">
-									<div class="info__nameTag">
-										<span class="username">{{ presence.profile.name }}</span>
-										<span class="discriminator"
-											>#{{ presence.profile.discriminator }}</span
-										>
-									</div>
+									<div
+										class="info__avatar"
+										:style="
+											'background-image: url(' +
+											presence.profile.avatar +
+											'?size=128' +
+											');'
+										"
+									></div>
 									<div class="info__badges">
 										<div
 											v-for="flag of presence.profile.flags"
@@ -89,6 +83,12 @@
 												:class="`badge badge_nitro`"
 											></div>
 										</div>
+									</div>
+									<div class="info__nameTag">
+										<span class="username">{{ presence.profile.name }}</span>
+										<span class="discriminator"
+											>#{{ presence.profile.discriminator }}</span
+										>
 									</div>
 								</div>
 							</div>

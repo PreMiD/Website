@@ -421,7 +421,7 @@
 	border-radius: 8px;
 	position: relative;
 	width: 550px;
-	background: $accent-primary;
+	background: #18191c;
 
 	* {
 		margin: 0;
@@ -430,55 +430,33 @@
 
 	.usercard__header {
 		padding: 20px;
-		display: flex;
-		align-items: center;
-
-		.header__avatar {
-			margin-right: 20px;
-
-			width: 90px;
-			height: 90px;
-
-			border-radius: 50%;
-			position: relative;
-
-			flex-shrink: 0;
-
-			background-clip: padding-box;
-			background-color: none;
-			background-position: 50%;
-			background-size: 100%;
-		}
+		border-bottom: 1px solid #ffffff0f;
 
 		.header__info {
-			flex: 1;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 
-			.info__nameTag {
-				vertical-align: middle;
-				padding-right: 20px;
+			.info__avatar {
+				margin-right: 20px;
 
-				line-height: 20px;
-				-ms-flex-wrap: wrap;
-				flex-wrap: wrap;
-				display: -webkit-box;
+				width: 90px;
+				height: 90px;
 
-				span.username {
-					font-size: 18px;
-					font-weight: 600;
-					color: #fff;
-				}
+				border-radius: 50%;
+				position: relative;
 
-				span.discriminator {
-					font-size: 14px;
-					color: hsla(0, 0%, 100%, 0.6);
-				}
+				flex-shrink: 0;
+
+				background-clip: padding-box;
+				background-color: none;
+				background-position: 50%;
+				background-size: 100%;
 			}
 
 			.info__badges {
-				margin-top: 8px;
+				top: calc(50% - 24px);
+				left: 115px;
 
 				-webkit-box-orient: horizontal;
 				-webkit-box-direction: normal;
@@ -493,6 +471,7 @@
 				align-items: stretch;
 
 				display: flex;
+				position: absolute;
 
 				.badge-wrapper {
 					outline: 0;
@@ -550,6 +529,29 @@
 					}
 				}
 			}
+
+			.info__nameTag {
+				margin-top: 10px;
+
+				vertical-align: middle;
+				padding-right: 20px;
+
+				line-height: 20px;
+				-ms-flex-wrap: wrap;
+				flex-wrap: wrap;
+				display: -webkit-box;
+
+				span.username {
+					font-size: 22px;
+					font-weight: 600;
+					color: #fff;
+				}
+
+				span.discriminator {
+					font-size: 18px;
+					color: hsla(0, 0%, 100%, 0.6);
+				}
+			}
 		}
 	}
 
@@ -560,7 +562,7 @@
 			padding: 20px;
 
 			.info__header {
-				color: #fff;
+				color: #b9bbbe;
 				text-transform: uppercase;
 				margin-bottom: 8px;
 				line-height: 16px;
@@ -579,7 +581,7 @@
 						text-indent: -9999px;
 						width: 90px;
 						height: 90px;
-						border-radius: 4px;
+						border-radius: 8px;
 						display: block;
 						-o-object-fit: cover;
 						object-fit: cover;
@@ -614,10 +616,11 @@
 					font-weight: 400;
 
 					.game__title {
+						font-size: 14px;
 						font-weight: 600;
 
 						span {
-							color: hsla(0, 0%, 100%, 0.8);
+							color: #dcddde;
 						}
 					}
 
