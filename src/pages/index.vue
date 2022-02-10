@@ -47,7 +47,12 @@
 											v-for="flag of presence.profile.flags"
 											:key="flag"
 											class="badge-wrapper"
-											:v-if="flag === 'EARLY_SUPPORTER' || flag === 'NITRO' || flag === 'HYPESQUAD_EVENTS' || flag.startsWith('HOUSE_')"
+											:v-if="
+												flag === 'EARLY_SUPPORTER' ||
+												flag === 'NITRO' ||
+												flag === 'HYPESQUAD_EVENTS' ||
+												flag.startsWith('HOUSE_')
+											"
 										>
 											<div
 												v-if="
