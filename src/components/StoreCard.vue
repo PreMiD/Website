@@ -262,8 +262,8 @@
 			 * If presence has non-multilingual description then we just parsing the "description" data.
 			 */
 			getPresenceDescription() {
-				if (this.presence.description[this.$root.getCurrentLanguage()]) {
-					return this.presence.description[this.$root.getCurrentLanguage()];
+				if (this.presence.description[this.$i18n.locale]) {
+					return this.presence.description[this.$i18n.locale];
 				} else if (this.presence.description["en"]) {
 					return this.presence.description["en"];
 				} else {

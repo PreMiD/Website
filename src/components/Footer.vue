@@ -80,7 +80,6 @@
 						href="https://translate.premid.app/"
 						v-text="$t(`footer.supportus.translate`)"
 					></a>
-					<a href="/jobs" v-text="$t(`footer.supportus.jobs`)"></a>
 				</div>
 			</div>
 			<div class="grid__section friendly">

@@ -421,7 +421,7 @@
 			 */
 			getLinkifiedDescription() {
 				const description =
-					this.presence?.metadata?.description?.[this.getCurrentLanguage()] ||
+					this.presence?.metadata?.description?.[this.$i18n.locale] ||
 					this.presence?.metadata?.description?.["en"];
 
 				const replaced = description?.replace(

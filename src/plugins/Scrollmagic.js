@@ -1,4 +1,4 @@
+import { Controller, Scene } from "scrollmagic";
 import Vue from "vue";
-import VueScrollmagic from "vue-scrollmagic";
 
-Vue.use(VueScrollmagic);
+Vue.prototype.$scrollmagic = { Controller, Scene };

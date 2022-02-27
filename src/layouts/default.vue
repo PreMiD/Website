@@ -11,10 +11,6 @@
 				<i class="fa-language fas"></i>
 			</span>
 		</div>
-		<!--
-      ! Disabled for now as it somehow breaks the page in production
-    <LanguageNotification />
-		-->
 		<header>
 			<Navigation />
 		</header>
@@ -39,18 +35,6 @@
 				switcherVisible: false,
 				ua: process.server ? "" : navigator.userAgent
 			};
-		},
-		created() {
-			this.$root.$data.i18nLanguageList = this.$i18n.availableLocales;
-
-			if (process.browser) {
-				if (localStorage.language !== undefined) {
-					this.$root.$i18n.locale = localStorage.language;
-				}
-			} else this.$root.$i18n.locale = "en";
-
-			this.$root.$data.navigatorLanguage = this.getBrowserLanguage();
-			this.$root.$data.i18nLanguage = this.getCurrentLanguage();
 		},
 		methods: {
 			toggleSwitcher() {

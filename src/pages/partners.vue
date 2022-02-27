@@ -86,15 +86,6 @@
 						toggleScroll();
 					"
 				/>
-				<transition name="slide-down" mode="in-out">
-					<Apply
-						v-if="showModal"
-						@close="
-							showModal = false;
-							toggleScroll();
-						"
-					/>
-				</transition>
 			</div>
 
 			<p v-html="job($t('partners.apply.jobs'))" class="jobs"></p>

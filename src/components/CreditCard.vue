@@ -82,8 +82,6 @@
 
 				document.execCommand("copy");
 				document.body.removeChild(el);
-
-				this.$noty.success(this.$t("contributors.cards.userIdCopied"));
 			}
 		}
 	};

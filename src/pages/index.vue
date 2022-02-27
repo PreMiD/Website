@@ -335,6 +335,7 @@
 		},
 		data() {
 			return {
+				controller: null,
 				extVersion: null,
 				cardThumbnail1,
 				cardThumbnail2,
@@ -474,14 +475,14 @@
 						duration: 1500,
 						autoplay: false
 					}),
-					scene1 = this.$scrollmagic.scene({
+					scene1 = new this.$scrollmagic.Scene({
 						triggerElement: el,
 						offset: 0,
 						duration: 1000
-					});
+					}).addTo(new this.$scrollmagic.Controller());
 
-				this.$scrollmagic.addScene(scene1);
-
+				/* 				this.$scrollmagic.addScene(scene1);
+				 */
 				scene1.on("start", event => {
 					if (hasRun) return;
 					heading.play();
