@@ -44,7 +44,9 @@ body {
 	-webkit-text-fill-color: transparent;
 }
 
-.userpage__presences > .heading > div.noContributes {
+.userpage__presences > .heading > div.noContributes,
+.userpage__presences > .heading > div.contributes {
+	display: inline-block;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -54,11 +56,6 @@ body {
 
 .userpage__presences > .heading > div.contributes {
 	cursor: pointer;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
 }
 
 header {
