@@ -20,7 +20,7 @@
 		"nuxt-lazy-load": "1.2.9",
 		"scrollmagic": "^2.0.8",
 		"tinycolor2": "1.4.2",
-		"ts-loader": "^9.2.6",
+		"ts-loader": "^9.2.8",
 		"unique-names-generator": "^4.7.1",
 		"vue-animejs": "2.1.1",
 		"vue-carousel-3d": "1.0.1",
