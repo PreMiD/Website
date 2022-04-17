@@ -1,26 +1,28 @@
 name: CD
-
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 on:
   workflow_run:
-    workflows: ["CD Docker"]
+    workflows: ["CI"]
     branches:
       - stable
-      - main
-    types: 
+    types:
       - completed
 jobs:
+  docker:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    uses: "Recodive/Workflows/.github/workflows/CD Docker.yml@main"
+    secrets:
+      GH_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
+    permissions:
+      contents: read
+      packages: write
   deploy:
-    name: CD
-    runs-on: ubuntu-latest
-    steps:
-    - name: Extract branch name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
-    - name: Deploy to cluster
-      uses: steebchen/kubectl@v2.0.0
-      env:
-        BRANCH: ${{ steps.extract_branch.outputs.branch }}
-      with:
-        config: ${{ secrets.KUBE_CONFIG_DATA }}
-        command: rollout restart -n premid deployment/website-${{ steps.extract_branch.outputs.branch }}
+    needs: docker
+    uses: Recodive/Workflows/.github/workflows/CD.yml@main
+    secrets:
+      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+    with:
+      namespace: premid
+      deployment: website-stable
