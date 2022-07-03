@@ -272,7 +272,7 @@
 				return pls.match(/(\*\*.*?\*\*)/g).map(ch => {
 					return pls.replace(
 						ch,
-						`<strong><a href="/jobs" class="text-highlight">${ch.slice(
+						`<strong><a href="https://recodive.com/jobs" class="text-highlight">${ch.slice(
 							2,
 							ch.length - 2
 						)}</a></strong>`
