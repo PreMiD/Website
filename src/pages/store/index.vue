@@ -322,7 +322,7 @@
 				addedPresences: [],
 				nsfw: false,
 				mostUsed: true,
-				showAdded: false,
+				showAdded: true,
 				filterLiked: false,
 				presenceSearch: "",
 				presencesPerPage: 12,
