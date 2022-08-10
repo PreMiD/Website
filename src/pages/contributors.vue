@@ -150,6 +150,7 @@
 					"673682085608816652", // Project Management
 					"685969048399249459", // Human Resources
 					"994342612532199525", // Community Management
+					"673682085608816652", // Project Management
 					"811262682408943616", // Localization Manager
 				];
 
