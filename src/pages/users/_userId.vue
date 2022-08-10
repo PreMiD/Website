@@ -22,73 +22,33 @@
 					<div class="roles">
 						<div v-for="role in user.roles" :key="role" :role="role">
 							<i
-								v-if="role == 'Project Leader'"
+								v-if="role == 'Project Management'"
 								v-tippy="{
-									content: $t('contributors.roles.projectLeader'),
+									content: $t('contributors.roles.projectManagement'),
 									placement: 'bottom'
 								}"
 								class="fas fa-tools"
 							></i>
 							<i
-								v-if="role == 'Staff Coordinator'"
+								v-if="role == 'Human Resources'"
 								v-tippy="{
-									content: $t('contributors.roles.staffCoordinator'),
+									content: $t('contributors.roles.humanResources'),
 									placement: 'bottom'
 								}"
 								class="fas fa-users"
 							></i>
 							<i
-								v-if="role == 'Marketing Director'"
+								v-if="role == 'Discord Moderator'"
 								v-tippy="{
-									content: $t('contributors.roles.marketingDirector'),
-									placement: 'bottom'
-								}"
-								class="fas fa-users"
-							></i>
-							<i
-								v-if="role == 'Administrator'"
-								v-tippy="{
-									content: $t('contributors.roles.administrator'),
-									placement: 'bottom'
-								}"
-								class="fas fa-user-shield"
-							></i>
-							<i
-								v-if="role == 'Reviewer'"
-								v-tippy="{
-									content: $t('user.roles.presenceVerifier'),
-									placement: 'bottom'
-								}"
-								class="fas fa-clipboard-check"
-							></i>
-							<i
-								v-if="role == 'Developer'"
-								v-tippy="{
-									content: $t('contributors.roles.developer'),
-									placement: 'bottom'
-								}"
-								class="fas fa-file-code"
-							></i>
-							<i
-								v-if="role == 'Designer'"
-								v-tippy="{
-									content: $t('contributors.roles.designer'),
-									placement: 'bottom'
-								}"
-								class="fas fa-ruler-combined"
-							></i>
-							<i
-								v-if="role == 'Moderator'"
-								v-tippy="{
-									content: $t('contributors.roles.moderator'),
+									content: $t('contributors.roles.discordModerator'),
 									placement: 'bottom'
 								}"
 								class="fas fa-user-cog"
 							></i>
 							<i
-								v-if="role == 'Support Agent'"
+								v-if="role == 'Technical Support'"
 								v-tippy="{
-									content: $t('contributors.roles.supportAgent'),
+									content: $t('contributors.roles.technicalSupport'),
 									placement: 'bottom'
 								}"
 								class="fas fa-ticket-alt"
