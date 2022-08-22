@@ -4824,10 +4824,10 @@ klona@^2.0.4, klona@^2.0.5:
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.5.tgz#d166574d90076395d9963aa7a928fabb8d76afbc"
   integrity sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==
 
-language-flag-colors@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/language-flag-colors/-/language-flag-colors-2.0.4.tgz#bc1a0937bb51bd774ab91428561256f0f3334960"
-  integrity sha512-y12RS5WtcqxIUN+0piQJMNyJgR+rTNjnYg/BmZYieIfyeXPs1QyvLz6dHfvLh6nl7cwHPVAigyThSTwkrJkdAQ==
+language-flag-colors@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/language-flag-colors/-/language-flag-colors-2.1.1.tgz#d770bf1f3466da2ba2169b75d54c7a1daad6c74d"
+  integrity sha512-vegbLPsf9Di6b1pgFzfc5ajXMzlP035gPMKiwG8Qq2ut0P3J2B7w9g0vUBDTehKxWK2UYrjuwZb54AKNPqGgJQ==
 
 last-call-webpack-plugin@^3.0.0:
   version "3.0.0"

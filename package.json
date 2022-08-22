@@ -14,7 +14,7 @@
 		"@nuxtjs/i18n": "^7.2.2",
 		"animejs": "3.2.1",
 		"axios": "0.27.2",
-		"language-flag-colors": "^2.0.4",
+		"language-flag-colors": "^2.1.1",
 		"marked": "4.0.15",
 		"nuxt": "2.15.8",
 		"nuxt-lazy-load": "1.2.9",
