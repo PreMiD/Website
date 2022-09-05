@@ -15,7 +15,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: fastify/github-action-merge-dependabot@v3.1.5
+      - uses: fastify/github-action-merge-dependabot@v3.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           target: minor
