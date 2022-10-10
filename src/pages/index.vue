@@ -8,6 +8,8 @@
 							<nuxt-img
 								alt="Logo Wordmark"
 								src="/images/logo-wordmark-blue.png"
+								height="150px"
+								width="450px"
 							/>
 						</div>
 						<div class="heading__text">
@@ -297,9 +299,9 @@
 	export default {
 		name: "Home",
 		auth: false,
-		async asyncData({ app }) {
+		async fetch() {
 			try {
-				const res = await app.$graphql(
+				const res = await this.$graphql(
 					`
 					{
 						versions {
@@ -316,21 +318,53 @@
 					}`
 				);
 
-				return {
-					extVersion: res.versions.extension,
-					users: res.credits
-				};
+				this.extVersion = res.versions.extension;
+				this.users = res.credits;
 			} catch (err) {
-				return {
-					extVersion: "2.2.3",
-					users: [generateTemplateUser(), generateTemplateUser()]
-				};
+				this.extVersion = "2.2.3";
+				this.users = [generateTemplateUser(), generateTemplateUser()];
 			}
+
+			const length = this.presences.length;
+
+			// Randomly selects 2 presences to display.
+			this.presences_display.push(
+				this.presences.splice((Math.random() * length) | 0, 1)[0],
+				this.presences.splice((Math.random() * (length - 1)) | 0, 1)[0]
+			);
+
+			// Updating user information in presence examples.
+			this.presences_display.forEach((presence_item, index) => {
+				let presence = this.presences_display[index];
+
+				presence.profile = {
+					name: this.users[index].user.name,
+					discriminator: this.users[index].user.tag,
+					flags: this.users[index].user.flags || [],
+					avatar: this.users[index].user.avatar
+				};
+
+				// Temporary solution
+				presence.profile["avatar"].endsWith(".gif")
+					? presence.profile["flags"].push("NITRO")
+					: false;
+
+				presence.seconds = Math.floor(Math.random() * presence.seconds) + 1;
+
+				let minutes = Math.floor(presence.seconds / 60);
+				let seconds = presence.seconds - minutes * 60;
+
+				presence.presence_time =
+					minutes.toString().padStart(2, "0") +
+					":" +
+					seconds.toString().padStart(2, "0");
+			});
 		},
 		data() {
 			return {
 				controller: null,
 				extVersion: null,
+				users: [],
 				presences_display: [],
 				presences: [
 					{
@@ -415,42 +449,6 @@
 					}
 				]
 			};
-		},
-		beforeMount() {
-			const length = this.presences.length;
-
-			// Randomly selects 2 presences to display.
-			this.presences_display.push(
-				this.presences.splice((Math.random() * length) | 0, 1)[0],
-				this.presences.splice((Math.random() * (length - 1)) | 0, 1)[0]
-			);
-
-			// Updating user information in presence examples.
-			this.presences_display.forEach((presence_item, index) => {
-				let presence = this.presences_display[index];
-
-				presence.profile = {
-					name: this.users[index].user.name,
-					discriminator: this.users[index].user.tag,
-					flags: this.users[index].user.flags || [],
-					avatar: this.users[index].user.avatar
-				};
-
-				// Temporary solution
-				presence.profile["avatar"].endsWith(".gif")
-					? presence.profile["flags"].push("NITRO")
-					: false;
-
-				presence.seconds = Math.floor(Math.random() * presence.seconds) + 1;
-
-				let minutes = Math.floor(presence.seconds / 60);
-				let seconds = presence.seconds - minutes * 60;
-
-				presence.presence_time =
-					minutes.toString().padStart(2, "0") +
-					":" +
-					seconds.toString().padStart(2, "0");
-			});
 		},
 		mounted() {
 			[

@@ -163,9 +163,31 @@
 	export default {
 		name: "Partners",
 		auth: false,
-		async asyncData({ app, error }) {
+		data() {
+			return {
+				partners: [],
+				sponsors: [],
+				randomImages: [
+					aniflix_icon,
+					aok_icon,
+					upbeat_icon,
+					slr_icon,
+					dtemplates_icon,
+					taigabot_icon,
+					erisly_icon,
+					onlyhit_icon,
+					reyfm_icon,
+					rnetflix_icon
+				],
+				showModal: false,
+				hovered: {}
+			};
+		},
+		async fetch() {
+			if (process.client) this.$nuxt.$loading.start();
+
 			try {
-				let { partners, sponsors } = await await app.$graphql(
+				let { partners, sponsors } = await this.$graphql(
 					`{
 						partners {
 							name
@@ -180,27 +202,14 @@
 						}
 					}`
 				);
-				return {
-					partners: partners,
-					sponsors: sponsors,
-					randomImages: [
-						aniflix_icon,
-						aok_icon,
-						upbeat_icon,
-						slr_icon,
-						dtemplates_icon,
-						taigabot_icon,
-						erisly_icon,
-						onlyhit_icon,
-						reyfm_icon,
-						rnetflix_icon
-					],
-					showModal: false,
-					hovered: {}
-				};
+
+				this.partners = partners;
+				this.sponsors = sponsors;
 			} catch (err) {
-				return error(err.message);
+				return this.error(err.message);
 			}
+
+			if (process.client) this.$nuxt.$loading.finish();
 		},
 		mounted() {
 			this.$auth.$storage.setUniversal("redirect", "/partners#req");

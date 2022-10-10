@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<title>PreMiD - Contributors</title>
-		<section class="contributors">
+		<section class="contributors" v-if="!$fetchState.pending">
 			<div v-if="contributors">
 				<div class="contributor-container">
 					<h1
@@ -102,9 +102,10 @@
 	export default {
 		name: "Contributors",
 		auth: false,
-		async asyncData({ app }) {
+		async fetch() {
+			if (process.client) this.$nuxt.$loading.start();
 			try {
-				const contributors = await app.$graphql(
+				const contributors = await this.$graphql(
 					`
 					{
 						credits {
@@ -122,19 +123,17 @@
 					}`
 				);
 
-				return {
-					contributors: contributors.credits
-						.sort((a, b) =>
-							a.user.name.toLowerCase().localeCompare(b.user.name.toLowerCase())
-						)
-						.sort((a, b) => b.user.rolePosition - a.user.rolePosition)
-						.reverse()
-				};
+				this.contributors = contributors.credits
+					.sort((a, b) =>
+						a.user.name.toLowerCase().localeCompare(b.user.name.toLowerCase())
+					)
+					.sort((a, b) => b.user.rolePosition - a.user.rolePosition)
+					.reverse();
 			} catch (err) {
-				return {
-					contributors: null
-				};
+				this.contributors = null;
 			}
+
+			if (process.client) this.$nuxt.$loading.finish();
 		},
 		data() {
 			return {
@@ -151,7 +150,7 @@
 					"685969048399249459", // Human Resources
 					"994342612532199525", // Community Management
 					"673682085608816652", // Project Management
-					"811262682408943616", // Localization Manager
+					"811262682408943616" // Localization Manager
 				];
 
 				if (staffRoles.indexOf(roleId) !== -1) return true;

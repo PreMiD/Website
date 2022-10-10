@@ -371,7 +371,7 @@
 	export default {
 		name: "Downloads",
 		auth: false,
-		async asyncData({ $auth, app, error }) {
+		async fetch({ $auth, app, error }) {
 			try {
 				let userAccess = false,
 					tabs = {},
@@ -428,41 +428,33 @@
 						else currentTab = downloads.find(d => d.releaseType == "beta");
 					}
 
-					return {
-						noBetas,
-						extVersion: data.versions.extension,
-						appVersion: data.versions.app,
-						linuxVersion: data.versions.linux,
-						userAccess: userAccess,
-						extraDownloads: tabs,
-						currentTab: currentTab,
-						betaUsers: data.betaUsers.number,
-						availableSlots: (data.discordUsers.length * 0.1).toFixed()
-					};
-				} catch (err) {
-					return {
-						noBetas: false,
-						extVersion: null,
-						appVersion: null,
-						linuxVersion: null,
-						userAccess: false,
-						extraDownloads: [],
-						currentTab: null,
-						betaUsers: null,
-						availableSlots: null
-					};
-				}
+					this.noBetas = noBetas;
+					this.extVersion = data.versions.extension;
+					this.appVersion = data.versions.app;
+					this.linuxVersion = data.versions.linux;
+					this.userAccess = userAccess;
+					this.extraDownloads = tabs;
+					this.currentTab = currentTab;
+					this.betaUsers = data.betaUsers.number;
+					this.availableSlots = (data.discordUsers.length * 0.1).toFixed();
+				} catch (err) {}
 			} catch (err) {
 				return error(err);
 			}
 		},
 		data() {
 			return {
-				skipAds: false,
-				showBeta: false,
+				noBetas: false,
 				extVersion: null,
 				appVersion: null,
 				linuxVersion: null,
+				userAccess: false,
+				extraDownloads: [],
+				currentTab: null,
+				betaUsers: null,
+				availableSlots: null,
+				skipAds: false,
+				showBeta: false,
 				cardHover: false,
 				modalAvailable: false,
 				platforms: [],

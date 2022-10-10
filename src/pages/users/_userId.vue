@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="!$fetchState.pending">
 		<div class="userpage-container">
 			<div v-if="error">
 				<span>{{ $t("user.notFound.heading") }}</span>
@@ -162,10 +162,21 @@
 	export default {
 		name: "Userpage",
 		auth: false,
-		async asyncData({ params, app }) {
-			let res = await app.$graphql(
+		data() {
+			return {
+				error: null,
+				user: null,
+				showContributions: false,
+				userPresences: [],
+				userContributions: []
+			};
+		},
+		async fetch() {
+			if (process.client) this.$nuxt.$loading.start();
+
+			let res = await this.$graphql(
 				`{
-				credits(id: "${params.userId}") {
+				credits(id: "${this.$route.params.userId}") {
 					user {
 						name
 						tag
@@ -175,7 +186,7 @@
 						name
 					}
 				}
-				authorPresences: presences(author: "${params.userId}") {
+				authorPresences: presences(author: "${this.$route.params.userId}") {
 					metadata {
 						color
 						service
@@ -188,7 +199,7 @@
 						}
 					}
 				}
-				contributionsPresences: presences(contributor: "${params.userId}") {
+				contributionsPresences: presences(contributor: "${this.$route.params.userId}") {
 					metadata {
 						color
 						service
@@ -220,7 +231,7 @@
 				user.name ||
 				userPresences[0]?.author?.name ||
 				userContributions[0]?.contributors.find(user => {
-					if (user.id === params.userId) return user;
+					if (user.id === this.$route.params.userId) return user;
 				})?.name ||
 				"Unknown user";
 
@@ -235,13 +246,13 @@
 
 			if (user.name === "Unknown user") error = true;
 
-			return {
-				error: error,
-				user: user,
-				showContributions: false,
-				userPresences: userPresences,
-				userContributions: userContributions
-			};
+			this.error = error;
+			this.user = user;
+			this.showContributions = false;
+			this.userPresences = userPresences;
+			this.userContributions = userContributions;
+
+			if (process.client) this.$nuxt.$loading.finish();
 		},
 		methods: {
 			linkify(pls) {
@@ -282,34 +293,42 @@
 		head() {
 			return {
 				title: `${
-					!this.error && this.user.name ? this.user.name : "Unknown User"
+					!this.error && this.user?.name ? this.user.name : "Unknown User"
 				}`,
 				meta: [
 					{
 						hid: "description",
 						name: "description",
 						content: `${
-							!this.error && this.user.name ? this.user.name : "Unknown user"
+							!this.error && this.user?.name ? this.user.name : "Unknown user"
 						}'s profile.`
 					},
 					{
 						hid: "og:description",
 						property: "og:description",
 						content: `${
-							!this.error && this.user.name ? this.user.name : "Unknown user"
+							!this.error && this.user?.name ? this.user.name : "Unknown user"
 						}'s profile.`
 					},
 					{
 						hid: "og:title",
 						property: "og:title",
 						content:
-							!this.error && this.user.name ? this.user.name : "Unknown User"
+							!this.error && this.user?.name ? this.user.name : "Unknown User"
 					},
 					{
 						hid: "og:image",
 						property: "og:image",
 						content:
-							!this.error && this.user.avatar
+							!this.error && this.user?.avatar
+								? this.user.avatar
+								: "https://premid.app/assets/images/logo.png"
+					},
+					{
+						hid: "twitter:image",
+						property: "twitter:image",
+						content:
+							!this.error && this.user?.avatar
 								? this.user.avatar
 								: "https://premid.app/assets/images/logo.png"
 					}

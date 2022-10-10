@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section v-if="!$fetchState.pending">
 		<div class="store-grid">
 			<div class="store-grid__sidebar store-menu">
 				<p class="sidebar__subheader">{{ $t("store.header.search") }}</p>
@@ -263,9 +263,11 @@
 		head: {
 			title: "Store"
 		},
-		async asyncData({ app, error }) {
+		async fetch() {
+			if (process.client) this.$nuxt.$loading.start();
+
 			try {
-				const { presences, partners, science } = await app.$graphql(
+				const { presences, partners, science } = await this.$graphql(
 					`
 					{
 						presences {
@@ -299,27 +301,29 @@
 
 				let usage = science.users;
 
-				return {
-					presences: presences,
-					topPresences: presences.sort((a, b) => b.users - a.users) || [],
-					partners: partners,
-					hotPresences: presences.filter(p => {
+				(this.presences = presences),
+					(this.topPresences =
+						presences.sort((a, b) => b.users - a.users) || []),
+					(this.partners = partners),
+					(this.hotPresences = presences.filter(p => {
 						if ((p.users / usage) * 100 > 5) return p;
-					})
-				};
+					}));
 			} catch (err) {
-				return {
-					presences: null,
-					topPresences: null,
-					partners: null,
-					hotPresences: null
-				};
+				(this.presences = null),
+					(this.topPresences = null),
+					(this.partners = null),
+					(this.hotPresences = null);
 			}
+
+			if (process.client) this.$nuxt.$loading.finish();
 		},
 		data() {
 			return {
 				presences: [],
 				addedPresences: [],
+				topPresences: [],
+				partners: [],
+				hotPresences: [],
 				nsfw: false,
 				mostUsed: true,
 				showAdded: true,

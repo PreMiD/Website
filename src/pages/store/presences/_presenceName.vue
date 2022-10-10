@@ -307,11 +307,22 @@
 		name: "PresencePage",
 		mixins: [PresenceMixin],
 		auth: false,
-		async asyncData({ params, app, error }) {
-			let { presences, partners, usage } = await app.$graphql(
+		data() {
+			return {
+				isMobile: false,
+				presence: null,
+				partner: false,
+				hot: false,
+				presenceUsage: 0
+			};
+		},
+		async fetch() {
+			if (process.client) this.$nuxt.$loading.start();
+
+			let { presences, partners, usage } = await this.$graphql(
 					`
 				{
-					presences(service: "${params.presenceName}") {
+					presences(service: "${this.$route.params.presenceName}") {
 						metadata {
 							color
 							service
@@ -334,7 +345,7 @@
 						},
 						users
 					},
-					partners(name: "${params.presenceName}"){
+					partners(name: "${this.$route.params.presenceName}"){
 						name
 					},
 					usage{
@@ -345,18 +356,16 @@
 				),
 				presenceData = presences[0];
 
-			let data = {
-				presenceUsage: presenceData.users,
-				partner: partners[0] ?? false,
-				hot: (presenceData.users / usage.count) * 100 > 30,
-				presence: presenceData
-			};
+			this.presenceUsage = presenceData.users;
+			this.partner = partners[0] ?? false;
+			this.hot = (presenceData.users / usage.count) * 100 > 30;
+			this.presence = presenceData;
 
 			try {
-				data.presence.metadata.author = (
-					await app.$graphql(
+				this.presence.metadata.author = (
+					await this.$graphql(
 						`{
-							credits(id: "${data.presence.metadata.author.id}") {
+							credits(id: "${this.presence.metadata.author.id}") {
 								user {
 									name
 									id
@@ -369,8 +378,14 @@
 				).credits[0].user;
 			} catch (err) {}
 
-			data["isMobile"] = false;
-			return data;
+			this.isMobile = false;
+
+			if (process.client) this.$nuxt.$loading.finish();
+			if (!this.presence)
+				this.$nuxt.error({
+					statusCode: 404,
+					message: "Presence does not exist."
+				});
 		},
 		computed: {
 			/**
@@ -439,12 +454,6 @@
 				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 					navigator.userAgent
 				);
-
-			if (!this.presence)
-				return this.$nuxt.error({
-					statusCode: 404,
-					message: "Presence does not exist."
-				});
 		},
 		created() {
 			if (this.presence)

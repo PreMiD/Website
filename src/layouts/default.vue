@@ -30,6 +30,13 @@
 	export default {
 		name: "PremidWeb",
 		mixins: [Debug, Detection],
+		head() {
+			return {
+				htmlAttrs: {
+					lang: this.$i18n.locale
+				}
+			};
+		},
 		data() {
 			return {
 				switcherVisible: false,

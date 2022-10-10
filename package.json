@@ -2,9 +2,9 @@
 	"name": "premid-website",
 	"version": "2.0.3",
 	"scripts": {
-		"start": "nuxt start",
+		"start": "nuxt start --modern=server",
 		"dev": "nuxt",
-		"build": "nuxt build && node cryptify",
+		"build": "nuxt build --modern=server && node cryptify",
 		"pretty": "prettier --write **/*.vue **/*.js **/*.json **/*.scss"
 	},
 	"dependencies": {
