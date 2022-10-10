@@ -202,14 +202,7 @@ export default async function () {
 			{ src: "~/plugins/Modal.js", mode: "client" }
 		],
 		build: {
-			cache: true,
-			ssr: true,
-			friendlyErrors: true,
-			hotMiddleware: {
-				client: {
-					overlay: false
-				}
-			}
+			ssr: true
 		}
 	};
 }
