@@ -12,7 +12,7 @@
 			</div>
 			<div v-else class="userpage__header">
 				<div class="user-avatar">
-					<img :src="user.avatar" />
+					<nuxt-img alt="User Avatar" :src="user.avatar" />
 				</div>
 				<div class="user-data">
 					<p class="username">

@@ -7,3 +7,4 @@ src/langs
 .nuxt
 package-lock.json
 languageUpdater.js
+.DS_Store

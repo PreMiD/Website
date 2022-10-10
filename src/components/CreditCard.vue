@@ -26,7 +26,8 @@
 			v-tippy="{ content: $t('contributors.cards.copyUserId') }"
 		>
 			<span :class="user.status"></span>
-			<img
+			<nuxt-img
+				alt="User Avatar"
 				@error="user.avatar = 'https://premid.app/assets/images/logo.png'"
 				:src="user.avatar + '?size=64'"
 				draggable="false"

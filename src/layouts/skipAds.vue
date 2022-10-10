@@ -40,7 +40,8 @@
 
 		<div v-else-if="probsUsingAdBlock" class="note smol">
 			<div class="disable">
-				<img
+				<nuxt-img
+					alt="Adblock pepe"
 					src="https://cdn.discordapp.com/attachments/473603737135349792/695397570272559235/634432333226836020.png"
 				/>
 				<p>{{ $t("downloads.adsbox.disableAdblock") }}</p>

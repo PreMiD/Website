@@ -5,7 +5,8 @@
 				<div class="fullpresence__header">
 					<div class="header__title">
 						<div class="section">
-							<img
+							<nuxt-img
+								alt="Logo"
 								v-if="!isMobile"
 								@error="
 									getPresenceMetadata.logo =
@@ -93,7 +94,7 @@
 						>
 							<i class="fa-github fab" />
 						</a>
-						<a
+						<button
 							class="button button--lg button--red button--like"
 							@click="like()"
 						>
@@ -106,7 +107,7 @@
 										: 'far' + ' fa-heart'
 								"
 							/>
-						</a>
+						</button>
 					</div>
 					<hr />
 					<div
@@ -145,7 +146,8 @@
 										:to="`/users/${getPresenceMetadata.author.id}`"
 										:disabled="true"
 									>
-										<img
+										<nuxt-img
+											alt="Logo"
 											v-if="getPresenceMetadata.author.avatar"
 											:src="getPresenceMetadata.author.avatar"
 											class="author-avatar"

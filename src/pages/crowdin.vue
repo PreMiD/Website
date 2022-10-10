@@ -5,9 +5,9 @@
 				<div v-if="$route.query.success == 'true'">
 					<h1 class="text-highlight">Account linked to Crowdin</h1>
 					<div class="images">
-						<img src="~/assets/images/pmd_logo.png" id="premid" />
+						<nuxt-img alt="Logo" src="/images/logo.png" id="premid" />
 						<h1 class="text-highlight" id="plus">+</h1>
-						<img src="~/assets/images/crowdin.png" id="crowdin" />
+						<nuxt-img alt="Crowdin" src="/images/crowdin.png" id="crowdin" />
 					</div>
 				</div>
 				<div v-else class="text">

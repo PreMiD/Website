@@ -3,7 +3,7 @@
 		<div class="section section--features section--features--beta-register">
 			<div class="promo-container__heading">
 				<h1 class="heading__logo">
-					<img src="../../assets/images/premid-beta.png" />
+					<nuxt-img alt="PreMiD Beta" src="/images/logo-beta.png" />
 				</h1>
 			</div>
 			<div id="thankYou-container" class="card--feature card--feature--reverse">

@@ -35,14 +35,16 @@ export default async function () {
 					href: "/assets/meta/favicon-32x32.png"
 				},
 				{
-					rel: "stylesheet",
-					type: "text/css",
-					href: "/assets/fonts/FontAwesome/all.css"
+					rel: "preload",
+					as: "style",
+					href: "/assets/fonts/FontAwesome/all.css",
+					onload: "this.onload=null;this.rel='stylesheet';"
 				},
 				{
-					rel: "stylesheet",
-					type: "text/css",
-					href: "https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css"
+					rel: "preload",
+					as: "style",
+					href: "https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css",
+					onload: "this.onload=null;this.rel='stylesheet';"
 				}
 			],
 			meta: [
@@ -56,7 +58,7 @@ export default async function () {
 				},
 				{
 					hid: "description",
-					property: "description",
+					name: "description",
 					content:
 						"PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status."
 				},
@@ -107,9 +109,9 @@ export default async function () {
 			],
 			script: [
 				{
-					hid: "stripe",
+					hid: "statuspage",
 					src: "https://t8yhzkqt8q6g.statuspage.io/embed/script.js",
-					defer: true
+					async: true
 				}
 			]
 		},
@@ -150,16 +152,17 @@ export default async function () {
 		env: {
 			graphQLapiBase
 		},
-		modules: [
-			[
-				"nuxt-lazy-load",
-				{
-					observerConfig: {
-						rootMargin: "50px 0px 50px 0px",
-						threshold: 0
-					}
+		image: {
+			provider: "ipx",
+			ipx: {
+				modifiers: {
+					loading: "lazy",
+					format: "webp"
 				}
-			],
+			}
+		},
+		modules: [
+			"@nuxt/image",
 			[
 				"@nuxtjs/google-adsense",
 				{

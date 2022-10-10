@@ -4,7 +4,7 @@
 		@mouseenter="hovered = true"
 		@mouseleave="hovered = false"
 	>
-		<img :src="require(`@/static/assets/images/partners/${partner.image}`)" />
+		<nuxt-img :alt="partner.name" :src="`/images/partners/${partner.image}`" />
 
 		<transition name="fade" mode="out-in">
 			<figcaption v-if="!hovered">

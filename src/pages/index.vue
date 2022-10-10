@@ -5,7 +5,10 @@
 				<div class="promo-container">
 					<div class="promo-container__heading" ref="promoHeading">
 						<div class="heading__logo">
-							<img data-not-lazy src="@/assets/images/logo-wordmark-blue.png" />
+							<nuxt-img
+								alt="Logo Wordmark"
+								src="/images/logo-wordmark-blue.png"
+							/>
 						</div>
 						<div class="heading__text">
 							<p v-html="markdown($t('home.introduction.paragraph'))"></p>
@@ -29,7 +32,7 @@
 							v-for="presence of presences_display"
 							:key="presence.service"
 							class="discord-usercard"
-							:v-if="presence.profile.name !== ''"
+							v-if="presence.profile.name !== ''"
 						>
 							<div class="usercard__header">
 								<div
@@ -99,43 +102,45 @@
 									</div>
 									<div class="info__game">
 										<div class="game__icon">
-											<img
+											<nuxt-img
 												v-if="presence.smallImage == false"
 												v-tippy="{ content: `PreMiD v${extVersion}` }"
 												class="game"
 												style="-webkit-mask: none"
-												alt="@/assets/images/logo-big.svg"
+												alt="Small Image"
 												:src="presence.serviceLogo"
 											/>
-											<img
+											<nuxt-img
 												v-if="presence.smallImage == 'search'"
 												v-tippy="{ content: `PreMiD v${extVersion}` }"
 												class="game"
-												alt="@/assets/images/logo-big.svg"
+												alt="Small Image"
 												:src="presence.serviceLogo"
 											/>
-											<img
+											<nuxt-img
 												v-if="presence.smallImage == true"
 												v-tippy="{ content: `PreMiD v${extVersion}` }"
 												class="game"
-												alt="@/assets/images/logo-big.svg"
+												alt="Small Image"
 												:src="presence.serviceLogo"
 											/>
-											<img
+											<nuxt-img
+												alt="Small Image"
 												v-if="presence.smallImage == 'search'"
 												v-tippy="{
 													content: $t('home.examples.status.browsing')
 												}"
 												class="status-icon"
-												:src="require('@/assets/images/search.png')"
+												src="/images/activity/actions/search.png"
 											/>
-											<img
+											<nuxt-img
+												alt="Small Image"
 												v-if="presence.smallImage == true"
 												v-tippy="{
 													content: $t('home.examples.status.playing')
 												}"
 												class="status-icon"
-												:src="require('@/assets/images/play.png')"
+												src="/images/activity/actions/play.png"
 											/>
 										</div>
 										<div class="game__content">
@@ -203,10 +208,11 @@
 							</p>
 						</div>
 						<div class="card--feature__promo">
-							<img
+							<nuxt-img
+								alt="Feature Image"
 								class="card--feature__promo--image1"
 								style="max-width: 100%"
-								:src="cardThumbnail1"
+								src="/images/features/card1.png"
 							/>
 						</div>
 					</div>
@@ -228,13 +234,11 @@
 						</div>
 						<div class="card--feature__promo">
 							<video autoplay loop>
-								<source
-									src="./../assets/images/cards/card2_video.mp4"
-									type="video/mp4"
-								/>
-								<img
+								<source src="/videos/card2_video.mp4" type="video/mp4" />
+								<nuxt-img
+									alt="Feature Image"
 									class="card--feature__promo--image2"
-									:src="cardThumbnail2"
+									src="/images/features/card2.png"
 								/>
 							</video>
 						</div>
@@ -252,7 +256,11 @@
 							</p>
 						</div>
 						<div class="card--feature__promo">
-							<img class="card--feature__promo--image1" :src="cardThumbnail4" />
+							<nuxt-img
+								alt="Feature Image"
+								class="card--feature__promo--image1"
+								src="/images/features/card3.png"
+							/>
 						</div>
 					</div>
 					<div class="waves-divider waves-divider_bottom">
@@ -277,20 +285,6 @@
 </template>
 
 <script>
-	import twitchLogo from "@/assets/images/twitch.png";
-	import youtubeLogo from "@/assets/images/youtube.png";
-	import soundcloudLogo from "@/assets/images/soundcloud.png";
-	import netflixLogo from "@/assets/images/netflix.png";
-	import ytmusicLogo from "@/assets/images/youtube-music.png";
-	import premidLogo from "@/assets/images/pmd_logo.png";
-	import steamLogo from "@/assets/images/steam.png";
-	import vliveLogo from "@/assets/images/vlive.png";
-
-	import cardThumbnail1 from "@/assets/images/cards/card1.png";
-	import cardThumbnail2 from "@/assets/images/cards/card2.png";
-	import cardThumbnail3 from "@/assets/images/cards/card3.png";
-	import cardThumbnail4 from "@/assets/images/cards/card4.png";
-
 	import {
 		uniqueNamesGenerator,
 		adjectives,
@@ -337,15 +331,11 @@
 			return {
 				controller: null,
 				extVersion: null,
-				cardThumbnail1,
-				cardThumbnail2,
-				cardThumbnail3,
-				cardThumbnail4,
 				presences_display: [],
 				presences: [
 					{
 						service_title: "PreMiD",
-						serviceLogo: premidLogo,
+						serviceLogo: "/images/logo.png",
 						smallImage: "search",
 						data: ["Store"],
 						presence_time: "00:12",
@@ -354,7 +344,7 @@
 					},
 					{
 						service_title: "YouTube",
-						serviceLogo: youtubeLogo,
+						serviceLogo: "/images/activity/youtube.png",
 						smallImage: true,
 						data: [
 							"Noisestorm - Crab Rave [Monstercat Release]",
@@ -365,7 +355,7 @@
 					},
 					{
 						service_title: "SoundCloud",
-						serviceLogo: soundcloudLogo,
+						serviceLogo: "/images/activity/soundcloud.png",
 						smallImage: true,
 						data: ["Dion Timmer - Panic", "Dion Timmer"],
 						seconds: "300", //Suitable range for timer
@@ -373,7 +363,7 @@
 					},
 					{
 						service_title: "Netflix",
-						serviceLogo: netflixLogo,
+						serviceLogo: "/images/activity/netflix.png",
 						smallImage: true,
 						data: ["Daredevil", "S1:E1 Into the Ring"],
 						seconds: "1750", //Suitable range for timer
@@ -381,7 +371,7 @@
 					},
 					{
 						service_title: "YouTube Music",
-						serviceLogo: ytmusicLogo,
+						serviceLogo: "/images/activity/youtube_music.png",
 						smallImage: true,
 						data: [
 							"supercombo - Piloto Automático (Clipe Oficial)",
@@ -392,16 +382,16 @@
 					},
 					{
 						service_title: "Steam",
-						serviceLogo: steamLogo,
+						serviceLogo: "/images/activity/steam.png",
 						smallImage: false,
-						data: ["Steam Store", "F1 2019"],
+						data: ["Steam Store", "F1 2022"],
 						presence_time: "03:32",
 						seconds: "650", //Suitable range for timer
 						elapsed: true
 					},
 					{
 						service_title: "YouTube Music",
-						serviceLogo: ytmusicLogo,
+						serviceLogo: "/images/activity/youtube_music.png",
 						smallImage: true,
 						data: ["Dance Monkey", "Tones and I - The Kids Are Coming (2019)"],
 						seconds: "210", //Suitable range for timer
@@ -409,7 +399,7 @@
 					},
 					{
 						service_title: "Twitch",
-						serviceLogo: twitchLogo,
+						serviceLogo: "/images/activity/twitch.png",
 						smallImage: true,
 						data: ["PreMiD coding stream!", "alexbcberio"],
 						seconds: "2750", //Suitable range for timer
@@ -417,7 +407,7 @@
 					},
 					{
 						service_title: "V LIVE",
-						serviceLogo: vliveLogo,
+						serviceLogo: "/images/activity/vlive.png",
 						smallImage: true,
 						data: ["[LOONA] Orbit! Thank you ❤️", "이달의 소녀(LOONA)"],
 						seconds: "600", //Suitable range for timer

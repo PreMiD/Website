@@ -2,7 +2,7 @@
 	<div class="promo-container beta">
 		<div class="promo-container__heading">
 			<h1 class="heading__logo">
-				<img src="../../assets/images/premid-beta.png" />
+				<nuxt-img alt="PreMiD Beta" src="/images/logo-beta.png" />
 			</h1>
 		</div>
 
@@ -32,13 +32,11 @@
 			</div>
 			<div class="card--feature__promo">
 				<video autoplay loop>
-					<source
-						src="../../assets/images/cards/card2_video.mp4"
-						type="video/mp4"
-					/>
-					<img
+					<source src="/videos/card2_video.mp4" type="video/mp4" />
+					<nuxt-img
+						alt="Feature Image"
 						class="card--feature__promo--image2"
-						src="../../assets/images/cards/card2.png"
+						src="images/features/card2.png"
 					/>
 				</video>
 			</div>

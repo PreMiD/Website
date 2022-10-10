@@ -4,7 +4,7 @@
 			<h1>{{ name }}</h1>
 			<p>{{ description }}</p>
 		</div>
-		<img class="sponsor-image" :src="rImage" />
+		<nuxt-img :alt="name" class="sponsor-image" :src="rImage" />
 	</div>
 </template>
 

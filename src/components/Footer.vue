@@ -27,13 +27,19 @@
 				</p>
 				<div class="section__promo">
 					<a class="partner-logo" href="https://installbuilder.bitrock.com/">
-						<img src="~/assets/images/bitrock_installbuilder.png" />
+						<nuxt-img
+							alt="Bitrock InstallBuilder"
+							src="/images/bitrock_installbuilder.png"
+						/>
 					</a>
 					<a class="partner-logo" href="https://statuspage.io/">
-						<img src="~/assets/images/atlassian_statuspage.svg" />
+						<nuxt-img
+							alt="Atlassian Statuspage"
+							src="/images/atlassian_statuspage.svg"
+						/>
 					</a>
 					<a class="partner-logo" href="https://www.crowdin.com/">
-						<img src="~/assets/images/crowdin.png" />
+						<nuxt-img alt="Crowdin" src="/images/crowdin.png" />
 					</a>
 				</div>
 			</div>

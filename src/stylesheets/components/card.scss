@@ -507,45 +507,45 @@
 						height: 24px;
 
 						&_hypesquad {
-							background-image: url("../assets/images/hypesquad.svg");
+							background-image: url("/images/badges/hypesquad.svg");
 						}
 
 						&_nitro {
-							background-image: url("../assets/images/nitro.svg");
+							background-image: url("/images/badges/nitro.svg");
 							width: 28px;
 						}
 
 						&_early {
-							background-image: url("../assets/images/early.svg");
+							background-image: url("/images/badges/early.svg");
 							width: 28px;
 						}
 
 						&_bravery {
-							background-image: url("../assets/images/bravery.svg");
+							background-image: url("/images/badges/bravery.svg");
 						}
 
 						&_brilliance {
-							background-image: url("../assets/images/brilliance.svg");
+							background-image: url("/images/badges/brilliance.svg");
 						}
 
 						&_balance {
-							background-image: url("../assets/images/balance.svg");
+							background-image: url("/images/badges/balance.svg");
 						}
 
 						&_boost-lvl1 {
-							background-image: url("../assets/images/boost-lvl1.svg");
+							background-image: url("/images/badges/boost-lvl1.svg");
 						}
 
 						&_boost-lvl2 {
-							background-image: require("../../assets/images/boost-lvl2.svg");
+							background-image: require("/images/badges/boost-lvl2.svg");
 						}
 
 						&_boost-lvl3 {
-							background-image: require("../../assets/images/boost-lvl3.svg");
+							background-image: require("/images/badges/boost-lvl3.svg");
 						}
 
 						&_boost-lvl4 {
-							background-image: require("../../assets/images/boost-lvl4.svg");
+							background-image: require("/images/badges/boost-lvl4.svg");
 						}
 					}
 				}

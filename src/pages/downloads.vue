@@ -180,7 +180,7 @@
 							</div>
 						</div>
 
-						<a
+						<div
 							:class="{ 'current-platform': browser.key == 'firefox' }"
 							class="cards__card clickable"
 							@click="open('firefox', 'Extension')"
@@ -191,8 +191,8 @@
 							<div class="card__content">
 								<h3>Firefox</h3>
 							</div>
-						</a>
-						<a
+						</div>
+						<div
 							:class="{ 'current-platform': browser.key == 'safari' }"
 							class="cards__card clickable"
 							@click="open('safari', 'Extension')"
@@ -203,7 +203,7 @@
 							<div class="card__content">
 								<h3>Safari</h3>
 							</div>
-						</a>
+						</div>
 					</div>
 				</div>
 				<div v-if="noBetas" class="show-beta">

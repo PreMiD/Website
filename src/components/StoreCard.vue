@@ -5,14 +5,18 @@
 			@mouseover="cardHovered = true"
 			@mouseleave="cardHovered = false"
 		>
-			<img
+			<nuxt-img
+				loading="lazy"
+				:alt="presence.service"
 				class="store-card__background"
 				@error="presence.thumbnail = ''"
 				:src="loadImage(presence.thumbnail, 'l')"
 			/>
 
 			<div class="store-card__service-logo">
-				<img
+				<nuxt-img
+					loading="lazy"
+					:alt="presence.service"
 					@error="presence.logo = '/assets/images/logo.png'"
 					:src="presence.logo"
 				/>

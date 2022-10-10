@@ -2,7 +2,7 @@
 	<transition name="loader">
 		<div v-if="loading" class="loader-container">
 			<div class="loader">
-				<img :src="Logo" />
+				<nuxt-img alt="Logo" :src="Logo" />
 				<p>{{ randomLoadingString() }}</p>
 			</div>
 		</div>
