@@ -193,7 +193,7 @@
 				</div>
 			</div>
 
-			<div class="store-grid__content" v-if="presences">
+			<div class="store-grid__content" v-if="!$fetchState.error">
 				<div class="presence-container" v-if="filteredPresences.length">
 					<StoreCard
 						v-for="presence in paginatedData"
@@ -264,11 +264,8 @@
 			title: "Store"
 		},
 		async fetch() {
-			if (process.client) this.$nuxt.$loading.start();
-
-			try {
-				const { presences, partners, science } = await this.$graphql(
-					`
+			const { presences, partners, science } = await this.$graphql(
+				`
 					{
 						presences {
 							metadata {
@@ -297,25 +294,26 @@
 							users
 						}
 					}`
-				);
+			);
 
-				let usage = science.users;
+			let usage = science.users;
 
-				(this.presences = presences),
-					(this.topPresences =
-						presences.sort((a, b) => b.users - a.users) || []),
-					(this.partners = partners),
-					(this.hotPresences = presences.filter(p => {
-						if ((p.users / usage) * 100 > 5) return p;
-					}));
-			} catch (err) {
-				(this.presences = null),
-					(this.topPresences = null),
-					(this.partners = null),
-					(this.hotPresences = null);
+			this.presences = presences;
+			this.topPresences = presences.sort((a, b) => b.users - a.users) || [];
+			this.partners = partners;
+			this.hotPresences = presences.filter(p => {
+				if ((p.users / usage) * 100 > 5) return p;
+			});
+
+			if (
+				this.pageCount < Number(this.$route.query.page) ||
+				this.$route.query.page <= -1
+			) {
+				this.$nuxt.error({
+					statusCode: 404,
+					message: "No presences available."
+				});
 			}
-
-			if (process.client) this.$nuxt.$loading.finish();
 		},
 		data() {
 			return {
@@ -459,20 +457,10 @@
 				return this.filteredPresences.slice(start, end);
 			}
 		},
-		created() {
-			if (
-				this.pageCount < Number(this.$route.query.page) ||
-				this.$route.query.page <= -1
-			) {
-				this.$nuxt.error({
-					statusCode: 404,
-					message: "No presences available."
-				});
-			}
-
-			this.interval = setInterval(() => {
+		watch: {
+			"$store.state.presences.addedPresences": function () {
 				this.addedPresences = this.$store.state.presences.addedPresences;
-			}, 100);
+			}
 		},
 		mounted() {
 			const query =
@@ -551,7 +539,7 @@
 				return true;
 			},
 			paginationEvent(pageNumber) {
-				this.$router.push({
+				this.$router.replace({
 					query: {
 						page: pageNumber,
 						category: this.currentCategory

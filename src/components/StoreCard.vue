@@ -10,7 +10,7 @@
 				:alt="presence.service"
 				class="store-card__background"
 				@error="presence.thumbnail = ''"
-				:src="loadImage(presence.thumbnail, 'l')"
+				:src="loadImage(presence.thumbnail, 'm')"
 			/>
 
 			<div class="store-card__service-logo">
@@ -278,16 +278,12 @@
 				// Supports Imgur imges
 				// Imgur sizes: s, b, t, m, l, h
 				if (imageUrl.includes("imgur.com")) {
-					let newUrl = imageUrl.split(
-						"https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/"
-					);
+					let newUrl = imageUrl.split("https://i.imgur.com/");
 
 					newUrl = newUrl.join("").split(".");
 					if (newUrl[0].length == 7) {
 						newUrl[0] = newUrl[0] + size;
-						newUrl =
-							"https://proxy.duckduckgo.com/iu/?u=https://i.imgur.com/" +
-							newUrl.join(".");
+						newUrl = "https://i.imgur.com/" + newUrl.join(".");
 						return newUrl;
 					}
 				}

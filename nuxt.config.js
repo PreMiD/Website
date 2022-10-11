@@ -1,17 +1,6 @@
 import axios from "axios";
 import { getNativeName } from "language-flag-colors";
 
-let baseURL;
-let graphQLapiBase;
-
-if (process.env.NODE_ENV == "development" && process.env.HOSTNAME)
-	baseURL = `http://${process.env.HOSTNAME}`;
-else if (process.env.HOSTNAME) baseURL = `${process.env.HOSTNAME}`;
-else baseURL = "https://api.premid.app";
-
-if (process.env.HOSTNAME) graphQLapiBase = `${process.env.HOSTNAME}/v3`;
-else graphQLapiBase = "https://api.premid.app/v3";
-
 export default async function () {
 	return {
 		rootDir: "./",
@@ -33,18 +22,6 @@ export default async function () {
 					rel: "icon",
 					type: "image/x-icon",
 					href: "/assets/meta/favicon-32x32.png"
-				},
-				{
-					rel: "preload",
-					as: "style",
-					href: "/assets/fonts/FontAwesome/all.css",
-					onload: "this.onload=null;this.rel='stylesheet';"
-				},
-				{
-					rel: "preload",
-					as: "style",
-					href: "https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css",
-					onload: "this.onload=null;this.rel='stylesheet';"
 				}
 			],
 			meta: [
@@ -115,6 +92,23 @@ export default async function () {
 				}
 			]
 		},
+		fontLoader: {
+			url: {
+				local: "/assets/fonts/FontAwesome/all.css",
+				google:
+					"https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+			},
+			prefetch: {
+				hid: "font-prefetch"
+			},
+			preconnect: {
+				hid: "font-preconnect",
+				crossorigin: "anonymous"
+			},
+			preload: {
+				hid: "font-preload"
+			}
+		},
 		auth: {
 			redirect: {
 				login: "/login",
@@ -133,25 +127,29 @@ export default async function () {
 				}
 			}
 		},
-		axios: {
-			baseURL,
-			retry: { retries: 3 },
-			credentials: false,
-			proxy: true
+		publicRuntimeConfig: {
+			axios: {
+				browserBaseURL: process.env.BROWSER_BASE_URL
+			},
+			privateRuntimeConfig: {
+				axios: {
+					baseURL: process.env.BASE_URL
+				}
+			}
 		},
-		proxy: {
-			"/v3": baseURL
+		axios: {
+			baseURL: "https://api.premid.app",
+			retry: { retries: 3 },
+			credentials: false
 		},
 		loading: "~/components/Loader.vue",
 		buildModules: [
+			"nuxt-font-loader",
 			"@nuxt/typescript-build",
 			["@nuxtjs/google-analytics", { id: "UA-129058596-1" }]
 		],
 		components: true,
 		css: ["~stylesheets/root.scss"],
-		env: {
-			graphQLapiBase
-		},
 		image: {
 			provider: "ipx",
 			ipx: {
@@ -210,7 +208,9 @@ export default async function () {
 async function getAvailableLocales() {
 	const languageCodes = (
 		await axios({
-			url: graphQLapiBase,
+			url: process.env.BASE_URL
+				? process.env.BASE_URL + "/v3"
+				: "https://api.premid.app/v3",
 			method: "POST",
 			data: {
 				query: `
