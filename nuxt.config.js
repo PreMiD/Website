@@ -201,7 +201,13 @@ export default async function () {
 		],
 		build: {
 			ssr: true
+		},
+		serverMiddleware: [
+			{
+				path: "/_ipx",
+				handler: "~/serverMiddleware/ipx.ts"
 		}
+		]
 	};
 }
 
