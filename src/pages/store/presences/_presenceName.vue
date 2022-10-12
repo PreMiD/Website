@@ -428,7 +428,7 @@
 					type = "#";
 				}
 
-				return `https://github.com/PreMiD/Presences/tree/master/websites/${type}/${encodeURIComponent(
+				return `https://github.com/PreMiD/Presences/tree/main/websites/${type}/${encodeURIComponent(
 					serviceName
 				)}`;
 			},
