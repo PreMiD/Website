@@ -12,7 +12,7 @@ specifiers:
   '@types/node': 17.0.45
   '@types/scrollmagic': ^2.0.2
   animejs: 3.2.1
-  axios: ^0.27.0
+  axios: ^1.0.0
   fast-glob: 3.2.12
   ipx: ^0.9.11
   language-flag-colors: ^2.1.2
@@ -40,7 +40,7 @@ dependencies:
   '@nuxtjs/google-adsense': 2.0.0
   '@nuxtjs/i18n': 7.3.0
   animejs: 3.2.1
-  axios: 0.27.2
+  axios: 1.1.2
   ipx: 0.9.11
   language-flag-colors: 2.1.2
   marked: 4.1.1
@@ -2820,11 +2820,12 @@ packages:
       - debug
     dev: false
 
-  /axios/0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
+  /axios/1.1.2:
+    resolution: {integrity: sha512-bznQyETwElsXl2RK7HLLwb5GPpOLlycxHCtrpDR/4RqqBzjARaOTo3jz4IgtntWUYee7Ne4S8UHd92VCuzPaWA==}
     dependencies:
       follow-redirects: 1.15.2
       form-data: 4.0.0
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -7772,6 +7773,10 @@ packages:
 
   /protocols/2.0.1:
     resolution: {integrity: sha512-/XJ368cyBJ7fzLMwLKv1e4vLxOju2MNAIokcr7meSaNcVbWz/CPcW22cP04mwxOErdA5mwjA8Q6w/cdAQxVn7Q==}
+    dev: false
+
+  /proxy-from-env/1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: false
 
   /prr/1.0.1:

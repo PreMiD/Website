@@ -14,7 +14,7 @@
 		"@nuxtjs/google-adsense": "2.0.0",
 		"@nuxtjs/i18n": "^7.3.0",
 		"animejs": "3.2.1",
-		"axios": "^0.27.0",
+		"axios": "^1.0.0",
 		"ipx": "^0.9.11",
 		"language-flag-colors": "^2.1.2",
 		"marked": "4.1.1",
