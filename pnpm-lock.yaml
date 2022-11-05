@@ -16,7 +16,7 @@ specifiers:
   fast-glob: 3.2.12
   ipx: ^0.9.11
   language-flag-colors: ^2.1.2
-  marked: 4.2.0
+  marked: 4.2.1
   nuxt: 2.15.8
   nuxt-font-loader: ^1.1.5
   prettier: 2.7.1
@@ -43,7 +43,7 @@ dependencies:
   axios: 0.27.2
   ipx: 0.9.11
   language-flag-colors: 2.1.2
-  marked: 4.2.0
+  marked: 4.2.1
   nuxt: 2.15.8
   scrollmagic: 2.0.8
   tinycolor2: 1.4.2
@@ -6070,8 +6070,8 @@ packages:
       object-visit: 1.0.1
     dev: false
 
-  /marked/4.2.0:
-    resolution: {integrity: sha512-1qWHjHlBKwjnDfrkxd0L3Yx4LTad/WO7+d13YsXAC/ZfKj7p0xkLV3sDXJzfWgL7GfW4IBZwMAYWaz+ifyQouQ==}
+  /marked/4.2.1:
+    resolution: {integrity: sha512-VK1/jNtwqDLvPktNpL0Fdg3qoeUZhmRsuiIjPEy/lHwXW4ouLoZfO4XoWd4ClDt+hupV1VLpkZhEovjU0W/kqA==}
     engines: {node: '>= 12'}
     hasBin: true
     dev: false
