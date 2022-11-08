@@ -17,7 +17,7 @@
 		"axios": "^0.27.0",
 		"ipx": "^0.9.11",
 		"language-flag-colors": "^2.1.2",
-		"marked": "4.2.1",
+		"marked": "4.2.2",
 		"nuxt": "2.15.8",
 		"scrollmagic": "^2.0.8",
 		"tinycolor2": "1.4.2",
