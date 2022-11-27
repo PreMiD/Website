@@ -132,13 +132,8 @@
 				display: false,
 				roles: {
 					staff: [
-						"514546359865442304", // Discord Mod
-						"566417964820070421", // Technical Support
 						"673682085608816652", // Project Management
-						"685969048399249459", // Human Resources
-						"994342612532199525", // Community Management
-						"673682085608816652", // Project Management
-						"811262682408943616" // Localization Manager
+						"691382432246530150" // Project Staff
 					],
 					support: [
 						"515874214750715904", // Patron
