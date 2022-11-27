@@ -10,14 +10,11 @@
 					></h1>
 					<div class="contributor-inner">
 						<div
-							v-for="contributor of contributors"
+							v-for="contributor of staffs"
 							:key="contributor.user.id"
 							class="contributor-card"
 						>
-							<CreditCard
-								v-if="isStaffRole(contributor.user.roleId)"
-								:user="contributor.user"
-							/>
+							<CreditCard :user="contributor.user" />
 						</div>
 					</div>
 				</div>
@@ -29,14 +26,11 @@
 					></h1>
 					<div class="contributor-inner">
 						<div
-							v-for="contributor of contributors"
+							v-for="contributor of supporters"
 							:key="contributor.user.id"
 							class="contributor-card"
 						>
-							<CreditCard
-								v-if="isSupporterRole(contributor.user.roleId)"
-								:user="contributor.user"
-							/>
+							<CreditCard :user="contributor.user" />
 						</div>
 					</div>
 				</div>
@@ -48,14 +42,11 @@
 					></h1>
 					<div class="contributor-inner">
 						<div
-							v-for="contributor of contributors"
+							v-for="contributor of translators"
 							:key="contributor.user.id"
 							class="contributor-card"
 						>
-							<CreditCard
-								v-if="isTranslatorRole(contributor.user.roleId)"
-								:user="contributor.user"
-							/>
+							<CreditCard :user="contributor.user" />
 						</div>
 					</div>
 				</div>
@@ -138,43 +129,92 @@
 		data() {
 			return {
 				contributors: [],
-				display: false
+				display: false,
+				roles: {
+					staff: [
+						"514546359865442304", // Discord Mod
+						"566417964820070421", // Technical Support
+						"673682085608816652", // Project Management
+						"685969048399249459", // Human Resources
+						"994342612532199525", // Community Management
+						"673682085608816652", // Project Management
+						"811262682408943616" // Localization Manager
+					],
+					support: [
+						"515874214750715904", // Patron
+						"585532751663333383", // Booster
+						"502165799172309013" // Donator
+					],
+					translator: [
+						"522755339448483840", // Proofreader
+						"502148045991968788" // Translator
+					]
+				}
 			};
+		},
+		computed: {
+			staffs() {
+				const contributors = this.contributors.filter(contributor =>
+					this.isStaffRole(contributor.user.roleId)
+				);
+
+				this.sortContributorsByRoles(contributors, this.roles.staff);
+
+				return contributors;
+			},
+			supporters() {
+				const contributors = this.contributors.filter(contributor =>
+					this.isSupporterRole(contributor.user.roleId)
+				);
+
+				this.sortContributorsByRoles(contributors, this.roles.support);
+
+				return contributors;
+			},
+			translators() {
+				const contributors = this.contributors.filter(contributor =>
+					this.isTranslatorRole(contributor.user.roleId)
+				);
+
+				this.sortContributorsByRoles(contributors, this.roles.translator);
+
+				return contributors;
+			}
 		},
 		methods: {
 			isStaffRole(roleId) {
-				const staffRoles = [
-					"514546359865442304", // Discord Mod
-					"566417964820070421", // Technical Support
-					"673682085608816652", // Project Management
-					"685969048399249459", // Human Resources
-					"994342612532199525", // Community Management
-					"673682085608816652", // Project Management
-					"811262682408943616" // Localization Manager
-				];
-
-				if (staffRoles.indexOf(roleId) !== -1) return true;
-				else return false;
+				return this.roles.staff.indexOf(roleId) !== -1;
 			},
 			isSupporterRole(roleId) {
-				const supportRoles = [
-					"502165799172309013", //Donator
-					"515874214750715904", //Patron
-					"585532751663333383" //Booster
-				];
-
-				if (supportRoles.indexOf(roleId) !== -1) return true;
-				else return false;
+				return this.roles.support.indexOf(roleId) !== -1;
 			},
 			isTranslatorRole(roleId) {
-				const translatorRoles = ["502148045991968788", "522755339448483840"]; //Translator, Proofreader
-
-				if (translatorRoles.indexOf(roleId) !== -1) return true;
-				else return false;
+				return this.roles.translator.indexOf(roleId) !== -1;
 			},
 			userNameColor(patronColor, userColor) {
 				if (patronColor == "#fff") return userColor;
 				else return patronColor;
+			},
+			sortContributorsByRoles(contributors, roles) {
+				const stringCollator = new Intl.Collator("en", {
+					sensitivity: "base"
+				});
+
+				contributors.sort((contributor1, contributor2) => {
+					const contributor1RolePos = roles.indexOf(contributor1.user.roleId);
+					const contributor2RolePos = roles.indexOf(contributor2.user.roleId);
+
+					const rolesCompare = contributor1RolePos - contributor2RolePos;
+
+					if (rolesCompare !== 0) {
+						return rolesCompare;
+					}
+
+					return stringCollator.compare(
+						contributor1.user.name,
+						contributor2.user.name
+					);
+				});
 			}
 		},
 
