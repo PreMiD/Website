@@ -78,6 +78,14 @@
 					>
 						<i class="fab fa-instagram"></i> Instagram
 					</a>
+					<a
+						href="https://mastodon.social/@premid"
+						target="_blank"
+						rel="me"
+						class="socials"
+					>
+						<i class="fab fa-mastodon"></i> Mastodon
+					</a>
 				</div>
 			</div>
 			<div class="grid__section">
