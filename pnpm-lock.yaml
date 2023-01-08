@@ -24,7 +24,7 @@ specifiers:
   sass: ^1.49.9
   sass-loader: ~10
   scrollmagic: ^2.0.8
-  tinycolor2: 1.4.2
+  tinycolor2: 1.5.2
   ts-loader: ^9.4.1
   unique-names-generator: ^4.7.1
   vue-animejs: 2.1.1
@@ -46,7 +46,7 @@ dependencies:
   marked: 4.2.5
   nuxt: 2.15.8
   scrollmagic: 2.0.8
-  tinycolor2: 1.4.2
+  tinycolor2: 1.5.2
   ts-loader: 9.4.1
   unique-names-generator: 4.7.1
   vue-animejs: 2.1.1
@@ -8960,8 +8960,8 @@ packages:
     resolution: {integrity: sha512-qsdtZH+vMoCARQtyod4imc2nIJwg9Cc7lPRrw9CzF8ZKR0khdr8+2nX80PBhET3tcyTtJDxAffGh2rXH4tyU8A==}
     dev: false
 
-  /tinycolor2/1.4.2:
-    resolution: {integrity: sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==}
+  /tinycolor2/1.5.2:
+    resolution: {integrity: sha512-h80m9GPFGbcLzZByXlNSEhp1gf8Dy+VX/2JCGUZsWLo7lV1mnE/XlxGYgRBoMLJh1lIDXP0EMC4RPTjlRaV+Bg==}
     dev: false
 
   /tippy.js/4.3.5:
