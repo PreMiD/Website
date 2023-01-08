@@ -65,13 +65,6 @@
 						<i class="fab fa-twitter"></i> Twitter
 					</a>
 					<a
-						href="https://facebook.com/PreMiDApp"
-						target="_blank"
-						class="socials"
-					>
-						<i class="fab fa-facebook-square"></i> Facebook
-					</a>
-					<a
 						href="https://instagram.com/PreMiDapp"
 						target="_blank"
 						class="socials"
