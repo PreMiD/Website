@@ -19,7 +19,7 @@ specifiers:
   marked: 4.2.5
   nuxt: 2.15.8
   nuxt-font-loader: ^1.1.5
-  prettier: 2.8.1
+  prettier: 2.8.2
   rimraf: 3.0.2
   sass: ^1.49.9
   sass-loader: ~10
@@ -63,7 +63,7 @@ devDependencies:
   '@types/scrollmagic': 2.0.2
   fast-glob: 3.2.12
   nuxt-font-loader: 1.1.5
-  prettier: 2.8.1
+  prettier: 2.8.2
   rimraf: 3.0.2
   sass: 1.49.9
   sass-loader: 10.2.1_sass@1.49.9
@@ -2385,7 +2385,7 @@ packages:
       source-map: 0.6.1
       vue-template-es2015-compiler: 1.9.1
     optionalDependencies:
-      prettier: 2.8.1
+      prettier: 2.8.2
     transitivePeerDependencies:
       - arc-templates
       - atpl
@@ -7708,8 +7708,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /prettier/2.8.1:
-    resolution: {integrity: sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==}
+  /prettier/2.8.2:
+    resolution: {integrity: sha512-BtRV9BcncDyI2tsuS19zzhzoxD8Dh8LiCx7j7tHzrkz8GFXAexeWFdi22mjE1d16dftH2qNaytVxqiRTGlMfpw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
 
