@@ -110,6 +110,9 @@
 								roleColor
 								rolePosition
 							}
+							roles {
+								id
+							}
 						}
 					}`
 				);
@@ -149,9 +152,23 @@
 		},
 		computed: {
 			staffs() {
-				const contributors = this.contributors.filter(contributor =>
-					this.isStaffRole(contributor.user.roleId)
-				);
+				const contributors = this.contributors
+					.filter(
+						contributor =>
+							contributor.roles &&
+							contributor.roles.filter(r => this.isStaffRole(r.id)).length > 0
+					)
+					.map(contributor => {
+						if (
+							!contributor.roles.map(r => r.id).includes(this.roles.staff[0])
+						) {
+							contributor.user.roleId = this.roles.staff[1];
+							contributor.user.role = "Project Staff";
+							contributor.user.roleColor = "#42b883";
+						}
+
+						return contributor;
+					});
 
 				this.sortContributorsByRoles(contributors, this.roles.staff);
 
