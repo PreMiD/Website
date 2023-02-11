@@ -18,7 +18,7 @@ specifiers:
   language-flag-colors: ^2.1.2
   marked: 4.2.12
   nuxt: 2.15.8
-  nuxt-font-loader: ^1.1.5
+  nuxt-font-loader: ^2.0.0
   prettier: 2.8.4
   rimraf: 3.0.2
   sass: ^1.49.9
@@ -62,7 +62,7 @@ devDependencies:
   '@types/node': 17.0.45
   '@types/scrollmagic': 2.0.2
   fast-glob: 3.2.12
-  nuxt-font-loader: 1.1.5
+  nuxt-font-loader: 2.3.1
   prettier: 2.8.4
   rimraf: 3.0.2
   sass: 1.49.9
@@ -6558,8 +6558,8 @@ packages:
     resolution: {integrity: sha512-Y1wZESM7VUThYY+4W+X4ySH2maqcA+p7UR+w8VWNWVAd6lwuXXWz/w/Cz43J/dI2I+PS6wD5N+bJUF+gjWvIqg==}
     dev: false
 
-  /nuxt-font-loader/1.1.5:
-    resolution: {integrity: sha512-Hzdp3/FEehBoZPDIVK2az5bl+6lEABWhTi920wDdne7/kjCK3KSmC2fd0teLZPQYF7Lwsnsr8yQBAeOeOd7aDA==}
+  /nuxt-font-loader/2.3.1:
+    resolution: {integrity: sha512-PJlQm3OXf7dkCPX55548L/GXETA9sA4aXpXNrD1NaRVvO79FVNl9fRHNLdire5rbwkSsAf7jOtPvUAuOx281OQ==}
     dev: true
 
   /nuxt/2.15.8:
