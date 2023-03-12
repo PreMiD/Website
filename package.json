@@ -26,7 +26,7 @@
 		"vue-animejs": "2.1.1",
 		"vue-carousel-3d": "1.0.1",
 		"vue-js-modal": "2.0.1",
-		"vue-tippy": "4.16.0",
+		"vue-tippy": "4.16.1",
 		"vuejs-paginate": "2.1.0"
 	},
 	"devDependencies": {

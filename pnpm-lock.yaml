@@ -30,7 +30,7 @@ specifiers:
   vue-animejs: 2.1.1
   vue-carousel-3d: 1.0.1
   vue-js-modal: 2.0.1
-  vue-tippy: 4.16.0
+  vue-tippy: 4.16.1
   vuejs-paginate: 2.1.0
 
 dependencies:
@@ -52,7 +52,7 @@ dependencies:
   vue-animejs: 2.1.1
   vue-carousel-3d: 1.0.1
   vue-js-modal: 2.0.1
-  vue-tippy: 4.16.0
+  vue-tippy: 4.16.1
   vuejs-paginate: 2.1.0
 
 devDependencies:
@@ -9528,8 +9528,8 @@ packages:
     resolution: {integrity: sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==}
     dev: false
 
-  /vue-tippy/4.16.0:
-    resolution: {integrity: sha512-ViI9Gd7PPzOfykkIcDlSqJ3Nx3g+mUoO5rkfkc1jxwNtf74vN7YvqfLO9zKjDAac1wFbKuc21ndLxsTeWkk0VA==}
+  /vue-tippy/4.16.1:
+    resolution: {integrity: sha512-mukSw8B+soZuDIrv3N6f1jpQpUH1OVemMHxjmHmz3NktSUrdJ2uLn6ziAMDD/ThFn5rOQ8LbeVu51+dawSPGWA==}
     peerDependencies:
       vue: ^2.5.9
     dependencies:
