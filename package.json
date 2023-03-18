@@ -18,7 +18,7 @@
 		"ipx": "^0.9.11",
 		"language-flag-colors": "^2.1.2",
 		"marked": "4.2.12",
-		"nuxt": "2.15.8",
+		"nuxt": "3.3.1",
 		"scrollmagic": "^2.0.8",
 		"tinycolor2": "1.6.0",
 		"ts-loader": "^9.4.1",
