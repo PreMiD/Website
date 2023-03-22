@@ -1,41 +1,40 @@
 <template>
-	<transition appear v-on:after-appear="appear">
-		<div>
-			<div class="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
-				<div class="logoWrapper" ref="headerLogo">
-					<nuxt-link to="/">
-						<h1>PreMiD</h1>
-					</nuxt-link>
+	<div>
+		<div class="navbar" :class="pageLoad ? null : 'invisible'" ref="header">
+			<div class="logoWrapper" ref="headerLogo">
+				<nuxt-link to="/">
+					<h1>PreMiD</h1>
+				</nuxt-link>
 
-					<transition name="pop">
-						<div
-							v-if="!isMobile && !$store.state.extension.extensionInstalled"
-							class="status"
-							v-tippy="{
-								content: $t('store.message.error')
-							}"
-						>
-							<i
-								@click="$router.push('/downloads#ext-downloads')"
-								class="fa-exclamation fas"
-							/>
-						</div>
-					</transition>
-				</div>
-
-				<div v-if="!noLinks" class="links">
-					<nuxt-link
-						v-for="category of categories"
-						:key="category.route"
-						:to="'/' + category.route"
-						ref="headerLink"
+				<transition name="pop">
+					<div
+						v-if="!isMobile && !$store.state.extension.extensionInstalled"
+						class="status"
+						v-tippy="{
+							content: $t('store.message.error')
+						}"
 					>
-						<span class="round-icon">
-							<i :class="`fa-${category.logo} fas`"></i>
-						</span>
-						<p>{{ $t(category.string) }}</p>
-					</nuxt-link>
-					<!--
+						<i
+							@click="$router.push('/downloads#ext-downloads')"
+							class="fa-exclamation fas"
+						/>
+					</div>
+				</transition>
+			</div>
+
+			<div v-if="!noLinks" class="links">
+				<nuxt-link
+					v-for="category of categories"
+					:key="category.route"
+					:to="'/' + category.route"
+					ref="headerLink"
+				>
+					<span class="round-icon">
+						<i :class="`fa-${category.logo} fas`"></i>
+					</span>
+					<p>{{ $t(category.string) }}</p>
+				</nuxt-link>
+				<!--
 	Commented out because as of rn its not used/needed for normal users
 					<div
 						class="user-info"
@@ -71,68 +70,67 @@
 						</span>
 						<p>{{ $t("header.login") }}</p>
 					</nuxt-link>-->
-				</div>
-
-				<div v-if="countDownBtn && noLinks" class="links">
-					<a
-						v-if="countDownValue === 0"
-						@click="$nuxt.setLayout('default')"
-						class="navbar__item"
-					>
-						<span class="round-icon">
-							<i :class="`fa-backward fas`"></i>
-						</span>
-						<p>{{ $t("downloads.button.back") }}</p>
-					</a>
-
-					<a
-						@click="countDownValue === 0 ? open($props.href) : null"
-						class="navbar__item"
-					>
-						<span class="round-icon">
-							<i :class="`fa-forward fas`"></i>
-						</span>
-						<p
-							v-text="
-								countDownValue === 0
-									? $t('downloads.button.skip')
-									: countDownValue
-							"
-						/>
-					</a>
-				</div>
-
-				<div
-					class="hamburger"
-					ref="hamburger"
-					@click="mobileMenuActive = !mobileMenuActive"
-				>
-					<i v-if="mobileMenuActive" class="fa-times fas" />
-					<i v-else class="fa-bars fas" />
-				</div>
 			</div>
 
-			<transition name="slide-down">
-				<div
-					class="mobileLinks"
-					v-if="mobileMenuActive"
-					@click="mobileMenuActive = !mobileMenuActive"
+			<div v-if="countDownBtn && noLinks" class="links">
+				<a
+					v-if="countDownValue === 0"
+					@click="$nuxt.setLayout('default')"
+					class="navbar__item"
 				>
-					<nuxt-link
-						active-class="mobile-active"
-						v-for="category of categories"
-						:key="category.route"
-						:to="'/' + category.route"
-					>
-						<span>
-							<i :class="'fas fa-' + category.logo"></i>
-							{{ $t(`header.${category.route}`) }}
-						</span>
-					</nuxt-link>
-				</div>
-			</transition>
+					<span class="round-icon">
+						<i :class="`fa-backward fas`"></i>
+					</span>
+					<p>{{ $t("downloads.button.back") }}</p>
+				</a>
+
+				<a
+					@click="countDownValue === 0 ? open($props.href) : null"
+					class="navbar__item"
+				>
+					<span class="round-icon">
+						<i :class="`fa-forward fas`"></i>
+					</span>
+					<p
+						v-text="
+							countDownValue === 0
+								? $t('downloads.button.skip')
+								: countDownValue
+						"
+					/>
+				</a>
+			</div>
+
+			<div
+				class="hamburger"
+				ref="hamburger"
+				@click="mobileMenuActive = !mobileMenuActive"
+			>
+				<i v-if="mobileMenuActive" class="fa-times fas" />
+				<i v-else class="fa-bars fas" />
+			</div>
 		</div>
-	</transition>
+
+		<transition name="slide-down">
+			<div
+				class="mobileLinks"
+				v-if="mobileMenuActive"
+				@click="mobileMenuActive = !mobileMenuActive"
+			>
+				<nuxt-link
+					active-class="mobile-active"
+					v-for="category of categories"
+					:key="category.route"
+					:to="'/' + category.route"
+				>
+					<span>
+						<i :class="'fas fa-' + category.logo"></i>
+						{{ $t(`header.${category.route}`) }}
+					</span>
+				</nuxt-link>
+			</div>
+		</transition>
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -487,6 +485,8 @@
 
 				if (this.countDownValue === 0) clearInterval(interval);
 			}, 1 * 1000);
+
+			this.appear();
 		},
 		beforeDestroy() {
 			clearInterval(this.btnCheckInterva);

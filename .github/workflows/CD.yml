@@ -6,23 +6,31 @@ on:
   workflow_run:
     workflows: ["CI"]
     branches:
-      - stable
+      - main
     types:
       - completed
 jobs:
   docker:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    uses: "Recodive/Workflows/.github/workflows/CD Docker.yml@main"
-    secrets:
-      GH_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-  deploy:
-    needs: docker
-    uses: Recodive/Workflows/.github/workflows/CD.yml@main
-    secrets:
-      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-    with:
-      namespace: premid
-      deployment: website-stable
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          build-args: |
+            "GH_NPM_TOKEN=${{ secrets.GITHUB_TOKEN }}"
+          push: true
+          tags: |
+            ghcr.io/${{ env.IMAGE_REPOSITORY }}:latest
+            ghcr.io/${{ env.IMAGE_REPOSITORY }}:${{ github.sha }}-${{ github.run_number }}

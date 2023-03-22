@@ -1,288 +1,278 @@
 <template>
 	<div>
-		<transition appear v-on:after-appear="appear">
-			<div class="invisible" ref="mainDiv">
-				<div class="promo-container">
-					<div class="promo-container__heading" ref="promoHeading">
-						<div class="heading__logo">
-							<nuxt-img
-								alt="Logo Wordmark"
-								src="/images/logo-wordmark-blue.png"
-								height="150px"
-								width="450px"
-							/>
-						</div>
-						<div class="heading__text">
-							<p v-html="markdown($t('home.introduction.paragraph'))"></p>
-						</div>
-						<div class="heading__button-group">
-							<a class="button text--uppercase" href="#features">
-								<i class="fa-stream fas"></i>
-								{{ $t("home.introduction.button.features") }}
-							</a>
-							<nuxt-link
-								class="button button--black text--uppercase"
-								to="/downloads"
-							>
-								<i class="fa-file-export fas"></i>
-								{{ $t(`home.introduction.button.downloads`) }}
-							</nuxt-link>
-						</div>
+		<div class="invisible" ref="mainDiv">
+			<div class="promo-container">
+				<div class="promo-container__heading" ref="promoHeading">
+					<div class="heading__logo">
+						<nuxt-img
+							alt="Logo Wordmark"
+							src="/images/logo-wordmark-blue.png"
+							height="150px"
+							width="450px"
+						/>
 					</div>
-					<div class="promo-container__presences" ref="promoPresences">
-						<div
-							v-for="presence of presences_display"
-							:key="presence.service"
-							class="discord-usercard"
-							v-if="presence.profile.name !== ''"
+					<div class="heading__text">
+						<p v-html="markdown($t('home.introduction.paragraph'))"></p>
+					</div>
+					<div class="heading__button-group">
+						<a class="button text--uppercase" href="#features">
+							<i class="fa-stream fas"></i>
+							{{ $t("home.introduction.button.features") }}
+						</a>
+						<nuxt-link
+							class="button button--black text--uppercase"
+							to="/downloads"
 						>
-							<div class="usercard__header">
-								<div
-									class="header__avatar"
-									:style="
-										'background-image: url(' +
-										presence.profile.avatar +
-										'?size=128' +
-										');'
-									"
-								></div>
-								<div class="header__info">
-									<div class="info__nameTag">
-										<span class="username">{{ presence.profile.name }}</span>
-										<span class="discriminator"
-											>#{{ presence.profile.discriminator }}</span
-										>
-									</div>
-									<div class="info__badges">
-										<div
-											v-for="flag of presence.profile.flags"
-											:key="flag"
-											class="badge-wrapper"
-										>
-											<div
-												v-if="
-													flag == 'HOUSE_BRILLIANCE' ||
-													flag == 'HOUSE_BRAVERY' ||
-													flag == 'HOUSE_BALANCE'
-												"
-												v-tippy="{
-													content:
-														'HypeSquad ' +
-														flag.replace('HOUSE_', '')[0] +
-														flag
-															.replace('HOUSE_', '')
-															.slice(1, 10)
-															.toLowerCase()
-												}"
-												:class="`badge badge_${flag
-													.replace('HOUSE_', '')
-													.toLowerCase()}`"
-											></div>
-											<div
-												v-if="flag == 'EARLY_SUPPORTER'"
-												v-tippy="{ content: 'Early Supporter' }"
-												:class="`badge badge_early`"
-											></div>
-											<div
-												v-if="flag == 'HYPESQUAD_EVENTS'"
-												v-tippy="{ content: 'HypeSquad Events' }"
-												:class="`badge badge_hypesquad`"
-											></div>
-											<div
-												v-if="flag == 'NITRO'"
-												v-tippy="{ content: 'Discord Nitro' }"
-												:class="`badge badge_nitro`"
-											></div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="usercard__activity">
-								<div class="activity__info">
-									<div class="info__header">
-										{{ $t(`home.examples.playingagame`) }}
-									</div>
-									<div class="info__game">
-										<div class="game__icon">
-											<nuxt-img
-												v-if="presence.smallImage == false"
-												v-tippy="{ content: `PreMiD v${extVersion}` }"
-												class="game"
-												style="-webkit-mask: none"
-												alt="Small Image"
-												:src="presence.serviceLogo"
-											/>
-											<nuxt-img
-												v-if="presence.smallImage == 'search'"
-												v-tippy="{ content: `PreMiD v${extVersion}` }"
-												class="game"
-												alt="Small Image"
-												:src="presence.serviceLogo"
-											/>
-											<nuxt-img
-												v-if="presence.smallImage == true"
-												v-tippy="{ content: `PreMiD v${extVersion}` }"
-												class="game"
-												alt="Small Image"
-												:src="presence.serviceLogo"
-											/>
-											<nuxt-img
-												alt="Small Image"
-												v-if="presence.smallImage == 'search'"
-												v-tippy="{
-													content: $t('home.examples.status.browsing')
-												}"
-												class="status-icon"
-												src="/images/activity/actions/search.png"
-											/>
-											<nuxt-img
-												alt="Small Image"
-												v-if="presence.smallImage == true"
-												v-tippy="{
-													content: $t('home.examples.status.playing')
-												}"
-												class="status-icon"
-												src="/images/activity/actions/play.png"
-											/>
-										</div>
-										<div class="game__content">
-											<div class="game__title text-row">
-												<span>{{ presence.service_title }}</span>
-											</div>
-											<div class="game__st-line text-row">
-												{{ presence.data[0] }}
-											</div>
-											<div
-												v-if="presence.data[1]"
-												class="game__nd-line text-row"
-											>
-												{{ presence.data[1] }}
-											</div>
-											<div class="game__time text-row">
-												{{
-													presence.elapsed
-														? $t(`home.examples.timestamp2`, {
-																0: presence.presence_time
-														  })
-														: $t(`home.examples.timestamp`, {
-																0: presence.presence_time
-														  })
-												}}
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+							<i class="fa-file-export fas"></i>
+							{{ $t(`home.introduction.button.downloads`) }}
+						</nuxt-link>
 					</div>
 				</div>
-				<div id="features" class="section section--features pattern">
-					<div class="waves-divider waves-divider_top">
-						<svg
-							class="wave"
-							version="1.1"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 1440 100"
-							preserveAspectRatio="none"
-						>
-							<path
-								class="wave-animation"
-								d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z"
-								fill="currentColor"
-							/>
-						</svg>
-					</div>
-					<div class="section__heading section__heading--center">
-						<h1 id="featuresHeading">{{ $t("home.features.heading") }}</h1>
-					</div>
-					<div class="card--feature">
-						<div class="card--feature__details">
-							<h1
-								v-html="markdown($t('home.features.presencesystem.heading'))"
-							></h1>
-							<p>{{ $t("home.features.presencesystem.description") }}</p>
-							<p>
-								<nuxt-link
-									class="button button--lg"
-									to="/store"
-									v-text="$t('home.features.presencesystem.button')"
-								/>
-							</p>
+				<div class="promo-container__presences" ref="promoPresences">
+					<div
+						v-for="presence of presences_display"
+						:key="presence.service"
+						class="discord-usercard"
+						v-if="presence.profile.name !== ''"
+					>
+						<div class="usercard__header">
+							<div
+								class="header__avatar"
+								:style="
+									'background-image: url(' +
+									presence.profile.avatar +
+									'?size=128' +
+									');'
+								"
+							></div>
+							<div class="header__info">
+								<div class="info__nameTag">
+									<span class="username">{{ presence.profile.name }}</span>
+									<span class="discriminator"
+										>#{{ presence.profile.discriminator }}</span
+									>
+								</div>
+								<div class="info__badges">
+									<div
+										v-for="flag of presence.profile.flags"
+										:key="flag"
+										class="badge-wrapper"
+									>
+										<div
+											v-if="
+												flag == 'HOUSE_BRILLIANCE' ||
+												flag == 'HOUSE_BRAVERY' ||
+												flag == 'HOUSE_BALANCE'
+											"
+											v-tippy="{
+												content:
+													'HypeSquad ' +
+													flag.replace('HOUSE_', '')[0] +
+													flag.replace('HOUSE_', '').slice(1, 10).toLowerCase()
+											}"
+											:class="`badge badge_${flag
+												.replace('HOUSE_', '')
+												.toLowerCase()}`"
+										></div>
+										<div
+											v-if="flag == 'EARLY_SUPPORTER'"
+											v-tippy="{ content: 'Early Supporter' }"
+											:class="`badge badge_early`"
+										></div>
+										<div
+											v-if="flag == 'HYPESQUAD_EVENTS'"
+											v-tippy="{ content: 'HypeSquad Events' }"
+											:class="`badge badge_hypesquad`"
+										></div>
+										<div
+											v-if="flag == 'NITRO'"
+											v-tippy="{ content: 'Discord Nitro' }"
+											:class="`badge badge_nitro`"
+										></div>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="card--feature__promo">
-							<nuxt-img
-								alt="Feature Image"
-								class="card--feature__promo--image1"
-								style="max-width: 100%"
-								src="/images/features/card1.png"
-							/>
+						<div class="usercard__activity">
+							<div class="activity__info">
+								<div class="info__header">
+									{{ $t(`home.examples.playingagame`) }}
+								</div>
+								<div class="info__game">
+									<div class="game__icon">
+										<nuxt-img
+											v-if="presence.smallImage == false"
+											v-tippy="{ content: `PreMiD v${extVersion}` }"
+											class="game"
+											style="-webkit-mask: none"
+											alt="Small Image"
+											:src="presence.serviceLogo"
+										/>
+										<nuxt-img
+											v-if="presence.smallImage == 'search'"
+											v-tippy="{ content: `PreMiD v${extVersion}` }"
+											class="game"
+											alt="Small Image"
+											:src="presence.serviceLogo"
+										/>
+										<nuxt-img
+											v-if="presence.smallImage == true"
+											v-tippy="{ content: `PreMiD v${extVersion}` }"
+											class="game"
+											alt="Small Image"
+											:src="presence.serviceLogo"
+										/>
+										<nuxt-img
+											alt="Small Image"
+											v-if="presence.smallImage == 'search'"
+											v-tippy="{
+												content: $t('home.examples.status.browsing')
+											}"
+											class="status-icon"
+											src="/images/activity/actions/search.png"
+										/>
+										<nuxt-img
+											alt="Small Image"
+											v-if="presence.smallImage == true"
+											v-tippy="{
+												content: $t('home.examples.status.playing')
+											}"
+											class="status-icon"
+											src="/images/activity/actions/play.png"
+										/>
+									</div>
+									<div class="game__content">
+										<div class="game__title text-row">
+											<span>{{ presence.service_title }}</span>
+										</div>
+										<div class="game__st-line text-row">
+											{{ presence.data[0] }}
+										</div>
+										<div v-if="presence.data[1]" class="game__nd-line text-row">
+											{{ presence.data[1] }}
+										</div>
+										<div class="game__time text-row">
+											{{
+												presence.elapsed
+													? $t(`home.examples.timestamp2`, {
+															0: presence.presence_time
+													  })
+													: $t(`home.examples.timestamp`, {
+															0: presence.presence_time
+													  })
+											}}
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="card--feature card--feature--reverse">
-						<div class="card--feature__details">
-							<h1>{{ $t("home.features.simpleInterface.heading") }}</h1>
-							<p>{{ $t("home.features.simpleInterface.description") }}</p>
-							<ul>
-								<li>
-									<p>{{ $t("home.features.simpleInterface.description.1") }}</p>
-								</li>
-								<li>
-									<p>{{ $t("home.features.simpleInterface.description.2") }}</p>
-								</li>
-								<li>
-									<p>{{ $t("home.features.simpleInterface.description.3") }}</p>
-								</li>
-							</ul>
-						</div>
-						<div class="card--feature__promo">
-							<video autoplay loop>
-								<source src="/videos/card2_video.mp4" type="video/mp4" />
-								<nuxt-img
-									alt="Feature Image"
-									class="card--feature__promo--image2"
-									src="/images/features/card2.png"
-								/>
-							</video>
-						</div>
-					</div>
-					<div class="card--feature">
-						<div class="card--feature__details">
-							<h1>{{ $t("home.features.quickSupport.heading") }}</h1>
-							<p>{{ $t("home.features.quickSupport.description") }}</p>
-							<p>
-								<a
-									class="button button--lg"
-									href="https://discord.premid.app"
-									>{{ $t("home.features.quickSupport.button") }}</a
-								>
-							</p>
-						</div>
-						<div class="card--feature__promo">
-							<nuxt-img
-								alt="Feature Image"
-								class="card--feature__promo--image1"
-								src="/images/features/card3.png"
-							/>
-						</div>
-					</div>
-					<div class="waves-divider waves-divider_bottom">
-						<svg
-							class="wave"
-							version="1.1"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 1440 100"
-							preserveAspectRatio="none"
-						>
-							<path
-								class="wave-animation"
-								d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z"
-								fill="currentColor"
-							/>
-						</svg>
 					</div>
 				</div>
 			</div>
-		</transition>
+			<div id="features" class="section section--features pattern">
+				<div class="waves-divider waves-divider_top">
+					<svg
+						class="wave"
+						version="1.1"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 1440 100"
+						preserveAspectRatio="none"
+					>
+						<path
+							class="wave-animation"
+							d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z"
+							fill="currentColor"
+						/>
+					</svg>
+				</div>
+				<div class="section__heading section__heading--center">
+					<h1 id="featuresHeading">{{ $t("home.features.heading") }}</h1>
+				</div>
+				<div class="card--feature">
+					<div class="card--feature__details">
+						<h1
+							v-html="markdown($t('home.features.presencesystem.heading'))"
+						></h1>
+						<p>{{ $t("home.features.presencesystem.description") }}</p>
+						<p>
+							<nuxt-link
+								class="button button--lg"
+								to="/store"
+								v-text="$t('home.features.presencesystem.button')"
+							/>
+						</p>
+					</div>
+					<div class="card--feature__promo">
+						<nuxt-img
+							alt="Feature Image"
+							class="card--feature__promo--image1"
+							style="max-width: 100%"
+							src="/images/features/card1.png"
+						/>
+					</div>
+				</div>
+				<div class="card--feature card--feature--reverse">
+					<div class="card--feature__details">
+						<h1>{{ $t("home.features.simpleInterface.heading") }}</h1>
+						<p>{{ $t("home.features.simpleInterface.description") }}</p>
+						<ul>
+							<li>
+								<p>{{ $t("home.features.simpleInterface.description.1") }}</p>
+							</li>
+							<li>
+								<p>{{ $t("home.features.simpleInterface.description.2") }}</p>
+							</li>
+							<li>
+								<p>{{ $t("home.features.simpleInterface.description.3") }}</p>
+							</li>
+						</ul>
+					</div>
+					<div class="card--feature__promo">
+						<video autoplay loop>
+							<source src="/videos/card2_video.mp4" type="video/mp4" />
+							<nuxt-img
+								alt="Feature Image"
+								class="card--feature__promo--image2"
+								src="/images/features/card2.png"
+							/>
+						</video>
+					</div>
+				</div>
+				<div class="card--feature">
+					<div class="card--feature__details">
+						<h1>{{ $t("home.features.quickSupport.heading") }}</h1>
+						<p>{{ $t("home.features.quickSupport.description") }}</p>
+						<p>
+							<a class="button button--lg" href="https://discord.premid.app">{{
+								$t("home.features.quickSupport.button")
+							}}</a>
+						</p>
+					</div>
+					<div class="card--feature__promo">
+						<nuxt-img
+							alt="Feature Image"
+							class="card--feature__promo--image1"
+							src="/images/features/card3.png"
+						/>
+					</div>
+				</div>
+				<div class="waves-divider waves-divider_bottom">
+					<svg
+						class="wave"
+						version="1.1"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 1440 100"
+						preserveAspectRatio="none"
+					>
+						<path
+							class="wave-animation"
+							d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z"
+							fill="currentColor"
+						/>
+					</svg>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -451,6 +441,8 @@
 			};
 		},
 		mounted() {
+			this.appear();
+
 			[
 				document.querySelector("#featuresHeading"),
 				...document.querySelectorAll(".card--feature")
