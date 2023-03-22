@@ -1,3 +1,118 @@
+<script>
+	export default {
+		name: "Contributors",
+		auth: false,
+		async fetch() {
+			if (process.client) this.$nuxt.$loading.start();
+			try {
+				const contributors = await this.$graphql(
+					`
+					{
+						credits {
+							user {
+								id
+								avatar
+								status
+								name
+								role
+								roleId
+								roleColor
+								rolePosition
+							}
+						}
+					}`
+				);
+
+				this.contributors = contributors.credits
+					.sort((a, b) =>
+						a.user.name.toLowerCase().localeCompare(b.user.name.toLowerCase())
+					)
+					.sort((a, b) => b.user.rolePosition - a.user.rolePosition)
+					.reverse();
+			} catch (err) {
+				this.contributors = null;
+			}
+
+			if (process.client) this.$nuxt.$loading.finish();
+		},
+		data() {
+			return {
+				contributors: [],
+				display: false
+			};
+		},
+		methods: {
+			sortUsers() {
+				const staffRoles = [
+					"673682085608816652", // Project Management
+					"514546359865442304", // Moderator
+					"566417964820070421", // Support
+					"994342612532199525", // Community Management
+					"811262682408943616", // Localization Manager
+					"515874214750715904", //Patron
+					"585532751663333383", //Booster
+					"502165799172309013" //Donator
+				];
+
+				//* Sort by role array index
+				return this.contributors.sort((a, b) => {
+					if (
+						staffRoles.indexOf(a.user.roleId) >
+						staffRoles.indexOf(b.user.roleId)
+					)
+						return 1;
+					else if (
+						staffRoles.indexOf(a.user.roleId) <
+						staffRoles.indexOf(b.user.roleId)
+					)
+						return -1;
+					else return 0;
+				});
+			},
+			isStaffRole(roleId) {
+				const staffRoles = [
+					"514546359865442304", // Discord Mod
+					"566417964820070421", // Technical Support
+					"673682085608816652", // Project Management
+					"685969048399249459", // Human Resources
+					"994342612532199525", // Community Management
+					"673682085608816652", // Project Management
+					"811262682408943616" // Localization Manager,
+				];
+
+				if (staffRoles.indexOf(roleId) !== -1) return true;
+				else return false;
+			},
+			isSupporterRole(roleId) {
+				const supportRoles = [
+					"502165799172309013", //Donator
+					"515874214750715904", //Patron
+					"585532751663333383" //Booster
+				];
+
+				if (supportRoles.indexOf(roleId) !== -1) return true;
+				else return false;
+			},
+			isTranslatorRole(roleId) {
+				const translatorRoles = ["502148045991968788", "522755339448483840"]; //Translator, Proofreader
+
+				if (translatorRoles.indexOf(roleId) !== -1) return true;
+				else return false;
+			},
+			userNameColor(patronColor, userColor) {
+				if (patronColor == "#fff") return userColor;
+				else return patronColor;
+			}
+		},
+
+		head() {
+			return {
+				title: "Contributors"
+			};
+		}
+	};
+</script>
+
 <template>
 	<div>
 		<title>PreMiD - Contributors</title>
@@ -10,7 +125,7 @@
 					></h1>
 					<div class="contributor-inner">
 						<div
-							v-for="contributor of contributors"
+							v-for="contributor of sortUsers()"
 							:key="contributor.user.id"
 							class="contributor-card"
 						>
@@ -29,7 +144,7 @@
 					></h1>
 					<div class="contributor-inner">
 						<div
-							v-for="contributor of contributors"
+							v-for="contributor of sortUsers()"
 							:key="contributor.user.id"
 							class="contributor-card"
 						>
@@ -48,7 +163,7 @@
 					></h1>
 					<div class="contributor-inner">
 						<div
-							v-for="contributor of contributors"
+							v-for="contributor of sortUsers()"
 							:key="contributor.user.id"
 							class="contributor-card"
 						>
@@ -97,91 +212,3 @@
 		font-size: 2.5em;
 	}
 </style>
-
-<script>
-	export default {
-		name: "Contributors",
-		auth: false,
-		async fetch() {
-			if (process.client) this.$nuxt.$loading.start();
-			try {
-				const contributors = await this.$graphql(
-					`
-					{
-						credits {
-							user {
-								id
-								avatar
-								status
-								name
-								role
-								roleId
-								roleColor
-								rolePosition
-							}
-						}
-					}`
-				);
-
-				this.contributors = contributors.credits
-					.sort((a, b) =>
-						a.user.name.toLowerCase().localeCompare(b.user.name.toLowerCase())
-					)
-					.sort((a, b) => b.user.rolePosition - a.user.rolePosition)
-					.reverse();
-			} catch (err) {
-				this.contributors = null;
-			}
-
-			if (process.client) this.$nuxt.$loading.finish();
-		},
-		data() {
-			return {
-				contributors: [],
-				display: false
-			};
-		},
-		methods: {
-			isStaffRole(roleId) {
-				const staffRoles = [
-					"514546359865442304", // Discord Mod
-					"566417964820070421", // Technical Support
-					"673682085608816652", // Project Management
-					"685969048399249459", // Human Resources
-					"994342612532199525", // Community Management
-					"673682085608816652", // Project Management
-					"811262682408943616" // Localization Manager
-				];
-
-				if (staffRoles.indexOf(roleId) !== -1) return true;
-				else return false;
-			},
-			isSupporterRole(roleId) {
-				const supportRoles = [
-					"502165799172309013", //Donator
-					"515874214750715904", //Patron
-					"585532751663333383" //Booster
-				];
-
-				if (supportRoles.indexOf(roleId) !== -1) return true;
-				else return false;
-			},
-			isTranslatorRole(roleId) {
-				const translatorRoles = ["502148045991968788", "522755339448483840"]; //Translator, Proofreader
-
-				if (translatorRoles.indexOf(roleId) !== -1) return true;
-				else return false;
-			},
-			userNameColor(patronColor, userColor) {
-				if (patronColor == "#fff") return userColor;
-				else return patronColor;
-			}
-		},
-
-		head() {
-			return {
-				title: "Contributors"
-			};
-		}
-	};
-</script>
