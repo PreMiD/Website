@@ -41,8 +41,8 @@
 				display: false
 			};
 		},
-		methods: {
-			sortUsers() {
+		computed: {
+			sortedUsers() {
 				const staffRoles = [
 					"673682085608816652", // Project Management
 					"514546359865442304", // Moderator
@@ -68,7 +68,9 @@
 						return -1;
 					else return 0;
 				});
-			},
+			}
+		},
+		methods: {
 			isStaffRole(roleId) {
 				const staffRoles = [
 					"514546359865442304", // Discord Mod
@@ -125,7 +127,7 @@
 					></h1>
 					<div class="contributor-inner">
 						<div
-							v-for="contributor of sortUsers()"
+							v-for="contributor of sortedUsers"
 							:key="contributor.user.id"
 							class="contributor-card"
 						>
@@ -144,7 +146,7 @@
 					></h1>
 					<div class="contributor-inner">
 						<div
-							v-for="contributor of sortUsers()"
+							v-for="contributor of sortedUsers"
 							:key="contributor.user.id"
 							class="contributor-card"
 						>
@@ -163,7 +165,7 @@
 					></h1>
 					<div class="contributor-inner">
 						<div
-							v-for="contributor of sortUsers()"
+							v-for="contributor of sortedUsers"
 							:key="contributor.user.id"
 							class="contributor-card"
 						>
