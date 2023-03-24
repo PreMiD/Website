@@ -206,7 +206,7 @@
 						</div>
 					</div>
 				</div>
-				<div v-if="noBetas" class="show-beta">
+				<!-- 				<div v-if="noBetas" class="show-beta">
 					<p>No Betas!</p>
 					<small
 						>It seems like we don't have any betas to test with you at this
@@ -316,7 +316,7 @@
 							</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</transition>
 
