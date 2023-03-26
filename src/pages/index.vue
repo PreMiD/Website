@@ -427,7 +427,8 @@
 						smallImage: true,
 						data: ["PreMiD coding stream!", "alexbcberio"],
 						seconds: "2750", //Suitable range for timer
-						presence_time: "49:12"
+						presence_time: "49:12",
+						elapsed: true
 					},
 					{
 						service_title: "V LIVE",
@@ -471,47 +472,52 @@
 			});
 		},
 		created() {
-			let timers = setInterval(() => {
-				let oneFinished = false;
-				this.presences_display.forEach((el, i) => {
-					if (el.presence_time === "00:00" || el.live) {
-						if (oneFinished) {
-							return clearInterval(timers);
-						}
-						return (oneFinished = true);
-					}
+			let timeOfLastUpdate = Date.now(),
+				timers = setInterval(() => {
+					//Prevent adblockers from breaking the timer
+					if (Date.now() - timeOfLastUpdate < 1000) return;
 
-					let minutes = el.presence_time.split(":")[0];
-					let seconds = el.presence_time.split(":")[1];
+					timeOfLastUpdate = Date.now();
+					let oneFinished = false;
+					this.presences_display.forEach((el, i) => {
+						if (el.presence_time === "00:00" || el.live) {
+							if (oneFinished) {
+								return clearInterval(timers);
+							}
+							return (oneFinished = true);
+						}
 
-					if (el.elapsed) {
-						if (seconds === "59") {
-							el.presence_time =
-								(parseInt(minutes) + 1).toString().padStart(2, "0") + ":00";
+						let minutes = el.presence_time.split(":")[0];
+						let seconds = el.presence_time.split(":")[1];
+
+						if (el.elapsed) {
+							if (seconds === "59") {
+								el.presence_time =
+									(parseInt(minutes) + 1).toString().padStart(2, "0") + ":00";
+							} else {
+								el.presence_time =
+									minutes +
+									":" +
+									(parseInt(seconds) + 1).toString().padStart(2, "0");
+							}
 						} else {
-							el.presence_time =
-								minutes +
-								":" +
-								(parseInt(seconds) + 1).toString().padStart(2, "0");
+							if (el.presence_time === "00:00") {
+								return;
+							} else if (seconds === "00") {
+								el.presence_time =
+									(parseInt(minutes) - 1).toString().padStart(2, "0") + ":59";
+							} else if (seconds.split("")[1] === "0") {
+								el.presence_time =
+									minutes + ":" + parseInt(seconds.split("")[0] - 1) + "9";
+							} else {
+								el.presence_time =
+									minutes +
+									":" +
+									(parseInt(seconds) - 1).toString().padStart(2, "0");
+							}
 						}
-					} else {
-						if (el.presence_time === "00:00") {
-							return;
-						} else if (seconds === "00") {
-							el.presence_time =
-								(parseInt(minutes) - 1).toString().padStart(2, "0") + ":59";
-						} else if (seconds.split("")[1] === "0") {
-							el.presence_time =
-								minutes + ":" + parseInt(seconds.split("")[0] - 1) + "9";
-						} else {
-							el.presence_time =
-								minutes +
-								":" +
-								(parseInt(seconds) - 1).toString().padStart(2, "0");
-						}
-					}
-				});
-			}, 1000);
+					});
+				}, 100);
 		},
 		methods: {
 			appear() {
