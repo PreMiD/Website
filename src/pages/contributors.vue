@@ -66,7 +66,10 @@
 						staffRoles.indexOf(b.user.roleId)
 					)
 						return -1;
-					else return 0;
+					else
+						return a.user.name
+							.toLowerCase()
+							.localeCompare(b.user.name.toLowerCase());
 				});
 			}
 		},
@@ -87,6 +90,7 @@
 			},
 			isSupporterRole(roleId) {
 				const supportRoles = [
+					"1032759805732978708", //Contributor
 					"502165799172309013", //Donator
 					"515874214750715904", //Patron
 					"585532751663333383" //Booster
