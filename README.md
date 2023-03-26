@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/PreMiD/Website/stable/src/static/assets/images/logo.png" style="border-radius: 1.3em;" width="512px" draggable="false" >
+<img src="https://cdn.rcd.gg/PreMiD.png" style="border-radius: 1.3em;" width="512px" draggable="false" >
 
 # PreMiD Website
 
