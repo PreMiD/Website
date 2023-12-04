@@ -166,11 +166,7 @@
 									browser.key == 'chrome' || browser.key == 'edge'
 							}"
 							class="cards__card clickable"
-							@click="
-								browser.warning
-									? warn(browser.warning)
-									: open(browser.key, 'Extension')
-							"
+							@click="open(browser.key, 'Extension')"
 						>
 							<div class="card__icon">
 								<i :class="`fa-${isChrome ? browser.icon : 'chrome'} fab`"></i>
@@ -331,39 +327,6 @@
 				</span>
 			</div>
 		</transition>
-
-		<modal
-			v-if="modalAvailable"
-			:classes="'modal'"
-			width="400px"
-			height="auto"
-			name="warning"
-		>
-			<div class="title">{{ $t("downloads.warning.title") }}</div>
-			<div class="message">
-				<p
-					v-html="
-						linkify(
-							$t(warning.messageKey),
-							'https://addons.opera.com/en/extensions/details/install-chrome-extensions/'
-						)
-					"
-				></p>
-			</div>
-			<div class="buttons">
-				<div class="container">
-					<button class="button btn cancel" @click="$modal.hide('warning')">
-						{{ $t("downloads.button.cancel") }}
-					</button>
-					<button
-						class="button btn accept"
-						@click="open('chrome', 'Extension')"
-					>
-						{{ $t("downloads.button.okay") }}
-					</button>
-				</div>
-			</div>
-		</modal>
 	</div>
 </template>
 
@@ -616,29 +579,17 @@
 					setTimeout(() => element.classList.remove("highlight"), 1000);
 				}
 			},
-			linkify(pls, customUrl) {
-				if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
-				return pls.match(/(\*\*.*?\*\*)/g).map(ch => {
-					return pls.replace(
-						ch,
-						`<a class="text-highlight" href="${
-							customUrl || "/beta"
-						}">${ch.slice(2, ch.length - 2)}</a>`
-					);
-				})[0];
-			},
-			warn(number) {
-				switch (number) {
-					case 2:
-						this.warning.messageKey = "downloads.warning.message.opera";
-						break;
-					default:
-						this.warning.messageKey = "Unknown error.";
-						break;
-				}
-
-				this.$modal.show("warning");
-			},
+			// linkify(pls, customUrl) {
+			// 	if (!pls.match(/(\*\*.*?\*\*)/g)) return pls;
+			// 	return pls.match(/(\*\*.*?\*\*)/g).map(ch => {
+			// 		return pls.replace(
+			// 			ch,
+			// 			`<a class="text-highlight" href="${
+			// 				customUrl || "/beta"
+			// 			}">${ch.slice(2, ch.length - 2)}</a>`
+			// 		);
+			// 	})[0];
+			// },
 			open(platform, type = "") {
 				if (platform == "linux") {
 					this.openInNewTab(
