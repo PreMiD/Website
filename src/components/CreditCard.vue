@@ -9,14 +9,16 @@
 			<h1 :title="user.name" v-text="user.name"></h1>
 			<h2>
 				{{
-					user.roleId == "515874214750715904"
-						? "Patron"
-						: $t(
-								`contributors.roles.${
-									user.role.replace(/\s/g, "").charAt(0).toLowerCase() +
-									user.role.replace(/\s/g, "").substring(1)
-								}`
-						  )
+					{
+						"515874214750715904": "Patron",
+						"606222296016879722": "Presence Developer"
+					}[user.roleId] ??
+					$t(
+						`contributors.roles.${
+							user.role.replace(/\s/g, "").charAt(0).toLowerCase() +
+							user.role.replace(/\s/g, "").substring(1)
+						}`
+					)
 				}}
 			</h2>
 		</div>
