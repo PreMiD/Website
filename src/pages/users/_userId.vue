@@ -17,7 +17,6 @@
 				<div class="user-data">
 					<p class="username">
 						{{ user.name }}
-						<span class="tag">#{{ user.tag || "0000" }}</span>
 					</p>
 					<div class="roles">
 						<div v-for="role in user.roles" :key="role" :role="role">
