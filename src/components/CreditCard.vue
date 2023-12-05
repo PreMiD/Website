@@ -10,8 +10,7 @@
 			<h2>
 				{{
 					{
-						"515874214750715904": "Patron",
-						"606222296016879722": "Presence Developer"
+						"515874214750715904": "Patron"
 					}[user.roleId] ??
 					$t(
 						`contributors.roles.${

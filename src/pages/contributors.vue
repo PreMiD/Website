@@ -175,7 +175,7 @@
 				</div>
 
 				<div class="contributor-container">
-					<h1 class="titleHeading" v-text="'Presence Developers'"></h1>
+					<h1 class="titleHeading" v-text="$t('contributors.headings.presenceDevelopers')"></h1>
 					<div class="contributor-inner">
 						<div
 							v-for="contributor of sortedUsers"
