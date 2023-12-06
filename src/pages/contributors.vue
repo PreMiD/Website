@@ -6,8 +6,7 @@
 			if (process.client) this.$nuxt.$loading.start();
 			try {
 				const contributors = await this.$graphql(
-					`
-					{
+					`{
 						credits {
 							user {
 								id
@@ -99,10 +98,23 @@
 				if (supportRoles.indexOf(roleId) !== -1) return true;
 				else return false;
 			},
-			isTranslatorRole(roleId) {
-				const translatorRoles = ["502148045991968788", "522755339448483840"]; //Translator, Proofreader
 
-				if (translatorRoles.indexOf(roleId) !== -1) return true;
+			isPresenceDeveloperRole(roleId) {
+				const presenceDeveloperRole = "606222296016879722"; //Presence Developer
+
+				if (presenceDeveloperRole == roleId) return true;
+				else return false;
+			},
+			isProofreaderRole(roleId) {
+				const proofreaderRole = "522755339448483840"; //Proofreader
+
+				if (proofreaderRole == roleId) return true;
+				else return false;
+			},
+			isTranslatorRole(roleId) {
+				const translatorRole = "502148045991968788"; //Translator
+
+				if (translatorRole == roleId) return true;
 				else return false;
 			},
 			userNameColor(patronColor, userColor) {
@@ -132,7 +144,7 @@
 					<div class="contributor-inner">
 						<div
 							v-for="contributor of sortedUsers"
-							:key="contributor.user.id"
+							:key="contributor.user.id + 'staff'"
 							class="contributor-card"
 						>
 							<CreditCard
@@ -151,7 +163,7 @@
 					<div class="contributor-inner">
 						<div
 							v-for="contributor of sortedUsers"
-							:key="contributor.user.id"
+							:key="contributor.user.id + 'supporter'"
 							class="contributor-card"
 						>
 							<CreditCard
@@ -163,6 +175,21 @@
 				</div>
 
 				<div class="contributor-container">
+					<h1 class="titleHeading" v-text="$t('contributors.headings.presenceDevelopers')"></h1>
+					<div class="contributor-inner">
+						<div
+							v-for="contributor of sortedUsers"
+							:key="contributor.user.id + 'developer'"
+							class="contributor-card"
+						>
+							<CreditCard
+								v-if="isPresenceDeveloperRole(contributor.user.roleId)"
+								:user="contributor.user" 
+							/>
+						</div>
+					</div>
+				</div>
+				<div class="contributor-container">
 					<h1
 						class="titleHeading"
 						v-text="$t('contributors.headings.translators')"
@@ -170,7 +197,17 @@
 					<div class="contributor-inner">
 						<div
 							v-for="contributor of sortedUsers"
-							:key="contributor.user.id"
+							:key="contributor.user.id + 'proofreader'"
+							class="contributor-card"
+						>
+							<CreditCard
+								v-if="isProofreaderRole(contributor.user.roleId)"
+								:user="contributor.user"
+							/>
+						</div>
+						<div
+							v-for="contributor of sortedUsers"
+							:key="contributor.user.id + 'translator'"
 							class="contributor-card"
 						>
 							<CreditCard
