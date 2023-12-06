@@ -48,9 +48,7 @@
 							<div class="header__info">
 								<div class="info__nameTag">
 									<span class="username">{{ presence.profile.name }}</span>
-									<span class="discriminator"
-										>#{{ presence.profile.discriminator }}</span
-									>
+								
 								</div>
 								<div class="info__badges">
 									<div
@@ -329,7 +327,6 @@
 
 				presence.profile = {
 					name: this.users[index].user.name,
-					discriminator: this.users[index].user.tag,
 					flags: this.users[index].user.flags || [],
 					avatar: this.users[index].user.avatar
 				};
