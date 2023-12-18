@@ -501,13 +501,13 @@
 				return true;
 			},
 			searchHandle(evt, typing) {
-				this.presenceSearch = this.presenceSearch.trim();
+				const presenceSearch = this.presenceSearch.trim();
 
-				if (!this.presenceSearch) this.typing = false;
+				if (!presenceSearch) this.typing = false;
 
 				if (
 					evt &&
-					this.presenceSearch == "" &&
+					presenceSearch == "" &&
 					evt.key.toLowerCase() == "backspace"
 				) {
 					for (let key in this.filters) this.filters[key].enabled = false;
@@ -516,18 +516,19 @@
 					this.typing = typing != "undefined" ? typing : true;
 					const handles = Object.keys(this.filters);
 
-					if (handles.indexOf(this.presenceSearch.split(" ")[0]) !== -1) {
+					if (handles.indexOf(presenceSearch.split(" ")[0]) !== -1) {
+						evt.preventDefault();
 						for (let key in this.filters) {
-							key == this.presenceSearch.split(" ")[0]
+							key == presenceSearch.split(" ")[0]
 								? (this.filters[key].enabled = true)
 								: (this.filters[key].enabled = false);
 						}
 
 						this.presenceSearch =
-							this.presenceSearch
+							presenceSearch
 								.split(" ")[0]
-								.replace(this.presenceSearch.split(" ")[0], "") +
-							this.presenceSearch.split(" ").slice(1);
+								.replace(presenceSearch.split(" ")[0], "") +
+							presenceSearch.split(" ").slice(1);
 
 						this.setSearchStyle();
 					}
