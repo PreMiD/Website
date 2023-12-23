@@ -178,7 +178,6 @@
 				credits(id: "${this.$route.params.userId}") {
 					user {
 						name
-						tag
 						avatar
 					}
 					roles{

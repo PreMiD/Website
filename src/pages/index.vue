@@ -48,7 +48,6 @@
 							<div class="header__info">
 								<div class="info__nameTag">
 									<span class="username">{{ presence.profile.name }}</span>
-								
 								</div>
 								<div class="info__badges">
 									<div
