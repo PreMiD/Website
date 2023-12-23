@@ -198,6 +198,9 @@
 		data() {
 			return {
 				cardHovered: false,
+				isInstalled: false,
+				isFetchingInstalled: false,
+				isPresenceInstalledInterval: null,
 				presenceLinkName: this.$props.presence.service
 			};
 		},
@@ -210,6 +213,19 @@
 			this.isPresenceInstalled(this.presence.service).then(response => {
 				if (response) this.isInstalled = true;
 			});
+
+			this.isPresenceInstalledInterval = setInterval(() => {
+				if (this.isFetchingInstalled) return;
+				this.isFetchingInstalled = true;
+				this.isPresenceInstalled(this.presence.service).then(response => {
+					if (response) this.isInstalled = true;
+					else this.isInstalled = false;
+					this.isFetchingInstalled = false;
+				});
+			}, 1000);
+		},
+		beforeDestroy() {
+			clearInterval(this.isPresenceInstalledInterval);
 		},
 		methods: {
 			like() {
