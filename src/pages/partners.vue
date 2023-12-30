@@ -184,8 +184,6 @@
 			};
 		},
 		async fetch() {
-			if (process.client) this.$nuxt.$loading.start();
-
 			try {
 				let { partners, sponsors } = await this.$graphql(
 					`{
@@ -208,8 +206,6 @@
 			} catch (err) {
 				return this.error(err.message);
 			}
-
-			if (process.client) this.$nuxt.$loading.finish();
 		},
 		mounted() {
 			this.$auth.$storage.setUniversal("redirect", "/partners#req");

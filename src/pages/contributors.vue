@@ -3,7 +3,6 @@
 		name: "Contributors",
 		auth: false,
 		async fetch() {
-			if (process.client) this.$nuxt.$loading.start();
 			try {
 				const contributors = await this.$graphql(
 					`{
@@ -31,8 +30,6 @@
 			} catch (err) {
 				this.contributors = null;
 			}
-
-			if (process.client) this.$nuxt.$loading.finish();
 		},
 		data() {
 			return {
@@ -175,7 +172,10 @@
 				</div>
 
 				<div class="contributor-container">
-					<h1 class="titleHeading" v-text="$t('contributors.headings.presenceDevelopers')"></h1>
+					<h1
+						class="titleHeading"
+						v-text="$t('contributors.headings.presenceDevelopers')"
+					></h1>
 					<div class="contributor-inner">
 						<div
 							v-for="contributor of sortedUsers"
@@ -184,7 +184,7 @@
 						>
 							<CreditCard
 								v-if="isPresenceDeveloperRole(contributor.user.roleId)"
-								:user="contributor.user" 
+								:user="contributor.user"
 							/>
 						</div>
 					</div>
