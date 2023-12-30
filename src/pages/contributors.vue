@@ -3,6 +3,9 @@
 		name: "Contributors",
 		auth: false,
 		async fetch() {
+			if (process.browser) {
+					window.$nuxt.$root.$loading.start();
+				}
 			try {
 				const contributors = await this.$graphql(
 					`{
@@ -30,6 +33,9 @@
 			} catch (err) {
 				this.contributors = null;
 			}
+			if (process.browser) {
+					window.$nuxt.$root.$loading.finish();
+				}
 		},
 		data() {
 			return {
