@@ -165,8 +165,7 @@ export default async function () {
 				"@nuxtjs/google-adsense",
 				{
 					id: "ca-pub-1575460061917202",
-					tag: "adsense",
-					onPageLoad: true
+					tag: "adsense"
 				}
 			],
 			"@nuxtjs/auth",
