@@ -185,7 +185,7 @@
 		},
 		async fetch() {
 			if (process.browser) {
-				window.$nuxt.$root.$loading.start();
+				window.$nuxt.$loading.start();
 			}
 			try {
 				let { partners, sponsors } = await this.$graphql(
@@ -210,7 +210,7 @@
 				return this.error(err.message);
 			}
 			if (process.browser) {
-				window.$nuxt.$root.$loading.finish();
+				window.$nuxt.$loading.finish();
 			}
 		},
 		mounted() {

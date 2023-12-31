@@ -263,7 +263,8 @@
 		head: {
 			title: "Store"
 		},
-		async fetch() {
+	async fetch() {
+		if(process.browser)
 			this.$nuxt.$loading.start();
 
 			const { presences, partners, science } = await this.$graphql(
@@ -306,6 +307,8 @@
 			this.hotPresences = presences.filter(p => {
 				if ((p.users / usage) * 100 > 5) return p;
 			});
+
+			if(process.browser)
 				this.$nuxt.$loading.finish();
 			if (
 				this.pageCount < Number(this.$route.query.page) ||

@@ -4,7 +4,7 @@
 		auth: false,
 		async fetch() {
 			if (process.browser) {
-					window.$nuxt.$root.$loading.start();
+					window.$nuxt.$loading.start();
 				}
 			try {
 				const contributors = await this.$graphql(
@@ -34,7 +34,7 @@
 				this.contributors = null;
 			}
 			if (process.browser) {
-					window.$nuxt.$root.$loading.finish();
+					window.$nuxt.$loading.finish();
 				}
 		},
 		data() {

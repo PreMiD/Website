@@ -319,7 +319,7 @@
 
 		async fetch() {
 			if (process.browser) {
-				window.$nuxt.$root.$loading.start();
+				window.$nuxt.$loading.start();
 			}
 			let { presences, partners, usage } = await this.$graphql(
 					`
@@ -382,7 +382,7 @@
 
 			this.isMobile = false;
 			if (process.browser) {
-				window.$nuxt.$root.$loading.finish();
+				window.$nuxt.$loading.finish();
 			}
 			if (!this.presence)
 				this.$nuxt.error({

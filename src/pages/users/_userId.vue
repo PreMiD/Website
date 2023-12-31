@@ -172,7 +172,7 @@
 		},
 		async fetch() {
 			if (process.browser) {
-				window.$nuxt.$root.$loading.start();
+				window.$nuxt.$loading.start();
 			}
 			let res = await this.$graphql(
 				`{
@@ -251,7 +251,7 @@
 			this.userPresences = userPresences;
 			this.userContributions = userContributions;
 			if (process.browser) {
-				window.$nuxt.$root.$loading.finish();
+				window.$nuxt.$loading.finish();
 			}
 		},
 		methods: {
