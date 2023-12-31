@@ -318,9 +318,9 @@
 		},
 
 		async fetch() {
-			if (process.browser) {
+			/* if (process.browser) {
 				window.$nuxt.$loading.start();
-			}
+			} */
 			let { presences, partners, usage } = await this.$graphql(
 					`
 				{
@@ -381,9 +381,9 @@
 			} catch (err) {}
 
 			this.isMobile = false;
-			if (process.browser) {
+			/* if (process.browser) {
 				window.$nuxt.$loading.finish();
-			}
+			} */
 			if (!this.presence)
 				this.$nuxt.error({
 					statusCode: 404,

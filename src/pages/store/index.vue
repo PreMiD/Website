@@ -264,8 +264,8 @@
 			title: "Store"
 		},
 	async fetch() {
-		if(process.browser)
-			this.$nuxt.$loading.start();
+/* 		if(process.browser)
+			this.$nuxt.$loading.start(); */
 
 			const { presences, partners, science } = await this.$graphql(
 				`
@@ -308,8 +308,8 @@
 				if ((p.users / usage) * 100 > 5) return p;
 			});
 
-			if(process.browser)
-				this.$nuxt.$loading.finish();
+			/* if(process.browser)
+				this.$nuxt.$loading.finish(); */
 			if (
 				this.pageCount < Number(this.$route.query.page) ||
 				this.$route.query.page <= -1

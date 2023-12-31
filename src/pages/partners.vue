@@ -184,9 +184,9 @@
 			};
 		},
 		async fetch() {
-			if (process.browser) {
+			/* if (process.browser) {
 				window.$nuxt.$loading.start();
-			}
+			} */
 			try {
 				let { partners, sponsors } = await this.$graphql(
 					`{
@@ -209,9 +209,9 @@
 			} catch (err) {
 				return this.error(err.message);
 			}
-			if (process.browser) {
+			/* if (process.browser) {
 				window.$nuxt.$loading.finish();
-			}
+			} */
 		},
 		mounted() {
 			this.$auth.$storage.setUniversal("redirect", "/partners#req");

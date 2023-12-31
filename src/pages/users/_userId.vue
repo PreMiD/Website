@@ -171,9 +171,9 @@
 			};
 		},
 		async fetch() {
-			if (process.browser) {
+			/* if (process.browser) {
 				window.$nuxt.$loading.start();
-			}
+			} */
 			let res = await this.$graphql(
 				`{
 				credits(id: "${this.$route.params.userId}") {
@@ -250,9 +250,9 @@
 			this.showContributions = false;
 			this.userPresences = userPresences;
 			this.userContributions = userContributions;
-			if (process.browser) {
+			/* if (process.browser) {
 				window.$nuxt.$loading.finish();
-			}
+			} */
 		},
 		methods: {
 			linkify(pls) {
