@@ -21,7 +21,7 @@ const { t } = useI18n(),
 
 <template>
   <div class="flex items-center m3 flex-justify-between select-none">
-    <div class="color-primary font-discord font-size-8">PreMiD</div>
+    <a href="/" class="color-primary font-discord font-size-8">PreMiD</a>
     <div>
       <NuxtLink
         v-for="link in links"
