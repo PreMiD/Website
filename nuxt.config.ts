@@ -2,6 +2,9 @@ import { readdirSync } from "node:fs";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  build: {
+    transpile: ["@fortawesome/vue-fontawesome"],
+  },
   css: [
     "@/scss/index.scss",
     "@unocss/reset/normalize.css",
@@ -13,13 +16,13 @@ export default defineNuxtConfig({
   features: {
     inlineStyles: false,
   },
+
   googleFonts: {
     families: {
       Inter: [400, 600, 700, 800, 900],
       Nunito: [400, 600, 700, 800, 900],
     },
   },
-
   i18n: {
     defaultLocale: "en",
     langDir: "locales/",
@@ -36,7 +39,6 @@ export default defineNuxtConfig({
     "@nuxtjs/eslint-module",
     "@unocss/nuxt",
   ],
-
   runtimeConfig: {
     public: {
       GQL_HOST: "https://api.premid.app/v3",
