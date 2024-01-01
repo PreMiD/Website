@@ -20,8 +20,12 @@
 		"@types/tinycolor2": "^1.4.6",
 		"@unocss/eslint-config": "^0.58.2",
 		"@unocss/reset": "^0.58.2",
+		"eslint": "^8.56.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.1.2",
 		"lodash": "^4.17.21",
 		"nuxt": "^3.9.0",
+		"prettier": "^3.1.1",
 		"tinycolor2": "^1.6.0",
 		"vue": "^3.4.3",
 		"vue-router": "^4.2.5"
