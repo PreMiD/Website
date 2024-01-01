@@ -8,6 +8,9 @@ export default defineNuxtConfig({
 		"@unocss/reset/eric-meyer.css"
 	],
 	devtools: { enabled: true },
+	features: {
+		inlineStyles: false
+	},
 	googleFonts: {
 		families: {
 			Nunito: [400, 600, 700, 800, 900]

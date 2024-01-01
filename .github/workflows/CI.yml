@@ -7,16 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Install Node v16
-        uses: actions/setup-node@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
-          cache: yarn
+          node-version: 18.x
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
 
       - name: Install dependencies
-        run: yarn
+        run: pnpm i --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm build
