@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Discord Font";
+	font-weight: 900;
+	src: url("/assets/fonts/discord.woff2") format("woff2");
+	font-style: normal;
+	font-display: swap;
+}
+
+html,
+body {
+	background-color: hsl(227, 18%, 8%);
+	color: #fdfcff;
+}

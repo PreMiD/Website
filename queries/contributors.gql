@@ -1,0 +1,13 @@
+query contributors {
+	credits {
+		user {
+			id
+			name
+			avatar
+			roleId
+			role
+			roleColor
+			rolePosition
+		}
+	}
+}

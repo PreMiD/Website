@@ -1,38 +1,75 @@
-<div align="center">
-<img src="https://cdn.rcd.gg/PreMiD.png" style="border-radius: 1.3em;" width="512px" draggable="false" >
+# Nuxt 3 Minimal Starter
 
-# PreMiD Website
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-</div>
+## Setup
 
-This repository contains source code of **PreMiD**'s website that allows you to install presences from our presence store.
-If you want to get more information or help us by **[contributing](#development)** in this project, we would like to see you in our **Discord** server:
-
-  <a target="_blank" href="https://discord.premid.app/" title="Join our Discord!">
-<img draggable="false" src="https://discordapp.com/api/guilds/493130730549805057/widget.png?style=banner2" height="76px" draggable="false" alt="Join our Discord!">
-</a>
-
-## Additional information
-
-Our server automatically builds the latest website versions from **[master](https://beta.premid.app/)** and **[stable](https://premid.app/)** branches.
-The `master` branch includes all changes that was not tested yet and may have perfomance issues.
-
-## Building
+Make sure to install the dependencies:
 
 ```bash
-# install dependencies
-yarn
+# npm
+npm install
 
-# build website in /dist
-yarn build
+# pnpm
+pnpm install
+
+# yarn
+yarn install
+
+# bun
+bun install
 ```
 
-## Development
+## Development Server
+
+Start the development server on `http://localhost:3000`:
 
 ```bash
-# install dependencies
-yarn
+# npm
+npm run dev
 
-# host local server
+# pnpm
+pnpm run dev
+
+# yarn
 yarn dev
+
+# bun
+bun run dev
 ```
+
+## Production
+
+Build the application for production:
+
+```bash
+# npm
+npm run build
+
+# pnpm
+pnpm run build
+
+# yarn
+yarn build
+
+# bun
+bun run build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm run preview
+
+# yarn
+yarn preview
+
+# bun
+bun run preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
