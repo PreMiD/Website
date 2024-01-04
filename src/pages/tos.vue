@@ -42,7 +42,7 @@
 			Most of the modern day interactive websites use cookies to enable us to
 			retrieve user details for each visit. Cookies are used in some areas of
 			our site to enable the functionality of this area and ease of use for
-			those people visiting. Some of our affiliate / advertising partners may
+			those people visiting. Some of our affiliate partners may
 			also use cookies.
 		</p>
 		<h2>License</h2>

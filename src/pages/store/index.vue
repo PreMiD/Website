@@ -248,11 +248,6 @@
 		>
 			<span slot="breakViewContent"></span>
 		</paginate>
-
-		<adsense
-			ad-slot="5201967746"
-			style="text-align: center; margin-top: 0.25em"
-		/>
 	</section>
 </template>
 

@@ -416,7 +416,6 @@
 				currentTab: null,
 				betaUsers: null,
 				availableSlots: null,
-				skipAds: false,
 				showBeta: false,
 				cardHover: false,
 				modalAvailable: false,
@@ -599,7 +598,6 @@
 				}
 
 				this.$store.commit("download/setDL", { platform, type });
-				this.$nuxt.setLayout("skipAds");
 			},
 			openInNewTab(url) {
 				window.open(url, "_blank");

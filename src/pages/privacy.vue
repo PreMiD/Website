@@ -250,7 +250,7 @@
 			When using these general data and information, the PreMiD does not draw
 			any conclusions about the data subject. Rather, this information is needed
 			to (1) deliver the content of our website correctly, (2) optimize the
-			content of our website as well as its advertisement, (3) ensure the
+			content of our website, (3) ensure the
 			long-term viability of our information technology systems and website
 			technology, and (4) provide law enforcement authorities with the
 			information necessary for criminal prosecution in case of a cyber-attack.

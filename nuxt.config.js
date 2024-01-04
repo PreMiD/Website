@@ -161,13 +161,6 @@ export default async function () {
 		},
 		modules: [
 			"@nuxt/image",
-			[
-				"@nuxtjs/google-adsense",
-				{
-					id: "ca-pub-1575460061917202",
-					tag: "adsense"
-				}
-			],
 			"@nuxtjs/auth",
 			[
 				"@nuxtjs/i18n",
