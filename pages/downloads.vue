@@ -2,7 +2,7 @@
 
 <template>
   <div
-    class="h-full justify-center items-center flex-wrap justify-content gap-2 flex m-5 mt-20"
+    class="justify-center items-center flex-wrap gap-2 flex mt-20 h-full justify-content m-5"
   >
     ✨downloads✨
   </div>
