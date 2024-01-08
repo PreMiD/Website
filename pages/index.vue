@@ -6,7 +6,7 @@ type presenceData = {
   largeImage: string;
   smallImage: string;
   state: string;
-  time: [number, "elapsed" | "remaining"];
+  time: [number, "elapsed" | "left"];
   type: string;
   user: {
     image: string;
@@ -25,7 +25,7 @@ const elapsedTime = ref(0),
       smallImage:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/2048px-Netflix_icon.svg.png",
       state: "Breaking Bad",
-      time: [4937, "remaining"],
+      time: [4937, "left"],
       type: "Watching Netflix",
       user: {
         image:
@@ -59,7 +59,7 @@ const elapsedTime = ref(0),
       let time;
       if (presenceData.time[1] === "elapsed")
         time = Math.max(0, presenceData.time[0] + elapsedTime.value);
-      if (presenceData.time[1] === "remaining")
+      if (presenceData.time[1] === "left")
         time = Math.max(0, presenceData.time[0] - elapsedTime.value);
       const seconds = time ?? 0,
         minutes = Math.floor(seconds / 60),
