@@ -142,7 +142,6 @@ export default async function () {
 			retry: { retries: 3 },
 			credentials: false
 		},
-		loading: "~/components/Loader.vue",
 		buildModules: [
 			"nuxt-font-loader",
 			"@nuxt/typescript-build",
