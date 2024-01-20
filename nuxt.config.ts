@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     "nuxt-graphql-client",
     "@nuxtjs/eslint-module",
     "@unocss/nuxt",
+    "@vueuse/nuxt",
   ],
   runtimeConfig: {
     public: {

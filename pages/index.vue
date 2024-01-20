@@ -158,7 +158,7 @@ onBeforeUnmount(() => {
             <div class="flex flex-wrap h-fit mt-4">
               <span class="max-h-22">
                 <img
-                  class="rounded-md h-22 w-22 object-cover"
+                  class="rounded-md object-cover h-22 w-22"
                   :src="presence.largeImage"
                 />
 

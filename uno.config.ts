@@ -13,12 +13,14 @@ export default defineConfig({
     },
     colors: {
       bg: {
-        blueGray: "hsl(218, 9%, 17%)",
-        primary: "hsl(227, 18%, 8%)",
-        secondary: "hsl(227, 18%, 12%)",
+        primary: "hsl(227, 18 %, 8 %)",
+        secondary: "hsl(227, 18 %, 12 %)",
       },
       btn: {
         gray: "#212530",
+      },
+      card: {
+        primary: "#151719",
       },
       link: {
         icon: {
