@@ -71,11 +71,11 @@
 												.replace('HOUSE_', '')
 												.toLowerCase()}`"
 										></div>
-										<div
+										<!-- <div
 											v-if="flag == 'EARLY_SUPPORTER'"
 											v-tippy="{ content: 'Early Supporter' }"
 											:class="`badge badge_early`"
-										></div>
+										></div> -->
 										<div
 											v-if="flag == 'HYPESQUAD_EVENTS'"
 											v-tippy="{ content: 'HypeSquad Events' }"
