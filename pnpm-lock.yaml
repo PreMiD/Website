@@ -55,6 +55,9 @@ devDependencies:
   '@unocss/reset':
     specifier: ^0.58.3
     version: 0.58.3
+  '@unocss/transformer-directives':
+    specifier: ^0.58.3
+    version: 0.58.3
   '@vueuse/nuxt':
     specifier: ^10.7.2
     version: 10.7.2(nuxt@3.9.1)(rollup@4.9.4)(vue@3.4.5)
@@ -3471,7 +3474,6 @@ packages:
     dependencies:
       '@unocss/core': 0.58.3
       magic-string: 0.30.5
-    dev: false
 
   /@unocss/scope@0.58.3:
     resolution: {integrity: sha512-Bkf6sk/0wry+fa5P8eLnzjC4pdrRlBY29g4F64qjsMBR0gk0stFRNzeoMOk412gmJXWjjlAQgNYiBZDHoPghZw==}
@@ -3506,7 +3508,6 @@ packages:
       '@unocss/core': 0.58.3
       '@unocss/rule-utils': 0.58.3
       css-tree: 2.3.1
-    dev: false
 
   /@unocss/transformer-variant-group@0.58.3:
     resolution: {integrity: sha512-/8CyzLwzpJC5cdiA/Wd5/Pg+HEIK+xxJJ3/VXoo93OPNCCbA9/h6DPwDh1ogKk15c6b5H75Ow6zKq1rYQAz2EA==}

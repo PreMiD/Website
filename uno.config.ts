@@ -1,6 +1,6 @@
 // uno.config.ts
+import transformerDirectives from "@unocss/transformer-directives";
 import { defineConfig } from "unocss";
-
 export default defineConfig({
   theme: {
     breakpoints: {
@@ -38,4 +38,5 @@ export default defineConfig({
       nunito: "Nunito",
     },
   },
+  transformers: [transformerDirectives()],
 });

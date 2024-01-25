@@ -19,7 +19,7 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: {
-      Inter: [400, 600, 700, 800, 900],
+      Inter: [400, 500, 600, 700, 800, 900],
       Nunito: [400, 600, 700, 800, 900],
     },
   },
