@@ -24,7 +24,7 @@ const { t } = useI18n(),
   ];
 
 function handleQuery(query: LocationQuery) {
-  const pageQuery = query.page?.toString() || "",
+  const pageQuery = query.page?.toString() || "1",
     parsedPage = Number.parseInt(
       Number.isNaN(Number(pageQuery)) ? "1" : pageQuery,
     );
@@ -98,7 +98,7 @@ onMounted(() => {
       <input
         v-model="searchTerm"
         type="text"
-        class="bg-gray p-2 w-full text-white border-none h-8 rounded-sm"
+        class="bg-gray p-2 w-full text-white border-none h-8 rounded"
         :placeholder="$t('store.filter.search')"
         @:input="$router.replace(getLinkProperties({}))"
       />
