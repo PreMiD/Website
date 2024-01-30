@@ -152,7 +152,7 @@ onBeforeUnmount(() => {
         </div>
         <div class="bg-primary w-full h-37 brightness-95 rounded-b-2 top-1/2">
           <div class="pt-4 pl-4">
-            <h1 class="uppercase font-extrabold text-3">
+            <h1 class="uppercase text-3 font-extrabold">
               {{ presence.type }}
             </h1>
             <div class="flex flex-wrap h-fit mt-4">

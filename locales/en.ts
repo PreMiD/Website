@@ -17,4 +17,17 @@ export default defineI18nLocale(() => ({
       translators: "Translators",
     },
   },
+  store: {
+    categories: {
+      all: "All",
+      anime: "Anime",
+      games: "Games",
+      music: "Music",
+      other: "Other",
+      socials: "Socials",
+      videos: "Videos & Streams",
+    },
+    filter: { search: "Search" },
+    header: { categories: "Categories", search: "Search Presence" },
+  },
 }));
