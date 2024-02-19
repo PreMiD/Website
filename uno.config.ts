@@ -1,6 +1,6 @@
 // uno.config.ts
+import transformerDirectives from "@unocss/transformer-directives";
 import { defineConfig } from "unocss";
-
 export default defineConfig({
   theme: {
     breakpoints: {
@@ -13,13 +13,15 @@ export default defineConfig({
     },
     colors: {
       bg: {
-        blueGray: "hsl(218, 9%, 17%)",
-        primary: "hsl(227, 18%, 8%)",
-        secondary: "hsl(227, 18%, 12%)",
+        primary: "hsl(227, 18 %, 8 %)",
+        secondary: "hsl(227, 18 %, 12 %)",
       },
-      btn: {
-        gray: "#212530",
+      card: {
+        filter: "#191b24",
+        primary: "#151719",
       },
+      gray: "#212530",
+      "gray-secondary": "#323748",
       link: {
         icon: {
           bg: "#323748",
@@ -36,4 +38,5 @@ export default defineConfig({
       nunito: "Nunito",
     },
   },
+  transformers: [transformerDirectives()],
 });

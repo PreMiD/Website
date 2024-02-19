@@ -16,10 +16,9 @@ export default defineNuxtConfig({
   features: {
     inlineStyles: false,
   },
-
   googleFonts: {
     families: {
-      Inter: [400, 600, 700, 800, 900],
+      Inter: [400, 500, 600, 700, 800, 900],
       Nunito: [400, 600, 700, 800, 900],
     },
   },
@@ -32,12 +31,17 @@ export default defineNuxtConfig({
       file: locale,
     })),
   },
+  image: {
+    domains: ["cdn.rcd.gg"],
+  },
   modules: [
     "@nuxtjs/i18n",
     "@nuxtjs/google-fonts",
     "nuxt-graphql-client",
     "@nuxtjs/eslint-module",
     "@unocss/nuxt",
+    "@vueuse/nuxt",
+    "@nuxt/image",
   ],
   runtimeConfig: {
     public: {

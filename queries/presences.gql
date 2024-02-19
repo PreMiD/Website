@@ -1,0 +1,22 @@
+query presences {
+    presences {
+        metadata {
+            author {
+                name
+                id
+            }
+            altnames
+            logo
+            thumbnail
+            service
+            color
+            url
+            warning
+            tags
+            description
+            button
+            category
+        }
+        users
+    }
+}
