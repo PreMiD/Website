@@ -28,15 +28,28 @@ const { presence } = defineProps<{
     @mouseleave="hovered = false"
   >
     <div
-      :class="{ 'opacity-60 delay-0': hovered, 'delay-200 transition-ease-out': !hovered }"
+      :class="{
+        'opacity-60 delay-0': hovered,
+        'delay-200 transition-ease-out': !hovered,
+      }"
       style="background-color: var(--shadowTint)"
       class="absolute card-dimensions rounded-lg border-primary border-1.5 transition-all border-solid object-cover opacity-0 z-10"
     ></div>
     <div
       :class="{ 'opacity100 w-70 delay-200': hovered }"
-      class="bg-primary absolute h-full z-200 transition-all transition-ease right-0 flex flex-col w-0 justify-center items-center rounded-md opacity-0"
+      class="absolute h-full z-200 transition-all transition-ease right-0 flex gap-2 w-0 justify-center items-center rounded-md opacity-0"
     >
-      <FAIcon class="h-6 w-6" icon="fa-solid fa-plus" />
+      <button
+        class="bg-primary rounded-full text-white w-40 h-10 border-none gap-2 flex items-center justify-center"
+      >
+        <FAIcon class="h5 w5" icon="fa-solid fa-plus" />
+        <p class="">add presence</p>
+      </button>
+      <button
+        class="bg-red rounded-full text-white w-10 h-10 border-none gap-2 flex items-center justify-center"
+      >
+        <FAIcon class="h5 w5" icon="fa-solid fa-heart" />
+      </button>
     </div>
     <NuxtImg
       placeholder

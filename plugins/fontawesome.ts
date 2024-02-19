@@ -7,6 +7,7 @@ import {
   faPlus,
   faStream,
   faUser,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default defineNuxtPlugin(() => {
@@ -18,5 +19,6 @@ export default defineNuxtPlugin(() => {
     faUser,
     faBolt,
     faPlus,
+    faHeart,
   );
 });
