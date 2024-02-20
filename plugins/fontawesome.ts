@@ -4,10 +4,10 @@ import {
   faCartArrowDown,
   faDownload,
   faHandshakeAngle,
+  faHeart,
   faPlus,
   faStream,
   faUser,
-  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default defineNuxtPlugin(() => {

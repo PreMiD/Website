@@ -83,7 +83,7 @@ onBeforeUnmount(() => {
 
 <template>
   <main
-    class="justify-center items-center flex-wrap gap-2 flex mx-2 h-screen lt-lg:mt-20"
+    class="justify-center items-center gap-2 flex h-screen flex-wrap mx-2 lt-lg:mt-20"
   >
     <div class="xl:p-10">
       <div>

@@ -92,32 +92,32 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="mx-3vw items-center justify-center flex h-screen">
-    <div class="bg-card-filter rounded-md w-70 p-5 mb-3.6rem">
+  <main class="items-center justify-center flex mx-3vw h-screen">
+    <div class="rounded-md bg-card-filter w-70 p-5 mb-3.6rem">
       <h1 class="header color-primary">{{ $t("store.header.search") }}</h1>
       <input
         v-model="searchTerm"
         type="text"
-        class="bg-gray p-2 w-full text-white border-none h-8 rounded"
+        class="text-white border-none bg-gray p-2 w-full h-8 rounded"
         :placeholder="$t('store.filter.search')"
         @:input="$router.replace(getLinkProperties({}))"
       />
-      <h1 class="header mt-8 color-primary">
+      <h1 class="header color-primary mt-8">
         {{ $t("store.header.categories") }}
       </h1>
-      <div class="flex flex-col w-full items-center">
+      <div class="flex w-full items-center flex-col">
         <NuxtLink
           v-for="c of categories"
           :key="c.text"
           :class="{ 'bg-primary text-white': c.tag === selectedCategory }"
-          class="w-full m-1 h-8 p-2 font-bold text-link-inactive border-gray-secondary border-1 rounded border-solid"
+          class="w-full h-8 p-2 font-bold rounded border-solid m-1 text-link-inactive border-gray-secondary border-1"
           :to="getLinkProperties({ category: c.tag })"
         >
           {{ c.text }}
         </NuxtLink>
       </div>
     </div>
-    <div class="min-h-688px items-center flex-col ml-3vw flex max-w-content">
+    <div class="items-center flex-col flex min-h-688px ml-3vw max-w-content">
       <div class="card-columns grid-cols-2 overflow-unset">
         <StoreCard
           v-for="presence in presences.data"
@@ -126,7 +126,7 @@ onMounted(() => {
           :presence="presence"
         />
       </div>
-      <div class="mt-5 flex">
+      <div class="flex mt-5">
         <NuxtLink
           :to="getLinkProperties({ page: 1 })"
           :replace="true"

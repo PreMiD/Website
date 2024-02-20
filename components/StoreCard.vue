@@ -33,7 +33,7 @@ const { presence } = defineProps<{
         'delay-200 transition-ease-out': !hovered,
       }"
       style="background-color: var(--shadowTint)"
-      class="absolute card-dimensions rounded-lg border-primary border-1.5 transition-all border-solid object-cover opacity-0 z-10"
+      class="card-dimensions rounded-lg absolute border-primary border-1.5 transition-all border-solid object-cover opacity-0 z-10"
     ></div>
     <div
       :class="{ 'opacity100 w-70 delay-200': hovered }"
