@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { data, error } = useAsyncGql({ operation: "contributors" }),
   filteredData = computed(() => {
-    return data.value.credits;
+    return data.value?.credits ?? [];
   }),
   staff = computed(() => {
     return (
