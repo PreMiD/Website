@@ -30,27 +30,12 @@ const { presence } = defineProps<{
     <div
       :class="{
         'opacity-60 delay-0': hovered,
-        'delay-200 transition-ease-out': !hovered,
+        'delay-100 transition-ease-out': !hovered,
       }"
       style="background-color: var(--shadowTint)"
-      class="card-dimensions rounded-lg absolute border-primary border-1.5 transition-all border-solid object-cover opacity-0 z-10"
+      class="card-dimensions rounded-lg absolute border-primary border-1.5 transition-opacity border-solid object-cover opacity-0 z-10"
     ></div>
-    <div
-      :class="{ 'opacity100 w-70 delay-200': hovered }"
-      class="absolute h-full z-200 transition-all transition-ease right-0 flex gap-2 w-0 justify-center items-center rounded-md opacity-0"
-    >
-      <button
-        class="bg-primary rounded-full text-white w-40 h-10 border-none gap-2 flex items-center justify-center"
-      >
-        <FAIcon class="h5 w5" icon="fa-solid fa-plus" />
-        <p class="">add presence</p>
-      </button>
-      <button
-        class="bg-red rounded-full text-white w-10 h-10 border-none gap-2 flex items-center justify-center"
-      >
-        <FAIcon class="h5 w5" icon="fa-solid fa-heart" />
-      </button>
-    </div>
+
     <NuxtImg
       placeholder
       preload
@@ -73,7 +58,9 @@ const { presence } = defineProps<{
         :src="presence.metadata.logo"
         :alt="presence.metadata.service"
       />
-      <div class="relative my-a text-color mr-4 text-3 font-50 w-6/9">
+      <div
+        class="relative my-a z-20 mr-4 text-color text-3 font-50 w-6/9 transition-color"
+      >
         <h1
           class="card-shadow font-bold text-xl text-ellipsis text-nowrap overflow-hidden"
         >
@@ -81,37 +68,55 @@ const { presence } = defineProps<{
         </h1>
         <Transition name="card-animation" mode="out-in">
           <div :key="presence.metadata.service + '_desc'">
-            <p class="card-shadow line-clamp-2 line-height-3.5">
+            <p v-if="!hovered" class="card-shadow line-clamp-2 line-height-3.5">
               {{ presence.metadata.description.en }}
             </p>
-          </div>
-          <!-- <div v-if="!hovered" :key="presence.metadata.service + '_desc'">
-            <p class="card-shadow line-clamp-2 line-height-3.5">
-              {{ presence.metadata.description.en }}
-            </p>
-          </div>
-          <div v-else-if="hovered" :key="presence.metadata.service + '_test'">
-            <button
-              class="h-10 w-45 mt-2 bg-primary card-shadow border-none rounded-3xl"
+            <div
+              v-else-if="hovered"
+              class="flex gap-2"
             >
-              Add Presence
-            </button>
-          </div> -->
+              <button
+                class="bg-primary rounded-full text-white w-40 h-10 border-none gap-2 flex items-center justify-center"
+              >
+                <FAIcon class="h5 w5" icon="fa-solid fa-plus" />
+                <p class="">add presence</p>
+              </button>
+              <button
+                class="bg-red rounded-full text-white w-10 h-10 border-none gap-2 flex items-center justify-center"
+              >
+                <FAIcon class="h5 w5" icon="fa-solid fa-heart" />
+              </button>
+            </div>
+          </div>
         </Transition>
       </div>
-      <p class="text-color absolute right-0 shadow-tint mt-3 mr-2">
-        {{ presence.users }} <FAIcon class="h-4 w-4" icon="fa-solid fa-bolt" />
-      </p>
+      <div
+        class="text-color op-50 absolute right-0 shadow-tint mt-2 mr-2 flex gap-2 flex-col"
+      >
+        <p>
+          <!-- {{ presence.users }}/{{ presence.users }} live <FAIcon class="h-4 w-4" beat-fade icon="fa-duotone fa-signal-stream" style="--fa-primary-color: #ff0000; --fa-secondary-color: #1e3050;" /> -->
+          {{ Math.round(presence.users / 5) }}
+          <FAIcon class="h-4 w-4" icon="fa-sold fa-bolt" />
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.card-dimensions {
-  width: 23rem;
-  height: 9rem;
+@screen lt-xs {
+  .card-dimensions {
+    width: 80vw;
+    height: 35vw;
+  }
 }
-@media (min-width: 1400px) {
+@screen xs {
+  .card-dimensions {
+    width: 23rem;
+    height: 9rem;
+  }
+}
+@screen lg {
   .card-dimensions {
     width: 25rem;
     height: 10rem;

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useWindowSize } from "@vueuse/core";
 import type { LocationQuery } from "vue-router";
 
 useHead({
@@ -6,7 +7,12 @@ useHead({
 });
 const { t } = useI18n(),
   { data } = await useAsyncGql({ operation: "presences" }),
-  pageSize = ref(12),
+  pageSize = computed(() => {
+    const { width } = useWindowSize();
+    if (width.value < 1024) return 5;
+    if (width.value < 1536) return 8;
+    return 12;
+  }),
   totalPages = ref(0),
   presences = computed(() => getPresencePage()),
   route = useRoute(),
@@ -28,17 +34,10 @@ function handleQuery(query: LocationQuery) {
     parsedPage = Number.parseInt(
       Number.isNaN(Number(pageQuery)) ? "1" : pageQuery,
     );
-  currentPage.value = Math.min(parsedPage, totalPages.value);
+  currentPage.value = Math.max(1, Math.min(parsedPage, totalPages.value));
   searchTerm.value = query.search?.toString() || "";
   selectedCategory.value = query.category?.toString() || "";
 }
-
-watch(
-  () => route.query,
-  (query) => {
-    handleQuery(query);
-  },
-);
 
 function getPresencePage(page = currentPage.value, search = searchTerm.value) {
   const startIndex = (page - 1) * pageSize.value,
@@ -86,15 +85,28 @@ function startPage() {
     ? Math.max(2, totalPages.value - 5)
     : Math.max(2, currentPage - middleOffset);
 }
+watch(
+  () => route.query,
+  (query) => {
+    handleQuery(query);
+  },
+);
 onMounted(() => {
   handleQuery(route.query);
 });
 </script>
 
 <template>
-  <main class="items-center justify-center flex mx-3vw h-screen">
-    <div class="rounded-md bg-card-filter w-70 p-5 mb-3.6rem">
-      <h1 class="header color-primary">{{ $t("store.header.search") }}</h1>
+  <main
+    class="relative items-center justify-center flex mx-3vw lt-sm:flex-col min-h-dvh"
+  >
+    <div
+      id="filters"
+      class="rounded-lg sticky z-30 text-nowrap bg-card p-5 sm:max-w-70 lt-sm:max-h-50 lt-sm:overflow-scroll w-full top-14"
+    >
+      <h1 class="filter-header color-primary">
+        {{ $t("store.header.search") }}
+      </h1>
       <input
         v-model="searchTerm"
         type="text"
@@ -102,7 +114,7 @@ onMounted(() => {
         :placeholder="$t('store.filter.search')"
         @:input="$router.replace(getLinkProperties({}))"
       />
-      <h1 class="header color-primary mt-8">
+      <h1 class="filter-header color-primary mt-8">
         {{ $t("store.header.categories") }}
       </h1>
       <div class="flex w-full items-center flex-col">
@@ -110,15 +122,22 @@ onMounted(() => {
           v-for="c of categories"
           :key="c.text"
           :class="{ 'bg-primary text-white': c.tag === selectedCategory }"
-          class="w-full h-8 p-2 font-bold rounded border-solid m-1 text-link-inactive border-gray-secondary border-1"
+          class="w-full flex items-center h-8 p-2 rounded font-bold border-solid m-1 text-link-inactive border-gray-secondary border-1"
           :to="getLinkProperties({ category: c.tag })"
         >
           {{ c.text }}
         </NuxtLink>
       </div>
     </div>
-    <div class="items-center flex-col flex min-h-688px ml-3vw max-w-content">
-      <div class="card-columns grid-cols-2 overflow-unset">
+    <div v-if="presences.data.length === 0" class="w-2/3 h-50 flex justify-center items-center ml-5 rounded-lg">
+      couldn't find any presences
+    </div>
+    <div
+    v-if="presences.data.length > 0"
+    class="items-center mt-5 sm:mt-10 flex-col flex min-h-688px sm:ml-3vw">
+      <div
+      class="gap-4 grid grid-cols-[fit-content(0%)] lg:grid-cols-[repeat(2,fit-content(0%))] 2xl:grid-cols-[repeat(3,fit-content(0%))] overflow-unset"
+      >
         <StoreCard
           v-for="presence in presences.data"
           :key="presence.metadata.service"
@@ -126,12 +145,15 @@ onMounted(() => {
           :presence="presence"
         />
       </div>
-      <div class="flex mt-5">
+      <div
+        v-if="presences.data.length > 0"
+        class="flex mt-5 sticky bottom-1 z-40"
+      >
         <NuxtLink
           :to="getLinkProperties({ page: 1 })"
           :replace="true"
           prefetch
-          class="button"
+          class="page-nav-button"
           :class="{ active: 1 === presences.currentPage }"
         >
           1
@@ -142,7 +164,7 @@ onMounted(() => {
           :key="i"
           prefetch
           :to="getLinkProperties({ page: startPage() + i - 1 })"
-          class="button"
+          class="page-nav-button"
           :class="{ active: startPage() + i - 1 === presences.currentPage }"
         >
           {{ startPage() + i - 1 }}
@@ -152,7 +174,7 @@ onMounted(() => {
           :to="getLinkProperties({ page: totalPages })"
           prefetch
           :class="{ active: totalPages === presences.currentPage }"
-          class="button"
+          class="page-nav-button"
         >
           {{ totalPages }}
         </NuxtLink>
@@ -162,30 +184,43 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.header {
+#filters {
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+}
+
+.filter-header {
   margin-bottom: 0.6rem;
   font-size: 1.3rem;
   font-weight: 700;
 }
 
-.card-columns {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: fit-content(20%) fit-content(20%) fit-content(200%);
+@screen lt-xs {
+  .page-nav-button {
+    font-size: 4.5vw;
+    height: 12vw;
+    width: 12vw;
+  }
 }
-
-@screen lt-2xl {
-  .card-columns {
-    grid-template-columns: fit-content(0%) fit-content(0%);
+@screen xs {
+  .page-nav-button {
+    font-size: 1.3rem;
+    height: 3.4rem;
+    width: 3.4rem;
   }
 }
 
-.button {
+.page-nav-button {
   color: white;
-  font-size: 1.3rem;
   font-weight: 600;
-  height: 3.4rem;
-  width: 3.4rem;
   background-color: #2e3242;
   border-radius: 10vw;
   border: none;
@@ -195,11 +230,10 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
 }
-
-.button:hover {
+.page-nav-button:hover {
   background-color: #373b4f;
 }
-.button.active {
+.page-nav-button.active {
   transition: background-color 400ms;
   background-color: #7289da;
 }

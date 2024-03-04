@@ -20,8 +20,8 @@ const { t } = useI18n(),
 </script>
 
 <template>
-  <div
-    class="flex items-center absolute select-none flex-justify-between top-0 w-full p-3"
+  <div id="header"
+    class="flex lt-sm:sticky z-1000 items-center absolute select-none flex-justify-between top-0 w-full p-3"
   >
     <a href="/" class="color-primary font-discord font-size-8">PreMiD</a>
     <div class="lt-lg:hidden">

@@ -6,6 +6,12 @@
   font-display: swap;
 }
 
+@screen lt-sm {
+  #header {
+    background-color: hsl(227, 18%, 8%);
+  }
+}
+
 html,
 body {
   background-color: hsl(227, 18%, 8%);

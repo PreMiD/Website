@@ -124,7 +124,7 @@ onBeforeUnmount(() => {
         >
         <a
           href="/downloads"
-          class="font-semibold text-nowrap text-center py-3 rounded-full uppercase font-inter text-4 px-10 bg-btn-gray"
+          class="font-semibold text-nowrap text-center py-3 rounded-full uppercase font-inter text-4 px-10 bg-gray"
         >
           <FAIcon class="w-4 mr-1 h-4" :icon="'fa-solid fa-download'" />{{
             $t("header.links.downloads")

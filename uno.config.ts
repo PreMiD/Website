@@ -16,10 +16,8 @@ export default defineConfig({
         primary: "hsl(227, 18 %, 8 %)",
         secondary: "hsl(227, 18 %, 12 %)",
       },
-      card: {
-        filter: "#191b24",
-        primary: "#151719",
-      },
+      card: "#191b24",
+
       gray: "#212530",
       "gray-secondary": "#323748",
       link: {
