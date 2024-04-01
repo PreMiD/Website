@@ -194,7 +194,7 @@
 	export default {
 		name: "StoreCard",
 		mixins: [PresenceMixin],
-		props: ["presence", "submit", "nsfw", "hot", "partner", "altnamesSearch"],
+		props: ["presence", "submit", "hot", "partner", "altnamesSearch"],
 		data() {
 			return {
 				cardHovered: false,
