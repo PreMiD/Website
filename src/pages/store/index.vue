@@ -118,16 +118,6 @@
 
 				<div class="checkbox-switcher">
 					<label>
-						<input type="checkbox" v-model="nsfw" />
-						<span ref="checkbox" class="checkbox-container"></span>
-						<span class="title">
-							{{ $t("store.category.filters.allowAdult") }}
-						</span>
-					</label>
-				</div>
-
-				<div class="checkbox-switcher">
-					<label>
 						<input type="checkbox" v-model="filterLiked" />
 						<span ref="checkbox" class="checkbox-container"></span>
 						<span class="title">
@@ -263,8 +253,8 @@
 		head: {
 			title: "Store"
 		},
-	async fetch() {
-/* 		if(process.browser)
+		async fetch() {
+			/* 		if(process.browser)
 			this.$nuxt.$loading.start(); */
 
 			const { presences, partners, science } = await this.$graphql(
@@ -327,7 +317,6 @@
 				topPresences: [],
 				partners: [],
 				hotPresences: [],
-				nsfw: false,
 				mostUsed: true,
 				showAdded: true,
 				filterLiked: false,
@@ -409,9 +398,6 @@
 									).length > 0)
 							);
 					})
-					.filter(presence =>
-						this.nsfw ? true : !presence.metadata.tags.includes("nsfw")
-					)
 					.filter(presence =>
 						this.filterLiked &&
 						this.$store.state.presences.likedPresences.includes(
