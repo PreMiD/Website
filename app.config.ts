@@ -1,4 +1,5 @@
 export default defineAppConfig({
+	categories: ["all", "anime", "games", "music", "other", "socials", "videos"],
 	roles: {
 		Booster: "585532751663333383",
 		Contributor: "1032759805732978708",
