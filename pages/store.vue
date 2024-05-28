@@ -43,7 +43,7 @@ function getLinkProperties({
 			<input
 				v-model="search"
 				type="text"
-				class="text-white border-none bg-gray p-2 w-full h-8 rounded"
+				class="text-white border-none outline-none bg-gray p-2 w-full h-8 rounded"
 				:placeholder="$t('store.filter.search')"
 				@:input="$router.replace(getLinkProperties({}))"
 			>
