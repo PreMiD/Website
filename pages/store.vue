@@ -54,7 +54,7 @@ function getLinkProperties({
 				<NuxtLink
 					v-for="c of categories"
 					:key="c"
-					:class="{ 'bg-primary text-white': c === selectedCategory }"
+					:class="{ 'bg-primary text-white': c == 'all' ? selectedCategory == '' : c === selectedCategory }"
 					class="w-full flex items-center h-8 p-2 rounded font-bold border-solid border-1 m-1 text-link-inactive border-gray-secondary"
 					:to="getLinkProperties({ category: c === 'all' ? '' : c })"
 				>
