@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import tinycolor from "tinycolor2";
 
-import { type ContributorsQuery } from "#gql";
-
 type ContributorType = NonNullable<ContributorsQuery["credits"]>[number];
 
 const { user } = defineProps<{ user: ContributorType }>();
@@ -39,14 +37,18 @@ const cardGradientColor = computed(() => {
 
 <template>
   <div
-    class="flex items-center select-none h-15 w-60 rd-2 py-1 justify-between px-3 transition-all hover:translate-y--1.5 duration-200"
+    class="flex items-center select-none h-17 w-60 rd-2 py-1 justify-between px-3 transition-all hover:translate-y--1.5 duration-200"
     :style="computedBackground"
     @mouseover="hovered = true"
     @mouseleave="hovered = false"
   >
     <div class="grid gap-1">
-      <h1 class="font-size-4.5 font-800">{{ user?.user?.name }}</h1>
-      <p class="color-white:85">{{ user?.user?.role }}</p>
+      <h1 class="font-size-4.5 font-800">
+        {{ user?.user?.name }}
+      </h1>
+      <p class="color-white:70 font-bold font-size-3.5">
+        {{ user?.user?.role }}
+      </p>
     </div>
     <div class="relative">
       <img

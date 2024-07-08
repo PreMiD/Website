@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import tinycolor from "tinycolor2";
+import { ref } from "vue";
 
 import type { PresencesQuery } from "#gql";
 
@@ -22,7 +23,7 @@ const { presence } = defineProps<{
 <template>
   <div
     :style="`--shadow: ${color.shadow}; --shadowTint: ${color.shadowTint}; --text: ${color.text};`"
-    class="relative shadow-md select-none bg-card-primary w-20 rounded-lg card-dimensions"
+    class="relative select-none shadow-md bg-card-primary w-20 rounded-lg card-dimensions"
     :aria-label="presence.metadata.service"
     @mouseover="hovered = true"
     @mouseleave="hovered = false"
@@ -33,8 +34,8 @@ const { presence } = defineProps<{
         'delay-100 transition-ease-out': !hovered,
       }"
       style="background-color: var(--shadowTint)"
-      class="card-dimensions rounded-lg absolute border-primary border-1.5 transition-opacity border-solid object-cover opacity-0 z-10"
-    ></div>
+      class="card-dimensions rounded-lg absolute border-solid border-primary border-1.5 transition-opacity object-cover opacity-0 z-10"
+    />
 
     <NuxtImg
       placeholder
@@ -71,18 +72,15 @@ const { presence } = defineProps<{
             <p v-if="!hovered" class="card-shadow line-clamp-2 line-height-3.5">
               {{ presence.metadata.description.en }}
             </p>
-            <div
-              v-else-if="hovered"
-              class="flex gap-2"
-            >
+            <div v-else-if="hovered" class="flex gap-2">
               <button
-                class="bg-primary rounded-full text-white w-40 h-10 border-none gap-2 flex items-center justify-center"
+                class="gap-2 flex items-center justify-center bg-primary rounded-full text-white w-40 h-10 border-none"
               >
                 <FAIcon class="h5 w5" icon="fa-solid fa-plus" />
                 <p class="">add presence</p>
               </button>
               <button
-                class="bg-red rounded-full text-white w-10 h-10 border-none gap-2 flex items-center justify-center"
+                class="rounded-full text-white w-10 h-10 border-none gap-2 flex items-center justify-center bg-red"
               >
                 <FAIcon class="h5 w5" icon="fa-solid fa-heart" />
               </button>
@@ -91,7 +89,7 @@ const { presence } = defineProps<{
         </Transition>
       </div>
       <div
-        class="text-color op-50 absolute right-0 shadow-tint mt-2 mr-2 flex gap-2 flex-col"
+        class="text-color absolute right-0 flex gap-2 op-50 shadow-tint mt-2 mr-2 flex-col"
       >
         <p>
           <!-- {{ presence.users }}/{{ presence.users }} live <FAIcon class="h-4 w-4" beat-fade icon="fa-duotone fa-signal-stream" style="--fa-primary-color: #ff0000; --fa-secondary-color: #1e3050;" /> -->

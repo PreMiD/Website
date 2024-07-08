@@ -2,6 +2,14 @@ import { readdirSync } from "node:fs";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  apollo: {
+    clients: {
+      default: {
+        browserHttpEndpoint: "https://api.premid.app/v3",
+        httpEndpoint: "https://api.premid.app/v3",
+      },
+    },
+  },
   build: {
     transpile: ["@fortawesome/vue-fontawesome"],
   },
@@ -35,17 +43,12 @@ export default defineNuxtConfig({
     domains: ["cdn.rcd.gg"],
   },
   modules: [
+    "@nuxtjs/apollo",
     "@nuxtjs/i18n",
     "@nuxtjs/google-fonts",
-    "nuxt-graphql-client",
     "@nuxtjs/eslint-module",
     "@unocss/nuxt",
     "@vueuse/nuxt",
     "@nuxt/image",
   ],
-  runtimeConfig: {
-    public: {
-      GQL_HOST: "https://api.premid.app/v3",
-    },
-  },
 });

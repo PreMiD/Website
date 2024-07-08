@@ -1,5 +1,19 @@
 <script lang="ts" setup>
-const { data, error } = useAsyncGql({ operation: "contributors" }),
+const { data, error } = useAsyncQuery(gql`
+    query contributors {
+      credits {
+        user {
+          id
+          name
+          avatar
+          roleId
+          role
+          roleColor
+          rolePosition
+        }
+      }
+    }
+  `),
   filteredData = computed(() => {
     return data.value?.credits ?? [];
   }),
