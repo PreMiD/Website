@@ -1,26 +1,18 @@
-@font-face {
-  font-family: "Discord Font";
-  font-weight: 900;
-  src: url("/assets/fonts/discord.woff2") format("woff2");
-  font-style: normal;
-  font-display: swap;
-}
-
 @screen lt-sm {
-  #header {
-    background-color: hsl(227, 18%, 8%);
-  }
+	#header {
+		background-color: hsl(227, 18%, 8%);
+	}
 }
 
 html,
 body {
-  background-color: hsl(227, 18%, 8%);
-  color: #fff;
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: antialiased;
-  -o-font-smoothing: antialiased;
+	background-color: hsl(227, 18%, 8%);
+	color: #fff;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-o-font-smoothing: antialiased;
 }
 a {
-  text-decoration: none;
-  color: white;
+	text-decoration: none;
+	color: white;
 }

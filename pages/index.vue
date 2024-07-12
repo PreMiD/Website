@@ -1,206 +1,297 @@
 <script lang="ts" setup>
-type presenceData = {
-	calculatedTime: string;
-	details: string;
-	name: string;
-	largeImage: string;
-	smallImage: string;
-	state: string;
-	time: [number, "elapsed" | "left"];
-	type: string;
-	user: {
-		image: string;
-		name: string;
-	};
-}[];
+import type { DiscordUserCardActivity } from "@discord-user-card/core";
+import { DiscordUserCard } from "@discord-user-card/vue";
+import "@discord-user-card/vue/style.css";
 
-const elapsedTime = ref(0),
-	presences = ref<presenceData>([
-		{
-			calculatedTime: "",
-			details: 'S2:E10 "Over"',
-			largeImage:
-        "https://occ-0-7202-769.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABcTBR2zKjrPP2hApy9ff-kf-0fSIZo-17obE5NcYcFsudoaKjJxyWtCEZMFrWWsyq9axKmsDKQpWgv3AQVskSxHbiw6TSS-qKbmqgtoJOV4Xu1gnKXaLQ64M3Q.webp?r=c3b",
-			name: "Netflix",
-			smallImage:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/2048px-Netflix_icon.svg.png",
-			state: "Breaking Bad",
-			time: [4937, "left"],
-			type: "Watching Netflix",
-			user: {
-				image:
-          "https://s3.vasc.dev/presencedb/avatars/576097150359044106/9d3dd2004c4d005f62d9b86e23e1d20a",
-				name: "veryCrunchy",
-			},
-		},
-		{
-			calculatedTime: "",
-			details: "detail",
-			largeImage:
-        "https://cdn.discordapp.com/avatars/503557087041683458/0e08c6c7ecd491094f443a86e53f1b13.png?size=1024",
-			name: "PreMiD",
-			smallImage:
-        "https://cdn.discordapp.com/avatars/503557087041683458/0e08c6c7ecd491094f443a86e53f1b13.png?size=1024",
+useSeoMeta({ title: "Home" });
 
-			state: "state",
-			time: [157, "elapsed"],
-			type: "Playing a game",
-			user: {
-				image:
-          "https://cdn.discordapp.com/avatars/503557087041683458/0e08c6c7ecd491094f443a86e53f1b13.png?size=1024",
-				name: "PreMiD",
-			},
-		},
-	]),
-	updateTimes = () => {
-		elapsedTime.value++;
+const words = ["music", "videos", "streams", "media"];
+const currentWord = ref(words[0]);
+let currentWordIndex = 0;
 
-		for (const presenceData of presences.value) {
-			let time;
-			if (presenceData.time[1] === "elapsed")
-				time = Math.max(0, presenceData.time[0] + elapsedTime.value);
-			if (presenceData.time[1] === "left")
-				time = Math.max(0, presenceData.time[0] - elapsedTime.value);
-			const seconds = time ?? 0,
-				minutes = Math.floor(seconds / 60),
-				hours = Math.floor(minutes / 60),
-				h = hours > 0 ? `${String(hours).padStart(2, "0")}:` : "",
-				m = minutes > 0 ? `${String(minutes % 60).padStart(2, "0")}:` : "00:",
-				s = `${String(seconds % 60).padStart(2, "0")}`;
-			presenceData.calculatedTime = `${h}${m}${s} ${presenceData.time[1]}`;
-		}
-	};
-
-let updateTimesInterval: NodeJS.Timeout;
-updateTimes();
+let wordInterval: number;
 onMounted(() => {
-	updateTimesInterval = setInterval(updateTimes, 1000);
+	wordInterval = window.setInterval(() => {
+		currentWordIndex = (currentWordIndex) % words.length;
+		currentWord.value = words[currentWordIndex];
+	}, 2000);
 });
-onBeforeUnmount(() => {
-	clearInterval(updateTimesInterval);
+
+onUnmounted(() => {
+	clearInterval(wordInterval);
+});
+
+const scroller = ref<HTMLDivElement>();
+
+const activities = ref<DiscordUserCardActivity[]>([
+	{
+		name: "YouTube",
+		type: 3,
+		details: "Let's play Minecraft together!",
+		state: "PreMiD",
+	},
+	{
+		name: "Netflix",
+		type: 3,
+		details: "Let's watch a movie together!",
+		state: "PreMiD",
+	},
+	{
+		name: "YouTube Music",
+		type: 3,
+		details: "Do What I Say (feat. Vito Z Holmes)",
+		state: "Single - Black Gryphon",
+		largeImage: "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/logo.png",
+	},
+	{
+		name: "Twitch",
+		type: 3,
+		details: "Let's play Minecraft together!",
+		state: "PreMiD",
+	},
+	{
+		name: "YouTube",
+		type: 3,
+		details: "Let's play Minecraft together!",
+		state: "PreMiD",
+	},
+]);
+
+function getActivity(index: number) {
+	const activity = activities.value[index];
+	return activity;
+}
+
+const features = ref([
+	{
+		icon: "fas fa-lock",
+		title: "Privacy Control",
+		description: "Take charge of your privacy settings and decide what activities you share with others. Your data, your rules.",
+	},
+	{
+		icon: "fas fa-users",
+		title: "Community Driven",
+		description: "Experience unparalleled support for a multitude of platforms, powered by a passionate and dedicated community.",
+	},
+	{
+		icon: "fas fa-cogs",
+		title: "Customizable Settings",
+		description: "Tailor your PreMiD experience with extensive customization options to suit your preferences and needs.",
+	},
+	{
+		icon: "fas fa-check-circle",
+		title: "Easy Setup",
+		description: "Get up and running with PreMiD in no time. Our straightforward setup process ensures a hassle-free start.",
+	},
+	{
+		icon: "fas fa-handshake",
+		title: "Discord ToS Compliant",
+		description: "Fully compliant with Discord's Terms of Service by utilizing official endpoints provided by Discord.",
+	},
+	{
+		icon: "fas fa-lightbulb",
+		title: "Future Features",
+		description: "Stay tuned for exciting new features and improvements that will enhance your PreMiD experience even further.",
+	},
+]);
+
+const steps = ref([
+	{
+		icon: "download",
+		title: "Install the Extension",
+		description: "Get the PreMiD extension from the official website or your browser's web page.store.",
+	},
+	{
+		icon: "sign-in-alt",
+		title: "Login with Discord",
+		description: "Connect PreMiD with your Discord account.",
+	},
+	{
+		icon: "plus",
+		title: "Add Services",
+		description: "Choose the services you want to display, like YouTube, Spotify, and more.",
+	},
+	{
+		icon: "smile",
+		title: "Enjoy",
+		description: "Share your activity and enjoy using PreMiD.",
+	},
+]);
+
+onMounted(() => {
+	setInterval(() => {
+		currentWordIndex = (currentWordIndex + 1) % words.length;
+		currentWord.value = words[currentWordIndex];
+	}, 2000); // Change word every 2 seconds
 });
 </script>
 
 <template>
-	<main
-		class="justify-center items-center gap-2 flex flex-wrap h-screen mx-2 lt-lg:mt-20"
-	>
-		<div class="xl:p-10">
-			<div>
-				<img
-					src="/assets/images/logo-wordmark.png"
-					alt="PreMiD Logo"
-					class="xs:max-w-120 xs:w-1/1"
-				>
-				<div class="flex justify-center">
-					<p
-						class="xs:max-w-120 w-1/1 mt-5 text-center font-semibold whitespace-pre-wrap max-w-screen text-5"
-					>
-						<span class="color-primary">PreMiD</span> is a simple, configurable
-						utility that allows you to show what you're doing on the web in your
-						Discord now playing status.
-					</p>
-				</div>
+	<div>
+		<!-- Hero Section -->
+		<section class="flex flex-col items-center justify-center text-white min-h-screen">
+			<div class="text-center flex flex-col items-center mx-5">
+				<img src="/assets/images/icon.png" alt="PreMiD Logo" class="mb-2 w-32">
+				<h1 class="font-extrabold mb-4 text-4xl">
+					Enhance Your Online Presence with PreMiD
+				</h1>
+				<p class="text-2xl flex mb-8">
+					Show your friends what
+					<span class="relative flex text-center justify-center mx-2 w-25">
+						<transition-group name="slide" tag="span">
+							<span v-for="word in [currentWord]" :key="word" class="absolute left-0 w-25 font-bold text-gradient">{{ word }}</span>
+						</transition-group>
+					</span>
+					you're enjoying.
+				</p>
+				<p class="text-lg mb-8 max-w-2xl">
+					PreMiD is a simple, powerful tool that allows you to share your current media activity across multiple platforms like YouTube, Spotify, Netflix, and more. Stay connected and let your friends see what you're up to in real-time.
+				</p>
+				<NuxtLink to="/downloads" class="transition-colors text-white font-bold font-size-4 px-6 rounded-full shadow-lg mb-8 bg-gradient-to-r from-primary to-purple-600 border-transparent py-4 transition-transform hover:scale-105">
+					Get Started
+				</NuxtLink>
 			</div>
-			<div class="flex justify-center gap-4 lt-sm:flex-col m-10">
-				<!-- <a
-                    href="#features"
-                    class="font-semibold text-center text-nowrap bg-primary py-3 rounded-full uppercase font-inter text-4 px-14.5"
-                >
-                    <FAIcon
-                        class="w-4 mr-1 h-4"
-                        :icon="'fa-solid fa-stream'"
-                    />{{ $t("header.links.features") }}</a
-                > -->
-				<!-- TODO: swap out /store with #features once created -->
-				<a
-					href="/store"
-					class="font-semibold text-center uppercase font-inter text-nowrap bg-primary rounded-full py-3 text-4 px-14"
-				>
-					<FAIcon
-						class="w-4 h-4 mr-1"
-						:icon="'fa-solid fa-cart-arrow-down'"
-					/>{{ $t("header.links.store") }}</a>
-				<a
-					href="/downloads"
-					class="font-semibold text-nowrap text-center py-3 rounded-full uppercase font-inter text-4 px-10 bg-gray"
-				>
-					<FAIcon
-						class="w-4 mr-1 h-4"
-						:icon="'fa-solid fa-download'"
-					/>{{
-						$t("header.links.downloads")
-					}}
-				</a>
+			<div ref="scroller" class="w-full overflow-hidden relative max-w-screen scroller mt25">
+				<ul class="flex scroller-items flex-nowrap gap-4 animate-duration-20000 animate-iteration-infinite animate-ease-linear w-max">
+					<ClientOnly>
+						<DiscordUserCard v-for="i in 5" :key="i" :activities="[getActivity(i)]" />
+						<!-- Duplicate to prevent weird jumping -->
+						<DiscordUserCard v-for="i in 5" :key="i" :activities="[getActivity(i)]" />
+					</ClientOnly>
+				</ul>
+				<div class="absolute top-0 left-0 bg-gradient-to-r h-full w-16 fade-left from-#111218 to-transparent" />
+				<div class="absolute top-0 right-0 h-full w-16 from-#111218 to-transparent fade-right bg-gradient-to-l" />
 			</div>
-		</div>
-		<section class="flex-col">
-			<div
-				v-for="presence in presences"
-				:key="presence.name"
-				class="bg-primary justify-center h-65 m-6 rounded-t-2 rounded-b-4 w-md"
-			>
-				<div class="flex items-center">
-					<img
-						class="rounded-full m-5 h-20"
-						:src="presence.user.image"
-					>
-					<div>
-						<h1 class="font-semibold font-inter text-5 subpixel-antialiased">
-							{{ presence.user.name }}
-						</h1>
-						<FAIcon
-							class="mr-1 h-5 mt-1 h-fit w-5"
-							:icon="'fa-solid fa-handshake-angle'"
-						/>
-					</div>
-				</div>
-				<div class="bg-primary w-full h-37 brightness-95 rounded-b-2 top-1/2">
-					<div class="pt-4 pl-4">
-						<h1 class="uppercase text-3 font-extrabold">
-							{{ presence.type }}
-						</h1>
-						<div class="flex flex-wrap h-fit mt-4">
-							<span class="max-h-22">
-								<img
-									class="rounded-md object-cover h-22 w-22"
-									:src="presence.largeImage"
-								>
+		</section>
 
-								<div
-									class="rounded-full bg-primary relative bottom-8 w-9 h-9 left-15"
-								>
-									<img
-										class="rounded-full w-8 h-8 m-0.5"
-										:src="presence.smallImage"
-									>
-								</div>
-							</span>
-							<div class="my-a pl-5">
-								<h1 class="font-bold text-sm pb-.5">
-									{{ presence.name }}
-								</h1>
-								<p class="pb-.5 text-xs font-extralight">
-									{{ presence.state }}
-								</p>
-								<p class="text-xs font-extralight pb-.5">
-									{{ presence.details }}
-								</p>
-								<p class="text-xs font-extralight pb-.5">
-									{{ presence.calculatedTime }}
-								</p>
-							</div>
+		<!-- Unique Feature Section -->
+		<section class="text-white mx5 pb-12 mt-10">
+			<div class="text-center container mx-auto">
+				<h2 class="text-4xl font-extrabold mb-12">
+					Why You'll Love PreMiD
+				</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+					<div
+						v-for="feature in features"
+						:key="feature.title"
+						class="p-6 rounded-lg shadow-lg transition hover:scale-105 feature-card bg-background-secondary transform duration-500 hover:translate-y--2"
+					>
+						<div class="mb-4 icon">
+							<FAIcon :icon="feature.icon" class="text-gradient fa-3x" />
 						</div>
+						<h3 class="text-2xl font-bold mb-2">
+							{{ feature.title }}
+						</h3>
+						<p class="text-gray-400">
+							{{ feature.description }}
+						</p>
 					</div>
 				</div>
 			</div>
 		</section>
-	</main>
-	<!-- TODO: features showcase -->
-	<!-- <hr class="mt-50" /> -->
-	<!-- <section class="flex justify-center bg-bg-blue-gray">
-    <h1 class="font-bold text-5xl">You will love these features!</h1>
-  </section> -->
+
+		<!-- How It Works Section -->
+		<section class="mx5 py-12 bg-gray-100">
+			<div class="container mx-auto text-center">
+				<h2 class="text-4xl font-extrabold mb-12 text-gray-900">
+					How It Works
+				</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+					<div
+						v-for="(step, index) in steps"
+						:key="step.title"
+						class="p-6 bg-background-secondary rounded-lg relative transform transition duration-500 hover:translate-y--2 hover:scale-105 shadow-md"
+					>
+						<div class="bg-primary text-white rounded-full w-10 flex items-center justify-center mx-auto mb-4 absolute h-10 top--3 left--3">
+							{{ index + 1 }}
+						</div>
+						<div class="icon mb-4">
+							<FAIcon :icon="step.icon" class="fa-3x text-primary" />
+						</div>
+						<h3 class="font-bold mb-2 text-xl">
+							{{ step.title }}
+						</h3>
+						<p>{{ step.description }}</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Call to Action Section -->
+		<section class="py-12 bg-gradient-to-r from-primary to-purple-600 text-white mx5 rounded">
+			<div class="container mx-auto text-center">
+				<h2 class="text-4xl font-extrabold mb-6">
+					Ready to Get Started?
+				</h2>
+				<p class="text-lg mb-6">
+					Join the <span class="font-bold">572.312</span> users who are already love PreMiD.
+				</p>
+				<NuxtLink to="/downloads" class="b-none font-size-4 font-bold px-6 rounded-full shadow-lg transition-colors cursor-pointer bg-white text-black py-3 hover:bg-light-900">
+					Start Now
+				</NuxtLink>
+			</div>
+		</section>
+	</div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+/* Add styles for the sliding word effect */
+.slide-enter-active,
+.slide-leave-active {
+	transition:
+		transform 0.5s,
+		opacity 0.5s;
+}
+.slide-enter-from {
+	transform: translateY(-100%);
+	opacity: 0;
+}
+.slide-enter-to {
+	transform: translateY(0);
+	opacity: 1;
+}
+.slide-leave-from {
+	transform: translateY(0);
+	opacity: 1;
+}
+.slide-leave-to {
+	transform: translateY(100%);
+	opacity: 0;
+}
+
+.text-gradient {
+	background: linear-gradient(90deg, #7289da, #b3aeff);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+@keyframes scroll {
+	to {
+		transform: translate(calc(-50% - 0.5rem));
+	}
+}
+
+.scroller-items {
+	animation-name: scroll;
+}
+
+/* Testimonial Section */
+.testimonial-card {
+	background: #f9fafb;
+	border-radius: 8px;
+	padding: 20px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Section */
+footer {
+	background: #1f2937;
+}
+footer a {
+	color: #9ca3af;
+}
+footer a:hover {
+	color: #ffffff;
+}
+</style>

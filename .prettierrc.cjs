@@ -1,5 +1,5 @@
 module.exports = {
-    extends: [
-      "@recodive/config/.prettierrc.js",
-    ],
-  };
+	extends: [
+		"@recodive/config/.prettierrc.js",
+	],
+};

@@ -1,0 +1,9 @@
+query getIndexData {
+	credits(random: true, limit: 8) {
+		user {
+			id
+			name
+			avatar
+		}
+	}
+}
