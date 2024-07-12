@@ -12,7 +12,7 @@
 		"lint:fix": "eslint . --fix"
 	},
 	"dependencies": {
-		"@discord-user-card/vue": "^0.0.3",
+		"@discord-user-card/vue": "^0.0.5",
 		"@nuxtjs/eslint-module": "^4.1.0",
 		"@nuxtjs/google-fonts": "^3.2.0",
 		"@nuxtjs/i18n": "^8.3.1",
