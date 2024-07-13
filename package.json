@@ -24,7 +24,7 @@
 		"sass": "^1.77.8"
 	},
 	"devDependencies": {
-		"@antfu/eslint-config": "^2.22.0",
+		"@antfu/eslint-config": "^2.22.2",
 		"@fortawesome/fontawesome-svg-core": "^6.5.2",
 		"@fortawesome/free-brands-svg-icons": "^6.5.2",
 		"@fortawesome/free-solid-svg-icons": "^6.5.2",
@@ -41,13 +41,13 @@
 		"@unocss/reset": "^0.61.3",
 		"@unocss/transformer-directives": "^0.61.3",
 		"@vueuse/nuxt": "^10.11.0",
-		"eslint": "^9.6.0",
+		"eslint": "^9.7.0",
 		"eslint-plugin-format": "^0.1.2",
 		"lodash": "^4.17.21",
 		"nuxt": "^3.12.3",
 		"nuxt-graphql-client": "^0.2.35",
-		"nuxt-gtag": "^2.0.6",
-		"prettier": "^3.3.2",
+		"nuxt-gtag": "^2.0.7",
+		"prettier": "^3.3.3",
 		"tinycolor2": "^1.6.0",
 		"vue": "^3.4.31",
 		"vue-router": "^4.4.0"
