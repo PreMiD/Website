@@ -70,7 +70,7 @@ export default defineI18nLocale(() => ({
 			meta: {
 				title: "Home",
 			},
-			title: "Enhance Your Online Presence with PreMiD",
+			title: "Enhance Your Online Presence With PreMiD",
 			subtitle: "Show your friends what {word} you're enjoying.",
 			words: {
 				music: "Music",
@@ -128,7 +128,7 @@ export default defineI18nLocale(() => ({
 					},
 				},
 				callToAction: {
-					title: "Ready to Get Started?",
+					title: "Ready To Get Started?",
 					description: "Join the {count} users who are already love PreMiD.",
 					button: "Start Now",
 				},

@@ -116,7 +116,7 @@ const linkSections = computed(() => [
 				</h1>
 				<ol>
 					<li v-for="link in section.links" :key="link.label" class="mb-2">
-						<a :href="link.href" class="flex gap-1 items-center color-#878b99 hover:c-light-9">
+						<a :href="link.href" target="_blank" class="flex gap-1 items-center color-#878b99 hover:c-light-9">
 							<FAIcon v-if="link.icon" class="h-5 w-5" :icon="link.icon" />
 							<span>{{ link.label }}</span>
 						</a>
@@ -129,7 +129,7 @@ const linkSections = computed(() => [
 				{{ t('footer.withLoveBy') }}
 				<FAIcon class="h-4 w-4 c-red" icon="fa-solid fa-heart" />
 				{{ t('footer.by') }}
-				<a href="https://recodive.com">Recodive</a>
+				<a href="https://recodive.com" target="_blank">Recodive</a>
 			</span>
 			<br>
 			<div class="text-xs mt2 color-light-9">
