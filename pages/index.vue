@@ -13,7 +13,7 @@ let currentWordIndex = 0;
 let wordInterval: number;
 onMounted(() => {
 	wordInterval = window.setInterval(() => {
-		currentWordIndex = (currentWordIndex) % words.length;
+		currentWordIndex = (currentWordIndex + 1) % words.length;
 		currentWord.value = words[currentWordIndex];
 	}, 2000);
 });
@@ -88,13 +88,6 @@ const { data } = await useAsyncGql("getIndexData");
 const computedUsage = computed(() => Intl.NumberFormat(locale.value).format(data.value?.usage?.count ?? 0));
 
 const localePath = useLocalePath();
-
-onMounted(() => {
-	setInterval(() => {
-		currentWordIndex = (currentWordIndex + 1) % words.length;
-		currentWord.value = words[currentWordIndex];
-	}, 2000); // Change word every 2 seconds
-});
 </script>
 
 <template>
