@@ -2,7 +2,7 @@
 const route = useRoute();
 const router = useRouter();
 
-const { data, status } = await useAsyncGql({ operation: "userPage", variables: { id: route.params.id } });
+const { data, status } = await useAsyncGql("userPage", { id: route.params.id });
 
 const user = computed(() => data.value.credits?.[0]?.user);
 const presences = computed(() => [...data.value.authorPresences, ...data.value.contributorPresences]);
@@ -22,8 +22,8 @@ if (status.value === "success" && !user.value) {
 				</h1>
 			</div>
 			<div class="flex flex-col items-center gap-10">
-				<h1 class="font-bold c-primary text-10">
-					Presence Contributions
+				<h1 class="font-bold c-primary text-10 text-center">
+					{{ $t("page.users.userPage.title") }}
 				</h1>
 				<div class="flex flex-wrap gap-5 justify-center">
 					<StoreCard v-for="presence in presences" :key="presence.metadata.service" :presence="presence" />
@@ -33,10 +33,9 @@ if (status.value === "success" && !user.value) {
 		<template v-else>
 			<div class="flex flex-col justify-center items-center gap-3">
 				<h1 class="font-bold text-xl">
-					Error
+					{{ $t("page.users.userPage.error.title") }}
 				</h1>
-				<p>We're having trouble loading this user...</p>
-				<p>Please try again later.</p>
+				<p>{{ $t("page.users.userPage.error.description") }}</p>
 			</div>
 		</template>
 	</div>

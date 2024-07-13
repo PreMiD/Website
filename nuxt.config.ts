@@ -1,6 +1,5 @@
 import { readdirSync } from "node:fs";
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	app: {
 		pageTransition: {
@@ -16,7 +15,6 @@ export default defineNuxtConfig({
 	build: {
 		transpile: ["@fortawesome/vue-fontawesome"],
 	},
-
 	css: [
 		"@/scss/index.scss",
 		"@unocss/reset/normalize.css",
@@ -24,13 +22,10 @@ export default defineNuxtConfig({
 		"@unocss/reset/sanitize/assets.css",
 		"@unocss/reset/eric-meyer.css",
 	],
-
 	devtools: { enabled: true },
-
 	features: {
 		inlineStyles: false,
 	},
-
 	fonts: {
 		families: [
 			{
@@ -47,24 +42,24 @@ export default defineNuxtConfig({
 			},
 		],
 	},
-
 	i18n: {
+		vueI18n: "i18n.ts",
+		baseUrl: "https://premid.app",
 		defaultLocale: "en",
 		langDir: "locales/",
+		strategy: "prefix_except_default",
 		lazy: true,
 		locales: readdirSync("locales").map(locale => ({
 			code: locale.replace(".ts", ""),
 			file: locale,
 		})),
 	},
-
 	site: {
 		url: "https://premid.app",
 		name: "PreMiD",
 		description: "PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord activity status.",
 		defaultLocale: "en",
 	},
-
 	image: {
 		domains: ["cdn.rcd.gg"],
 		ipx: {
@@ -81,12 +76,20 @@ export default defineNuxtConfig({
 		"@nuxt/fonts",
 		"@nuxtjs/seo",
 		"floating-vue/nuxt",
+		"nuxt-gtag",
+		"@nuxtjs/device",
 	],
-
+	gtag: {
+		id: "G-L8H2VTE7NQ",
+	},
 	runtimeConfig: {
+		discord_bot_token: "",
 		public: {
 			GQL_HOST: "https://api.premid.app/v3",
 		},
+	},
+	ogImage: {
+		enabled: false,
 	},
 	compatibilityDate: "2024-07-09",
 });

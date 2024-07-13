@@ -20,8 +20,9 @@ tinycolor(presence.metadata.color).getLuminance() > 0.95
 };
 
 const router = useRouter();
+const localePath = useLocalePath();
 function goToPresence() {
-	router.push(`/store/${presence.metadata.service}`);
+	router.push(localePath(`/store/${presence.metadata.service}`));
 }
 </script>
 
@@ -76,15 +77,15 @@ function goToPresence() {
 								class="gap-2 flex items-center justify-center h-10 cursor-pointer font-bold bg-primary hover:bg-primary-highlight rounded-full transition-colors text-white border-none w-40"
 							>
 								<FAIcon class="h5 w5" icon="fa-solid fa-plus" />
-								<p class="">
-									Add Presence
+								<p>
+									{{ $t("component.storeCard.addPresence") }}
 								</p>
 							</button>
-							<button
+							<!-- <button
 								class="rounded-full text-white h-10 border-none gap-2 flex items-center justify-center w-10 cursor-pointer transition-colors bg-red hover:bg-red-3"
 							>
 								<FAIcon class="h5 w5" icon="fa-solid fa-heart" />
-							</button>
+							</button> -->
 						</div>
 					</div>
 				</Transition>

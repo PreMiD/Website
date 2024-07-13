@@ -12,16 +12,19 @@ useHead({
 	],
 });
 
+const { t } = useI18n();
+
 useSeoMeta({
 	title: "PreMiD",
 	ogTitle: "PreMiD",
-	description: "PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.",
-	ogDescription: "PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.",
+	description: t("page.home.description"),
+	ogDescription: t("page.home.description"),
 	ogImage: "https://cdn.rcd.gg/PreMiD.png",
 	twitterCard: "summary_large_image",
 	ogUrl: "https://premid.app",
 	twitterTitle: "PreMiD",
-	twitterDescription: "PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.",
+	twitterDescription: t("page.home.description"),
+	applicationName: "PreMiD",
 	twitterImage: "https://cdn.rcd.gg/PreMiD.png",
 });
 </script>

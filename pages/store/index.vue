@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { LocationQuery } from "vue-router";
 
+const { t } = useI18n();
 useSeoMeta({
-	title: "Store",
+	title: t("page.store.title"),
 });
 
 const { data } = await useAsyncGql({ operation: "presences" });
@@ -82,11 +83,11 @@ onMounted(() => {
 			</div>
 		</div>
 		<div v-if="presences.data.length > 0" class="items-center mt-5 flex-col flex sm:mt-10 min-h-688px">
-			<div class="gap-4 grid grid-cols-[fit-content(0%)] lg:grid-cols-[repeat(2,fit-content(0%))] 2xl:grid-cols-[repeat(3,fit-content(0%))] overflow-unset">
+			<div class="gap-4 grid grid-cols-[fit-content(0%)] lg:grid-cols-[repeat(2,fit-content(0%))] overflow-unset">
 				<StoreCard v-for="presence in presences.data" :key="presence.metadata.service" :presence="presence" />
 			</div>
 			<!-- Pagination -->
-			<div v-if="presences.data.length > 0" class="flex mt-5 mb-10 sticky z-40">
+			<div v-if="presences.data.length > 0" class="flex mt-5 mb-10 sticky z-40 flex-wrap justify-center">
 				<NuxtLink
 					:to="getLinkProperties({ page: 1 })"
 					:replace="true"

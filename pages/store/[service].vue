@@ -20,6 +20,8 @@ const presenceLink = computed(() => {
 	return `https://github.com/PreMiD/Presences/tree/main/websites/${letter}/${presence.value!.metadata.service}`;
 });
 
+const { userAgent } = useDevice();
+
 const extractedInfo = computed(() => {
 	if (import.meta.server) {
 		return {
@@ -32,7 +34,7 @@ const extractedInfo = computed(() => {
 		};
 	}
 
-	const info = Bowser.getParser(window.navigator.userAgent);
+	const info = Bowser.getParser(userAgent);
 	const os = info.getOS();
 	return {
 		os,
@@ -40,6 +42,10 @@ const extractedInfo = computed(() => {
 		browserVersion: info.getBrowserVersion(),
 	};
 });
+
+const { locale } = useI18n();
+
+const formattedUsers = computed(() => Intl.NumberFormat(locale.value).format(presence.value?.users ?? 0));
 
 useSeoMeta({
 	title: presence.value?.metadata.service,
@@ -61,16 +67,16 @@ useSeoMeta({
 
 <template>
 	<div v-if="presence" class="w-full">
-		<div class="relative overflow-hidden w-full items-center flex rounded h60 mb10">
+		<div class="relative overflow-hidden w-full items-center flex rounded h60 mb10 justify-between px5 flex-wrap">
 			<NuxtImg :src="presence.metadata.thumbnail" class="absolute w-full h-auto left-50 translate-x--50 opacity-75" alt="Presence thumbnail" width="1024px" />
 
-			<div class="relative flex items-center gap-5 left-20 lt-md:left-5 transition-left">
+			<div class="relative flex items-center gap-5 transition-left">
 				<NuxtImg :src="presence.metadata.logo" class="w-auto h-25" alt="Presence logo" width="100px" height="100px" />
 				<h1 class="font-extrabold font-size-6">
 					{{ presence.metadata.service }}
 				</h1>
 			</div>
-			<div class="absolute right-20 lt-md:right-5 transition-right">
+			<div class="right-20 lt-md:right-5 transition-right z-1">
 				<button class="bg-primary c-white rounded-full font-semibold font-size-5 transition-colors cursor-pointer b-solid b-transparent px-4 py-2 duration-300 hover:bg-secondary">
 					{{ $t("page.store.presence.button.add") }}
 				</button>
@@ -122,7 +128,7 @@ useSeoMeta({
 					</div>
 				</div>
 			</div>
-			<div class="rounded bg-gray p5 max-w-70">
+			<div class="rounded bg-gray p5 max-w-70 lt-md:max-w-none">
 				<h1 class="font-extrabold font-size-6 mb2">
 					{{ $t("page.store.presence.title.information") }}
 				</h1>
@@ -138,7 +144,7 @@ useSeoMeta({
 					<div>
 						<p class="mb2">
 							<FAIcon class="h-4 w-4" icon="fa-solid fa-tag" />
-							<i18n-t keypath="page.store.presence.informationSection.version" tag="span" class="mb2 c-text font-semibold ml1">
+							<i18n-t scope="global" keypath="page.store.presence.informationSection.version" tag="span" class="mb2 c-text font-semibold ml1">
 								<template #version>
 									<span class="font-normal">{{ presence?.metadata.version }}</span>
 								</template>
@@ -148,9 +154,9 @@ useSeoMeta({
 					<div>
 						<p class="mb2">
 							<FAIcon class="h-4 w-4" icon="fa-solid fa-cart-arrow-down" />
-							<i18n-t keypath="page.store.presence.informationSection.users" tag="span" class="ml1 mb2 c-text font-semibold">
+							<i18n-t scope="global" keypath="page.store.presence.informationSection.users" tag="span" class="ml1 mb2 c-text font-semibold">
 								<template #users>
-									<span class="font-normal">{{ presence?.users }}</span>
+									<span class="font-normal">{{ formattedUsers }}</span>
 								</template>
 							</i18n-t>
 						</p>

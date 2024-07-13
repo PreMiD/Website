@@ -2,75 +2,39 @@
 import Bowser from "bowser";
 import type DonationModal from "~/components/DonationModal.vue";
 
-const { t } = useI18n();
+const { t, tm } = useI18n();
+const { userAgent, isMobile } = useDevice();
 
 useSeoMeta({
 	title: t("page.downloads.title"),
 });
 
 const steps = [t("page.downloads.steps.install"), t("page.downloads.steps.login"), t("page.downloads.steps.add"), t("page.downloads.steps.showoff")];
-const browsers = ["Chromium based", "Firefox", "Edge", "Safari"];
+const browsers = computed(() => [t("page.downloads.browser.based", { browser: "Chromium" }), "Firefox", "Edge", "Safari"]);
 
 const userBrowser = ref<string>();
 
-const otherBrowsers = computed(() => browsers.filter(browser => browser !== userBrowser.value));
+const otherBrowsers = computed(() => browsers.value.filter(browser => browser !== userBrowser.value));
 
 onMounted(() => {
-	const browser = Bowser.getParser(window.navigator.userAgent).getBrowserName();
+	const browser = Bowser.getParser(userAgent).getBrowserName();
 	switch (browser) {
 		case "Safari":
-			userBrowser.value = browsers[3];
+			userBrowser.value = browsers.value[3];
 			break;
 		case "Edge":
-			userBrowser.value = browsers[2];
+			userBrowser.value = browsers.value[2];
 			break;
 		case "Firefox":
-			userBrowser.value = browsers[1];
+			userBrowser.value = browsers.value[1];
 			break;
 		default:
-			userBrowser.value = browsers[0];
+			userBrowser.value = browsers.value[0];
 			break;
 	}
 });
 
-const faqs = [
-	{
-		question: "What is PreMiD?",
-		answer: "PreMiD is a simple, configurable utility that allows you to show what you're doing on the web in your Discord now playing status.",
-	},
-	{
-		question: "How do I use PreMiD?",
-		answer: "You can use PreMiD by installing the extension and logging in with your Discord account. Once you're logged in, you can add presences to your profile and show off to your friends.",
-	},
-	{
-		question: "Is PreMiD against Discord's ToS?",
-		answer: "No, PreMiD is not against Discord's ToS. PreMiD uses Discord's API (including gated API endpoints provided by Discord) to set your activity. This means that PreMiD is in full compliance with Discord's ToS.",
-	},
-	{
-		question: "What platforms does PreMiD support?",
-		answer: "PreMiD supports many different platforms including YouTube, Twitch, and Netflix. The list of supported platforms is constantly growing. You can view the complete list of Presences on our store page.",
-	},
-	{
-		question: "How can I contribute to PreMiD?",
-		answer: "You can contribute to PreMiD by joining our community on GitHub. You can help by reporting issues, suggesting features, or contributing code.",
-	},
-	{
-		question: "Is PreMiD free to use?",
-		answer: "Yes, PreMiD is free to use. However, we do accept donations through Patreon and GitHub Sponsors to help support the development of the project.",
-	},
-	{
-		question: "What should I do if I encounter an issue with PreMiD?",
-		answer: "If you encounter any issues with PreMiD, you can join our Discord server for support. We also have a troubleshooting guide on our documentation.",
-	},
-	{
-		question: "PreMiD doesn't support xyz, can you add it?",
-		answer: "Our so called Presences are community-driven, we don't have the resources to add every single platform. However, you can add your own Presence by following the instructions on our documentation.",
-	},
-	{
-		question: "How often is PreMiD updated?",
-		answer: "We are a small volunteer-driven project, we aim to update PreMiD as often as possible but we can't promise that we will always be on top of things.",
-	},
-];
+const faqs = computed(() => Object.keys(tm("page.downloads.faqs")));
 
 const donationModal = ref<InstanceType<typeof DonationModal>>();
 
@@ -83,16 +47,16 @@ function openModal(browser: string) {
 
 function goToStore() {
 	switch (continueToStoreOf.value) {
-		case browsers[0]:
-			window.open("https://chromewebpage.store.google.com/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi");
+		case browsers.value[0]:
+			window.open("https://chromewebstore.google.com/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi");
 			break;
-		case browsers[1]:
+		case browsers.value[1]:
 			window.open("https://dl.premid.app/PreMiD.xpi");
 			break;
-		case browsers[2]:
+		case browsers.value[2]:
 			window.open("https://microsoftedge.microsoft.com/addons/detail/premid/hkchpjlnddoppadcbefbpgmgaeidkkkm");
 			break;
-		case browsers[3]:
+		case browsers.value[3]:
 			// TODO: Safari
 			break;
 	}
@@ -105,15 +69,15 @@ function goToStore() {
 		<section class="flex justify-center items-center relative gap-10 h100 lt-md:flex-col mb-10">
 			<div class="max-w-60%">
 				<h1 class="c-primary font-size-10 font-extrabold mb-6">
-					Time to show off.
+					{{ $t("page.downloads.section.heading.title") }}
 				</h1>
 				<p class="font-semibold font-size-5 lt-sm:font-size-4.5">
-					Use PreMiD now and show off to your friends what you're doing, maybe you find someone with the same interests.
+					{{ $t("page.downloads.section.heading.description") }}
 				</p>
 			</div>
 			<div>
 				<h2 class="font-extrabold mb-6 c-white font-size-6">
-					Get Started
+					{{ $t("page.downloads.section.heading.getStarted") }}
 				</h2>
 				<ol class="grid gap-3 list-inside counter-step">
 					<li v-for="step in steps" :key="step" class="before:inline-block before:text-center before:p1 before:w6 before:h6 before:bg-gradient-to-r before:from-primary before:to-primary-highlight before:rounded-full before:font-bold before:mr2">
@@ -124,8 +88,17 @@ function goToStore() {
 		</section>
 		<section class="flex flex-col gap-5 items-center w-full">
 			<h1 id="extension" class="c-primary font-size-10 font-extrabold mb-6">
-				Extension
+				{{ $t("page.downloads.section.heading.extension") }}
 			</h1>
+			<!-- User on mobile, not supported error -->
+			<div v-if="isMobile" class="bg-red-500 text-white p-5 rounded-lg flex flex-col items-center justify-center gap-2 mb-5">
+				<h2 class="font-bold font-size-5">
+					{{ $t("page.downloads.mobile.title") }}
+				</h2>
+				<p class="font-bold">
+					{{ $t("page.downloads.mobile.description") }}
+				</p>
+			</div>
 			<template v-if="userBrowser">
 				<h2 class="font-bold font-size-5">
 					{{ $t("page.downloads.browser.your") }}
@@ -144,7 +117,7 @@ function goToStore() {
 				{{ $t("page.downloads.faq") }}
 			</h1>
 			<div class="flex flex-wrap gap-7 max-w-80%">
-				<FAQCard v-for="faq in faqs" :key="faq.question" :question="faq.question" :answer="faq.answer" />
+				<FAQCard v-for="faq in faqs" :key="faq" :question="t(`page.downloads.faqs.${faq}.question`)" :answer="t(`page.downloads.faqs.${faq}.answer`)" />
 			</div>
 		</section>
 	</div>

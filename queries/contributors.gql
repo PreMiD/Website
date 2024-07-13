@@ -11,3 +11,11 @@ query contributors {
 		}
 	}
 }
+
+query contributor($id: String!) {
+	credits(id: $id) {
+		user {
+			id
+		}
+	}
+}

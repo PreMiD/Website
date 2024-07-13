@@ -22,11 +22,13 @@ const userColor = computed(() => {
 		return "#fff";
 	return data.value.credits?.[0]?.user?.roleColor ?? "#fff";
 });
+
+const localePath = useLocalePath();
 </script>
 
 <template>
 	<span v-bind="$attrs">
-		<NuxtLink :to="`/users/${id}`" class="flex items-center gap-2">
+		<NuxtLink :to="localePath(`/users/${id}`)" class="flex items-center gap-2">
 			<template v-if="status === 'success' && username">
 				<NuxtImg
 					class="rounded-full h-6 w-6"
@@ -43,7 +45,7 @@ const userColor = computed(() => {
 			</template>
 			<template v-else-if="status === 'pending'">
 				<p class="c-text">
-					Loading...
+					{{ $t("component.userChip.loading") }}
 				</p>
 			</template>
 			<template v-else>

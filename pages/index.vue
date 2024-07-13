@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import type { DiscordUserCardActivity } from "@discord-user-card/core";
 import { DiscordUserCard } from "@discord-user-card/vue";
 import "@discord-user-card/vue/style.css";
 
-useSeoMeta({ title: "Home" });
+const { t, locale } = useI18n();
 
-const words = ["music", "videos", "streams", "media"];
+useSeoMeta({ title: t("page.home.meta.title") });
+
+const words = [t("page.home.words.music"), t("page.home.words.videos"), t("page.home.words.streams"), t("page.home.words.media")];
 const currentWord = ref(words[0]);
 let currentWordIndex = 0;
 
@@ -23,100 +24,70 @@ onUnmounted(() => {
 
 const scroller = ref<HTMLDivElement>();
 
-const activities = ref<DiscordUserCardActivity[]>([
-	{
-		name: "YouTube",
-		type: 3,
-		details: "Let's play Minecraft together!",
-		state: "PreMiD",
-	},
-	{
-		name: "Netflix",
-		type: 3,
-		details: "Let's watch a movie together!",
-		state: "PreMiD",
-	},
-	{
-		name: "YouTube Music",
-		type: 3,
-		details: "Do What I Say (feat. Vito Z Holmes)",
-		state: "Single - Black Gryphon",
-		largeImage: "https://cdn.rcd.gg/PreMiD/websites/Y/YouTube%20Music/assets/logo.png",
-	},
-	{
-		name: "Twitch",
-		type: 3,
-		details: "Let's play Minecraft together!",
-		state: "PreMiD",
-	},
-	{
-		name: "YouTube",
-		type: 3,
-		details: "Let's play Minecraft together!",
-		state: "PreMiD",
-	},
-]);
-
-function getActivity(index: number) {
-	const activity = activities.value[index];
-	return activity;
-}
+const { data: staffData } = await useFetch("/api/getStaffData");
 
 const features = ref([
 	{
 		icon: "fas fa-lock",
-		title: "Privacy Control",
-		description: "Take charge of your privacy settings and decide what activities you share with others. Your data, your rules.",
+		title: t("page.home.sections.feature.feature1.title"),
+		description: t("page.home.sections.feature.feature1.description"),
 	},
 	{
 		icon: "fas fa-users",
-		title: "Community Driven",
-		description: "Experience unparalleled support for a multitude of platforms, powered by a passionate and dedicated community.",
+		title: t("page.home.sections.feature.feature2.title"),
+		description: t("page.home.sections.feature.feature2.description"),
 	},
 	{
 		icon: "fas fa-cogs",
-		title: "Customizable Settings",
-		description: "Tailor your PreMiD experience with extensive customization options to suit your preferences and needs.",
+		title: t("page.home.sections.feature.feature3.title"),
+		description: t("page.home.sections.feature.feature3.description"),
 	},
 	{
 		icon: "fas fa-check-circle",
-		title: "Easy Setup",
-		description: "Get up and running with PreMiD in no time. Our straightforward setup process ensures a hassle-free start.",
+		title: t("page.home.sections.feature.feature4.title"),
+		description: t("page.home.sections.feature.feature4.description"),
 	},
 	{
 		icon: "fas fa-handshake",
-		title: "Discord ToS Compliant",
-		description: "Fully compliant with Discord's Terms of Service by utilizing official endpoints provided by Discord.",
+		title: t("page.home.sections.feature.feature5.title"),
+		description: t("page.home.sections.feature.feature5.description"),
 	},
 	{
 		icon: "fas fa-lightbulb",
-		title: "Future Features",
-		description: "Stay tuned for exciting new features and improvements that will enhance your PreMiD experience even further.",
+		title: t("page.home.sections.feature.feature6.title"),
+		description: t("page.home.sections.feature.feature6.description"),
 	},
 ]);
 
 const steps = ref([
 	{
 		icon: "download",
-		title: "Install the Extension",
-		description: "Get the PreMiD extension from the official website or your browser's web page.store.",
+		title: t("page.home.sections.howItWorks.step1.title"),
+		description: t("page.home.sections.howItWorks.step1.description"),
 	},
 	{
 		icon: "sign-in-alt",
-		title: "Login with Discord",
-		description: "Connect PreMiD with your Discord account.",
+		title: t("page.home.sections.howItWorks.step2.title"),
+		description: t("page.home.sections.howItWorks.step2.description"),
+
 	},
 	{
 		icon: "plus",
-		title: "Add Services",
-		description: "Choose the services you want to display, like YouTube, Spotify, and more.",
+		title: t("page.home.sections.howItWorks.step3.title"),
+		description: t("page.home.sections.howItWorks.step3.description"),
 	},
 	{
 		icon: "smile",
-		title: "Enjoy",
-		description: "Share your activity and enjoy using PreMiD.",
+		title: t("page.home.sections.howItWorks.step4.title"),
+		description: t("page.home.sections.howItWorks.step4.description"),
 	},
 ]);
+
+const { data } = await useAsyncGql("getIndexData");
+
+const computedUsage = computed(() => Intl.NumberFormat(locale.value).format(data.value?.usage?.count ?? 0));
+
+const localePath = useLocalePath();
 
 onMounted(() => {
 	setInterval(() => {
@@ -133,30 +104,30 @@ onMounted(() => {
 			<div class="text-center flex flex-col items-center mx-5">
 				<img src="/assets/images/icon.png" alt="PreMiD Logo" class="mb-2 w-32">
 				<h1 class="font-extrabold mb-4 text-4xl">
-					Enhance Your Online Presence with PreMiD
+					{{ $t("page.home.title") }}
 				</h1>
-				<p class="text-2xl flex mb-8">
-					Show your friends what
-					<span class="relative flex text-center justify-center mx-2 w-25">
-						<transition-group name="slide" tag="span">
-							<span v-for="word in [currentWord]" :key="word" class="absolute left-0 w-25 font-bold text-gradient">{{ word }}</span>
-						</transition-group>
-					</span>
-					you're enjoying.
-				</p>
+				<i18n-t scope="global" keypath="page.home.subtitle" tag="p" class="text-2xl flex mb-8">
+					<template #word>
+						<span class="relative flex text-center justify-center mx-2 w-25">
+							<transition-group name="slide" tag="span">
+								<span v-for="word in [currentWord]" :key="word" class="absolute left-0 w-25 font-bold text-gradient">{{ word }}</span>
+							</transition-group>
+						</span>
+					</template>
+				</i18n-t>
 				<p class="text-lg mb-8 max-w-2xl">
-					PreMiD is a simple, powerful tool that allows you to share your current media activity across multiple platforms like YouTube, Spotify, Netflix, and more. Stay connected and let your friends see what you're up to in real-time.
+					{{ $t("page.home.description") }}
 				</p>
-				<NuxtLink to="/downloads" class="transition-colors text-white font-bold font-size-4 px-6 rounded-full shadow-lg mb-8 bg-gradient-to-r from-primary to-purple-600 border-transparent py-4 transition-transform hover:scale-105">
-					Get Started
+				<NuxtLink :to="localePath('/downloads')" class="transition-colors text-white font-bold font-size-4 px-6 rounded-full shadow-lg mb-8 bg-gradient-to-r from-primary to-purple-600 border-transparent py-4 transition-transform hover:scale-105">
+					{{ $t("page.home.getStarted") }}
 				</NuxtLink>
 			</div>
 			<div ref="scroller" class="w-full overflow-hidden relative max-w-screen scroller mt25">
 				<ul class="flex scroller-items flex-nowrap gap-4 animate-duration-20000 animate-iteration-infinite animate-ease-linear w-max">
 					<ClientOnly>
-						<DiscordUserCard v-for="i in 5" :key="i" :activities="[getActivity(i)]" />
+						<DiscordUserCard v-for="(card, i) in staffData" :key="i" :activities="card.activities" :user="card.user" />
 						<!-- Duplicate to prevent weird jumping -->
-						<DiscordUserCard v-for="i in 5" :key="i" :activities="[getActivity(i)]" />
+						<DiscordUserCard v-for="(card, i) in staffData" :key="i" :activities="card.activities" :user="card.user" />
 					</ClientOnly>
 				</ul>
 				<div class="absolute top-0 left-0 bg-gradient-to-r h-full w-16 fade-left from-#111218 to-transparent" />
@@ -168,7 +139,7 @@ onMounted(() => {
 		<section class="text-white mx5 pb-12 mt-10">
 			<div class="text-center container mx-auto">
 				<h2 class="text-4xl font-extrabold mb-12">
-					Why You'll Love PreMiD
+					{{ $t("page.home.sections.feature.title") }}
 				</h2>
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
 					<div
@@ -221,13 +192,17 @@ onMounted(() => {
 		<section class="py-12 bg-gradient-to-r from-primary to-purple-600 text-white mx5 rounded">
 			<div class="container mx-auto text-center">
 				<h2 class="text-4xl font-extrabold mb-6">
-					Ready to Get Started?
+					{{ $t("page.home.sections.callToAction.title") }}
 				</h2>
 				<p class="text-lg mb-6">
-					Join the <span class="font-bold">572.312</span> users who are already love PreMiD.
+					<i18n-t scope="global" keypath="page.home.sections.callToAction.description" tag="span" class="font-bold">
+						<template #count>
+							<span class="font-bold">{{ computedUsage }}</span>
+						</template>
+					</i18n-t>
 				</p>
-				<NuxtLink to="/downloads" class="b-none font-size-4 font-bold px-6 rounded-full shadow-lg transition-colors cursor-pointer bg-white text-black py-3 hover:bg-light-900">
-					Start Now
+				<NuxtLink :to="localePath('/downloads')" class="b-none font-size-4 font-bold px-6 rounded-full shadow-lg transition-colors cursor-pointer bg-white text-black py-3 hover:bg-light-900">
+					{{ $t("page.home.sections.callToAction.button") }}
 				</NuxtLink>
 			</div>
 		</section>
@@ -274,24 +249,5 @@ onMounted(() => {
 
 .scroller-items {
 	animation-name: scroll;
-}
-
-/* Testimonial Section */
-.testimonial-card {
-	background: #f9fafb;
-	border-radius: 8px;
-	padding: 20px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Footer Section */
-footer {
-	background: #1f2937;
-}
-footer a {
-	color: #9ca3af;
-}
-footer a:hover {
-	color: #ffffff;
 }
 </style>

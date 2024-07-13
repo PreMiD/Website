@@ -75,8 +75,10 @@ function sortContributors(
 	return b?.user?.rolePosition - a?.user?.rolePosition;
 }
 
+const { t } = useI18n();
+
 useSeoMeta({
-	title: "Contributors",
+	title: t("page.contributors.title"),
 });
 </script>
 

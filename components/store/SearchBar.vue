@@ -10,23 +10,23 @@ const sortOrder = defineModel<string>("sortBy");
 //* Nuxt apparently does not like using route query in defaults
 searchTerm.value = route.query.search?.toString() || "";
 selectedCategory.value = route.query.category?.toString() || "";
-sortOrder.value = route.query.sortBy?.toString() || "Most Used";
+sortOrder.value = route.query.sortBy?.toString() || t("component.searchBar.sort.mostUsed");
 
 const categories = [
-	{ tag: "", text: t("page.store.categories.all"), icon: "fa-solid fa-tag" },
-	{ tag: "anime", text: t("page.store.categories.anime"), icon: "fa-solid fa-film" },
-	{ tag: "games", text: t("page.store.categories.games"), icon: "fa-solid fa-gamepad" },
-	{ tag: "music", text: t("page.store.categories.music"), icon: "fa-solid fa-music" },
-	{ tag: "other", text: t("page.store.categories.other"), icon: "fa-solid fa-link" },
-	{ tag: "socials", text: t("page.store.categories.socials"), icon: "fa-solid fa-lightbulb" },
-	{ tag: "videos", text: t("page.store.categories.videos"), icon: "fa-solid fa-video" },
+	{ tag: "", text: t("component.searchBar.categories.all"), icon: "fa-solid fa-tag" },
+	{ tag: "anime", text: t("component.searchBar.categories.anime"), icon: "fa-solid fa-film" },
+	{ tag: "games", text: t("component.searchBar.categories.games"), icon: "fa-solid fa-gamepad" },
+	{ tag: "music", text: t("component.searchBar.categories.music"), icon: "fa-solid fa-music" },
+	{ tag: "other", text: t("component.searchBar.categories.other"), icon: "fa-solid fa-link" },
+	{ tag: "socials", text: t("component.searchBar.categories.socials"), icon: "fa-solid fa-lightbulb" },
+	{ tag: "videos", text: t("component.searchBar.categories.videos"), icon: "fa-solid fa-video" },
 ];
 
 const isDropdownOpen = ref(false);
 const options = [
-	{ text: "Most Used", icon: "fa-solid fa-sort-amount-down" },
-	{ text: "Alphabetical", icon: "fa-solid fa-sort-alpha-down" },
-	{ text: "Liked First", icon: "fa-solid fa-heart" },
+	{ text: t("component.searchBar.sort.mostUsed"), icon: "fa-solid fa-sort-amount-down" },
+	{ text: t("component.searchBar.sort.alphabetical"), icon: "fa-solid fa-sort-alpha-down" },
+	{ text: t("component.searchBar.sort.likedFirst"), icon: "fa-solid fa-heart" },
 ];
 
 const sortByDropdown = ref<HTMLDivElement>();
@@ -61,9 +61,10 @@ watch([searchTerm, selectedCategory, sortOrder], updateQuery);
 		<div class="flex items-center gap-2 h-10 relative rounded bg-gray-secondary">
 			<input
 				v-model.trim="searchTerm"
+				autofocus
 				type="text"
 				class="text-white bg-transparent p-2 w-full h-10 rounded b-none outline-none text-sm placeholder:font-bold pl-8"
-				:placeholder="$t('page.store.filter.search')"
+				:placeholder="$t('component.searchBar.search')"
 			>
 			<label class="absolute h-10 flex items-center left-2">
 				<FAIcon class="h-4 w-4 text-primary" icon="fa-solid fa-magnifying-glass" />

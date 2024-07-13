@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 const partners = [
 	{
@@ -14,7 +15,7 @@ const partners = [
 	},
 ];
 
-const linkSections: { title: string; links: { href: string; icon?: string; label: string }[] }[] = [
+const linkSections = computed<{ title: string; links: { href: string; icon?: string; label: string }[] }[]>(() => [
 	{
 		title: t("footer.followUs"),
 		links: [
@@ -40,7 +41,7 @@ const linkSections: { title: string; links: { href: string; icon?: string; label
 		links: [
 			{
 				label: t("footer.supportList.donate"),
-				href: "/donate",
+				href: localePath("/donate"),
 			},
 			{
 				label: t("footer.supportList.contribute"),
@@ -56,12 +57,8 @@ const linkSections: { title: string; links: { href: string; icon?: string; label
 		title: t("footer.more"),
 		links: [
 			{
-				label: t("footer.moreList.troubleshooting"),
-				href: "/troubleshooting",
-			},
-			{
 				label: t("footer.moreList.faq"),
-				href: "/downloads#faq",
+				href: localePath("/downloads#faq"),
 			},
 			{
 				label: t("footer.moreList.documentation"),
@@ -78,19 +75,19 @@ const linkSections: { title: string; links: { href: string; icon?: string; label
 		links: [
 			{
 				label: t("footer.legalList.privacyPolicy"),
-				href: "/privacy",
+				href: localePath("/privacy"),
 			},
 			{
 				label: t("footer.legalList.termsOfService"),
-				href: "/terms",
+				href: localePath("/terms"),
 			},
 			{
 				label: t("footer.legalList.cookiePolicy"),
-				href: "/cookie",
+				href: localePath("/cookie"),
 			},
 		],
 	},
-];
+]);
 </script>
 
 <template>

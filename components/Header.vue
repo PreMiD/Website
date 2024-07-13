@@ -2,34 +2,42 @@
 const { t } = useI18n();
 const links = computed(() => [
 	{
-		href: "/store",
+		to: "/store",
 		icon: "fa-solid fa-cart-arrow-down",
 		name: t("header.links.store"),
 	},
 	{
-		href: "/downloads",
+		to: "/downloads",
 		icon: "fa-solid fa-download",
 		name: t("header.links.downloads"),
 	},
 	{
-		href: "/contributors",
+		to: "/contributors",
 		icon: "fa-solid fa-handshake-angle",
 		name: t("header.links.contributors"),
 	},
 ]);
 
 const navOpen = ref(false);
+
+const localePath = useLocalePath();
+
+useHead({
+	htmlAttrs: {
+		class: () => navOpen.value ? "overflow-hidden" : "",
+	},
+});
 </script>
 
 <template>
 	<div>
-		<PageBanner />
+		<!-- <PageBanner /> -->
 		<div
 			id="header"
 			class="flex items-center w-full select-none top-0 lg-md:relative lt-md:sticky z-1000 flex-justify-between p-3 bg-bg-primary"
 		>
 			<NuxtLink
-				to="/"
+				:to="localePath('/')"
 				class="color-primary font-discord font-size-8"
 				aria-label="Homepage"
 			>
@@ -40,8 +48,8 @@ const navOpen = ref(false);
 				<transition-group name="slide-fade" tag="div">
 					<NuxtLink
 						v-for="link in links"
-						:key="link.href"
-						:href="link.href"
+						:key="link.to"
+						:to="localePath(link.to)"
 						class="font-size-4.5 color-link-inactive decoration-none mx2 font-900 hover-color-primary"
 						active-class="active"
 						:aria-label="`Link to ${link.name}`"
@@ -76,7 +84,7 @@ const navOpen = ref(false);
 				<Transition>
 					<div
 						v-if="navOpen"
-						class="top-0 w-full fixed left-0 z-50 h-screen bg-black/50 p-5 backdrop-blur-sm transition-opacity"
+						class="top-0 w-full fixed left-0 z-50 h-screen bg-black/70 p-5 backdrop-blur-sm transition-opacity"
 					>
 						<div class="flex gap-2 flex-col">
 							<button
@@ -89,9 +97,10 @@ const navOpen = ref(false);
 
 							<NuxtLink
 								v-for="link in links"
-								:key="link.href"
-								:href="link.href"
+								:key="link.to"
+								:to="localePath(link.to)"
 								class="font-size-4.5 color-link-inactive decoration-none mx2 font-900 hover-color-primary"
+								@click="navOpen = false"
 							>
 								<span class="items-center block">
 									<span

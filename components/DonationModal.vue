@@ -46,26 +46,26 @@ defineExpose({
 				</button>
 				<div class="text-center">
 					<h1 class="font-extrabold text-2xl text-primary mb-4">
-						A Quick Favor...
+						{{ $t("component.donationModal.title") }}
 					</h1>
 					<p class="mb-4 text-lg text-gray-300">
-						We hope you're gonna love PreMiD! If it brings a smile to your face, why not spread some love back? Our team of volunteers put their hearts into making it awesome just for you!
+						{{ $t("component.donationModal.description") }}
 					</p>
 					<div class="flex items-center justify-center mb-6">
 						<div class="grid grid-cols-2">
 							<a href="https://www.patreon.com/Timeraa" target="_blank" class="flex items-center justify-center font-bold text-white rounded-full h12.5 bg-orange-500 py-2 px-4 m-2 hover:bg-orange-600 transition duration-300 inline-block">
-								<FAIcon icon="fa-brands fa-patreon" class="mr-2 h5" /> Support on Patreon
+								<FAIcon icon="fa-brands fa-patreon" class="mr-2 h5" /> {{ $t("component.donationModal.patreon", { name: "Patreon" }) }}
 							</a>
 							<a href="https://github.com/sponsors/PreMiD" target="_blank" class="h12.5 bg-black font-bold text-white rounded-full py-2 px-4 m-2 transition duration-300 inline-block flex items-center justify-center cursor-pointer hover:bg-op-80">
-								<FAIcon icon="fa-brands fa-github" class="mr-2 h5" /> Sponsor on GitHub
+								<FAIcon icon="fa-brands fa-github" class="mr-2 h5" /> {{ $t("component.donationModal.github", { name: "GitHub" }) }}
 							</a>
 						</div>
 					</div>
 					<p v-if="!showButton" class="text-gray-400">
-						Hold tight... loading the magic button...
+						{{ $t("component.donationModal.holdTight") }}
 					</p>
 					<button v-if="showButton" class="cursor-pointer text-white rounded-full py-2 transition duration-300 font-size-4 bg-primary hover:bg-primary-highlight outline-none b-solid b-transparent font-semibold px-6" @click="continueButton">
-						Continue
+						{{ $t("component.donationModal.continue") }}
 					</button>
 				</div>
 			</div>
