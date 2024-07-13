@@ -2,7 +2,7 @@
 import Bowser from "bowser";
 import type { PresenceQuery } from "#gql";
 
-const route = useRoute();
+const route = useRoute("store-service");
 const router = useRouter();
 
 const presence = ref<PresenceQuery["presences"][number]>();
@@ -189,6 +189,16 @@ useSeoMeta({
 				</div>
 			</div>
 		</div>
+		<ScriptGoogleAdsense
+			data-ad-client="ca-pub-1575460061917202"
+			data-ad-slot="5541572189"
+			data-ad-format="auto"
+			:data-full-width-responsive="true"
+		>
+			<template #error>
+				{{ $t("layout.ads.error") }}
+			</template>
+		</ScriptGoogleAdsense>
 	</div>
 	<div v-else-if="error" class="flex justify-center items-center h-full">
 		{{ error }}

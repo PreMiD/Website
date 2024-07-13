@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const route = useRoute();
+const route = useRoute("users-id");
 const router = useRouter();
 
 const { data, status } = await useAsyncGql("userPage", { id: route.params.id });

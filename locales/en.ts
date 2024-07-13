@@ -1,6 +1,11 @@
 import { defineI18nLocale } from "#i18n";
 
 export default defineI18nLocale(() => ({
+	layout: {
+		ads: {
+			error: "Please support us by disabling your ad blocker.",
+		},
+	},
 	component: {
 		searchBar: {
 			search: "Search",

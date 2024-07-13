@@ -66,7 +66,6 @@ export default defineNuxtConfig({
 			maxAge: 60 * 60 * 24 * 30,
 		},
 	},
-
 	modules: [
 		"@nuxtjs/i18n",
 		"@unocss/nuxt",
@@ -76,12 +75,10 @@ export default defineNuxtConfig({
 		"@nuxt/fonts",
 		"@nuxtjs/seo",
 		"floating-vue/nuxt",
-		"nuxt-gtag",
 		"@nuxtjs/device",
+		"@nuxt/scripts",
+		"nuxt-typed-router",
 	],
-	gtag: {
-		id: "G-L8H2VTE7NQ",
-	},
 	runtimeConfig: {
 		discord_bot_token: "",
 		public: {

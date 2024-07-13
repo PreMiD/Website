@@ -15,7 +15,7 @@ const partners = [
 	},
 ];
 
-const linkSections = computed<{ title: string; links: { href: string; icon?: string; label: string }[] }[]>(() => [
+const linkSections = computed(() => [
 	{
 		title: t("footer.followUs"),
 		links: [
