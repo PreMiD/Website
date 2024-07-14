@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: Install dependencies and build
+    name: CI
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -25,7 +25,7 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      - name: Lint
+      - name: Type Check
         run: pnpm nuxt typecheck
 
       - name: Build
