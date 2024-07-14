@@ -78,7 +78,7 @@ export default defineI18nLocale(() => ({
 				streams: "Streams",
 				media: "Media",
 			},
-			description: "PreMiD is a simple, powerful tool that allows you to share your current media activity across multiple platforms like YouTube, Spotify, Netflix, and more. Stay connected and let your friends see what you're up to in real-time.",
+			description: "PreMiD is a simple, powerful tool that allows you to share your current media activity across multiple platforms like YouTube, Disney+, Netflix, and more. Stay connected and let your friends see what you're up to in real-time.",
 			getStarted: "Get Started",
 			sections: {
 				feature: {
@@ -120,7 +120,7 @@ export default defineI18nLocale(() => ({
 					},
 					step3: {
 						title: "Add Services",
-						description: "Choose the services you want to display, like YouTube, Spotify, and more.",
+						description: "Choose the services you want to display, like YouTube, Disney+, and more.",
 					},
 					step4: {
 						title: "Enjoy",
