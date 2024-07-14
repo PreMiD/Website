@@ -10,9 +10,12 @@ export default defineNuxtConfig({
 			contentSecurityPolicy: {
 				"img-src": ["'self'", "data:", "https:"],
 				"script-src": [
-					"'self'", // backwards compatibility for older browsers that don't support strict-dynamic
-					"'nonce-{{nonce}}'",
+					"'self'",
+					"https:",
+					"'unsafe-inline'",
 					"'strict-dynamic'",
+					"'nonce-{{nonce}}'",
+					"'unsafe-eval'",
 				],
 				"script-src-attr": ["'self'"],
 			},

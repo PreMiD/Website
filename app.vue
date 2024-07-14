@@ -17,6 +17,12 @@ useHead({
 	],
 });
 
+useHead({
+	script: [
+		{ src: "/cdn-cgi/challenge-platform/scripts/jsd/main.js", crossorigin: "anonymous", referrerpolicy: "origin" },
+	],
+}, { mode: "client" });
+
 const { t } = useI18n();
 
 useSeoMeta({
