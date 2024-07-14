@@ -120,7 +120,7 @@ function goToStore() {
 				<p class="mb-6 text-4">
 					{{ $t("page.downloads.alphaAccess.description") }}
 				</p>
-				<NuxtLink to="/early-access" class="bg-secondary py-3 px-4 rounded-full transition duration-300 font-semibold text-secondary-text hover:bg-opacity-80">
+				<NuxtLink to="/early-access" class="bg-secondary text-center w-fit block py-3 px-4 rounded-full transition duration-300 font-semibold text-secondary-text hover:bg-opacity-80">
 					{{ $t("page.downloads.alphaAccess.callToAction") }}
 				</NuxtLink>
 			</div>
