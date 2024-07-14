@@ -64,7 +64,7 @@ function openBetaModal() {
 							<h3 class="font-semibold text-lg">
 								For Chromium-based Browsers:
 							</h3>
-							<ol class="list-decimal pl-4">
+							<ol class="list-decimal pl-4 line-height-5.5">
 								<li>Download the PreMiD-Chromium.zip file from our beta or alpha builds.</li>
 								<li>Navigate to chrome://extensions/ and activate Developer Mode.</li>
 								<li>Drag and drop the PreMiD-Chromium.zip file onto the extensions page.</li>
@@ -82,7 +82,7 @@ function openBetaModal() {
 							<h3 class="font-semibold text-lg">
 								For Firefox:
 							</h3>
-							<ol class="list-decimal pl-4">
+							<ol class="list-decimal pl-4 line-height-5.5">
 								<li>Download the PreMiD-Firefox.zip file from our beta or alpha builds.</li>
 								<li>Open about:debugging#/runtime/this-firefox, then click 'Load Temporary Add-on…'.</li>
 								<li>Select the PreMiD-Firefox.zip file you downloaded.</li>
