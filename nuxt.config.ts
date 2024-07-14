@@ -104,7 +104,7 @@ export default defineNuxtConfig({
 		"@pinia/nuxt",
 	],
 	runtimeConfig: {
-		discord_bot_token: "env.NUXT_DISCORD_BOT_TOKEN",
+		discord_bot_token: "", // can be set with NUXT_DISCORD_BOT_TOKEN environment variable
 		public: {
 			GQL_HOST: "https://api.premid.app/v3",
 		},
