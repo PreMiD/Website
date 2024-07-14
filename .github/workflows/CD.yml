@@ -23,6 +23,15 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+      - name: Set up tags
+        id: vars
+        run: |
+          if [ "${{ github.ref_name }}" == "main" ]; then
+            echo "LATEST_TAG=ghcr.io/${{ env.IMAGE_REPOSITORY }}:latest" >> $GITHUB_ENV
+            echo "SHA_TAG=ghcr.io/${{ env.IMAGE_REPOSITORY }}:${{ github.sha }}-${{ github.run_number }}" >> $GITHUB_ENV
+          else
+            echo "SHA_TAG=ghcr.io/${{ env.IMAGE_REPOSITORY }}:beta-${{ github.sha }}-${{ github.run_number }}" >> $GITHUB_ENV
+          fi
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -30,5 +39,5 @@ jobs:
             GH_NPM_TOKEN=${{ secrets.GITHUB_TOKEN }}
           push: true
           tags: |
-            ${{ github.ref_name == 'main' && 'ghcr.io/' || '' }}${{ env.IMAGE_REPOSITORY }}${{ github.ref_name == 'main' && ':latest' || '' }}
-            ${{ github.ref_name == 'main' && 'ghcr.io/' || '' }}${{ env.IMAGE_REPOSITORY }}${{ github.ref_name == 'main' && ':${{ github.sha }}-${{ github.run_number }}' || ':beta-${{ github.sha }}-${{ github.run_number }}' }}
+            ${{ env.LATEST_TAG }}
+            ${{ env.SHA_TAG }}
