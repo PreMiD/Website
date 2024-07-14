@@ -41,31 +41,30 @@ const hasPresence = computed(() => extension.presences.includes(presence.metadat
 	>
 		<div class="absolute w-full top-0 left-0 h-full z-1" @click="goToPresence" />
 
-		<NuxtImg
+		<img
 			format="webp"
-			placeholder
 			:draggable="false"
 			class="absolute top-50% left-50% translate--50% opacity-20 bgBounce" :class="[hovered ? 'rotate--10 scale-130' : 'scale-105']"
 			:src="presence.metadata.thumbnail"
 			:alt="presence.metadata.service"
 			width="360px"
-		/>
+		>
 
 		<div
 			class="rounded-lg flex h-full"
 			:style="`background: linear-gradient(135deg, ${color.main} 0%, ${color.tint} 100%); `"
 		>
-			<NuxtImg
+			<img
 				format="webp"
 				draggable="false"
-				placeholder
+
 				class="w-16 h-16 z-20 card-shadow rounded-md my-a mx-7"
 				:src="presence.metadata.logo"
 				:alt="presence.metadata.service"
 				width="64px"
 				height="64px"
 				@click="goToPresence"
-			/>
+			>
 			<div
 				class="relative my-a z-20 transition-color text-3 mr-4 text-color font-50 w-6/9"
 			>
