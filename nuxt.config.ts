@@ -5,6 +5,7 @@ export default defineNuxtConfig({
 		compressPublicAssets: true,
 	},
 	security: {
+		rateLimiter: false,
 		headers: {
 			crossOriginEmbedderPolicy: false,
 			contentSecurityPolicy: {
@@ -82,11 +83,8 @@ export default defineNuxtConfig({
 		defaultLocale: "en",
 	},
 	image: {
-		domains: ["cdn.rcd.gg"],
+		domains: ["cdn.rcd.gg", "cdn.discordapp.com"],
 		ipx: {
-			http: {
-				domains: ["cdn.rcd.gg"],
-			},
 			maxAge: 60 * 60 * 24 * 30,
 		},
 	},
