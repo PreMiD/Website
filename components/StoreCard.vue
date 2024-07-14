@@ -57,7 +57,6 @@ const hasPresence = computed(() => extension.presences.includes(presence.metadat
 			<img
 				format="webp"
 				draggable="false"
-
 				class="w-16 h-16 z-20 card-shadow rounded-md my-a mx-7"
 				:src="presence.metadata.logo"
 				:alt="presence.metadata.service"

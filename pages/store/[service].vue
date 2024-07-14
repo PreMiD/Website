@@ -72,10 +72,10 @@ useSeoMeta({
 <template>
 	<div v-if="presence" class="w-full">
 		<div class="relative overflow-hidden w-full items-center flex rounded justify-between px5 flex-wrap h60 mb10">
-			<NuxtImg :src="presence.metadata.thumbnail" class="absolute w-full h-auto left-50 translate-x--50 opacity-75" alt="Presence thumbnail" width="1024px" />
+			<img :src="presence.metadata.thumbnail" class="absolute w-full h-auto left-50 translate-x--50 opacity-75" alt="Presence thumbnail" width="1024px">
 
 			<div class="relative flex items-center gap-5 transition-left">
-				<NuxtImg :src="presence.metadata.logo" class="w-auto h-25" alt="Presence logo" width="100px" height="100px" />
+				<img :src="presence.metadata.logo" class="w-auto h-25" alt="Presence logo" width="100px" height="100px">
 				<h1 class="font-extrabold font-size-6">
 					{{ presence.metadata.service }}
 				</h1>

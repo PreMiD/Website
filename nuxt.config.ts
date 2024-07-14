@@ -5,7 +5,6 @@ export default defineNuxtConfig({
 		compressPublicAssets: true,
 	},
 	security: {
-		enabled: false,
 		rateLimiter: false,
 		headers: {
 			crossOriginEmbedderPolicy: false,
