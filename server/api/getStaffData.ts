@@ -73,6 +73,39 @@ const activities: Map<string, DiscordUserCardActivity[]> = new Map()
 			],
 			startTimestamp: Date.now(),
 		} satisfies DiscordUserCardActivity,
+	]).set("205984221859151873", [
+		{
+			type: ActivityType.Playing,
+			name: "BeatLeader",
+			largeImage: "https://cdn.assets.beatleader.xyz/songcover-38bddxx-cover.jpg",
+			smallImage: "https://cdn.rcd.gg/PreMiD/websites/B/BeatLeader/assets/15.png",
+			smallImageText: "Lawless Expert+",
+			details: "Blue Bird",
+			state: "Mapped by: Darkrealm7, ItsNoot3rch",
+			startTimestamp: Date.now(),
+			buttons: [
+				{
+					label: "View Page",
+					url: "https://beatleader.xyz/leaderboard/global/38bddxx97/1",
+				},
+			],
+		} satisfies DiscordUserCardActivity,
+	]).set("152155870917033985", [
+		{
+			type: ActivityType.Watching,
+			name: "YouTube",
+			details: "lofi hip hop radio 📚 - beats to relax/study to",
+			state: "Lofi Girl",
+			largeImage: "https://i.ytimg.com/vi/jfKfPfyJRdk/hqdefault_live.jpg",
+			smallImage: "https://cdn.rcd.gg/PreMiD/resources/live.png",
+			startTimestamp: Date.now(),
+			buttons: [
+				{
+					label: "Watch Live",
+					url: "https://www.youtube.com/live/jfKfPfyJRdk",
+				},
+			],
+		} satisfies DiscordUserCardActivity,
 	]);
 
 async function getStaffData(id: string) {
