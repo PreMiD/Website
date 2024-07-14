@@ -84,6 +84,9 @@ export default defineNuxtConfig({
 	image: {
 		domains: ["cdn.rcd.gg"],
 		ipx: {
+			http: {
+				domains: ["cdn.rcd.gg"],
+			},
 			maxAge: 60 * 60 * 24 * 30,
 		},
 	},
