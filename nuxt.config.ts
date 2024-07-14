@@ -1,6 +1,23 @@
 import { readdirSync } from "node:fs";
 
 export default defineNuxtConfig({
+	nitro: {
+		compressPublicAssets: true,
+	},
+	security: {
+		headers: {
+			crossOriginEmbedderPolicy: false,
+			contentSecurityPolicy: {
+				"img-src": ["'self'", "data:", "https:"],
+				"script-src": [
+					"'self'", // backwards compatibility for older browsers that don't support strict-dynamic
+					"'nonce-{{nonce}}'",
+					"'strict-dynamic'",
+				],
+				"script-src-attr": ["'self'"],
+			},
+		},
+	},
 	app: {
 		pageTransition: {
 			name: "page",
@@ -30,8 +47,9 @@ export default defineNuxtConfig({
 		families: [
 			{
 				name: "Discord Font",
-				fallbacks: ["sans-serif"],
+				fallbacks: ["Inter", "sans-serif"],
 				provider: "local",
+				preload: false,
 				src: "/assets/fonts/discord.woff2",
 			},
 			{
@@ -67,8 +85,8 @@ export default defineNuxtConfig({
 		},
 	},
 	modules: [
-		"@nuxtjs/i18n",
 		"@unocss/nuxt",
+		"@nuxtjs/i18n",
 		"@vueuse/nuxt",
 		"@nuxt/image",
 		"nuxt-graphql-client",
@@ -76,8 +94,10 @@ export default defineNuxtConfig({
 		"@nuxtjs/seo",
 		"floating-vue/nuxt",
 		"@nuxtjs/device",
-		"@nuxt/scripts",
+		/* "@nuxt/scripts", */
 		"nuxt-typed-router",
+		"nuxt-security",
+		"@pinia/nuxt",
 	],
 	runtimeConfig: {
 		discord_bot_token: "",

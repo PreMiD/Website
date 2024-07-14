@@ -95,7 +95,7 @@ const localePath = useLocalePath();
 		<!-- Hero Section -->
 		<section class="flex flex-col items-center justify-center text-white min-h-screen">
 			<div class="text-center flex flex-col items-center mx-5">
-				<img src="/assets/images/icon.png" alt="PreMiD Logo" class="mb-2 w-32">
+				<NuxtImg format="webp" src="/assets/images/icon.png" alt="PreMiD Logo" class="mb-2 w-32" width="128px" height="128px" />
 				<h1 class="font-extrabold mb-4 text-4xl">
 					{{ $t("page.home.title") }}
 				</h1>
@@ -111,12 +111,12 @@ const localePath = useLocalePath();
 				<p class="text-lg mb-8 max-w-2xl">
 					{{ $t("page.home.description") }}
 				</p>
-				<NuxtLink :to="localePath('/downloads')" class="transition-colors text-white font-bold font-size-4 px-6 rounded-full shadow-lg mb-8 bg-gradient-to-r from-primary to-purple-600 border-transparent py-4 transition-transform hover:scale-105">
+				<NuxtLink :to="localePath('/downloads')" class="transition-colors text-white font-bold font-size-4 px-6 rounded-full shadow-lg mb-8 bg-gradient-to-r from-primary to-purple-600 py-4 border-transparent transition-transform hover:scale-105">
 					{{ $t("page.home.getStarted") }}
 				</NuxtLink>
 			</div>
 			<div ref="scroller" class="w-full overflow-hidden relative max-w-screen scroller mt25">
-				<ul class="flex scroller-items flex-nowrap gap-4 animate-duration-20000 animate-iteration-infinite animate-ease-linear w-max">
+				<ul class="flex gap-4 scroller-items flex-nowrap animate-duration-20000 animate-iteration-infinite animate-ease-linear w-max">
 					<ClientOnly>
 						<DiscordUserCard v-for="(card, i) in staffData" :key="i" :activities="card.activities" :user="card.user" />
 						<!-- Duplicate to prevent weird jumping -->
@@ -130,7 +130,7 @@ const localePath = useLocalePath();
 
 		<!-- Unique Feature Section -->
 		<section class="text-white mx5 pb-12 mt-10">
-			<div class="text-center container mx-auto">
+			<div class="text-center mx-auto container">
 				<h2 class="text-4xl font-extrabold mb-12">
 					{{ $t("page.home.sections.feature.title") }}
 				</h2>
@@ -160,7 +160,7 @@ const localePath = useLocalePath();
 				<h2 class="text-4xl font-extrabold mb-12 text-gray-900">
 					How It Works
 				</h2>
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:grid-cols-4">
 					<div
 						v-for="(step, index) in steps"
 						:key="step.title"

@@ -40,7 +40,7 @@ defineExpose({
 <template>
 	<Transition name="fade">
 		<div v-if="visible" class="flex items-center justify-center fixed inset-0 bg-black bg-opacity-50 z-9999">
-			<div class="relative bg-gray w-full rounded-lg bg-gray-800 p-6 max-w-md shadow-lg">
+			<div class="relative bg-gray shadow-lg w-full rounded-lg bg-gray-800 p-6 max-w-md">
 				<button class="absolute cursor-pointer transition-colors bg-transparent border-none top-4 right-4 text-text hover:text-red" @click="visible = false">
 					<FAIcon icon="fa-solid fa-times" class="h-5 w-5" />
 				</button>
@@ -53,7 +53,7 @@ defineExpose({
 					</p>
 					<div class="flex items-center justify-center mb-6">
 						<div class="grid grid-cols-2">
-							<a href="https://www.patreon.com/Timeraa" target="_blank" class="flex items-center justify-center font-bold text-white rounded-full h12.5 bg-orange-500 py-2 px-4 m-2 hover:bg-orange-600 transition duration-300 inline-block">
+							<a href="https://www.patreon.com/Timeraa" target="_blank" class="flex items-center justify-center font-bold rounded-full text-white h12.5 bg-orange-500 py-2 px-4 m-2 hover:bg-orange-600 transition duration-300 inline-block">
 								<FAIcon icon="fa-brands fa-patreon" class="mr-2 h5" /> {{ $t("component.donationModal.patreon", { name: "Patreon" }) }}
 							</a>
 							<a href="https://github.com/sponsors/PreMiD" target="_blank" class="h12.5 bg-black font-bold text-white rounded-full py-2 px-4 m-2 transition duration-300 inline-block flex items-center justify-center cursor-pointer hover:bg-op-80">
@@ -64,7 +64,7 @@ defineExpose({
 					<p v-if="!showButton" class="text-gray-400">
 						{{ $t("component.donationModal.holdTight") }}
 					</p>
-					<button v-if="showButton" class="cursor-pointer text-white rounded-full py-2 transition duration-300 font-size-4 bg-primary hover:bg-primary-highlight outline-none b-solid b-transparent font-semibold px-6" @click="continueButton">
+					<button v-if="showButton" class="cursor-pointer text-white rounded-full py-2 transition duration-300 font-size-4 px-6 bg-primary hover:bg-primary-highlight font-semibold outline-none b-solid b-transparent" @click="continueButton">
 						{{ $t("component.donationModal.continue") }}
 					</button>
 				</div>

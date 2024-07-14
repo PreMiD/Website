@@ -59,7 +59,7 @@ onBeforeUnmount(() => {
 <template>
 	<ClientOnly>
 		<VTooltip :disabled="!isWIP">
-			<div class="select-none flex gap-2 items-center cursor-pointer relative font-bold bg-gray transition-colors px5 border-rounded w-50 h-20" :class="[highlight && !isWIP ? 'bg-primary hover:bg-primary-highlight c-black' : '', isWIP ? 'bg-op-60 cursor-not-allowed' : 'hover:bg-primary']" @click="!isWIP && emit('click')">
+			<div class="flex items-center cursor-pointer font-bold transition-colors select-none gap-2 relative bg-gray px5 border-rounded w-50 h-20" :class="[highlight && !isWIP ? 'bg-primary hover:bg-primary-highlight c-black' : '', isWIP ? 'bg-op-60 cursor-not-allowed' : 'hover:bg-primary']" @click="!isWIP && emit('click')">
 				<FAIcon
 					class="mr-2 h-auto w-7"
 					:icon="currentIcon"
@@ -67,7 +67,7 @@ onBeforeUnmount(() => {
 				<span>
 					{{ browser }}
 				</span>
-				<span v-if="isWIP" class="absolute text-white rounded-full py-1 top--2 right--2 bg-red-500 px-2 text-ellipsis max-w-25 max-h-7 overflow-hidden whitespace-nowrap">
+				<span v-if="isWIP" class="rounded-full absolute py-1 top--2 right--2 bg-red-500 px-2 text-ellipsis max-w-25 max-h-7 overflow-hidden whitespace-nowrap">
 					{{ $t("component.browserCard.wip") }}
 				</span>
 			</div>

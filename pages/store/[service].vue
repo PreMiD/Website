@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Bowser from "bowser";
 import type { PresenceQuery } from "#gql";
+import { useExtensionStore } from "~/stores/useExtension";
 
 const route = useRoute("store-service");
 const router = useRouter();
@@ -47,6 +48,9 @@ const { locale } = useI18n();
 
 const formattedUsers = computed(() => Intl.NumberFormat(locale.value).format(presence.value?.users ?? 0));
 
+const extension = useExtensionStore();
+const hasPresence = computed(() => extension.presences.includes(presence.value?.metadata.service ?? ""));
+
 useSeoMeta({
 	title: presence.value?.metadata.service,
 	description: presence.value?.metadata.description.en,
@@ -67,7 +71,7 @@ useSeoMeta({
 
 <template>
 	<div v-if="presence" class="w-full">
-		<div class="relative overflow-hidden w-full items-center flex rounded h60 mb10 justify-between px5 flex-wrap">
+		<div class="relative overflow-hidden w-full items-center flex rounded justify-between px5 flex-wrap h60 mb10">
 			<NuxtImg :src="presence.metadata.thumbnail" class="absolute w-full h-auto left-50 translate-x--50 opacity-75" alt="Presence thumbnail" width="1024px" />
 
 			<div class="relative flex items-center gap-5 transition-left">
@@ -76,9 +80,14 @@ useSeoMeta({
 					{{ presence.metadata.service }}
 				</h1>
 			</div>
-			<div class="right-20 lt-md:right-5 transition-right z-1">
-				<button class="bg-primary c-white rounded-full font-semibold font-size-5 transition-colors cursor-pointer b-solid b-transparent px-4 py-2 duration-300 hover:bg-secondary">
-					{{ $t("page.store.presence.button.add") }}
+			<div v-if="extension.hasExtension" class="z-1 right-20 lt-md:right-5 transition-right">
+				<button v-if="hasPresence" class="bg-red c-white rounded-full font-semibold font-size-5 transition-colors cursor-pointer b-solid b-transparent px-4 py-2 duration-300 hover:bg-red-3" @click="extension.removePresence(presence.metadata.service)">
+					<FAIcon class="h-4 w-4" icon="fa-solid fa-times" />
+					{{ $t("component.storeCard.removePresence") }}
+				</button>
+				<button v-else class="bg-primary c-white rounded-full font-semibold font-size-5 transition-colors cursor-pointer b-solid b-transparent px-4 py-2 duration-300 hover:bg-primary-highlight" @click="extension.addPresence(presence.metadata.service)">
+					<FAIcon class="h-4 w-4" icon="fa-solid fa-plus" />
+					{{ $t("component.storeCard.addPresence") }}
 				</button>
 			</div>
 		</div>
@@ -166,7 +175,7 @@ useSeoMeta({
 							<FAIcon class="h-4 w-4" icon="fa-solid fa-tags" />
 							{{ $t("page.store.presence.informationSection.tags") }}
 						</p>
-						<div class="flex flex-wrap gap-2 mt2 ml5">
+						<div class="flex flex-wrap gap-2 ml5 mt2">
 							<span v-for="tag in presence?.metadata.tags" :key="tag" class="bg-gray-secondary rounded-full c-text font-semibold text-3 py1 px2">
 								{{ tag }}
 							</span>
@@ -189,7 +198,7 @@ useSeoMeta({
 				</div>
 			</div>
 		</div>
-		<ScriptGoogleAdsense
+		<!-- 		<ScriptGoogleAdsense
 			data-ad-client="ca-pub-1575460061917202"
 			data-ad-slot="5541572189"
 			data-ad-format="auto"
@@ -198,7 +207,7 @@ useSeoMeta({
 			<template #error>
 				{{ $t("layout.ads.error") }}
 			</template>
-		</ScriptGoogleAdsense>
+		</ScriptGoogleAdsense> -->
 	</div>
 	<div v-else-if="error" class="flex justify-center items-center h-full">
 		{{ error }}

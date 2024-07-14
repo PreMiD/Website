@@ -3,10 +3,14 @@ import tinycolor from "tinycolor2";
 import { ref } from "vue";
 
 import type { PresencesQuery } from "#gql";
+import { useExtensionStore } from "~/stores/useExtension";
 
 const { presence } = defineProps<{
 	presence: PresencesQuery["presences"][number];
 }>();
+
+const extension = useExtensionStore();
+
 const hovered = ref(false);
 const color = {
 	main: presence.metadata.color,
@@ -24,6 +28,8 @@ const localePath = useLocalePath();
 function goToPresence() {
 	router.push(localePath(`/store/${presence.metadata.service}`));
 }
+
+const hasPresence = computed(() => extension.presences.includes(presence.metadata.service));
 </script>
 
 <template>
@@ -36,6 +42,7 @@ function goToPresence() {
 		<div class="absolute w-full top-0 left-0 h-full z-1" @click="goToPresence" />
 
 		<NuxtImg
+			format="webp"
 			placeholder
 			:draggable="false"
 			class="absolute top-50% left-50% translate--50% opacity-20 bgBounce" :class="[hovered ? 'rotate--10 scale-130' : 'scale-105']"
@@ -49,6 +56,7 @@ function goToPresence() {
 			:style="`background: linear-gradient(135deg, ${color.main} 0%, ${color.tint} 100%); `"
 		>
 			<NuxtImg
+				format="webp"
 				draggable="false"
 				placeholder
 				class="w-16 h-16 z-20 card-shadow rounded-md my-a mx-7"
@@ -69,16 +77,24 @@ function goToPresence() {
 				</h1>
 				<Transition name="card-animation" mode="out-in">
 					<div :key="`${presence.metadata.service}_desc`">
-						<p v-if="!hovered" class="card-shadow h-10 font-normal line-clamp-3 line-height-3.5">
+						<p v-if="!hovered || !extension.hasExtension" class="card-shadow h-10 font-normal line-clamp-3 line-height-3.5">
 							{{ presence.metadata.description.en }}
 						</p>
-						<div v-else-if="hovered" class="flex gap-2">
+						<div v-else-if="hovered && extension.hasExtension" class="flex gap-2">
 							<button
-								class="gap-2 flex items-center justify-center h-10 cursor-pointer font-bold bg-primary hover:bg-primary-highlight rounded-full transition-colors text-white border-none w-40"
+								v-if="!hasPresence"
+								class="gap-2 flex items-center justify-center h-10 cursor-pointer font-bold rounded-full transition-colors bg-primary hover:bg-primary-highlight text-white border-none min-w-25 w-min"
+								@click="extension.addPresence(presence.metadata.service)"
 							>
 								<FAIcon class="h5 w5" icon="fa-solid fa-plus" />
 								<p>
 									{{ $t("component.storeCard.addPresence") }}
+								</p>
+							</button>
+							<button v-else class="gap-2 flex items-center justify-center h-10 cursor-pointer font-bold rounded-full transition-colors text-white border-none min-w-25 w-min bg-red hover:bg-red-3" @click="extension.removePresence(presence.metadata.service)">
+								<FAIcon class="h5 w5" icon="fa-solid fa-times" />
+								<p>
+									{{ $t("component.storeCard.removePresence") }}
 								</p>
 							</button>
 							<!-- <button

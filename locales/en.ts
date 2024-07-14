@@ -14,7 +14,6 @@ export default defineI18nLocale(() => ({
 			sort: {
 				mostUsed: "Most Used",
 				alphabetical: "Alphabetical",
-				likedFirst: "Liked First",
 			},
 			categories: {
 				all: "All",
@@ -36,7 +35,8 @@ export default defineI18nLocale(() => ({
 			loading: "Loading...",
 		},
 		storeCard: {
-			addPresence: "Add Presence",
+			addPresence: "Add",
+			removePresence: "Remove",
 		},
 		donationModal: {
 			title: "A Quick Favor...",
@@ -169,6 +169,11 @@ export default defineI18nLocale(() => ({
 				title: "Bad news!",
 				description: "PreMiD is not available for mobile devices, sorry!",
 			},
+			alphaAccess: {
+				title: "Unlock Exclusive Alpha Access!",
+				description: "Step into the future of PreMiD by becoming a Patron or sponsoring us on GitHub. Your support not only propels our development but also grants you first access to the most innovative features we’re crafting. Experience the cutting-edge of what PreMiD can offer and influence its trajectory with your feedback. It's not just about being first—it's about being part of something bigger.",
+				callToAction: "Learn More & Join the Innovation",
+			},
 			faq: "Frequently Asked Questions",
 			faqs: {
 				q1: {
@@ -214,8 +219,6 @@ export default defineI18nLocale(() => ({
 			noPresence: "No presence matches your search...",
 			presence: {
 				button: {
-					add: "Add Presence",
-					remove: "Remove Presence",
 					reportIssue: "Report an Issue",
 					suggestFeature: "Suggest a Feature",
 					viewCode: "View Code",

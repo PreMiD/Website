@@ -5,7 +5,7 @@ const route = useRoute();
 
 const searchTerm = defineModel<string>();
 const selectedCategory = defineModel<string>("category");
-const sortOrder = defineModel<string>("sortBy");
+const sortOrder = defineModel<string>("sortOrder");
 
 //* Nuxt apparently does not like using route query in defaults
 searchTerm.value = route.query.search?.toString() || "";
@@ -26,7 +26,6 @@ const isDropdownOpen = ref(false);
 const options = [
 	{ text: t("component.searchBar.sort.mostUsed"), icon: "fa-solid fa-sort-amount-down" },
 	{ text: t("component.searchBar.sort.alphabetical"), icon: "fa-solid fa-sort-alpha-down" },
-	{ text: t("component.searchBar.sort.likedFirst"), icon: "fa-solid fa-heart" },
 ];
 
 const sortByDropdown = ref<HTMLDivElement>();

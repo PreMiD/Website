@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type { LocationQuery } from "vue-router";
+import { useExtensionStore } from "~/stores/useExtension";
+
+const extension = useExtensionStore();
 
 const { t } = useI18n();
 useSeoMeta({
@@ -8,6 +11,7 @@ useSeoMeta({
 
 const { data } = await useAsyncGql({ operation: "presences" });
 
+const sortBy = ref<string>("");
 const totalPages = ref(0);
 const presences = computed(() => getPresencePage());
 const route = useRoute();
@@ -32,9 +36,15 @@ function getPresencePage(page = currentPage.value, search = searchTerm.value) {
 			? data.value.presences.filter(p => p.metadata.category === selectedCategory.value)
 			: data.value.presences
 	)
-		.sort((a, b) => b.users - a.users)
-		.filter(p => !p.metadata.tags.includes("nsfw"))
-		.filter(p => p.metadata.service.toLowerCase().includes(search.toLowerCase()));
+		.filter(p => p.metadata.service.toLowerCase().includes(search.toLowerCase()))
+		.sort((a, b) => {
+			if (sortBy.value === t("component.searchBar.sort.mostUsed"))
+				return b.users - a.users;
+			else if (sortBy.value === t("component.searchBar.sort.alphabetical"))
+				return a.metadata.service.localeCompare(b.metadata.service);
+			return 0;
+		})
+		.sort(a => extension.presences.includes(a.metadata.service) ? -1 : 1);
 
 	totalPages.value = Math.ceil(sortedPresences.length / pageSize);
 	return {
@@ -74,7 +84,7 @@ onMounted(() => {
 
 <template>
 	<div>
-		<StoreSearchBar />
+		<StoreSearchBar v-model:sort-order="sortBy" />
 		<!-- Presences Grid or Empty State -->
 		<div v-if="presences.data.length === 0" class="flex justify-center items-center rounded-lg h-50">
 			<div class="flex flex-col items-center justify-center p-5 text-lg text-primary-highlight">
@@ -87,7 +97,7 @@ onMounted(() => {
 				<StoreCard v-for="presence in presences.data" :key="presence.metadata.service" :presence="presence" />
 			</div>
 			<!-- Pagination -->
-			<div v-if="presences.data.length > 0" class="flex mt-5 mb-10 sticky z-40 flex-wrap justify-center">
+			<div v-if="presences.data.length > 0" class="flex mt-5 mb-10 flex-wrap justify-center sticky z-40">
 				<NuxtLink
 					:to="getLinkProperties({ page: 1 })"
 					:replace="true"

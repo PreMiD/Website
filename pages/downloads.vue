@@ -66,12 +66,12 @@ function goToStore() {
 <template>
 	<div>
 		<DonationModal ref="donationModal" @continue="goToStore" />
-		<section class="flex justify-center items-center relative gap-10 h100 lt-md:flex-col mb-10">
+		<section class="flex justify-center items-center relative mb-10 gap-10 h100 lt-md:flex-col">
 			<div class="max-w-60%">
-				<h1 class="c-primary font-size-10 font-extrabold mb-6">
+				<h1 class="c-primary font-extrabold mb-6 font-size-10">
 					{{ $t("page.downloads.section.heading.title") }}
 				</h1>
-				<p class="font-semibold font-size-5 lt-sm:font-size-4.5">
+				<p class="font-size-5 lt-sm:font-size-4.5 font-semibold">
 					{{ $t("page.downloads.section.heading.description") }}
 				</p>
 			</div>
@@ -86,7 +86,7 @@ function goToStore() {
 				</ol>
 			</div>
 		</section>
-		<section class="flex flex-col gap-5 items-center w-full">
+		<section class="flex flex-col items-center w-full gap-5">
 			<h1 id="extension" class="c-primary font-size-10 font-extrabold mb-6">
 				{{ $t("page.downloads.section.heading.extension") }}
 			</h1>
@@ -108,8 +108,21 @@ function goToStore() {
 			<h2 class="font-bold font-size-5">
 				{{ $t("page.downloads.browser.other") }}
 			</h2>
-			<div class="flex flex-wrap gap-5 justify-center">
+			<div class="flex gap-5 justify-center flex-wrap">
 				<BrowserCard v-for="browser in otherBrowsers" :key="browser" :browser="browser" @click="openModal(browser)" />
+			</div>
+		</section>
+		<section class="flex flex-col items-center justify-center my-10">
+			<div class="max-w-screen-md text-white rounded-lg shadow-lg bg-gradient-to-r from-primary to-purple-600 p-8">
+				<h2 class="font-extrabold text-white mb-4 text-7">
+					{{ $t("page.downloads.alphaAccess.title") }}
+				</h2>
+				<p class="mb-6 text-4">
+					{{ $t("page.downloads.alphaAccess.description") }}
+				</p>
+				<NuxtLink to="/early-access" class="bg-secondary py-3 px-4 rounded-full transition duration-300 font-semibold text-secondary-text hover:bg-opacity-80">
+					{{ $t("page.downloads.alphaAccess.callToAction") }}
+				</NuxtLink>
 			</div>
 		</section>
 		<section id="faq" class="flex flex-col gap-5 items-center w-full my-10">

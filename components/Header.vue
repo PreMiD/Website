@@ -34,7 +34,7 @@ useHead({
 		<!-- <PageBanner /> -->
 		<div
 			id="header"
-			class="flex items-center w-full select-none top-0 lg-md:relative lt-md:sticky z-1000 flex-justify-between p-3 bg-bg-primary"
+			class="flex items-center select-none w-full top-0 lg-md:relative lt-md:sticky z-1000 flex-justify-between p-3 bg-bg-primary"
 		>
 			<NuxtLink
 				:to="localePath('/')"
@@ -54,7 +54,7 @@ useHead({
 						active-class="active"
 						:aria-label="`Link to ${link.name}`"
 					>
-						<span class="items-center inline-flex gap-2">
+						<span class="items-center gap-2 inline-flex">
 							<span
 								class="inline-flex iconOutline bg-link-icon-bg border-rd-100 p-2"
 							>
@@ -75,7 +75,7 @@ useHead({
 			<!-- Mobile Nav -->
 			<div class="md:hidden">
 				<button
-					class="md:hidden cursor-pointer bg-transparent b-none p0 c-primary h7"
+					class="md:hidden cursor-pointer b-none bg-transparent p0 c-primary h7"
 					aria-label="Toggle navigation menu"
 					@click="navOpen = !navOpen"
 				>

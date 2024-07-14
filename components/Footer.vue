@@ -15,6 +15,15 @@ const partners = [
 	},
 ];
 
+interface LinkSection {
+	title: string;
+	links: {
+		href: string | any;
+		icon?: string;
+		label: string;
+	}[];
+}
+
 const linkSections = computed(() => [
 	{
 		title: t("footer.followUs"),
@@ -87,7 +96,7 @@ const linkSections = computed(() => [
 			},
 		],
 	},
-]);
+] as LinkSection[] satisfies LinkSection[]);
 </script>
 
 <template>
@@ -132,7 +141,7 @@ const linkSections = computed(() => [
 				<a href="https://recodive.com" target="_blank">Recodive</a>
 			</span>
 			<br>
-			<div class="text-xs mt2 color-light-9">
+			<div class="mt2 text-xs color-light-9">
 				{{ t('footer.copyright', { year: "2018", currentYear: new Date().getFullYear(), company: 'Recodive oHG.' }) }}
 			</div>
 		</div>

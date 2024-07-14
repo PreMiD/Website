@@ -22,7 +22,7 @@ if (status.value === "success" && !user.value) {
 				</h1>
 			</div>
 			<div class="flex flex-col items-center gap-10">
-				<h1 class="font-bold c-primary text-10 text-center">
+				<h1 class="font-bold c-primary text-center text-10">
 					{{ $t("page.users.userPage.title") }}
 				</h1>
 				<div class="flex flex-wrap gap-5 justify-center">

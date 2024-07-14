@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import { useExtensionStore } from "./stores/useExtension";
+
 useHead({
 	htmlAttrs: {
 		lang: "en",
+	},
+	bodyAttrs: {
+		id: "app",
 	},
 	link: [
 		{
@@ -27,6 +32,13 @@ useSeoMeta({
 	applicationName: "PreMiD",
 	twitterImage: "https://cdn.rcd.gg/PreMiD.png",
 });
+
+/* useScriptGoogleAdsense({
+	client: "ca-pub-1575460061917202",
+}); */
+
+const extension = useExtensionStore();
+extension.setupGlobalEvents();
 </script>
 
 <template>
