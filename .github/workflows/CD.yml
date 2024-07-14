@@ -27,8 +27,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           build-args: |
-            "GH_NPM_TOKEN=${{ secrets.GITHUB_TOKEN }}"
+            GH_NPM_TOKEN=${{ secrets.GITHUB_TOKEN }}
           push: true
           tags: |
-            ${{ github.ref_name == 'main' && 'ghcr.io/${{ env.IMAGE_REPOSITORY }}:latest' || '' }}
-            ${{ github.ref_name == 'main' && 'ghcr.io/${{ env.IMAGE_REPOSITORY }}:${{ github.sha }}-${{ github.run_number }}' || 'ghcr.io/${{ env.IMAGE_REPOSITORY }}:beta-${{ github.sha }}-${{ github.run_number }}' }}
+            ${{ github.ref_name == 'main' && 'ghcr.io/' || '' }}${{ env.IMAGE_REPOSITORY }}${{ github.ref_name == 'main' && ':latest' || '' }}
+            ${{ github.ref_name == 'main' && 'ghcr.io/' || '' }}${{ env.IMAGE_REPOSITORY }}${{ github.ref_name == 'main' && ':${{ github.sha }}-${{ github.run_number }}' || ':beta-${{ github.sha }}-${{ github.run_number }}' }}
