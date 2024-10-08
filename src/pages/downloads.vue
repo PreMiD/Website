@@ -6,7 +6,7 @@
 					<h1>{{ $t("downloads.header.title") }}</h1>
 					<p>{{ $t("downloads.header.subtitle") }}</p>
 				</div>
-				<div class="header__steps">
+				<!-- <div class="header__steps">
 					<h2>{{ $t("downloads.instructions.heading") }}</h2>
 					<ol>
 						<li>
@@ -39,7 +39,7 @@
 							</p>
 						</li>
 					</ol>
-				</div>
+				</div> -->
 			</div>
 
 			<div class="waves-divider waves-divider_bottom">
@@ -71,92 +71,11 @@
 		<transition name="card-animation" mode="out-in">
 			<div v-if="showDownloads">
 				<div
-					id="app-downloads"
-					class="dl-container__section dl-container__section_downloads waves-aligned"
-				>
-					<h1 class="section-header">
-						{{ $t("downloads.appdownloading.header") }}
-						<a
-							v-if="platform_order[1] == 'linux'"
-							href="https://github.com/PreMiD/Linux/releases"
-							target="_blank"
-							class="label label_downloads-version linux"
-							v-tippy="{
-								content: $t('downloads.warning.differentVersion2', {
-									0: appVersion
-								})
-							}"
-							v-text="linuxVersion"
-						></a>
-
-						<a
-							v-else-if="appVersion"
-							href="https://github.com/PreMiD/PreMiD/releases"
-							target="_blank"
-							class="label label_downloads-version"
-							v-text="appVersion"
-						></a>
-					</h1>
-					<div class="dl-container__cards">
-						<div v-for="(platform, index) of platform_order" :key="platform">
-							<div @click="open(platform, 'Application')">
-								<div
-									:class="{ 'current-platform': index == 1 }"
-									class="cards__card clickable"
-								>
-									<div class="card__icon">
-										<i :class="`fab fa-${platform}`"></i>
-									</div>
-									<div class="card__content">
-										<h3>
-											{{ builds[platform].os_name }}
-											<i
-												v-if="!builds[platform].has_installer"
-												v-tippy
-												class="fa-exclamation-circle fas platform-warning"
-												:content="
-													$t('downloads.tooltips.os.not.supported.part2', {
-														0: `<b>${$t(
-															'downloads.tooltips.os.not.supported.part1'
-														)}</b> `
-													})
-												"
-											></i>
-
-											<i
-												v-if="
-													platform_order[1] != 'linux' &&
-													builds[platform].os_name == 'Linux' &&
-													builds[platform].warning
-												"
-												class="fa-question-circle fas platform-warning linux"
-												v-tippy="{
-													content: $t('downloads.warning.differentVersion', {
-														0: linuxVersion
-													})
-												}"
-											></i>
-										</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div
 					id="ext-downloads"
 					class="dl-container__section dl-container__section_downloads"
 				>
 					<h1 class="section-header">
-						{{ $t("downloads.extdownloading.header") }}
-						<a
-							v-if="extVersion"
-							href="https://github.com/PreMiD/Extension"
-							target="_blank"
-							class="label label_downloads-version"
-							v-text="extVersion"
-						></a>
+						{{ $t("home.introduction.button.getPremid") }}
 					</h1>
 
 					<div class="dl-container__cards">
@@ -392,7 +311,6 @@
 					}
 
 					this.noBetas = noBetas;
-					this.extVersion = data.versions.extension;
 					this.appVersion = data.versions.app;
 					this.linuxVersion = data.versions.linux;
 					this.userAccess = userAccess;
@@ -408,9 +326,6 @@
 		data() {
 			return {
 				noBetas: false,
-				extVersion: null,
-				appVersion: null,
-				linuxVersion: null,
 				userAccess: false,
 				extraDownloads: [],
 				currentTab: null,
@@ -420,7 +335,6 @@
 				showBeta: false,
 				cardHover: false,
 				modalAvailable: false,
-				platforms: [],
 				isChrome: true,
 				browser: {
 					name: "Chrome",
@@ -431,7 +345,6 @@
 					number: null,
 					messageKey: null
 				},
-				platform_order: ["windows", "apple", "linux"],
 				builds: {
 					windows: {
 						os_name: "Windows",
@@ -517,11 +430,6 @@
 				};
 			}
 
-			let platform_temp = "linux";
-			var platform_order = this.platform_order;
-
-			if (ua.includes("OS X") || ua.includes("Mac")) platform_temp = "apple";
-			if (ua.includes("Windows")) platform_temp = "windows";
 			if (
 				/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
 					ua
@@ -530,10 +438,6 @@
 				this.isMobile = true;
 				this.showDownloads = false;
 			}
-
-			//* Centering the current platform in array. Only works if array has 3 items.
-			platform_order.splice(platform_order.indexOf(platform_temp), 1);
-			platform_order.splice(1, 0, platform_temp);
 
 			if (
 				["#app-downloads", "#ext-downloads", "#beta-downloads"].includes(
