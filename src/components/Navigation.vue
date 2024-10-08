@@ -14,10 +14,7 @@
 							content: $t('store.message.error')
 						}"
 					>
-						<i
-							@click="$router.push('/downloads#ext-downloads')"
-							class="fa-exclamation fas"
-						/>
+						<i @click="$router.push('/downloads')" class="fa-exclamation fas" />
 					</div>
 				</transition>
 			</div>
@@ -125,7 +122,14 @@
 				>
 					<span>
 						<i :class="'fas fa-' + category.logo"></i>
-						{{ $t(`header.${category.route}`) }}
+						{{
+							$t(
+								`header.${category.route}`.replace(
+									"header.downloads",
+									"home.introduction.button.getPremid"
+								)
+							)
+						}}
 					</span>
 				</nuxt-link>
 			</div>
@@ -411,15 +415,15 @@
 						string: "header.store"
 					},
 					{
-						logo: "download",
-						route: "downloads",
-						string: "header.downloads"
-					},
-					{
 						logo: "hands-helping",
 						route: "contributors",
 						string: "header.contributors"
-					}
+					},
+					{
+						logo: "download",
+						route: "downloads",
+						string: "home.introduction.button.getPremid"
+					},
 				]
 			};
 		},
