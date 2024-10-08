@@ -8,3 +8,4 @@ src/langs
 package-lock.json
 languageUpdater.js
 .DS_Store
+pnpm-lock.yaml
