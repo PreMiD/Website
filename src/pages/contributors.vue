@@ -1,4 +1,23 @@
 <script>
+	const staffRoles = [
+			"673682085608816652", // Project Management
+			"1027665813525778436", // Software Engineer
+			"514546359865442304", // Discord Mod
+			"566417964820070421", // Technical Support
+			"685969048399249459", // Human Resources
+			"994342612532199525", // Community Management
+			"811262682408943616" // Localization Manager,
+		],
+		supportRoles = [
+			"1032759805732978708", //Contributor
+			"502165799172309013", //Donator
+			"515874214750715904", //Patron
+			"585532751663333383" //Booster
+		],
+		presenceDeveloperRole = "606222296016879722", //Presence Developer
+		proofreaderRole = "522755339448483840", //Proofreader
+		translatorRole = "502148045991968788", //Translator
+		roles = [...staffRoles, ...supportRoles];
 	export default {
 		name: "Contributors",
 		auth: false,
@@ -45,28 +64,11 @@
 		},
 		computed: {
 			sortedUsers() {
-				const staffRoles = [
-					"673682085608816652", // Project Management
-					"514546359865442304", // Moderator
-					"566417964820070421", // Support
-					"994342612532199525", // Community Management
-					"811262682408943616", // Localization Manager
-					"515874214750715904", //Patron
-					"585532751663333383", //Booster
-					"502165799172309013" //Donator
-				];
-
 				//* Sort by role array index
 				return this.contributors.sort((a, b) => {
-					if (
-						staffRoles.indexOf(a.user.roleId) >
-						staffRoles.indexOf(b.user.roleId)
-					)
+					if (roles.indexOf(a.user.roleId) > roles.indexOf(b.user.roleId))
 						return 1;
-					else if (
-						staffRoles.indexOf(a.user.roleId) <
-						staffRoles.indexOf(b.user.roleId)
-					)
+					else if (roles.indexOf(a.user.roleId) < roles.indexOf(b.user.roleId))
 						return -1;
 					else
 						return a.user.name
@@ -77,46 +79,23 @@
 		},
 		methods: {
 			isStaffRole(roleId) {
-				const staffRoles = [
-					"514546359865442304", // Discord Mod
-					"566417964820070421", // Technical Support
-					"673682085608816652", // Project Management
-					"685969048399249459", // Human Resources
-					"994342612532199525", // Community Management
-					"673682085608816652", // Project Management
-					"811262682408943616" // Localization Manager,
-				];
-
 				if (staffRoles.indexOf(roleId) !== -1) return true;
 				else return false;
 			},
 			isSupporterRole(roleId) {
-				const supportRoles = [
-					"1032759805732978708", //Contributor
-					"502165799172309013", //Donator
-					"515874214750715904", //Patron
-					"585532751663333383" //Booster
-				];
-
 				if (supportRoles.indexOf(roleId) !== -1) return true;
 				else return false;
 			},
 
 			isPresenceDeveloperRole(roleId) {
-				const presenceDeveloperRole = "606222296016879722"; //Presence Developer
-
 				if (presenceDeveloperRole == roleId) return true;
 				else return false;
 			},
 			isProofreaderRole(roleId) {
-				const proofreaderRole = "522755339448483840"; //Proofreader
-
 				if (proofreaderRole == roleId) return true;
 				else return false;
 			},
 			isTranslatorRole(roleId) {
-				const translatorRole = "502148045991968788"; //Translator
-
 				if (translatorRole == roleId) return true;
 				else return false;
 			},
@@ -149,11 +128,9 @@
 							v-for="contributor of sortedUsers"
 							:key="contributor.user.id + 'staff'"
 							class="contributor-card"
+							v-if="isStaffRole(contributor.user.roleId)"
 						>
-							<CreditCard
-								v-if="isStaffRole(contributor.user.roleId)"
-								:user="contributor.user"
-							/>
+							<CreditCard :user="contributor.user" />
 						</div>
 					</div>
 				</div>
@@ -168,11 +145,9 @@
 							v-for="contributor of sortedUsers"
 							:key="contributor.user.id + 'supporter'"
 							class="contributor-card"
+							v-if="isSupporterRole(contributor.user.roleId)"
 						>
-							<CreditCard
-								v-if="isSupporterRole(contributor.user.roleId)"
-								:user="contributor.user"
-							/>
+							<CreditCard :user="contributor.user" />
 						</div>
 					</div>
 				</div>

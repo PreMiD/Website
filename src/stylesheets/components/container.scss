@@ -474,7 +474,7 @@
 
 			z-index: 1;
 
-			padding-top: 6em;
+			padding-top: 3em;
 			padding-bottom: 12em;
 		}
 
@@ -516,14 +516,15 @@
 
 	.dl-container__header {
 		display: flex;
-		max-width: 1600px;
-		margin: 0 auto;
-		justify-content: space-between;
-		align-items: flex-start;
+		justify-content: center;
 
 		.header__content {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
 			width: 55%;
-
+			text-align: center;
 			h1 {
 				font-weight: 800;
 				line-height: 1.1;

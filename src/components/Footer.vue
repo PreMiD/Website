@@ -12,7 +12,7 @@
 						class="button"
 						replace
 						to="/downloads"
-						v-text="$t(`footer.usercount.button`)"
+						v-text="$t(`home.introduction.button.getPremid`)"
 					/>
 				</div>
 			</div>

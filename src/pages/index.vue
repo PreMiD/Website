@@ -15,17 +15,17 @@
 						<p v-html="markdown($t('home.introduction.paragraph'))"></p>
 					</div>
 					<div class="heading__button-group">
-						<a class="button text--uppercase" href="#features">
-							<i class="fa-stream fas"></i>
-							{{ $t("home.introduction.button.features") }}
-						</a>
 						<nuxt-link
-							class="button button--black text--uppercase"
+							class="button text--uppercase"
 							to="/downloads"
 						>
 							<i class="fa-file-export fas"></i>
-							{{ $t(`home.introduction.button.downloads`) }}
+							{{ $t(`home.introduction.button.getPremid`) }}
 						</nuxt-link>
+						<a class="button button--black text--uppercase" href="#features">
+							<i class="fa-stream fas"></i>
+							{{ $t("home.introduction.button.features") }}
+						</a>
 					</div>
 				</div>
 				<div class="promo-container__presences" ref="promoPresences">
