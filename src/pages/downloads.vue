@@ -64,7 +64,7 @@
 				v-if="isMobile"
 				class="dl-container__section dl-container__mobile-warning waves-aligned"
 			>
-				PreMiD is not available for mobile devices. Please use a desktop browser to install PreMiD.
+				{{ $t("downloads.mobile.notAvailable") }}
 			</div>
 		</transition>
 
@@ -76,31 +76,42 @@
 							<div class="header__icon">
 								<i class="fas fa-wand-sparkles"></i>
 							</div>
-							<h2>Big News!</h2>
+							<h2>{{ $t("downloads.notice.header.title") }}</h2>
 						</div>
 						<div class="notice__body">
-							<p>We've removed the application completely!<br> Now you only need the browser extension - no extra downloads needed.</p>
+							<p>
+								{{ $t("downloads.notice.header.removal") }}<br>
+								{{ $t("downloads.notice.header.simplified") }}
+							</p>
 							<div class="body__tags">
-								<span class="tag"><i class="fas fa-bolt"></i> One-Click Setup</span>
-								<span class="tag"><i class="fas fa-feather"></i> No App Needed</span>
-								<span class="tag"><i class="fas fa-rocket"></i> Just Works™</span>
+								<span class="tag"><i class="fas fa-bolt"></i> {{ $t("downloads.notice.features.oneClick") }}</span>
+								<span class="tag"><i class="fas fa-feather"></i> {{ $t("downloads.notice.features.noApp") }}</span>
+								<span class="tag"><i class="fas fa-rocket"></i> {{ $t("downloads.notice.features.justWorks") }}</span>
 							</div>
-							<small>Application removed in v2.6.0 to make your life easier ✨</small>
+							<small>{{ $t("downloads.notice.version") }}</small>
 						</div>
 
 						<div class="notice__downloads">
-							<h3>Get PreMiD for your browser</h3>
+							<h3>{{ $t("downloads.notice.browsers.title") }}</h3>
 							<div class="downloads__cards">
 								<div
 									:class="{
-										'current-platform':
-											browser.key == 'chrome' || browser.key == 'edge'
+										'current-platform': browser.key == 'chrome'
 									}"
 									class="download-card"
 									@click="open(browser.key, 'Extension')"
+									>
+									<i class="fa-chrome fab"></i>
+									<span>Chrome</span>
+								</div>
+
+								<div
+									:class="{ 'current-platform': browser.key == 'edge' }"
+									class="download-card"
+									@click="open('edge', 'Extension')"
 								>
-									<i :class="`fa-${isChrome ? browser.icon : 'chrome'} fab`"></i>
-									<span>{{ isChrome ? browser.name : "Chrome" }}</span>
+									<i class="fa-edge fab"></i>
+									<span>Edge</span>
 								</div>
 
 								<div
@@ -115,7 +126,7 @@
 								<div class="download-card download-card--disabled">
 									<i class="fa-safari fab"></i>
 									<span>Safari</span>
-									<div class="coming-soon">Coming Soon</div>
+									<div class="coming-soon">{{ $t("downloads.notice.browsers.comingSoon") }}</div>
 								</div>
 							</div>
 						</div>
@@ -126,8 +137,8 @@
 									<i class="fas fa-flask"></i>
 								</div>
 								<div class="item__content">
-									<h3>Beta Program</h3>
-									<p>Love trying new stuff? Join our Discord and use <code>/beta</code> to get early access!</p>
+									<h3>{{ $t("downloads.notice.beta.title") }}</h3>
+									<p>{{ $t("downloads.notice.beta.description") }}</p>
 								</div>
 							</div>
 							<div class="beta-info__item">
@@ -135,31 +146,35 @@
 									<i class="fas fa-crown"></i>
 								</div>
 								<div class="item__content">
-									<h3>Alpha Access</h3>
-									<p>Support us on <strong>GitHub</strong> or <strong>Patreon</strong> to get the bleeding-edge features!</p>
+									<h3>{{ $t("downloads.notice.alpha.title") }}</h3>
+									<p>{{ $t("downloads.notice.alpha.description") }}</p>
 								</div>
 							</div>
 						</div>
 						<div class="notice__support">
 							<i class="fas fa-question-circle"></i>
-							<p>Need help? Join our <a href="https://discord.premid.app" target="_blank">Discord</a> for support!</p>
+							<p>
+								{{ $t("downloads.notice.support.needHelp") }}
+								<a href="https://discord.premid.app" target="_blank">{{ $t("downloads.notice.support.discord") }}</a>
+								{{ $t("downloads.notice.support.forSupport") }}
+							</p>
 						</div>
 						<div class="notice__appreciation">
 							<div class="appreciation__content">
-								<h3><i class="fas fa-heart"></i> Love PreMiD?</h3>
-								<p>Consider supporting us or leaving a review - it means the world to us!</p>
+								<h3><i class="fas fa-heart"></i> {{ $t("downloads.notice.appreciation.title") }}</h3>
+								<p>{{ $t("downloads.notice.appreciation.description") }}</p>
 								<div class="appreciation__buttons">
 									<a href="https://github.com/sponsors/PreMiD" target="_blank" class="button button--github">
 										<i class="fab fa-github"></i>
-										GitHub Sponsors
+										{{ $t("downloads.notice.appreciation.buttons.github") }}
 									</a>
 									<a href="https://patreon.com/Timeraa" target="_blank" class="button button--patreon">
 										<i class="fab fa-patreon"></i>
-										Patreon
+										{{ $t("downloads.notice.appreciation.buttons.patreon") }}
 									</a>
 									<a href="https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi" target="_blank" class="button button--review">
 										<i class="fas fa-star"></i>
-										Review Us
+										{{ $t("downloads.notice.appreciation.buttons.review") }}
 									</a>
 								</div>
 							</div>
@@ -172,11 +187,7 @@
 		<transition name="card-animation" mode="out-in">
 			<div v-if="isMobile" class="dl-container__showDownloads">
 				<span @click="showDownloads = !showDownloads">
-					{{
-						showDownloads
-								? $t("downloads.mobile.hideDownloads")
-								: $t("downloads.mobile.showDownloads")
-					}}
+					{{ showDownloads ? $t("downloads.mobile.hideDownloads") : $t("downloads.mobile.showDownloads") }}
 				</span>
 			</div>
 		</transition>
