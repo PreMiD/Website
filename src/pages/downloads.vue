@@ -80,13 +80,22 @@
 						</div>
 						<div class="notice__body">
 							<p>
-								{{ $t("downloads.notice.header.removal") }}<br>
+								{{ $t("downloads.notice.header.removal") }}<br />
 								{{ $t("downloads.notice.header.simplified") }}
 							</p>
 							<div class="body__tags">
-								<span class="tag"><i class="fas fa-bolt"></i> {{ $t("downloads.notice.features.oneClick") }}</span>
-								<span class="tag"><i class="fas fa-feather"></i> {{ $t("downloads.notice.features.noApp") }}</span>
-								<span class="tag"><i class="fas fa-rocket"></i> {{ $t("downloads.notice.features.justWorks") }}</span>
+								<span class="tag"
+									><i class="fas fa-bolt"></i>
+									{{ $t("downloads.notice.features.oneClick") }}</span
+								>
+								<span class="tag"
+									><i class="fas fa-feather"></i>
+									{{ $t("downloads.notice.features.noApp") }}</span
+								>
+								<span class="tag"
+									><i class="fas fa-rocket"></i>
+									{{ $t("downloads.notice.features.justWorks") }}</span
+								>
 							</div>
 							<small>{{ $t("downloads.notice.version") }}</small>
 						</div>
@@ -100,7 +109,7 @@
 									}"
 									class="download-card"
 									@click="open(browser.key, 'Extension')"
-									>
+								>
 									<i class="fa-chrome fab"></i>
 									<span>Chrome</span>
 								</div>
@@ -126,7 +135,9 @@
 								<div class="download-card download-card--disabled">
 									<i class="fa-safari fab"></i>
 									<span>Safari</span>
-									<div class="coming-soon">{{ $t("downloads.notice.browsers.comingSoon") }}</div>
+									<div class="coming-soon">
+										{{ $t("downloads.notice.browsers.comingSoon") }}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -155,24 +166,41 @@
 							<i class="fas fa-question-circle"></i>
 							<p>
 								{{ $t("downloads.notice.support.needHelp") }}
-								<a href="https://discord.premid.app" target="_blank">{{ $t("downloads.notice.support.discord") }}</a>
+								<a href="https://discord.premid.app" target="_blank">{{
+									$t("downloads.notice.support.discord")
+								}}</a>
 								{{ $t("downloads.notice.support.forSupport") }}
 							</p>
 						</div>
 						<div class="notice__appreciation">
 							<div class="appreciation__content">
-								<h3><i class="fas fa-heart"></i> {{ $t("downloads.notice.appreciation.title") }}</h3>
+								<h3>
+									<i class="fas fa-heart"></i>
+									{{ $t("downloads.notice.appreciation.title") }}
+								</h3>
 								<p>{{ $t("downloads.notice.appreciation.description") }}</p>
 								<div class="appreciation__buttons">
-									<a href="https://github.com/sponsors/PreMiD" target="_blank" class="button button--github">
+									<a
+										href="https://github.com/sponsors/PreMiD"
+										target="_blank"
+										class="button button--github"
+									>
 										<i class="fab fa-github"></i>
-										{{ $t("downloads.notice.appreciation.buttons.github") }}
+										GitHub Sponsors
 									</a>
-									<a href="https://patreon.com/Timeraa" target="_blank" class="button button--patreon">
+									<a
+										href="https://patreon.com/Timeraa"
+										target="_blank"
+										class="button button--patreon"
+									>
 										<i class="fab fa-patreon"></i>
-										{{ $t("downloads.notice.appreciation.buttons.patreon") }}
+										Patreon
 									</a>
-									<a href="https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi" target="_blank" class="button button--review">
+									<a
+										href="https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi"
+										target="_blank"
+										class="button button--review"
+									>
 										<i class="fas fa-star"></i>
 										{{ $t("downloads.notice.appreciation.buttons.review") }}
 									</a>
@@ -187,7 +215,11 @@
 		<transition name="card-animation" mode="out-in">
 			<div v-if="isMobile" class="dl-container__showDownloads">
 				<span @click="showDownloads = !showDownloads">
-					{{ showDownloads ? $t("downloads.mobile.hideDownloads") : $t("downloads.mobile.showDownloads") }}
+					{{
+						showDownloads
+							? $t("downloads.mobile.hideDownloads")
+							: $t("downloads.mobile.showDownloads")
+					}}
 				</span>
 			</div>
 		</transition>
