@@ -132,11 +132,15 @@
 									<span>Firefox</span>
 								</div>
 
-								<div class="download-card download-card--disabled">
+								<div
+									:class="{ 'current-platform': browser.key == 'safari' }"
+									class="download-card"
+									@click="open('safari', 'Extension')"
+								>
 									<i class="fa-safari fab"></i>
 									<span>Safari</span>
-									<div class="coming-soon">
-										{{ $t("downloads.notice.browsers.comingSoon") }}
+									<div class="beta-tag">
+										{{ $t("downloads.notice.browsers.beta") }}
 									</div>
 								</div>
 							</div>
@@ -750,10 +754,16 @@
 						min-width: 120px;
 						cursor: pointer;
 						transition: all 0.2s ease;
+						position: relative;
+						overflow: hidden;
 
 						&:hover {
 							background: rgba(114, 137, 218, 0.15);
 							transform: translateY(-2px);
+
+							.beta-tag {
+								transform: none;
+							}
 						}
 
 						&.current-platform {
@@ -772,29 +782,19 @@
 							color: #7289da;
 						}
 
-						&--disabled {
-							opacity: 0.5;
-							cursor: not-allowed;
-							position: relative;
-							overflow: hidden;
-
-							&:hover {
-								background: rgba(114, 137, 218, 0.1);
-								transform: none;
-							}
-
-							.coming-soon {
-								position: absolute;
-								bottom: 0;
-								left: 0;
-								right: 0;
-								background: rgba(114, 137, 218, 0.3);
-								color: white;
-								font-size: 0.8rem;
-								padding: 0.2rem;
-								text-align: center;
-								font-weight: 500;
-							}
+						.beta-tag {
+							position: absolute;
+							bottom: 0;
+							left: 0;
+							right: 0;
+							background: rgba(255, 171, 0, 0.3);
+							color: #ffab00;
+							font-size: 0.8rem;
+							padding: 0.2rem;
+							text-align: center;
+							font-weight: 500;
+							transition: transform 0.2s ease;
+							transform: translateY(0);
 						}
 					}
 				}

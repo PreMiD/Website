@@ -101,7 +101,7 @@
 					chrome:
 						"https://chrome.google.com/webstore/detail/premid/agjnjboanicjcpenljmaaigopkgdnihi",
 					firefox: "https://dl.premid.app/PreMiD.xpi",
-					safari: "https://github.com/PreMiD/Extension-Safari"
+					safari: "https://testflight.apple.com/join/HwTAFdBj"
 				}
 			};
 		},
