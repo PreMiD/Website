@@ -139,9 +139,7 @@
 								>
 									<i class="fa-safari fab"></i>
 									<span>Safari</span>
-									<div class="beta-tag">
-										{{ $t("downloads.notice.browsers.beta") }}
-									</div>
+									<div class="beta-tag">MacOS</div>
 								</div>
 							</div>
 						</div>
