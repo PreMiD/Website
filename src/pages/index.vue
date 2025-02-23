@@ -308,7 +308,7 @@
 				this.extVersion = res.versions.extension;
 				this.users = res.credits;
 			} catch (err) {
-				this.extVersion = "2.2.3";
+				this.extVersion = "2.7.4";
 				this.users = [generateTemplateUser(), generateTemplateUser()];
 			}
 
