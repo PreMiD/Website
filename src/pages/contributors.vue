@@ -3,6 +3,7 @@
 			"673682085608816652", // Project Management
 			"1027665813525778436", // Software Engineer
 			"514546359865442304", // Discord Mod
+			"1027665964684300358", // Social Media Manager
 			"566417964820070421", // Technical Support
 			"685969048399249459", // Human Resources
 			"994342612532199525", // Community Management
